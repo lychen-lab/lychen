@@ -47,14 +47,24 @@ const BaseHeading = defineAsyncComponent(
   () => import('@lychen/vue-components-app/base-heading/BaseHeading.vue'),
 );
 
-const { variant = VARIANT.Default } = defineProps<{
-  name?: string;
-  numberOfArea?: number;
-  surface?: number | null;
-  altitude?: number | null;
-  numberOfMember?: number;
-  variant?: Variant;
-}>();
+withDefaults(
+  defineProps<{
+    name?: string;
+    numberOfArea?: number;
+    surface?: number | null;
+    altitude?: number | null;
+    numberOfMember?: number;
+    variant?: Variant;
+  }>(),
+  {
+    name: undefined,
+    numberOfArea: 0,
+    surface: undefined,
+    altitude: undefined,
+    numberOfMember: undefined,
+    variant: VARIANT.Default,
+  },
+);
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 </script>

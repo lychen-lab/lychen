@@ -108,7 +108,12 @@ const BaseHeading = defineAsyncComponent(
   () => import('@lychen/vue-components-app/base-heading/BaseHeading.vue'),
 );
 
-const { variant = VARIANT.Settings, landMemberInvitation } = defineProps<{
+const {
+  variant = VARIANT.Settings,
+  landMemberInvitation,
+  landRoles = undefined,
+  land = undefined,
+} = defineProps<{
   variant?: Variant;
   landMemberInvitation: Partial<
     Pick<components['schemas']['LandMemberInvitation.jsonld'], 'email' | 'state' | 'ulid'>
