@@ -15,6 +15,7 @@
 
 <script setup lang="ts">
 import { cn } from '@lychen/typescript-utils/tailwind/Cn';
+import { SheetTrigger, SheetContent, Sheet } from '@lychen/vue-components-core/sheet';
 import type { HTMLAttributes } from 'vue';
 
 interface Props {
