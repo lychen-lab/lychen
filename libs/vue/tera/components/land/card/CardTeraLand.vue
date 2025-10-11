@@ -39,8 +39,7 @@ import { defineAsyncComponent } from 'vue';
 import { messages, TRANSLATION_KEY } from '@lychen/i18n-tera/land';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { VARIANT, type Variant } from '.';
-import IconUsers from '@lychen/vue-icons/IconUsers.vue';
-import IconMountain from '@lychen/vue-icons/IconMountain.vue';
+import { IconUsers, IconMountain } from '@lychen/vue-icons';
 
 import Card from '@lychen/vue-components-core/card/Card.vue';
 
