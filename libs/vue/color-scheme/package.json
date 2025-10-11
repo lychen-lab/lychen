@@ -1,10 +1,8 @@
 {
   "name": "@lychen/vue-color-scheme",
-  "devDependencies": {
-    "@vueuse/core": "^13.9.0",
-    "vue": "^3.5.22"
-  },
   "dependencies": {
+    "@vueuse/core": "^13.9.0",
+    "vue": "^3.5.22",
     "@lychen/vue-components-core": "workspace:*",
     "@lychen/vue-icons": "workspace:*"
   }
