@@ -53,3 +53,9 @@ Use clear, descriptive branch names:
 <issue-id>-<short-description>
 <scope>/<short-description>
 ```
+
+## Working on project
+
+```bash
+moon <project-id>:dev
+```
