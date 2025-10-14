@@ -58,7 +58,7 @@
     </div>
     <div
       v-else
-      class="flex flex-row items-center justify-center h-full opacity-70"
+      class="flex h-full flex-row items-center justify-center opacity-70"
     >
       {{ t('tabs.team.invitations.none') }}
     </div>

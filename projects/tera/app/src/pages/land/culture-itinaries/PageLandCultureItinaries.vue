@@ -1,5 +1,5 @@
 <template>
-  <section class="flex flex-col items-stretch h-full">
+  <section class="flex h-full flex-col items-stretch">
     <SectionDevelopmentInProgress title="Itinéraires de culture" />
   </section>
 </template>

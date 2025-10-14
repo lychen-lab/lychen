@@ -1,9 +1,9 @@
 {
   "name": "@lychen/vue-color-scheme",
   "dependencies": {
-    "@vueuse/core": "^13.9.0",
-    "vue": "^3.5.22",
     "@lychen/vue-components-core": "workspace:*",
-    "@lychen/vue-icons": "workspace:*"
+    "@lychen/vue-icons": "workspace:*",
+    "@vueuse/core": "^13.9.0",
+    "vue": "^3.5.22"
   }
 }

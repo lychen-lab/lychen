@@ -3,7 +3,7 @@
     <Tabs
       v-model="selectedTab"
       default-value="list"
-      class="gap-2 flex flex-col"
+      class="flex flex-col gap-2"
     >
       <TabsList class="flex flex-row justify-between md:justify-start">
         <TabsTrigger value="list"><IconList /> Liste </TabsTrigger>
@@ -28,7 +28,7 @@
         </template>
       </TabsContent>
       <TabsContent value="kanban">
-        <Kanban class="flex flex-col md:grid md:grid-cols-3 gap-4">
+        <Kanban class="flex flex-col gap-4 md:grid md:grid-cols-3">
           <KanbanColumn
             v-for="(state, index) in states"
             :key="state"
@@ -168,7 +168,7 @@ const { data: taskFromURL } = useQuery({
   queryFn: async () => {
     if (taskIdFromURL.value) {
       const response = await api.GET('/api/land_tasks/{ulid}', {
-        params: { path: { ulid: <string>taskIdFromURL.value } },
+        params: { path: { ulid: taskIdFromURL.value as string } },
       });
       return response.data;
     }

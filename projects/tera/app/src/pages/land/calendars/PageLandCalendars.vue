@@ -1,5 +1,5 @@
 <template>
-  <section class="flex flex-col h-full">
+  <section class="flex h-full flex-col">
     <SectionDevelopmentInProgress title="Calendriers" />
   </section>
 </template>

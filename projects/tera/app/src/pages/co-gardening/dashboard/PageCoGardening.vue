@@ -2,7 +2,7 @@
   <SectionTwoThird :title="t('title')">
     <BannerTeraShareYourLand />
     <div class="flex flex-col gap-4">
-      <div class="flex flex-row gap-4 items-center justify-between">
+      <div class="flex flex-row items-center justify-between gap-4">
         <BaseHeading variant="h2">Ces espaces de culture recherches des co-jardineurs</BaseHeading>
         <RouterLink :to="RoutePageCoGardeningProposals">
           <Button
@@ -13,7 +13,7 @@
           ></Button>
         </RouterLink>
       </div>
-      <div class="flex flex-row gap-4 justify-between items-center">
+      <div class="flex flex-row items-center justify-between gap-4">
         <ToggleGroupTeraLandSharingConditions v-model="sharingConditionFilter" />
         <ToggleGroupTeraLandInteractionMode v-model="interactionModeFilter" />
       </div>

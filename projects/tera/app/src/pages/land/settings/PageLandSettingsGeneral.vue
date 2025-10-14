@@ -9,7 +9,7 @@
     :title="t('tabs.general.danger_zone.title')"
     :description="t('tabs.general.danger_zone.description')"
   >
-    <div class="flex flex-col md:flex-row gap-2 justify-between">
+    <div class="flex flex-col justify-between gap-2 md:flex-row">
       <div>
         <BaseHeading variant="h3">
           {{ t('tabs.general.danger_zone.transfer.title') }}
@@ -20,12 +20,12 @@
       </div>
       <Button
         variant="ghost"
-        class="border-1 border-negative text-negative"
+        class="border-negative text-negative border-1"
       >
         {{ t('tabs.general.danger_zone.transfer.button.label') }}
       </Button>
     </div>
-    <div class="flex flex-col md:flex-row gap-2 justify-between">
+    <div class="flex flex-col justify-between gap-2 md:flex-row">
       <div>
         <BaseHeading variant="h3">
           {{ t('tabs.general.danger_zone.delete.title') }}
@@ -40,7 +40,7 @@
         :land="land"
         ><Button
           variant="ghost"
-          class="border-1 border-negative text-negative"
+          class="border-negative text-negative border-1"
         >
           {{ t('tabs.general.danger_zone.delete.button.label') }}
         </Button>
