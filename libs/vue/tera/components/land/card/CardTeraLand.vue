@@ -39,8 +39,7 @@ import { defineAsyncComponent } from 'vue';
 import { messages, TRANSLATION_KEY } from '@lychen/i18n-tera/land';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { VARIANT, type Variant } from '.';
-import IconUsers from '@lychen/vue-icons/IconUsers.vue';
-import IconMountain from '@lychen/vue-icons/IconMountain.vue';
+import { IconUsers, IconMountain } from '@lychen/vue-icons';
 
 import Card from '@lychen/vue-components-core/card/Card.vue';
 
@@ -48,14 +47,24 @@ const BaseHeading = defineAsyncComponent(
   () => import('@lychen/vue-components-app/base-heading/BaseHeading.vue'),
 );
 
-const { variant = VARIANT.Default } = defineProps<{
-  name?: string;
-  numberOfArea?: number;
-  surface?: number | null;
-  altitude?: number | null;
-  numberOfMember?: number;
-  variant?: Variant;
-}>();
+withDefaults(
+  defineProps<{
+    name?: string;
+    numberOfArea?: number;
+    surface?: number | null;
+    altitude?: number | null;
+    numberOfMember?: number;
+    variant?: Variant;
+  }>(),
+  {
+    name: undefined,
+    numberOfArea: 0,
+    surface: undefined,
+    altitude: undefined,
+    numberOfMember: undefined,
+    variant: VARIANT.Default,
+  },
+);
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 </script>

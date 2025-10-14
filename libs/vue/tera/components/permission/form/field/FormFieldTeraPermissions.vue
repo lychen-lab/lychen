@@ -134,7 +134,7 @@ const props = defineProps({
   },
   modelValue: {
     type: Array as () => string[],
-    required: true,
+    required: false,
     default: () => [],
   },
 });

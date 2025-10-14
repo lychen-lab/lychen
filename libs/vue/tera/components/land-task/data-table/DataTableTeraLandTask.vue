@@ -159,7 +159,11 @@ import { cn } from '@lychen/typescript-utils/tailwind/Cn';
 
 const { d } = useI18nExtended();
 
-const { data } = defineProps<{
+const {
+  data,
+  state = undefined,
+  totalItems = undefined,
+} = defineProps<{
   data: components['schemas']['LandTask.jsonld'][] | undefined;
   state?: components['schemas']['LandTask.jsonld']['state'];
   totalItems?: number;
