@@ -1,16 +1,16 @@
 <template>
   <Card
-    class="p-4 gap-2"
+    class="gap-2 p-4"
     hoverable
   >
     <p class="font-medium">{{ landRole.name }}</p>
     <p
       v-if="landRole.landMembers"
-      class="opacity-70 text-sm"
+      class="text-sm opacity-70"
     >
       {{ t('property.land_members.default', landRole.landMembers?.length || 0) }}
     </p>
-    <div class="flex flex-row gap-2 flex-wrap">
+    <div class="flex flex-row flex-wrap gap-2">
       <BadgeTeraPermission
         v-for="permission in landRole.permissions"
         :key="permission"

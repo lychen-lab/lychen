@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="kind"
-    class="flex flex-row items-center rounded-md px-2 uppercase py-1 text-xs gap-2 bg-secondary-container text-on-secondary-container"
+    class="bg-secondary-container text-on-secondary-container flex flex-row items-center gap-2 rounded-md px-2 py-1 text-xs uppercase"
   >
     {{ t(`property.kind.${kind}.default`) }}
   </div>

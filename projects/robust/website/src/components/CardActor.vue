@@ -1,7 +1,7 @@
 <template>
   <DivWithBackgroundImg
     :background-image="backgroundImage"
-    class="rounded-3xl p-6 bg-surface-container text-on-surface flex flex-col gap-6 justify-end min-h-[250px] bg-cover bg-center"
+    class="bg-surface-container text-on-surface flex min-h-[250px] flex-col justify-end gap-6 rounded-3xl bg-cover bg-center p-6"
     overlay
     overlay-class="bg-gradient-to-tr from-surface/80 to-surface/10"
   >

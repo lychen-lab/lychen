@@ -1,5 +1,5 @@
 <template>
-  <nav class="layout-in-app-side-navigation flex flex-col h-full p-3">
+  <nav class="layout-in-app-side-navigation flex h-full flex-col p-3">
     <div
       :class="
         cn(

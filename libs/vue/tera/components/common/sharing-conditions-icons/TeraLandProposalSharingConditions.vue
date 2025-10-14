@@ -7,7 +7,7 @@
     <div
       v-for="(condition, index) in [...sharingConditions].sort((a, b) => a.localeCompare(b))"
       :key="condition"
-      class="flex items-center gap-2 p-2 rounded-2xl bg-surface-container-highest self-start"
+      class="bg-surface-container-highest flex items-center gap-2 self-start rounded-2xl p-2"
       :class="`z-${index} ${iconsBorderClass} ${display === DISPLAY.Horizontal ? '-ml-2' : ''}`"
       :style="{
         background: `oklch(from var(--color-surface-container-highest) l calc(c * ${index}) h)`,

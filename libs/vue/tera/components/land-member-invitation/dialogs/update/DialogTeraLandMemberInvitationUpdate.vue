@@ -4,11 +4,11 @@
       <slot />
     </DialogTrigger>
     <DialogContent
-      class="bg-surface-container-high/90 text-on-surface-container md:max-w-[50%] w-full max-h-dvh"
+      class="bg-surface-container-high/90 text-on-surface-container max-h-dvh w-full md:max-w-[50%]"
     >
-      <div class="overflow-y-auto flex flex-col gap-4">
-        <DialogHeader class="flex flex-row justify-between items-start gap-10">
-          <div class="md:w-4/5 flex flex-col gap-2">
+      <div class="flex flex-col gap-4 overflow-y-auto">
+        <DialogHeader class="flex flex-row items-start justify-between gap-10">
+          <div class="flex flex-col gap-2 md:w-4/5">
             <DialogTitle>{{ t('title') }}</DialogTitle>
             <DialogDescription>
               {{ t('description') }}

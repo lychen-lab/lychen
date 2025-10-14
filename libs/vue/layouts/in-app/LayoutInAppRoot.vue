@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-in-app-root grid-rows-[60px_1fr] grid-cols-[auto_1fr]">
+  <div class="layout-in-app-root grid-cols-[auto_1fr] grid-rows-[60px_1fr]">
     <slot> </slot>
   </div>
 </template>

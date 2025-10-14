@@ -13,7 +13,7 @@
       <Icon
         v-if="icon"
         :icon="icon"
-        class="w-5 h-5 shrink-0"
+        class="h-5 w-5 shrink-0"
       />
       <span>{{ label }}</span>
       <slot />
@@ -36,7 +36,7 @@
         </RouterLink>
       </TooltipTrigger>
       <TooltipContent
-        class="bg-surface-container text-on-surface-container px-2 py-1 rounded-lg z-30"
+        class="bg-surface-container text-on-surface-container z-30 rounded-lg px-2 py-1"
         side="right"
         :side-offset="20"
       >

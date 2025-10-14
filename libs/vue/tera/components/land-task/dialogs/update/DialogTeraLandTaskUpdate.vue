@@ -5,14 +5,14 @@
     </DialogTrigger>
     <DialogContent
       :id="`dialog-content-${landTask.ulid}`"
-      class="md:max-w-[70%] w-full max-h-dvh"
+      class="max-h-dvh w-full md:max-w-[70%]"
     >
-      <div class="overflow-y-auto flex flex-col gap-4">
+      <div class="flex flex-col gap-4 overflow-y-auto">
         <DialogHeader
           v-if="landTask"
-          class="flex flex-row justify-between items-center gap-10 border-b-1 border-on-surface/20 py-2"
+          class="border-on-surface/20 flex flex-row items-center justify-between gap-10 border-b-1 py-2"
         >
-          <div class="flex flew-row items-center gap-4">
+          <div class="flew-row flex items-center gap-4">
             <p>
               <span
                 v-if="land"
@@ -27,7 +27,7 @@
               >{{ landTask.ulid }}</Badge
             >
           </div>
-          <div class="flex flew-row items-center gap-4">
+          <div class="flew-row flex items-center gap-4">
             <DropdownMenuTeraLandTaskMain :land-task="landTask">
               <Button
                 size="sm"

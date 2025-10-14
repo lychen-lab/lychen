@@ -1,10 +1,10 @@
 <template>
   <div
-    class="p-4 rounded-3xl bg-surface-container-high text-on-surface-container flex flex-row gap-4 justify-between items-center active:bg-surface-container-highest"
+    class="bg-surface-container-high text-on-surface-container active:bg-surface-container-highest flex flex-row items-center justify-between gap-4 rounded-3xl p-4"
   >
     <div class="flex flex-col gap-1 overflow-hidden">
       <BaseHeading
-        class="whitespace-nowrap overflow-hidden text-ellipsis"
+        class="truncate"
         variant="h3"
         >{{ landArea.name }}
       </BaseHeading>

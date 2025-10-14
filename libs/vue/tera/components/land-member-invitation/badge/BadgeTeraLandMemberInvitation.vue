@@ -1,7 +1,7 @@
 <template>
   <div
     :class="classes[state]"
-    class="flex flex-row items-center rounded-md px-2 uppercase py-1 text-xs gap-2"
+    class="flex flex-row items-center gap-2 rounded-md px-2 py-1 text-xs uppercase"
   >
     {{ t(`property.state.${state}`) }}
   </div>
