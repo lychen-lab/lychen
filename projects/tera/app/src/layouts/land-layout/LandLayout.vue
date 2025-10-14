@@ -32,7 +32,7 @@ const { data: land, refetch } = useQuery({
   queryFn: async () => {
     try {
       const response = await api.GET('/api/lands/{ulid}', {
-        params: { path: { ulid: <string>route.params.landUlid } },
+        params: { path: { ulid: route.params.landUlid as string } },
       });
       return response.data;
     } catch {

@@ -1,27 +1,27 @@
 <template>
   <section class="flex flex-col gap-6">
-    <div class="flex flex-row gap-4 items-center justify-between">
+    <div class="flex flex-row items-center justify-between gap-4">
       <Title variant="h2"
         >Bonjour,
         <span class="text-on-surface/70">{{
           zitadelAuth.oidcAuth.userProfile.given_name
         }}</span></Title
       >
-      <div class="flex flex-row gap-2 items-center"></div>
+      <div class="flex flex-row items-center gap-2"></div>
     </div>
     <div
       :style="{ backgroundImage: `url(${headerImg})` }"
-      class="rounded-3xl min-h-[200px] flex flex-col justify-end p-8 bg-center bg-no-repeat bg-cover"
+      class="flex min-h-[200px] flex-col justify-end rounded-3xl bg-cover bg-center bg-no-repeat p-8"
     ></div>
 
     <div
-      class="-mt-16 flex flex-row justify-between items-center bg-surface-container-low p-4 rounded-3xl shadow-md"
+      class="bg-surface-container-low -mt-16 flex flex-row items-center justify-between rounded-3xl p-4 shadow-md"
     >
       <div class="flex flex-col gap-0">
         <Title variant="h5">Note rapide</Title>
         <small>Journalisez vos observations</small>
       </div>
-      <div class="flex flex-row gap-2 items-center">
+      <div class="flex flex-row items-center gap-2">
         <Button variant="ghost">
           <template #icon><IconCamera /></template
         ></Button>

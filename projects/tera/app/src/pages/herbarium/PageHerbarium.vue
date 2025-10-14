@@ -4,14 +4,14 @@
       :background-image="bannerImg"
       overlay
       overlay-class="bg-gradient-to-tr from-tertiary-container to-tertiary-container/60"
-      class="p-8 lg:py-20 rounded-xl flex flex-col gap-4 text-on-tertiary-container"
+      class="text-on-tertiary-container flex flex-col gap-4 rounded-xl p-8 lg:py-20"
     >
       <BaseHeading
         variant="h2"
-        class="z-10 text-on-tertiary-container"
+        class="text-on-tertiary-container z-10"
         >{{ t('banner.title') }}</BaseHeading
       >
-      <p class="lg:w-2/3 z-10">
+      <p class="z-10 lg:w-2/3">
         {{ t('banner.description') }}
       </p>
     </DivWithBackgroundImg>

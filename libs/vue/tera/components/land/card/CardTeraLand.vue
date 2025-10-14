@@ -1,21 +1,21 @@
 <template>
   <Card
     hoverable
-    class="h-full justify-between items-stretch active:bg-surface-container-highest"
+    class="active:bg-surface-container-highest h-full items-stretch justify-between"
   >
-    <div class="flex flex-row gap-2 items-center justify-between opacity-70">
+    <div class="flex flex-row items-center justify-between gap-2 opacity-70">
       <div>
         <IconUsers v-if="variant === VARIANT.Default && numberOfMember && numberOfMember > 1" />
       </div>
       <div
         v-if="altitude && altitude !== null"
-        class="flex flex-row-reverse text-xs gap-2 items-center"
+        class="flex flex-row-reverse items-center gap-2 text-xs"
       >
         <IconMountain /> {{ t(`property.altitude.default`, altitude) }}
       </div>
     </div>
     <div class="flex flex-col gap-1">
-      <div class="flex flex-row gap-4 items-center opacity-70">
+      <div class="flex flex-row items-center gap-4 opacity-70">
         <small
           v-if="surface"
           class="text-tertiary"

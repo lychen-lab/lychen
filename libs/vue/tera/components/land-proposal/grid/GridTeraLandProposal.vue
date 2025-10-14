@@ -34,7 +34,7 @@
   <div v-else>
     <div
       v-if="status === 'pending'"
-      class="flex flex-row gap-4 items-center"
+      class="flex flex-row items-center gap-4"
     >
       <IconLoaderCircle />
       Recherche en cours

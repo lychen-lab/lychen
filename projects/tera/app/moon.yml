@@ -37,7 +37,7 @@ tasks:
         target: assets-tera:create-symlink-on-icons
 
   #dev:
-  #deps:
+  # deps:
   #- typescript-tera-api-sdk:generate-api
 
 type: application

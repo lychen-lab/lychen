@@ -1,6 +1,6 @@
 <template>
   <Card
-    class="p-4 gap-2 flex flex-row justify-between items-center"
+    class="flex flex-row items-center justify-between gap-2 p-4"
     hoverable
   >
     <div class="flex flex-col gap-1">

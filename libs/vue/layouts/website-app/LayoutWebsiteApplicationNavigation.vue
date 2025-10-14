@@ -1,11 +1,11 @@
 <template>
   <div class="z-50 flex w-full">
-    <div class="text-on-surface-container flex flex-row gap-4 rounded-full w-full md:container">
+    <div class="text-on-surface-container flex w-full flex-row gap-4 rounded-full md:container">
       <a
         ref="lychenLogo"
         href="https://lychen.fr"
         target="_blank"
-        class="size-[56px] flex flex-row items-center justify-center backdrop-blur-lg p-4 rounded-3xl bg-surface-container/70 transition-all duration-500 ease-in-out group hover:w-36 hover:text-on-primary-container"
+        class="bg-surface-container/70 group hover:text-on-primary-container flex size-[56px] flex-row items-center justify-center rounded-3xl p-4 backdrop-blur-lg transition-all duration-500 ease-in-out hover:w-36"
         aria-label="lychen.fr"
       >
         <div class="flex flex-col items-end">
@@ -14,19 +14,19 @@
             <LogoLychenTextOnly class="hidden group-hover:flex" />
           </div>
           <small
-            class="flex-row gap-1 hidden group-hover:flex items-center text-xs motion-blur-in-md motion-duration-[1s] motion-ease-spring-smooth"
+            class="motion-blur-in-md motion-duration-[1s] motion-ease-spring-smooth hidden flex-row items-center gap-1 text-xs group-hover:flex"
             >lychen.fr<IconArrowUpRight
           /></small>
         </div>
       </a>
 
       <div
-        class="relative backdrop text-on-surface-container flex flex-row items-stretch gap-4 px-6 py-2 rounded-full shadow-lg grow justify-between"
+        class="backdrop text-on-surface-container relative flex grow flex-row items-stretch justify-between gap-4 rounded-full px-6 py-2 shadow-lg"
       >
         <div class="flex flex-row items-center justify-start gap-2">
           <RouterLink
             :to="routeHome"
-            class="flex flex-row items-center gap-1 justify-start"
+            class="flex flex-row items-center justify-start gap-1"
           >
             <ApplicationTitle :value="applicationName" />
           </RouterLink>
@@ -60,7 +60,7 @@
                 <IconMenu class="cursor-pointer" />
               </SheetTrigger>
               <SheetContent
-                class="bg-surface-container/70 text-on-surface-container w-full backdrop-blur-lg flex flex-col gap-4"
+                class="bg-surface-container/70 text-on-surface-container flex w-full flex-col gap-4 backdrop-blur-lg"
               >
                 <template #header>
                   <div class="flex flex-col gap-1">

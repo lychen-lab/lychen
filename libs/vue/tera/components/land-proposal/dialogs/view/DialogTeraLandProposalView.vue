@@ -4,9 +4,9 @@
       <slot />
     </DialogTrigger>
     <DialogContent
-      class="bg-surface-container-high/90 text-on-surface-container md:max-w-[50%] w-full max-h-dvh"
+      class="bg-surface-container-high/90 text-on-surface-container max-h-dvh w-full md:max-w-[50%]"
     >
-      <DialogHeader class="flex flex-row justify-between items-center gap-10">
+      <DialogHeader class="flex flex-row items-center justify-between gap-10">
         <div class="flex flex-col gap-2">
           <DialogTitle>{{ title }}</DialogTitle>
         </div>
@@ -33,7 +33,7 @@
           display-label
         />
       </div>
-      <div class="flex flex-row gap-4 justify-end">
+      <div class="flex flex-row justify-end gap-4">
         <Button label="Candidater" />
       </div>
     </DialogContent>

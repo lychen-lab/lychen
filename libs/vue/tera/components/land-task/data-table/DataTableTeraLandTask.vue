@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-2">
-    <div class="flex flex-row gap-2 items-center justify-between">
-      <div class="flex flex-row gap-2 items-center">
+    <div class="flex flex-row items-center justify-between gap-2">
+      <div class="flex flex-row items-center gap-2">
         <BadgeTeraLandTaskState
           v-if="state"
           :state

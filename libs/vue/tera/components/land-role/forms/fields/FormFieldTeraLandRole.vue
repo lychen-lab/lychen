@@ -16,10 +16,10 @@
           <ComboboxAnchor>
             <TagsInput
               :model-value="componentField.modelValue"
-              class="px-2 gap-2"
+              class="gap-2 px-2"
               @update:model-value="componentField['onUpdate:modelValue']"
             >
-              <div class="flex gap-2 flex-wrap items-center">
+              <div class="flex flex-wrap items-center gap-2">
                 <TagsInputItem
                   v-for="item in componentField.modelValue"
                   :key="item['@id']"
@@ -38,7 +38,7 @@
               >
                 <TagsInputInput
                   placeholder="Rechercher un rôle..."
-                  class="min-w-[200px] w-full p-0 border-none bg-transparent shadow-none focus-visible:ring-0 h-auto"
+                  class="h-auto w-full min-w-[200px] border-none bg-transparent p-0 shadow-none focus-visible:ring-0"
                   @keydown.enter.prevent
                 />
               </ComboboxInput>

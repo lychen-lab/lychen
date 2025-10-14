@@ -1,7 +1,7 @@
 <template>
-  <Container class="flex xl:flex-row flex-col justify-start xl:items-center gap-8 relative">
+  <Container class="relative flex flex-col justify-start gap-8 xl:flex-row xl:items-center">
     <div
-      class="bg-tertiary-container text-on-tertiary-container rounded-3xl xl:w-1/2 p-8 flex flex-col gap-6"
+      class="bg-tertiary-container text-on-tertiary-container flex flex-col gap-6 rounded-3xl p-8 xl:w-1/2"
     >
       <Title
         variant="h2"
@@ -15,7 +15,7 @@
       >
     </div>
     <div
-      class="xl:absolute flex flex-col md:grid md:grid-cols-2 grid-rows-2 gap-8 xl:w-2/3 xl:left-1/3"
+      class="flex grid-rows-2 flex-col gap-8 md:grid md:grid-cols-2 xl:absolute xl:left-1/3 xl:w-2/3"
     >
       <CardActor
         :background-image="CitizenImageUrl"

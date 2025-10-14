@@ -7,14 +7,14 @@
     overlay-class="bg-on-surface opacity-30 group-hover:opacity-15 transition duration-300 ease-in-out"
   >
     <div
-      class="flex flex-col gap-2 bg-surface/80 rounded-3xl backdrop-blur-lg z-10 p-4 text-on-surface"
+      class="bg-surface/80 text-on-surface z-10 flex flex-col gap-2 rounded-3xl p-4 backdrop-blur-lg"
     >
       <div class="flex flex-row justify-between self-stretch">
         <ApplicationTitle :value="application.title" /><Badge v-if="displayState">{{
           application.state
         }}</Badge>
       </div>
-      <p class="opacity-80 text-balance">{{ application.description }}</p>
+      <p class="text-balance opacity-80">{{ application.description }}</p>
     </div>
     <slot name="footer" />
   </DivWithBackgroundImg>

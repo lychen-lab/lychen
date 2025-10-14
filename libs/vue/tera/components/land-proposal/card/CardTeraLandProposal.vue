@@ -1,9 +1,9 @@
 <template>
   <Card
     hoverable
-    class="grid md:grid-cols-[auto_1fr_auto_auto] gap-4 items-center"
+    class="grid items-center gap-4 md:grid-cols-[auto_1fr_auto_auto]"
   >
-    <div class="bg-surface-container-high rounded-full size-12 flex items-center justify-center">
+    <div class="bg-surface-container-high flex size-12 items-center justify-center rounded-full">
       <IconFence class="p-2" />
     </div>
 

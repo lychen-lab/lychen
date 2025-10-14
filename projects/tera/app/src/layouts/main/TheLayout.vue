@@ -13,7 +13,7 @@
               <LayoutInAppSideNavigationSectionLabel :label="landSection.label" />
               <div
                 v-if="expanded"
-                class="flex flex-row gap-2 justify-end items-center"
+                class="flex flex-row items-center justify-end gap-2"
               >
                 <RouterLink :to="RoutePageLands">
                   <Button
@@ -83,7 +83,7 @@
     <LayoutInAppContent />
     <LayoutInAppHeader class="justify-between gap-2">
       <div id="breadcrumb"></div>
-      <div class="flex flex-row gap-2 items-center justify-end">
+      <div class="flex flex-row items-center justify-end gap-2">
         <AppMenu />
         <UserAvatar
           :first-name="zitadelAuth.oidcAuth.userProfile.given_name"

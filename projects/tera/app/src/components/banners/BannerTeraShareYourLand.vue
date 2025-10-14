@@ -1,7 +1,7 @@
 <template>
   <div class="@container">
     <div
-      class="flex flex-col @lg:flex-row justify-between gap-4 p-8 rounded-3xl bg-gradient-to-tr from-surface-container-low to-surface-container text-on-surface-container-highest items-center"
+      class="from-surface-container-low to-surface-container text-on-surface-container-highest flex flex-col items-center justify-between gap-4 rounded-3xl bg-gradient-to-tr p-8 @lg:flex-row"
     >
       <div class="flex flex-col gap-2">
         <BaseHeading variant="h3">{{ t('heading') }}</BaseHeading>

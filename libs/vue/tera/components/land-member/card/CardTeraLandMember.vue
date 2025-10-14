@@ -3,7 +3,7 @@
     hoverable
     class="flex flex-col gap-2"
   >
-    <div class="flex flex-row justify-between gap-4 items-center">
+    <div class="flex flex-row items-center justify-between gap-4">
       <span>{{ landMember.person?.givenName }} {{ landMember.person?.familyName }}</span>
       <span
         v-if="landMember.joinedAt"

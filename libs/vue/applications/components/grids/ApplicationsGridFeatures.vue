@@ -1,10 +1,10 @@
 <template>
-  <div class="grid grid-cols-1 grid-rows-auto md:grid-cols-(--grid-fluid) md:grid-rows-1 gap-10">
+  <div class="grid-rows-auto grid grid-cols-1 gap-10 md:grid-cols-(--grid-fluid) md:grid-rows-1">
     <div
       v-for="(group, index) in features"
       :key="index"
     >
-      <p class="text-xl opacity-60 uppercase">{{ group.title }}</p>
+      <p class="text-xl uppercase opacity-60">{{ group.title }}</p>
       <ApplicationFeatureCard
         v-for="feature in group.features"
         v-bind="feature"

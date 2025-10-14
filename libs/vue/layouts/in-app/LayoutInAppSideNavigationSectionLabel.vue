@@ -1,12 +1,12 @@
 <template>
   <span
     v-if="navigationExpanded"
-    class="font-bold opacity-50 text-xs uppercase"
+    class="text-xs font-bold uppercase opacity-50"
     >{{ label }}</span
   >
   <hr
     v-else
-    class="opacity-20 mb-2"
+    class="mb-2 opacity-20"
   />
 </template>
 

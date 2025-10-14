@@ -1,25 +1,25 @@
 <template>
   <Container>
     <div
-      class="flex flex-col-reverse xl:flex-row bg-secondary-container text-on-secondary-container rounded-3xl items-stretch outline outline-offset-4 outline-secondary-container"
+      class="bg-secondary-container text-on-secondary-container outline-secondary-container flex flex-col-reverse items-stretch rounded-3xl outline outline-offset-4 xl:flex-row"
     >
-      <div class="md:basis-1/2 flex flex-col gap-6 md:p-20 p-8">
+      <div class="flex flex-col gap-6 p-8 md:basis-1/2 md:p-20">
         <Title variant="h2">{{ t('mesh.title') }}</Title>
         <Paragraph variant="website-highlight">{{ t('mesh.highlight_text') }}</Paragraph>
         <div class="flex flex-col gap-4">
-          <div class="bg-secondary/90 p-4 rounded-xl text-on-secondary">
+          <div class="bg-secondary/90 text-on-secondary rounded-xl p-4">
             {{ t('mesh.text_block_1') }}
           </div>
-          <div class="bg-secondary/70 p-4 rounded-xl text-on-secondary xl:translate-x-1/10">
+          <div class="bg-secondary/70 text-on-secondary rounded-xl p-4 xl:translate-x-1/10">
             {{ t('mesh.text_block_2') }}
           </div>
-          <div class="bg-secondary/50 p-4 rounded-xl text-on-secondary">
+          <div class="bg-secondary/50 text-on-secondary rounded-xl p-4">
             {{ t('mesh.text_block_3') }}
           </div>
         </div>
       </div>
       <div
-        class="h-[300px] xl:h-auto xl:basis-1/2 flex flex-col items-center justify-center bg-cover xl:rounded-br-3xl rounded-tr-3xl rounded-tl-3xl xl:rounded-tl-none"
+        class="flex h-[300px] flex-col items-center justify-center rounded-tl-3xl rounded-tr-3xl bg-cover xl:h-auto xl:basis-1/2 xl:rounded-tl-none xl:rounded-br-3xl"
         :style="`background-image: url('${ImageUrl}');`"
       ></div>
     </div>

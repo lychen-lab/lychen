@@ -1,5 +1,5 @@
 <template>
-  <SectionTwoThird class="flex flex-col justify-center h-full">
+  <SectionTwoThird class="flex h-full flex-col justify-center">
     <SectionDevelopmentInProgress title="Gestion de vos données" />
   </SectionTwoThird>
 </template>

@@ -5,20 +5,20 @@
         :background-image="bannerImg"
         overlay
         overlay-class="bg-gradient-to-tr from-secondary-container to-secondary-container/30"
-        class="py-20 md:py-30 px-10 rounded-xl flex flex-col md:flex-row justify-between gap-4"
+        class="flex flex-col justify-between gap-4 rounded-xl px-10 py-20 md:flex-row md:py-30"
       >
-        <div class="z-10 flex flex-col gap-8 md:flex-row md:justify-between md:items-center">
+        <div class="z-10 flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
           <div class="flex flex-col gap-1">
-            <BaseHeading class="z-10 text-on-secondary-container">{{ t('title') }} </BaseHeading>
+            <BaseHeading class="text-on-secondary-container z-10">{{ t('title') }} </BaseHeading>
             <p
               v-if="lands?.totalItems"
-              class="font-medium text-on-secondary-container opacity-80"
+              class="text-on-secondary-container font-medium opacity-80"
             >
               {{ t('sub_title', lands.totalItems) }}
             </p>
           </div>
         </div>
-        <div class="flex flex-col md:flex-row md:items-center gap-4 z-10">
+        <div class="z-10 flex flex-col gap-4 md:flex-row md:items-center">
           <div>
             <DialogTeraLandCreate v-model:open="open">
               <Button
@@ -47,13 +47,13 @@
       </DivWithBackgroundImg>
     </template>
     <div class="flex flex-col gap-4">
-      <div class="flex flex-row justify-between items-center">
+      <div class="flex flex-row items-center justify-between">
         <div class="flex flex-row items-center gap-2"></div>
       </div>
 
       <div
         v-if="lands?.member || landMemberInvitations?.member"
-        class="grid gap-8 grid-cols-(--grid-fluid) auto-rows-(--grid-rows-fluid)"
+        class="grid auto-rows-(--grid-rows-fluid) grid-cols-(--grid-fluid) gap-8"
       >
         <template v-if="landMemberInvitations?.member">
           <CardTeraLandMemberInvitation
@@ -64,7 +64,7 @@
             :land="landMemberInvitation.land"
             :variant="VARIANT.ForUser"
             :hoverable="false"
-            class="outline outline-offset-4 outline-secondary-container/40 border-0 bg-gradient-to-tr from-surface-container to-secondary-container"
+            class="outline-secondary-container/40 from-surface-container to-secondary-container border-0 bg-gradient-to-tr outline outline-offset-4"
           />
         </template>
         <template v-if="lands?.member">

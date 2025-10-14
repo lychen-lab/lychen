@@ -1,7 +1,7 @@
 <template>
   <div class="z-50 flex h-[70px] w-full">
     <div
-      class="relative backdrop text-on-surface-container container flex flex-row items-stretch gap-4 rounded-3xl px-4 py-2"
+      class="backdrop text-on-surface-container relative container flex flex-row items-stretch gap-4 rounded-3xl px-4 py-2"
     >
       <slot></slot>
 

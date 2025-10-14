@@ -3,7 +3,7 @@
     v-if="land"
     class="flex flex-col gap-6"
   >
-    <div class="flex flex-row gap-4 items-center justify-between">
+    <div class="flex flex-row items-center justify-between gap-4">
       <BaseHeading>{{ land.name }}</BaseHeading>
       <div class="flex flex-row gap-2">
         <DialogTeraLandMemberDelete
@@ -39,12 +39,12 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-[1fr_30%] gap-8 grid-rows-2 dashboard-grid">
+    <div class="dashboard-grid grid grid-cols-[1fr_30%] grid-rows-2 gap-8">
       <div
         id="header"
-        class="flex flex-row justify-between p-4 border-1 border-surface-container/100 rounded-xl items-center"
+        class="border-surface-container/100 flex flex-row items-center justify-between rounded-xl border-1 p-4"
       >
-        <div class="flex flex-row gap-4 items-center">
+        <div class="flex flex-row items-center gap-4">
           <BaseHeading variant="h4">Actions rapide</BaseHeading>
           <RouterLink :to="RoutePageLandSettings">
             <Button
@@ -97,7 +97,7 @@
         </div>
       </div>
       <div id="principal">
-        <div class="bg-surface-container p-8 h-full rounded-xl flex flex-col gap-4 justify-between">
+        <div class="bg-surface-container flex h-full flex-col justify-between gap-4 rounded-xl p-8">
           <BaseHeading>Tâches en cours</BaseHeading>
           <div class="flex flex-row gap-4 self-end">
             <Button
@@ -122,7 +122,7 @@
         id="side"
         class="flex flex-col gap-8"
       >
-        <Card class="bg-gradient-to-tr from-purple-500 to-pink-500 gap-4">
+        <Card class="gap-4 bg-gradient-to-tr from-purple-500 to-pink-500">
           <div class="flex flex-col gap-0">
             <BaseHeading variant="h3">Un surplus ?</BaseHeading>
             <p>Signalez le on s'occupe de trouver quelqu'un pour que ce ne soit pas perdu.</p>
@@ -130,12 +130,12 @@
           <BadgeDevelopmentInProgress class="self-start" />
           <Button
             label="Signaler un surplus"
-            class="bg-purple-200 self-end text-black hover:bg-purple-700 hover:text-purple-200"
+            class="self-end bg-purple-200 text-black hover:bg-purple-700 hover:text-purple-200"
             disabled
           >
           </Button>
         </Card>
-        <Card class="bg-gradient-to-tr from-amber-500 to-yellow-500 gap-4">
+        <Card class="gap-4 bg-gradient-to-tr from-amber-500 to-yellow-500">
           <div class="flex flex-col gap-0 text-amber-800">
             <BaseHeading
               variant="h3"
@@ -147,7 +147,7 @@
           <BadgeDevelopmentInProgress class="self-start" />
           <Button
             label="Demander"
-            class="bg-amber-200 self-end text-black hover:bg-amber-700 hover:text-amber-200"
+            class="self-end bg-amber-200 text-black hover:bg-amber-700 hover:text-amber-200"
             disabled
           >
           </Button>
@@ -183,7 +183,7 @@
           <CarouselItem
             v-for="(item, index) in landAreas.member"
             :key="index"
-            class="basis-3/5 md:basis-1/2 lg:basis-1/10 h-[100px]"
+            class="h-[100px] basis-3/5 md:basis-1/2 lg:basis-1/10"
           >
             <CardTeraLandArea
               :land-area="item"
@@ -195,7 +195,7 @@
     </div>
 
     <div class="flex flex-col gap-4">
-      <div class="flex flex-row justify-between items-center">
+      <div class="flex flex-row items-center justify-between">
         <Title variant="h4">Serres</Title>
         <div class="flex flex-row gap-2">
           <Button variant="ghost">
@@ -221,7 +221,7 @@
           <CarouselItem
             v-for="(item, index) in landGreenhouses.member"
             :key="index"
-            class="basis-3/5 md:basis-1/2 lg:basis-1/8 h-[200px]"
+            class="h-[200px] basis-3/5 md:basis-1/2 lg:basis-1/8"
           >
             <CardTeraLandGreenhouse :land-greenhouse="item" />
           </CarouselItem>

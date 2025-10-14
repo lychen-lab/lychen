@@ -1,15 +1,15 @@
 <template>
   <DivScalingDown class="flex flex-col justify-start">
     <Hero
-      class="text-surface dark:text-on-surface flex flex-row items-center justify-start gap-4 min-h-dvh"
+      class="text-surface dark:text-on-surface flex min-h-dvh flex-row items-center justify-start gap-4"
       :overlay="true"
       :background-image="heroImg"
       overlay-class="bg-on-surface dark:bg-surface opacity-40"
     >
-      <div class="flex flex-col md:w-3/5 items-start gap-4">
+      <div class="flex flex-col items-start gap-4 md:w-3/5">
         <Title
           variant="h1"
-          class="text-balance z-20"
+          class="z-20 text-balance"
           >{{ t('hero.title') }}</Title
         >
         <Paragraph
