@@ -36,8 +36,8 @@ tasks:
       - args: '$projectRoot/public/icons'
         target: assets-tera:create-symlink-on-icons
 
-  dev:
-    deps:
-      - typescript-tera-api-sdk:generate-api
+  #dev:
+  #deps:
+  #- typescript-tera-api-sdk:generate-api
 
 type: application
