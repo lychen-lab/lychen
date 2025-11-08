@@ -68,7 +68,7 @@ export const PATTERN_BACKGROUND_MASK = {
 export const patternBackgroundMaskVariants = cva('', {
   variants: {
     mask: {
-      [PATTERN_BACKGROUND_MASK.Ellipse]: 'mask-radial-at-center mask-radial-[100%_100%]',
+      [PATTERN_BACKGROUND_MASK.Ellipse]: 'mask-radial-[100%_100%] mask-radial-at-center',
       [PATTERN_BACKGROUND_MASK.EllipseTop]:
         '[mask-image:radial-gradient(ellipse_at_top,transparent,black_80%)]',
     },

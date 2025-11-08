@@ -8,7 +8,7 @@
       )
     "
   >
-    <span class="flex flex-row items-center truncate gap-2">
+    <span class="flex flex-row items-center gap-2 truncate">
       <slot />
     </span>
   </TabsTrigger>

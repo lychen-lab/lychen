@@ -1,5 +1,5 @@
 <template>
-  <div class="z-60 absolute top-full flex justify-center">
+  <div class="absolute top-full z-60 flex justify-center">
     <NavigationMenuViewport
       v-bind="forwardedProps"
       :class="
