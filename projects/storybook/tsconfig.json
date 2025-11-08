@@ -9,9 +9,6 @@
       "path": "./tsconfig.node.json"
     },
     {
-      "path": "../../libs/typescript/faker-business"
-    },
-    {
       "path": "../../libs/typescript/utils"
     },
     {
