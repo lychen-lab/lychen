@@ -1,0 +1,50 @@
+$schema: 'https://moonrepo.dev/schemas/tasks.json'
+
+tasks:
+  assets-sync:
+    command: noop
+    deps:
+      - sync-fonts-unix
+      - sync-logos-unix
+      - sync-fonts-windows
+      - sync-logos-windows
+      
+  sync-fonts-unix:
+    command: ln -sfn $workspaceRoot/libs/assets/fonts $projectRoot/public/fonts
+    #deps:
+      #- assets:affected
+    inputs:
+      - '/libs/assets/fonts/**/*'
+    options:
+      cache: false
+      os: ['linux', 'macos']
+
+  sync-fonts-windows:
+    command: powershell "$workspaceRoot\\.moon\scripts\make-symlink.ps1" "$projectRoot\public\fonts" "$workspaceRoot\libs\assets\fonts"
+    #deps:
+      #- assets:affected
+    inputs:
+      - '\libs\assets\fonts\**\*'
+    options:
+      cache: false
+      os: 'windows'
+
+  sync-logos-unix:
+    command: ln -sfn $workspaceRoot/libs/assets/logos $projectRoot/public/logos
+    #deps:
+      #- assets:affected
+    inputs:
+      - '/libs/assets/logos/**/*'
+    options:
+      cache: false
+      os: ['linux', 'macos']
+
+  sync-logos-windows:
+    command: powershell "$workspaceRoot\\.moon\scripts\make-symlink.ps1" "$projectRoot\public\logos" "$workspaceRoot\libs\assets\logos"
+    #deps:
+      #- assets:affected
+    inputs:
+      - '\libs\assets\logos\**\*'
+    options:
+      cache: false
+      os: 'windows'

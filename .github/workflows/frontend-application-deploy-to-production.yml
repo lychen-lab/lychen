@@ -1,22 +1,22 @@
-name: 'Vue | Deploy to staging'
+name: 'Deploy to production | STACK-frontend LAYER-application'
 
 env:
   REGISTRY: ghcr.io
 
 on:
-  #push:
-    #branches:
-      #- main
+  push:
+    branches:
+      - main
   workflow_dispatch: {}
 
+permissions:
+  contents: read
+  packages: write 
+  
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  contents: read
-  packages: write
-  
 jobs:
   define-matrix:
     name: 'Gather affected projects'
@@ -29,11 +29,11 @@ jobs:
           fetch-depth: 0
       - name: Set up Moon Toolchain
         uses: 'moonrepo/setup-toolchain@v0'
-      - run: moon query projects --affected --tags vue --downstream deep --type application
+      - run: moon query projects --affected --downstream deep --layer application --stack frontend
       - name: Define Projects
         id: projects
         run: |
-          echo "projects=$(moon query projects --affected --tags vue --downstream deep --type application --json | jq -r '.projects | map(.id | @json) | join(",")' | sed 's/^/\[/; s/$/\]/')" >> "$GITHUB_OUTPUT"
+          echo "projects=$(moon query projects --affected --downstream deep --layer application --stack frontend --json | jq -r '.projects | map(.id | @json) | join(",")' | sed 's/^/\[/; s/$/\]/')" >> "$GITHUB_OUTPUT"
       - run: echo ${{ steps.projects.outputs.projects }}
 
   build-and-push:
@@ -72,7 +72,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push docker images
-        run: 'moon ci ${{ matrix.projects }}:staging-docker-push'
+        run: 'moon ci ${{ matrix.projects }}:production-docker-push'
 
   deploy:
     name: '${{ matrix.projects }} | Deploy'
@@ -94,4 +94,4 @@ jobs:
         env:
           DOKPLOY_API_TOKEN: ${{ secrets.DOKPLOY_API_TOKEN }}
           DOKPLOY_API_URL: ${{ secrets.DOKPLOY_API_URL }}
-        run: 'moon ci ${{ matrix.projects }}:staging-dokploy-compose-deploy'
+        run: 'moon ci ${{ matrix.projects }}:production-dokploy-compose-deploy'

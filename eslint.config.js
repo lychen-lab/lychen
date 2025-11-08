@@ -27,6 +27,7 @@ export default defineConfig([
       '**/tests-examples/**',
       '**/playwright-report/**',
       '**/test-results/**',
+      '**/storybook-static/**',
     ],
   },
   {

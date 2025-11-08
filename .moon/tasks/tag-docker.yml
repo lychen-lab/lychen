@@ -13,28 +13,29 @@ tasks:
 
   production-docker-build:
     args:
-      - 'ghcr.io/lychen-lab/${PRODUCTION_DOCKER_IMAGE}:latest'
+      - 'ghcr.io/lychen-lab/lychen/prodction/$project:latest'
     deps:
       - production-build
     extends: docker-build
 
   production-docker-push:
     args:
-      - 'ghcr.io/lychen-lab/${PRODUCTION_DOCKER_IMAGE}:latest'
+      - 'ghcr.io/lychen-lab/lychen/production/$project:latest'
     deps:
       - production-docker-build
     extends: docker-push
-
+    
   staging-docker-build:
     args:
-      - 'ghcr.io/lychen-lab/${STAGING_DOCKER_IMAGE}:latest'
+      - 'ghcr.io/lychen-lab/lychen/staging/$project:latest'
     deps:
       - staging-build
     extends: docker-build
 
   staging-docker-push:
     args:
-      - 'ghcr.io/lychen-lab/${STAGING_DOCKER_IMAGE}:latest'
+      - 'ghcr.io/lychen-lab/lychen/staging/$project:latest'
     deps:
       - staging-docker-build
     extends: docker-push
+  

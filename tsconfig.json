@@ -155,6 +155,9 @@
       "path": "projects/robust/website"
     },
     {
+      "path": "projects/storybook"
+    },
+    {
       "path": "projects/tera/app"
     },
     {

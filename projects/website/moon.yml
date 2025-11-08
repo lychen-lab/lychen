@@ -40,9 +40,10 @@ project:
 stack: frontend
 
 tags:
-  - vue
-  - dokploy
   - ssg
+  - asset
+  - docker
+  - dokploy
 
 tasks:
   assets-sync:

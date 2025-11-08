@@ -23,6 +23,7 @@ layer: application
 stack: frontend
 
 tags:
-  - vue
-  - dokploy
   - ssg
+  - asset
+  - docker
+  - dokploy
