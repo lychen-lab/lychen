@@ -1,8 +1,8 @@
 {
   "name": "@lychen/vue-unhead-composables",
   "dependencies": {
-    "@unhead/vue": "^2.0.17",
+    "@unhead/vue": "^2.0.19",
     "vue": "^3.5.22",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.6.3"
   }
 }
