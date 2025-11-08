@@ -18,10 +18,10 @@ env:
   DEV_DOMAIN: tera.lychen.local
   PRODUCTION_DOCKER_IMAGE: lychen/production/tera/website
   PRODUCTION_DOKPLOY_COMPOSE_ID: LulVMVE94GbMfcW4RLo7s
-  PRODUCTION_DOMAIN: tera.lychen.fr
+  PRODUCTION_DOMAIN: tera.lychen.org
   STAGING_DOCKER_IMAGE: lychen/staging/tera/website
   STAGING_DOKPLOY_COMPOSE_ID: 1XUUxxSsvm8GRr2g7W3ic
-  STAGING_DOMAIN: staging.tera.lychen.fr
+  STAGING_DOMAIN: staging.tera.lychen.org
 
 id: tera-website
 

@@ -6,16 +6,16 @@
   >
     <div
       :id="htmlId"
-      class="flex flex-row gap-4 bg-surface-container-low rounded-xl items-center max-h-20 p-4"
+      class="bg-surface-container-low flex max-h-20 flex-row items-center gap-4 rounded-xl p-4"
     >
       <div class="rounded-2xl">
         <img
           :src="`/persona/${id}.webp`"
-          class="h-14 aspect-1/1 object-cover object-top rounded-2xl"
+          class="aspect-1/1 h-14 rounded-2xl object-cover object-top"
         />
       </div>
-      <div class="flex flex-col gap-1 items-stretch grow">
-        <div class="flex flex-row gap-2 justify-between">
+      <div class="flex grow flex-col items-stretch gap-1">
+        <div class="flex flex-row justify-between gap-2">
           <BaseHeading variant="h2">{{ fullName }}</BaseHeading>
         </div>
         <Badge class="bg-tertiary-container text-on-tertiary-container self-start">{{ id }}</Badge>

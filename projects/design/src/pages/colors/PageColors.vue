@@ -4,13 +4,13 @@
     :description="t('description')"
   >
     <div
-      class="hidden text-on-warning bg-warning text-on-negative bg-negative text-on-positive bg-positive bg-surface-container bg-surface-container-low bg-surface-container-lowest bg-surface-container-high bg-surface-container-highest"
+      class="text-on-warning bg-warning text-on-negative bg-negative text-on-positive bg-positive bg-surface-container bg-surface-container-low bg-surface-container-lowest bg-surface-container-high bg-surface-container-highest hidden"
     ></div>
-    <div class="flex flex-col p-8 gap-8">
+    <div class="flex flex-col gap-8 p-8">
       <section
         v-for="theme in themes"
         :key="theme.value"
-        class="p-8 gap-4 flex flex-col items-stretch bg-surface text-on-surface border-1 border-on-surface/30 rounded-2xl"
+        class="bg-surface text-on-surface border-on-surface/30 flex flex-col items-stretch gap-4 rounded-2xl border-1 p-8"
         :data-theme="theme.value"
       >
         <BaseHeading variant="h2">{{ theme.label }}</BaseHeading>
@@ -23,7 +23,7 @@
             <h2>{{ feedbackColor }}</h2>
           </div>
         </div>
-        <div class="rounded-xl h-40 p-4 bg-surface border-1 border-on-surface/20">
+        <div class="bg-surface border-on-surface/20 h-40 rounded-xl border-1 p-4">
           <h2>surface</h2>
         </div>
         <div :class="`grid grid-cols-5 gap-4`">
@@ -31,7 +31,7 @@
             v-for="variant in surfaceContainerVariants"
             :key="variant"
             :class="`bg-${variant}`"
-            class="rounded-xl h-40 p-4"
+            class="h-40 rounded-xl p-4"
           >
             <h2>{{ variant }}</h2>
           </div>

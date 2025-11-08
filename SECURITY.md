@@ -4,7 +4,7 @@
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 
-To report a vulnerability, please email bonjour@lychen.fr.
+To report a vulnerability, please email bonjour@lychen.org.
 
 While the discovery of new vulnerabilities is rare, we also recommend always using the latest versions of Lychen
 

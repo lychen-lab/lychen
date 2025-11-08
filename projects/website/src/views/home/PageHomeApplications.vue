@@ -57,17 +57,6 @@
 
             <Paragraph>{{ selectedApplication.description }}</Paragraph>
           </div>
-          <a
-            :href="selectedApplication.link"
-            target="_blank"
-          >
-            <Button
-              class="flex flex-row gap-2"
-              size="sm"
-              variant="outline"
-              >Site web <IconLink
-            /></Button>
-          </a>
         </div>
         <ApplicationsGridFeatures :features="features" />
       </DialogContent>

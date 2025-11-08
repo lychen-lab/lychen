@@ -3,17 +3,17 @@
     :title="t('title')"
     :description="t('description')"
   >
-    <div class="flex flex-col gap-10 p-4 items-start">
+    <div class="flex flex-col items-start gap-10 p-4">
       <div
         v-for="persona in personas"
         :key="persona.id"
-        class="flex flex-col lg:flex-row gap-8"
+        class="flex flex-col gap-8 lg:flex-row"
       >
         <CardPersona
           v-bind="persona"
           class="basis-2/3"
         />
-        <div class="flex lg:flex-col gap-8 lg:justify-between">
+        <div class="flex gap-8 lg:flex-col lg:justify-between">
           <CardPersonaOverImage v-bind="persona" />
           <CardPersonaSmall v-bind="persona" />
         </div>

@@ -6,16 +6,16 @@
   >
     <div
       :id="htmlId"
-      class="flex flex-row gap-10 bg-surface-container-low rounded-xl p-8 group"
+      class="bg-surface-container-low group flex flex-row gap-10 rounded-xl p-8"
     >
-      <div class="rounded-2xl basis-1/3 relative">
+      <div class="relative basis-1/3 rounded-2xl">
         <img
           :src="`/persona/${id}.webp`"
-          class="h-full aspect-2/3 object-cover rounded-2xl"
+          class="aspect-2/3 h-full rounded-2xl object-cover"
         />
       </div>
-      <div class="flex flex-col gap-8 items-stretch basis-2/3">
-        <div class="flex flex-row justify-between items-center">
+      <div class="flex basis-2/3 flex-col items-stretch gap-8">
+        <div class="flex flex-row items-center justify-between">
           <BaseHeading>{{ fullName }}</BaseHeading>
           <div class="flex flex-row gap-2">
             <Badge class="bg-tertiary-container text-on-tertiary-container">{{ id }}</Badge>
@@ -23,7 +23,7 @@
         </div>
 
         <div class="flex flex-row gap-4">
-          <div class="flex flex-col basis-1/2 gap-2">
+          <div class="flex basis-1/2 flex-col gap-2">
             <BaseHeading
               variant="h5"
               class="inline"
@@ -31,7 +31,7 @@
             >
             <p>{{ jobTitle }}</p>
           </div>
-          <div class="flex flex-col basis-1/2 gap-2">
+          <div class="flex basis-1/2 flex-col gap-2">
             <p>
               <BaseHeading
                 variant="h5"
@@ -66,7 +66,7 @@
           </ul>
         </div>
         <div class="flex flex-row gap-4">
-          <div class="flex flex-col gap-2 basis-1/2">
+          <div class="flex basis-1/2 flex-col gap-2">
             <BaseHeading variant="h5">Goals</BaseHeading>
             <ul class="list-disc pl-4">
               <li
@@ -77,7 +77,7 @@
               </li>
             </ul>
           </div>
-          <div class="flex flex-col gap-2 basis-1/2">
+          <div class="flex basis-1/2 flex-col gap-2">
             <BaseHeading variant="h5">Pain Points</BaseHeading>
             <ul class="list-disc pl-4">
               <li

@@ -4,7 +4,7 @@
     :class="cn('flex rounded bg-transparent mr-1 cursor-pointer', props.class)"
   >
     <slot>
-      <IconTimes class="w-4 h-4" />
+      <IconTimes class="h-4 w-4" />
     </slot>
   </TagsInputItemDelete>
 </template>

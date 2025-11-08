@@ -21,8 +21,9 @@
                   >
                     <NavigationMenuSubLink
                       v-for="application in opiniatedApplicationsList"
-                      v-bind="application"
                       :key="application.title"
+                      :title="application.title"
+                      :description="application.description"
                     />
                   </div>
 
@@ -42,7 +43,7 @@
                       </p>
                       <p>{{ robust.description }}</p>
 
-                      <a href="https://robust.lychen.fr">
+                      <a href="https://robust.lychen.org">
                         <Button
                           :label="t('navigation.app.robust.button')"
                           class="self-start"
@@ -102,18 +103,6 @@
           </NavigationMenuItem>
 
           <NavigationMenuItem>
-            <RouterLink :to="{ name: ROUTE_PRICE.name }">
-              <NavigationMenuLink
-                as="div"
-                :class="navigationMenuTriggerStyle()"
-                class="hover:bg-primary-container/30 hover:text-on-primary-container"
-              >
-                {{ t(`navigation.price.title`) }}
-              </NavigationMenuLink>
-            </RouterLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem>
             <RouterLink :to="{ name: ROUTE_SPONSOR.name }">
               <NavigationMenuLink
                 as="div"
@@ -159,7 +148,6 @@ import { navigationMenuTriggerStyle } from '@lychen/vue-components-core/navigati
 import { computed, defineAsyncComponent } from 'vue';
 import { ROUTE_HOME } from '@/views/home';
 import { useApplicationsCatalog } from '@lychen/vue-applications/composables/useApplicationsCatalog';
-import { ROUTE_PRICE } from '@/views/price';
 import { SOCIAL_LINK } from '@lychen/typescript-constants/Social';
 import { messages, TRANSLATION_KEY } from './i18n';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
