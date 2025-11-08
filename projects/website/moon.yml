@@ -68,3 +68,11 @@ tasks:
         target: assets-tera:create-symlink-on-content
       - args: '$projectRoot/public/sustainable-development-goals'
         target: assets-sustainable-development-goals:create-symlink-on-content
+
+  build:
+    deps:
+      - assets-sync
+
+  dev:
+    deps:
+      - assets-sync
