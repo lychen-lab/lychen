@@ -1,11 +1,11 @@
 <template>
   <LayoutInAppRoot>
     <LayoutInAppSideNavigation class="flex flex-col justify-between">
-      <LayoutInAppSideNavigationHeader class="flex flex-row gap-2 items-center">
-        <LogoLychenIconOnly class="w-8 h-8" />
+      <LayoutInAppSideNavigationHeader class="flex flex-row items-center gap-2">
+        <LogoLychenIconOnly class="h-8 w-8" />
         <div class="flex flex-col">
-          <span class="font-lexend font-bold text-lg">Design</span>
-          <span class="text-sm opacity-60 -mt-1">by Lychen</span>
+          <span class="font-lexend text-lg font-bold">Design</span>
+          <span class="-mt-1 text-sm opacity-60">by Lychen</span>
         </div>
       </LayoutInAppSideNavigationHeader>
       <div class="flex flex-col gap-4">
@@ -24,12 +24,12 @@
         </LayoutInAppSideNavigationSection>
       </div>
       <LayoutInAppSideNavigationFooter>
-        <a href="https://lychen.fr">lychen.fr <IconArrowUpRight class="text-xs opacity-80" /></a>
+        <a href="https://lychen.org">lychen.org <IconArrowUpRight class="text-xs opacity-80" /></a>
       </LayoutInAppSideNavigationFooter>
     </LayoutInAppSideNavigation>
     <LayoutInAppContent />
     <LayoutInAppHeader>
-      <div class="flex flex-row justify-end gap-4 w-full p-4">
+      <div class="flex w-full flex-row justify-end gap-4 p-4">
         <ToggleColorScheme />
         <SelectLanguage />
       </div>

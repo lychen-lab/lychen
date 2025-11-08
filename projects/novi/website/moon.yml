@@ -17,10 +17,10 @@ env:
   DEV_DOMAIN: novi.lychen.local
   PRODUCTION_DOCKER_IMAGE: lychen/production/novi/website
   PRODUCTION_DOKPLOY_COMPOSE_ID: 1BfxcLqmXXQjaGtylyz1g
-  PRODUCTION_DOMAIN: novi.lychen.fr
+  PRODUCTION_DOMAIN: novi.lychen.org
   STAGING_DOCKER_IMAGE: lychen/staging/novi/website
   STAGING_DOKPLOY_COMPOSE_ID: 1BHr_0k2unNaTLIIJ7J3R
-  STAGING_DOMAIN: staging.novi.lychen.fr
+  STAGING_DOMAIN: staging.novi.lychen.org
 
 id: novi-website
 

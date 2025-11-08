@@ -3,10 +3,10 @@
     <div class="text-on-surface-container flex w-full flex-row gap-4 rounded-full md:container">
       <a
         ref="lychenLogo"
-        href="https://lychen.fr"
+        href="https://lychen.org"
         target="_blank"
         class="bg-surface-container/70 group hover:text-on-primary-container flex size-[56px] flex-row items-center justify-center rounded-3xl p-4 backdrop-blur-lg transition-all duration-500 ease-in-out hover:w-36"
-        aria-label="lychen.fr"
+        aria-label="lychen.org"
       >
         <div class="flex flex-col items-end">
           <div class="flex flex-row items-center">
@@ -15,7 +15,7 @@
           </div>
           <small
             class="motion-blur-in-md motion-duration-[1s] motion-ease-spring-smooth hidden flex-row items-center gap-1 text-xs group-hover:flex"
-            >lychen.fr<IconArrowUpRight
+            >lychen.org<IconArrowUpRight
           /></small>
         </div>
       </a>

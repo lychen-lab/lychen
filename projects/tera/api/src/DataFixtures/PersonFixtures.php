@@ -13,7 +13,7 @@ use function Zenstruck\Foundry\faker;
 class PersonFixtures extends Fixture
 {
     public const string DEFAULT_PASSWORD = '222|UG?64YjkiT7£';
-    public const string DEFAULT_EMAIL_DOMAIN = '@fake.lychen.fr';
+    public const string DEFAULT_EMAIL_DOMAIN = '@fake.lychen.org';
 
     public const string PERSON_1 = 'person-1';
     public const string PERSON_2 = 'person-2';

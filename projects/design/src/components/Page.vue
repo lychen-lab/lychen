@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-4">
     <slot name="header">
-      <header class="flex flex-col gap-2 px-10 py-14 bg-surface-container rounded-t-2xl">
+      <header class="bg-surface-container flex flex-col gap-2 rounded-t-2xl px-10 py-14">
         <slot name="title">
           <BaseHeading v-if="title">{{ title }}</BaseHeading>
         </slot>

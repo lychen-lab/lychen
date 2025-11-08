@@ -17,10 +17,10 @@ env:
   DEV_DOMAIN: kiro.lychen.local
   PRODUCTION_DOCKER_IMAGE: lychen/production/kiro/website
   PRODUCTION_DOKPLOY_COMPOSE_ID: 3RJ10DZ9cySPMYD4bDqsk
-  PRODUCTION_DOMAIN: kiro.lychen.fr
+  PRODUCTION_DOMAIN: kiro.lychen.org
   STAGING_DOCKER_IMAGE: lychen/staging/kiro/website
   STAGING_DOKPLOY_COMPOSE_ID: hj8BFeg1eQVuWxkxstvHd
-  STAGING_DOMAIN: staging.kiro.lychen.fr
+  STAGING_DOMAIN: staging.kiro.lychen.org
 
 id: kiro-website
 

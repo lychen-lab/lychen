@@ -7,9 +7,9 @@ env:
   DEV_DOMAIN: api.flora.lychen.local
   PRODUCTION_DOCKER_IMAGE: lychen/production/flora/api
   PRODUCTION_DOKPLOY_COMPOSE_ID: ''
-  PRODUCTION_DOMAIN: api.flora.lychen.fr
+  PRODUCTION_DOMAIN: api.flora.lychen.org
   STAGING_DOKPLOY_COMPOSE_ID: ''
-  STAGING_DOMAIN: staging.api.flora.lychen.fr
+  STAGING_DOMAIN: staging.api.flora.lychen.org
 
 id: flora-api
 

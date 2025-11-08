@@ -42,7 +42,7 @@
                       </p>
                       <p>{{ robust.description }}</p>
 
-                      <a href="https://robust.lychen.fr">
+                      <a href="https://robust.lychen.org">
                         <Button
                           :label="t('navigation.app.robust.button')"
                           class="self-start"

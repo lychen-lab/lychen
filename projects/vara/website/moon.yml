@@ -17,10 +17,10 @@ env:
   DEV_DOMAIN: vara.lychen.local
   PRODUCTION_DOCKER_IMAGE: lychen/production/vara/website
   PRODUCTION_DOKPLOY_COMPOSE_ID: Qwe7jGntmIQ2IixH8OiRk
-  PRODUCTION_DOMAIN: vara.lychen.fr
+  PRODUCTION_DOMAIN: vara.lychen.org
   STAGING_DOCKER_IMAGE: lychen/staging/vara/website
   STAGING_DOKPLOY_COMPOSE_ID: XKt58w8aLZdCAnJK5-nE0
-  STAGING_DOMAIN: staging.vara.lychen.fr
+  STAGING_DOMAIN: staging.vara.lychen.org
 
 id: vara-website
 

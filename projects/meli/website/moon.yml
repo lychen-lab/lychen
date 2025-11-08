@@ -17,10 +17,10 @@ env:
   DEV_DOMAIN: meli.lychen.local
   PRODUCTION_DOCKER_IMAGE: lychen/production/meli/website
   PRODUCTION_DOKPLOY_COMPOSE_ID: P6ij0FGRcpI1_p0RYbu5C
-  PRODUCTION_DOMAIN: meli.lychen.fr
+  PRODUCTION_DOMAIN: meli.lychen.org
   STAGING_DOCKER_IMAGE: lychen/staging/meli/website
   STAGING_DOKPLOY_COMPOSE_ID: 8AyLmmqwLhk3EBkYXTo2I
-  STAGING_DOMAIN: staging.meli.lychen.fr
+  STAGING_DOMAIN: staging.meli.lychen.org
 
 id: meli-website
 

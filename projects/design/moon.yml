@@ -10,10 +10,10 @@ env:
   DEV_DOMAIN: design.lychen.local
   PRODUCTION_DOCKER_IMAGE: lychen/production/design
   PRODUCTION_DOKPLOY_COMPOSE_ID: jhDL7t8NPrI9viFa3wAU2
-  PRODUCTION_DOMAIN: design.lychen.fr
+  PRODUCTION_DOMAIN: design.lychen.org
   STAGING_DOCKER_IMAGE: lychen/staging/design
   STAGING_DOKPLOY_COMPOSE_ID: dZZj6SgAvbZL6tIYgMee7
-  STAGING_DOMAIN: staging.design.lychen.fr
+  STAGING_DOMAIN: staging.design.lychen.org
 
 id: design
 

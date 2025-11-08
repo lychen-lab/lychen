@@ -55,7 +55,7 @@ export function useApplicationsCatalog() {
 
   function generateAppInfo(alias: ApplicationAlias): Application {
     return {
-      link: `https://${alias}.lychen.fr`,
+      link: `https://${alias}.lychen.org`,
       title: t(`${alias}.name`),
       description: t(`${alias}.description`),
       state: APPLICATION_STATE.Funding,

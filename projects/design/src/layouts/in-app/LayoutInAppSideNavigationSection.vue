@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-2">
     <span
       v-if="title"
-      class="font-bold opacity-50 text-xs uppercase"
+      class="text-xs font-bold uppercase opacity-50"
       >{{ title }}</span
     >
     <slot />

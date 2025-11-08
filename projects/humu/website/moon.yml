@@ -17,10 +17,10 @@ env:
   DEV_DOMAIN: humu.lychen.local
   PRODUCTION_DOCKER_IMAGE: lychen/production/humu/website
   PRODUCTION_DOKPLOY_COMPOSE_ID: nMbO2t5jDFAZUAWXYsJiv
-  PRODUCTION_DOMAIN: humu.lychen.fr
+  PRODUCTION_DOMAIN: humu.lychen.org
   STAGING_DOCKER_IMAGE: lychen/staging/humu/website
   STAGING_DOKPLOY_COMPOSE_ID: DVCQ3BjBqM3XJcyeDv09L
-  STAGING_DOMAIN: staging.humu.lychen.fr
+  STAGING_DOMAIN: staging.humu.lychen.org
 
 id: humu-website
 

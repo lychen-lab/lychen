@@ -17,10 +17,10 @@ env:
   DEV_DOMAIN: kolo.lychen.local
   PRODUCTION_DOCKER_IMAGE: lychen/production/kolo/website
   PRODUCTION_DOKPLOY_COMPOSE_ID: 7OTpNomBfLjW1pLb445Cr
-  PRODUCTION_DOMAIN: kolo.lychen.fr
+  PRODUCTION_DOMAIN: kolo.lychen.org
   STAGING_DOCKER_IMAGE: lychen/staging/kolo/website
   STAGING_DOKPLOY_COMPOSE_ID: VAijElTS-qTRmcr0560pO
-  STAGING_DOMAIN: staging.kolo.lychen.fr
+  STAGING_DOMAIN: staging.kolo.lychen.org
 
 id: kolo-website
 

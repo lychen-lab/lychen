@@ -9,7 +9,7 @@ setup.describe('Authenticate as', () => {
   for (const person of persons) {
     setup(`${person}`, async ({ page }) => {
       await page.goto('/dashboard');
-      await page.getByLabel('Login Name').fill(`${person}@fake.lychen.fr`);
+      await page.getByLabel('Login Name').fill(`${person}@fake.lychen.org`);
       await page.getByRole('button', { name: 'Next' }).click();
       await page.getByLabel('Password').fill(defaultPassword);
       await page.getByRole('button', { name: 'Next' }).click();

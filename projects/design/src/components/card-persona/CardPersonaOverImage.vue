@@ -6,24 +6,24 @@
   >
     <div
       :id="htmlId"
-      class="flex flex-col bg-surface-container-low rounded-2xl group relative max-w-[300px] justify-end items-stretch"
+      class="bg-surface-container-low group relative flex max-w-[300px] flex-col items-stretch justify-end rounded-2xl"
     >
       <img
         :src="`/persona/${id}.webp`"
-        class="h-full aspect-2/3 object-cover rounded-2xl"
+        class="aspect-2/3 h-full rounded-2xl object-cover"
       />
 
       <div
-        class="flex flex-col gap-2 items-stretch absolute p-4 bg-surface/90 rounded-xl bottom-2 left-2 right-2"
+        class="bg-surface/90 absolute right-2 bottom-2 left-2 flex flex-col items-stretch gap-2 rounded-xl p-4"
       >
-        <div class="flex flex-row justify-between items-center">
+        <div class="flex flex-row items-center justify-between">
           <BaseHeading variant="h2">{{ fullName }}</BaseHeading>
           <div class="flex flex-row gap-2">
             <Badge class="bg-tertiary-container text-on-tertiary-container">{{ id }}</Badge>
           </div>
         </div>
 
-        <div class="flex flex-col gap-2 basis-1/2">
+        <div class="flex basis-1/2 flex-col gap-2">
           <ul class="list-disc pl-4">
             <li
               v-for="(goal, index) in goals"

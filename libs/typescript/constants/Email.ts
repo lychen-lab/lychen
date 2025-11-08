@@ -1,3 +1,3 @@
 export const EMAIL = {
-  Bonjour: 'bonjour@lychen.fr',
+  Bonjour: 'bonjour@lychen.org',
 } as const;
