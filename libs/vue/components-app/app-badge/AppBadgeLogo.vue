@@ -1,7 +1,7 @@
 <template>
   <img
     v-if="src"
-    class="rounded-xl h-[1.7lh]"
+    class="h-[1.7lh] rounded-xl"
     :src
   />
 </template>

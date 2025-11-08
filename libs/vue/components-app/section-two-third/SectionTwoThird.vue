@@ -1,6 +1,6 @@
 <template>
   <section
-    class="flex flex-col-reverse md:grid md:grid-cols-[2fr_1fr] md:grid-rows-1 md:h-full gap-4"
+    class="flex flex-col-reverse gap-4 md:grid md:h-full md:grid-cols-[2fr_1fr] md:grid-rows-1"
   >
     <div :class="cn('flex flex-col gap-4', mainClass)">
       <BaseHeading v-if="title">{{ title }}</BaseHeading>

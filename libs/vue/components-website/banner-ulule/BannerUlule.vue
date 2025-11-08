@@ -5,11 +5,11 @@
     data-umami-event="Click on Ulule banner"
   >
     <GlowBorder
-      class="grow hover:shadow-md rounded-lg cursor-pointer"
+      class="grow cursor-pointer rounded-lg hover:shadow-md"
       :color="['var(--color-primary)', 'var(--color-secondary)', 'var(--color-tertiary)']"
     >
       <div
-        class="p-6 rounded-lg bg-surface-container flex flex-col md:grid md:grid-cols-[1fr_30%_20%] gap-4"
+        class="bg-surface-container flex flex-col gap-4 rounded-lg p-6 md:grid md:grid-cols-[1fr_30%_20%]"
       >
         <div class="flex flex-col items-center md:items-start">
           <TextGenerateEffect
@@ -27,9 +27,9 @@
             alt="Ulule Logo"
           />
         </div>
-        <div class="flex flex-col gap-2 justify-center items-end">
+        <div class="flex flex-col items-end justify-center gap-2">
           <p>Le 01/04/2025</p>
-          <p class="text-sm text-right font-bold">{{ t('preregister') }}</p>
+          <p class="text-right text-sm font-bold">{{ t('preregister') }}</p>
         </div>
       </div>
     </GlowBorder>

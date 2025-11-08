@@ -2,15 +2,15 @@
   <PatternBackground
     :direction="PATTERN_BACKGROUND_DIRECTION.TopRight"
     :variant="PATTERN_BACKGROUND_VARIANT.Grid"
-    class="flex flex-col gap-4 p-20 rounded-3xl bg-surface-container size-full justify-center items-center"
+    class="bg-surface-container flex size-full flex-col items-center justify-center gap-4 rounded-3xl p-20"
   >
     <IconPickaxe
       size="2xl"
       class="text-warning"
     />
-    <div class="flex flex-col justify-center items-center">
+    <div class="flex flex-col items-center justify-center">
       <BaseHeading class="text-warning">{{ title }}</BaseHeading>
-      <p class="opacity-70 text-sm text-warning">En cours de développement</p>
+      <p class="text-warning text-sm opacity-70">En cours de développement</p>
     </div>
   </PatternBackground>
 </template>

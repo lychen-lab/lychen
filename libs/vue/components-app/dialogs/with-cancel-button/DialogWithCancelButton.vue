@@ -3,7 +3,7 @@
     <DialogTrigger as-child>
       <slot />
     </DialogTrigger>
-    <DialogContent class="md:max-w-[30%] w-full max-h-dvh overflow-y-auto gap-8">
+    <DialogContent class="max-h-dvh w-full gap-8 overflow-y-auto md:max-w-[30%]">
       <DialogHeader>
         <slot name="header">
           <DialogTitle>{{ title }}</DialogTitle>

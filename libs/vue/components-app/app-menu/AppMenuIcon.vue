@@ -1,13 +1,13 @@
 <template>
   <RouterLink
     :to="link"
-    class="rounded-xl flex flex-col items-center gap-1"
+    class="flex flex-col items-center gap-1 rounded-xl"
   >
     <img
       :src="`/logos/${id}/logo.png`"
-      class="rounded-xl w-12 h-12"
+      class="h-12 w-12 rounded-xl"
     />
-    <span class="font-bold text-xs">{{ name }}</span>
+    <span class="text-xs font-bold">{{ name }}</span>
   </RouterLink>
 </template>
 

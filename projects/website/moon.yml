@@ -29,11 +29,15 @@ id: website
 
 language: typescript
 
+layer: application
+
 project:
   description: Presentation site for Lychen ecosystem
   metadata:
     url: lychen.org
   name: 'Lychen website'
+
+stack: frontend
 
 tags:
   - vue
@@ -63,5 +67,3 @@ tasks:
         target: assets-tera:create-symlink-on-content
       - args: '$projectRoot/public/sustainable-development-goals'
         target: assets-sustainable-development-goals:create-symlink-on-content
-
-type: application

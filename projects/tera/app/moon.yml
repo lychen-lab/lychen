@@ -23,8 +23,16 @@ env:
 
 id: tera-app
 
-language: typescript
+language:
+  typescript
 
+  #dev:
+  # deps:
+  #- typescript-tera-api-sdk:generate-api
+
+layer: application
+
+stack: frontend
 tags:
   - vue
   - dokploy
@@ -35,9 +43,3 @@ tasks:
     deps:
       - args: '$projectRoot/public/icons'
         target: assets-tera:create-symlink-on-icons
-
-  #dev:
-  # deps:
-  #- typescript-tera-api-sdk:generate-api
-
-type: application

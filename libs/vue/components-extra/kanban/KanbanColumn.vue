@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-surface-container p-4 rounded-md flex flex-col gap-2">
-    <div class="flex flex-row justify-between items-center min-h-[40px]">
-      <div class="flex flex-row gap-2 items-center">
+  <div class="bg-surface-container flex flex-col gap-2 rounded-md p-4">
+    <div class="flex min-h-[40px] flex-row items-center justify-between">
+      <div class="flex flex-row items-center gap-2">
         <slot name="state">
           <Badge>{{ state }}</Badge>
         </slot>

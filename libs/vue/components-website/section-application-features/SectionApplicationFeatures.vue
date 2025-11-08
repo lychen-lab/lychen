@@ -1,7 +1,7 @@
 <template>
   <Container
     id="features"
-    class="flex flex-col gap-8 items-stretch"
+    class="flex flex-col items-stretch gap-8"
   >
     <Title variant="h2">{{ t('title') }}</Title>
     <ApplicationsGridFeatures :features />

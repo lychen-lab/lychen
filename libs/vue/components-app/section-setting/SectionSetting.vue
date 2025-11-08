@@ -7,7 +7,7 @@
     <div class="flex flex-col gap-1 p-4">
       <BaseHeading variant="h2">{{ title }}</BaseHeading>
       <p class="opacity-80">{{ description }}</p>
-      <div class="flex py-2 gap-2">
+      <div class="flex gap-2 py-2">
         <slot name="subTitle" />
       </div>
     </div>

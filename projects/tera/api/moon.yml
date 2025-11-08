@@ -15,10 +15,10 @@ env:
 id: tera-api
 
 language: php
+layer: application
+stack: backend
 
 tags:
   - symfony
   - dokploy
   - compose
-
-type: application

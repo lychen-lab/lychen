@@ -27,9 +27,11 @@ id: tera-website
 
 language: typescript
 
+layer: application
+
+stack: frontend
+
 tags:
   - vue
   - dokploy
   - ssg
-
-type: application

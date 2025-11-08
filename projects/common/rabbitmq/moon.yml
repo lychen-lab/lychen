@@ -2,7 +2,9 @@ id: common-rabbitmq
 
 language: unknown
 
+layer: automation
+
+stack: backend
+
 tags:
   - compose
-
-type: tool

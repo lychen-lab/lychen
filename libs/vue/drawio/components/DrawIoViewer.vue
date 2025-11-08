@@ -1,8 +1,8 @@
 <template>
   <div
-    class="component flex flex-col gap-4 items-center rounded-3xl bg-on-surface-container dark:bg-surface-container p-6 outline outline-offset-4 outline-on-surface-container/60 dark:outline-surface-container/60"
+    class="component bg-on-surface-container dark:bg-surface-container outline-on-surface-container/60 dark:outline-surface-container/60 flex flex-col items-center gap-4 rounded-3xl p-6 outline outline-offset-4"
   >
-    <small class="md:hidden text-center italic">{{ t('mobile_message') }}</small>
+    <small class="text-center italic md:hidden">{{ t('mobile_message') }}</small>
     <slot>
       <div
         v-if="mxgraph"

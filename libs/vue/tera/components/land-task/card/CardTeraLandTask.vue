@@ -3,9 +3,7 @@
     class="active:bg-surface-container-highest flex flex-row items-center justify-between gap-4 p-4"
   >
     <div class="flex flex-col gap-1 overflow-hidden">
-      <span class="truncate text-sm font-bold"
-        >{{ landTask.title }}
-      </span>
+      <span class="truncate text-sm font-bold">{{ landTask.title }} </span>
       <span
         v-if="landTask.startDate || landTask.dueDate"
         class="text-xs opacity-70"

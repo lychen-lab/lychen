@@ -2,7 +2,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 export { default as BaseHeading } from './BaseHeading.vue';
 
-export const baseHeadingVariants = cva('font-poppins text-balance antialiased text-on-surface', {
+export const baseHeadingVariants = cva('font-poppins text-on-surface text-balance antialiased', {
   variants: {
     variant: {
       h1: 'text-2xl font-bold',

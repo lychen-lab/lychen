@@ -5,8 +5,8 @@
         <AvatarFallback> {{ avatarTag }} </AvatarFallback>
       </Avatar>
     </PopoverTrigger>
-    <PopoverContent class="flex flex-col gap-4 items-center p-8">
-      <div class="flex flex-col gap-0 items-center">
+    <PopoverContent class="flex flex-col items-center gap-4 p-8">
+      <div class="flex flex-col items-center gap-0">
         <small>{{ email }}</small>
       </div>
       <div class="flex flex-col items-center gap-2">
@@ -23,7 +23,7 @@
           size="sm"
         />
       </div>
-      <div class="flex flex-row justify-between text-xs items-center self-stretch">
+      <div class="flex flex-row items-center justify-between self-stretch text-xs">
         <a class="opacity-90"><IconRightFromBracket class="mr-2" /> Se déconnecter </a>
         <div class="flex flex-row gap-2">
           <!--<SelectLanguage />-->

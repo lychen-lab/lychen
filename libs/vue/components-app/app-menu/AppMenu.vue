@@ -16,8 +16,8 @@
         </PopoverTrigger>
       </TooltipTrigger>
       <PopoverContent class="flex flex-col gap-4">
-        <h2 class="p-2 self-center font-medium">Lychen écosystème</h2>
-        <div class="grid grid-cols-3 gap-4 place-items-center">
+        <h2 class="self-center p-2 font-medium">Lychen écosystème</h2>
+        <div class="grid grid-cols-3 place-items-center gap-4">
           <AppMenuIcon
             v-for="app in filteredApps"
             :key="app.id"
@@ -25,7 +25,7 @@
           />
         </div>
         <hr class="w-2/3 self-center opacity-30" />
-        <p class="text-sm self-center opacity-70">
+        <p class="self-center text-sm opacity-70">
           Découvrir toutes les applications <IconArrowUpRight />
         </p>
       </PopoverContent>

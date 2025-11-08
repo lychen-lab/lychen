@@ -19,7 +19,7 @@
       <div
         v-for="(localeItem, index) in availableLocales"
         :key="index"
-        class="p-2 cursor-pointer hover:bg-surface-container-high rounded-xl px-4"
+        class="hover:bg-surface-container-high cursor-pointer rounded-xl p-2 px-4"
         @click="locale = localeItem.code"
       >
         {{ localeItem.name }}

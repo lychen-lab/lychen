@@ -9,7 +9,7 @@
       >
       <span
         v-if="!nameOnly"
-        class="text-xs -mt-1"
+        class="-mt-1 text-xs"
         ><span class="opacity-50">{{ t('by') }}</span>
         <span class="font-bold opacity-70"> Lychen</span>
       </span>
