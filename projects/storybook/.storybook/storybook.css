@@ -1,9 +1,4 @@
-@import '@swisssteel/css-core/all.css';
-@import '@swisssteel/css-horus/colors.css';
-@import '@swisssteel/css-odin/colors.css';
-@import '@swisssteel/css-thor/colors.css';
-@import '@swisssteel/css-oxyde/colors.css';
-@import '@swisssteel/css-themis/colors.css';
+@import '@lychen/css-core/all.css';
 
 #storybook-root > .story-wrapper {
   height: calc(100dvh - 32px);

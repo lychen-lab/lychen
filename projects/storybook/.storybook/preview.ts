@@ -2,7 +2,7 @@ import type { Preview } from '@storybook/vue3-vite';
 import { setup } from '@storybook/vue3';
 
 import { createI18n } from 'vue-i18n';
-import { configDefault } from '@swisssteel/vue-i18n/configs/ConfigDefault';
+import { configDefault } from '@lychen/vue-i18n/configs/ConfigDefault';
 
 import { ModeDecorator } from './modeDecorator';
 import { themes } from 'storybook/theming';
