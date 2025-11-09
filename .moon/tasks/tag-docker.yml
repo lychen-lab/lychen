@@ -13,7 +13,7 @@ tasks:
 
   production-docker-build:
     args:
-      - 'ghcr.io/lychen-lab/lychen/prodction/$project:latest'
+      - 'ghcr.io/lychen-lab/lychen/production/$project:latest'
     deps:
       - production-build
     extends: docker-build
