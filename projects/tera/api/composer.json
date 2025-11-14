@@ -1,7 +1,7 @@
 {
   "type": "project",
   "license": "proprietary",
-  "name": "alpsify/lychen-tera-api",
+  "name": "lychen/tera-api",
   "description": "",
   "require": {
     "php": ">=8.4",

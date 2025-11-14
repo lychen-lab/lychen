@@ -1,0 +1,33 @@
+{
+  "extends": "../../tsconfig.options.json",
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "../../libs/typescript/utils"
+    },
+    {
+      "path": "../../libs/vue/components-business"
+    },
+    {
+      "path": "../../libs/vue/components-core"
+    },
+    {
+      "path": "../../libs/vue/components-extra"
+    },
+    {
+      "path": "../../libs/vue/i18n"
+    },
+    {
+      "path": "../../libs/vue/icons"
+    }
+  ],
+  "compilerOptions": {
+    "outDir": "../../.moon/cache/types/projects/storybook"
+  }
+}

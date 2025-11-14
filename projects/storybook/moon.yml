@@ -1,0 +1,44 @@
+dependsOn:
+  - css-core
+  - typescript-utils
+  - vue-components-business
+  - vue-components-core
+  - vue-components-extra
+  - vue-i18n
+  - vue-icons
+
+env:
+  STAGING_DOKPLOY_COMPOSE_ID: ''
+  STAGING_DOMAIN: storybook.lychen.org
+
+id: storybook
+
+language: typescript
+
+layer: application
+
+stack: frontend
+
+tags:
+  - docker
+  - dokploy
+
+tasks:
+  build:
+    command: yarn build
+    deps:
+      - args: $projectRoot/.nginx-build
+        target: nginx-configs:sync-ssg
+    options:
+      cache: false
+
+  dev:
+    command: yarn dev
+    options:
+      persistent: true
+
+  production-build:
+    extends: build
+
+  staging-build:
+    extends: build

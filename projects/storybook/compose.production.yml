@@ -1,0 +1,4 @@
+services:
+  app:
+    image: ghcr.io/lychen-lab/lychen/production/storybook:latest
+    restart: unless-stopped

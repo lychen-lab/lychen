@@ -1,0 +1,7 @@
+services:
+  app:
+    image: ghcr.io/lychen-lab/lychen/staging/storybook:latest
+    labels:
+      - traefik.http.routers.staging-storybook-v5bffb-156-websecure.middlewares=ip-allow-lychen@file
+    pull_policy: always
+    restart: unless-stopped

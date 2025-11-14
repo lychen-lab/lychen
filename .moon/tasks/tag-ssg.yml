@@ -4,8 +4,27 @@ tasks:
   build:
     command: yarn build
     deps:
-      - assets-sync
+      #- assets-sync
       - args: $projectRoot/.nginx-build
         target: nginx-configs:sync-ssg
     options:
       cache: false
+  
+  dev:
+    command: yarn dev
+    #deps:
+     # - assets-sync
+    env:
+      VITE_APP_ID: $project
+    options:
+      persistent: true
+
+  production-build:
+    args:
+      - '--mode production'
+    extends: build
+
+  staging-build:
+    args:
+      - '--mode staging'
+    extends: build

@@ -134,25 +134,10 @@
       "path": "projects/design"
     },
     {
-      "path": "projects/humu/website"
-    },
-    {
-      "path": "projects/kiro/website"
-    },
-    {
-      "path": "projects/kolo/website"
-    },
-    {
-      "path": "projects/meli/website"
-    },
-    {
-      "path": "projects/myko/website"
-    },
-    {
-      "path": "projects/novi/website"
-    },
-    {
       "path": "projects/robust/website"
+    },
+    {
+      "path": "projects/storybook"
     },
     {
       "path": "projects/tera/app"
@@ -162,9 +147,6 @@
     },
     {
       "path": "projects/tera/website"
-    },
-    {
-      "path": "projects/vara/website"
     },
     {
       "path": "projects/website"

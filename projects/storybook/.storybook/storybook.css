@@ -1,0 +1,5 @@
+@import '@lychen/css-core/all.css';
+
+#storybook-root > .story-wrapper {
+  height: calc(100dvh - 32px);
+}
