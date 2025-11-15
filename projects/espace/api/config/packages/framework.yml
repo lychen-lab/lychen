@@ -1,0 +1,36 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
+framework:
+  # Enables session support. Note that the session will ONLY be started if you read or write from it.
+  # Remove or comment this section to explicitly disable session support.
+  #session:
+  #enabled: true
+  #handler_id: null
+  #storage_factory_id: session.storage.factory.native
+  #cookie_secure: true
+  #cookie_samesite: "none"
+  #save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+
+  annotations:
+    enabled: false
+
+  disallow_search_engine_index: true
+
+  handle_all_throwables: true
+
+  #csrf_protection: true
+  http_method_override: false
+  #esi: true
+  #fragments: true
+  php_errors:
+    log: true
+
+  secret: '%env(APP_SECRET)%'
+  trusted_proxies: '127.0.0.1,REMOTE_ADDR'
+  validation:
+    email_validation_mode: strict
+
+when@test:
+  framework:
+    test: true
+    #session:
+    #storage_factory_id: session.storage.factory.mock_file

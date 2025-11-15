@@ -1,0 +1,47 @@
+dependsOn:
+  - css-core
+  - typescript-zitadel
+  - vue-color-scheme
+  - vue-components-app
+  - vue-components-core
+  - vue-components-extra
+  - vue-i18n
+  - vue-icons
+  - vue-layouts
+
+env:
+  DEV_DOMAIN: app.espace.lychen.local
+  PRODUCTION_DOCKER_IMAGE: lychen/production/espace/app
+  PRODUCTION_DOKPLOY_COMPOSE_ID: ''
+  PRODUCTION_DOMAIN: app.espace.lychen.org
+  STAGING_DOCKER_IMAGE: lychen/staging/espace/app
+  STAGING_DOKPLOY_COMPOSE_ID: ''
+  STAGING_DOMAIN: staging.app.espace.lychen.org
+
+id: espace-app
+
+language: typescript
+
+layer: application
+
+stack: frontend
+
+tags:
+  - pwa
+  - asset
+  #- docker
+  #- dokploy
+
+tasks:
+  assets-sync:
+    deps:
+      - args: '$projectRoot/public/fonts'
+        target: assets-fonts:create-symlink-on-content
+
+  build:
+    deps:
+      - assets-sync
+
+  dev:
+    deps:
+      - assets-sync

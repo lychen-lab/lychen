@@ -13,7 +13,7 @@ services:
       timeout: 5s
     image: postgres:${POSTGRES_VERSION:-16}-alpine
     volumes:
-      - database_data:/var/lib/postgresql/data:rw
+      - {{ name }}_database_data:/var/lib/postgresql/data:rw
 
   {{ name }}-api:
     depends_on:
@@ -35,12 +35,11 @@ services:
     image: ${IMAGES_PREFIX:-}{{ name }}-api
     restart: unless-stopped
     volumes:
-      - caddy_data:/data
-      - caddy_config:/config
+      - {{ name }}_caddy_data:/data
+      - {{ name }}_caddy_config:/config
       - ../../../libs/php:/packages
 
 volumes:
-  caddy_config:
-  caddy_data:
-  database_data:
-  mailpit_data:
+  {{ name }}_caddy_config:
+  {{ name }}_caddy_data:
+  {{ name }}_database_data:

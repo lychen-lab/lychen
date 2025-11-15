@@ -2,6 +2,8 @@ id: nginx-configs
 
 language: unknown
 
+layer: library
+
 tasks:
   sync-pwa:
     command:
@@ -26,5 +28,3 @@ tasks:
       - '$projectRoot/ssg/'
     options:
       cache: false
-
-layer: library
