@@ -15,8 +15,8 @@ id: espace-api
 
 language: php
 
+layer: application
+
 tags:
   - symfony
   - dokploy
-
-layer: application
