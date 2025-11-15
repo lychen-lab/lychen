@@ -1,5 +1,5 @@
 {
-  "name": "@lychen/tera-app",
+  "name": "@lychen/espace-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,8 +11,6 @@
   },
   "dependencies": {
     "@lychen/css-core": "workspace:*",
-    "@lychen/i18n-tera": "workspace:*",
-    "@lychen/typescript-tera-core": "workspace:*",
     "@lychen/typescript-zitadel": "workspace:*",
     "@lychen/vue-color-scheme": "workspace:*",
     "@lychen/vue-components-app": "workspace:*",
@@ -21,10 +19,7 @@
     "@lychen/vue-i18n": "workspace:*",
     "@lychen/vue-icons": "workspace:*",
     "@lychen/vue-layouts": "workspace:*",
-    "@lychen/vue-tera": "workspace:*",
     "@tanstack/vue-query": "^5.91.1",
-    "@tanstack/vue-table": "^8.21.3",
-    "@vueuse/core": "^13.9.0",
     "vue": "^3.5.22",
     "vue-router": "^4.6.3"
   },
