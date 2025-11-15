@@ -48,6 +48,8 @@ tags:
 tasks:
   assets-sync:
     deps:
+      - args: '$projectRoot/public/fonts'
+        target: assets-fonts:create-symlink-on-content
       - args: '$projectRoot/public/vara'
         target: assets-vara:create-symlink-on-content
       - args: '$projectRoot/public/humu'

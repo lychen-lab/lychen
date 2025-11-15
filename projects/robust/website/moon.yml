@@ -27,9 +27,17 @@ id: robust-website
 language: typescript
 
 layer: application
+
 stack: frontend
+
 tags:
   - ssg
   - asset
   - docker
   - dokploy
+
+tasks:
+  asset-sync:
+    deps:
+      - args: '$projectRoot/public/fonts'
+        target: assets-fonts:create-symlink-on-content
