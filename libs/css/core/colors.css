@@ -45,27 +45,22 @@
   --lychen-color-surface-container: oklch(
     0.93 var(--lychen-color-surface-chroma) var(--lychen-color-surface-hue)
   );
-  --lychen-color-on-surface-container: var(--lychen-color-on-surface);
 
   --lychen-color-surface-container-low: oklch(
     0.95 var(--lychen-color-surface-chroma) var(--lychen-color-surface-hue)
   );
-  --lychen-color-on-surface-container-low: var(--lychen-color-on-surface);
 
   --lychen-color-surface-container-lowest: oklch(
     1 var(--lychen-color-surface-chroma) var(--lychen-color-surface-hue)
   );
-  --lychen-color-on-surface-container-lowest: var(--lychen-color-on-surface);
 
   --lychen-color-surface-container-high: oklch(
     0.9 var(--lychen-color-surface-chroma) var(--lychen-color-surface-hue)
   );
-  --lychen-color-on-surface-container-high: var(--lychen-color-on-surface);
 
   --lychen-color-surface-container-highest: oklch(
     0.88 var(--lychen-color-surface-chroma) var(--lychen-color-surface-hue)
   );
-  --lychen-color-on-surface-container-highest: var(--lychen-color-on-surface);
 }
 
 [data-theme='dark'] {
@@ -163,19 +158,10 @@
 
   --color-surface: var(--lychen-color-surface);
   --color-on-surface: var(--lychen-color-on-surface);
-
+  
   --color-surface-container: var(--lychen-color-surface-container);
-  --color-on-surface-container: var(--lychen-color-on-surface-container);
-
   --color-surface-container-low: var(--lychen-color-surface-container-low);
-  --color-on-surface-container-low: var(--lychen-color-on-surface-container-low);
-
   --color-surface-container-lowest: var(--lychen-color-surface-container-lowest);
-  --color-on-surface-container-lowest: var(--lychen-color-on-surface-container-lowest);
-
   --color-surface-container-high: var(--lychen-color-surface-container-high);
-  --color-on-surface-container-high: var(--lychen-color-on-surface-container-high);
-
   --color-surface-container-highest: var(--lychen-color-surface-container-highest);
-  --color-on-surface-container-highest: var(--lychen-color-on-surface-container-highest);
 }
