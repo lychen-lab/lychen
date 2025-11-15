@@ -11,10 +11,10 @@ dependsOn:
 
 env:
   DEV_DOMAIN: app.espace.lychen.local
-  PRODUCTION_DOCKER_IMAGE: lychen/production/espace-app
+  PRODUCTION_DOCKER_IMAGE: lychen/production/espace/app
   PRODUCTION_DOKPLOY_COMPOSE_ID: ''
   PRODUCTION_DOMAIN: app.espace.lychen.org
-  STAGING_DOCKER_IMAGE: lychen/staging/espace-app
+  STAGING_DOCKER_IMAGE: lychen/staging/espace/app
   STAGING_DOKPLOY_COMPOSE_ID: ''
   STAGING_DOMAIN: staging.app.espace.lychen.org
 

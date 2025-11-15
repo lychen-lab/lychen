@@ -1,4 +1,4 @@
 services:
   website:
-    image: ghcr.io/lychen-lab/lychen/staging/espace-app:latest
+    image: ghcr.io/lychen-lab/lychen/staging/espace/app:latest
     restart: unless-stopped

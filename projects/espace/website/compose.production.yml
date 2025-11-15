@@ -1,0 +1,4 @@
+services:
+  website:
+    image: ghcr.io/lychen-lab/lychen/production/espace/website:latest
+    restart: unless-stopped

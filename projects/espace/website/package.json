@@ -1,0 +1,37 @@
+{
+  "name": "@lychen/espace-website",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite-ssg build ${0}",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@lychen/css-core": "workspace:*",
+    "@lychen/typescript-constants": "workspace:*",
+    "@lychen/vite-ssg": "workspace:*",
+    "@lychen/vue-applications": "workspace:*",
+    "@lychen/vue-color-scheme": "workspace:*",
+    "@lychen/vue-components-core": "workspace:*",
+    "@lychen/vue-components-website": "workspace:*",
+    "@lychen/vue-i18n": "workspace:*",
+    "@lychen/vue-layouts": "workspace:*",
+    "@lychen/vue-router-configs": "workspace:*",
+    "@lychen/vue-unhead-composables": "workspace:*",
+    "@unhead/schema-org": "^2.0.19",
+    "@unhead/vue": "^2.0.19",
+    "unhead": "^2.0.19",
+    "vue": "^3.5.22",
+    "vue-router": "^4.6.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.17",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "vite": "^7.2.2",
+    "vite-plugin-mkcert": "^1.17.9",
+    "vite-ssg": "^28.2.2",
+    "vite-ssg-sitemap": "^0.10.0"
+  }
+}
