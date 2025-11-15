@@ -1,0 +1,22 @@
+dependsOn:
+  - lychen-php-core
+  - lychen-php-model
+  - lychen-php-zitadel
+
+env:
+  DEV_DOMAIN: api.espace.lychen.local
+  PRODUCTION_DOCKER_IMAGE: lychen/production/espace/api
+  PRODUCTION_DOKPLOY_COMPOSE_ID: ''
+  PRODUCTION_DOMAIN: api.espace.lychen.org
+  STAGING_DOKPLOY_COMPOSE_ID: ''
+  STAGING_DOMAIN: staging.api.espace.lychen.org
+
+id: espace-api
+
+language: php
+
+tags:
+  - symfony
+  - dokploy
+
+layer: application

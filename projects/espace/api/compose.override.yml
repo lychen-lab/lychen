@@ -1,0 +1,50 @@
+# Development environment override
+services:
+  espace-database:
+    ports:
+      - "19432:5432/tcp"
+  espace-api:
+    build:
+      context: .
+      target: frankenphp_dev
+    environment:
+      SERVER_NAME: api.espace.lychen.local
+      #MERCURE_EXTRA_DIRECTIVES: demo
+      # See https://xdebug.org/docs/all_settings#mode
+      XDEBUG_MODE: "${XDEBUG_MODE:-off}"
+    extra_hosts:
+      # Ensure that host.docker.internal is correctly defined on Linux
+      - host.docker.internal:host-gateway
+    tty: true
+    volumes:
+      - ./:/app
+      #- ./var:/app/var
+      - ./frankenphp/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./frankenphp/conf.d/20-app.dev.ini:/usr/local/etc/php/app.conf.d/20-app.dev.ini:ro
+    ports:
+      - protocol: tcp
+        published: ${HTTP_PORT:-8089}
+        target: 80
+      - protocol: tcp
+        published: ${HTTPS_PORT:-19443}
+        target: 443
+      - protocol: udp
+        published: ${HTTP3_PORT:-29443}
+        target: 443
+
+###> doctrine/doctrine-bundle ###
+  database:
+    ports:
+      - "5432"
+###< doctrine/doctrine-bundle ###
+
+###> symfony/mailer ###
+  mailer:
+    image: axllent/mailpit
+    ports:
+      - "1025"
+      - "8025"
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+###< symfony/mailer ###

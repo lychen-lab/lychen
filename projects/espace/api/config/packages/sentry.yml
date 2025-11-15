@@ -1,0 +1,13 @@
+when@prod:
+  monolog:
+    handlers:
+      sentry:
+        fill_extra_context: true
+        hub_id: Sentry\State\HubInterface
+        level: !php/const Monolog\Logger::ERROR
+        type: sentry
+
+  sentry:
+    dsn: '%env(SENTRY_DSN)%'
+    register_error_handler: false
+    register_error_listener: false

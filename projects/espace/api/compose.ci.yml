@@ -1,0 +1,30 @@
+# Development environment override
+services:
+  database:
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-app_test}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-PasswordForLocal!}
+      - POSTGRES_USER=${POSTGRES_USER:-userlocal}
+    healthcheck:
+      retries: 5
+      start_period: 60s
+      test:
+        ['CMD', 'pg_isready', '-d', '${POSTGRES_DB:-app_test}', '-U', '${POSTGRES_USER:-userlocal}']
+      timeout: 5s
+    ports:
+      - '5432:5432'
+
+  php:
+    build: !reset null
+    environment:
+      - PHP_CS_FIXER_IGNORE_ENV=1
+    extra_hosts:
+      # Ensure that host.docker.internal is correctly defined on Linux
+      - host.docker.internal:host-gateway
+    image: ${TEST_IMAGE_NAME}:${GITHUB_SHA:-latest}
+    tty: true
+    volumes:
+      - ./:/app
+      - ../../../libs/php:/packages
+      - ./frankenphp/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./frankenphp/conf.d/20-app.dev.ini:/usr/local/etc/php/app.conf.d/20-app.dev.ini:ro

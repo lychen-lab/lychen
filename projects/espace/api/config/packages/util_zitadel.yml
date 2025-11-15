@@ -1,0 +1,3 @@
+util_zitadel:
+  user:
+    class: App\Entity\Person

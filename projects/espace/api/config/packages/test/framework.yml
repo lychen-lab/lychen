@@ -1,0 +1,4 @@
+framework:
+    test: true
+    php_errors:
+        log: true

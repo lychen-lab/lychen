@@ -1,0 +1,54 @@
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###
+
+###> symfony/framework-bundle ###
+/.env.dev
+/.env.staging
+/.env.local.php
+/.env.*.local
+/.env.prod
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> Docker ###
+docker/database/data/*
+docker-compose.override.yml
+###< Docker ###
+
+###> System files ###
+.DS_Store
+###< System files ###
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+/log/
+/tools/vendor
+
+.php-cs-fixer.cache
+
+./packages
+.cache
+.yarn
+
+/docker/nginx/certs/*.crt
+/docker/nginx/certs/*.key
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
+
+
+###> symfony/phpunit-bridge ###
+.phpunit.cache
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
