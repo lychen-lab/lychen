@@ -6,4 +6,4 @@ id: vue-robust
 
 language: typescript
 
-type: library
+layer: library

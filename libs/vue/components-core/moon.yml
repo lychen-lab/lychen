@@ -12,4 +12,4 @@ tasks:
     options:
       interactive: true
 
-type: library
+layer: library

@@ -7,4 +7,4 @@ id: vue-kiro
 
 language: typescript
 
-type: library
+layer: library

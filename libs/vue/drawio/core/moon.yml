@@ -5,4 +5,4 @@ id: vue-drawio-core
 
 language: typescript
 
-type: library
+layer: library

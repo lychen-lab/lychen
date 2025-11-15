@@ -2,4 +2,7 @@ id: lychen-php-core
 
 language: php
 
-type: library
+layer: library
+
+tags:
+  - composer

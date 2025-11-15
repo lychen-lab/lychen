@@ -2,4 +2,4 @@ id: vue-router-configs
 
 language: typescript
 
-type: library
+layer: library

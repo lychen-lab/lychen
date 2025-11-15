@@ -5,4 +5,4 @@ id: typescript-kiro
 
 language: typescript
 
-type: library
+layer: library

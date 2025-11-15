@@ -6,4 +6,4 @@ id: vite-ssg
 
 language: typescript
 
-type: library
+layer: library

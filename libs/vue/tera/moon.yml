@@ -13,4 +13,4 @@ id: vue-tera
 
 language: typescript
 
-type: library
+layer: library

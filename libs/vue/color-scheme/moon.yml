@@ -6,4 +6,4 @@ id: vue-color-scheme
 
 language: typescript
 
-type: library
+layer: library

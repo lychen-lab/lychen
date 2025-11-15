@@ -6,4 +6,4 @@ id: vue-i18n
 
 language: typescript
 
-type: library
+layer: library

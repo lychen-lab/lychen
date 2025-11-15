@@ -1,0 +1,3 @@
+tasks:
+  composer-update:
+    command: 'docker run --rm --interactive --tty --volume $PWD:/app composer update'

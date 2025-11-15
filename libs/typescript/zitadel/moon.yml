@@ -2,4 +2,4 @@ id: typescript-zitadel
 
 language: typescript
 
-type: library
+layer: library

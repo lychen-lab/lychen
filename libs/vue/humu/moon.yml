@@ -7,4 +7,4 @@ id: vue-humu
 
 language: typescript
 
-type: library
+layer: library

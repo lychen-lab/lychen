@@ -1,3 +1,3 @@
 id: typescript-utils
 language: typescript
-type: library
+layer: library

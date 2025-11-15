@@ -6,4 +6,4 @@ id: vue-components-business
 
 language: typescript
 
-type: library
+layer: library

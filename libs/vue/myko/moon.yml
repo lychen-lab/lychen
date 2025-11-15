@@ -7,4 +7,4 @@ id: vue-myko
 
 language: typescript
 
-type: library
+layer: library
