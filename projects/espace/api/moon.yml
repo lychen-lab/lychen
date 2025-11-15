@@ -20,3 +20,4 @@ layer: application
 tags:
   - symfony
   - dokploy
+  - compose
