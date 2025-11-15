@@ -15,7 +15,6 @@ monolog:
       level: debug
       path: '%kernel.logs_dir%/%kernel.environment%_workers.log'
       type: stream
-
 when@dev:
   monolog:
     handlers:
@@ -29,7 +28,6 @@ when@dev:
         level: debug
         path: '%kernel.logs_dir%/%kernel.environment%.log'
         type: stream
-
 when@prod:
   monolog:
     handlers:
@@ -63,7 +61,6 @@ when@prod:
         max_files: 30
         path: '%kernel.logs_dir%/%kernel.environment%_worker.log'
         type: rotating_file
-
 when@test:
   monolog:
     handlers:

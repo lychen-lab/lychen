@@ -14,9 +14,7 @@ services:
     exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
     resource: '../src/*'
 
-  # default configuration for services in *this* file
+    # default configuration for services in *this* file
   _defaults:
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
     autowire: true # Automatically injects dependencies in your services.
-    bind:
-      $zitadelProjectId: '%env(ZITADEL_PROJECT_ID)%'
