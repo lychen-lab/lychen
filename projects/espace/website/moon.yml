@@ -2,7 +2,6 @@ dependsOn:
   - css-core
   - typescript-constants
   - vite-ssg
-  - vue-applications
   - vue-color-scheme
   - vue-components-core
   - vue-components-website
