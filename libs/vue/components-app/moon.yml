@@ -6,4 +6,4 @@ id: vue-components-app
 
 language: typescript
 
-type: library
+layer: library

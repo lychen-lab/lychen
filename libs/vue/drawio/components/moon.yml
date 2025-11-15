@@ -5,4 +5,4 @@ id: vue-drawio-components
 
 language: typescript
 
-type: library
+layer: library

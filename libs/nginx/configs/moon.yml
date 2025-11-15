@@ -27,4 +27,4 @@ tasks:
     options:
       cache: false
 
-type: library
+layer: library

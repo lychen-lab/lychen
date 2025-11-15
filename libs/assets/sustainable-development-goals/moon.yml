@@ -11,4 +11,4 @@ tasks:
     inputs:
       - '$projectRoot/icons/'
 
-type: library
+layer: library

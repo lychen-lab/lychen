@@ -5,4 +5,4 @@ id: typescript-humu
 
 language: typescript
 
-type: library
+layer: library

@@ -17,4 +17,4 @@ id: vue-applications
 
 language: typescript
 
-type: library
+layer: library

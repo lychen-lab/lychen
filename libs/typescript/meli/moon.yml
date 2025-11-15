@@ -5,4 +5,4 @@ id: typescript-meli
 
 language: typescript
 
-type: library
+layer: library

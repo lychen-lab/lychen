@@ -11,4 +11,4 @@ tasks:
     deps:
       - tera-api:export-openapi
 
-type: library
+layer: library

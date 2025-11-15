@@ -2,4 +2,7 @@ id: lychen-php-zitadel
 
 language: php
 
-type: library
+layer: library
+
+tags:
+  - composer

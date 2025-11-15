@@ -2,4 +2,4 @@ id: i18n-tera
 
 language: typescript
 
-type: library
+layer: library

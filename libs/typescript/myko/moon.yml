@@ -5,4 +5,4 @@ id: typescript-myko
 
 language: typescript
 
-type: library
+layer: library

@@ -2,4 +2,4 @@ id: typescript-constants
 
 language: typescript
 
-type: library
+layer: library

@@ -9,4 +9,4 @@ id: vue-components-website
 
 language: typescript
 
-type: library
+layer: library

@@ -5,4 +5,4 @@ id: typescript-novi
 
 language: typescript
 
-type: library
+layer: library
