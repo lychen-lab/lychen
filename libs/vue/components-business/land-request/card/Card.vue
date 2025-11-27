@@ -1,5 +1,5 @@
 <template>
-  <div>Card LandRequest {{ id }}</div>
+  <div class="bg-surface-container rounded-lg p-4">Card LandRequest {{ id }}</div>
 </template>
 
 <script setup lang="ts">
