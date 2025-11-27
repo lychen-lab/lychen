@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import type { Decorator } from '@storybook/vue3';
-import TooltipProvider from '@swisssteel/vue-components-core/tooltip/TooltipProvider.vue';
+import TooltipProvider from '@lychen/vue-components-core/tooltip/TooltipProvider.vue';
 
 export function ModeDecorator(story: any, context: any): any {
   return {
