@@ -4,6 +4,10 @@ import { ROUTE_HOME } from '@/views/home';
 
 const routes: RouteRecordRaw[] = [
   {
+    path: '',
+    redirect: ROUTE_HOME,
+  },
+  {
     path: '/',
     children: [ROUTE_HOME],
   },
