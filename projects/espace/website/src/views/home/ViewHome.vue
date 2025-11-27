@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="flex flex-row gap-4">
     <CardLandProposal
       v-for="item in fakeLandProposals"
       :key="item.id"
