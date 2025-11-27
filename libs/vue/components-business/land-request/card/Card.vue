@@ -1,11 +1,17 @@
 <template>
-  <div class="bg-surface-container rounded-lg p-4">Card LandRequest {{ id }}</div>
+  <div :class="cn('bg-surface-container rounded-lg p-4', props.class)">
+    Card LandRequest {{ id }}
+  </div>
 </template>
 
 <script setup lang="ts">
+import { cn } from '@lychen/typescript-utils/tailwind/Cn';
+import type { HTMLAttributes } from 'vue';
+
 interface Props {
   id: string;
+  class?: HTMLAttributes['class'];
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 </script>
