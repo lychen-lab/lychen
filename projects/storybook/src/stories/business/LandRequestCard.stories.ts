@@ -5,7 +5,9 @@ import { Card } from '@lychen/vue-components-business/land-request/card';
 const meta = {
   title: 'Business/Land Request Card',
   component: Card,
-  argTypes: {},
+  argTypes: {
+    class: { control: 'text' },
+  },
   args: {},
 } satisfies Meta<typeof Card>;
 
