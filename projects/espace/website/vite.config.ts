@@ -16,7 +16,7 @@ const config: UserConfig = {
     vueDevTools(),
     tailwindcss(),
     mkcert({
-      hosts: ['esapce.lychen.local'],
+      hosts: ['espace.lychen.local'],
     }),
     vue({
       template: {
