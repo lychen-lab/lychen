@@ -1,16 +1,25 @@
-*::-webkit-scrollbar {
-  width: 15px; /* width of the entire scrollbar */
+* {
+  --scrollbar-color-track: transparent;
+  --scrollbar-color-thumb: oklch(
+    from var(--color-on-surface) l c h / calc(alpha - 0.5)
+  );
+  --scrollbar-width: thin;
+  --scrollbar-gutter: auto;
 }
 
-*::-webkit-scrollbar-track {
-  background: var(--color-surface); /* color of the tracking area */
+@supports ((scrollbar-gutter: stable) and (scrollbar-width: thin)) {
+  * {
+    scrollbar-width: var(--scrollbar-width);
+    scrollbar-gutter: var(--scrollbar-gutter);
+  }
 }
 
-*::-webkit-scrollbar-thumb {
-  background-color: oklch(
-    from var(--color-on-surface-container) l c h / calc(alpha - 0.8)
-  ); /* color of the scroll thumb */
-  border-radius: 20px; /* roundness of the scroll thumb */
-  border: 5px solid var(--color-surface);
-  cursor: move;
+@supports (scrollbar-color: var(--scrollbar-color-thumb) var(--scrollbar-color-track)) {
+  * {
+    scrollbar-color: var(--scrollbar-color-thumb) var(--scrollbar-color-track);
+  }
+
+  [data-when="scrollbar-color"] {
+    display: flex;
+  }
 }
