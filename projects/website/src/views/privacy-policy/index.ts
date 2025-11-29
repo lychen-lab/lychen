@@ -1,5 +1,5 @@
 export const ROUTE_PRIVACY = {
-  path: '/privacy',
+  path: '/privacy-policy',
   component: () => import('./View.vue'),
-  name: 'privacy',
+  name: 'privacy-policy',
 } as const;
