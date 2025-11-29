@@ -1,10 +1,10 @@
 import enUs from './en-US';
 import frFr from './fr-FR';
 
-export const messages = {
+export const MESSAGES = {
   'fr-FR': frFr,
   'en-US': enUs,
   'en-GB': enUs,
-};
+} as const;
 
-export const TRANSLATION_KEY = 'page_price';
+export const TRANSLATION_KEY = 'view_mission';
