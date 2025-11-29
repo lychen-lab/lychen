@@ -1,5 +1,5 @@
 export const ROUTE_MISSION = {
-  path: '/mission',
+  path: '/about/mission',
   component: () => import('./View.vue'),
   name: 'mission',
 } as const;
