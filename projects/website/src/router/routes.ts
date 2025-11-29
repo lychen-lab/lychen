@@ -7,6 +7,7 @@ import { ROUTE_TEAM } from '@/views/team';
 import { ROUTE_PRIVACY_POLICY } from '@/views/privacy-policy';
 import { ROUTE_TERMS_OF_USE } from '@/views/terms-of-use';
 import { ROUTE_APPLICATIONS } from '@/views/applications';
+import { ROUTE_PARTNERSHIPS } from '@/views/partnerships';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -20,6 +21,7 @@ const routes: RouteRecordRaw[] = [
       ROUTE_PRIVACY_POLICY,
       ROUTE_APPLICATIONS,
       ROUTE_TERMS_OF_USE,
+      ROUTE_PARTNERSHIPS,
     ],
   },
   {
