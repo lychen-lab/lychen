@@ -1,4 +1,3 @@
-import { ROUTE_MANIFEST } from '@/views/manifest';
 import { messages, TRANSLATION_KEY } from '../i18n';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { LINK } from '@lychen/typescript-constants/Link';
@@ -11,16 +10,6 @@ export function useResourcesMenu() {
       title: t(`navigation.resources.blog.title`),
       description: t(`navigation.resources.blog.description`),
       link: LINK.Blog,
-    },
-    {
-      title: t(`navigation.resources.project_dashboard.title`),
-      description: t(`navigation.resources.project_dashboard.description`),
-      link: LINK.Huly,
-    },
-    {
-      title: t(`navigation.resources.manifest.title`),
-      description: t(`navigation.resources.manifest.description`),
-      route: ROUTE_MANIFEST,
     },
     /*{
         title: t(`navigation.resources.feedback.title`),
