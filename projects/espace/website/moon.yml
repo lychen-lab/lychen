@@ -3,6 +3,7 @@ dependsOn:
   - typescript-constants
   - vite-ssg
   - vue-color-scheme
+  - vue-components-business
   - vue-components-core
   - vue-components-website
   - vue-i18n
