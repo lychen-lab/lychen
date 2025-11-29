@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    {{ t('meta.title') }}
+  </div>
   <!--<PageHomeHero />
   <SectionCrowdfunding />
   <PageHomeApplications />
