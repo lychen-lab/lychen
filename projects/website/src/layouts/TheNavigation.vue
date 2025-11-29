@@ -118,55 +118,28 @@
     </div>
 
     <div class="flex flex-row items-center gap-2">
-      <SelectLanguage />
-      <ToggleColorScheme />
-      <a
-        :href="SOCIAL_LINK.GitHub"
-        target="_blank"
-        aria-label="GitHub"
-      >
-        <IconGithub />
-      </a>
-      <a
-        :href="SOCIAL_LINK.Discord"
-        target="_blank"
-        aria-label="Discord"
-      >
-        <IconDiscord />
-      </a>
-      <ButtonTallyPreregister class="hidden md:flex" />
+      <Button label="Faire un don" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import IconGithub from '@lychen/vue-icons/IconGithub.vue';
-import IconDiscord from '@lychen/vue-icons/IconDiscord.vue';
 import CommunityMenuUrl from './assets/community-menu.webp';
 import ResourcesMenuUrl from './assets/resources-menu.webp';
 import { navigationMenuTriggerStyle } from '@lychen/vue-components-core/navigation-menu';
 import { computed, defineAsyncComponent } from 'vue';
 import { ROUTE_HOME } from '@/views/home';
 import { useApplicationsCatalog } from '@lychen/vue-applications/composables/useApplicationsCatalog';
-import { SOCIAL_LINK } from '@lychen/typescript-constants/Social';
 import { messages, TRANSLATION_KEY } from './i18n';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import IconArrowUpRight from '@lychen/vue-icons/IconArrowUpRight.vue';
 
 import { useCommunityMenu } from './composables/useCommunityMenu';
 import { useResourcesMenu } from './composables/useResourcesMenu';
-import { ROUTE_SPONSOR } from '@/views/sponsor';
 
-import ButtonTallyPreregister from '@lychen/vue-components-website/button-tally-preregister/ButtonTallyPreregister.vue';
 import LogoLychenFull from '@lychen/vue-components-extra/logo-lychen/LogoLychenFull.vue';
 import { APPLICATION_ALIAS } from '@lychen/typescript-applications/constants/ApplicationAlias';
 import Button from '@lychen/vue-components-core/button/Button.vue';
-
-import ToggleColorScheme from '@lychen/vue-color-scheme/components/ToggleColorScheme.vue';
-
-const SelectLanguage = defineAsyncComponent(
-  () => import('@lychen/vue-i18n/components/select-language/SelectLanguage.vue'),
-);
 
 const NavigationMenuSubLink = defineAsyncComponent(
   () => import('@lychen/vue-components-core/navigation-menu/NavigationMenuSubLink.vue'),
