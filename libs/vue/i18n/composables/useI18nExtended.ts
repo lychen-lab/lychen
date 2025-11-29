@@ -1,6 +1,7 @@
 import { useI18n, type UseI18nOptions } from 'vue-i18n';
 
 import { addRootKey } from '../helpers/RootKeyHelper';
+import { buildMessagesFromModules } from '../helpers/MessagesHelper';
 
 export interface UseCustomI18nOptions extends UseI18nOptions {
   rootKey?: string;
@@ -9,6 +10,19 @@ export interface UseCustomI18nOptions extends UseI18nOptions {
 
 // Define the return type explicitly for clarity
 export type UseI18nExtendedReturn = ReturnType<typeof useI18n>;
+
+export type Config = { messages: UseI18nOptions['messages']; rootKey: string };
+
+export function buildConfig(modules: Record<string, unknown>, rootKey: string): Config {
+  return {
+    messages: buildMessagesFromModules(modules),
+    rootKey,
+  } as const;
+}
+
+export function usePrefixedI18n(options: Config) {
+  return useI18nExtended({ ...options, prefixed: true });
+}
 
 export function useI18nExtended(options?: UseCustomI18nOptions): UseI18nExtendedReturn {
   const i18nOptions = { ...options }; // Clone to avoid modifying original
@@ -45,7 +59,6 @@ export function useI18nExtended(options?: UseCustomI18nOptions): UseI18nExtended
     return originalT(calculatedKey, ...(restArgs as [any]));
   }
 
-  // Define customN using function declaration, matching original n (ComposerNumberFormatting)
   function customN(...args: Parameters<typeof originalN>): ReturnType<typeof originalN> {
     const value = args[0];
     const keyOrOptions = args[1]; // Can be string, object, or undefined
@@ -70,8 +83,6 @@ export function useI18nExtended(options?: UseCustomI18nOptions): UseI18nExtended
   // Define customD using function declaration, matching original d (ComposerDateTimeFormatting)
   function customD(...args: Parameters<typeof originalD>): ReturnType<typeof originalD> {
     const passThroughArgs = [...args]; // Copy args
-
-    // If value is already Date or string, pass through unmodified
 
     // Pass potentially modified args to the original d using apply
     return originalD(...(passThroughArgs as Parameters<typeof originalD>));
