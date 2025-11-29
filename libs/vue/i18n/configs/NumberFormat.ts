@@ -1,19 +1,6 @@
 import { type I18nOptions } from 'vue-i18n';
 
-const en = {
-  currency: {
-    style: 'currency',
-    currency: 'EUR',
-    currencyDisplay: 'symbol',
-  },
-  percent: {
-    style: 'percent',
-    useGrouping: false,
-    minimumFractionDigits: 2,
-  },
-} as const;
-
-const fr = {
+const formats = {
   currency: {
     style: 'currency',
     currency: 'EUR',
@@ -28,7 +15,9 @@ const fr = {
 } as const;
 
 export const numberFormats: I18nOptions['numberFormats'] = {
-  'en-US': en,
-  'en-GB': en,
-  'fr-FR': fr,
+  'en-US': formats,
+  'en-GB': formats,
+  'fr-FR': formats,
+  fr: formats,
+  en: formats,
 };
