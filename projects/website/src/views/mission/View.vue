@@ -1,31 +1,12 @@
 <template>
   <div class="flex flex-row gap-4">
-    <CardLandProposal
-      v-for="item in fakeLandProposals"
-      :key="item.id"
-      v-bind="item"
-    />
+    {{ t('title') }}
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { Card as CardLandProposal } from '@lychen/vue-components-business/land-proposal/card';
-import { MESSAGES, TRANSLATION_KEY } from './i18n';
+import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
+import { CONFIG } from './i18n';
 
-const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
-
-const fakeLandProposals = [
-  {
-    id: '1',
-  },
-  {
-    id: '2',
-  },
-  {
-    id: '3',
-  },
-];
+const { t } = usePrefixedI18n(CONFIG);
 </script>
-
-<style lang="css" scoped></style>

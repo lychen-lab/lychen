@@ -1,10 +1,3 @@
-import enUs from './en-US';
-import frFr from './fr-FR';
+import { buildConfig } from '@lychen/vue-i18n/composables/useI18nExtended';
 
-export const MESSAGES = {
-  'fr-FR': frFr,
-  'en-US': enUs,
-  'en-GB': enUs,
-} as const;
-
-export const TRANSLATION_KEY = 'view_mission';
+export const CONFIG = buildConfig(import.meta.glob('./*.json', { eager: true }), 'view_mission');
