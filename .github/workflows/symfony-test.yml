@@ -5,6 +5,9 @@ env:
 
 on:
   pull_request:
+    paths:
+      - 'projects/*-api/**'
+      - 'libs/php/**'
   workflow_dispatch: {}
 
 permissions:

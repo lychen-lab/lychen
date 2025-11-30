@@ -1,0 +1,39 @@
+name: 'PR Auto label'
+
+env:
+  REGISTRY: ghcr.io
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+  
+jobs:
+  tag-branch:
+    name: 'Add labels'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    outputs:
+      projects: ${{ steps.gather-projects.outputs.projects }}
+    steps:
+      - uses: 'actions/checkout@v4'
+        with:
+          fetch-depth: 0
+        
+      - name: Set up Moon Toolchain
+        uses: 'moonrepo/setup-toolchain@v0'
+
+      - id: gather-projects
+        uses: ./.github/actions/moon-affected-projects-list
+
+      - name: Add labels
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: steps.gather-projects.outputs.projects != ''
+        run: |
+          labels=$(echo "${{ steps.gather-projects.outputs.projects }}" | sed 's/\[//g' | sed 's/\]//g' | sed 's/"//g')
+          gh pr edit ${{ github.event.pull_request.number }} --add-label "$labels"
+  
