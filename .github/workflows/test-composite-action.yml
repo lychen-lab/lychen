@@ -7,8 +7,8 @@ on:
   pull_request:
 
 jobs:
-  define-matrix:
-    name: 'Gather affected projects'
+  tag-branch:
+    name: 'Add labels'
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -34,5 +34,5 @@ jobs:
         if: steps.gather-projects.outputs.projects != ''
         run: |
           labels=$(echo "${{ steps.gather-projects.outputs.projects }}" | sed 's/\[//g' | sed 's/\]//g' | sed 's/"//g')
-          gh pr edit --add-label "$labels"
+          gh pr edit ${{ github.event.pull_request.number }} --add-label "$labels"
   
