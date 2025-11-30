@@ -2071,6 +2071,7 @@ __metadata:
     "@lychen/typescript-constants": "workspace:*"
     "@lychen/vite-ssg": "workspace:*"
     "@lychen/vue-color-scheme": "workspace:*"
+    "@lychen/vue-components-business": "workspace:*"
     "@lychen/vue-components-core": "workspace:*"
     "@lychen/vue-components-website": "workspace:*"
     "@lychen/vue-i18n": "workspace:*"
