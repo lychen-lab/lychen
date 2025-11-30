@@ -31,6 +31,8 @@ jobs:
       - name: Add labels
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: steps.gather-projects.outputs.projects != ''
         run: |
-          gh pr edit 1 --add-label ${{ steps.gather-projects.outputs.projects }}
+          labels=$(echo "${{ steps.gather-projects.outputs.projects }}" | sed 's/\[//g' | sed 's/\]//g' | sed 's/"//g')
+          gh pr edit --add-label "$labels"
   
