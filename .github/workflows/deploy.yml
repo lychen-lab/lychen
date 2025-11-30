@@ -4,18 +4,29 @@ env:
   REGISTRY: ghcr.io
 
 on:
-  push:
+  workflow_dispatch: {}
+  workflow_run:
+    workflows: 
+      - Build and push images
+    types:
+      - completed
     branches:
       - main
-  workflow_dispatch: {}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - run: echo 'The triggering workflow failed'
+
   define-matrix:
     name: 'Gather affected projects'
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     outputs:
       projects: ${{ steps.gather-projects.outputs.projects }}
