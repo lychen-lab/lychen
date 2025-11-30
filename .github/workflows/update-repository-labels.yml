@@ -37,11 +37,15 @@ jobs:
         run: |
           # Fetch existing labels
           EXISTING_LABELS=$(gh label list --json name -q '.[].name')
+          
+          # Remove quotes and set Internal Field Separator to comma to loop over projects
+          PROJECTS_NO_QUOTES=$(echo "${{ steps.get-projects.outputs.projects }}" | tr -d '"')
+          IFS=','
 
           # Create labels that don't exist
-          while read -r project; do
+          for project in $PROJECTS_NO_QUOTES; do
             if ! echo "$EXISTING_LABELS" | grep -q "^$project$"; then
               echo "Creating label: $project"
               gh label create "$project" --description "Issues and PRs related to the $project project."
             fi
-          done <<< "${{ steps.get-projects.outputs.projects }}"
+          done
