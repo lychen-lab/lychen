@@ -11,7 +11,7 @@ jobs:
     name: 'Gather affected projects'
     runs-on: ubuntu-latest
     outputs:
-      projects: ${{ steps.projects.outputs.projects }}
+      projects: ${{ steps.gather-projects.outputs.projects }}
     steps:
       - uses: 'actions/checkout@v4'
         with:
@@ -20,7 +20,8 @@ jobs:
       - name: Set up Moon Toolchain
         uses: 'moonrepo/setup-toolchain@v0'
 
-      - uses: ./.github/actions/moon-affected-projects-list
+      - id: gather-projects
+        uses: ./.github/actions/moon-affected-projects-list
         with:
           layer: 'application'
           stack: 'frontend'
