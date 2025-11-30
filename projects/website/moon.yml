@@ -17,11 +17,8 @@ dependsOn:
   - vue-unhead-composables
 
 env:
-  DEV_DOMAIN: lychen.local
   PRODUCTION_DOKPLOY_COMPOSE_ID: 2FMNGgsfpo5z8-I3nLmx_
-  PRODUCTION_DOMAIN: lychen.org
   STAGING_DOKPLOY_COMPOSE_ID: k9LyoYbvcpb54I3YOQ9iq
-  STAGING_DOMAIN: staging.lychen.org
 
 id: website
 

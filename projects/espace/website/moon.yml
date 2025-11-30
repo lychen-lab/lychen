@@ -12,13 +12,8 @@ dependsOn:
   - vue-unhead-composables
 
 env:
-  DEV_DOMAIN: espace.lychen.local
-  PRODUCTION_DOCKER_IMAGE: lychen/production/espace/website
   PRODUCTION_DOKPLOY_COMPOSE_ID: ''
-  PRODUCTION_DOMAIN: espace.lychen.org
-  STAGING_DOCKER_IMAGE: lychen/staging/espace/website
   STAGING_DOKPLOY_COMPOSE_ID: ''
-  STAGING_DOMAIN: staging.espace.lychen.org
 
 id: espace-website
 
