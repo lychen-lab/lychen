@@ -3,11 +3,11 @@ description: 'Use moon query to fetch list of affected project id'
 inputs:
   layer:
     description: 'Targeted layer'
-    required: true
+    required: false
     default: 'application'
   stack:
     description: 'Targeted stack'
-    required: true
+    required: false
 outputs:
   projects: 
     description: "Projects list"

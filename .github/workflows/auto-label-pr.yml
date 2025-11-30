@@ -1,4 +1,4 @@
-name: 'Test composite action | STACK-frontend LAYER-application'
+name: 'PR Auto label'
 
 env:
   REGISTRY: ghcr.io
@@ -24,9 +24,6 @@ jobs:
 
       - id: gather-projects
         uses: ./.github/actions/moon-affected-projects-list
-        with:
-          layer: 'application'
-          stack: 'frontend'
 
       - name: Add labels
         env:
