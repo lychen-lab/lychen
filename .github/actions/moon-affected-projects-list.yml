@@ -1,0 +1,25 @@
+name: List moon affected projects to GITHUB_OUPUT
+inputs:
+  layer:
+    description: 'Targeted layer'
+    required: true
+    default: 'application'
+  stack:
+    description: 'Targeted stack'
+    required: true
+outputs:
+  projects: ${{ steps.projects.outputs.projects }}
+runs:
+  using: "composite"
+  steps:
+      
+
+      - run: moon query projects --affected --downstream deep --layer ${{ inputs.layer }} --stack ${{ inputs.stack }}
+
+      - name: Define Projects
+        id: projects
+        run: |
+          echo "projects=$(moon query projects --affected --downstream deep --layer ${{ inputs.layer }} --stack ${{ inputs.stack }} --json | jq -r '.projects | map(.id | @json) | join(",")' | sed 's/^/\[/; s/$/\]/')" >> "$GITHUB_OUTPUT"
+          
+      - run: echo ${{ steps.projects.outputs.projects }}
+
