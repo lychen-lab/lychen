@@ -1,4 +1,4 @@
-name: 'STAGING-image-build'
+name: 'Build staging images'
 
 env:
   REGISTRY: ghcr.io
