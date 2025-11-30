@@ -30,18 +30,19 @@ jobs:
 
   build-and-push:
     if: ${{ needs.define-matrix.outputs.projects != '[]' && needs.define-matrix.outputs.projects != '' }}
-    name: '${{ matrix.projects }} | Build and push docker image'
+    name: '${{ matrix.projects }} | ${{ matrix.environments }} | Build and push docker image'
     needs: define-matrix
     continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
         projects: ${{ fromJSON(needs.define-matrix.outputs.projects) }}
+        environments: ['staging', 'production']
+    environment: ${{ matrix.environments }}
     runs-on: ubuntu-latest
     permissions:
       contents: read 
       packages: write
-    environment: 'staging'
     steps:
       - uses: 'actions/checkout@v4'
         with:
@@ -68,4 +69,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push docker images
-        run: 'moon ci ${{ matrix.projects }}:staging-docker-push'
+        run: 'moon ci ${{ matrix.projects }}:${{ matrix.environments }}-docker-push'
