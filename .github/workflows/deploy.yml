@@ -40,7 +40,7 @@ jobs:
         uses: ./.github/actions/moon-affected-projects-list
   
   deploy:
-    name: '${{ matrix.projects }} | Deploy to ${{ matrix.environments }}'
+    name: '${{ matrix.environments }} | ${{ matrix.projects }} | Deployment'
     runs-on: ubuntu-latest
     needs:
       - define-matrix

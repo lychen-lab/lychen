@@ -30,7 +30,7 @@ jobs:
 
   build-and-push:
     if: ${{ needs.define-matrix.outputs.projects != '[]' && needs.define-matrix.outputs.projects != '' }}
-    name: '${{ matrix.environments }} > ${{ matrix.projects }} | Build and push docker image'
+    name: '${{ matrix.environments }} | ${{ matrix.projects }} | Build and push image'
     needs: define-matrix
     continue-on-error: true
     strategy:
