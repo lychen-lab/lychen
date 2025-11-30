@@ -1,0 +1,47 @@
+name: 'Update repository labels'
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 0 * * *' # Runs every day at midnight
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  update-labels:
+    name: 'Update repository labels'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write # To manage labels
+    steps:
+      - name: 'Checkout'
+        uses: 'actions/checkout@v4'
+
+      - name: 'Set up Moon Toolchain'
+        uses: 'moonrepo/setup-toolchain@v0'
+
+      - name: 'Get application projects'
+        id: get-projects
+        run: |
+          PROJECTS=$(moon query projects projectLayer=application --json | jq -r '.projects | map(.id | @json) | join(",")')
+          echo "projects<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$PROJECTS" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: 'Update repository labels'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Fetch existing labels
+          EXISTING_LABELS=$(gh label list --json name -q '.[].name')
+
+          # Create labels that don't exist
+          while read -r project; do
+            if ! echo "$EXISTING_LABELS" | grep -q "^$project$"; then
+              echo "Creating label: $project"
+              gh label create "$project" --description "Issues and PRs related to the $project project."
+            fi
+          done <<< "${{ steps.get-projects.outputs.projects }}"
