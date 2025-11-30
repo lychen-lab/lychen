@@ -38,7 +38,7 @@ jobs:
       matrix:
         projects: ${{ fromJSON(needs.define-matrix.outputs.projects) }}
         environments: ['staging', 'production']
-    environment: ${{ matrix.environments }}
+    environment: ${{ matrix.environments != 'production' && matrix.environments || null }}
     runs-on: ubuntu-latest
     permissions:
       contents: read 
