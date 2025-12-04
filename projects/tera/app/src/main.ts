@@ -3,7 +3,7 @@ import '@lychen/css-core/all.css';
 import { createApp } from 'vue';
 
 import zitadelAuth from '@lychen/typescript-zitadel/ZitadelAuth';
-import { useI18n } from '@lychen/vue-i18n/configs/useI18n';
+import { createI18n } from '@lychen/vue-i18n/configs/createI18n';
 
 import { VueQueryPlugin } from '@tanstack/vue-query';
 
@@ -14,7 +14,8 @@ const app = createApp(App);
 
 app.use(router);
 
-useI18n(app);
+const i18n = createI18n();
+app.use(i18n);
 
 declare module 'vue' {
   interface ComponentCustomProperties {
