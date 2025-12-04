@@ -28,6 +28,8 @@ jobs:
 
       - id: gather-projects
         uses: ./.github/actions/moon-affected-projects-list
+        with:
+          layer: 'application'
 
       - name: Add labels
         env:
