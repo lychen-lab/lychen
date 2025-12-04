@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.options.json",
-  "include": ["**/*", "**/*.json"],
+  "include": ["**/*"],
   "references": [
     {
       "path": "../../libs/typescript/applications"
