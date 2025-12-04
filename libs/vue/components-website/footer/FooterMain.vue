@@ -25,17 +25,15 @@
 
     <div class="flex flex-col-reverse items-center justify-between gap-4 lg:flex-row">
       <small class="text-xs">{{ t(`copyright`, { date: year }) }}</small>
-      <ul class="flex flex-row gap-2 text-xs opacity-60">
+      <div class="flex flex-row gap-2 text-xs opacity-60">
         <RouterLink
           v-for="(menu, _index) in legalMenus"
           :key="_index"
           :to="i18nRoute(menu.to)"
         >
-          <li>
-            {{ menu.title }}
-          </li>
+          {{ menu.title }}
         </RouterLink>
-      </ul>
+      </div>
     </div>
   </div>
 </template>
