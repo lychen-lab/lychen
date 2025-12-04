@@ -1,4 +1,4 @@
-import type { RouteRecordRaw } from 'vue-router';
+import { RouterView, type RouteRecordRaw } from 'vue-router';
 
 import { ROUTE_HOME } from '@/views/home';
 import { ROUTE_MISSION } from '@/views/mission';
@@ -12,20 +12,28 @@ import { ROUTE_CAREER } from '@/views/career';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/',
-    component: () => import('@/layouts/TheLayout.vue'),
+    path: '/:locale?',
+    component: RouterView,
+    beforeEnter: useTrans().routeMiddleware,
     children: [
-      ROUTE_HOME,
-      ROUTE_MISSION,
-      ROUTE_CHARTER,
-      ROUTE_TEAM,
-      ROUTE_PRIVACY_POLICY,
-      ROUTE_APPLICATIONS,
-      ROUTE_TERMS_OF_USE,
-      ROUTE_PARTNERSHIPS,
-      ROUTE_CAREER,
+      {
+        path: '/',
+        component: () => import('@/layouts/TheLayout.vue'),
+        children: [
+          ROUTE_HOME,
+          ROUTE_MISSION,
+          ROUTE_CHARTER,
+          ROUTE_TEAM,
+          ROUTE_PRIVACY_POLICY,
+          ROUTE_APPLICATIONS,
+          ROUTE_TERMS_OF_USE,
+          ROUTE_PARTNERSHIPS,
+          ROUTE_CAREER,
+        ],
+      },
     ],
   },
+
   {
     path: '/:pathMatch(.*)*',
     redirect: ROUTE_HOME,

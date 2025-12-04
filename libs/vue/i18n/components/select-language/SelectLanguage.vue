@@ -20,7 +20,7 @@
         v-for="(localeItem, index) in availableLocales"
         :key="index"
         class="hover:bg-surface-container-high cursor-pointer rounded-xl p-2 px-4"
-        @click="locale = localeItem.code"
+        @click="switchLanguage(localeItem.code)"
       >
         {{ localeItem.name }}
       </div>
@@ -30,11 +30,11 @@
 
 <script lang="ts" setup>
 import { Popover, PopoverContent, PopoverTrigger } from '@lychen/vue-components-core/popover';
-import { useI18nExtended } from '../../composables/useI18nExtended';
 import IconLanguage from '@lychen/vue-icons/IconLanguage.vue';
 import Button from '@lychen/vue-components-core/button/Button.vue';
+import { useTrans } from '../../composables/useTrans';
 
-const { locale } = useI18nExtended();
+const { switchLanguage } = useTrans();
 
 const availableLocales = [
   { code: 'en-US', name: 'English' },
