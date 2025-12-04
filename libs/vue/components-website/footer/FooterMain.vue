@@ -25,14 +25,15 @@
 
     <div class="flex flex-col-reverse items-center justify-between gap-4 lg:flex-row">
       <small class="text-xs">{{ t(`copyright`, { date: year }) }}</small>
-      <ul class="flex flex-row gap-2 text-xs opacity-60">
-        <li
+      <div class="flex flex-row gap-2 text-xs opacity-60">
+        <RouterLink
           v-for="(menu, _index) in legalMenus"
           :key="_index"
+          :to="i18nRoute(menu.to)"
         >
           {{ menu.title }}
-        </li>
-      </ul>
+        </RouterLink>
+      </div>
     </div>
   </div>
 </template>
@@ -42,20 +43,21 @@ import { defineAsyncComponent } from 'vue';
 
 import { messages, TRANSLATION_KEY } from './i18n';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { LINK } from '@lychen/typescript-constants/Link';
 import { EMAIL } from '@lychen/typescript-constants/Email';
 
 const LogoLychenFull = defineAsyncComponent(
   () => import('@lychen/vue-components-extra/logo-lychen/LogoLychenFull.vue'),
 );
 
-const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
+const { t, i18nRoute } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 
-const { displayPronunciation = false } = defineProps<{
-  legalMenus?: { title: string }[];
+interface Props {
+  legalMenus?: { title: string; to: unknown }[];
   seoParagraph?: string;
   displayPronunciation?: boolean;
-}>();
+}
+
+const { displayPronunciation = false } = defineProps<Props>();
 
 const year = new Date().getFullYear();
 </script>

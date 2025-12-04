@@ -1,4 +1,4 @@
-import type { RouteRecordRaw } from 'vue-router';
+import { type RouteRecordRaw } from 'vue-router';
 
 import { ROUTE_HOME } from '@/views/home';
 import { ROUTE_MISSION } from '@/views/mission';
@@ -12,7 +12,7 @@ import { ROUTE_CAREER } from '@/views/career';
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '/',
+    path: '',
     component: () => import('@/layouts/TheLayout.vue'),
     children: [
       ROUTE_HOME,
@@ -25,10 +25,6 @@ const routes: RouteRecordRaw[] = [
       ROUTE_PARTNERSHIPS,
       ROUTE_CAREER,
     ],
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    redirect: ROUTE_HOME,
   },
 ];
 

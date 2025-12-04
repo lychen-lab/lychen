@@ -1,9 +1,8 @@
-import { createI18n, type I18nOptions } from 'vue-i18n';
-import { type App } from 'vue';
+import { createI18n as defaultCreateI18n, type I18nOptions, type I18n } from 'vue-i18n';
 import { configSSG } from './ConfigSSG';
 import { configDefault } from './ConfigDefault';
 
-export function useI18n(app: App, config?: I18nOptions) {
+export function createI18n(config?: I18nOptions): I18n {
   if (!config) {
     if (import.meta.env.SSR && import.meta.env.VITE_SSG) {
       config = configSSG();
@@ -12,6 +11,5 @@ export function useI18n(app: App, config?: I18nOptions) {
     }
   }
 
-  const i18n = createI18n(config);
-  app.use(i18n);
+  return defaultCreateI18n(config);
 }
