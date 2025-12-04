@@ -7,7 +7,7 @@
     :target="link ? target : '_self'"
     @click="emitCloseIfRoute()"
   >
-    <div class="no-wrap flex flex-row justify-between">
+    <div class="no-wrap flex flex-row justify-between gap-4">
       <p class="text-md font-lexend leading-none font-black tracking-wide">
         {{ title }}
       </p>
