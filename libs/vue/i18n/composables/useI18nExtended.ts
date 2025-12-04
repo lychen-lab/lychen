@@ -2,6 +2,7 @@ import { useI18n, type UseI18nOptions } from 'vue-i18n';
 
 import { addRootKey } from '../helpers/RootKeyHelper';
 import { buildMessagesFromModules } from '../helpers/MessagesHelper';
+import type { RouteLocationAsRelativeGeneric } from 'vue-router';
 
 export interface UseCustomI18nOptions extends UseI18nOptions {
   rootKey?: string;
@@ -9,7 +10,9 @@ export interface UseCustomI18nOptions extends UseI18nOptions {
 }
 
 // Define the return type explicitly for clarity
-export type UseI18nExtendedReturn = ReturnType<typeof useI18n>;
+export type UseI18nExtendedReturn = ReturnType<typeof useI18n> & {
+  i18nRoute: (to: RouteLocationAsRelativeGeneric) => RouteLocationAsRelativeGeneric;
+};
 
 export type Config = { messages: UseI18nOptions['messages']; rootKey: string };
 
@@ -88,8 +91,26 @@ export function useI18nExtended(options?: UseCustomI18nOptions): UseI18nExtended
     return originalD(...(passThroughArgs as Parameters<typeof originalD>));
   }
 
+  function i18nRoute(to: Pick<RouteLocationAsRelativeGeneric, 'name' | 'params'>) {
+    console.log({
+      ...to,
+      params: {
+        locale: i18n.locale.value,
+        ...to.params,
+      },
+    });
+    return {
+      ...to,
+      params: {
+        locale: i18n.locale.value,
+        ...to.params,
+      },
+    };
+  }
+
   return {
     ...i18n, // Spread the original i18n context first (includes locale, etc.)
+    i18nRoute,
     t: customT as typeof originalT, // Override t
     n: customN as typeof originalN, // Override n
     d: customD as typeof originalD, // Override d

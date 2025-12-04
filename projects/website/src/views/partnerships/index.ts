@@ -1,5 +1,5 @@
 export const ROUTE_PARTNERSHIPS = {
-  path: '/partnerships',
+  path: 'partnerships',
   component: () => import('./View.vue'),
   name: 'partnerships',
 } as const;
