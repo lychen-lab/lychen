@@ -31,6 +31,7 @@
                 :title="t('navigation.code.title')"
                 :description="t('navigation.code.description')"
                 :link="SOCIAL_LINK.GitHub"
+                rel="noopener noreferrer"
               />
             </NavigationMenuContent>
           </NavigationMenuItem>
@@ -78,6 +79,7 @@
             <a
               :href="LINK.Blog"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <NavigationMenuLink
                 as="div"
