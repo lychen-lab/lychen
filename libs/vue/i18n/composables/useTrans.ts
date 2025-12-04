@@ -3,7 +3,7 @@ import { LOCAL_STORAGE_KEY } from '../configs/Default';
 
 export function useTrans(i18n: I18n) {
   function getDefaultLocale() {
-    return i18n.global.fallbackLocale;
+    return i18n.global.fallbackLocale.value;
   }
 
   function setCurrentLocale(newLocale: string) {
@@ -22,7 +22,10 @@ export function useTrans(i18n: I18n) {
   }
 
   function getUserLocale() {
-    const locale = window.navigator.language || window.navigator.userLanguage || getDefaultLocale();
+    const locale =
+      !import.meta.env.SSR && !import.meta.env.VITE_SSG
+        ? window.navigator.language || window.navigator.userLanguage
+        : getDefaultLocale();
 
     return {
       locale: locale,
@@ -31,6 +34,9 @@ export function useTrans(i18n: I18n) {
   }
 
   function getPersistedLocale() {
+    if (import.meta.env.SSR || import.meta.env.VITE_SSG) {
+      return null;
+    }
     const persistedLocale = localStorage.getItem(LOCAL_STORAGE_KEY);
 
     if (isLocaleSupported(persistedLocale)) {
@@ -61,8 +67,10 @@ export function useTrans(i18n: I18n) {
 
   async function switchLanguage(newLocale: string) {
     setCurrentLocale(newLocale);
-    document.querySelector('html').setAttribute('lang', newLocale);
-    localStorage.setItem(LOCAL_STORAGE_KEY, newLocale);
+    if (!import.meta.env.SSR && !import.meta.env.VITE_SSG) {
+      document.querySelector('html').setAttribute('lang', newLocale);
+      localStorage.setItem(LOCAL_STORAGE_KEY, newLocale);
+    }
   }
 
   return {

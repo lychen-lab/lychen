@@ -58,21 +58,6 @@
         </AccordionContent>
       </AccordionItem>
     </Accordion>
-
-    <div class="text-lg font-bold">
-      <RouterLink
-        :to="{ name: ROUTE_PRICE.name }"
-        @click="closeMobileMenu"
-        >{{ t(`navigation.price.title`) }}
-      </RouterLink>
-    </div>
-    <div class="text-lg font-bold">
-      <RouterLink
-        :to="{ name: ROUTE_SPONSOR.name }"
-        @click="closeMobileMenu"
-        >{{ t(`navigation.sponsor.title`) }}
-      </RouterLink>
-    </div>
   </div>
 </template>
 
@@ -82,7 +67,6 @@ import { APPLICATION_ALIAS } from '@lychen/typescript-applications/constants/App
 
 import { messages, TRANSLATION_KEY } from './i18n';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { ROUTE_PRICE } from '@/views/price';
 import { ROUTE_HOME } from '@/views/home';
 import { useCommunityMenu } from './composables/useCommunityMenu';
 import { useResourcesMenu } from './composables/useResourcesMenu';
@@ -92,7 +76,6 @@ import AccordionTrigger from '@lychen/vue-components-core/accordion/AccordionTri
 import AccordionContent from '@lychen/vue-components-core/accordion/AccordionContent.vue';
 import AccordionItem from '@lychen/vue-components-core/accordion/AccordionItem.vue';
 import { inject, type Ref, computed } from 'vue';
-import { ROUTE_SPONSOR } from '@/views/sponsor';
 import ButtonTallyPreregister from '@lychen/vue-components-website/button-tally-preregister/ButtonTallyPreregister.vue';
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });

@@ -22,9 +22,13 @@ tasks:
   production-build:
     args:
       - '--mode production'
+    env:
+      VITE_UNHEAD_HOST: ${PRODUCTION_HOST}
     extends: build
 
   staging-build:
     args:
       - '--mode staging'
+    env:
+      VITE_UNHEAD_HOST: ${STAGING_HOST}
     extends: build

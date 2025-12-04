@@ -42,8 +42,10 @@ const router = useRouter();
 
 async function switchLanguage(newLocale: string) {
   locale.value = newLocale;
-  document.querySelector('html').setAttribute('lang', newLocale);
-  localStorage.setItem(LOCAL_STORAGE_KEY, newLocale);
+  if (!import.meta.env.SSR && !import.meta.env.VITE_SSG) {
+    document.querySelector('html').setAttribute('lang', newLocale);
+    localStorage.setItem(LOCAL_STORAGE_KEY, newLocale);
+  }
   try {
     await router.replace({ params: { locale: newLocale } });
   } catch (e) {
