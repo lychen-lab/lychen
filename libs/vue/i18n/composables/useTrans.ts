@@ -1,5 +1,5 @@
 import { type I18n } from 'vue-i18n';
-import { LOCAL_STORAGE_KEY } from '../configs/Default';
+import { AVAILABLE_LOCALES, LOCAL_STORAGE_KEY } from '../configs/Default';
 
 export function useTrans(i18n: I18n) {
   function getDefaultLocale() {
@@ -11,7 +11,7 @@ export function useTrans(i18n: I18n) {
   }
 
   function getAvailableLocales(): string[] {
-    return i18n.global.availableLocales;
+    return AVAILABLE_LOCALES;
   }
 
   function isLocaleSupported(locale: string | null) {
@@ -68,7 +68,6 @@ export function useTrans(i18n: I18n) {
   async function switchLanguage(newLocale: string) {
     setCurrentLocale(newLocale);
     if (!import.meta.env.SSR && !import.meta.env.VITE_SSG) {
-      document.querySelector('html').setAttribute('lang', newLocale);
       localStorage.setItem(LOCAL_STORAGE_KEY, newLocale);
     }
   }

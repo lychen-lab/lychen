@@ -92,13 +92,6 @@ export function useI18nExtended(options?: UseCustomI18nOptions): UseI18nExtended
   }
 
   function i18nRoute(to: Pick<RouteLocationAsRelativeGeneric, 'name' | 'params'>) {
-    console.log({
-      ...to,
-      params: {
-        locale: i18n.locale.value,
-        ...to.params,
-      },
-    });
     return {
       ...to,
       params: {
