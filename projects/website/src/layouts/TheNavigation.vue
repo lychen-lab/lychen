@@ -118,7 +118,15 @@
     </div>
 
     <div class="flex flex-row items-center gap-2">
-      <Button label="Faire un don" />
+      <a
+        :href="LINK.HelloAssoDonation"
+        target="_blank"
+      >
+        <Button
+          label="Faire un don"
+          size="sm"
+        />
+      </a>
     </div>
   </div>
 </template>
@@ -140,6 +148,7 @@ import { useResourcesMenu } from './composables/useResourcesMenu';
 import LogoLychenFull from '@lychen/vue-components-extra/logo-lychen/LogoLychenFull.vue';
 import { APPLICATION_ALIAS } from '@lychen/typescript-applications/constants/ApplicationAlias';
 import Button from '@lychen/vue-components-core/button/Button.vue';
+import { LINK } from '@lychen/typescript-constants/Link';
 
 const NavigationMenuSubLink = defineAsyncComponent(
   () => import('@lychen/vue-components-core/navigation-menu/NavigationMenuSubLink.vue'),

@@ -1,8 +1,8 @@
 export const LINK = {
-  TallyPreregisterForm: 'https://tally.so/r/w5EYdZ',
   Blog: 'https://blog.lychen.org/',
-  Huly: 'https://huly.app/workbench/lychen',
+  Plane: '',
   Forum: 'https://github.com/lychen-lab/lychen/discussions',
   Alpsify: 'https://alpsify.com',
   HumusAndCo: 'https://humusandco.fr',
+  HelloAssoDonation: 'https://www.helloasso.com/associations/lychen/formulaires/1',
 } as const;
