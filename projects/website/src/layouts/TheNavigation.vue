@@ -12,7 +12,7 @@
           <NavigationMenuItem>
             <NavigationMenuTrigger>{{ t(`navigation.initiatives.title`) }}</NavigationMenuTrigger>
             <NavigationMenuContent
-              class="bg-surface-container/70 grid grid-cols-2 rounded-lg p-4 backdrop-blur-lg md:w-[600px]"
+              class="bg-surface-container/70 grid grid-cols-2 gap-4 rounded-lg p-4 backdrop-blur-lg md:w-[600px]"
             >
               <NavigationMenuSubLink
                 :title="t('navigation.applications.title')"
@@ -39,7 +39,6 @@
               <NavigationMenuLink
                 as="div"
                 :class="navigationMenuTriggerStyle()"
-                class="hover:bg-primary-container/30 hover:text-on-primary-container"
               >
                 {{ t(`navigation.mission.title`) }}
               </NavigationMenuLink>
@@ -48,7 +47,7 @@
           <NavigationMenuItem>
             <NavigationMenuTrigger>{{ t(`navigation.about.title`) }}</NavigationMenuTrigger>
             <NavigationMenuContent
-              class="bg-surface-container/70 grid grid-cols-2 rounded-lg p-4 backdrop-blur-lg md:w-[600px]"
+              class="bg-surface-container/70 grid grid-cols-2 gap-4 rounded-lg p-4 backdrop-blur-lg md:w-[600px]"
             >
               <NavigationMenuSubLink
                 :title="t('navigation.charter.title')"
@@ -83,7 +82,6 @@
               <NavigationMenuLink
                 as="div"
                 :class="navigationMenuTriggerStyle()"
-                class="hover:bg-primary-container/30 hover:text-on-primary-container"
               >
                 {{ t(`navigation.blog.title`) }}
               </NavigationMenuLink>
@@ -109,10 +107,10 @@
 
 <script setup lang="ts">
 import { navigationMenuTriggerStyle } from '@lychen/vue-components-core/navigation-menu';
-import { computed, defineAsyncComponent } from 'vue';
+import { defineAsyncComponent } from 'vue';
 import { ROUTE_HOME } from '@/views/home';
 import { CONFIG } from './i18n';
-import { useI18nExtended, usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
+import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 
 import LogoLychenFull from '@lychen/vue-components-extra/logo-lychen/LogoLychenFull.vue';
 import Button from '@lychen/vue-components-core/button/Button.vue';
