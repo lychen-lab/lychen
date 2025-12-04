@@ -31,6 +31,8 @@ jobs:
         uses: 'moonrepo/setup-toolchain@v0'
       - id: gather-projects
         uses: ./.github/actions/moon-affected-projects-list
+        with:
+          layer: application
 
   build-and-push:
     if: ${{ needs.define-matrix.outputs.projects != '[]' && needs.define-matrix.outputs.projects != '' }}
