@@ -2532,6 +2532,7 @@ __metadata:
     "@lychen/vue-icons": "workspace:*"
     vue: "npm:^3.5.22"
     vue-i18n: "npm:^11.1.12"
+    vue-router: "npm:^4.6.3"
   languageName: unknown
   linkType: soft
 

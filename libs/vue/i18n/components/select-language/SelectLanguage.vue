@@ -32,9 +32,24 @@
 import { Popover, PopoverContent, PopoverTrigger } from '@lychen/vue-components-core/popover';
 import IconLanguage from '@lychen/vue-icons/IconLanguage.vue';
 import Button from '@lychen/vue-components-core/button/Button.vue';
-import { useTrans } from '../../composables/useTrans';
+import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+import { LOCAL_STORAGE_KEY } from '../../configs/Default';
 
-const { switchLanguage } = useTrans();
+const { locale } = useI18n();
+
+const router = useRouter();
+
+async function switchLanguage(newLocale: string) {
+  locale.value = newLocale;
+  document.querySelector('html').setAttribute('lang', newLocale);
+  localStorage.setItem(LOCAL_STORAGE_KEY, newLocale);
+  try {
+    await router.replace({ params: { locale: newLocale } });
+  } catch (e) {
+    router.push('/');
+  }
+}
 
 const availableLocales = [
   { code: 'en-US', name: 'English' },

@@ -1,20 +1,28 @@
-import { useI18n } from 'vue-i18n';
+import { type I18n } from 'vue-i18n';
+import { LOCAL_STORAGE_KEY } from '../configs/Default';
 
-export function useTrans() {
-  const LOCAL_STORAGE_KEY = 'user-locale';
+export function useTrans(i18n: I18n) {
+  function getDefaultLocale() {
+    return i18n.global.fallbackLocale;
+  }
 
-  const { locale, availableLocales, fallbackLocale } = useI18n();
+  function setCurrentLocale(newLocale: string) {
+    return (i18n.global.locale.value = newLocale);
+  }
+
+  function getAvailableLocales(): string[] {
+    return i18n.global.availableLocales;
+  }
 
   function isLocaleSupported(locale: string | null) {
     if (!locale) {
       return false;
     }
-    return availableLocales.includes(locale);
+    return getAvailableLocales().includes(locale);
   }
 
   function getUserLocale() {
-    const locale =
-      window.navigator.language || window.navigator.userLanguage || fallbackLocale.value;
+    const locale = window.navigator.language || window.navigator.userLanguage || getDefaultLocale();
 
     return {
       locale: locale,
@@ -48,29 +56,18 @@ export function useTrans() {
       return userPreferredLocale.localeNoRegion;
     }
 
-    return fallbackLocale;
+    return getDefaultLocale();
   }
 
   async function switchLanguage(newLocale: string) {
-    locale.value = newLocale;
+    setCurrentLocale(newLocale);
     document.querySelector('html').setAttribute('lang', newLocale);
     localStorage.setItem(LOCAL_STORAGE_KEY, newLocale);
   }
 
-  async function routeMiddleware(to, _from, next) {
-    const paramLocale = to.params.locale;
-
-    if (!isLocaleSupported(paramLocale)) {
-      return next(guessDefaultLocale());
-    }
-
-    await switchLanguage(paramLocale);
-
-    return next();
-  }
-
   return {
     switchLanguage,
-    routeMiddleware,
+    isLocaleSupported,
+    guessDefaultLocale,
   };
 }
