@@ -2,7 +2,7 @@ $schema: 'https://moonrepo.dev/schemas/tasks.json'
 
 tasks:
   dokploy-compose-deploy:
-    command: bash $workspaceRoot/.moon/scripts/dokploy-compose-deploy.sh -i ${DOKPLOY_COMPOSE_ID}
+    command: bash $workspaceRoot/.moon/scripts/dokploy-compose-deploy.sh
     options:
       inferInputs: false
 
