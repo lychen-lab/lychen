@@ -14,10 +14,12 @@
             <IconMenu class="cursor-pointer" />
           </SheetTrigger>
           <SheetContent
-            class="bg-surface-container/70 text-on-surface-container w-full backdrop-blur-lg"
+            class="bg-surface-container/70 text-on-surface-container w-full overflow-y-auto backdrop-blur-lg"
           >
             <template #header><slot name="header"></slot></template>
-            <slot name="mobile"></slot>
+            <SheetClose class="flex flex-col gap-2 text-left">
+              <slot name="mobile"></slot>
+            </SheetClose>
           </SheetContent>
         </Sheet>
       </div>
@@ -28,6 +30,7 @@
 <script lang="ts" setup>
 import { defineAsyncComponent, provide, ref } from 'vue';
 import IconMenu from '@lychen/vue-icons/IconMenu.vue';
+import { SheetClose } from '@lychen/vue-components-core/sheet';
 
 const SheetTrigger = defineAsyncComponent(
   () => import('@lychen/vue-components-core/sheet/SheetTrigger.vue'),

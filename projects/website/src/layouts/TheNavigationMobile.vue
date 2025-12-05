@@ -1,89 +1,118 @@
 <template>
   <div class="mt-4 flex w-full flex-col items-stretch justify-start gap-2">
-    <ButtonTallyPreregister />
-    <div class="text-lg font-bold">
-      <RouterLink
-        :to="{ name: ROUTE_HOME.name }"
-        @click="closeMobileMenu"
-        >{{ t(`navigation.home.title`) }}
-      </RouterLink>
-    </div>
     <Accordion
       type="single"
       class="w-full"
       collapsible
-      :default-value="'resources'"
+      default-value="initiatives"
     >
-      <AccordionItem value="applications">
+      <AccordionItem value="initiatives">
         <AccordionTrigger class="text-lg font-bold">{{
-          t(`navigation.app.title`)
+          t(`navigation.initiatives.title`)
         }}</AccordionTrigger>
         <AccordionContent>
           <NavigationMenuSubLink
-            v-for="application in opiniatedApplicationsList"
-            v-bind="application"
-            :key="application.title"
-            @navigate-to-route="closeMobileMenu"
+            :title="t('navigation.applications.title')"
+            :description="t('navigation.applications.description')"
+            :route="{ name: ROUTE_APPLICATIONS.name }"
           />
           <NavigationMenuSubLink
-            v-bind="robust"
-            @navigate-to-route="closeMobileMenu"
+            :title="t('navigation.api.title')"
+            :description="t('navigation.api.description')"
           />
-        </AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="resources">
-        <AccordionTrigger class="text-lg font-bold">{{
-          t(`navigation.resources.title`)
-        }}</AccordionTrigger>
-        <AccordionContent>
           <NavigationMenuSubLink
-            v-for="resourceMenu in resourcesMenuList"
-            v-bind="resourceMenu"
-            :key="resourceMenu.title"
-            @navigate-to-route="closeMobileMenu"
+            :title="t('navigation.label.title')"
+            :description="t('navigation.label.description')"
           />
-        </AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="community">
-        <AccordionTrigger class="text-lg font-bold">{{
-          t(`navigation.community.title`)
-        }}</AccordionTrigger>
-        <AccordionContent>
           <NavigationMenuSubLink
-            v-for="communityMenu in communityMenuList"
-            v-bind="communityMenu"
-            :key="communityMenu.title"
-            @navigate-to-route="closeMobileMenu"
+            :title="t('navigation.code.title')"
+            :description="t('navigation.code.description')"
+            :link="SOCIAL_LINK.GitHub"
+            rel="noopener noreferrer"
           />
         </AccordionContent>
       </AccordionItem>
     </Accordion>
+    <RouterLink
+      :to="i18nRoute({ name: ROUTE_MISSION.name })"
+      class="text-lg font-bold"
+    >
+      <NavigationMenuLink as="div">
+        {{ t(`navigation.mission.title`) }}
+      </NavigationMenuLink>
+    </RouterLink>
+    <Accordion
+      type="single"
+      class="w-full"
+      collapsible
+      default-value="about"
+    >
+      <AccordionItem value="about">
+        <AccordionTrigger class="text-lg font-bold">{{
+          t(`navigation.about.title`)
+        }}</AccordionTrigger>
+        <AccordionContent>
+          <NavigationMenuSubLink
+            :title="t('navigation.charter.title')"
+            :description="t('navigation.charter.description')"
+            :route="{ name: ROUTE_CHARTER.name }"
+          />
+
+          <NavigationMenuSubLink
+            :title="t('navigation.team.title')"
+            :description="t('navigation.team.description')"
+            :route="{ name: ROUTE_TEAM.name }"
+          />
+
+          <NavigationMenuSubLink
+            :title="t('navigation.partnerships.title')"
+            :description="t('navigation.partnerships.description')"
+            :route="{ name: ROUTE_PARTNERSHIPS.name }"
+          />
+
+          <NavigationMenuSubLink
+            :title="t('navigation.career.title')"
+            :description="t('navigation.career.description')"
+            :route="{ name: ROUTE_CAREER.name }"
+          />
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+    <a
+      :href="LINK.Blog"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <NavigationMenuLink
+        as="div"
+        class="text-lg font-bold"
+      >
+        {{ t(`navigation.blog.title`) }}
+      </NavigationMenuLink>
+    </a>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useApplicationsCatalog } from '@lychen/vue-applications/composables/useApplicationsCatalog';
-import { APPLICATION_ALIAS } from '@lychen/typescript-applications/constants/ApplicationAlias';
-
-import { messages, TRANSLATION_KEY } from './i18n';
-import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { ROUTE_HOME } from '@/views/home';
-import { useCommunityMenu } from './composables/useCommunityMenu';
-import { useResourcesMenu } from './composables/useResourcesMenu';
+import { CONFIG } from './i18n';
+import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import NavigationMenuSubLink from '@lychen/vue-components-core/navigation-menu/NavigationMenuSubLink.vue';
 import Accordion from '@lychen/vue-components-core/accordion/Accordion.vue';
 import AccordionTrigger from '@lychen/vue-components-core/accordion/AccordionTrigger.vue';
 import AccordionContent from '@lychen/vue-components-core/accordion/AccordionContent.vue';
 import AccordionItem from '@lychen/vue-components-core/accordion/AccordionItem.vue';
-import { inject, type Ref, computed } from 'vue';
-import ButtonTallyPreregister from '@lychen/vue-components-website/button-tally-preregister/ButtonTallyPreregister.vue';
+import { inject, type Ref } from 'vue';
+import { ROUTE_MISSION } from '@/views/mission';
+import { ROUTE_APPLICATIONS } from '@/views/applications';
+import { SOCIAL_LINK } from '@lychen/typescript-constants/Social';
+import { ROUTE_PARTNERSHIPS } from '@/views/partnerships';
+import { ROUTE_CAREER } from '@/views/career';
+import { ROUTE_TEAM } from '@/views/team';
+import { ROUTE_CHARTER } from '@/views/charter';
+import { LINK } from '@lychen/typescript-constants/Link';
 
-const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
+const { t, i18nRoute } = usePrefixedI18n(CONFIG);
 
-const { opiniatedApplicationsList, getAppInfo } = useApplicationsCatalog();
-const { communityMenuList } = useCommunityMenu();
-const { resourcesMenuList } = useResourcesMenu();
-const robust = computed(() => getAppInfo(APPLICATION_ALIAS.Robust));
 const mobileMenuIsOpen = inject<Ref<boolean>>('mobileMenuIsOpen');
 
 function closeMobileMenu() {

@@ -1,0 +1,62 @@
+{
+  "navigation": {
+    "initiatives": {
+      "title": "Our initiatives"
+    },
+    "applications": {
+      "title": "Create applications",
+      "description": "We develop web applications to allow the ecosystem to be connected"
+    },
+    "label": {
+      "title": "Label the systems",
+      "description": "We created the Robust label to reward pro-active systems"
+    },
+    "blog": {
+      "title": "Blog",
+      "description": "Read our latest articles and insights"
+    },
+    "about": {
+      "title": "About",
+      "description": ""
+    },
+    "career": {
+      "title": "Join us",
+      "description": "Help us build this ecosystem by getting involved concretely"
+    },
+    "api": {
+      "title": "Provide APIs",
+      "description": "We take care to provide everything needed for easy integration into existing systems"
+    },
+    "code": {
+      "title": "Share our knowledge",
+      "description": "The code we write is open-source, public, and open to external proposals"
+    },
+    "partnerships": {
+      "title": "Partnerships",
+      "description": "The actors with whom we have a strong and contractual link"
+    },
+    "charter": {
+      "title": "Our charter",
+      "description": "Our rules and values, how the association is organized"
+    },
+    "team": {
+      "title": "The team",
+      "description": "Who are we?"
+    },
+    "mission": {
+      "title": "Our mission",
+      "description": ""
+    },
+    "discord": {
+      "title": "Discord",
+      "description": "Join the community on Discord."
+    },
+    "github": {
+      "title": "GitHub",
+      "description": "Source code for Lychen."
+    }
+  },
+  "footer": {
+    "seo_paragraph": "Facilitating local symbiosis. We connect territory stakeholders for sustainable and environmentally friendly agriculture."
+  }
+}

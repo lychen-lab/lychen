@@ -2,12 +2,12 @@
   <component
     :is="route ? 'RouterLink' : 'a'"
     :to="route ? { name: route.name } : null"
-    class="focus:bg-primary-container/30 focus:text-on-primary-container flex cursor-pointer flex-col gap-1 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none"
+    class="hover:bg-surface-container focus:bg-primary-container/30 focus:text-on-primary-container flex cursor-pointer flex-col gap-1 rounded-lg p-3 leading-none no-underline transition-colors outline-none select-none"
     :href="link"
     :target="link ? target : '_self'"
     @click="emitCloseIfRoute()"
   >
-    <div class="no-wrap flex flex-row justify-between">
+    <div class="no-wrap flex flex-row justify-between gap-4">
       <p class="text-md font-lexend leading-none font-black tracking-wide">
         {{ title }}
       </p>
