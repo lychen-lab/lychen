@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-row gap-4">
     {{ t('title') }}
+    - presentation without pictures
   </div>
 </template>
 
