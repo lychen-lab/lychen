@@ -59,9 +59,12 @@ jobs:
           fetch-depth: 0
       - name: Set up Moon Toolchain
         uses: 'moonrepo/setup-toolchain@v0'
+      - run: |
+          PROJECT_ID_UPPERCASE=$(echo "${{ matrix.projects }}" | tr '[:lower:]' '[:upper:]')
+          SECRET_NAME="${PROJECT_ID_UPPERCASE}_DOKPLOY_ID"
+          echo "DOKPLOY_COMPOSE_ID=${!SECRET_NAME}" >> $GITHUB_ENV
       - name: 'Deploy'
         env:
           DOKPLOY_API_TOKEN: ${{ secrets.DOKPLOY_API_TOKEN }}
           DOKPLOY_API_URL: ${{ secrets.DOKPLOY_API_URL }}
-          DOKPLOY_COMPOSE_ID: ${{ secrets[format('{0}_DOKPLOY_ID', toUpper(matrix.projects))] }}
         run: 'moon ci ${{ matrix.projects }}:${{ matrix.environments }}-dokploy-compose-deploy'
