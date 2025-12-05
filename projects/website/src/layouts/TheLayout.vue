@@ -3,7 +3,12 @@
     <template #navigation>
       <TheNavigation />
     </template>
-    <template #header><LogoLychenFull class="h-10" /></template>
+    <template #header
+      ><RouterLink
+        :to="{ name: ROUTE_HOME.name }"
+        class="flex flex-row items-stretch"
+        ><LogoLychenFull class="h-10" /></RouterLink
+    ></template>
     <template #mobile>
       <TheNavigationMobile />
     </template>
@@ -14,6 +19,7 @@
 </template>
 
 <script lang="ts" setup>
+import { ROUTE_HOME } from '@/views/home';
 import { defineAsyncComponent } from 'vue';
 
 const LayoutMain = defineAsyncComponent(
