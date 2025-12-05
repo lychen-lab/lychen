@@ -1,6 +1,8 @@
 <template>
   <div class="flex flex-row gap-4">
     {{ t('title') }}
+
+    - Nos status simpifié
   </div>
 </template>
 
