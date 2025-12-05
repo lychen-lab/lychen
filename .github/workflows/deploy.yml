@@ -63,5 +63,5 @@ jobs:
         env:
           DOKPLOY_API_TOKEN: ${{ secrets.DOKPLOY_API_TOKEN }}
           DOKPLOY_API_URL: ${{ secrets.DOKPLOY_API_URL }}
-          DOKPLOY_COMPOSE_ID: ${{ secrets.[format('{0}_DOKPLOY_ID'), toUpper(matrix.projects))] }}
+          DOKPLOY_COMPOSE_ID: ${{ secrets[format('{0}_DOKPLOY_ID', toUpper(matrix.projects))] }}
         run: 'moon ci ${{ matrix.projects }}:${{ matrix.environments }}-dokploy-compose-deploy'
