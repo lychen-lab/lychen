@@ -17,8 +17,8 @@ dependsOn:
   - vue-unhead-composables
 
 env:
-  PRODUCTION_HOST: 'lychen.org'
-  STAGING_HOST: 'staging.lychen.org'
+  PRODUCTION_HOST: lychen.org
+  STAGING_HOST: staging.lychen.org
 
 id: website
 
