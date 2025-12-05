@@ -59,8 +59,9 @@ jobs:
           fetch-depth: 0
       - name: Set up Moon Toolchain
         uses: 'moonrepo/setup-toolchain@v0'
-      - name: 'Redeploy from Dokploy on VPS'
+      - name: 'Deploy'
         env:
           DOKPLOY_API_TOKEN: ${{ secrets.DOKPLOY_API_TOKEN }}
           DOKPLOY_API_URL: ${{ secrets.DOKPLOY_API_URL }}
+          DOKPLOY_COMPOSE_ID: ${{ secrets.[format('{0}_DOKPLOY_ID'), fromJSON(toJson(matrix.projects)) | toUpper)] }}
         run: 'moon ci ${{ matrix.projects }}:${{ matrix.environments }}-dokploy-compose-deploy'

@@ -15,24 +15,24 @@ tasks:
     deps:
       - production-dokploy-compose-update
     env:
-      DOKPLOY_COMPOSE_ID: ${PRODUCTION_DOKPLOY_COMPOSE_ID}
+      DOKPLOY_COMPOSE_ID: ${DOKPLOY_COMPOSE_ID}
     extends: dokploy-compose-deploy
 
   production-dokploy-compose-update:
     env:
       COMPOSE_FILE: $projectRoot/compose.production.yml
-      DOKPLOY_COMPOSE_ID: ${PRODUCTION_DOKPLOY_COMPOSE_ID}
+      DOKPLOY_COMPOSE_ID: ${DOKPLOY_COMPOSE_ID}
     extends: dokploy-compose-update
 
   staging-dokploy-compose-deploy:
     deps:
       - staging-dokploy-compose-update
     env:
-      DOKPLOY_COMPOSE_ID: ${STAGING_DOKPLOY_COMPOSE_ID}
+      DOKPLOY_COMPOSE_ID: ${DOKPLOY_COMPOSE_ID}
     extends: dokploy-compose-deploy
 
   staging-dokploy-compose-update:
     env:
       COMPOSE_FILE: $projectRoot/compose.staging.yml
-      DOKPLOY_COMPOSE_ID: ${STAGING_DOKPLOY_COMPOSE_ID}
+      DOKPLOY_COMPOSE_ID: ${DOKPLOY_COMPOSE_ID}
     extends: dokploy-compose-update
