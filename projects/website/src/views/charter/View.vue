@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-row gap-4">
     {{ t('title') }}
+    - Charte avec explication pour chaque éléments
   </div>
 </template>
 
