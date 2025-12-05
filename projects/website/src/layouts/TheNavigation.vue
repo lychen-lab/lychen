@@ -101,7 +101,11 @@
         <Button
           label="Faire un don"
           size="sm"
-        />
+        >
+          <template #icon>
+            <IconHeartHandshake />
+          </template>
+        </Button>
       </a>
     </div>
   </div>
@@ -124,6 +128,7 @@ import { ROUTE_CHARTER } from '@/views/charter';
 import { ROUTE_TEAM } from '@/views/team';
 import { ROUTE_MISSION } from '@/views/mission';
 import { ROUTE_APPLICATIONS } from '@/views/applications';
+import IconHeartHandshake from '@lychen/vue-icons/IconHeartHandshake.vue';
 
 const NavigationMenuSubLink = defineAsyncComponent(
   () => import('@lychen/vue-components-core/navigation-menu/NavigationMenuSubLink.vue'),
