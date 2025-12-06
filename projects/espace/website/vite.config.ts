@@ -17,7 +17,7 @@ const config: UserConfig & ViteSSGOptions = {
     vueDevTools(),
     tailwindcss(),
     mkcert({
-      hosts: [<string>process.env.VITE_UNHEAD_HOST],
+      hosts: [process.env.VITE_UNHEAD_HOST || 'localhost'],
     }),
     vue({
       template: {
