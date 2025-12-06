@@ -5,15 +5,8 @@ import { ROUTE_HOME } from '@/views/home';
 const routes: RouteRecordRaw[] = [
   {
     path: '',
-    redirect: ROUTE_HOME,
-  },
-  {
-    path: '/',
+    component: () => import('@/layouts/TheLayout.vue'),
     children: [ROUTE_HOME],
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    redirect: ROUTE_HOME,
   },
 ];
 
