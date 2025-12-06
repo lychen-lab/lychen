@@ -6,6 +6,7 @@ dependsOn:
   - vue-components-business
   - vue-components-core
   - vue-components-website
+  - vue-espace
   - vue-i18n
   - vue-layouts
   - vue-router-configs

@@ -2074,6 +2074,7 @@ __metadata:
     "@lychen/vue-components-business": "workspace:*"
     "@lychen/vue-components-core": "workspace:*"
     "@lychen/vue-components-website": "workspace:*"
+    "@lychen/vue-espace": "workspace:*"
     "@lychen/vue-i18n": "workspace:*"
     "@lychen/vue-layouts": "workspace:*"
     "@lychen/vue-router-configs": "workspace:*"
@@ -2249,6 +2250,14 @@ __metadata:
 "@lychen/typescript-constants@workspace:*, @lychen/typescript-constants@workspace:libs/typescript/constants":
   version: 0.0.0-use.local
   resolution: "@lychen/typescript-constants@workspace:libs/typescript/constants"
+  languageName: unknown
+  linkType: soft
+
+"@lychen/typescript-espace@workspace:*, @lychen/typescript-espace@workspace:libs/typescript/espace":
+  version: 0.0.0-use.local
+  resolution: "@lychen/typescript-espace@workspace:libs/typescript/espace"
+  dependencies:
+    "@lychen/typescript-utils": "workspace:*"
   languageName: unknown
   linkType: soft
 
@@ -2511,6 +2520,15 @@ __metadata:
   resolution: "@lychen/vue-drawio-tera@workspace:libs/vue/drawio/tera"
   dependencies:
     "@lychen/vue-drawio-components": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@lychen/vue-espace@workspace:*, @lychen/vue-espace@workspace:libs/vue/espace":
+  version: 0.0.0-use.local
+  resolution: "@lychen/vue-espace@workspace:libs/vue/espace"
+  dependencies:
+    "@lychen/typescript-espace": "workspace:*"
+    "@lychen/vue-i18n": "workspace:*"
   languageName: unknown
   linkType: soft
 

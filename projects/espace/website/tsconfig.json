@@ -24,6 +24,9 @@
       "path": "../../../libs/vue/components-website"
     },
     {
+      "path": "../../../libs/vue/espace"
+    },
+    {
       "path": "../../../libs/vue/i18n"
     },
     {

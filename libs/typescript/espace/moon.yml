@@ -1,0 +1,8 @@
+dependsOn:
+  - typescript-utils
+
+id: typescript-espace
+
+language: typescript
+
+layer: library

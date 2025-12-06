@@ -11,6 +11,9 @@
       "path": "libs/typescript/constants"
     },
     {
+      "path": "libs/typescript/espace"
+    },
+    {
       "path": "libs/typescript/humu"
     },
     {
@@ -81,6 +84,9 @@
     },
     {
       "path": "libs/vue/drawio/tera"
+    },
+    {
+      "path": "libs/vue/espace"
     },
     {
       "path": "libs/vue/humu"
