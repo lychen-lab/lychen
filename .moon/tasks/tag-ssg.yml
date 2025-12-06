@@ -16,6 +16,7 @@ tasks:
      # - assets-sync
     env:
       VITE_APP_ID: $project
+      VITE_UNHEAD_HOST: ${DEV_HOST}
     options:
       persistent: true
 

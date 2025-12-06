@@ -1,5 +1,6 @@
 {
   "name": "@lychen/vite-ssg",
+  "type": "module",
   "dependencies": {
     "@lychen/vue-i18n": "workspace:*",
     "@lychen/vue-router-configs": "workspace:*",
@@ -9,6 +10,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
     "vite": "^7.2.2",
-    "vite-ssg": "^28.2.2"
+    "vite-ssg": "^28.2.2",
+    "vite-ssg-sitemap": "^0.10.0"
   }
 }
