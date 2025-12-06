@@ -66,7 +66,7 @@ jobs:
           # Pass all secrets as a JSON string
           DOKPLOY_SECRETS: ${{ toJSON(secrets) }}
         run: |
-          PROJECT_ID_UPPERCASE=$(echo "${{ matrix.projects }}" | tr '[:lower:]' '[:upper:]')
+          PROJECT_ID_UPPERCASE=$(echo "${{ matrix.projects }}" | tr '[:lower:]-' '[:upper:]_')
           SECRET_NAME="${PROJECT_ID_UPPERCASE}_DOKPLOY_ID"
           export DOKPLOY_COMPOSE_ID=$(echo "$DOKPLOY_SECRETS" | jq -r --arg key "$SECRET_NAME" '.[$key]')
           moon ci ${{ matrix.projects }}:${{ matrix.environments }}-dokploy-compose-deploy

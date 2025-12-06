@@ -3,13 +3,13 @@
 </template>
 
 <script setup lang="ts">
-import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
+import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { usePreferredColorScheme } from '@lychen/vue-color-scheme/composables/usePreferredColorScheme';
 import { defineOrganization, defineWebPage, defineWebSite } from '@unhead/schema-org';
 import { useHead } from '@unhead/vue';
-import { TRANSLATION_KEY, messages } from '@lychen/vue-tera/i18n';
+import { CONFIG } from '@lychen/vue-espace/i18n';
 
-const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
+const { t } = usePrefixedI18n(CONFIG);
 
 usePreferredColorScheme();
 

@@ -2074,6 +2074,7 @@ __metadata:
     "@lychen/vue-components-business": "workspace:*"
     "@lychen/vue-components-core": "workspace:*"
     "@lychen/vue-components-website": "workspace:*"
+    "@lychen/vue-espace": "workspace:*"
     "@lychen/vue-i18n": "workspace:*"
     "@lychen/vue-layouts": "workspace:*"
     "@lychen/vue-router-configs": "workspace:*"
@@ -2252,6 +2253,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@lychen/typescript-espace@workspace:*, @lychen/typescript-espace@workspace:libs/typescript/espace":
+  version: 0.0.0-use.local
+  resolution: "@lychen/typescript-espace@workspace:libs/typescript/espace"
+  dependencies:
+    "@lychen/typescript-utils": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "@lychen/typescript-humu@workspace:*, @lychen/typescript-humu@workspace:libs/typescript/humu":
   version: 0.0.0-use.local
   resolution: "@lychen/typescript-humu@workspace:libs/typescript/humu"
@@ -2361,6 +2370,7 @@ __metadata:
     "@vitejs/plugin-vue": "npm:^6.0.1"
     vite: "npm:^7.2.2"
     vite-ssg: "npm:^28.2.2"
+    vite-ssg-sitemap: "npm:^0.10.0"
     vue: "npm:^3.5.22"
     vue-router: "npm:^4.6.3"
   languageName: unknown
@@ -2510,6 +2520,15 @@ __metadata:
   resolution: "@lychen/vue-drawio-tera@workspace:libs/vue/drawio/tera"
   dependencies:
     "@lychen/vue-drawio-components": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@lychen/vue-espace@workspace:*, @lychen/vue-espace@workspace:libs/vue/espace":
+  version: 0.0.0-use.local
+  resolution: "@lychen/vue-espace@workspace:libs/vue/espace"
+  dependencies:
+    "@lychen/typescript-espace": "workspace:*"
+    "@lychen/vue-i18n": "workspace:*"
   languageName: unknown
   linkType: soft
 

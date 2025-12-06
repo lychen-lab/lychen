@@ -1,0 +1,9 @@
+dependsOn:
+  - typescript-espace
+  - vue-i18n
+
+id: vue-espace
+
+language: typescript
+
+layer: library

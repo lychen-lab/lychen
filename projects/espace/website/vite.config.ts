@@ -3,11 +3,12 @@ import path from 'node:path';
 import type { UserConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import mkcert from 'vite-plugin-mkcert';
-import generateSitemap from 'vite-ssg-sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import vueDevTools from 'vite-plugin-vue-devtools';
+import type { ViteSSGOptions } from 'vite-ssg';
+import { ssgOptions } from '@lychen/vite-ssg/ssgOptions';
 
-const config: UserConfig = {
+const config: UserConfig & ViteSSGOptions = {
   server: {
     https: {},
     port: 5145,
@@ -16,7 +17,7 @@ const config: UserConfig = {
     vueDevTools(),
     tailwindcss(),
     mkcert({
-      hosts: ['espace.lychen.local'],
+      hosts: [process.env.VITE_UNHEAD_HOST || 'localhost'],
     }),
     vue({
       template: {
@@ -31,13 +32,7 @@ const config: UserConfig = {
       '@': path.resolve(__dirname, './src'),
     },
   },
-  ssgOptions: {
-    script: 'async',
-    formatting: 'prettify',
-    onFinished() {
-      generateSitemap({ hostname: `https://${process.env.VITE_UNHEAD_HOST}` });
-    },
-  },
+  ssgOptions,
 };
 
 export default config;

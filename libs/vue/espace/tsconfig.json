@@ -1,0 +1,17 @@
+{
+  "extends": "../../../tsconfig.options.json",
+  "include": [
+    "**/*"
+  ],
+  "references": [
+    {
+      "path": "../../typescript/espace"
+    },
+    {
+      "path": "../i18n"
+    }
+  ],
+  "compilerOptions": {
+    "outDir": "../../../.moon/cache/types/libs/vue/espace"
+  }
+}

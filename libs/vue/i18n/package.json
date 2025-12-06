@@ -1,5 +1,6 @@
 {
   "name": "@lychen/vue-i18n",
+  "type": "module",
   "dependencies": {
     "@intlify/core-base": "^11.1.12",
     "@lychen/vue-components-core": "workspace:*",

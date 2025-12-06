@@ -16,6 +16,7 @@
     "@lychen/vue-components-business": "workspace:*",
     "@lychen/vue-components-core": "workspace:*",
     "@lychen/vue-components-website": "workspace:*",
+    "@lychen/vue-espace": "workspace:*",
     "@lychen/vue-i18n": "workspace:*",
     "@lychen/vue-layouts": "workspace:*",
     "@lychen/vue-router-configs": "workspace:*",

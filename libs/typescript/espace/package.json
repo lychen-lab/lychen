@@ -1,0 +1,6 @@
+{
+  "name": "@lychen/typescript-espace",
+  "dependencies": {
+    "@lychen/typescript-utils": "workspace:*"
+  }
+}

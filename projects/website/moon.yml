@@ -17,6 +17,7 @@ dependsOn:
   - vue-unhead-composables
 
 env:
+  DEV_HOST: lychen.local
   PRODUCTION_HOST: lychen.org
   STAGING_HOST: staging.lychen.org
 

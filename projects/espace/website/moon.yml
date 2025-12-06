@@ -6,14 +6,16 @@ dependsOn:
   - vue-components-business
   - vue-components-core
   - vue-components-website
+  - vue-espace
   - vue-i18n
   - vue-layouts
   - vue-router-configs
   - vue-unhead-composables
 
 env:
-  PRODUCTION_DOKPLOY_COMPOSE_ID: ''
-  STAGING_DOKPLOY_COMPOSE_ID: ''
+  DEV_HOST: espace.lychen.local
+  PRODUCTION_HOST: espace.lychen.org
+  STAGING_HOST: staging.espace.lychen.org
 
 id: espace-website
 
