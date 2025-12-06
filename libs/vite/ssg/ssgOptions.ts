@@ -14,6 +14,10 @@ export const ssgOptions: ViteSSGOptions = {
   },
   dirStyle: 'nested',
   onFinished() {
-    generateSitemap({ hostname: `https://${process.env.VITE_UNHEAD_HOST}` });
+    const host = process.env.VITE_UNHEAD_HOST;
+    if (!host) {
+      throw new Error('VITE_UNHEAD_HOST environment variable is required for sitemap generation');
+    }
+    generateSitemap({ hostname: `https://${host}` });
   },
 };
