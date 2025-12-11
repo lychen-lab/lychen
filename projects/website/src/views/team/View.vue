@@ -29,13 +29,16 @@
   </Container>
 
   <Container class="grid grid-cols-2 gap-8">
-    <div>
+    <div class="flex flex-col items-start gap-8">
       <Title variant="h2">Découvrir notre manière de construire l'écosystème</Title>
       <Paragraph class="w-3/4 text-left opacity-60">
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi sint at atque illum esse
         accusantium necessitatibus, molestias fuga voluptatem voluptatibus provident ut maxime neque
         officia odit iusto eius illo nisi!
       </Paragraph>
+      <RouterLink :to="{ name: ROUTE_CHARTER.name }">
+        <Button>Notre charte</Button>
+      </RouterLink>
     </div>
     <div>
       <img />
@@ -51,6 +54,8 @@ import Title from '@lychen/vue-components-website/title/Title.vue';
 import Paragraph from '@lychen/vue-components-website/paragraph/Paragraph.vue';
 import persons from './data/team';
 import CardPerson from '@/views/team/CardPerson.vue';
+import Button from '@lychen/vue-components-core/button/Button.vue';
+import { ROUTE_CHARTER } from '@/views/charter';
 
 const { t } = usePrefixedI18n(CONFIG);
 </script>

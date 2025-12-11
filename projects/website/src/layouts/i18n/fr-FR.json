@@ -4,8 +4,8 @@
       "title": "Nos initiatives"
     },
     "applications": {
-      "title": "Créer des applications",
-      "description": "Nous développons des applications web pour permettre à l'écosystème d'être connecté"
+      "title": "Applications, APIs, code",
+      "description": "Nous développons des applications et APIs open-source"
     },
     "label": {
       "title": "Labelliser les systèmes",
@@ -22,14 +22,6 @@
     "career": {
       "title": "Nous rejoindre",
       "description": "Aidez-nous à construire cet écosystème en vous impliquant concrètement"
-    },
-    "api": {
-      "title": "Fournir des APIs",
-      "description": "Nous prenons soin de fournir tout ce qu'il faut pour une intégration facile dans les systèmes existants"
-    },
-    "code": {
-      "title": "Transmettre nos connaissances",
-      "description": "Le code que nous écrivons est open-source, public et ouvert aux propositions extérieures"
     },
     "partnerships": {
       "title": "Partenariats",
