@@ -5,6 +5,7 @@
         v-if="image"
         :src="image"
         class="rounded-full"
+        :alt="`${firstname} ${lastname}`"
       />
     </div>
     <div class="flex flex-col gap-1">
@@ -24,6 +25,9 @@
       v-if="link"
       :href="link"
       class="opacity-60"
+      :aria-label="`Visit ${firstname} ${lastname}'s profile`"
+      target="_blank"
+      rel="noopener noreferrer"
     >
       <IconLink />
     </a>

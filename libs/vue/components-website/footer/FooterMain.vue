@@ -22,6 +22,7 @@
         <div class="flex flex-row gap-4">
           <SelectLanguage />
           <ToggleColorScheme />
+          
         </div>
         <p class="font-medium">{{ EMAIL.Contact }}</p>
         <p>Made with ❤️ by lychen</p>
