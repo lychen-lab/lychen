@@ -19,6 +19,29 @@
       eligendi sequi, aspernatur placeat ea, blanditiis accusantium laborum molestias quae
       doloremque magnam ducimus quaerat repellat architecto, aliquid alias.
     </Paragraph>
+    <div class="flex flex-row items-center gap-2">
+      <small>N'hésitez pas à nous contacter </small>
+
+      <Badge class="bg-stone-200"
+        >{{ contactEmail }}
+        <IconCopy
+          v-if="isSupported"
+          class="opacity-60 hover:opacity-100"
+          @click="copy(contactEmail)"
+      /></Badge>
+      <a
+        :href="`mailto:${contactEmail}`"
+        class="cursor-pointer"
+      >
+        <Button
+          size="xs"
+          icon-only
+          variant="ghost"
+        >
+          <template #icon><IconSendHorizontal class="opacity-60 hover:opacity-100" /></template>
+        </Button>
+      </a>
+    </div>
     <div class="grid grid-cols-2 gap-8 pt-20 md:grid-cols-4">
       <CardPerson
         v-for="(person, index) in persons"
@@ -56,6 +79,15 @@ import persons from './data/team';
 import CardPerson from '@/views/team/CardPerson.vue';
 import Button from '@lychen/vue-components-core/button/Button.vue';
 import { ROUTE_CHARTER } from '@/views/charter';
+import Badge from '@lychen/vue-components-core/badge/Badge.vue';
+import { EMAIL } from '@lychen/typescript-constants/Email';
+import IconSendHorizontal from '@lychen/vue-icons/IconSendHorizontal.vue';
+import IconCopy from '@lychen/vue-icons/IconCopy.vue';
+import { useClipboard } from '@vueuse/core';
+import { ref } from 'vue';
 
 const { t } = usePrefixedI18n(CONFIG);
+
+const contactEmail = ref(EMAIL.Contact);
+const { copy, isSupported } = useClipboard({ source: contactEmail });
 </script>
