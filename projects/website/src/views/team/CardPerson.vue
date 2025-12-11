@@ -1,9 +1,10 @@
 <template>
   <div class="flex flex-col gap-4">
-    <div class="size-30 rounded-full bg-gray-300">
+    <div class="size-30 rounded-full bg-stone-200">
       <img
         v-if="image"
         :src="image"
+        class="rounded-full"
       />
     </div>
     <div class="flex flex-col gap-1">
