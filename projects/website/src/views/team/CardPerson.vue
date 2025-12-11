@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-4">
-    <div class="size-20 rounded-full bg-gray-300">
+    <div class="size-30 rounded-full bg-gray-300">
       <img
         v-if="image"
         :src="image"
@@ -11,12 +11,13 @@
       <small
         v-if="role"
         class="text-green-700 opacity-60"
-        >{{ role }}</small
-      >
+        >{{ role }}
+      </small>
       <p class="text-xs opacity-60">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis quos alias laudantium
         deleniti perspiciatis nesciunt doloribus.
       </p>
+      <small class="opacity-80">{{ email }}</small>
     </div>
     <a
       v-if="link"
@@ -37,6 +38,7 @@ interface Props {
   image?: string;
   role?: string;
   link?: string;
+  email?: string;
 }
 
 defineProps<Props>();

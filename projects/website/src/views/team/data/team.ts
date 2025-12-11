@@ -1,3 +1,5 @@
+import { EMAIL } from '@lychen/typescript-constants/Email';
+
 export default [
   {
     firstname: 'Nathan',
@@ -5,12 +7,14 @@ export default [
     role: 'Président',
     image: '',
     link: 'https://www.linkedin.com/in/nathandepachtere/',
+    email: EMAIL.Presidence,
   },
   {
     firstname: 'Jennifer',
     lastname: 'Geoffroy',
     role: 'Vice-Présidente',
     image: '',
+    email: EMAIL.Presidence,
   },
   {
     firstname: 'Nadège',
