@@ -1,5 +1,5 @@
 <template>
-  <Container class="flex flex-col items-center gap-4">
+  <Container class="flex flex-col items-center gap-4 pt-20">
     <Title variant="h1">{{ t('title') }}</Title>
     <Paragraph class="w-3/4 text-center opacity-60">A diverse team of passionate ...</Paragraph>
     <div class="grid h-50 w-full grid-cols-4 grid-rows-3 gap-8">
@@ -14,12 +14,12 @@
 
   <Container class="flex flex-col items-center gap-4">
     <Title variant="h2">The lychen team</Title>
-    <Paragraph class="w-3/4 text-center opacity-60">
+    <Paragraph class="text-center opacity-60 md:w-3/4">
       Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium quisquam magni maxime
       eligendi sequi, aspernatur placeat ea, blanditiis accusantium laborum molestias quae
       doloremque magnam ducimus quaerat repellat architecto, aliquid alias.
     </Paragraph>
-    <div class="grid grid-cols-4 gap-8 pt-20">
+    <div class="grid grid-cols-2 gap-8 pt-20 md:grid-cols-4">
       <CardPerson
         v-for="(person, index) in persons"
         :key="index"
@@ -28,7 +28,7 @@
     </div>
   </Container>
 
-  <Container class="grid grid-cols-2 gap-8">
+  <Container class="flex flex-col gap-8 md:grid md:grid-cols-2">
     <div class="flex flex-col items-start gap-8">
       <Title variant="h2">Découvrir notre manière de construire l'écosystème</Title>
       <Paragraph class="w-3/4 text-left opacity-60">
