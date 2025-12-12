@@ -1,3 +1,32 @@
 {
-  "title": "Notre équipe"
+  "title": "Notre équipe",
+  "header_subtitle": "Développer la robustesse et la résilience des territoires face aux changements climatiques.",
+  "team_section": {
+    "title": "L'équipe Lychen",
+    "description": "Nous sommes une équipe dédiée à la création d'un écosystème numérique open-source. Notre mission : connecter citoyens, producteurs, associations et collectivités pour favoriser une agriculture durable et la protection de la biodiversité."
+  },
+  "contact_label": "N'hésitez pas à nous contacter",
+  "ecosystem_section": {
+    "title": "Un écosystème transparent et interconnecté",
+    "description": "Lychen offre des outils concrets pour le territoire : maraîchage, apiculture, gestion des biodéchets et biodiversité. Nous facilitons la collaboration entre tous les acteurs locaux autour des Objectifs de Développement Durable.",
+    "cta": "Notre charte",
+    "image_alt": "Illustration de l'écosystème"
+  },
+  "member_card": {
+    "bios": {
+      "nathan_depachtere": "Visionnaire qui code ses rêves avec du café et de la détermination. Toujours à la recherche de la prochaine grande idée pour l'écosystème.",
+      "jennifer_geoffroy": "La force organisatrice qui transforme le chaos en plans d'action concrets. Elle veille à ce que le navire garde le cap.",
+      "nadege_crepel": "Transforme les idées abstraites en stratégies tangibles. Apporte couleur et créativité à tout ce qu'elle touche.",
+      "noellie": "L'étincelle qui allume nos projets les plus ambitieux. Sa curiosité n'a d'égal que son enthousiasme.",
+      "luc_auvigne": "Architecte du code, construisant des fondations solides une ligne à la fois. Pragmatique et efficace.",
+      "justine_delalleau": "L'œil du design. Elle s'assure que chaque pixel est à sa place et que l'expérience utilisateur est impeccable.",
+      "thomas": "Le bâtisseur. Transforme les concepts en réalité structurelle avec une précision d'ingénieur.",
+      "agnes_balquet": "La Picasso de l'équipe. Favorise la cohérence graphique de l'écosystème."
+    }
+  },
+  "roles": {
+    "president": "Président•e",
+    "vice_president": "Vice-Président•e"
+  },
+  "visit_profile": "Visiter le profil de {name}"
 }
