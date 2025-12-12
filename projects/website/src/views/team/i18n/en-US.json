@@ -1,15 +1,15 @@
 {
   "title": "Our Team",
-  "header_subtitle": "A diverse team of passionate individuals...",
+  "header_subtitle": "Developing the robustness and resilience of territories in the face of climate change.",
   "team_section": {
     "title": "The Lychen Team",
-    "description": "We are a group of dedicated individuals united by a common mission: building a sustainable and innovative ecosystem. Everyone brings their unique expertise to move the project forward.",
+    "description": "We are a team dedicated to creating an open-source digital ecosystem. Our mission: to connect citizens, producers, associations, and local authorities to promote sustainable agriculture and biodiversity protection.",
     "cta": "Our Charter"
   },
   "contact_label": "Feel free to contact us",
   "ecosystem_section": {
-    "title": "Discover how we build the ecosystem",
-    "description": "Our approach is based on collaboration, transparency, and innovation. We believe in creating solutions that benefit all stakeholders in the ecosystem.",
+    "title": "A transparent and interconnected ecosystem",
+    "description": "Lychen offers concrete tools for the territory: market gardening, beekeeping, bio-waste management, and biodiversity. We facilitate collaboration among all local actors around the Sustainable Development Goals.",
     "cta": "Our Charter",
     "image_alt": "Ecosystem Illustration"
   },

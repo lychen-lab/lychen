@@ -1,14 +1,14 @@
 {
   "title": "Notre équipe",
-  "header_subtitle": "Une équipe diversifiée de passionnés...",
+  "header_subtitle": "Développer la robustesse et la résilience des territoires face aux changements climatiques.",
   "team_section": {
     "title": "L'équipe Lychen",
-    "description": "Nous sommes un groupe d'individus dévoués, unis par une mission commune : construire un écosystème durable et innovant. Chacun apporte son expertise unique pour faire avancer le projet."
+    "description": "Nous sommes une équipe dédiée à la création d'un écosystème numérique open-source. Notre mission : connecter citoyens, producteurs, associations et collectivités pour favoriser une agriculture durable et la protection de la biodiversité."
   },
   "contact_label": "N'hésitez pas à nous contacter",
   "ecosystem_section": {
-    "title": "Découvrir notre manière de construire l'écosystème",
-    "description": "Notre approche est fondée sur la collaboration, la transparence et l'innovation. Nous croyons en la création de solutions qui profitent à tous les acteurs de l'écosystème.",
+    "title": "Un écosystème transparent et interconnecté",
+    "description": "Lychen offre des outils concrets pour le territoire : maraîchage, apiculture, gestion des biodéchets et biodiversité. Nous facilitons la collaboration entre tous les acteurs locaux autour des Objectifs de Développement Durable.",
     "cta": "Notre charte",
     "image_alt": "Illustration de l'écosystème"
   },
