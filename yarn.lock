@@ -2035,7 +2035,7 @@ __metadata:
     "@vitejs/plugin-vue": "npm:^6.0.1"
     html-to-image: "npm:^1.11.13"
     unhead: "npm:^2.0.19"
-    vite: "npm:^7.2.2"
+    vite: "npm:^7.2.7"
     vite-ssg: "npm:^28.2.2"
     vite-ssg-sitemap: "npm:^0.10.0"
     vue: "npm:^3.5.25"
@@ -2073,7 +2073,7 @@ __metadata:
     "@vite-pwa/assets-generator": "npm:^1.0.0"
     "@vitejs/plugin-vue": "npm:^6.0.1"
     tailwindcss: "npm:^4.1.14"
-    vite: "npm:^7.2.2"
+    vite: "npm:^7.2.7"
     vite-plugin-mkcert: "npm:^1.17.9"
     vite-plugin-pwa: "npm:^1.0.3"
     vite-plugin-vue-devtools: "npm:^8.0.2"
@@ -2103,7 +2103,7 @@ __metadata:
     "@unhead/vue": "npm:^2.0.19"
     "@vitejs/plugin-vue": "npm:^6.0.1"
     unhead: "npm:^2.0.19"
-    vite: "npm:^7.2.2"
+    vite: "npm:^7.2.7"
     vite-plugin-mkcert: "npm:^1.17.9"
     vite-plugin-vue-devtools: "npm:^8.0.3"
     vite-ssg: "npm:^28.2.2"
@@ -2141,7 +2141,7 @@ __metadata:
     "@unhead/vue": "npm:^2.0.19"
     "@vitejs/plugin-vue": "npm:^6.0.1"
     unhead: "npm:^2.0.19"
-    vite: "npm:^7.2.2"
+    vite: "npm:^7.2.7"
     vite-plugin-mkcert: "npm:^1.17.9"
     vite-ssg: "npm:^28.2.2"
     vite-ssg-sitemap: "npm:^0.10.0"
@@ -2172,7 +2172,7 @@ __metadata:
     storybook: "npm:^10.0.4"
     tailwindcss: "npm:^4.1.13"
     typescript: "npm:~5.9.3"
-    vite: "npm:^7.2.2"
+    vite: "npm:^7.2.7"
     vite-plugin-mkcert: "npm:1.17.8"
     vue: "npm:^3.5.25"
     vue-tsc: "npm:^3.1.0"
@@ -2202,7 +2202,7 @@ __metadata:
     "@vitejs/plugin-vue": "npm:^6.0.1"
     "@vueuse/core": "npm:^14.1.0"
     tailwindcss: "npm:^4.1.14"
-    vite: "npm:^7.2.2"
+    vite: "npm:^7.2.7"
     vite-plugin-mkcert: "npm:^1.17.9"
     vite-plugin-pwa: "npm:^1.0.3"
     vite-plugin-vue-devtools: "npm:^8.0.2"
@@ -2247,7 +2247,7 @@ __metadata:
     "@unhead/vue": "npm:^2.0.19"
     "@vitejs/plugin-vue": "npm:^6.0.1"
     unhead: "npm:^2.0.19"
-    vite: "npm:^7.2.2"
+    vite: "npm:^7.2.7"
     vite-plugin-mkcert: "npm:^1.17.9"
     vite-ssg: "npm:^28.2.2"
     vite-ssg-sitemap: "npm:^0.10.0"
@@ -2387,7 +2387,7 @@ __metadata:
     "@lychen/vue-i18n": "workspace:*"
     "@lychen/vue-router-configs": "workspace:*"
     "@vitejs/plugin-vue": "npm:^6.0.1"
-    vite: "npm:^7.2.2"
+    vite: "npm:^7.2.7"
     vite-ssg: "npm:^28.2.2"
     vite-ssg-sitemap: "npm:^0.10.0"
     vue: "npm:^3.5.25"
@@ -2777,7 +2777,7 @@ __metadata:
     "@vitejs/plugin-vue": "npm:^6.0.1"
     "@vueuse/core": "npm:^14.1.0"
     unhead: "npm:^2.0.19"
-    vite: "npm:^7.2.2"
+    vite: "npm:^7.2.7"
     vite-plugin-mkcert: "npm:^1.17.9"
     vite-ssg: "npm:^28.2.2"
     vite-ssg-sitemap: "npm:^0.10.0"
@@ -12004,9 +12004,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^7.2.2":
-  version: 7.2.2
-  resolution: "vite@npm:7.2.2"
+"vite@npm:^7.2.7":
+  version: 7.2.7
+  resolution: "vite@npm:7.2.7"
   dependencies:
     esbuild: "npm:^0.25.0"
     fdir: "npm:^6.5.0"
@@ -12055,7 +12055,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/9c76ee441f8dbec645ddaecc28d1f9cf35670ffa91cff69af7b1d5081545331603f0b1289d437b2fa8dc43cdc77b4d96b5bd9c9aed66310f490cb1a06f9c814c
+  checksum: 10c0/0c502d9eb898d9c05061dbd8fd199f280b524bbb4c12ab5f88c7b12779947386684a269e4dd0aa424aa35bcd857f1aa44aadb9ea764702a5043af433052455b5
   languageName: node
   linkType: hard
 

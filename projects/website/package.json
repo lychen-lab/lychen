@@ -37,7 +37,7 @@
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "@vitejs/plugin-vue": "^6.0.1",
-    "vite": "^7.2.2",
+    "vite": "^7.2.7",
     "vite-plugin-mkcert": "^1.17.9",
     "vite-ssg": "^28.2.2",
     "vite-ssg-sitemap": "^0.10.0"
