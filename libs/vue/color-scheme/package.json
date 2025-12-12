@@ -4,6 +4,6 @@
     "@lychen/vue-components-core": "workspace:*",
     "@lychen/vue-icons": "workspace:*",
     "@vueuse/core": "^13.9.0",
-    "vue": "^3.5.22"
+    "vue": "^3.5.25"
   }
 }

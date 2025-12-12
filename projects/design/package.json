@@ -19,7 +19,7 @@
     "@unhead/vue": "^2.0.19",
     "html-to-image": "^1.11.13",
     "unhead": "^2.0.19",
-    "vue": "^3.5.22",
+    "vue": "^3.5.25",
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
