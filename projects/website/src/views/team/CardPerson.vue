@@ -13,11 +13,10 @@
       <small
         v-if="role"
         class="text-green-700 opacity-60"
-        >{{ role }}
+        >{{ t('roles.' + role) }}
       </small>
       <p class="text-xs opacity-60">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis quos alias laudantium
-        deleniti perspiciatis nesciunt doloribus.
+        {{ t('member_card.bio_placeholder') }}
       </p>
       <small class="opacity-80">{{ email }}</small>
     </div>
@@ -25,7 +24,7 @@
       v-if="link"
       :href="link"
       class="opacity-60"
-      :aria-label="`Visit ${firstname} ${lastname}'s profile`"
+      :aria-label="t('visit_profile', { name: `${firstname} ${lastname}` })"
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -36,6 +35,10 @@
 
 <script setup lang="ts">
 import IconLink from '@lychen/vue-icons/IconLink.vue';
+import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
+import { CONFIG } from './i18n';
+
+const { t } = usePrefixedI18n(CONFIG);
 
 interface Props {
   firstname: string;

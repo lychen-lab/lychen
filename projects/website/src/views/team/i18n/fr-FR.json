@@ -1,3 +1,22 @@
 {
-  "title": "Notre équipe"
+  "title": "Notre équipe",
+  "header_subtitle": "Une équipe diversifiée de passionnés...",
+  "team_section": {
+    "title": "L'équipe Lychen",
+    "description": "Nous sommes un groupe d'individus dévoués, unis par une mission commune : construire un écosystème durable et innovant. Chacun apporte son expertise unique pour faire avancer le projet."
+  },
+  "contact_label": "N'hésitez pas à nous contacter",
+  "ecosystem_section": {
+    "title": "Découvrir notre manière de construire l'écosystème",
+    "description": "Notre approche est fondée sur la collaboration, la transparence et l'innovation. Nous croyons en la création de solutions qui profitent à tous les acteurs de l'écosystème.",
+    "cta": "Notre charte"
+  },
+  "member_card": {
+    "bio_placeholder": "Lorem ipsum dolor sit amet consectetur adipisicing elit."
+  },
+  "roles": {
+    "president": "Président",
+    "vice_president": "Vice-Présidente"
+  },
+  "visit_profile": "Visiter le profil de {name}"
 }

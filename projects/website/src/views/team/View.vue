@@ -1,7 +1,7 @@
 <template>
   <Container class="flex flex-col items-center gap-4 pt-20">
     <Title variant="h1">{{ t('title') }}</Title>
-    <Paragraph class="w-3/4 text-center opacity-60">A diverse team of passionate ...</Paragraph>
+    <Paragraph class="w-3/4 text-center opacity-60">{{ t('header_subtitle') }}</Paragraph>
     <div class="grid h-50 w-full grid-cols-4 grid-rows-3 gap-8">
       <div class="row-span-2 rounded-[60px] bg-green-300"></div>
       <div class="row-span-1 rounded-[60px] bg-green-800"></div>
@@ -13,14 +13,12 @@
   </Container>
 
   <Container class="flex flex-col items-center gap-4">
-    <Title variant="h2">The lychen team</Title>
+    <Title variant="h2">{{ t('team_section.title') }}</Title>
     <Paragraph class="text-center opacity-60 md:w-3/4">
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium quisquam magni maxime
-      eligendi sequi, aspernatur placeat ea, blanditiis accusantium laborum molestias quae
-      doloremque magnam ducimus quaerat repellat architecto, aliquid alias.
+      {{ t('team_section.description') }}
     </Paragraph>
     <div class="flex flex-row items-center gap-2">
-      <small>N'hésitez pas à nous contacter </small>
+      <small>{{ t('contact_label') }} </small>
 
       <Badge class="bg-stone-200"
         >{{ contactEmail }}
@@ -53,14 +51,12 @@
 
   <Container class="flex flex-col gap-8 md:grid md:grid-cols-2">
     <div class="flex flex-col items-start gap-8">
-      <Title variant="h2">Découvrir notre manière de construire l'écosystème</Title>
+      <Title variant="h2">{{ t('ecosystem_section.title') }}</Title>
       <Paragraph class="w-3/4 text-left opacity-60">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi sint at atque illum esse
-        accusantium necessitatibus, molestias fuga voluptatem voluptatibus provident ut maxime neque
-        officia odit iusto eius illo nisi!
+        {{ t('ecosystem_section.description') }}
       </Paragraph>
       <RouterLink :to="{ name: ROUTE_CHARTER.name }">
-        <Button>Notre charte</Button>
+        <Button>{{ t('ecosystem_section.cta') }}</Button>
       </RouterLink>
     </div>
     <div>

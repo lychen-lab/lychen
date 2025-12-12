@@ -4,7 +4,7 @@ export default [
   {
     firstname: 'Nathan',
     lastname: 'De Pachtere',
-    role: 'Président',
+    role: 'president',
     image: 'https://res.cloudinary.com/ddhvfiezg/image/upload/v1765464918/NathanDePachtere.webp',
     link: 'https://www.linkedin.com/in/nathandepachtere/',
     email: EMAIL.Presidence,
@@ -12,7 +12,7 @@ export default [
   {
     firstname: 'Jennifer',
     lastname: 'Geoffroy',
-    role: 'Vice-Présidente',
+    role: 'vice_president',
     image: 'https://res.cloudinary.com/ddhvfiezg/image/upload/v1765464918/JenniferGeoffroy.webp',
     email: EMAIL.Presidence,
   },
