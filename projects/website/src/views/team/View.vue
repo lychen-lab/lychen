@@ -2,37 +2,37 @@
   <Container class="flex flex-col items-center gap-4 pt-20">
     <Title variant="h1">{{ t('title') }}</Title>
     <Paragraph class="w-3/4 text-center opacity-60">{{ t('header_subtitle') }}</Paragraph>
-    <div class="grid h-180 w-full grid-cols-4 grid-rows-3 gap-4 px-4 md:px-20">
+    <div class="grid-rows-auto grid h-180 w-full grid-cols-2 gap-4 px-4 md:grid-cols-4 md:px-20">
       <BentoCard
-        class="row-span-2"
+        class="row-span-2 md:row-span-2"
         image="https://images.pexels.com/photos/3184431/pexels-photo-3184431.jpeg"
       />
       <BentoCard
-        class="row-span-1"
+        class="row-span-1 md:row-span-1"
         image="https://images.pexels.com/photos/1595391/pexels-photo-1595391.jpeg"
       />
       <BentoCard
-        class="row-span-2"
+        class="md:row-span-2"
         image="https://images.pexels.com/photos/1172207/pexels-photo-1172207.jpeg"
       />
       <BentoCard
-        class="row-span-1"
+        class="md:row-span-1"
         image="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg"
       />
       <BentoCard
-        class="row-span-2"
+        class="row-span-2 md:row-span-2"
         image="https://res.cloudinary.com/ddhvfiezg/image/upload/v1765545330/019b12b4-718c-7d11-b33e-dde66feeff83.webp"
       />
       <BentoCard
-        class="row-span-2"
+        class="md:row-span-2"
         image="https://images.pexels.com/photos/1685650/pexels-photo-1685650.jpeg"
       />
       <BentoCard
-        class="row-span-2"
+        class="md:row-span-1"
         image="https://images.pexels.com/photos/142497/pexels-photo-142497.jpeg"
       />
       <BentoCard
-        class="row-span-1"
+        class="md:row-span-1"
         image="https://images.pexels.com/photos/7583935/pexels-photo-7583935.jpeg"
       />
     </div>
