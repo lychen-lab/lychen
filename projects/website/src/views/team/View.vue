@@ -2,7 +2,9 @@
   <Container class="flex flex-col items-center gap-4 pt-20">
     <Title variant="h1">{{ t('title') }}</Title>
     <Paragraph class="w-3/4 text-center opacity-60">{{ t('header_subtitle') }}</Paragraph>
-    <div class="grid-rows-auto grid h-180 w-full grid-cols-2 gap-4 px-4 md:grid-cols-4 md:px-20">
+    <div
+      class="grid-rows-auto grid h-180 w-full grid-cols-2 gap-4 px-4 md:grid-cols-4 md:grid-rows-3 md:px-20"
+    >
       <BentoCard
         class="row-span-2 md:row-span-2"
         image="https://images.pexels.com/photos/3184431/pexels-photo-3184431.jpeg"
