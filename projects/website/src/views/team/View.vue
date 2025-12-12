@@ -73,10 +73,8 @@
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { CONFIG } from './i18n';
 import Container from '@lychen/vue-components-website/container/Container.vue';
-import Title from '@lychen/vue-components-website/title/Title.vue';
 import Paragraph from '@lychen/vue-components-website/paragraph/Paragraph.vue';
 import persons from './data/team';
-import CardPerson from '@/views/team/CardPerson.vue';
 import Button from '@lychen/vue-components-core/button/Button.vue';
 import { ROUTE_CHARTER } from '@/views/charter';
 import Badge from '@lychen/vue-components-core/badge/Badge.vue';
@@ -85,6 +83,8 @@ import IconSendHorizontal from '@lychen/vue-icons/IconSendHorizontal.vue';
 import IconCopy from '@lychen/vue-icons/IconCopy.vue';
 import { useClipboard } from '@vueuse/core';
 import { ref } from 'vue';
+import CardPerson from '@/views/team/CardPerson.vue';
+import Title from '@lychen/vue-components-website/title/Title.vue';
 
 const { t } = usePrefixedI18n(CONFIG);
 
