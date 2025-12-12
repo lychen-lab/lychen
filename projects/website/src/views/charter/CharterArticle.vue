@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="flex flex-col gap-2">
     <Title variant="h3">{{ t(`${i18nKey}.title`) }}</Title>
-    <Paragraph>{{ t(`${i18nKey}.content`) }}</Paragraph>
+    <Paragraph class="opacity-80">{{ t(`${i18nKey}.content`) }}</Paragraph>
   </div>
 </template>
 

@@ -1,7 +1,8 @@
 <template>
   <div class="flex flex-col gap-8">
     <Title variant="h2">{{ t(`${i18nKey}.title`) }}</Title>
-    <div class="flex flex-col gap-12">
+    <Paragraph>{{ t(`${i18nKey}.description`) }}</Paragraph>
+    <div class="grid grid-cols-2 gap-8">
       <slot />
     </div>
   </div>
@@ -11,6 +12,7 @@
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { CONFIG } from './i18n';
 import Title from '@lychen/vue-components-website/title/Title.vue';
+import Paragraph from '@lychen/vue-components-website/paragraph/Paragraph.vue';
 
 defineProps<{
   i18nKey: string;
