@@ -24,16 +24,16 @@
     "@lychen/vue-tera": "workspace:*",
     "@tanstack/vue-query": "^5.91.1",
     "@tanstack/vue-table": "^8.21.3",
-    "@vueuse/core": "^13.9.0",
-    "vue": "^3.5.22",
-    "vue-router": "^4.6.3"
+    "@vueuse/core": "^14.1.0",
+    "vue": "^3.5.25",
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.17",
+    "@tailwindcss/vite": "^4.1.18",
     "@vite-pwa/assets-generator": "^1.0.0",
     "@vitejs/plugin-vue": "^6.0.1",
     "tailwindcss": "^4.1.14",
-    "vite": "^7.2.2",
+    "vite": "^7.2.7",
     "vite-plugin-mkcert": "^1.17.9",
     "vite-plugin-pwa": "^1.0.3",
     "vite-plugin-vue-devtools": "^8.0.2"
