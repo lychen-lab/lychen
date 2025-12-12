@@ -5,7 +5,7 @@
   "charter": {
     "section": {
       "human": {
-        "title": "Humain",
+        "title": "Humain et organisation",
         "description": "Favoriser un environnement accueillant et inclusif où chacun se sent valorisé et épanoui."
       },
       "software_technologies": {
@@ -13,11 +13,11 @@
         "description": "Concevoir des outils ouverts, pratiques et faciles à intégrer."
       },
       "data": {
-        "title": "Données",
+        "title": "Données et protections",
         "description": "Donner aux utilisateurs un contrôle total et sécurisé sur leurs données."
       },
       "finance": {
-        "title": "Finance",
+        "title": "Finance et capitalisation",
         "description": "Une approche transparente et éthique du financement et des coûts."
       }
     },

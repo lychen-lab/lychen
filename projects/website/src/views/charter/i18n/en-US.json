@@ -5,19 +5,19 @@
   "charter": {
     "section": {
       "human": {
-        "title": "Human",
+        "title": "Human and organization",
         "description": "Foster a welcoming and inclusive environment where everyone feels valued and fulfilled."
       },
       "software_technologies": {
-        "title": "Software, applications and technologies",
+        "title": "Softwares, applications and technologies",
         "description": "Design open, practical, and easy-to-integrate tools."
       },
       "data": {
-        "title": "Data",
+        "title": "Data and protections",
         "description": "Give users total and secure control over their data."
       },
       "finance": {
-        "title": "Finance",
+        "title": "Finance and capitalization",
         "description": "A transparent and ethical approach to funding and costs."
       }
     },
