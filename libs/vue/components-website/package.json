@@ -7,7 +7,7 @@
     "@lychen/vue-components-extra": "workspace:*",
     "@lychen/vue-i18n": "workspace:*",
     "@lychen/vue-icons": "workspace:*",
-    "@vueuse/core": "^13.9.0",
+    "@vueuse/core": "^14.1.0",
     "class-variance-authority": "^0.7.1",
     "reka-ui": "^2.5.1",
     "vue": "^3.5.25"

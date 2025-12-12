@@ -2181,7 +2181,7 @@ __metadata:
     "@tanstack/vue-table": "npm:^8.21.3"
     "@vite-pwa/assets-generator": "npm:^1.0.0"
     "@vitejs/plugin-vue": "npm:^6.0.1"
-    "@vueuse/core": "npm:^13.9.0"
+    "@vueuse/core": "npm:^14.1.0"
     tailwindcss: "npm:^4.1.14"
     vite: "npm:^7.2.2"
     vite-plugin-mkcert: "npm:^1.17.9"
@@ -2403,7 +2403,7 @@ __metadata:
   dependencies:
     "@lychen/vue-components-core": "workspace:*"
     "@lychen/vue-icons": "workspace:*"
-    "@vueuse/core": "npm:^13.9.0"
+    "@vueuse/core": "npm:^14.1.0"
     vue: "npm:^3.5.25"
   languageName: unknown
   linkType: soft
@@ -2416,7 +2416,7 @@ __metadata:
     "@lychen/vue-color-scheme": "workspace:*"
     "@lychen/vue-components-core": "workspace:*"
     "@lychen/vue-components-extra": "workspace:*"
-    "@vueuse/core": "npm:^13.9.0"
+    "@vueuse/core": "npm:^14.1.0"
     class-variance-authority: "npm:^0.7.1"
     reka-ui: "npm:^2.5.1"
     vue: "npm:^3.5.25"
@@ -2429,7 +2429,7 @@ __metadata:
   dependencies:
     "@lychen/typescript-utils": "workspace:*"
     "@lychen/vue-components-core": "workspace:*"
-    "@vueuse/core": "npm:^13.9.0"
+    "@vueuse/core": "npm:^14.1.0"
     class-variance-authority: "npm:^0.7.1"
     reka-ui: "npm:^2.5.1"
     vue: "npm:^3.5.25"
@@ -2444,7 +2444,7 @@ __metadata:
     "@lychen/typescript-utils": "workspace:*"
     "@lychen/vue-icons": "workspace:*"
     "@vee-validate/zod": "npm:^4.15.1"
-    "@vueuse/core": "npm:^13.9.0"
+    "@vueuse/core": "npm:^14.1.0"
     class-variance-authority: "npm:^0.7.1"
     clsx: "npm:^2.1.1"
     embla-carousel-vue: "npm:^8.6.0"
@@ -2465,7 +2465,7 @@ __metadata:
   dependencies:
     "@lychen/typescript-utils": "workspace:*"
     "@lychen/vue-components-core": "workspace:*"
-    "@vueuse/core": "npm:^13.9.0"
+    "@vueuse/core": "npm:^14.1.0"
     class-variance-authority: "npm:^0.7.1"
     reka-ui: "npm:^2.5.1"
     vue: "npm:^3.5.25"
@@ -2482,7 +2482,7 @@ __metadata:
     "@lychen/vue-components-extra": "workspace:*"
     "@lychen/vue-i18n": "workspace:*"
     "@lychen/vue-icons": "workspace:*"
-    "@vueuse/core": "npm:^13.9.0"
+    "@vueuse/core": "npm:^14.1.0"
     class-variance-authority: "npm:^0.7.1"
     reka-ui: "npm:^2.5.1"
     vue: "npm:^3.5.25"
@@ -2596,7 +2596,7 @@ __metadata:
     "@lychen/vue-components-website": "workspace:*"
     "@lychen/vue-i18n": "workspace:*"
     "@lychen/vue-icons": "workspace:*"
-    "@vueuse/core": "npm:^13.9.0"
+    "@vueuse/core": "npm:^14.1.0"
     vue: "npm:^3.5.25"
     vue-router: "npm:^4.6.3"
   languageName: unknown
@@ -2672,7 +2672,7 @@ __metadata:
     "@lychen/vue-composables": "workspace:*"
     "@lychen/vue-i18n": "workspace:*"
     "@lychen/vue-icons": "workspace:*"
-    "@vueuse/core": "npm:^13.9.0"
+    "@vueuse/core": "npm:^14.1.0"
     openapi-fetch: "npm:^0.14.0"
     vue: "npm:^3.5.25"
   languageName: unknown
@@ -2756,7 +2756,7 @@ __metadata:
     "@unhead/schema-org": "npm:^2.0.19"
     "@unhead/vue": "npm:^2.0.19"
     "@vitejs/plugin-vue": "npm:^6.0.1"
-    "@vueuse/core": "npm:^13.9.0"
+    "@vueuse/core": "npm:^14.1.0"
     unhead: "npm:^2.0.19"
     vite: "npm:^7.2.2"
     vite-plugin-mkcert: "npm:^1.17.9"
@@ -4774,16 +4774,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueuse/core@npm:^13.9.0":
-  version: 13.9.0
-  resolution: "@vueuse/core@npm:13.9.0"
+"@vueuse/core@npm:^14.1.0":
+  version: 14.1.0
+  resolution: "@vueuse/core@npm:14.1.0"
   dependencies:
     "@types/web-bluetooth": "npm:^0.0.21"
-    "@vueuse/metadata": "npm:13.9.0"
-    "@vueuse/shared": "npm:13.9.0"
+    "@vueuse/metadata": "npm:14.1.0"
+    "@vueuse/shared": "npm:14.1.0"
   peerDependencies:
     vue: ^3.5.0
-  checksum: 10c0/f1e6c5e02584e018e53e0e5f93844afbcd33742c5a2454e57aaa3433e9068efbe84b7b423f34628738e28e3ba4bfe7d648f2edaae39706a236ae48bc1a22709b
+  checksum: 10c0/e1ed368c832f2836ae62f3969cd46691fcef40a34a3909898012e6143395cb8e31d9ebb6ccfd9b0b9fb7493b073282ce226e4fb62ab84fc2f9557d59f232b6f0
   languageName: node
   linkType: hard
 
@@ -4801,10 +4801,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueuse/metadata@npm:13.9.0":
-  version: 13.9.0
-  resolution: "@vueuse/metadata@npm:13.9.0"
-  checksum: 10c0/7e4620c6e5acbf8f2e5eba0db80a8de887f4816221b383e5d829ee833139d262b8a89e9709d58d7aacb263927ce2c55e262eb29372f784aa9138c8fa7a86506a
+"@vueuse/metadata@npm:14.1.0":
+  version: 14.1.0
+  resolution: "@vueuse/metadata@npm:14.1.0"
+  checksum: 10c0/983296b13dc979e8a18831315631e0d08934e655edd0d12073c06512228a5a5140af0671eb28b20068ef42c55312a58287a7d51314427d2edcbbf0c38f5994c8
   languageName: node
   linkType: hard
 
@@ -4826,12 +4826,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueuse/shared@npm:13.9.0":
-  version: 13.9.0
-  resolution: "@vueuse/shared@npm:13.9.0"
+"@vueuse/shared@npm:14.1.0":
+  version: 14.1.0
+  resolution: "@vueuse/shared@npm:14.1.0"
   peerDependencies:
     vue: ^3.5.0
-  checksum: 10c0/4820f71caab3c94bc88343270bb4408d8818baa9c0223e6f7499aeb05f9227a87724c15b792f2aaf308137ac996cccd93c0cbe338f7cf3ae50045981abc223a3
+  checksum: 10c0/642ca681ffea7bf24de970bed6580fafc01bd66a4a185f8eb05ddc2450265f1ede86b79b2d8660d22d39ec3f498658f9fedadf2606dfd94d730d443bb0b10f2a
   languageName: node
   linkType: hard
 
