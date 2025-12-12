@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-start gap-4 rounded-3xl border border-black/10 p-4 md:p-8">
+  <div class="border-on-surface/10 flex flex-col items-start gap-4 rounded-3xl border p-4 md:p-8">
     <Title variant="h2">{{ t(`${i18nKey}.title`) }}</Title>
     <Paragraph>{{ t(`${i18nKey}.description`) }}</Paragraph>
     <div class="mt-4 flex flex-col gap-8 md:grid md:grid-cols-2">

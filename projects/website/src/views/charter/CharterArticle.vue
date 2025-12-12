@@ -2,7 +2,9 @@
   <div class="flex flex-col gap-2">
     <Title variant="h3">{{ t(`${i18nKey}.title`) }}</Title>
     <Paragraph class="opacity-80">{{ t(`${i18nKey}.content`) }}</Paragraph>
-    <div class="rounded-xl bg-stone-200 p-4 text-sm font-bold text-stone-900 opacity-80">
+    <div
+      class="rounded-xl bg-stone-200 p-4 text-sm font-bold text-stone-900 opacity-80 dark:bg-stone-800 dark:text-stone-100"
+    >
       {{ t(`${i18nKey}.simplify`) }}
     </div>
   </div>
