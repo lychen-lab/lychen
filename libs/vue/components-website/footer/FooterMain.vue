@@ -17,8 +17,14 @@
         </p>
       </div>
 
-      <div class="flex basis-1/4 flex-col justify-center gap-2 text-sm">
-        <p class="font-medium">{{ EMAIL.Bonjour }}</p>
+      
+      <div class="flex basis-1/4 flex-col justify-center gap-2 text-sm items-end">
+        <div class="flex flex-row gap-4">
+          <SelectLanguage />
+          <ToggleColorScheme />
+          
+        </div>
+        <p class="font-medium">{{ EMAIL.Contact }}</p>
         <p>Made with ❤️ by lychen</p>
       </div>
     </div>
@@ -44,6 +50,8 @@ import { defineAsyncComponent } from 'vue';
 import { messages, TRANSLATION_KEY } from './i18n';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { EMAIL } from '@lychen/typescript-constants/Email';
+import SelectLanguage from '@lychen/vue-i18n/components/select-language/SelectLanguage.vue';
+import ToggleColorScheme from '@lychen/vue-color-scheme/components/ToggleColorScheme.vue';
 
 const LogoLychenFull = defineAsyncComponent(
   () => import('@lychen/vue-components-extra/logo-lychen/LogoLychenFull.vue'),

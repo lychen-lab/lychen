@@ -12,26 +12,17 @@
           <NavigationMenuItem>
             <NavigationMenuTrigger>{{ t(`navigation.initiatives.title`) }}</NavigationMenuTrigger>
             <NavigationMenuContent
-              class="bg-surface-container/70 grid grid-cols-2 gap-4 rounded-lg p-4 backdrop-blur-lg md:w-[600px]"
+              class="bg-surface-container/70 flex flex-col gap-4 rounded-lg p-4 backdrop-blur-lg md:w-[300px]"
             >
               <NavigationMenuSubLink
                 :title="t('navigation.applications.title')"
                 :description="t('navigation.applications.description')"
                 :route="{ name: ROUTE_APPLICATIONS.name }"
               />
-              <NavigationMenuSubLink
-                :title="t('navigation.api.title')"
-                :description="t('navigation.api.description')"
-              />
+
               <NavigationMenuSubLink
                 :title="t('navigation.label.title')"
                 :description="t('navigation.label.description')"
-              />
-              <NavigationMenuSubLink
-                :title="t('navigation.code.title')"
-                :description="t('navigation.code.description')"
-                :link="SOCIAL_LINK.GitHub"
-                rel="noopener noreferrer"
               />
             </NavigationMenuContent>
           </NavigationMenuItem>
@@ -121,7 +112,6 @@ import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import LogoLychenFull from '@lychen/vue-components-extra/logo-lychen/LogoLychenFull.vue';
 import Button from '@lychen/vue-components-core/button/Button.vue';
 import { LINK } from '@lychen/typescript-constants/Link';
-import { SOCIAL_LINK } from '@lychen/typescript-constants/Social';
 import { ROUTE_PARTNERSHIPS } from '@/views/partnerships';
 import { ROUTE_CAREER } from '@/views/career';
 import { ROUTE_CHARTER } from '@/views/charter';

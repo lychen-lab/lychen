@@ -1,7 +1,6 @@
 {
   "recommendations": [
     "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
     "editorconfig.editorconfig",
     "ms-playwright.playwright",
     "moonrepo.moon-console",
@@ -16,7 +15,8 @@
     "antfu.slidev",
     "wenfangdu.snippet-generator",
     "jock.svg",
-    "eamodio.gitlens"
+    "eamodio.gitlens",
+    "prettier.prettier-vscode"
   ],
   "unwantedRecommendations": [
     "octref.vetur",

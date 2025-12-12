@@ -2756,6 +2756,7 @@ __metadata:
     "@unhead/schema-org": "npm:^2.0.19"
     "@unhead/vue": "npm:^2.0.19"
     "@vitejs/plugin-vue": "npm:^6.0.1"
+    "@vueuse/core": "npm:^13.9.0"
     unhead: "npm:^2.0.19"
     vite: "npm:^7.2.2"
     vite-plugin-mkcert: "npm:^1.17.9"
