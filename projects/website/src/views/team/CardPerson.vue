@@ -16,7 +16,7 @@
         >{{ t('roles.' + role) }}
       </small>
       <p class="text-xs opacity-60">
-        {{ t('member_card.bio_placeholder') }}
+        {{ t(`member_card.bios.${id}`) }}
       </p>
       <small class="opacity-80">{{ email }}</small>
     </div>
@@ -41,6 +41,7 @@ import { CONFIG } from './i18n';
 const { t } = usePrefixedI18n(CONFIG);
 
 interface Props {
+  id: string;
   firstname: string;
   lastname?: string;
   image?: string;

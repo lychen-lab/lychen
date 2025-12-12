@@ -13,7 +13,16 @@
     "image_alt": "Illustration de l'écosystème"
   },
   "member_card": {
-    "bio_placeholder": "Lorem ipsum dolor sit amet consectetur adipisicing elit."
+    "bios": {
+      "nathan_depachtere": "Visionnaire qui code ses rêves avec du café et de la détermination. Toujours à la recherche de la prochaine grande idée pour l'écosystème.",
+      "jennifer_geoffroy": "La force organisatrice qui transforme le chaos en plans d'action concrets. Elle veille à ce que le navire garde le cap.",
+      "nadege_crepel": "Transforme les idées abstraites en stratégies tangibles. Apporte couleur et créativité à tout ce qu'elle touche.",
+      "noellie": "L'étincelle qui allume nos projets les plus ambitieux. Sa curiosité n'a d'égal que son enthousiasme.",
+      "luc_auvigne": "Architecte du code, construisant des fondations solides une ligne à la fois. Pragmatique et efficace.",
+      "justine_delalleau": "L'œil du design. Elle s'assure que chaque pixel est à sa place et que l'expérience utilisateur est impeccable.",
+      "thomas_detharre": "Le bâtisseur. Transforme les concepts en réalité structurelle avec une précision d'ingénieur.",
+      "agnes_balquet": "Le ciment de l'équipe. Favorise la collaboration et s'assure que chaque voix est entendue."
+    }
   },
   "roles": {
     "president": "Président",
