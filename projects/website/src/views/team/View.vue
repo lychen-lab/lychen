@@ -43,7 +43,7 @@
     <Paragraph class="text-center opacity-60 md:w-3/4">
       {{ t('team_section.description') }}
     </Paragraph>
-    <div class="flex flex-row items-center gap-2">
+    <div class="flex flex-col items-center gap-2 md:flex-row">
       <small>{{ t('contact_label') }} </small>
 
       <Badge class="bg-stone-200"
