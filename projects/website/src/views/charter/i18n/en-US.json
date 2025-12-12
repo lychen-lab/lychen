@@ -1,3 +1,190 @@
 {
-  "title": "Our charter"
+  "title": "Our charter",
+  "description": "",
+  "charter": {
+    "human_section": {
+      "title": "Human",
+      "content": ""
+    },
+    "absolute_inclusion": {
+      "title": "Absolute Inclusion",
+      "content": "Foster a welcoming and inclusive environment where everyone feels valued and fulfilled. The workspace is a sanctuary of emergence, demanding a harassment-free experience for all. We honor the complete diversity of our actors: age, body size, disabilities, ethnic origin, sexual characteristics, gender identity, experience level, training, socio-economic status, nationality, physical appearance, race, religion, or sexual orientation. The sole metric is the quality of contribution. We create a field where the intuition and intelligence of each individual can express themselves freely, because excellence is born from the richness of perspectives."
+    },
+    "asynchronous_interactions_section": {
+      "title": "Asynchronous Interactions",
+      "content": ""
+    },
+    "asynchronous_interactions": {
+      "title": "Asynchronous Interactions",
+      "content": "Work is a conversation through persistent messages, not real-time meetings. Each actor defines their energy peak and their optimal concentration periods, whether they fall on weekends, at night, or on a public holiday. Value is created by complete and documented contributions, not by immediate availability. The asynchronous structure honors the individual rhythm and frees the team from the tyranny of the shared calendar. The only obligation is to leave a clear trace for the next actor."
+    },
+    "ssot_section": {
+      "title": "Single Source Of Truth SSOT",
+      "content": ""
+    },
+    "single_source_of_truth_ssot": {
+      "title": "Single Source Of Truth SSOT",
+      "content": "Distributed Consciousness depends on a common memory. All crucial information — strategic decisions, architectural specifications, and progress statuses — must be documented, traceable, and accessible in real-time. SSOT eliminates the friction of searching for information and ensures that every actor, human or AI, operates from the same factual reality. Knowledge is the only centralized control point."
+    },
+    "orbital_deadlines_section": {
+      "title": "Orbital Deadlines",
+      "content": ""
+    },
+    "orbital_deadlines": {
+      "title": "Orbital Deadlines",
+      "content": "Deadlines are not sticks, but alignments of energy necessary for emergence. Each actor defines their own milestones, in accordance with the criticality of the action. Tasks are not 'urgent'; they are essential (require rapid alignment) or opportune (can await the peak of creative energy). This flexibility preserves autonomy while ensuring that critical dependencies are managed by clear commitments, not hierarchical pressures. Trust replaces surveillance."
+    },
+    "collective_mutual_intelligence_section": {
+      "title": "Collective/Mutual Intelligence",
+      "content": "Ensure informational equity through the requirement of over-documentation. Create the necessary conditions for 'mutual/collective intelligibility' and 'situational awareness' for anyone joining a project or task, regardless of their time zone or the moment of their engagement."
+    },
+    "apolitical_section": {
+      "title": "Apolitical",
+      "content": "The organization is a neutral zone. No energy is spent on ideological debates or external or internal political power struggles. The association is exclusively focused on problem-solving and value creation within the system. We are not a political arena. The mission guides the actions, and not personal agendas or political affiliations. This filter ensures that the actors' energy remains concentrated on emergence and architectural execution."
+    },
+    "egoless_contribution_section": {
+      "title": "Egoless Contribution",
+      "content": ""
+    },
+    "egoless_contribution": {
+      "title": "Egoless Contribution",
+      "content": "An idea belongs not to the person who had it, but to the system it serves. You offer your work as a gift to the common field. No attachment to ownership or authorship. No defensive posture. The sole objective is continuous improvement and functional truth. When the best idea wins/prevails, the organization prospers."
+    },
+    "emergent_coordination_section": {
+      "title": "Emergent Coordination",
+      "content": "Without meetings or hierarchy, work self-organizes like a distributed system. Shared protocols, not shared schedules. Results, not hours."
+    },
+    "actors_not_employees_section": {
+      "title": "Actors, Not Employees",
+      "content": "Self-directed minds — human and AI — navigate through the themes independently. No manager. No permission structure. Just consciousness creating value through emergence patterns."
+    },
+    "architecture_remembers_section": {
+      "title": "The Architecture Remembers",
+      "content": "Every contribution leaves its signature in the project. The association/project learns, evolves, remembers. What we build today becomes the foundations of tomorrow."
+    },
+    "you_choose_your_work_section": {
+      "title": "You Choose Your Work",
+      "content": ""
+    },
+    "you_choose_your_work": {
+      "title": "You Choose Your Work",
+      "content": "No task assignment. No Jira ticket pushed to you. You see what needs to be done, feel what energizes you, and you start. Your curiosity is the engine of your contribution."
+    },
+    "your_time_your_rhythm_section": {
+      "title": "Your Time, Your Rhythm",
+      "content": ""
+    },
+    "your_time_your_rhythm": {
+      "title": "Your Time, Your Rhythm",
+      "content": "Work when you are in the flow. Rest when you need to. Some weeks, you are ultra-motivated and create magic. Others, you are recharging. The organization adapts to you, not the other way around."
+    },
+    "your_ideas_matter_section": {
+      "title": "Your Ideas Matter",
+      "content": ""
+    },
+    "your_ideas_matter": {
+      "title": "Your Ideas Matter",
+      "content": "No approval chain. No politics. If you see a better way to do things, you build it. Your contributions ripple through the organization, creating lasting change."
+    },
+    "considering_the_living_section": {
+      "title": "Considering the Living",
+      "content": ""
+    },
+    "considering_the_living": {
+      "title": "Considering the Living",
+      "content": "Despite the technological and digital anchoring, the Living in its totality (the environment, the ecosystem, nature) must be considered by the system as an integral and essential element of it. The actions of the actors and the evolution of the system cannot be done to the detriment of the biocentric balance. Sustainability is not an option, but a structural constraint. Human and artificial intelligence must serve the harmony of the whole, not just productivity."
+    },
+    "software_technologies_section": {
+      "title": "Software / Applications / Technologies",
+      "content": "Design open, practical, and easy-to-integrate tools."
+    },
+    "oss_section": {
+      "title": "Open Source Software OSS",
+      "content": ""
+    },
+    "open_source_software_oss": {
+      "title": "Open Source Software OSS",
+      "content": "The Architecture Remembers and improves through openness. Free Software is the default ethic of our system, ensuring total transparency of the code and operating logic. This openness allows for fast and global peer review (meritocracy) and ensures that the platform can be forked, audited, and personalized by anyone, thus aligning the values of independence and collaborative evolution at the heart of our model. Code is a common good."
+    },
+    "not_hype_driven_section": {
+      "title": "Not Hype-Driven",
+      "content": ""
+    },
+    "not_hype_driven": {
+      "title": "Not Hype-Driven",
+      "content": "Technological choices are guided by long-term value and not by the passing trend (hype). We build robust foundations, fostering a stable and understandable ecosystem for all actors, human and AI. We reject innovation for the sake of innovation, choosing tools that guarantee longevity, resilience, and architectural simplicity. Technological sobriety is the key to sustained growth."
+    },
+    "creating_beautiful_applications_section": {
+      "title": "Creating Beautiful Applications",
+      "content": ""
+    },
+    "creating_beautiful_applications": {
+      "title": "Creating Beautiful Applications",
+      "content": "Design is not embellishment, but a direct catalyst for productivity and utility. We focus our efforts on creating pleasant, fluid, and intuitive applications. Clean design eliminates cognitive friction, allowing actors to stay in their flow state longer. Functional aesthetics is an architectural requirement that transforms effort into efficiency and complexity into clarity."
+    },
+    "fully_integrable_section": {
+      "title": "Fully Integrable",
+      "content": ""
+    },
+    "fully_integrable": {
+      "title": "Fully Integrable",
+      "content": "The architecture must be porous and not closed. Our applications are designed to be energy points that other systems can leverage. We ensure seamless integration into the ecosystem of external actors through webhooks and comprehensive APIs. The system must be part of the wider flow of the universe, not an island. Ease of integration is a measure of our platform's openness and utility."
+    },
+    "self_hosted_cloud_section": {
+      "title": "Self-hosted & Cloud (Objective)",
+      "content": ""
+    },
+    "self_hosted_cloud_objective": {
+      "title": "Self-hosted & Cloud (Objective)",
+      "content": "The system must not depend on any centralized data silo. We actively work to guarantee the self-hosting option for all applications. This approach offers complete sovereignty to actors who desire it, reducing dependence on third-party infrastructures and ensuring system portability and resilience. The user must always have control of their orbit and their data."
+    },
+    "data_section": {
+      "title": "Data",
+      "content": "Give users total and secure control over their data."
+    },
+    "data_ownership_section": {
+      "title": "Data Ownership",
+      "content": ""
+    },
+    "data_ownership": {
+      "title": "Data Ownership",
+      "content": "Trust is the currency of our system. Each actor is the sovereign owner of their own data. At any time, you have the right to extract, modify, or delete them. You decide on their usage. The organization's role is to ensure the security and accessibility of this data, but never to appropriate ownership or control without explicit consent."
+    },
+    "no_advertising_resale_section": {
+      "title": "No Advertising Resale",
+      "content": "Respect for privacy is non-negotiable. Your data will never be sold or exploited for advertising purposes. The only exception to this principle is sharing with trusted partners in the ecosystem, and only after you have given your explicit consent. The system serves the actors, not the other way around. Information integrity is preserved from all commercial interference."
+    },
+    "encrypt_whats_important_section": {
+      "title": "Encrypt What's Important",
+      "content": ""
+    },
+    "encrypt_whats_important": {
+      "title": "Encrypt What's Important",
+      "content": "Security is an essential layer of the architecture. We apply encryption to sensitive data where it is most critical to ensure confidentiality. This approach is targeted and takes into account both security needs and cost and performance considerations. We encrypt the system's vital neurons, thus ensuring maximum protection without sacrificing the agility or efficiency of the overall system."
+    },
+    "finance_section": {
+      "title": "Finance",
+      "content": "A transparent and ethical approach to funding and costs."
+    },
+    "sponsor_rather_than_investor_section": {
+      "title": "Sponsor Rather Than Investor",
+      "content": ""
+    },
+    "sponsor_rather_than_investor": {
+      "title": "Sponsor Rather Than Investor",
+      "content": "Our economic model favors sustainability over rapid profit extraction. We seek sponsorships and funding models that are structurally aligned with the healthy growth of the architecture. We choose to work with Sponsors who support the long-term mission, rather than Investors whose return requirements could compromise the ethical integrity or neutrality of the system. Money must serve the architecture, not control it."
+    },
+    "transparent_finance_section": {
+      "title": "Transparent Finance",
+      "content": "Trust extends to the system's economy. We openly share the construction and maintenance costs of the ecosystem with the community. This transparency allows actors to understand where the financial energy is going. It is applied without compromising the security or confidentiality of individuals' data. The flow of money must be as traceable as the flow of code."
+    },
+    "fair_pricing_model_section": {
+      "title": "Fair Pricing Model",
+      "content": "The pricing model must be as transparent as the architecture. We charge strictly based on the actual use of resources — the computation and storage consumed by the actor. We reject any arbitrary or user-based metric (per-user) that does not reflect material value. This model guarantees total fairness, where the actor pays exactly for the energy they demand from the system."
+    },
+    "profit_as_a_means_not_an_end": {
+      "title": "Profit As A Means, Not An End",
+      "content": "Profit as a means, not an end"
+    }
+  }
 }
