@@ -9,7 +9,7 @@
       />
       <BentoCard
         class="row-span-1"
-        image="https://images.pexels.com/photos/1685650/pexels-photo-1685650.jpeg"
+        image="https://images.pexels.com/photos/1595391/pexels-photo-1595391.jpeg"
       />
       <BentoCard
         class="row-span-2"
