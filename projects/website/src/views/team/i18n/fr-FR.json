@@ -20,13 +20,13 @@
       "noellie": "L'étincelle qui allume nos projets les plus ambitieux. Sa curiosité n'a d'égal que son enthousiasme.",
       "luc_auvigne": "Architecte du code, construisant des fondations solides une ligne à la fois. Pragmatique et efficace.",
       "justine_delalleau": "L'œil du design. Elle s'assure que chaque pixel est à sa place et que l'expérience utilisateur est impeccable.",
-      "thomas_detharre": "Le bâtisseur. Transforme les concepts en réalité structurelle avec une précision d'ingénieur.",
-      "agnes_balquet": "Le ciment de l'équipe. Favorise la collaboration et s'assure que chaque voix est entendue."
+      "thomas": "Le bâtisseur. Transforme les concepts en réalité structurelle avec une précision d'ingénieur.",
+      "agnes_balquet": "La Picasso de l'équipe. Favorise la cohérence graphique de l'écosystème."
     }
   },
   "roles": {
-    "president": "Président",
-    "vice_president": "Vice-Présidente"
+    "president": "Président•e",
+    "vice_president": "Vice-Président•e"
   },
   "visit_profile": "Visiter le profil de {name}"
 }
