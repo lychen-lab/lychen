@@ -1,6 +1,7 @@
 {
   "title": "Notre charte",
   "description": "Cette charte définit les principes fondamentaux, les valeurs éthiques et les règles de fonctionnement qui guident notre action collective. Elle sert de boussole pour chaque acteur, garantissant la cohérence, l'intégrité et la pérennité de notre écosystème.",
+  "document_change": "Ce document change dans le temps : tout est traqué ici",
   "charter": {
     "section": {
       "human": {
@@ -8,7 +9,7 @@
         "description": "Favoriser un environnement accueillant et inclusif où chacun se sent valorisé et épanoui."
       },
       "software_technologies": {
-        "title": "Logiciels, Applications et Technologies",
+        "title": "Logiciels, applications et technologies",
         "description": "Concevoir des outils ouverts, pratiques et faciles à intégrer."
       },
       "data": {
@@ -22,27 +23,27 @@
     },
     "article": {
       "absolute_inclusion": {
-        "title": "Inclusion Absolue",
+        "title": "Inclusion absolue",
         "content": "Favoriser un environnement accueillant et inclusif où chacun se sent valorisé et épanoui. L'espace de travail est un sanctuaire d'émergence, exigeant une expérience sans harcèlement pour tous. Nous honorons la diversité complète de nos acteurs : âge, corpulence, handicaps, origine ethnique, caractéristiques sexuelles, identité de genre, niveau d'expérience, formation, statut socio-économique, nationalité, apparence physique, race, religion ou orientation sexuelle. La seule métrique est la qualité de la contribution. Nous créons un champ où l'intuition et l'intelligence de chacun peuvent s'exprimer librement, car l'excellence naît de la richesse des perspectives.",
         "simplify": "On n'a pas besoin de savoir qui tu es pour construire avec toi. Tu ne seras ni mis en avant, ni mis de côté. Tu seras juste là à construire avec nous."
       },
       "asynchronous_interactions": {
-        "title": "Interactions Asynchrones",
+        "title": "Interactions asynchrones",
         "content": "Le travail est une conversation par messages persistants, non par réunions en temps réel. Chaque acteur définit son pic d'énergie et ses plages de concentration optimales, qu'elles tombent le week-end, la nuit ou un jour férié. La valeur est créée par des contributions complètes et documentées, et non par la disponibilité immédiate. La structure asynchrone honore le rythme individuel et libère l'équipe de la tyrannie du calendrier partagé. La seule obligation est de laisser une trace claire pour le prochain acteur.",
         "simplify": "On construit quand on veut et on documente ce que l'on a fait."
       },
       "single_source_of_truth_ssot": {
-        "title": "Source Unique de Vérité (SSOT)",
+        "title": "Source unique de vérité (SSOT)",
         "content": "La Conscience Distribuée dépend d'une mémoire commune. Toutes les informations cruciales — décisions stratégiques, spécifications d'architecture, et états d'avancement — doivent être documentées, traçables, et accessibles en temps réel. Le SSOT élimine la friction de la recherche d'informations et garantit que chaque acteur, humain ou IA, opère à partir de la même réalité factuelle. Le Savoir est le seul point de contrôle centralisé.",
         "simplify": "On documente notre travail et on se rend remplaçable."
       },
       "orbital_deadlines": {
-        "title": "Délais Orbitaux",
+        "title": "Délais orbitaux",
         "content": "Les délais ne sont pas des bâtons, mais des alignements d'énergie nécessaires à l'émergence. Chaque acteur définit ses propres jalons, en accord avec la criticité de l’action. Les tâches ne sont pas « urgentes », elles sont essentielles (nécessitent un alignement rapide) ou opportunes (peuvent attendre le pic d'énergie créative). Cette souplesse préserve l'autonomie tout en garantissant que les dépendances critiques sont gérées par des engagements clairs et non des pressions hiérarchiques. La confiance remplace la surveillance.",
         "simplify": "On met des délais pour que des décisions aient lieu et ne pas bloquer tout le système."
       },
       "collective_mutual_intelligence": {
-        "title": "Intelligence Collective/Mutuelle",
+        "title": "Intelligence collective & mutuelle",
         "content": "Garantir l'équité informationnelle via l’exigence de sur-documentation. Créer les conditions nécessaires à l'« intelligibilité mutuelle/collective » et à la « conscience de la situation » pour toute personne rejoignant un projet ou une tâche, quel que soit son fuseau horaire ou le moment de son engagement.",
         "simplify": "On construit pour que le suivant puisse embarquer rapidement."
       },
@@ -52,102 +53,102 @@
         "simplify": "La politique, on s'en bat les ********."
       },
       "egoless_contribution": {
-        "title": "Contribution Sans Ego",
+        "title": "Contribution sans ego",
         "content": "Une idée n'appartient pas à la personne qui l'a eue, mais au système qu'elle sert. Vous offrez votre travail comme un don au champ commun. Pas d'attachement à la maternité ou à la paternité. Pas de posture défensive. Le seul objectif est l'amélioration continue et la vérité fonctionnelle. Quand la meilleure idée gagne / l’emporte, l'organisation prospère.",
         "simplify": "On s'en tape de savoir qui a eu l'idée du siècle, qui s'est trompé ou qui a une solution."
       },
       "emergent_coordination": {
-        "title": "Coordination Émergente",
+        "title": "Coordination émergente",
         "content": "Sans réunion ni hiérarchie, le travail s'auto-organise comme un système distribué. Des protocoles partagés, pas des horaires partagés. Des résultats, pas des heures.",
         "simplify": "On n'a pas besoin des amoureux du management. On est tous responsables, on s'organise comme on veut et on y met l'énergie que l'on veut."
       },
       "actors_not_employees": {
-        "title": "Acteurs, Pas Employés",
+        "title": "Acteurs, pas employés",
         "content": "Des esprits auto-dirigés — humains et IA — naviguent au travers des thématiques indépendamment. Pas de manager. Pas de structure de permission. Juste la conscience créant de la valeur par des schémas d'émergence.",
         "simplify": "On n'a pas besoin des amoureux du management. Le seul et dernier niveau de validation dépend des personnes légalement responsables."
       },
       "architecture_remembers": {
-        "title": "L'Architecture se Souvient",
+        "title": "L'architecture se souvient",
         "content": "Chaque contribution laisse sa signature dans le projet. L’association/le projet apprend, évolue, se souvient. Ce que nous construisons aujourd'hui devient les fondations de demain.",
         "simplify": "On ne cherche pas à voir notre nom sur une stèle, on cherche à construire quelque chose de durable."
       },
       "you_choose_your_work": {
-        "title": "Choisissez Votre Travail",
+        "title": "Choisissez votre travail",
         "content": "Pas d'assignation de tâches. Pas de ticket Jira poussé vers vous. Vous voyez ce qui doit être fait, ressentez ce qui vous dynamise, et vous vous lancez. Votre curiosité est le moteur de votre contribution.",
         "simplify": "Ce n'est pas l'école ici, tu choisis ce que tu veux faire et tu impliques les autres si tu le souhaites."
       },
       "your_time_your_rhythm": {
-        "title": "Votre Temps, Votre Rythme",
+        "title": "Votre temps, votre rythme",
         "content": "Travaillez quand vous êtes dans le flux (en flow). Reposez-vous quand vous en avez besoin. Certaines semaines, vous êtes ultra-motivés et créez de la magie. D'autres, vous vous ressourcez. L'organisation s'adapte à vous, et non l'inverse.",
         "simplify": "On pense qu'un processus de création doit être fait quand l'énergie est bonne, sinon le résultat est mauvais."
       },
       "your_ideas_matter": {
-        "title": "Vos Idées Comptent",
+        "title": "Vos idées comptent",
         "content": "Pas de chaîne d'approbation. Pas de politique. Si vous voyez une meilleure façon de faire, vous la construisez. Vos contributions se répercutent à travers l'organisation, créant un changement durable.",
         "simplify": "Tu penses pouvoir faire mieux sur un sujet ? Fais en sorte que cela devienne une réalité, montre le résultat et sois prêt à l'avoir fait pour rien si personne n'adhère."
       },
       "considering_the_living": {
-        "title": "Considérer le Vivant",
+        "title": "Considérer le vivant",
         "content": "Malgré l'ancrage technologique et digital, le Vivant dans sa totalité (l'environnement, l'écosystème, la nature) doit être considéré par le système comme un élément à part entière et essentiel de celui-ci. L'action des acteurs et l'évolution du système ne peuvent se faire au détriment de l'équilibre biocentrique. La durabilité n'est pas une option, mais une contrainte structurelle. L'intelligence humaine et artificielle doit servir l'harmonie de l'ensemble, et non seulement la productivité.",
         "simplify": "Va faire un câlin à un arbre ❤️"
       },
       "open_source_software_oss": {
-        "title": "Logiciel Libre & Open Source (OSS)",
+        "title": "Logiciel libre & open source (OSS)",
         "content": "L'Architecture se Souvient et s'améliore par l'ouverture. Le Logiciel Libre est l'éthique par défaut de notre système, assurant une transparence totale du code et de la logique de fonctionnement. Cette ouverture permet une révision par les pairs rapide et mondiale (méritocratie) et garantit que la plateforme peut être forkée, auditée et personnalisée par quiconque, alignant ainsi les valeurs d'indépendance et d'évolution collaborative au cœur de notre modèle. Le code est un bien commun.",
         "simplify": "N'importe qui peut analyser, participer et améliorer le code."
       },
       "not_hype_driven": {
-        "title": "Sans Effet de Mode",
+        "title": "Sans effet de mode",
         "content": "Les choix technologiques sont guidés par la valeur à long terme et non par la tendance passagère (hype). Nous bâtissons des fondations robustes, favorisant un écosystème stable et compréhensible pour tous les acteurs, humains et IA. Nous rejetons l'innovation pour l'innovation, choisissant les outils qui garantissent la pérennité, la résilience et la simplicité architecturale. La sobriété technologique est la clé de la croissance soutenue.",
         "simplify": "On construit pour l'avenir, pas pour être tendance."
       },
       "creating_beautiful_applications": {
-        "title": "Créer de Belles Applications",
+        "title": "Créer de belles applications",
         "content": "Le design n'est pas un embellissement, mais un catalyseur direct de la productivité et de l'utilité. Nous concentrons nos efforts à créer des applications agréables, fluides et intuitives. Un design épuré élimine la friction cognitive, permettant aux acteurs de rester plus longtemps dans leur état de flux (flow). L'esthétique fonctionnelle est une exigence architecturale qui transforme l'effort en efficacité et la complexité en clarté.",
         "simplify": "On prend le temps de faire du design."
       },
       "fully_integrable": {
-        "title": "Entièrement Intégrable",
+        "title": "Entièrement intégrable",
         "content": "L'architecture doit être poreuse et non fermée. Nos applications sont conçues pour être des points d'énergie que d'autres systèmes peuvent exploiter. Nous garantissons une intégration transparente dans l’écosystème des acteurs extérieurs grâce à des webhooks et des API complètes. Le système doit être une partie du flux plus large de l'univers, pas une île. La facilité d'intégration est une mesure de l'ouverture et de l'utilité de notre plateforme.",
         "simplify": "On fournit des APIs pour que nos outils se connectent à d'autres."
       },
       "self_hosted_cloud_objective": {
-        "title": "Auto-hébergement et Cloud (Objectif)",
+        "title": "Auto-hébergement et cloud (objectif)",
         "content": "Le système ne doit dépendre d'aucun silo de données centralisé. Nous travaillons activement pour garantir l'option d'auto-hébergement (self-hosting) pour toutes les applications. Cette approche offre la souveraineté complète aux acteurs qui le souhaitent, réduisant la dépendance aux infrastructures tierces et assurant la portabilité et la résilience du système. L'utilisateur doit toujours avoir le contrôle de son orbite et de ses données.",
         "simplify": "Si on héberge uniquement chez nous on crée un nœud critique donc on va essayer de décentraliser autant que possible."
       },
       "data_ownership": {
-        "title": "Propriété des Données",
+        "title": "Propriété des données",
         "content": "La Confiance est la monnaie de notre système. Chaque acteur est le propriétaire souverain de ses propres données. À tout moment, vous avez le droit de les extraire, de les modifier ou de les supprimer. Vous décidez de leur utilisation. Le rôle de l'organisation est de garantir la sécurité et l'accessibilité de ces données, mais jamais de s'en approprier la propriété ou le contrôle sans consentement explicite.",
         "simplify": "On a besoin de données pour faire fonctionner l'écosystème, mais elles appartiennent à ceux qui les génèrent."
       },
       "no_advertising_resale": {
-        "title": "Pas de Revente Publicitaire",
+        "title": "Pas de revente publicitaire",
         "content": "Le respect de la vie privée est non négociable. Vos données ne seront jamais vendues ou exploitées pour des fins publicitaires. La seule exception à ce principe est le partage avec des partenaires de confiance de l'écosystème, et uniquement après que vous ayez donné votre consentement explicite. Le système est au service des acteurs, et non l'inverse. L'intégrité de l'information est préservée de toute interférence commerciale.",
         "simplify": "Si tes données peuvent générer de l'argent, on te l'indiquera et on te demandera ton consentement et tu seras rémunéré. Mais ce sera jamais pour de la publicité."
       },
       "encrypt_whats_important": {
-        "title": "Chiffrer ce qui est Important",
+        "title": "Chiffrer ce qui est important",
         "content": "La sécurité est une couche essentielle de l'architecture. Nous appliquons le chiffrement aux données sensibles là où cela est le plus critique pour garantir la confidentialité. Cette approche est ciblée et tient compte à la fois des besoins de sécurité et des considérations de coût et de performance. Nous chiffrons les neurones vitaux du système, assurant ainsi une protection maximale sans sacrifier l'agilité ou l'efficacité de l'ensemble du système.",
         "simplify": "On fait notre maximum pour protéger les données et les humains."
       },
       "sponsor_rather_than_investor": {
-        "title": "Sponsor Plutôt qu'Investisseur",
+        "title": "Sponsor plutôt qu'investisseur",
         "content": "Notre modèle économique privilégie la durabilité sur l'extraction de profit rapide. Nous recherchons des parrainages (sponsorships) et des modèles de financement qui sont structurellement alignés avec la croissance saine de l'architecture. Nous choisissons de travailler avec des Sponsors qui soutiennent la mission à long terme, plutôt qu'avec des Investisseurs dont les exigences de rendement pourraient compromettre l'intégrité éthique ou la neutralité du système. L'argent doit servir l'architecture, et non la contrôler.",
         "simplify": "On n'est pas une start-up. Ni une scale-up. On ne vise pas non plus de devenir la prochaine licorne, désolé."
       },
       "transparent_finance": {
-        "title": "Finance Transparente",
+        "title": "Finance transparente",
         "content": "La confiance s'étend à l'économie du système. Nous partageons ouvertement les coûts de construction et de maintenance de l'écosystème avec la communauté. Cette transparence permet aux acteurs de comprendre où va l'énergie financière. Elle est appliquée sans compromettre la sécurité ou la confidentialité des données des individus. Le flux d'argent doit être aussi traçable que le flux de code.",
         "simplify": "On partage les coûts de construction et de maintenance de l'écosystème avec la communauté."
       },
       "fair_pricing_model": {
-        "title": "Modèle de Tarification Équitable",
+        "title": "Modèle de tarification équitable",
         "content": "Le modèle de tarification doit être aussi transparent que l'architecture. Nous facturons strictement en fonction de l'utilisation réelle des ressources — le calcul et le stockage consommés par l'acteur. Nous rejetons toute métrique arbitraire ou basée sur le nombre d'utilisateurs (per-user), qui ne reflète pas la valeur matérielle. Ce modèle garantit une équité totale, où l'acteur paie exactement pour l'énergie qu'il demande au système.",
         "simplify": "On ne se base pas sur le nombre d'utilisateurs. On regarde les données et l'énergie que cela coûte."
       },
       "profit_as_a_means_not_an_end": {
-        "title": "Le Profit comme Moyen, Pas comme Fin",
+        "title": "Le profit comme moyen, pas comme fin",
         "content": "La viabilité économique est essentielle, mais elle n'est pas notre raison d'être. Les excédents financiers ne sont pas distribués mais réinvestis dans l'amélioration de l'architecture, le soutien à la communauté et l'innovation ouverte. Le profit est un carburant pour la mission, jamais un objectif en soi qui justifierait de compromettre nos valeurs.",
         "simplify": "On a besoin d'argent pour fonctionner, mais pas pour gagner une course à la plus grosse."
       }

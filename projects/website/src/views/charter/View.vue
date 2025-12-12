@@ -1,9 +1,18 @@
 <template>
   <Container class="flex flex-col items-center gap-4 pt-20">
     <Title variant="h1">{{ t('title') }}</Title>
-    <Paragraph class="text-center">{{ t('description') }}</Paragraph>
+    <Paragraph class="text-center opacity-80">{{ t('description') }}</Paragraph>
+    <p class="text-xs font-light italic opacity-60">
+      {{ t('document_change') }}
+      <a
+        href="https://github.com/lychen-lab/lychen/tree/main/projects/website/src/views/charter"
+        target="_blank"
+        class="underline"
+        >github.com</a
+      >
+    </p>
   </Container>
-  <Container class="flex flex-col gap-24 md:pt-0">
+  <Container class="flex flex-col gap-8 md:gap-24 md:pt-0">
     <CharterSection i18n-key="charter.section.human">
       <CharterArticle i18n-key="charter.article.absolute_inclusion" />
       <CharterArticle i18n-key="charter.article.asynchronous_interactions" />
