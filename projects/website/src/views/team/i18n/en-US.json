@@ -10,7 +10,8 @@
   "ecosystem_section": {
     "title": "Discover how we build the ecosystem",
     "description": "Our approach is based on collaboration, transparency, and innovation. We believe in creating solutions that benefit all stakeholders in the ecosystem.",
-    "cta": "Our Charter"
+    "cta": "Our Charter",
+    "image_alt": "Ecosystem Illustration"
   },
   "member_card": {
     "bio_placeholder": "Lorem ipsum  ... to fill the space"

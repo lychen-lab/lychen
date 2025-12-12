@@ -50,7 +50,7 @@
   </Container>
 
   <Container class="flex flex-col gap-8 md:grid md:grid-cols-2">
-    <div class="flex flex-col items-start gap-8">
+    <div class="flex flex-col items-start justify-center gap-8">
       <Title variant="h2">{{ t('ecosystem_section.title') }}</Title>
       <Paragraph class="w-3/4 text-left opacity-60">
         {{ t('ecosystem_section.description') }}
@@ -60,7 +60,10 @@
       </RouterLink>
     </div>
     <div>
-      <img />
+      <img
+        src="https://res.cloudinary.com/ddhvfiezg/image/upload/v1765534714/ecosystem_y3ufwm.jpg"
+        :alt="t('ecosystem_section.image_alt')"
+      />
     </div>
   </Container>
 </template>
