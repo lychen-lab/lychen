@@ -7,9 +7,9 @@ export interface Props {
 export const paragraphVariants = cva('text-balance', {
   variants: {
     variant: {
-      default: 'text-base leading-4',
-      'website-default': 'text-base leading-6 font-semibold tracking-tight',
-      'website-highlight': 'text-lg leading-6 font-semibold tracking-tight',
+      default: 'text-base leading-5',
+      'website-default': 'text-base font-semibold',
+      'website-highlight': 'text-lg font-semibold',
     },
   },
   defaultVariants: {

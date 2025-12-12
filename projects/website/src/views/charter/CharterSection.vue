@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col gap-8">
+  <div class="flex flex-col items-start gap-4 rounded-3xl border border-black/10 p-8">
     <Title variant="h2">{{ t(`${i18nKey}.title`) }}</Title>
     <Paragraph>{{ t(`${i18nKey}.description`) }}</Paragraph>
-    <div class="grid grid-cols-2 gap-8">
+    <div class="mt-4 grid grid-cols-2 gap-8">
       <slot />
     </div>
   </div>

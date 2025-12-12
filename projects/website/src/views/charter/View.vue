@@ -1,9 +1,9 @@
 <template>
   <Container class="flex flex-col items-center gap-4 pt-20">
     <Title variant="h1">{{ t('title') }}</Title>
-    <Paragraph>{{ t('description') }}</Paragraph>
+    <Paragraph class="text-center">{{ t('description') }}</Paragraph>
   </Container>
-  <Container class="flex flex-col gap-24 py-24">
+  <Container class="flex flex-col gap-24 md:pt-0">
     <CharterSection i18n-key="charter.section.human">
       <CharterArticle i18n-key="charter.article.absolute_inclusion" />
       <CharterArticle i18n-key="charter.article.asynchronous_interactions" />
