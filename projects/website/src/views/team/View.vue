@@ -48,7 +48,7 @@
     <div class="flex flex-col items-center gap-2 md:flex-row">
       <small>{{ t('contact_label') }} </small>
 
-      <Badge class="bg-stone-200"
+      <Badge class="bg-stone-200 text-stone-800"
         >{{ contactEmail }}
         <IconCopy
           v-if="isSupported"
