@@ -41,29 +41,29 @@
             <NavigationMenuContent
               class="bg-surface-container/70 grid grid-cols-2 gap-4 rounded-lg p-4 backdrop-blur-lg md:w-[600px]"
             >
-              <NavigationMenuSubLink
-                :title="t('navigation.charter.title')"
-                :description="t('navigation.charter.description')"
-                :route="{ name: ROUTE_CHARTER.name }"
-              />
-
-              <NavigationMenuSubLink
-                :title="t('navigation.team.title')"
-                :description="t('navigation.team.description')"
-                :route="{ name: ROUTE_TEAM.name }"
-              />
-
-              <NavigationMenuSubLink
-                :title="t('navigation.partnerships.title')"
-                :description="t('navigation.partnerships.description')"
-                :route="{ name: ROUTE_PARTNERSHIPS.name }"
-              />
-
-              <NavigationMenuSubLink
-                :title="t('navigation.career.title')"
-                :description="t('navigation.career.description')"
-                :route="{ name: ROUTE_CAREER.name }"
-              />
+              <div class="flex flex-col justify-between gap-4">
+                <NavigationMenuSubLink
+                  :title="t('navigation.team.title')"
+                  :description="t('navigation.team.description')"
+                  :route="{ name: ROUTE_TEAM.name }"
+                />
+                <NavigationMenuSubLink
+                  :title="t('navigation.charter.title')"
+                  :description="t('navigation.charter.description')"
+                  :route="{ name: ROUTE_CHARTER.name }"
+                />
+                <NavigationMenuSubLink
+                  :title="t('navigation.partnerships.title')"
+                  :description="t('navigation.partnerships.description')"
+                  :route="{ name: ROUTE_PARTNERSHIPS.name }"
+                />
+              </div>
+              <div class="h-70 overflow-hidden rounded-lg">
+                <img
+                  src="https://res.cloudinary.com/ddhvfiezg/image/upload/v1765700238/019b1bef-b594-7bc0-84b8-2294798cc1f5.webp"
+                  class="h-full w-full object-cover"
+                />
+              </div>
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem>
