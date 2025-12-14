@@ -17,18 +17,8 @@
             :route="{ name: ROUTE_APPLICATIONS.name }"
           />
           <NavigationMenuSubLink
-            :title="t('navigation.api.title')"
-            :description="t('navigation.api.description')"
-          />
-          <NavigationMenuSubLink
             :title="t('navigation.label.title')"
             :description="t('navigation.label.description')"
-          />
-          <NavigationMenuSubLink
-            :title="t('navigation.code.title')"
-            :description="t('navigation.code.description')"
-            :link="SOCIAL_LINK.GitHub"
-            rel="noopener noreferrer"
           />
         </AccordionContent>
       </AccordionItem>
@@ -101,23 +91,16 @@ import Accordion from '@lychen/vue-components-core/accordion/Accordion.vue';
 import AccordionTrigger from '@lychen/vue-components-core/accordion/AccordionTrigger.vue';
 import AccordionContent from '@lychen/vue-components-core/accordion/AccordionContent.vue';
 import AccordionItem from '@lychen/vue-components-core/accordion/AccordionItem.vue';
-import { inject, type Ref } from 'vue';
 import { ROUTE_MISSION } from '@/views/mission';
 import { ROUTE_APPLICATIONS } from '@/views/applications';
-import { SOCIAL_LINK } from '@lychen/typescript-constants/Social';
 import { ROUTE_PARTNERSHIPS } from '@/views/partnerships';
 import { ROUTE_CAREER } from '@/views/career';
 import { ROUTE_TEAM } from '@/views/team';
 import { ROUTE_CHARTER } from '@/views/charter';
 import { LINK } from '@lychen/typescript-constants/Link';
+import { NavigationMenuLink } from '@lychen/vue-components-core/navigation-menu';
 
 const { t, i18nRoute } = usePrefixedI18n(CONFIG);
-
-const mobileMenuIsOpen = inject<Ref<boolean>>('mobileMenuIsOpen');
-
-function closeMobileMenu() {
-  mobileMenuIsOpen!.value = false;
-}
 </script>
 
 <style lang="css" scoped></style>
