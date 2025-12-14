@@ -28,6 +28,9 @@
                 <img
                   src="https://res.cloudinary.com/ddhvfiezg/image/upload/v1765700848/019b1bf9-0a48-73c9-ae92-1956fc25fe64.webp"
                   class="h-full w-full object-cover"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               <div class="flex flex-col gap-4">
@@ -70,6 +73,9 @@
                 <img
                   src="https://res.cloudinary.com/ddhvfiezg/image/upload/v1765700238/019b1bef-b594-7bc0-84b8-2294798cc1f5.webp"
                   class="h-full w-full object-cover"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </NavigationMenuContent>
