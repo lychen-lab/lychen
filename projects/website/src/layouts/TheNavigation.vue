@@ -43,6 +43,7 @@
                 <NavigationMenuSubLink
                   :title="t('navigation.label.title')"
                   :description="t('navigation.label.description')"
+                  :route="{ name: ROUTE_LABEL.name }"
                 />
               </div>
             </NavigationMenuContent>
@@ -133,6 +134,7 @@ import { ROUTE_TEAM } from '@/views/team';
 import { ROUTE_MISSION } from '@/views/mission';
 import { ROUTE_APPLICATIONS } from '@/views/applications';
 import IconHeartHandshake from '@lychen/vue-icons/IconHeartHandshake.vue';
+import { ROUTE_LABEL } from '@/views/label';
 
 const NavigationMenuSubLink = defineAsyncComponent(
   () => import('@lychen/vue-components-core/navigation-menu/NavigationMenuSubLink.vue'),
