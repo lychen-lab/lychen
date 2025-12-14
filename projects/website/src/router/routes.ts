@@ -9,6 +9,7 @@ import { ROUTE_TERMS_OF_USE } from '@/views/terms-of-use';
 import { ROUTE_APPLICATIONS } from '@/views/applications';
 import { ROUTE_PARTNERSHIPS } from '@/views/partnerships';
 import { ROUTE_CAREER } from '@/views/career';
+import { ROUTE_LABEL } from '@/views/label';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -24,6 +25,7 @@ const routes: RouteRecordRaw[] = [
       ROUTE_TERMS_OF_USE,
       ROUTE_PARTNERSHIPS,
       ROUTE_CAREER,
+      ROUTE_LABEL,
     ],
   },
 ];
