@@ -1,36 +1,42 @@
 import { type ApplicationAlias } from '@lychen/typescript-applications/constants/ApplicationAlias';
-import { type Application } from '@lychen/typescript-applications/model/Application';
 import { computed } from 'vue';
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { APPLICATION_ALIAS } from '@lychen/typescript-applications/constants/ApplicationAlias';
 import { APPLICATIONS } from '../constants/Applications';
 import { CONFIG } from '../i18n';
 
+type TranslatedApplication = {
+  title: string;
+  description: string;
+  state: string;
+  alias: ApplicationAlias;
+};
+
 export function useApplicationsCatalog() {
   const { t } = usePrefixedI18n(CONFIG);
 
-  function generateAppInfo(alias: ApplicationAlias): Application {
+  function generateAppInfo(alias: ApplicationAlias): TranslatedApplication {
     return {
       title: t(`${alias}.name`),
       description: t(`${alias}.description`),
-      state: APPLICATIONS[alias].state,
+      state: t(`state.${APPLICATIONS[alias].state}`),
       alias,
     };
   }
 
-  const applicationsList = computed<Application[]>(() => {
+  const applicationsList = computed<TranslatedApplication[]>(() => {
     return Object.values(APPLICATION_ALIAS).map((alias) => {
       return generateAppInfo(alias);
     });
   });
 
-  const titleSortedApplicationsList = computed<Application[]>(() => {
+  const titleSortedApplicationsList = computed<TranslatedApplication[]>(() => {
     return applicationsList.value.sort((a, b) =>
       a.title.toLowerCase().localeCompare(b.title.toLowerCase()),
     );
   });
 
-  const opiniatedApplicationsList = computed<Application[]>(() => {
+  const opiniatedApplicationsList = computed<TranslatedApplication[]>(() => {
     const customOrder = [
       APPLICATION_ALIAS.Espace,
       APPLICATION_ALIAS.Tera,
