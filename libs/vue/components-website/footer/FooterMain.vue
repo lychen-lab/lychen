@@ -17,19 +17,19 @@
         </p>
       </div>
 
-      
-      <div class="flex basis-1/4 flex-col justify-center gap-2 text-sm items-end">
+      <div class="flex basis-1/4 flex-col items-end justify-center gap-2 text-sm">
         <div class="flex flex-row gap-4">
           <SelectLanguage />
           <ToggleColorScheme />
-          
         </div>
         <p class="font-medium">{{ EMAIL.Contact }}</p>
       </div>
     </div>
 
     <div class="flex flex-col-reverse items-center justify-between gap-4 lg:flex-row">
-      <small class="text-xs">{{ t(`copyright`, { date: year }) }} -  {{ INFORMATION.Siret }}</small>
+      <small class="text-xs"
+        >{{ t(`copyright`, { date: year }) }} - SIRET {{ INFORMATION.Siret }}</small
+      >
       <div class="flex flex-row gap-2 text-xs opacity-60">
         <RouterLink
           v-for="(menu, _index) in legalMenus"
@@ -46,8 +46,8 @@
 <script lang="ts" setup>
 import { defineAsyncComponent } from 'vue';
 
-import { messages, TRANSLATION_KEY } from './i18n';
-import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
+import { CONFIG } from './i18n';
+import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { EMAIL } from '@lychen/typescript-constants/Email';
 import { INFORMATION } from '@lychen/typescript-constants/Information';
 import SelectLanguage from '@lychen/vue-i18n/components/select-language/SelectLanguage.vue';
@@ -57,7 +57,7 @@ const LogoLychenFull = defineAsyncComponent(
   () => import('@lychen/vue-components-extra/logo-lychen/LogoLychenFull.vue'),
 );
 
-const { t, i18nRoute } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
+const { t, i18nRoute } = usePrefixedI18n(CONFIG);
 
 interface Props {
   legalMenus?: { title: string; to: unknown }[];
