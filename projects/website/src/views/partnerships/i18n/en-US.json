@@ -1,3 +1,20 @@
 {
-  "title": "Partnerships"
+  "title": "Partnerships",
+  "description": "Building a sustainable future requires collective effort. We are proud to work with partners who share our vision of resilience, inclusivity, and ecological responsibility.",
+  "current": {
+    "title": "Our Current Partners",
+    "description": "Meet the organizations that trust and support the Lychen ecosystem."
+  },
+  "alpsify": {
+    "description": "Alpsify is a web development agency based in Annecy. They support Lychen with technical expertise, helping to build a robust and scalable open-source platform."
+  },
+  "humus_and_co": {
+    "description": "Humus & Co specializes in agroecology and soil health. They provide invaluable expertise in sustainable farming practices, training, and project support."
+  },
+  "become_section": {
+    "title": "Become a Partner",
+    "description": "Join the movement to connect local actors and strengthen territorial resilience. Whether you are a company, an association, or a public institution, let's collaborate to create meaningful impact.",
+    "cta": "Contact Us",
+    "image_alt": "Collaboration and partnership illustration"
+  }
 }

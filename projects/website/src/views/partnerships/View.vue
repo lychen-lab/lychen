@@ -1,7 +1,7 @@
 <template>
   <Container class="flex flex-col items-center gap-8">
     <Title variant="h1">{{ t('title') }}</Title>
-    <Paragraph>{{ t('description') }}</Paragraph>
+    <Paragraph class="">{{ t('description') }}</Paragraph>
   </Container>
   <Container class="flex flex-col items-center gap-8">
     <Title variant="h2">{{ t('current.title') }}</Title>

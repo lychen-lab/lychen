@@ -1,14 +1,14 @@
 <template>
-  <div class="bg-surface-container flex flex-row items-center gap-8 rounded-2xl p-4">
-    <div class="flex h-[100px] w-[100px] flex-col items-center justify-center">
-      <img
-        v-if="image"
-        :src="image"
-        :alt="name"
-        class="w-full rounded-lg object-cover"
-      />
-    </div>
-    <div class="flex flex-col gap-2">
+  <div
+    class="bg-surface-container flex max-w-[500px] flex-col items-center justify-center gap-8 rounded-2xl p-4 md:flex-row"
+  >
+    <img
+      v-if="image"
+      :src="image"
+      :alt="name"
+      class="w-[100px] rounded-lg object-cover"
+    />
+    <div class="flex flex-col justify-center gap-2 text-center md:text-left">
       <Title variant="h3">{{ name }}</Title>
       <Paragraph
         v-if="description"

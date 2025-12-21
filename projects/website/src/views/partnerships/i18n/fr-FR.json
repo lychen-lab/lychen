@@ -1,3 +1,20 @@
 {
-  "title": "Partenariats"
+  "title": "Partenariats",
+  "description": "Construire un avenir durable nécessite un effort collectif. Nous sommes fiers de collaborer avec des partenaires qui partagent notre vision de résilience, d'inclusion et de responsabilité écologique.",
+  "current": {
+    "title": "Nos Partenaires Actuels",
+    "description": "Découvrez les organisations qui font confiance et soutiennent l'écosystème Lychen."
+  },
+  "alpsify": {
+    "description": "Alpsify est une agence de développement web basée à Annecy. Elle accompagne Lychen avec son expertise technique pour bâtir une plateforme open-source robuste et évolutive."
+  },
+  "humus_and_co": {
+    "description": "Humus & Co est spécialisé en agroécologie et santé des sols. Ils apportent une expertise précieuse en pratiques agricoles durables, formation et accompagnement de projets."
+  },
+  "become_section": {
+    "title": "Devenir Partenaire",
+    "description": "Rejoignez le mouvement pour connecter les acteurs locaux et renforcer la résilience des territoires. Que vous soyez une entreprise, une association ou une institution publique, collaborons pour créer un impact significatif.",
+    "cta": "Contactez-nous",
+    "image_alt": "Illustration de collaboration et partenariat"
+  }
 }
