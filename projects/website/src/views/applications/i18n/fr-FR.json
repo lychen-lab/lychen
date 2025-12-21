@@ -1,5 +1,8 @@
 {
-  "title": "Applications",
+  "meta": {
+    "title": "Applications, APIs, Code",
+    "description": "Découvrez l'écosystème d'applications Lychen dédié à la transition écologique et sociale. Des outils connectés pour les producteurs, citoyens et acteurs du territoire."
+  },
   "oss": {
     "title": "Un écosystème transparent et open-source",
     "description": "Nous croyons en la transparence totale pour que chacun puisse s'assurer de la sécurité, de la fiabilité et de l'intégrité de notre solution.",

@@ -24,15 +24,15 @@
       </div>
     </div>
   </Container>
-  <Container class="flex flex-col items-center gap-4">
+  <Container class="flex flex-col items-start gap-4">
     <Title
       variant="h2"
-      class="text-center md:w-2/3"
+      class="md:w-2/3"
       >{{ t('use_cases.title') }}</Title
     >
     <Paragraph
       variant="website-highlight"
-      class="text-center opacity-80 md:w-2/3"
+      class="opacity-80 md:w-2/3"
     >
       {{ t('use_cases.description') }}
     </Paragraph>
@@ -49,14 +49,18 @@
       class="text-center opacity-90 md:w-3/5"
       >{{ t('oss.description') }}</Paragraph
     >
-    <RouterLink :to="SOCIAL_LINK.GitHub">
-      <Button variant="ghost"
+    <a
+      :href="SOCIAL_LINK.GitHub"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <Button
         >{{ t('oss.button.label') }}
         <template #icon>
           <IconArrowUpRight />
         </template>
       </Button>
-    </RouterLink>
+    </a>
   </Container>
   <Container>
     <BentoSummary />
@@ -76,8 +80,11 @@ import { SOCIAL_LINK } from '@lychen/typescript-constants/Social';
 import Badge from '@lychen/vue-components-core/badge/Badge.vue';
 import LychenEcosystem from '@lychen/vue-drawio-core/LychenEcosystem.vue';
 import { BentoSummary } from '@/components/bento-summary';
+import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
 
 const { t } = usePrefixedI18n(CONFIG);
 
 const { opiniatedApplicationsList: list } = useApplicationsCatalog();
+
+useExtendedHead(t);
 </script>
