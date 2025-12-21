@@ -13,22 +13,29 @@
     </Paragraph>
     <LychenEcosystem />
   </Container>
-  <Container class="grid grid-cols-3 gap-4">
-    <div
-      v-for="(application, index) in titleSortedApplicationsList"
-      :key="index"
-      class="flex flex-col gap-2 rounded-3xl p-4"
+  <Container class="flex flex-col items-start gap-8">
+    <Title
+      variant="h2"
+      class="text-center md:basis-2/5"
+      >{{ t('applications.title') }}</Title
     >
-      <div class="flex items-center gap-2">
-        <Title
-          variant="h3"
-          class="lowercase"
-          >{{ application.title }}</Title
-        >
-        <Badge>{{ application.state }}</Badge>
-      </div>
+    <div class="grid grid-cols-3 gap-8">
+      <div
+        v-for="(application, index) in titleSortedApplicationsList"
+        :key="index"
+        class="border-on-surface/10 flex flex-col gap-2 rounded-3xl border p-4"
+      >
+        <div class="flex items-center gap-2">
+          <Title
+            variant="h3"
+            class="lowercase"
+            >{{ application.title }}</Title
+          >
+          <Badge>{{ application.state }}</Badge>
+        </div>
 
-      <Paragraph class="opacity-80">{{ application.description }}</Paragraph>
+        <Paragraph class="opacity-80">{{ application.description }}</Paragraph>
+      </div>
     </div>
   </Container>
 

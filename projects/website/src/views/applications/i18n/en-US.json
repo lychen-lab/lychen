@@ -10,5 +10,8 @@
   "use_cases": {
     "title": "Solutions tailored to each actor of the territory",
     "description": "Explore how Lychen connects producers, citizens, associations, businesses, communities, and researchers around the Sustainable Development Goals. Click on each actor to discover the specific features that facilitate their engagement and collaboration within the ecosystem."
+  },
+  "applications": {
+    "title": "Our applications"
   }
 }
