@@ -42,8 +42,8 @@ import Goal12Url from './assets/goal-12.webp';
 import Goal11Url from './assets/goal-11.webp';
 import { computed, defineAsyncComponent, ref } from 'vue';
 import { useSustainableDevelopmentGoals } from '@lychen/vue-sustainable-development-goals/composables/useSustainableDevelopmentGoals';
-import { messages, TRANSLATION_KEY } from './i18n';
-import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
+import { CONFIG } from './i18n';
+import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 
 const GoalSubSection = defineAsyncComponent(
   () => import('@/views/home/component/GoalSubSection.vue'),
@@ -55,7 +55,7 @@ const Container = defineAsyncComponent(
   () => import('@lychen/vue-components-website/container/Container.vue'),
 );
 
-const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
+const { t } = usePrefixedI18n(CONFIG);
 
 const { two, eleven, twelve } = useSustainableDevelopmentGoals();
 

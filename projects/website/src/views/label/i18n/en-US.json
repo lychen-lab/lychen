@@ -1,3 +1,42 @@
 {
-  "title": "Label"
+  "meta": {
+    "title": "Robust Label - Lychen",
+    "description": "Discover the Lychen Robust Label, a unique system to measure the resilience and autonomy of territories, from transition to regeneration."
+  },
+  "title": "Robust Label",
+  "hero": {
+    "title": "Robust: The Scale of Resilience and Autonomy",
+    "description": "A single label to measure robustness, from transition to the regeneration of life. A unique scale from 1 to 10 for all systems (cities, companies, associations, products)."
+  },
+  "tranches": {
+    "transition": {
+      "title": "Transition",
+      "subtitle": "Levels 1 to 3",
+      "description": "The system initiates its model change. It implements initial initiatives to reduce negative impact and move towards sustainable practices."
+    },
+    "preservation": {
+      "title": "Preservation",
+      "subtitle": "Levels 4 to 7",
+      "description": "The system preserves the ecosystem. It has reached a balance where its activities no longer harm the environment and maintain existing resources."
+    },
+    "regeneration": {
+      "title": "Regeneration",
+      "subtitle": "Levels 8 to 10",
+      "description": "The system regenerates the surrounding ecosystem. It aims for complete autonomy and actively contributes to the restoration of life and biodiversity."
+    }
+  },
+  "gamification": {
+    "title": "Coherent & Measurable Gamification",
+    "description": "The Robust Label allows comparing and validating the efforts of each actor, whatever their nature. The larger the system, the harder the level is to reach, highlighting agile small local initiatives.",
+    "examples": {
+      "0": { "role": "Local Association", "points": "Level 6 (100 pts)" },
+      "1": { "role": "Company Y", "points": "Level 4 (20 pts)" },
+      "2": { "role": "Building Z", "points": "Level 5 (5 pts)" },
+      "3": { "role": "Village X", "points": "Level 8 (8 pts)" }
+    }
+  },
+  "vision": {
+    "title": "A Unique Vision",
+    "description": "By speaking only of 'Robust Level X', we simplify communication while maintaining scientific precision on real impact. It is a universal recognition tool for ecological transition."
+  }
 }

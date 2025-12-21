@@ -1,6 +1,6 @@
 {
   "extends": "../../../tsconfig.options.json",
-  "include": ["**/*"],
+  "include": ["**/*", "../../../projects/website/src/views/label/RobustLabel.vue"],
   "references": [
     {
       "path": "../../typescript/utils"

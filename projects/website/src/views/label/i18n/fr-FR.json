@@ -1,3 +1,42 @@
 {
-  "title": "Label"
+  "meta": {
+    "title": "Label Robust - Lychen",
+    "description": "Découvrez le Label Robust de Lychen, un système unique pour mesurer la résilience et l'autonomie des territoires, de la transition à la régénération."
+  },
+  "title": "Label Robust",
+  "hero": {
+    "title": "Robust : L'Échelle de la Résilience et de l'Autonomie",
+    "description": "Un seul label pour mesurer la robustesse, de la transition à la régénération du vivant. Une échelle unique de 1 à 10 pour tous les systèmes (villes, entreprises, associations, produits)."
+  },
+  "tranches": {
+    "transition": {
+      "title": "Transition",
+      "subtitle": "Niveaux 1 à 3",
+      "description": "Le système amorce son changement de modèle. Il met en place les premières initiatives pour réduire son impact négatif et s'orienter vers des pratiques durables."
+    },
+    "preservation": {
+      "title": "Préservation",
+      "subtitle": "Niveaux 4 à 7",
+      "description": "Le système préserve l'écosystème. Il a atteint un équilibre où ses activités ne nuisent plus à l'environnement et permettent de maintenir les ressources existantes."
+    },
+    "regeneration": {
+      "title": "Régénération",
+      "subtitle": "Niveaux 8 à 10",
+      "description": "Le système régénère l'écosystème qui l'entoure. Il vise une autonomie complète et contribue activement à la restauration du vivant et de la biodiversité."
+    }
+  },
+  "gamification": {
+    "title": "Gamification Cohérente & Mesurable",
+    "description": "Le Label Robust permet de comparer et valider les efforts de chaque acteur, quelle que soit sa nature. Plus le système est gros, plus le niveau est complexe à atteindre, mettant en évidence les petites initiatives locales agiles.",
+    "examples": {
+      "0": { "role": "Asso Locale", "points": "Niveau 6 (100 pts)" },
+      "1": { "role": "Entreprise Y", "points": "Niveau 4 (20 pts)" },
+      "2": { "role": "Immeuble Z", "points": "Niveau 5 (5 pts)" },
+      "3": { "role": "Village X", "points": "Niveau 8 (8 pts)" }
+    }
+  },
+  "vision": {
+    "title": "Une Vision Unique",
+    "description": "En parlant uniquement de 'Robust Niveau X', nous simplifions la communication tout en gardant une précision scientifique sur l'impact réel. C'est un outil de reconnaissance universel pour la transition écologique."
+  }
 }
