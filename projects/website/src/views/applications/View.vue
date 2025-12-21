@@ -5,10 +5,13 @@
       class="text-center md:basis-2/5"
       >{{ t('applications.title') }}</Title
     >
-    <div class="flex flex-col gap-4 md:grid md:grid-cols-3 md:gap-8">
+    <div
+      v-if="list"
+      class="flex flex-col gap-4 md:grid md:grid-cols-3 md:gap-8"
+    >
       <div
-        v-for="(application, index) in list"
-        :key="index"
+        v-for="application in list"
+        :key="application.alias"
         class="border-on-surface/10 flex flex-col gap-2 rounded-3xl border p-4"
       >
         <div class="flex items-center justify-between gap-2">

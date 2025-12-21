@@ -1,18 +1,23 @@
 import { type ApplicationAlias } from '@lychen/typescript-applications/constants/ApplicationAlias';
-import { computed } from 'vue';
+import { computed, type ComputedRef } from 'vue';
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { APPLICATION_ALIAS } from '@lychen/typescript-applications/constants/ApplicationAlias';
 import { APPLICATIONS } from '../constants/Applications';
 import { CONFIG } from '../i18n';
 
-type TranslatedApplication = {
+export type TranslatedApplication = {
   title: string;
   description: string;
   state: string;
   alias: ApplicationAlias;
 };
 
-export function useApplicationsCatalog() {
+export function useApplicationsCatalog(): {
+  applicationsList: ComputedRef<TranslatedApplication[]>;
+  titleSortedApplicationsList: ComputedRef<TranslatedApplication[]>;
+  opiniatedApplicationsList: ComputedRef<TranslatedApplication[]>;
+  getAppInfo: (alias: ApplicationAlias) => TranslatedApplication;
+} {
   const { t } = usePrefixedI18n(CONFIG);
 
   function generateAppInfo(alias: ApplicationAlias): TranslatedApplication {
