@@ -9,9 +9,8 @@
     <Paragraph>{{ t('goals.description') }}</Paragraph>
     <div class="grid grid-cols-2 grid-rows-2 items-stretch gap-8">
       <div
-        class="bg-surface-variant row-span-2 flex flex-col items-center justify-center gap-4 rounded-2xl p-8"
+        class="border-on-surface/20 row-span-2 flex flex-col items-center justify-center gap-4 rounded-2xl border p-8"
       >
-        <!-- Placeholder for Image if needed, or remove img tag if no source -->
         <div class="bg-surface-2 h-48 w-full rounded-xl opacity-20"></div>
         <Title variant="h3">{{ t('goals.food.title') }}</Title>
         <p class="opacity-60">
@@ -19,18 +18,18 @@
         </p>
       </div>
       <div
-        class="bg-surface-variant flex flex-col items-center justify-center gap-4 rounded-2xl p-8"
+        class="border-on-surface/20 flex flex-col items-center justify-center gap-4 rounded-2xl border p-8"
       >
         <Title variant="h3">{{ t('goals.biodiversity.title') }}</Title>
-        <p>
+        <p class="opacity-60">
           {{ t('goals.biodiversity.description') }}
         </p>
       </div>
       <div
-        class="bg-surface-variant flex flex-col items-center justify-center gap-4 rounded-2xl p-8"
+        class="border-on-surface/20 flex flex-col items-center justify-center gap-4 rounded-2xl border p-8"
       >
         <Title variant="h3">{{ t('goals.social.title') }}</Title>
-        <p>
+        <p class="opacity-60">
           {{ t('goals.social.description') }}
         </p>
       </div>
