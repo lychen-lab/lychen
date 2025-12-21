@@ -9,8 +9,10 @@ import { APP_ALIAS as KOLO_APP_ALIAS } from '@lychen/typescript-kolo/constants/A
 import { APP_ALIAS as VARA_APP_ALIAS } from '@lychen/typescript-vara/constants/App';
 import { APP_ALIAS as NOVI_APP_ALIAS } from '@lychen/typescript-novi/constants/App';
 import { APP_ALIAS as ROBUST_APP_ALIAS } from '@lychen/typescript-robust/constants/App';
+import { APP_ALIAS as ESPACE_APP_ALIAS } from '@lychen/typescript-espace/constants/App';
 
 export const APPLICATION_ALIAS = {
+  Espace: ESPACE_APP_ALIAS,
   Kiro: KIRO_APP_ALIAS,
   Humu: HUMU_APP_ALIAS,
   Novi: NOVI_APP_ALIAS,
