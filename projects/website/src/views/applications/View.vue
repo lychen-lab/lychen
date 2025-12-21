@@ -72,6 +72,7 @@ import IconArrowUpRight from '@lychen/vue-icons/IconArrowUpRight.vue';
 import { SOCIAL_LINK } from '@lychen/typescript-constants/Social';
 import Badge from '@lychen/vue-components-core/badge/Badge.vue';
 import LychenEcosystem from '@lychen/vue-drawio-core/LychenEcosystem.vue';
+import { BentoSummary } from '@/components/bento-summary';
 
 const { t } = usePrefixedI18n(CONFIG);
 

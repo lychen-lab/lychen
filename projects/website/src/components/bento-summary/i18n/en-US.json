@@ -1,0 +1,56 @@
+{
+  "integrability": {
+    "title": "Integrability"
+  },
+  "objective": {
+    "title": "Objective",
+    "year": "2026",
+    "version": "v1"
+  },
+  "local_value": {
+    "title": "Value the",
+    "keyword": "local",
+    "subtitle": "via digital technology"
+  },
+  "data_ownership": {
+    "title": "You own your data",
+    "description": "Ensure transparency and control over your personal data."
+  },
+  "accessibility": {
+    "title": "Accessibility",
+    "subtitle": "Fluidity and modernity"
+  },
+  "citizen_change": {
+    "title": "Citizen Changes"
+  },
+  "applications": {
+    "title": "Applications",
+    "subtitle": "Inter-connected"
+  },
+  "sustainable_development": {
+    "title": "Based on the",
+    "sdg_number": "17",
+    "subtitle": "European SDGs "
+  },
+  "sponsorship": {
+    "title": "Sponsor",
+    "description": "Rather than an investor"
+  },
+  "ethics_inclusion": {
+    "title": "Ethics & Inclusivity"
+  },
+  "compromise": {
+    "title": "0",
+    "subtitle": "compromises"
+  },
+  "communication": {
+    "title": "Facilitating communication among local actors"
+  },
+  "team": {
+    "title": "Small team, big results"
+  },
+  "transparency": {
+    "title": "Transparency",
+    "subtitle": "Open-Source Software"
+  }
+}
