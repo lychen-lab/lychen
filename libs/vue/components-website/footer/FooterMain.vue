@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="flex flex-col gap-8">
     <div class="flex flex-col items-stretch justify-between gap-4 lg:flex-row">
       <div class="flex basis-1/3 flex-col gap-2">
         <slot name="logo">
@@ -22,7 +22,7 @@
         </p>
       </div>
 
-      <div class="flex basis-1/4 flex-col items-end justify-center gap-2 text-sm">
+      <div class="flex basis-1/4 flex-col items-end justify-start gap-2 text-sm">
         <div class="flex flex-row gap-4">
           <SelectLanguage />
           <ToggleColorScheme />
@@ -30,11 +30,11 @@
       </div>
     </div>
 
-    <div class="flex flex-col-reverse items-center justify-between gap-4 lg:flex-row">
+    <div class="flex flex-col-reverse items-center justify-between gap-4 opacity-60 lg:flex-row">
       <small class="text-xs"
         >{{ t(`copyright`, { date: year }) }} - SIRET {{ INFORMATION.Siret }}</small
       >
-      <div class="flex flex-row gap-2 text-xs opacity-60">
+      <div class="flex flex-row gap-2 text-xs">
         <RouterLink
           v-for="(menu, _index) in legalMenus"
           :key="_index"
