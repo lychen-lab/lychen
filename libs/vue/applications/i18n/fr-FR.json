@@ -1,6 +1,48 @@
 {
   "state": {
     "development": "En développement",
-    "funding": "Recherche de financement"
+    "funding": "Recherche de financement",
+    "beta": "Beta",
+    "production": "Production"
+  },
+  "tera": {
+    "name": "tera",
+    "description": "Facilite la gestion des cultures et connecte citoyens et maraîchers à des espaces partagés"
+  },
+  "myko": {
+    "name": "myko",
+    "description": "Optimise la culture de champignons et sensibilise à la mycologie"
+  },
+  "kiro": {
+    "name": "kiro",
+    "description": "Simplifie la gestion des AMAPs et renforce les liens entre producteurs et citoyens"
+  },
+  "meli": {
+    "name": "meli",
+    "description": "Organise l'activité apicole et connecte les apiculteurs avec les acteurs locaux"
+  },
+  "humu": {
+    "name": "humu",
+    "description": "Structure la gestion des biodéchets et développe des initiatives de compostage"
+  },
+  "kolo": {
+    "name": "kolo",
+    "description": "Gère les magasins de producteurs et connecte citoyens et producteurs locaux"
+  },
+  "vara": {
+    "name": "vara",
+    "description": "Centralise les données sur la biodiversité et informe citoyens et associations"
+  },
+  "novi": {
+    "name": "novi",
+    "description": "Partage les connaissances scientifiques sur l'écosystème et encourage la recherche"
+  },
+  "robust": {
+    "name": "robust",
+    "description": "Facilite la création d'un territoire résilient en connectant les acteurs autour des ODD européens. Permet de visualiser et de promouvoir les interactions entre les différents acteurs."
+  },
+  "espace": {
+    "name": "espace",
+    "description": "Trouve ton espace de culture"
   }
 }

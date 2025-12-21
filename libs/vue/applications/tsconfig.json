@@ -16,30 +16,6 @@
     },
     {
       "path": "../i18n"
-    },
-    {
-      "path": "../kiro"
-    },
-    {
-      "path": "../kolo"
-    },
-    {
-      "path": "../meli"
-    },
-    {
-      "path": "../myko"
-    },
-    {
-      "path": "../novi"
-    },
-    {
-      "path": "../robust"
-    },
-    {
-      "path": "../tera"
-    },
-    {
-      "path": "../vara"
     }
   ],
   "compilerOptions": {

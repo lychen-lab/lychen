@@ -1,6 +1,52 @@
 {
   "state": {
     "development": "In development",
-    "funding": "Seeking funding"
+    "funding": "Seeking funding",
+    "beta": "Beta",
+    "production": "Production"
+  },
+  "tera": {
+    "name": "tera",
+    "description": "Facilitates crop management and connects citizens and farmers to shared spaces"
+  },
+  "website": {
+    "name": "website",
+    "description": "The main website for the Lychen project"
+  },
+  "myko": {
+    "name": "myko",
+    "description": "Optimizes mushroom cultivation and raises awareness about mycology"
+  },
+  "kiro": {
+    "name": "kiro",
+    "description": "Simplifies the management of AMAPs and strengthens connections between producers and citizens"
+  },
+  "meli": {
+    "name": "meli",
+    "description": "Organizes beekeeping activities and connects beekeepers with local stakeholders"
+  },
+  "humu": {
+    "name": "humu",
+    "description": "Structures biowaste management and develops composting initiatives"
+  },
+  "kolo": {
+    "name": "kolo",
+    "description": "Manages producer stores and connects citizens with local producers"
+  },
+  "vara": {
+    "name": "vara",
+    "description": "Centralizes biodiversity data and informs citizens and associations"
+  },
+  "novi": {
+    "name": "novi",
+    "description": "Shares scientific knowledge about ecosystems and encourages research"
+  },
+  "robust": {
+    "name": "robust",
+    "description": "Facilitates the creation of a resilient territory by connecting actors around the European SDGs. Enables the visualization and promotion of interactions between different stakeholders."
+  },
+  "espace": {
+    "name": "espace",
+    "description": "Find your cultivation space"
   }
 }

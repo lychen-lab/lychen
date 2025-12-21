@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { test } from 'fixtures/fixtures';
+import { test } from '../../fixtures/fixtures';
 
 test('first attempt', async ({ person1 }) => {
   await person1.page.goto('dashboard');
