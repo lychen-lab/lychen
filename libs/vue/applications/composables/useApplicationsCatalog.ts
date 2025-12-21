@@ -1,20 +1,19 @@
-import { CONFIG } from '../i18n';
 import { type ApplicationAlias } from '@lychen/typescript-applications/constants/ApplicationAlias';
 import { type Application } from '@lychen/typescript-applications/model/Application';
 import { computed } from 'vue';
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { APPLICATION_STATE } from '@lychen/typescript-applications/constants/ApplicationState';
 import { APPLICATION_ALIAS } from '@lychen/typescript-applications/constants/ApplicationAlias';
+import { APPLICATIONS } from '../constants/Applications';
+import { CONFIG } from '../i18n';
 
 export function useApplicationsCatalog() {
   const { t } = usePrefixedI18n(CONFIG);
 
   function generateAppInfo(alias: ApplicationAlias): Application {
     return {
-      link: `https://${alias}.lychen.org`,
       title: t(`${alias}.name`),
       description: t(`${alias}.description`),
-      state: APPLICATION_STATE.Funding,
+      state: APPLICATIONS[alias].state,
       alias,
     };
   }
@@ -33,6 +32,7 @@ export function useApplicationsCatalog() {
 
   const opiniatedApplicationsList = computed<Application[]>(() => {
     const customOrder = [
+      APPLICATION_ALIAS.Espace,
       APPLICATION_ALIAS.Tera,
       APPLICATION_ALIAS.Myko,
       APPLICATION_ALIAS.Meli,

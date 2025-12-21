@@ -1,11 +1,17 @@
 {
   "state": {
     "development": "In development",
-    "funding": "Seeking funding"
+    "funding": "Seeking funding",
+    "beta": "Beta",
+    "production": "Production"
   },
   "tera": {
     "name": "tera",
     "description": "Facilitates crop management and connects citizens and farmers to shared spaces"
+  },
+  "website": {
+    "name": "website",
+    "description": "The main website for the Lychen project"
   },
   "myko": {
     "name": "myko",
@@ -38,5 +44,9 @@
   "robust": {
     "name": "robust",
     "description": "Facilitates the creation of a resilient territory by connecting actors around the European SDGs. Enables the visualization and promotion of interactions between different stakeholders."
+  },
+  "espace": {
+    "name": "espace",
+    "description": ""
   }
 }

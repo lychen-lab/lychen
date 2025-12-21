@@ -21,7 +21,7 @@
     >
     <div class="grid grid-cols-3 gap-8">
       <div
-        v-for="(application, index) in titleSortedApplicationsList"
+        v-for="(application, index) in list"
         :key="index"
         class="border-on-surface/10 flex flex-col gap-2 rounded-3xl border p-4"
       >
@@ -76,5 +76,5 @@ import LychenEcosystem from '@lychen/vue-drawio-core/LychenEcosystem.vue';
 
 const { t } = usePrefixedI18n(CONFIG);
 
-const { titleSortedApplicationsList } = useApplicationsCatalog();
+const { opiniatedApplicationsList: list } = useApplicationsCatalog();
 </script>
