@@ -2,18 +2,23 @@
   <div class="flex flex-col gap-4">
     <div class="flex flex-col items-stretch justify-between gap-4 lg:flex-row">
       <div class="flex basis-1/3 flex-col gap-2">
-        <slot name="logo"><LogoLychenFull class="h-14" /></slot>
+        <slot name="logo">
+          <div class="flex flex-row items-center gap-2">
+            <LogoLychenFull class="h-14" />
+            <p
+              v-if="displayPronunciation"
+              class="text-sm opacity-60"
+            >
+              {{ t(`pronounce`) }}
+            </p>
+          </div>
+        </slot>
+        <p class="text-sm font-medium">{{ EMAIL.Contact }}</p>
         <p
           v-if="seoParagraph"
           class="text-sm opacity-80"
         >
           {{ seoParagraph }}
-        </p>
-        <p
-          v-if="displayPronunciation"
-          class="text-sm opacity-60"
-        >
-          {{ t(`pronounce`) }}
         </p>
       </div>
 
@@ -22,7 +27,6 @@
           <SelectLanguage />
           <ToggleColorScheme />
         </div>
-        <p class="font-medium">{{ EMAIL.Contact }}</p>
       </div>
     </div>
 
