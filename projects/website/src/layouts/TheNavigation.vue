@@ -128,7 +128,6 @@ import LogoLychenFull from '@lychen/vue-components-extra/logo-lychen/LogoLychenF
 import Button from '@lychen/vue-components-core/button/Button.vue';
 import { LINK } from '@lychen/typescript-constants/Link';
 import { ROUTE_PARTNERSHIPS } from '@/views/partnerships';
-import { ROUTE_CAREER } from '@/views/career';
 import { ROUTE_CHARTER } from '@/views/charter';
 import { ROUTE_TEAM } from '@/views/team';
 import { ROUTE_MISSION } from '@/views/mission';

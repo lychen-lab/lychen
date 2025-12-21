@@ -30,14 +30,6 @@
               :label="t('hero.discover')"
             />
           </RouterLink>
-          <RouterLink
-            :to="{ name: ROUTE_SPONSOR.name }"
-            class="z-20"
-          >
-            <RainbowBox class="no-wrap flex flex-row gap-2 rounded-2xl">
-              {{ t('hero.sponsor_us') }}<IconHeartHandshake />
-            </RainbowBox>
-          </RouterLink>
         </div>
       </div>
     </Hero>
@@ -48,10 +40,8 @@
 import heroUrl from './assets/hero-2.webp';
 import { defineAsyncComponent } from 'vue';
 
-import { messages, TRANSLATION_KEY } from './i18n';
-import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { ROUTE_SPONSOR } from '../sponsor';
-import IconHeartHandshake from '@lychen/vue-icons/IconHeartHandshake.vue';
+import { CONFIG } from './i18n';
+import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 
 const DivScalingDown = defineAsyncComponent(
   () => import('@lychen/vue-components-extra/div-scaling-down/DivScalingDown.vue'),
@@ -64,10 +54,7 @@ const Paragraph = defineAsyncComponent(
   () => import('@lychen/vue-components-website/paragraph/Paragraph.vue'),
 );
 
-const RainbowBox = defineAsyncComponent(
-  () => import('@lychen/vue-components-extra/rainbow-box/RainbowBox.vue'),
-);
-const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
+const { t } = usePrefixedI18n(CONFIG);
 </script>
 
 <style scoped>

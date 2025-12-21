@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
 import { defineAsyncComponent } from 'vue';
-import { messages, TRANSLATION_KEY } from './i18n';
-import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
+import { CONFIG } from './i18n';
+import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 
 const LychenEcosystem = defineAsyncComponent(
   () => import('@lychen/vue-drawio-core/LychenEcosystem.vue'),
@@ -34,5 +34,5 @@ const Container = defineAsyncComponent(
   () => import('@lychen/vue-components-website/container/Container.vue'),
 );
 
-const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
+const { t } = usePrefixedI18n(CONFIG);
 </script>
