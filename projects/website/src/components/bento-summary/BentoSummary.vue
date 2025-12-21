@@ -26,9 +26,11 @@
     </div>
     <div class="item bg-surface-container-high">
       <img
-        :src="bentoCentralImageUrl"
+        src="https://res.cloudinary.com/ddhvfiezg/image/upload/v1766327483/019b4152-a105-7f71-a98b-a2be9a6bdfdd.webp"
         class="w-2/3 rounded-xl"
         alt="number 10 as organic blue and green shapes"
+        loading="lazy"
+        decoding="async"
       />
       <p class="gradient text-4xl">{{ t('applications.title') }}</p>
       <p>{{ t('applications.subtitle') }}</p>
@@ -69,8 +71,6 @@
 </template>
 
 <script setup lang="ts">
-import bentoCentralImageUrl from './assets/bento-central.webp';
-import { defineAsyncComponent } from 'vue';
 import { CONFIG } from './i18n';
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import IconHeartHandshake from '@lychen/vue-icons/IconHeartHandshake.vue';
