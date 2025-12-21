@@ -25,12 +25,11 @@
           
         </div>
         <p class="font-medium">{{ EMAIL.Contact }}</p>
-        <p>Made with ❤️ by lychen</p>
       </div>
     </div>
 
     <div class="flex flex-col-reverse items-center justify-between gap-4 lg:flex-row">
-      <small class="text-xs">{{ t(`copyright`, { date: year }) }}</small>
+      <small class="text-xs">{{ t(`copyright`, { date: year }) }} -  {{ INFORMATION.Siret }}</small>
       <div class="flex flex-row gap-2 text-xs opacity-60">
         <RouterLink
           v-for="(menu, _index) in legalMenus"
@@ -50,6 +49,7 @@ import { defineAsyncComponent } from 'vue';
 import { messages, TRANSLATION_KEY } from './i18n';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { EMAIL } from '@lychen/typescript-constants/Email';
+import { INFORMATION } from '@lychen/typescript-constants/Information';
 import SelectLanguage from '@lychen/vue-i18n/components/select-language/SelectLanguage.vue';
 import ToggleColorScheme from '@lychen/vue-color-scheme/components/ToggleColorScheme.vue';
 

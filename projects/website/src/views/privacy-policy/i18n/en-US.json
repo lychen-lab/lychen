@@ -1,3 +1,26 @@
 {
-  "title": "Privacy policy"
+  "title": "Privacy Policy",
+  "last_update": "Last updated: {date}",
+  "sections": [
+    {
+      "title": "Data Controller",
+      "content": "The data controller is the Lychen Association.\nHeadquarters: 1 ALLEE DU TRELOD 74000 ANNECY, France\nContact: dpo@lychen.org or contact@lychen.org"
+    },
+    {
+      "title": "Data Collected",
+      "content": "Our website is a static site that does not require user accounts. We do not collect personal data directly through the site forms currently (unless otherwise stated). Use of the site does not require providing personal data."
+    },
+    {
+      "title": "Cookies",
+      "content": "We do not use tracking cookies or marketing cookies. Technical cookies may be used by the hosting provider for security and load balancing purposes, which do not require consent."
+    },
+    {
+      "title": "User Rights",
+      "content": "In accordance with the GDPR and French law, you have the right to access, rectify, delete, and port your data. You also have the right to object to or limit processing. To exercise these rights, please contact our Data Protection Officer (DPO) at: dpo@lychen.org."
+    },
+    {
+      "title": "Right to Complain",
+      "content": "If you believe your rights are not respecting, you can file a complaint with the CNIL (Commission Nationale de l'Informatique et des Libertés) in France."
+    }
+  ]
 }
