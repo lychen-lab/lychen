@@ -8,24 +8,30 @@
     <Title variant="h2">{{ t('goals.title') }}</Title>
     <Paragraph>{{ t('goals.description') }}</Paragraph>
     <div class="grid grid-cols-2 grid-rows-2 items-stretch gap-8">
-      <div class="row-span-2 flex flex-col items-center justify-center gap-4 rounded-2xl">
-        <img />
-        <Title variant="h3">Augmenter la production alimentaire locale</Title>
+      <div
+        class="bg-surface-variant row-span-2 flex flex-col items-center justify-center gap-4 rounded-2xl p-8"
+      >
+        <!-- Placeholder for Image if needed, or remove img tag if no source -->
+        <div class="bg-surface-2 h-48 w-full rounded-xl opacity-20"></div>
+        <Title variant="h3">{{ t('goals.food.title') }}</Title>
         <p class="opacity-60">
-          Fournir les outils, les connaissances et les données pour développer la production
-          alimentaire locale en respectant la biodiversité locale.
+          {{ t('goals.food.description') }}
         </p>
       </div>
-      <div class="flex flex-col items-center justify-center gap-4 rounded-2xl">
-        <Title variant="h3">Développer et protéger la biodiversité locale</Title>
+      <div
+        class="bg-surface-variant flex flex-col items-center justify-center gap-4 rounded-2xl p-8"
+      >
+        <Title variant="h3">{{ t('goals.biodiversity.title') }}</Title>
         <p>
-          Permettre aux acteurs locaux d'observer, quantifier et protéger la biodiversité locale.
+          {{ t('goals.biodiversity.description') }}
         </p>
       </div>
-      <div class="flex flex-col items-center justify-center gap-4 rounded-2xl">
-        <Title variant="h3">Renforcer le lien social et économique</Title>
+      <div
+        class="bg-surface-variant flex flex-col items-center justify-center gap-4 rounded-2xl p-8"
+      >
+        <Title variant="h3">{{ t('goals.social.title') }}</Title>
         <p>
-          Utiliser les données et l'informatique pour favoriser la coopération et la solidarité.
+          {{ t('goals.social.description') }}
         </p>
       </div>
     </div>
@@ -34,7 +40,7 @@
   <Container class="flex flex-col items-center gap-8 pt-20 text-center">
     <Title variant="h2">{{ t('status.title') }}</Title>
     <Paragraph>{{ t('status.description') }}</Paragraph>
-    <p class="opacity-60">
+    <p class="mx-auto max-w-3xl text-justify whitespace-pre-line opacity-60">
       {{ t('status.content') }}
     </p>
   </Container>
