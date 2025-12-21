@@ -47,6 +47,7 @@ export function useApplicationsCatalog() {
       APPLICATION_ALIAS.Novi,
       APPLICATION_ALIAS.Vara,
       APPLICATION_ALIAS.Kolo,
+      APPLICATION_ALIAS.Robust,
     ];
     return Object.values(customOrder).map((alias) => {
       return generateAppInfo(alias);
