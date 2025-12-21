@@ -1,9 +1,9 @@
 <template>
-  <Container class="flex flex-col items-center gap-8">
+  <Container class="flex flex-col items-center gap-8 pt-20 text-center">
     <Title variant="h1">{{ t('title') }}</Title>
     <Paragraph class="">{{ t('description') }}</Paragraph>
   </Container>
-  <Container class="flex flex-col items-center gap-8">
+  <Container class="flex flex-col items-center gap-8 text-center">
     <Title variant="h2">{{ t('current.title') }}</Title>
     <Paragraph>{{ t('current.description') }}</Paragraph>
     <div class="flex flex-row flex-wrap items-center gap-8">
