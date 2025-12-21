@@ -28,6 +28,9 @@ import { CONFIG } from './i18n';
 import Container from '@lychen/vue-components-website/container/Container.vue';
 import Title from '@lychen/vue-components-website/title/Title.vue';
 import Paragraph from '@lychen/vue-components-website/paragraph/Paragraph.vue';
+import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
 
 const { t, d, tm, rt } = usePrefixedI18n(CONFIG);
+
+useExtendedHead(t);
 </script>
