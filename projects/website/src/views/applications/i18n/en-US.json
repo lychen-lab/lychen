@@ -1,3 +1,10 @@
 {
-  "title": "Applications"
+  "title": "Applications",
+  "oss": {
+    "title": "A transparent and open-source ecosystem",
+    "description": "We believe in full transparency so everyone can ensure the security, reliability, and integrity of our solution.",
+    "button": {
+      "label": "See on GitHub"
+    }
+  }
 }
