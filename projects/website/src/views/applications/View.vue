@@ -1,4 +1,18 @@
 <template>
+  <Container class="flex flex-col items-center gap-4">
+    <Title
+      variant="h2"
+      class="text-center md:w-2/3"
+      >{{ t('use_cases.title') }}</Title
+    >
+    <Paragraph
+      variant="website-highlight"
+      class="text-center opacity-80 md:w-2/3"
+    >
+      {{ t('use_cases.description') }}
+    </Paragraph>
+    <LychenEcosystem />
+  </Container>
   <Container class="grid grid-cols-3 gap-4">
     <div
       v-for="(application, index) in titleSortedApplicationsList"
@@ -51,6 +65,7 @@ import Button from '@lychen/vue-components-core/button/Button.vue';
 import IconArrowUpRight from '@lychen/vue-icons/IconArrowUpRight.vue';
 import { SOCIAL_LINK } from '@lychen/typescript-constants/Social';
 import Badge from '@lychen/vue-components-core/badge/Badge.vue';
+import LychenEcosystem from '@lychen/vue-drawio-core/LychenEcosystem.vue';
 
 const { t } = usePrefixedI18n(CONFIG);
 
