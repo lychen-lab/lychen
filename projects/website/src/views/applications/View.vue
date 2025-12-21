@@ -58,6 +58,9 @@
       </Button>
     </RouterLink>
   </Container>
+  <Container>
+    <BentoSummary />
+  </Container>
 </template>
 
 <script lang="ts" setup>
