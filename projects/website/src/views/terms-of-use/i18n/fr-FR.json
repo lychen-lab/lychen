@@ -1,3 +1,34 @@
 {
-  "title": "CGU"
+  "meta": {
+    "title": "Conditions Générales d'Utilisation",
+    "description": "Conditions Générales d'Utilisation du site web de l'association Lychen."
+  },
+  "title": "Conditions Générales d'Utilisation",
+  "last_update": "Dernière mise à jour : {date}",
+  "sections": [
+    {
+      "title": "Mentions Légales",
+      "content": "Association Lychen\nSIREN : 993 140 904 - SIRET : 993 140 904 00018\nSiège social : 1 ALLEE DU TRELOD 74000 ANNECY\nCatégorie juridique : 9220 - Association déclarée\nActivité Principale Exercée (APE) : 94.99Z - Autres organisations fonctionnant par adhésion volontaire\nDirecteur de la publication : Présidence de l'association\nContact : contact@lychen.org"
+    },
+    {
+      "title": "Accès au site",
+      "content": "L'accès au site est gratuit. Les frais d'accès et d'utilisation du réseau de télécommunication sont à la charge de tout utilisateur du site, selon les modalités fixées par ses fournisseurs d'accès et opérateurs de télécommunication."
+    },
+    {
+      "title": "Propriété intellectuelle",
+      "content": "L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle. Tous les droits de reproduction sont réservés, y compris pour les documents téléchargeables et les représentations iconographiques et photographiques. La reproduction de tout ou partie de ce site sur un support électronique quel qu'il soit est formellement interdite sauf autorisation expresse du directeur de la publication."
+    },
+    {
+      "title": "Responsabilité",
+      "content": "Les informations fournies sur le site le sont à titre informatif. L'association Lychen ne saurait garantir l'exactitude, la complétude, l'actualité des informations diffusées sur le site. En conséquence, l'utilisateur reconnaît utiliser ces informations sous sa responsabilité exclusive."
+    },
+    {
+      "title": "Données personnelles",
+      "content": "L'utilisation de ce site peut entraîner le traitement de données personnelles. Pour plus d'information, veuillez consulter notre Politique de Confidentialité. Le DPO peut être contacté à l'adresse : dpo@lychen.org"
+    },
+    {
+      "title": "Contact",
+      "content": "Pour toute question relative aux présentes conditions d'utilisation du site, vous pouvez nous écrire à l'adresse suivante : contact@lychen.org"
+    }
+  ]
 }
