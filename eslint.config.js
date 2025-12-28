@@ -10,6 +10,7 @@ import checkFile from 'eslint-plugin-check-file';
 import eslintPluginYml from 'eslint-plugin-yml';
 import { defineConfig } from 'eslint/config';
 import tailwind from 'eslint-plugin-tailwindcss';
+import path from 'node:path';
 
 export default defineConfig([
   {
@@ -46,6 +47,13 @@ export default defineConfig([
   ...eslintPluginYml.configs['flat/recommended'],
   ...tailwind.configs['flat/recommended'],
   {
+    settings: {
+      tailwindcss: {
+        config: false,
+      },
+    },
+  },
+  {
     files: ['**/*.vue'],
     languageOptions: {
       parserOptions: { parser: tseslint.parser },
@@ -71,7 +79,7 @@ export default defineConfig([
       'no-console': 'error',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
       'import/no-default-export': 'off',
-      'import/first': 'error',
+      'import/first': 'off',
       'import/newline-after-import': 'error',
       'import/no-duplicates': 'error',
       'import/no-unresolved': 'off', //Need eslint-import-resolver-typescript, waiting for flatconfig and error fix on package side
@@ -103,7 +111,6 @@ export default defineConfig([
       'yml/sort-sequence-values': ['error', { order: { type: 'asc' }, pathPattern: '^dependsOn$' }],
       'yml/no-empty-sequence-entry': ['error'],
       'tailwindcss/no-custom-classname': 'off',
-      //'tailwindcss/classnames-order': 'off',
     },
   },
 ]);

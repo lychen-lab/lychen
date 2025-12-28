@@ -2387,14 +2387,6 @@ __metadata:
     "@lychen/vue-components-core": "workspace:*"
     "@lychen/vue-components-extra": "workspace:*"
     "@lychen/vue-i18n": "workspace:*"
-    "@lychen/vue-kiro": "workspace:*"
-    "@lychen/vue-kolo": "workspace:*"
-    "@lychen/vue-meli": "workspace:*"
-    "@lychen/vue-myko": "workspace:*"
-    "@lychen/vue-novi": "workspace:*"
-    "@lychen/vue-robust": "workspace:*"
-    "@lychen/vue-tera": "workspace:*"
-    "@lychen/vue-vara": "workspace:*"
     vue: "npm:^3.5.25"
   languageName: unknown
   linkType: soft
@@ -2566,7 +2558,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@lychen/vue-kiro@workspace:*, @lychen/vue-kiro@workspace:libs/vue/kiro":
+"@lychen/vue-kiro@workspace:libs/vue/kiro":
   version: 0.0.0-use.local
   resolution: "@lychen/vue-kiro@workspace:libs/vue/kiro"
   dependencies:
@@ -2576,7 +2568,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@lychen/vue-kolo@workspace:*, @lychen/vue-kolo@workspace:libs/vue/kolo":
+"@lychen/vue-kolo@workspace:libs/vue/kolo":
   version: 0.0.0-use.local
   resolution: "@lychen/vue-kolo@workspace:libs/vue/kolo"
   dependencies:
@@ -2604,7 +2596,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@lychen/vue-meli@workspace:*, @lychen/vue-meli@workspace:libs/vue/meli":
+"@lychen/vue-meli@workspace:libs/vue/meli":
   version: 0.0.0-use.local
   resolution: "@lychen/vue-meli@workspace:libs/vue/meli"
   dependencies:
@@ -2614,7 +2606,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@lychen/vue-myko@workspace:*, @lychen/vue-myko@workspace:libs/vue/myko":
+"@lychen/vue-myko@workspace:libs/vue/myko":
   version: 0.0.0-use.local
   resolution: "@lychen/vue-myko@workspace:libs/vue/myko"
   dependencies:
@@ -2624,7 +2616,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@lychen/vue-novi@workspace:*, @lychen/vue-novi@workspace:libs/vue/novi":
+"@lychen/vue-novi@workspace:libs/vue/novi":
   version: 0.0.0-use.local
   resolution: "@lychen/vue-novi@workspace:libs/vue/novi"
   dependencies:
@@ -2722,7 +2714,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@lychen/vue-vara@workspace:*, @lychen/vue-vara@workspace:libs/vue/vara":
+"@lychen/vue-vara@workspace:libs/vue/vara":
   version: 0.0.0-use.local
   resolution: "@lychen/vue-vara@workspace:libs/vue/vara"
   dependencies:
@@ -3983,12 +3975,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^24.6.0, @types/node@npm:^24.6.1":
+"@types/node@npm:^24.6.0":
   version: 24.10.0
   resolution: "@types/node@npm:24.10.0"
   dependencies:
     undici-types: "npm:~7.16.0"
   checksum: 10c0/f82ed7194e16f5590ef7afdc20c6d09068c76d50278b485ede8f0c5749683536e3064ffa8def8db76915196afb3724b854aa5723c64d6571b890b14492943b46
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^25.0.3":
+  version: 25.0.3
+  resolution: "@types/node@npm:25.0.3"
+  dependencies:
+    undici-types: "npm:~7.16.0"
+  checksum: 10c0/b7568f0d765d9469621615e2bb257c7fd1953d95e9acbdb58dffb6627a2c4150d405a4600aa1ad8a40182a94fe5f903cafd3c0a2f5132814debd0e3bfd61f835
   languageName: node
   linkType: hard
 
@@ -8184,7 +8185,7 @@ __metadata:
     "@eslint/js": "npm:^9.39.1"
     "@eslint/markdown": "npm:^7.5.1"
     "@types/eslint": "npm:^9.6.1"
-    "@types/node": "npm:^24.6.1"
+    "@types/node": "npm:^25.0.3"
     eslint: "npm:^9.39.1"
     eslint-config-prettier: "npm:^10.1.8"
     eslint-plugin-check-file: "npm:^3.3.1"
@@ -8196,6 +8197,7 @@ __metadata:
     eslint-plugin-yml: "npm:^1.19.0"
     globals: "npm:^16.5.0"
     prettier: "npm:^3.7.4"
+    tailwindcss: "npm:^4.1.18"
     tsconfig-moon: "npm:^1.4.1"
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.49.0"
@@ -10974,7 +10976,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:4.1.18, tailwindcss@npm:^4.1.13, tailwindcss@npm:^4.1.14":
+"tailwindcss@npm:4.1.18, tailwindcss@npm:^4.1.13, tailwindcss@npm:^4.1.14, tailwindcss@npm:^4.1.18":
   version: 4.1.18
   resolution: "tailwindcss@npm:4.1.18"
   checksum: 10c0/c79263cea0b2c577859b02f28284caa4eb3844e4d0f563686726ca97817c045c5c395a55bc776daaa351ba9e4aefa9a75bfbb43c22d86f3c573eecc2b87d6bf1
