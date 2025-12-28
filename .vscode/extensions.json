@@ -5,18 +5,13 @@
     "ms-playwright.playwright",
     "moonrepo.moon-console",
     "pascalreitermann93.vscode-yaml-sort",
-    "hediet.vscode-drawio",
-    "google.geminicodeassist",
     "kamikillerto.vscode-colorize",
     "jannisx11.batch-rename-extension",
     "bradlc.vscode-tailwindcss",
     "vue.volar",
-    "mylesmurphy.prettify-ts",
-    "antfu.slidev",
-    "wenfangdu.snippet-generator",
     "jock.svg",
-    "eamodio.gitlens",
-    "prettier.prettier-vscode"
+    "prettier.prettier-vscode",
+    "oderwat.indent-rainbow"
   ],
   "unwantedRecommendations": [
     "octref.vetur",

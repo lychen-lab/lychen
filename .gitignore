@@ -31,6 +31,7 @@ build/
 .moon/cache
 .moon/dts
 .moon/logs
+.moon/hooks
 ###< Moon ###
 
 tsconfig.tsbuildinfo
