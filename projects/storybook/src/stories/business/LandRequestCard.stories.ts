@@ -29,7 +29,7 @@ export const Default: Story = {
 };
 
 export const Approved: Story = {
-  name: 'Utilisateur•rice vérifié•e',
+  name: 'Utilisateur·rice vérifié·e',
   args: {
     ...DefaultData,
     isApproved: true,
