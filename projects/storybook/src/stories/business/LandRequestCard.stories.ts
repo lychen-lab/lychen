@@ -3,19 +3,43 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { Card } from '@lychen/vue-components-business/land-request/card';
 
 const meta = {
-  title: 'Business/Land Request Card',
+  title: 'Business/Terrain (Land)/ Card - Demande',
   component: Card,
-  argTypes: {
-    class: { control: 'text' },
-  },
+  argTypes: {},
   args: {},
 } satisfies Meta<typeof Card>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const DefaultData = {
+  uuid: '019b705c-46db-7974-ad15-84b918ecbdcb',
+  firstName: 'John',
+  lastName: 'Doe',
+  minimalSurfaceRequested: 50,
+  description:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante finibus facilisis.',
+  avatarUrl: 'https://images.pexels.com/photos/35417978/pexels-photo-35417978.png',
+  city: 'Lyon',
+};
 export const Default: Story = {
   args: {
-    id: '23547766',
+    ...DefaultData,
+  },
+};
+
+export const Approved: Story = {
+  name: 'Utilisateur·rice vérifié·e',
+  args: {
+    ...DefaultData,
+    isApproved: true,
+  },
+};
+export const TooLongDescription: Story = {
+  name: 'Description (trop) longue',
+  args: {
+    ...DefaultData,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante finibus facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante finibus facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante finibus facilisis.',
   },
 };
