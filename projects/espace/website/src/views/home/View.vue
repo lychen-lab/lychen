@@ -37,11 +37,25 @@
   <Container class="flex flex-col items-start justify-center gap-8">
     <Title variant="h1">Trouvez un espace de culture</Title>
     <div class="flex w-1/3 flex-row items-center gap-2">
-      <Button
-        icon-only
-        size="sm"
-        ><template #icon></template
-      ></Button>
+      <Popover>
+        <PopoverTrigger as-child>
+          <Button
+            icon-only
+            variant="ghost"
+            size="sm"
+            ><template #icon> <img :src="planetEarth" /></template
+          ></Button>
+        </PopoverTrigger>
+        <PopoverContent class="flex w-fit flex-row gap-2">
+          <img
+            v-for="planet in planets"
+            :key="planet.id"
+            :src="planet.img"
+            class="size-10 cursor-pointer"
+          />
+        </PopoverContent>
+      </Popover>
+
       <Input placeholder="Rechercher par ville" />
       <Button
         size="sm"
@@ -49,8 +63,7 @@
         ><template #icon><IconSearch /></template
       ></Button>
     </div>
-    <Badge>10 lieux en France</Badge>
-    <div class="flex flex-row gap-4">
+    <div class="flex w-full flex-row gap-4 overflow-x-scroll pb-2">
       <CardLandProposal
         v-for="item in fakeLandProposals"
         :key="item.uuid"
@@ -58,9 +71,14 @@
         display-city
       />
     </div>
-    <Button
-      >Plus de terrains <template #icon><IconArrowRight /></template
-    ></Button>
+    <div class="flex w-full flex-row items-center justify-start gap-4">
+      <Badge>10 lieux en France</Badge>
+      <Button
+        variant="ghost"
+        size="sm"
+        >Voir tous les espaces <template #icon><IconArrowRight /></template
+      ></Button>
+    </div>
   </Container>
   <Container class="flex flex-col items-start justify-center gap-8 text-left">
     <h2 class="text-[3rem]/[3rem] lg:text-[5rem]/[5rem]">
@@ -92,7 +110,7 @@
         width="100%"
         height="auto"
         src="https://www.youtube.com/embed/t43-zErA2V8?si=3WqOKdcuc0Z992Hx&amp;controls=0"
-        title="YouTube video player"
+        title="Jardiner autrement"
         frameborder="0"
         allow="
           accelerometer;
@@ -126,9 +144,18 @@ import IconSearch from '@lychen/vue-icons/IconSearch.vue';
 import IconArrowRight from '@lychen/vue-icons/IconArrowRight.vue';
 import { CONFIG } from './i18n';
 import { Badge } from '@lychen/vue-components-core/badge';
+import planetEarth from './assets/planet-earth.png';
+import planetPluton from './assets/planet-pluton.png';
+import planetMars from './assets/planet-mars.png';
+import { Popover, PopoverContent, PopoverTrigger } from '@lychen/vue-components-core/popover';
 
 const { t } = usePrefixedI18n(CONFIG);
 
+const planets = [
+  { id: 'earth', img: planetEarth },
+  { id: 'mars', img: planetMars },
+  { id: 'pluton', img: planetPluton },
+];
 const fakeLandProposals: LandProposal[] = [
   {
     uuid: '1',
