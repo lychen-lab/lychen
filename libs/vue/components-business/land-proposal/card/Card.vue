@@ -5,6 +5,13 @@
     :class="clickable ? 'cursor-pointer hover:shadow-md' : 'cursor-default'"
   >
     <div class="relative aspect-[4/5] overflow-hidden rounded-2xl">
+      <img
+        :src="image"
+        :alt="title"
+        class="h-full w-full object-cover"
+        loading="lazy"
+        decoding="async"
+      />
       <Button
         class="bg-surface/5 absolute top-2 right-2 backdrop-blur-sm"
         icon-only
@@ -15,13 +22,11 @@
             v-else
             class="text-red-700" /></template
       ></Button>
-      <img
-        :src="image"
-        :alt="title"
-        class="h-full w-full object-cover"
-        loading="lazy"
-        decoding="async"
-      />
+      <div
+        class="absolute bottom-2 left-2 flex items-center gap-1 rounded-lg bg-lime-50 px-2 py-0.5 text-[0.8rem] text-lime-800"
+      >
+        <IconMapPin class="!size-4" /> {{ city }}
+      </div>
     </div>
     <div class="flex flex-col gap-4 p-4">
       <div class="flex flex-col gap-1">
@@ -57,6 +62,7 @@ import type { LandProposal } from '.';
 import IconArrowRight from '@lychen/vue-icons/IconArrowRight.vue';
 import IconHeart from '@lychen/vue-icons/IconHeart.vue';
 import IconHeartFilled from '@lychen/vue-icons/IconHeartFilled.vue';
+import IconMapPin from '@lychen/vue-icons/IconMapPin.vue';
 import IconMountain from '@lychen/vue-icons/IconMountain.vue';
 import IconSquareDashed from '@lychen/vue-icons/IconSquareDashed.vue';
 import Button from '@lychen/vue-components-core/button/Button.vue';

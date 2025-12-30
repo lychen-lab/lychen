@@ -18,6 +18,7 @@ const DefaultData = {
   description: 'Yupola Garden is a garden in the heart of the city.',
   surface: 100,
   altitude: 456,
+  city: 'Annecy',
   image:
     'https://images.pexels.com/photos/147640/pexels-photo-147640.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
   clickable: true,
@@ -34,6 +35,7 @@ const LongDescriptionData = {
     'Yupola Garden is a garden in the heart of the city. Yupola Garden is a garden in the heart of the city. Yupola Garden is a garden in the heart of the city. Yupola Garden is a garden in the heart of the city. Yupola Garden is a garden in the heart of the city. Yupola Garden is a garden in the heart of the city. Yupola Garden is a garden in the heart of the city. Yupola Garden is a garden in the heart of the city. Yupola Garden is a garden in the heart of the city. Yupola Garden is a garden in the heart of the city.',
   surface: 100,
   altitude: 456,
+  city: 'Annecy',
   image:
     'https://images.pexels.com/photos/147640/pexels-photo-147640.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
 };
