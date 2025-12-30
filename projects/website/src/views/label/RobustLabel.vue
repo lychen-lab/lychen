@@ -20,7 +20,7 @@
     </div>
 
     <!-- Decorative background elements -->
-    <div class="absolute inset-0 bg-[url('@/assets/noise.png')] opacity-20 mix-blend-overlay"></div>
+    <!--<div class="absolute inset-0 bg-[url('@/assets/noise.png')] opacity-20 mix-blend-overlay"></div>-->
     <div
       v-if="tranche === 'regeneration'"
       class="absolute inset-0 bg-gradient-to-t from-yellow-400/20 to-transparent"

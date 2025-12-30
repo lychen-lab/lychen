@@ -3,18 +3,14 @@
 </template>
 
 <script setup lang="ts">
-import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { usePreferredColorScheme } from '@lychen/vue-color-scheme/composables/usePreferredColorScheme';
 import { defineOrganization, defineWebPage, defineWebSite } from '@unhead/schema-org';
 import { useHead } from '@unhead/vue';
-import { CONFIG } from '@lychen/vue-espace/i18n';
-
-const { t } = usePrefixedI18n(CONFIG);
 
 usePreferredColorScheme();
-
+const title = 'espace';
 useHead({
-  titleTemplate: `${t('name')} | %s`,
+  titleTemplate: `${title} | %s`,
   templateParams: {
     schemaOrg: {
       host: import.meta.env.VITE_UNHEAD_HOST,
@@ -23,11 +19,11 @@ useHead({
 });
 
 defineOrganization({
-  name: t('name'),
+  name: title,
   logo: '/logos/lychen/logo-lychen.svg',
 });
 defineWebSite({
-  name: t('name'),
+  name: title,
 });
 defineWebPage();
 </script>
