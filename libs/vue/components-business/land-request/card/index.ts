@@ -4,6 +4,7 @@ export interface LandRequest {
   uuid: string;
   firstName: string;
   lastName: string;
+  avatarUrl?: string;
   minimalSurfaceRequested: number;
   description: string;
 }

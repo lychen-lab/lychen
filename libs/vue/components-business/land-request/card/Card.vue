@@ -4,6 +4,9 @@
     data-uuid="uuid"
   >
     <div class="flex items-center gap-2">
+      <Avatar v-if="avatarUrl">
+        <AvatarImage :src="avatarUrl" />
+      </Avatar>
       <p class="font-bold">{{ firstName }} {{ lastName }}</p>
       <IconBadgeCheck
         v-if="isApproved"
@@ -12,9 +15,8 @@
     </div>
     <p class="line-clamp-3 text-sm opacity-70">{{ description }}</p>
     <div class="flex items-center gap-1 text-xs">
-      <IconSquareDashed class="!size-4 text-lime-700 dark:text-lime-200" />{{
-        n(minimalSurfaceRequested, 'square-meter')
-      }}
+      <IconSquareDashed class="!size-4 text-lime-700 dark:text-lime-200" />
+      {{ n(minimalSurfaceRequested, 'square-meter') }}
     </div>
   </div>
 </template>
@@ -24,9 +26,10 @@ import type { LandRequest } from '.';
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import IconSquareDashed from '@lychen/vue-icons/IconSquareDashed.vue';
 import IconBadgeCheck from '@lychen/vue-icons/IconBadgeCheck.vue';
+import { Avatar, AvatarImage } from '../../../components-core/avatar';
 
 interface Props extends LandRequest {
-  isApproved: boolean;
+  isApproved?: boolean;
 }
 
 const props = defineProps<Props>();

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { Card } from '@lychen/vue-components-business/land-request/card';
 
 const meta = {
-  title: 'Business/Land Request Card',
+  title: 'Business/Terrain (Land)/ Card - Demande',
   component: Card,
   argTypes: {},
   args: {},
@@ -19,6 +19,7 @@ const DefaultData = {
   minimalSurfaceRequested: 50,
   description:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante finibus facilisis.',
+  avatarUrl: 'https://images.pexels.com/photos/35417978/pexels-photo-35417978.png',
 };
 export const Default: Story = {
   args: {
