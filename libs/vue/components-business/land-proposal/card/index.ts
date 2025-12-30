@@ -2,8 +2,9 @@ export { default as Card } from './Card.vue';
 
 export interface LandProposal {
   uuid: string;
-  name: string;
+  title: string;
   description: string;
   surface: number;
   altitude: number;
+  image: string;
 }

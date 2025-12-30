@@ -80,7 +80,13 @@ export function useI18nExtended(options?: UseCustomI18nOptions): UseI18nExtended
     }
 
     // Pass potentially modified args to the original n using spread operator
-    return originalN(...(passThroughArgs as Parameters<typeof originalN>));
+    const result = originalN(...(passThroughArgs as Parameters<typeof originalN>));
+
+    if (keyOrOptions === 'square-meter') {
+      return `${result} m²`;
+    }
+
+    return result;
   }
 
   // Define customD using function declaration, matching original d (ComposerDateTimeFormatting)

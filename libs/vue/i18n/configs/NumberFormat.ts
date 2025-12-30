@@ -39,11 +39,9 @@ const formats = {
     maximumFractionDigits: 0,
     roundingMode: 'halfExpand',
   },
-  squareMeter: {
-    style: 'unit',
+  'square-meter': {
+    style: 'decimal',
     useGrouping: true,
-    unit: 'square-meter',
-    unitDisplay: 'short',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
     roundingMode: 'halfExpand',

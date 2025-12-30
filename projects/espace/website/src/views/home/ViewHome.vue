@@ -20,7 +20,7 @@
     <div class="flex flex-row gap-4">
       <CardLandProposal
         v-for="item in fakeLandProposals"
-        :key="item.id"
+        :key="item.uuid"
         v-bind="item"
       />
     </div>
@@ -42,13 +42,13 @@ const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, pr
 
 const fakeLandProposals = [
   {
-    id: '1',
+    uuid: '1',
   },
   {
-    id: '2',
+    uuid: '2',
   },
   {
-    id: '3',
+    uuid: '3',
   },
 ];
 </script>
