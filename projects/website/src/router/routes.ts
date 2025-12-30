@@ -4,12 +4,12 @@ import { ROUTE_HOME } from '@/views/home';
 import { ROUTE_MISSION } from '@/views/mission';
 import { ROUTE_CHARTER } from '@/views/charter';
 import { ROUTE_TEAM } from '@/views/team';
-import { ROUTE_PRIVACY_POLICY } from '@/views/privacy-policy';
-import { ROUTE_TERMS_OF_USE } from '@/views/terms-of-use';
 import { ROUTE_APPLICATIONS } from '@/views/applications';
 import { ROUTE_PARTNERSHIPS } from '@/views/partnerships';
 import { ROUTE_CAREER } from '@/views/career';
 import { ROUTE_LABEL } from '@/views/label';
+import { ROUTE_PRIVACY_POLICY } from '@lychen/vue-components-website/views/privacy-policy';
+import { ROUTE_TERMS_OF_USE } from '@lychen/vue-components-website/views/terms-of-use';
 
 const routes: RouteRecordRaw[] = [
   {
