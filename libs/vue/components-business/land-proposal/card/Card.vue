@@ -17,7 +17,7 @@
         class="bg-surface text-on-surface absolute top-2 right-2"
         icon-only
         size="xs"
-        @click="$emit('favorite')"
+        @click.stop="emit('favorite')"
         ><template #icon
           ><IconHeart
             v-if="!isFavorite"
@@ -76,7 +76,7 @@ interface Events {
   (e: 'click'): void;
   (e: 'favorite'): void;
 }
-defineEmits<Events>();
+const emit = defineEmits<Events>();
 
 const { n } = usePrefixedI18n();
 </script>
