@@ -25,3 +25,11 @@ export const Default: Story = {
     ...DefaultData,
   },
 };
+
+export const Approved: Story = {
+  name: 'Utilisateur vérifié',
+  args: {
+    ...DefaultData,
+    isApproved: true,
+  },
+};
