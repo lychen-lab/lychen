@@ -15,7 +15,7 @@
     </div>
     <div>Map</div>
   </Container>
-  <Container class="flex flex-col items-center justify-center gap-4 text-center">
+  <Container class="flex flex-col items-center justify-center gap-8 text-center">
     <Title variant="h2">Derniers terrains disponibles</Title>
     <div class="flex flex-row gap-4">
       <CardLandProposal
@@ -25,24 +25,28 @@
         display-city
       />
     </div>
+    <Button
+      >Plus de terrains <template #icon><IconArrowRight /></template
+    ></Button>
   </Container>
 </template>
 
 <script lang="ts" setup>
-import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
+import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import {
   Card as CardLandProposal,
   type LandProposal,
 } from '@lychen/vue-components-business/land-proposal/card';
-import { MESSAGES, TRANSLATION_KEY } from './i18n';
 import { Container } from '@lychen/vue-components-website/container';
 import { Title } from '@lychen/vue-components-website/title';
 import { Paragraph } from '@lychen/vue-components-website/paragraph';
 import { Input } from '@lychen/vue-components-core/input';
 import { Button } from '@lychen/vue-components-core/button';
 import IconSearch from '@lychen/vue-icons/IconSearch.vue';
+import IconArrowRight from '@lychen/vue-icons/IconArrowRight.vue';
+import { CONFIG } from './i18n';
 
-const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
+const { t } = usePrefixedI18n(CONFIG);
 
 const fakeLandProposals: LandProposal[] = [
   {

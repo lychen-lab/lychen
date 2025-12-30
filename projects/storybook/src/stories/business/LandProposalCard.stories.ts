@@ -23,6 +23,7 @@ const DefaultData = {
     'https://images.pexels.com/photos/147640/pexels-photo-147640.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
   clickable: true,
   displayCity: true,
+  displayFavoriteButton: true,
 };
 
 export const Default: Story = {
@@ -48,5 +49,5 @@ export const LongDescription: Story = {
 
 export const Favorite: Story = {
   name: 'Terrain mis en favori',
-  args: { ...DefaultData, isFavorite: true },
+  args: { ...DefaultData, isFavorite: true, displayFavoriteButton: true },
 };

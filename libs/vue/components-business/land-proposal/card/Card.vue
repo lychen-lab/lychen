@@ -13,6 +13,7 @@
         decoding="async"
       />
       <Button
+        v-if="displayFavoriteButton"
         class="bg-surface text-on-surface absolute top-2 right-2"
         icon-only
         size="xs"
@@ -66,6 +67,7 @@ interface Props extends LandProposal {
   isFavorite?: boolean;
   clickable?: boolean;
   displayCity?: boolean;
+  displayFavoriteButton?: boolean;
 }
 
 defineProps<Props>();
