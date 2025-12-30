@@ -2119,7 +2119,7 @@ __metadata:
     "@lychen/vue-robust": "workspace:*"
     "@lychen/vue-router-configs": "workspace:*"
     "@lychen/vue-unhead-composables": "workspace:*"
-    "@tailwindcss/vite": "npm:^4.0.0"
+    "@tailwindcss/vite": "npm:^4.1.18"
     "@unhead/schema-org": "npm:^2.0.19"
     "@unhead/vue": "npm:^2.0.19"
     "@vitejs/plugin-vue": "npm:^6.0.1"
@@ -3481,7 +3481,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tailwindcss/vite@npm:^4.0.0, @tailwindcss/vite@npm:^4.1.18":
+"@tailwindcss/vite@npm:^4.1.18":
   version: 4.1.18
   resolution: "@tailwindcss/vite@npm:4.1.18"
   dependencies:

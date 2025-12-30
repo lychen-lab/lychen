@@ -22,3 +22,5 @@ export const titleVariants = cva(' font-inter text-balance antialiased', {
 });
 
 export type TitleVariants = VariantProps<typeof titleVariants>;
+
+export { default as Title } from './Title.vue';

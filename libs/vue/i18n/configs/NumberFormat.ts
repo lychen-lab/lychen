@@ -12,6 +12,40 @@ const formats = {
     useGrouping: false,
     minimumFractionDigits: 2,
   },
+  millimeter: {
+    style: 'unit',
+    useGrouping: true,
+    unit: 'millimeter',
+    unitDisplay: 'short',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+    roundingMode: 'halfExpand',
+  },
+  meter: {
+    style: 'unit',
+    useGrouping: true,
+    unit: 'meter',
+    unitDisplay: 'short',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+    roundingMode: 'halfExpand',
+  },
+  kilogram: {
+    style: 'unit',
+    useGrouping: true,
+    unit: 'kilogram',
+    unitDisplay: 'short',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+    roundingMode: 'halfExpand',
+  },
+  'square-meter': {
+    style: 'decimal',
+    useGrouping: true,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+    roundingMode: 'halfExpand',
+  },
 } as const;
 
 export const numberFormats: I18nOptions['numberFormats'] = {
