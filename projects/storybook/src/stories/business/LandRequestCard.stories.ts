@@ -35,3 +35,11 @@ export const Approved: Story = {
     isApproved: true,
   },
 };
+export const TooLongDescription: Story = {
+  name: 'Description trop longue',
+  args: {
+    ...DefaultData,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante finibus facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante finibus facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante finibus facilisis.',
+  },
+};
