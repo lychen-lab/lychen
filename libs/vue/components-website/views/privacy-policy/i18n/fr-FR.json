@@ -1,0 +1,30 @@
+{
+  "meta": {
+    "title": "Politique de Confidentialité",
+    "description": "Politique de Confidentialité concernant les données personnelles de l'association Lychen."
+  },
+  "title": "Politique de Confidentialité",
+  "last_update": "Dernière mise à jour : {date}",
+  "sections": [
+    {
+      "title": "Responsable du traitement",
+      "content": "Le responsable du traitement des données est l'Association Lychen.\nSiège social : 1 ALLEE DU TRELOD 74000 ANNECY\nContact DPO : dpo@lychen.org\nContact générique : contact@lychen.org"
+    },
+    {
+      "title": "Données collectées",
+      "content": "Notre site internet est un site statique informatif. Nous ne collectons pas de données personnelles nominatives via des formulaires sur ce site (sauf mention contraire explicite). La simple navigation sur le site ne nécessite pas la fourniture de données personnelles."
+    },
+    {
+      "title": "Cookies",
+      "content": "Nous n'utilisons pas de cookies de traçage publicitaire ou de mesure d'audience nécessitant un consentement. Des cookies techniques peuvent être déposés par l'hébergeur à des fins de sécurité et de bon fonctionnement, exemptés de consentement selon les recommandations de la CNIL."
+    },
+    {
+      "title": "Vos droits",
+      "content": "Conformément au RGPD et à la loi Informatique et Libertés, vous disposez d'un droit d'accès, de rectification, d'effacement, de portabilité, de limitation et d'opposition au traitement de vos données. Pour exercer ces droits, contactez notre Délégué à la Protection des Données (DPO) : dpo@lychen.org."
+    },
+    {
+      "title": "Réclamation",
+      "content": "Si vous estimez, après nous avoir contactés, que vos droits ne sont pas respectés, vous pouvez adresser une réclamation auprès de la CNIL."
+    }
+  ]
+}
