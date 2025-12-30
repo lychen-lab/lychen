@@ -4,7 +4,7 @@
     :data-uuid="uuid"
     :class="clickable ? 'cursor-pointer hover:shadow-md' : 'cursor-default'"
   >
-    <div class="relative aspect-[4/5] overflow-hidden rounded-2xl">
+    <div class="relative aspect-[1/1] overflow-hidden rounded-2xl">
       <img
         :src="image"
         :alt="title"
