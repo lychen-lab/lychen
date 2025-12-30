@@ -12,8 +12,14 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const DefaultData = {
+  uuid: '019b6e7f-ab0b-736b-a4f9-c5f9335aeda3',
+  name: 'Yupola Garden',
+  description: 'Yupola Garden is a garden in the heart of the city.',
+  surface: 100,
+  altitude: 456,
+};
+
 export const Default: Story = {
-  args: {
-    id: '23547766',
-  },
+  args: DefaultData,
 };

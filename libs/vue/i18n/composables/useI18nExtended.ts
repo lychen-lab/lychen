@@ -23,7 +23,7 @@ export function buildConfig(modules: Record<string, unknown>, rootKey: string): 
   } as const;
 }
 
-export function usePrefixedI18n(options: Config) {
+export function usePrefixedI18n(options?: Config) {
   return useI18nExtended({ ...options, prefixed: true });
 }
 
