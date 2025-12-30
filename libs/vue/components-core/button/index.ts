@@ -29,3 +29,5 @@ export const SIZE_VALUES = {
 
 export const SIZE = Object.keys(SIZE_VALUES);
 export type SizeKey = keyof typeof SIZE_VALUES;
+
+export { default as Button } from './Button.vue';

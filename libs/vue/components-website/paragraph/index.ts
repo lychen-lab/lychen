@@ -18,3 +18,5 @@ export const paragraphVariants = cva('text-balance', {
 });
 
 export type ParagraphVariants = VariantProps<typeof paragraphVariants>;
+
+export { default as Paragraph } from './Paragraph.vue';

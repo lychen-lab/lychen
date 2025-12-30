@@ -1,5 +1,5 @@
 export const ROUTE_HOME = {
-  path: '/home',
+  path: '',
   component: () => import('./ViewHome.vue'),
   name: 'home',
 } as const;

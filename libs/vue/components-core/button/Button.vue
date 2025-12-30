@@ -76,7 +76,7 @@ const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
   class: undefined,
   label: undefined,
-  iconPosition: ICON_POSITION.End,
+  iconPosition: () => ICON_POSITION.End,
   loading: false,
   iconOnly: false,
 });
