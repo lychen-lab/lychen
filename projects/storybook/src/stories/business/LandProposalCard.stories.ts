@@ -22,6 +22,7 @@ const DefaultData = {
   image:
     'https://images.pexels.com/photos/147640/pexels-photo-147640.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
   clickable: true,
+  displayCity: true,
 };
 
 export const Default: Story = {

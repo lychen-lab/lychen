@@ -6,6 +6,6 @@ export interface LandProposal {
   description: string;
   surface: number;
   altitude: number;
-  city: string;
+  city?: string;
   image: string;
 }

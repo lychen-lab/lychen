@@ -23,7 +23,8 @@
             class="text-red-700" /></template
       ></Button>
       <div
-        class="absolute bottom-2 left-2 flex items-center gap-1 rounded-lg bg-lime-50 px-2 py-0.5 text-[0.8rem] text-lime-800"
+        v-if="displayCity && city"
+        class="absolute bottom-4 left-4 flex items-center gap-1 rounded-lg bg-lime-50 px-2 py-0.5 text-[0.8rem] text-lime-800"
       >
         <IconMapPin class="!size-4" /> {{ city }}
       </div>
@@ -71,6 +72,7 @@ import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 interface Props extends LandProposal {
   isFavorite?: boolean;
   clickable?: boolean;
+  displayCity?: boolean;
 }
 
 defineProps<Props>();
