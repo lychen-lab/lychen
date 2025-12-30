@@ -20,6 +20,7 @@ const DefaultData = {
   description:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante finibus facilisis.',
   avatarUrl: 'https://images.pexels.com/photos/35417978/pexels-photo-35417978.png',
+  city: 'Lyon',
 };
 export const Default: Story = {
   args: {
@@ -28,7 +29,7 @@ export const Default: Story = {
 };
 
 export const Approved: Story = {
-  name: 'Utilisateur vérifié',
+  name: 'Utilisateur•rice vérifié•e',
   args: {
     ...DefaultData,
     isApproved: true,

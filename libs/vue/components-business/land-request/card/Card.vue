@@ -14,9 +14,18 @@
       />
     </div>
     <p class="line-clamp-3 text-sm opacity-70">{{ description }}</p>
-    <div class="flex items-center gap-1 text-xs">
-      <IconSquareDashed class="!size-4 text-lime-700 dark:text-lime-200" />
-      {{ n(minimalSurfaceRequested, 'square-meter') }}
+    <div class="flex items-center gap-2 text-xs">
+      <div class="flex items-center gap-1">
+        <IconSquareDashed class="!size-4 text-lime-700 dark:text-lime-200" />
+        {{ n(minimalSurfaceRequested, 'square-meter') }}
+      </div>
+      <div
+        v-if="city"
+        class="flex items-center gap-1"
+      >
+        <IconMapPin class="!size-4 text-lime-700 dark:text-lime-200" />
+        {{ city }}
+      </div>
     </div>
   </div>
 </template>
@@ -26,6 +35,7 @@ import type { LandRequest } from '.';
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import IconSquareDashed from '@lychen/vue-icons/IconSquareDashed.vue';
 import IconBadgeCheck from '@lychen/vue-icons/IconBadgeCheck.vue';
+import IconMapPin from '@lychen/vue-icons/IconMapPin.vue';
 import { Avatar, AvatarImage } from '../../../components-core/avatar';
 
 interface Props extends LandRequest {

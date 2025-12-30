@@ -7,4 +7,5 @@ export interface LandRequest {
   avatarUrl?: string;
   minimalSurfaceRequested: number;
   description: string;
+  city: string;
 }
