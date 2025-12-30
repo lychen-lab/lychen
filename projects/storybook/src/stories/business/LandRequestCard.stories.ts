@@ -36,7 +36,7 @@ export const Approved: Story = {
   },
 };
 export const TooLongDescription: Story = {
-  name: 'Description trop longue',
+  name: 'Description (trop) longue',
   args: {
     ...DefaultData,
     description:
