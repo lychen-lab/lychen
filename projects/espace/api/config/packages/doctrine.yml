@@ -13,7 +13,7 @@ doctrine:
     controller_resolver:
       auto_mapping: false
     default_entity_manager: default
-    enable_native_lazy_objects: true
+    #enable_native_lazy_objects: true
     entity_managers:
       default:
         connection: default
@@ -39,7 +39,6 @@ when@prod:
         type: pool
       result_cache_driver:
         pool: doctrine.result_cache_pool
-
         type: pool
   framework:
     cache:
