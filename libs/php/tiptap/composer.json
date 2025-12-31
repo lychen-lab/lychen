@@ -14,10 +14,10 @@
   ],
   "minimum-stability": "stable",
   "require": {
-    "ueberdosis/tiptap-php": "1.4.*"
+    "ueberdosis/tiptap-php": "^1.4"
   },
   "require-dev": {
-    "zenstruck/foundry": "2.3.*"
+    "zenstruck/foundry": "^2.3"
   },
   "archive": {
     "exclude": [
