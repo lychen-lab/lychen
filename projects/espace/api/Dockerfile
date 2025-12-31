@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:1.9-php8.4 AS frankenphp_upstream
+FROM dunglas/frankenphp:1.11-php8.4 AS frankenphp_upstream
 
 FROM frankenphp_upstream AS frankenphp_base
 
