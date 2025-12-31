@@ -6,10 +6,14 @@ use App\Repository\AreaRequestRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Lychen\UtilModel\Abstract\AbstractIdOrmAndUuidApiIdentified;
+use Lychen\UtilModel\Trait\CreatedAtTrait;
 
 #[ORM\Entity(repositoryClass: AreaRequestRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class AreaRequest extends AbstractIdOrmAndUuidApiIdentified
 {
+    use CreatedAtTrait;
+
     #[ORM\Column(length: 255)]
     private ?string $state = null;
 

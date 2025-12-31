@@ -9,6 +9,7 @@ use Lychen\UtilModel\Abstract\AbstractIdOrmAndUuidApiIdentified;
 use Lychen\UtilModel\Trait\CreatedAtTrait;
 
 #[ORM\Entity(repositoryClass: AreaProposalRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
 {
     use CreatedAtTrait;
