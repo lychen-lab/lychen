@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\AreaProposalRepository;
+use App\Workflow\AreaProposal\AreaProposalWorkflowState;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Lychen\UtilModel\Abstract\AbstractIdOrmAndUuidApiIdentified;
 use Lychen\UtilModel\Trait\CreatedAtTrait;
+use Symfony\Component\Validator\Constraints\Choice;
 
 #[ORM\Entity(repositoryClass: AreaProposalRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -21,10 +24,11 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $state = null;
+    #[Choice(AreaProposalWorkflowState::ALL)]
+    private ?string $state = AreaProposalWorkflowState::DRAFT;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $archivedAt = null;
+    private ?DateTimeImmutable $archivedAt = null;
 
     public function getTitle(): ?string
     {
@@ -62,12 +66,12 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
         return $this;
     }
 
-    public function getArchivedAt(): ?\DateTimeImmutable
+    public function getArchivedAt(): ?DateTimeImmutable
     {
         return $this->archivedAt;
     }
 
-    public function setArchivedAt(?\DateTimeImmutable $archivedAt): static
+    public function setArchivedAt(?DateTimeImmutable $archivedAt): static
     {
         $this->archivedAt = $archivedAt;
 
