@@ -13,10 +13,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 'path' => '^/api/docs',
                 'roles' => 'PUBLIC_ACCESS',
             ],
-            [
+            /*[
                 'path' => '^/api/',
                 'roles' => 'IS_AUTHENTICATED_FULLY',
-            ],
+            ],*/
         ],
         'access_decision_manager' => [
             'allow_if_all_abstain' => false,
