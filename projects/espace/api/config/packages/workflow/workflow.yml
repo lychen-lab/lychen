@@ -1,0 +1,30 @@
+framework:
+    workflows:
+        area_proposal:
+            audit_trail:
+                enabled: true
+            initial_marking: draft
+            marking_store:
+                property: 'state'
+                type: 'method'
+            places:
+                - draft
+                - verification
+                - published
+                - archived
+            supports:
+                - App\Entity\AreaProposal
+            transitions:
+                archive:
+                    from: [ verification, published ]
+                    to: archived
+                publish:
+                    from: verification
+                    to: published
+                reject:
+                    from: verification
+                    to: draft
+                submit:
+                    from: draft
+                    to: verification
+            type: 'state_machine'
