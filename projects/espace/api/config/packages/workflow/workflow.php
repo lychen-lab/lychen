@@ -3,45 +3,44 @@
 declare(strict_types=1);
 
 use App\Entity\AreaProposal;
-use App\Workflow\AreaProposal\AreaProposalWorkflowState;
-use App\Workflow\AreaProposal\AreaProposalWorkflowTransition;
+use App\Workflow\AreaProposal\AreaProposalWorkflow;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->extension('framework', [
         'workflows' => [
-            'area_proposal' => [
+            AreaProposalWorkflow::NAME => [
                 'audit_trail' => [
                     'enabled' => true,
                 ],
-                'initial_marking' => AreaProposalWorkflowState::DRAFT,
+                'initial_marking' => AreaProposalWorkflow::PLACE_DRAFT,
                 'marking_store' => [
-                    'property' => 'state',
+                    'property' => 'place',
                     'type' => 'method',
                 ],
-                'places' => AreaProposalWorkflowState::ALL,
+                'places' => AreaProposalWorkflow::PLACES,
                 'supports' => [
                     AreaProposal::class,
                 ],
                 'transitions' => [
-                    AreaProposalWorkflowTransition::ARCHIVE => [
+                    AreaProposalWorkflow::TRANSITION_ARCHIVE => [
                         'from' => [
-                            AreaProposalWorkflowState::VERIFICATION,
-                            AreaProposalWorkflowState::PUBLISHED,
+                            AreaProposalWorkflow::PLACE_VERIFICATION,
+                            AreaProposalWorkflow::PLACE_PUBLISHED,
                         ],
-                        'to' => AreaProposalWorkflowState::ARCHIVED,
+                        'to' => AreaProposalWorkflow::PLACE_ARCHIVED,
                     ],
-                    AreaProposalWorkflowTransition::PUBLISH => [
-                        'from' => AreaProposalWorkflowState::VERIFICATION,
-                        'to' => AreaProposalWorkflowState::PUBLISHED,
+                    AreaProposalWorkflow::TRANSITION_PUBLISH => [
+                        'from' => AreaProposalWorkflow::PLACE_VERIFICATION,
+                        'to' => AreaProposalWorkflow::PLACE_PUBLISHED,
                     ],
-                    AreaProposalWorkflowTransition::REJECT => [
-                        'from' => AreaProposalWorkflowState::VERIFICATION,
-                        'to' => AreaProposalWorkflowState::DRAFT,
+                    AreaProposalWorkflow::TRANSITION_REJECT => [
+                        'from' => AreaProposalWorkflow::PLACE_VERIFICATION,
+                        'to' => AreaProposalWorkflow::PLACE_DRAFT,
                     ],
-                    AreaProposalWorkflowTransition::SUBMIT => [
-                        'from' => AreaProposalWorkflowState::DRAFT,
-                        'to' => AreaProposalWorkflowState::VERIFICATION,
+                    AreaProposalWorkflow::TRANSITION_SUBMIT => [
+                        'from' => AreaProposalWorkflow::PLACE_DRAFT,
+                        'to' => AreaProposalWorkflow::PLACE_VERIFICATION,
                     ],
                 ],
                 'type' => 'state_machine',
