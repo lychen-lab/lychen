@@ -27,6 +27,7 @@ final class AreaProposalFactory extends PersistentObjectFactory
             'city' => self::faker()->city(),
             'surfaceToShare' => self::faker()->numberBetween(5, $surfaceTotal),
             'surfaceTotal' => $surfaceTotal,
+            'altitude' => self::faker()->numberBetween(0, 1000),
         ];
     }
 

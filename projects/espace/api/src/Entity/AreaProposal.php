@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Lychen\UtilModel\Abstract\AbstractIdOrmAndUuidApiIdentified;
 use Lychen\UtilModel\Trait\CreatedAtTrait;
 use Symfony\Component\Validator\Constraints\Choice;
+use Symfony\Component\Validator\Constraints\Positive;
 
 #[ORM\Entity(repositoryClass: AreaProposalRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -31,13 +32,18 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
     private ?DateTimeImmutable $archivedAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Positive]
     private ?int $surfaceTotal = null;
 
     #[ORM\Column(nullable: true)]
+    #[Positive]
     private ?int $surfaceToShare = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $city = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $altitude = 0;
 
     public function getTitle(): ?string
     {
@@ -119,6 +125,18 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
     public function setCity(?string $city): static
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getAltitude(): ?int
+    {
+        return $this->altitude;
+    }
+
+    public function setAltitude(?int $altitude): static
+    {
+        $this->altitude = $altitude;
 
         return $this;
     }
