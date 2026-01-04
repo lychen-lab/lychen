@@ -44,7 +44,7 @@ final class AreaProposal
     public ?string $archivedAt;
     public ?int $surfaceTotal;
     public ?int $surfaceToShare;
-    
+
     public ?string $city;
     public ?int $altitude;
 }
