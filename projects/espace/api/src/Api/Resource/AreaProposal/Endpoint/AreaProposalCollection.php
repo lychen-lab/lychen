@@ -35,4 +35,7 @@ class AreaProposalCollection
     public ?string $title;
     public ?string $description;
     public ?string $archivedAt;
+    public ?int $surfaceTotal;
+    public ?int $surfaceToShare;
+    public ?string $city;
 }

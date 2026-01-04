@@ -30,6 +30,15 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
     #[ORM\Column(nullable: true)]
     private ?DateTimeImmutable $archivedAt = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $surfaceTotal = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $surfaceToShare = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $city = null;
+
     public function getTitle(): ?string
     {
         return $this->title;
@@ -74,6 +83,42 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
     public function setArchivedAt(?DateTimeImmutable $archivedAt): static
     {
         $this->archivedAt = $archivedAt;
+
+        return $this;
+    }
+
+    public function getSurfaceTotal(): ?int
+    {
+        return $this->surfaceTotal;
+    }
+
+    public function setSurfaceTotal(?int $surfaceTotal): static
+    {
+        $this->surfaceTotal = $surfaceTotal;
+
+        return $this;
+    }
+
+    public function getSurfaceToShare(): ?int
+    {
+        return $this->surfaceToShare;
+    }
+
+    public function setSurfaceToShare(?int $surfaceToShare): static
+    {
+        $this->surfaceToShare = $surfaceToShare;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): static
+    {
+        $this->city = $city;
 
         return $this;
     }

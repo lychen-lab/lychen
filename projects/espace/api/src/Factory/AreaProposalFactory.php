@@ -20,9 +20,13 @@ final class AreaProposalFactory extends PersistentObjectFactory
     #[Override]
     protected function defaults(): array|callable
     {
+        $surfaceTotal = self::faker()->numberBetween(5, 1000);
         return [
             'description' => self::faker()->text(),
             'title' => self::faker()->text(120),
+            'city' => self::faker()->city(),
+            'surfaceToShare' => self::faker()->numberBetween(5, $surfaceTotal),
+            'surfaceTotal' => $surfaceTotal,
         ];
     }
 
