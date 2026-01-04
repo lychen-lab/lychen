@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AreaProposalRepository;
-use App\Workflow\AreaProposal\AreaProposalWorkflowState;
+use App\Workflow\AreaProposal\AreaProposalWorkflow;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,8 +24,8 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    #[Choice(AreaProposalWorkflowState::ALL)]
-    private ?string $state = AreaProposalWorkflowState::DRAFT;
+    #[Choice(AreaProposalWorkflow::PLACES)]
+    private ?string $place = AreaProposalWorkflow::PLACE_DRAFT;
 
     #[ORM\Column(nullable: true)]
     private ?DateTimeImmutable $archivedAt = null;
@@ -54,14 +54,14 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
         return $this;
     }
 
-    public function getState(): ?string
+    public function getPlace(): ?string
     {
-        return $this->state;
+        return $this->place;
     }
 
-    public function setState(string $state): static
+    public function setPlace(string $place): static
     {
-        $this->state = $state;
+        $this->place = $place;
 
         return $this;
     }

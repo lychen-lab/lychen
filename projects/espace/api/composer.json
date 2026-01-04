@@ -74,6 +74,7 @@
         "symfony/phpunit-bridge": "7.4.*",
         "symfony/stopwatch": "7.4.*",
         "symfony/web-profiler-bundle": "7.4.*",
+        "symplify/config-transformer": "^12.4",
         "zenstruck/browser": "1.9.*",
         "zenstruck/foundry": "2.8.*",
         "zenstruck/messenger-test": "1.13.*"

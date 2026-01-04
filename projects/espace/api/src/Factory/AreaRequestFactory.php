@@ -23,7 +23,6 @@ final class AreaRequestFactory extends PersistentObjectFactory
         return [
 
             'description' => self::faker()->text(),
-            'state' => self::faker()->text(255),
             'title' => self::faker()->text(255),
         ];
     }
