@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\AreaProposalRepository;
 use App\Workflow\AreaProposal\AreaProposalWorkflow;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Lychen\UtilModel\Abstract\AbstractIdOrmAndUuidApiIdentified;
@@ -45,6 +47,18 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
     #[ORM\Column(nullable: true)]
     private ?int $altitude = 0;
 
+    /**
+     * @var Collection<int, AreaActivity>
+     */
+    #[ORM\ManyToMany(targetEntity: AreaActivity::class)]
+    private Collection $activities;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->activities = new ArrayCollection();
+    }
+    
     public function getTitle(): ?string
     {
         return $this->title;
@@ -137,6 +151,30 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
     public function setAltitude(?int $altitude): static
     {
         $this->altitude = $altitude;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AreaActivity>
+     */
+    public function getActivities(): Collection
+    {
+        return $this->activities;
+    }
+
+    public function addActivity(AreaActivity $activity): static
+    {
+        if (!$this->activities->contains($activity)) {
+            $this->activities->add($activity);
+        }
+
+        return $this;
+    }
+
+    public function removeActivity(AreaActivity $activity): static
+    {
+        $this->activities->removeElement($activity);
 
         return $this;
     }

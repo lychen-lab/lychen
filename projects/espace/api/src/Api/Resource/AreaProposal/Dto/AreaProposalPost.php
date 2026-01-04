@@ -2,15 +2,13 @@
 
 namespace App\Api\Resource\AreaProposal\Dto;
 
-use App\Api\Trait\UuidIdentifierTrait;
-use App\Entity\AreaProposal;
 use Symfony\Component\ObjectMapper\Attribute\Map;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-#[Map(target: AreaProposal::class)]
 final class AreaProposalPost
 {
-    use UuidIdentifierTrait;
+    public ?Uuid $uuid;
 
     #[NotBlank]
     public ?string $title;
@@ -29,4 +27,15 @@ final class AreaProposalPost
 
     #[NotBlank]
     public ?int $altitude;
+
+    /**
+     * @var string[]
+     */
+    #[Map(if: false)]
+    public ?array $activities;
+
+    public function __construct()
+    {
+        $this->activities = [];
+    }
 }

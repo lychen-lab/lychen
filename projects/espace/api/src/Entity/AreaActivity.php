@@ -13,7 +13,7 @@ class AreaActivity extends AbstractIdOrmAndUuidApiIdentified
 {
     use CreatedAtTrait;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $code = null;
 
     public function getCode(): ?string
