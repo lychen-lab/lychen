@@ -17,9 +17,11 @@ use App\Api\Resource\AreaProposal\Dto\AreaProposalPost;
 use App\Api\Trait\CreatedAtTrait;
 use App\Api\Trait\PlaceTrait;
 use App\Api\Trait\UuidIdentifierTrait;
+use App\Entity\AreaProposal as AreaProposalEntity;
+use Symfony\Component\ObjectMapper\Attribute\Map;
 
 #[ApiResource(
-    stateOptions: new Options(entityClass: \App\Entity\AreaProposal::class),
+    stateOptions: new Options(entityClass: AreaProposalEntity::class),
 )]
 #[Get()]
 #[GetCollection(
@@ -32,7 +34,8 @@ use App\Api\Trait\UuidIdentifierTrait;
 )]
 #[Post(input: AreaProposalPost::class)]
 #[Patch(input: AreaProposalPatch::class)]
-#[Delete()]
+#[Delete]
+#[Map(source: AreaProposalEntity::class)]
 final class AreaProposal
 {
     use UuidIdentifierTrait;

@@ -8,5 +8,5 @@ use Symfony\Component\Uid\Uuid;
 trait UuidIdentifierTrait
 {
     #[ApiProperty(identifier: true)]
-    public Uuid $uuid;
+    public ?Uuid $uuid;
 }
