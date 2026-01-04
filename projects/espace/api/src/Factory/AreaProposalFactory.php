@@ -22,7 +22,6 @@ final class AreaProposalFactory extends PersistentObjectFactory
     {
         return [
             'description' => self::faker()->text(),
-            //'state' => AreaProposalWorkflowState::DRAFT,
             'title' => self::faker()->text(255),
         ];
     }
