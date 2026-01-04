@@ -14,6 +14,7 @@ use App\Api\Filter\PlaceFilter;
 use App\Api\Resource\AreaProposal\Dto\AreaProposalCollection;
 use App\Api\Resource\AreaProposal\Dto\AreaProposalPatch;
 use App\Api\Resource\AreaProposal\Dto\AreaProposalPost;
+use App\Api\Resource\AreaProposal\Processor\AreaProposalPostProcessor;
 use App\Api\Trait\CreatedAtTrait;
 use App\Api\Trait\PlaceTrait;
 use App\Api\Trait\UuidIdentifierTrait;
@@ -32,7 +33,10 @@ use Symfony\Component\ObjectMapper\Attribute\Map;
         )
     ],
 )]
-#[Post(input: AreaProposalPost::class)]
+#[Post(
+    input: AreaProposalPost::class,
+    processor: AreaProposalPostProcessor::class
+)]
 #[Patch(input: AreaProposalPatch::class)]
 #[Delete]
 #[Map(source: AreaProposalEntity::class)]
