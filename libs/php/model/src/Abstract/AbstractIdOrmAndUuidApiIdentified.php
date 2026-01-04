@@ -19,10 +19,8 @@ abstract class AbstractIdOrmAndUuidApiIdentified implements UuidIdentifiedInterf
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[ApiProperty(identifier: false)]
     protected ?int $id = null;
 
-    #[ApiProperty(identifier: true)]
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     protected Uuid $uuid;
 

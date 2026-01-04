@@ -58,7 +58,7 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
         parent::__construct();
         $this->activities = new ArrayCollection();
     }
-
+    
     public function getTitle(): ?string
     {
         return $this->title;

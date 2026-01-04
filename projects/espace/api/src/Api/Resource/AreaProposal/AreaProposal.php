@@ -38,6 +38,7 @@ final class AreaProposal
     use UuidIdentifierTrait;
     use CreatedAtTrait;
     use PlaceTrait;
+    use ActivitiesAsStringTrait;
 
     public ?string $title;
     public ?string $description;
