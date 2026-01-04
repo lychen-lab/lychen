@@ -8,31 +8,24 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class AreaProposalPost
 {
-    #[Map()]
     public ?Uuid $uuid;
 
     #[NotBlank]
-    #[Map()]
     public ?string $title;
 
     #[NotBlank]
-    #[Map()]
     public ?string $description;
 
     #[NotBlank]
-    #[Map()]
     public ?int $surfaceTotal;
 
     #[NotBlank]
-    #[Map()]
     public ?int $surfaceToShare;
 
     #[NotBlank]
-    #[Map()]
     public ?string $city;
 
     #[NotBlank]
-    #[Map()]
     public ?int $altitude;
 
     /**
