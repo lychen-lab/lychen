@@ -8,23 +8,23 @@ use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
 use Doctrine\ORM\QueryBuilder;
 
-final class StateFilter implements FilterInterface
+final class PlaceFilter implements FilterInterface
 {
     public function apply(QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, ?Operation $operation = null, array $context = []): void
     {
         $parameter = $context['parameter'];
         $value = $parameter->getValue();
 
-        $property = 'state';
+        $property = 'place';
 
         $alias = $queryBuilder->getRootAliases()[0];
-        $field = $alias.'.'.$property;
+        $field = $alias . '.' . $property;
 
         $parameterName = $queryNameGenerator->generateParameterName($property);
 
         $queryBuilder
-            ->andWhere($queryBuilder->expr()->like('LOWER('.$field.')', ':'.$parameterName))
-            ->setParameter($parameterName, '%'.strtolower($value).'%');
+            ->andWhere($queryBuilder->expr()->like('LOWER(' . $field . ')', ':' . $parameterName))
+            ->setParameter($parameterName, '%' . strtolower($value) . '%');
     }
 
     public function getDescription(string $resourceClass): array
