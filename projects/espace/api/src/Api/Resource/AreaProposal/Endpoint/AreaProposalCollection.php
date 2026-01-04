@@ -18,7 +18,6 @@ use App\Entity\AreaProposal;
     shortName: AreaProposalResource::SHORT_NAME,
 )]
 #[GetCollection(
-    #normalizationContext: ['groups' => ['area_proposal:collection']],
     provider: ObjectMappedCollectionProvider::class,
     stateOptions: new Options(entityClass: AreaProposal::class),
     parameters: [
@@ -32,4 +31,8 @@ class AreaProposalCollection
     use UuidIdentifierTrait;
     use CreatedAtTrait;
     use PlaceTrait;
+
+    public ?string $title;
+    public ?string $description;
+    public ?string $archivedAt;
 }

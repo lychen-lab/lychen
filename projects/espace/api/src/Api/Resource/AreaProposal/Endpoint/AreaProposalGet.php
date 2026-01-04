@@ -24,4 +24,8 @@ class AreaProposalGet
     use UuidIdentifierTrait;
     use CreatedAtTrait;
     use PlaceTrait;
+
+    public ?string $title;
+    public ?string $description;
+    public ?string $archivedAt;
 }

@@ -22,7 +22,7 @@ final class AreaProposalFactory extends PersistentObjectFactory
     {
         return [
             'description' => self::faker()->text(),
-            'title' => self::faker()->text(255),
+            'title' => self::faker()->text(120),
         ];
     }
 
