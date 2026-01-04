@@ -19,7 +19,7 @@ use App\Api\Trait\PlaceTrait;
 use App\Api\Trait\UuidIdentifierTrait;
 
 #[ApiResource(
-    stateOptions: new Options(entityClass: \App\Entity\AreaProposal::class)
+    stateOptions: new Options(entityClass: \App\Entity\AreaProposal::class),
 )]
 #[Get()]
 #[GetCollection(
@@ -28,7 +28,7 @@ use App\Api\Trait\UuidIdentifierTrait;
         'place' => new QueryParameter(
             filter: new PlaceFilter(),
         )
-    ]
+    ],
 )]
 #[Post(input: AreaProposalPost::class)]
 #[Patch(input: AreaProposalPatch::class)]
