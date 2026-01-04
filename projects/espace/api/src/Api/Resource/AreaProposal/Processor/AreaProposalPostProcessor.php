@@ -6,7 +6,6 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\Api\Resource\AreaProposal\AreaProposal;
 use App\Api\Resource\AreaProposal\Dto\AreaProposalPost;
-use App\Entity\AreaProposal as AreaProposalEntity;
 use App\Repository\AreaActivityRepository;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\ObjectMapper\ObjectMapperInterface;
@@ -24,11 +23,8 @@ final readonly class AreaProposalPostProcessor implements ProcessorInterface
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): AreaProposal
     {
-        dump($data);
-        $entity = new AreaProposalEntity();
-        dump($entity);
-        $entity = $this->objectMapper->map($data, $entity);
-        dump($entity);
+        $entity = $this->objectMapper->map($data, \App\Entity\AreaProposal::class);
+        
         if ($data instanceof AreaProposalPost && $data->activities) {
             foreach ($data->activities as $activityCode) {
                 if ($activity = $this->areaActivityRepository->findOneBy(['code' => $activityCode])) {
@@ -37,10 +33,8 @@ final readonly class AreaProposalPostProcessor implements ProcessorInterface
                 }
             }
         }
-        dump($entity);
-        $entity = $this->persistProcessor->process($entity, $operation, $uriVariables, $context);
 
-        dump($entity);
+        $entity = $this->persistProcessor->process($entity, $operation, $uriVariables, $context);
 
         return $this->objectMapper->map($entity, $operation->getClass());
     }
