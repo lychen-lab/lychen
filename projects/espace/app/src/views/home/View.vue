@@ -21,14 +21,14 @@
         <IconFence />
         <div>
           <p class="text-lg leading-5 font-bold">I have space to share</p>
-          <small class="text-xs opacity-70">Host a gardener</small>
+          <small class="text-xs opacity-70">Host a grower</small>
         </div>
       </div>
       <div class="flex flex-col gap-10 rounded-2xl bg-emerald-700 p-6 text-emerald-50">
         <IconSearch />
         <div>
           <p class="text-lg leading-5 font-bold">I'm looking for a space</p>
-          <small class="text-xs opacity-70">Start your growing</small>
+          <small class="text-xs opacity-70">Start growing</small>
         </div>
       </div>
     </div>
@@ -66,11 +66,13 @@
       <Button>Voir tout</Button>
     </div>
     <div class="flex flex-row gap-4 overflow-x-scroll py-2">
-      <LandProposalCard
+      <RouterLink
         v-for="proposal in fakeLandProposals"
         :key="proposal.uuid"
-        v-bind="proposal"
-      />
+        :to="{ name: ROUTE_LAND_PROPOSAL.name, params: { uuid: proposal.uuid } }"
+      >
+        <LandProposalCard v-bind="proposal" />
+      </RouterLink>
     </div>
   </section>
 </template>
@@ -85,6 +87,7 @@ import IconSprout from '@lychen/vue-icons/IconSprout.vue';
 import IconHeartHandshake from '@lychen/vue-icons/IconHeartHandshake.vue';
 import SectionLuk from '@/views/home/SectionLuk.vue';
 import { Card as LandProposalCard } from '@lychen/vue-components-business/land-proposal/card';
+import { ROUTE_LAND_PROPOSAL } from '@/views/land-proposal';
 
 const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 

@@ -4,6 +4,8 @@ import { ROUTE_LAND_PROPOSALS } from '@/views/land-proposals';
 import { ROUTE_LAND_REQUESTS } from '@/views/land-requests';
 import { ROUTE_FAVORITES } from '@/views/favorites';
 import { ROUTE_CHATS } from '@/views/chats';
+import { ROUTE_LAND_PROPOSAL } from '@/views/land-proposal';
+import { ROUTE_LAND_REQUEST } from '@/views/land-request';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -14,7 +16,15 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('@/layouts/main/LayoutMain.vue'),
-    children: [ROUTE_HOME, ROUTE_LAND_PROPOSALS, ROUTE_LAND_REQUESTS, ROUTE_FAVORITES, ROUTE_CHATS],
+    children: [
+      ROUTE_HOME,
+      ROUTE_LAND_PROPOSALS,
+      ROUTE_LAND_REQUESTS,
+      ROUTE_FAVORITES,
+      ROUTE_CHATS,
+      ROUTE_LAND_PROPOSAL,
+      ROUTE_LAND_REQUEST,
+    ],
   },
   {
     path: '/:pathMatch(.*)*',

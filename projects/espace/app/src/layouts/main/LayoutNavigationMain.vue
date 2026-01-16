@@ -21,7 +21,7 @@
       :route-name="ROUTE_FAVORITES.name"
     >
       <template #icon>
-        <IconHeartFilled />
+        <IconHeart />
       </template>
     </LayoutNavigationItem>
     <LayoutNavigationItem
@@ -45,11 +45,11 @@
 
 <script lang="ts" setup>
 import LayoutNavigationItem from '@/layouts/main/LayoutNavigationItem.vue';
-import IconHeartFilled from '@lychen/vue-icons/IconHeartFilled.vue';
 import IconHouse from '@lychen/vue-icons/IconHouse.vue';
 import IconMessagesSquare from '@lychen/vue-icons/IconMessagesSquare.vue';
 import IconFence from '@lychen/vue-icons/IconFence.vue';
 import IconUsers from '@lychen/vue-icons/IconUsers.vue';
+import IconHeart from '@lychen/vue-icons/IconHeart.vue';
 import { ROUTE_HOME } from '@/views/home';
 import { ROUTE_LAND_PROPOSALS } from '@/views/land-proposals';
 import { ROUTE_LAND_REQUESTS } from '@/views/land-requests';
