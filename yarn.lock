@@ -2054,7 +2054,6 @@ __metadata:
     "@tailwindcss/vite": "npm:^4.1.18"
     "@tanstack/vue-query": "npm:^5.91.1"
     "@vite-pwa/assets-generator": "npm:^1.0.0"
-    "@vitejs/plugin-vue": "npm:^6.0.1"
     tailwindcss: "npm:^4.1.18"
     vite: "npm:^7.3.0"
     vite-plugin-mkcert: "npm:^1.17.9"
@@ -2552,7 +2551,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@lychen/vue-icons@workspace:libs/vue/icons"
   dependencies:
-    lucide-vue-next: "npm:^0.545.0"
+    lucide-vue-next: "npm:^0.562.0"
     vue: "npm:^3.5.25"
   languageName: unknown
   linkType: soft
@@ -8150,12 +8149,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-vue-next@npm:^0.545.0":
-  version: 0.545.0
-  resolution: "lucide-vue-next@npm:0.545.0"
+"lucide-vue-next@npm:^0.562.0":
+  version: 0.562.0
+  resolution: "lucide-vue-next@npm:0.562.0"
   peerDependencies:
     vue: ">=3.0.1"
-  checksum: 10c0/c8bcb97d840882819b9efe09adcca05c0dd26e6ccd20382aa372ca2d35200fd1fc6f76e4e43f7bf564f0db95a64ccd5ac03331f1e7bbf21956cbc6768326a29d
+  checksum: 10c0/5ba792ea5e48d01fc99a3c5ae4a59d9767e5d4c7826901800831cf051cf85eb4a680b3564d2910ed4d17dc1d35223c37d006bdbcdb291d90a9491b9c6a20ae14
   languageName: node
   linkType: hard
 

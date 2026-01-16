@@ -5,7 +5,6 @@ import vue from '@vitejs/plugin-vue';
 import mkcert from 'vite-plugin-mkcert';
 import { VitePWA } from 'vite-plugin-pwa';
 import tailwindcss from '@tailwindcss/vite';
-import vueDevTools from 'vite-plugin-vue-devtools';
 
 const config: UserConfig = {
   server: {
@@ -13,7 +12,6 @@ const config: UserConfig = {
     port: 5810,
   },
   plugins: [
-    vueDevTools(),
     tailwindcss(),
     mkcert({
       hosts: ['app.espace.lychen.local'],
