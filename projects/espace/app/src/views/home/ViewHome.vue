@@ -17,14 +17,14 @@
   <section class="flex flex-col gap-4">
     <h2 class="text-xl font-bold">Comment voulez-vous commencer ?</h2>
     <div class="flex flex-row gap-2">
-      <div class="flex flex-col gap-10 rounded-2xl bg-amber-700 p-4 text-amber-50">
+      <div class="flex flex-col gap-10 rounded-2xl bg-amber-700 p-6 text-amber-50">
         <IconFence />
         <div>
           <p class="text-lg leading-5 font-bold">I have space to share</p>
           <small class="text-xs opacity-70">Host a gardener</small>
         </div>
       </div>
-      <div class="flex flex-col gap-10 rounded-2xl bg-emerald-700 p-4 text-emerald-50">
+      <div class="flex flex-col gap-10 rounded-2xl bg-emerald-700 p-6 text-emerald-50">
         <IconSearch />
         <div>
           <p class="text-lg leading-5 font-bold">I'm looking for a space</p>
@@ -33,7 +33,7 @@
       </div>
     </div>
   </section>
-  <section class="flex flex-col items-center gap-4">
+  <section class="flex flex-col items-center gap-6">
     <h2 class="text-xl font-bold">Comment ça marche</h2>
     <SectionLuk
       title="1. Découvre"
@@ -65,6 +65,13 @@
       <h2 class="text-xl font-bold">Derniers terrains</h2>
       <Button>Voir tout</Button>
     </div>
+    <div class="flex flex-row gap-4 overflow-x-scroll py-2">
+      <LandProposalCard
+        v-for="proposal in fakeLandProposals"
+        :key="proposal.uuid"
+        v-bind="proposal"
+      />
+    </div>
   </section>
 </template>
 
@@ -77,8 +84,32 @@ import IconCompass from '@lychen/vue-icons/IconCompass.vue';
 import IconSprout from '@lychen/vue-icons/IconSprout.vue';
 import IconHeartHandshake from '@lychen/vue-icons/IconHeartHandshake.vue';
 import SectionLuk from '@/views/home/SectionLuk.vue';
+import { Card as LandProposalCard } from '@lychen/vue-components-business/land-proposal/card';
 
 const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
+
+const fakeLandProposals = [
+  {
+    uuid: '1',
+    title: 'Terrain de culture',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante feugiat finibus. Nullam nec metus vel ante feugiat finibus.',
+    surface: 130,
+    altitude: 678,
+    city: 'Lille',
+    image: 'https://images.pexels.com/photos/59321/pexels-photo-59321.jpeg',
+  },
+  {
+    uuid: '2',
+    title: 'Cave à champignons',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante feugiat finibus. Nullam nec metus vel ante feugiat finibus.',
+    surface: 40,
+    altitude: 150,
+    city: 'Toulouse',
+    image: 'https://images.pexels.com/photos/2499862/pexels-photo-2499862.jpeg',
+  },
+];
 </script>
 
 <style lang="css" scoped></style>

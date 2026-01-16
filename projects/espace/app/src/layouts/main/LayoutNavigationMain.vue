@@ -10,6 +10,11 @@
         <IconFence />
       </template>
     </LayoutNavigationItem>
+    <LayoutNavigationItem label="Favoris">
+      <template #icon>
+        <IconHeartFilled />
+      </template>
+    </LayoutNavigationItem>
     <LayoutNavigationItem label="Personnes">
       <template #icon>
         <IconUsers />
@@ -18,11 +23,6 @@
     <LayoutNavigationItem label="Chat">
       <template #icon>
         <IconMessagesSquare />
-      </template>
-    </LayoutNavigationItem>
-    <LayoutNavigationItem label="Favoris">
-      <template #icon>
-        <IconHeartFilled />
       </template>
     </LayoutNavigationItem>
   </nav>
