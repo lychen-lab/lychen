@@ -5,7 +5,7 @@
     </div>
     <div>
       <h3 class="text-md font-bold">{{ title }}</h3>
-      <p class="text-sm text-emerald-800 opacity-80">{{ description }}</p>
+      <p class="w-4/5 text-sm text-emerald-800 opacity-80">{{ description }}</p>
     </div>
   </div>
 </template>
