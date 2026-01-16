@@ -1,4 +1,11 @@
 <template>
+  <header class="flex flex-row items-center justify-between">
+    <div class="font-lexend flex flex-row items-center gap-0">
+      <span class="text-on-surface font-medium tracking-normal">espace</span>
+      <span class="text-on-surface/40">.lychen</span>
+    </div>
+    <div class="bg-primary size-8 rounded-full"></div>
+  </header>
   <section class="relative flex h-[500px] flex-col gap-4 rounded-4xl">
     <img
       src="https://res.cloudinary.com/ddhvfiezg/image/upload/v1768572225/019bc71e-9a9d-7b3c-9478-f855ba60f20c.jpg"
