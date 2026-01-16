@@ -6,6 +6,7 @@ import { ROUTE_FAVORITES } from '@/views/favorites';
 import { ROUTE_CHATS } from '@/views/chats';
 import { ROUTE_LAND_PROPOSAL } from '@/views/land-proposal';
 import { ROUTE_LAND_REQUEST } from '@/views/land-request';
+import { ROUTE_CHAT } from '@/views/chat';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -24,6 +25,7 @@ const routes: RouteRecordRaw[] = [
       ROUTE_CHATS,
       ROUTE_LAND_PROPOSAL,
       ROUTE_LAND_REQUEST,
+      ROUTE_CHAT,
     ],
   },
   {
