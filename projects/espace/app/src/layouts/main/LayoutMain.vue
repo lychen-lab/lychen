@@ -7,7 +7,7 @@
       </div>
       <div class="bg-primary size-8 rounded-full"></div>
     </header>
-    <main class="flex flex-col gap-8 p-4 pb-[70px]">
+    <main class="flex flex-col gap-8 px-4 pt-0 pb-[70px]">
       <RouterView />
     </main>
     <LayoutNavigationMain class="fixed bottom-0" />
