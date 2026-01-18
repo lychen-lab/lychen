@@ -12,6 +12,9 @@
       "path": "../../../libs/vue/components-app"
     },
     {
+      "path": "../../../libs/vue/components-business"
+    },
+    {
       "path": "../../../libs/vue/components-core"
     },
     {

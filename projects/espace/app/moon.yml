@@ -3,6 +3,7 @@ dependsOn:
   - typescript-zitadel
   - vue-color-scheme
   - vue-components-app
+  - vue-components-business
   - vue-components-core
   - vue-components-extra
   - vue-i18n
