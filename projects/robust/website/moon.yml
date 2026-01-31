@@ -28,8 +28,8 @@ stack: frontend
 tags:
   - ssg
   - asset
-  - docker
-  - dokploy
+  #- docker
+  #- dokploy
 
 tasks:
   asset-sync:
