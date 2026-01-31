@@ -38,7 +38,7 @@ jobs:
         projects: ${{ fromJSON(needs.define-matrix.outputs.projects) }}
     runs-on: ubuntu-latest
     permissions:
-      contents: read 
+      contents: read
       packages: write
     steps:
       - uses: 'actions/checkout@v4'
@@ -66,5 +66,5 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build docker images
-        run: 'moon ci ${{ matrix.projects }}:docker-build'
+        run: 'moon ci ${{ matrix.projects }}:docker-push'
   
