@@ -12,9 +12,6 @@ dependsOn:
   - vue-router-configs
   - vue-unhead-composables
 
-env:
-  HOST: ${ESPACE_WEBSITE_HOST}
-
 id: espace-website
 
 language: typescript

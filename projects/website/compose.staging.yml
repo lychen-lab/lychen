@@ -1,5 +1,0 @@
-services:
-  website:
-    image: ghcr.io/lychen-lab/lychen/staging/website:latest
-    pull_policy: always
-    restart: unless-stopped
