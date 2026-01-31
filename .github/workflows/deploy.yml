@@ -69,4 +69,4 @@ jobs:
           PROJECT_ID_UPPERCASE=$(echo "${{ matrix.projects }}" | tr '[:lower:]-' '[:upper:]_')
           SECRET_NAME="${PROJECT_ID_UPPERCASE}_DOKPLOY_ID"
           export DOKPLOY_COMPOSE_ID=$(echo "$DOKPLOY_SECRETS" | jq -r --arg key "$SECRET_NAME" '.[$key]')
-          moon ci ${{ matrix.projects }}:${{ matrix.environments }}-dokploy-compose-deploy
+          moon ci ${{ matrix.projects }}:dokploy-compose-deploy
