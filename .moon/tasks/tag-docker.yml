@@ -9,3 +9,12 @@ tasks:
       IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
     options:
       cache: false
+  
+  docker-test-build:
+    command: docker build $projectRoot --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${IMAGE_NAME}:latest
+    deps:
+      - build
+    env:
+      IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
+    options:
+      cache: false
