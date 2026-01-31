@@ -2018,30 +2018,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@lychen/design@workspace:projects/design":
-  version: 0.0.0-use.local
-  resolution: "@lychen/design@workspace:projects/design"
-  dependencies:
-    "@lychen/css-core": "workspace:*"
-    "@lychen/vite-ssg": "workspace:*"
-    "@lychen/vue-components-app": "workspace:*"
-    "@lychen/vue-components-core": "workspace:*"
-    "@lychen/vue-components-extra": "workspace:*"
-    "@lychen/vue-i18n": "workspace:*"
-    "@tailwindcss/vite": "npm:^4.1.18"
-    "@unhead/schema-org": "npm:^2.0.19"
-    "@unhead/vue": "npm:^2.0.19"
-    "@vitejs/plugin-vue": "npm:^6.0.1"
-    html-to-image: "npm:^1.11.13"
-    unhead: "npm:^2.0.19"
-    vite: "npm:^7.3.0"
-    vite-ssg: "npm:^28.2.2"
-    vite-ssg-sitemap: "npm:^0.10.0"
-    vue: "npm:^3.5.25"
-    vue-router: "npm:^4.6.4"
-  languageName: unknown
-  linkType: soft
-
 "@lychen/drawio-core@workspace:*, @lychen/drawio-core@workspace:libs/drawio/core":
   version: 0.0.0-use.local
   resolution: "@lychen/drawio-core@workspace:libs/drawio/core"
@@ -2143,6 +2119,7 @@ __metadata:
     "@vitejs/plugin-vue": "npm:^6.0.1"
     unhead: "npm:^2.0.19"
     vite: "npm:^7.3.0"
+    vite-plugin-env-runtime: "npm:^0.3.7"
     vite-plugin-mkcert: "npm:^1.17.9"
     vite-ssg: "npm:^28.2.2"
     vite-ssg-sitemap: "npm:^0.10.0"
@@ -2770,6 +2747,7 @@ __metadata:
     "@vueuse/core": "npm:^14.1.0"
     unhead: "npm:^2.0.19"
     vite: "npm:^7.3.0"
+    vite-plugin-env-runtime: "npm:^0.3.7"
     vite-plugin-mkcert: "npm:^1.17.9"
     vite-ssg: "npm:^28.2.2"
     vite-ssg-sitemap: "npm:^0.10.0"
@@ -7171,13 +7149,6 @@ __metadata:
   bin:
     html-minifier-terser: cli.js
   checksum: 10c0/ffc97c17299d9ec30e17269781b816ea2fc411a9206fc9e768be8f2decb1ea1470892809babb23bb4e3ab1f64d606d97e1803bf526ae3af71edc0fd3070b94b9
-  languageName: node
-  linkType: hard
-
-"html-to-image@npm:^1.11.13":
-  version: 1.11.13
-  resolution: "html-to-image@npm:1.11.13"
-  checksum: 10c0/03bd7192d87b99499e37ff12a8e2b41ddce4cf8e33a93dfadff18df0f213434c7f1ba8328db2158f4805da07b7aec3c90aec3152908281153217e86784218b10
   languageName: node
   linkType: hard
 
