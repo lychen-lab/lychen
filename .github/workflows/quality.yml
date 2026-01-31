@@ -66,8 +66,5 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build docker images
-        run: 'moon ci ${{ matrix.projects }}:docker-build'
-      
-      - name: Push docker images
-        run: 'moon ci ${{ matrix.projects }}:docker-push'
+        run: 'moon ci ${{ matrix.projects }}:docker-buildx'
   
