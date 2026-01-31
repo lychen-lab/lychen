@@ -8,7 +8,6 @@ import type { ViteSSGOptions } from 'vite-ssg';
 import { ssgOptions } from '@lychen/vite-ssg/ssgOptions';
 import EnvRuntime from 'vite-plugin-env-runtime';
 
-// Wrap the config in defineConfig to access build flags
 export default defineConfig(({ isSsrBuild }) => {
   const config: UserConfig & ViteSSGOptions = {
     server: {
@@ -16,10 +15,6 @@ export default defineConfig(({ isSsrBuild }) => {
       port: 5145,
     },
     define: {
-      // 1. During SSG Build (isSsrBuild === true):
-      //    We replace it with an empty object so Node.js doesn't crash.
-      // 2. During Client Build (isSsrBuild === false):
-      //    We define it as itself (a string), which tells Vite: "Leave this as a global variable".
       'window.__PRODUCTION__APP__CONF__': isSsrBuild
         ? JSON.stringify({})
         : 'window.__PRODUCTION__APP__CONF__',
