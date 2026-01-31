@@ -105,7 +105,7 @@
         target="_blank"
       >
         <Button
-          label="Faire un don"
+          :label="t('donate')"
           size="sm"
         >
           <template #icon>
