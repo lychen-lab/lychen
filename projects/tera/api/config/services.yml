@@ -45,7 +45,7 @@ services:
   _defaults:
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
     autowire: true # Automatically injects dependencies in your services.
-        bind:
+    bind:
       $zitadelProjectId: '%env(ZITADEL_PROJECT_ID)%'
 
   common.collection_land_filter:
