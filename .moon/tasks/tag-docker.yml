@@ -4,18 +4,18 @@ tasks:
   docker-build:
     command: docker buildx build $projectRoot --platform linux/arm64,linux/amd64 --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${IMAGE_NAME}:latest --tag ${IMAGE_NAME}:${GITHUB_SHA} --tag ${IMAGE_NAME}:latest
     deps:
-      - 'build'
+      - build
     env:
       IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
     options:
       cache: false
 
-  #docker-push:
-    #command: docker push ${IMAGE_NAME}:${GITHUB_SHA} ${IMAGE_NAME}:latest
-    #deps:
-      #- 'docker-build'
-    #env:
-      #IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
-    #options:
-      #cache: false
+  docker-push:
+    command: docker push ${IMAGE_NAME}:${GITHUB_SHA} ${IMAGE_NAME}:latest
+    deps:
+      - docker-build
+    env:
+      IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
+    options:
+      cache: false
   

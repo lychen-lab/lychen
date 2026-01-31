@@ -29,7 +29,7 @@ jobs:
 
   build:
     if: ${{ needs.define-matrix.outputs.projects != '[]' && needs.define-matrix.outputs.projects != '' }}
-    name: '{{ matrix.projects }} | Build image'
+    name: 'Build image'
     needs: define-matrix
     continue-on-error: true
     strategy:
@@ -67,4 +67,7 @@ jobs:
 
       - name: Build docker images
         run: 'moon ci ${{ matrix.projects }}:docker-build'
+      
+      - name: Push docker images
+        run: 'moon ci ${{ matrix.projects }}:docker-push'
   
