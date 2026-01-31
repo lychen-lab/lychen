@@ -1,6 +1,6 @@
 <template>
   <PageHomeHero />
-  <PageHomeUseCases />
+  <PageHomeUseCases id="discover" />
   <PageHomeODD />
 </template>
 
