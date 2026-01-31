@@ -24,7 +24,7 @@ export default defineConfig(({ isSsrBuild }) => {
       tailwindcss(),
       EnvRuntime(),
       mkcert({
-        hosts: [process.env.VITE_UNHEAD_HOST || 'localhost'],
+        hosts: ['espace.lychen.local'],
       }),
       vue({
         template: {
