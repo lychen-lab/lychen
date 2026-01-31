@@ -26,6 +26,7 @@ jobs:
         uses: ./.github/actions/moon-affected-projects-list
         with:
           layer: application
+          tags: docker
 
   build:
     if: ${{ needs.define-matrix.outputs.projects != '[]' && needs.define-matrix.outputs.projects != '' }}
