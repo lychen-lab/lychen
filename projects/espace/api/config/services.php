@@ -15,12 +15,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->defaults()
         ->autoconfigure()
-        ->autowire();
+        ->autowire()
+        ->bind('$zitadelProjectId', '%env(ZITADEL_PROJECT_ID)%');
 
     $services->load('App\\', __DIR__ . '/../src/*')
         ->exclude([
             __DIR__ . '/../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}',
         ]);
-
-
 };
