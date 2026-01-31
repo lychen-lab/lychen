@@ -7,16 +7,19 @@ import { ROUTE_CHATS } from '@/views/chats';
 import { ROUTE_LAND_PROPOSAL } from '@/views/land-proposal';
 import { ROUTE_LAND_REQUEST } from '@/views/land-request';
 import { ROUTE_CHAT } from '@/views/chat';
+import zitadelAuth from '@lychen/typescript-zitadel/ZitadelAuth';
 
 const routes: RouteRecordRaw[] = [
   {
     path: '',
-
     redirect: ROUTE_HOME,
   },
   {
     path: '/',
     component: () => import('@/layouts/main/LayoutMain.vue'),
+    meta: {
+      authName: zitadelAuth.oidcAuth.authName,
+    },
     children: [
       ROUTE_HOME,
       ROUTE_LAND_PROPOSALS,
