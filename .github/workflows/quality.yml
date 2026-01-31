@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
+      packages: read
     steps:
       - uses: 'actions/checkout@v4'
         with:
@@ -49,12 +49,6 @@ jobs:
         uses: 'moonrepo/setup-toolchain@v0'
         with:
           auto-install: true
- 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -64,5 +58,5 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build docker images
-        run: 'moon ci ${{ matrix.projects }}:docker-buildx'
+        run: 'moon ci ${{ matrix.projects }}:docker-test-build'
   
