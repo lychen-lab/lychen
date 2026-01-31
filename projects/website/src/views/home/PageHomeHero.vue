@@ -1,38 +1,34 @@
 <template>
   <DivScalingDown class="flex flex-col justify-start">
-    <Hero
-      class="text-surface dark:text-on-surface flex min-h-dvh flex-row items-center justify-start gap-4"
-      :background-image="heroUrl"
-      overlay
-      overlay-class="bg-on-surface dark:bg-surface opacity-40"
+    <Container
+      class="text-surface dark:text-on-surface flex min-h-[80dvh] flex-col items-center justify-center gap-4"
     >
-      <div class="flex flex-col items-start gap-4 md:w-3/5">
-        <Title
+      <div class="flex flex-col items-center justify-center gap-4 text-center md:w-3/5">
+        <Titles
           variant="h1"
-          class="z-20 text-balance"
+          class="z-20 text-[6rem]! text-balance"
           >{{ t('hero.title.prepend') }}
           {{ t('hero.title.key_word') }}
-          {{ t('hero.title.append') }}</Title
+          {{ t('hero.title.append') }}</Titles
         >
         <Paragraph
           variant="website-highlight"
-          class="z-20"
+          class="z-20 opacity-80"
           >{{ t('hero.description') }}
         </Paragraph>
-        <div class="flex flex-row items-center gap-4">
-          <RouterLink
-            to="#discover"
-            class="z-20"
-          >
-            <Button
-              class="flex gap-2"
-              data-umami-event="discover-button"
-              :label="t('hero.discover')"
-            />
-          </RouterLink>
-        </div>
+
+        <RouterLink
+          to="#discover"
+          class="z-20"
+        >
+          <Button
+            class="flex gap-2"
+            data-umami-event="discover-button"
+            :label="t('hero.discover')"
+          />
+        </RouterLink>
       </div>
-    </Hero>
+    </Container>
   </DivScalingDown>
 </template>
 
@@ -42,6 +38,7 @@ import { defineAsyncComponent } from 'vue';
 
 import { CONFIG } from './i18n';
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
+import Container from '@lychen/vue-components-website/container/Container.vue';
 
 const DivScalingDown = defineAsyncComponent(
   () => import('@lychen/vue-components-extra/div-scaling-down/DivScalingDown.vue'),
