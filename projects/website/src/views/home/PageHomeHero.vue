@@ -1,15 +1,13 @@
 <template>
   <DivScalingDown class="flex flex-col justify-start">
-    <Container
-      class="text-surface dark:text-on-surface flex min-h-[80dvh] flex-col items-center justify-center gap-4"
-    >
+    <Container class="flex min-h-[80dvh] flex-col items-center justify-center gap-4">
       <div class="flex flex-col items-center justify-center gap-4 text-center md:w-3/5">
-        <Titles
+        <Title
           variant="h1"
-          class="z-20 text-[6rem]! text-balance"
+          class="font-poppins text-balanc z-20"
           >{{ t('hero.title.prepend') }}
           {{ t('hero.title.key_word') }}
-          {{ t('hero.title.append') }}</Titles
+          {{ t('hero.title.append') }}</Title
         >
         <Paragraph
           variant="website-highlight"
@@ -33,12 +31,12 @@
 </template>
 
 <script setup lang="ts">
-import heroUrl from './assets/hero-2.webp';
 import { defineAsyncComponent } from 'vue';
 
 import { CONFIG } from './i18n';
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import Container from '@lychen/vue-components-website/container/Container.vue';
+import TextHighlight from '@lychen/vue-components-extra/text-highlight/TextHighlight.vue';
 
 const DivScalingDown = defineAsyncComponent(
   () => import('@lychen/vue-components-extra/div-scaling-down/DivScalingDown.vue'),
