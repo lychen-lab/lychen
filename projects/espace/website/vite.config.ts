@@ -14,6 +14,9 @@ const config: UserConfig & ViteSSGOptions = {
     https: {},
     port: 5145,
   },
+  define: {
+    'window.__PRODUCTION__APP__CONF__': JSON.stringify({}),
+  },
   plugins: [
     vueDevTools(),
     tailwindcss(),
