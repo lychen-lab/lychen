@@ -27,7 +27,7 @@ jobs:
         with:
           layer: application
 
-  build-and-push:
+  build:
     if: ${{ needs.define-matrix.outputs.projects != '[]' && needs.define-matrix.outputs.projects != '' }}
     name: '{{ matrix.projects }} | Build image'
     needs: define-matrix
