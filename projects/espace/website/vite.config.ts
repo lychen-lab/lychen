@@ -7,6 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 import vueDevTools from 'vite-plugin-vue-devtools';
 import type { ViteSSGOptions } from 'vite-ssg';
 import { ssgOptions } from '@lychen/vite-ssg/ssgOptions';
+import runtimeEnv from 'vite-plugin-runtime-env';
 
 const config: UserConfig & ViteSSGOptions = {
   server: {
@@ -16,6 +17,7 @@ const config: UserConfig & ViteSSGOptions = {
   plugins: [
     vueDevTools(),
     tailwindcss(),
+    runtimeEnv(),
     mkcert({
       hosts: [process.env.VITE_UNHEAD_HOST || 'localhost'],
     }),

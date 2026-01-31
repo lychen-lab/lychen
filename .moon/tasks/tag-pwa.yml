@@ -2,18 +2,17 @@ $schema: 'https://moonrepo.dev/schemas/tasks.json'
 
 tasks:
   build:
-    command: yarn build
+    command: yarn build --mode production
     deps:
-      #- assets-sync
       - args: $projectRoot/.nginx-build
         target: nginx-configs:sync-pwa
+    env:
+      VITE_APP_ID: $project
     options:
       cache: false
 
   dev:
     command: yarn dev
-    #deps:
-      #- assets-sync
     env:
       VITE_APP_ID: $project
     options:
@@ -23,14 +22,3 @@ tasks:
     command: yarn generate-pwa-assets
     deps:
       - assets-sync
-      
-  production-build:
-    args:
-      - '--mode production'
-    extends: build
-
-  staging-build:
-    args:
-      - '--mode staging'
-    extends: build
-  

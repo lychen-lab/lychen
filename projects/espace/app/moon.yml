@@ -11,9 +11,7 @@ dependsOn:
   - vue-layouts
 
 env:
-  DEV_DOMAIN: app.espace.lychen.local
-  PRODUCTION_DOMAIN: app.espace.lychen.org
-  STAGING_DOMAIN: staging.app.espace.lychen.org
+  HOST: ${ESPACE_APP_HOST}
 
 id: espace-app
 

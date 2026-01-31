@@ -13,9 +13,7 @@ dependsOn:
   - vue-unhead-composables
 
 env:
-  DEV_HOST: espace.lychen.local
-  PRODUCTION_HOST: espace.lychen.org
-  STAGING_HOST: staging.espace.lychen.org
+  HOST: ${ESPACE_WEBSITE_HOST}
 
 id: espace-website
 

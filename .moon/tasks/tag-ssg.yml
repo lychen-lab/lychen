@@ -2,34 +2,19 @@ $schema: 'https://moonrepo.dev/schemas/tasks.json'
 
 tasks:
   build:
-    command: yarn build
+    command: yarn build --mode production
     deps:
-      #- assets-sync
       - args: $projectRoot/.nginx-build
         target: nginx-configs:sync-ssg
+    env:
+      VITE_UNHEAD_HOST: ${HOST}
     options:
       cache: false
   
   dev:
     command: yarn dev
-    #deps:
-     # - assets-sync
     env:
       VITE_APP_ID: $project
-      VITE_UNHEAD_HOST: ${DEV_HOST}
+      VITE_UNHEAD_HOST: ${HOST}
     options:
       persistent: true
-
-  production-build:
-    args:
-      - '--mode production'
-    env:
-      VITE_UNHEAD_HOST: ${PRODUCTION_HOST}
-    extends: build
-
-  staging-build:
-    args:
-      - '--mode staging'
-    env:
-      VITE_UNHEAD_HOST: ${STAGING_HOST}
-    extends: build

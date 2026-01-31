@@ -2059,6 +2059,7 @@ __metadata:
     vite: "npm:^7.3.0"
     vite-plugin-mkcert: "npm:^1.17.9"
     vite-plugin-pwa: "npm:^1.0.3"
+    vite-plugin-runtime-env: "npm:^1.0.0"
     vite-plugin-vue-devtools: "npm:^8.0.2"
     vue: "npm:^3.5.25"
     vue-router: "npm:^4.6.4"
@@ -2088,6 +2089,7 @@ __metadata:
     unhead: "npm:^2.0.19"
     vite: "npm:^7.3.0"
     vite-plugin-mkcert: "npm:^1.17.9"
+    vite-plugin-runtime-env: "npm:^1.0.0"
     vite-plugin-vue-devtools: "npm:^8.0.3"
     vite-ssg: "npm:^28.2.2"
     vite-ssg-sitemap: "npm:^0.10.0"
@@ -11630,6 +11632,17 @@ __metadata:
     "@vite-pwa/assets-generator":
       optional: true
   checksum: 10c0/03fc24bd12ae4a4130979da4877e3dabddf13d7d6ff2bd68e5e8497a2643b8874a78e6c2502874277ddf2f28593d0a3b025d78af2335bdcc5d2966295784fd46
+  languageName: node
+  linkType: hard
+
+"vite-plugin-runtime-env@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "vite-plugin-runtime-env@npm:1.0.0"
+  dependencies:
+    magic-string: "npm:^0.30.0"
+  peerDependencies:
+    vite: "*"
+  checksum: 10c0/a1d6a67da39900373e78d24406138064fd2c2205c7937b8f71f9c4800ba823cd4bb1344dd6061e725dae3a7a42fc00fa98e8661933fcca343a738f8e2d31b6c1
   languageName: node
   linkType: hard
 
