@@ -15,9 +15,9 @@ layer: application
 
 stack: frontend
 
-tags:
-  - docker
-  - dokploy
+#tags:
+#- docker
+#- dokploy
 
 tasks:
   build:
