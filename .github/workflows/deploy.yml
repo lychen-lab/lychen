@@ -25,11 +25,12 @@ jobs:
       - run: echo 'The triggering workflow failed'
 
   define-matrix:
-    name: 'Gather affected projects'
+    name: 'Gather affected projects & environments'
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     outputs:
       projects: ${{ steps.gather-projects.outputs.projects }}
+      environments: ${{ steps.fetch-environments.outputs.environments }}
     steps:
       - uses: 'actions/checkout@v4'
         with:
@@ -41,6 +42,14 @@ jobs:
         with:
           layer: application
           tags: dokploy
+      - id: fetch-environments
+        name: Fetch Environments from GitHub
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Fetch environments and extract names into a JSON array
+          ENVS=$(gh api repos/${{ github.repository }}/environments --jq '[.environments[].name]')
+          echo "environments=$ENVS" >> $GITHUB_OUTPUT
   
   deploy:
     if: ${{ needs.define-matrix.outputs.projects != '[]' && needs.define-matrix.outputs.projects != '' }}
@@ -52,7 +61,7 @@ jobs:
       fail-fast: false
       matrix:
         projects: ${{ fromJSON(needs.define-matrix.outputs.projects) }}
-        environments: ['staging', 'production']
+        environments: ${{ fromJSON(needs.define-matrix.outputs.environments) }}
     environment: ${{ matrix.environments }}
     steps:
       - uses: 'actions/checkout@v4'
