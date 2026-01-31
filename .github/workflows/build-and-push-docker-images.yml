@@ -37,15 +37,13 @@ jobs:
 
   build-and-push:
     if: ${{ needs.define-matrix.outputs.projects != '[]' && needs.define-matrix.outputs.projects != '' }}
-    name: '${{ matrix.environments }} | ${{ matrix.projects }} | Build and push image'
+    name: 'Build and push image'
     needs: define-matrix
     continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
         projects: ${{ fromJSON(needs.define-matrix.outputs.projects) }}
-        environments: ['staging', 'production']
-    environment: ${{ matrix.environments != 'production' && matrix.environments || null }}
     runs-on: ubuntu-latest
     permissions:
       contents: read 
