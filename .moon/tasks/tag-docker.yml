@@ -11,7 +11,7 @@ tasks:
       cache: false
 
   docker-push:
-    command: docker push ${IMAGE_NAME}:${GITHUB_SHA} ${IMAGE_NAME}:latest
+    command: docker image push ${IMAGE_NAME} --all-tags
     env:
       IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
     options:
