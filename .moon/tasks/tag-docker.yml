@@ -12,8 +12,6 @@ tasks:
 
   docker-push:
     command: docker push ${IMAGE_NAME}:${GITHUB_SHA} ${IMAGE_NAME}:latest
-    deps:
-      - docker-build
     env:
       IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
     options:
