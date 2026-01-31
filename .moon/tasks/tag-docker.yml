@@ -3,6 +3,8 @@ $schema: 'https://moonrepo.dev/schemas/tasks.json'
 tasks:
   docker-build:
     command: docker build $projectRoot --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${IMAGE_NAME}:latest --tag ${IMAGE_NAME}:${GITHUB_SHA} --tag ${IMAGE_NAME}:latest
+    deps:
+      - 'build'
     env:
       IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
     options:
@@ -10,6 +12,8 @@ tasks:
 
   docker-push:
     command: docker push ${IMAGE_NAME}:${GITHUB_SHA} ${IMAGE_NAME}:latest
+    deps:
+      - 'docker-build'
     env:
       IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
     options:
