@@ -4,7 +4,6 @@ tasks:
   build:
     command: yarn build
     deps:
-      #- assets-sync
       - args: $projectRoot/.nginx-build
         target: nginx-configs:sync-pwa
     options:
@@ -12,10 +11,6 @@ tasks:
 
   dev:
     command: yarn dev
-    #deps:
-      #- assets-sync
-    env:
-      VITE_APP_ID: $project
     options:
       persistent: true
 
@@ -23,14 +18,3 @@ tasks:
     command: yarn generate-pwa-assets
     deps:
       - assets-sync
-      
-  production-build:
-    args:
-      - '--mode production'
-    extends: build
-
-  staging-build:
-    args:
-      - '--mode staging'
-    extends: build
-  

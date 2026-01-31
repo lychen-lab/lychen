@@ -12,11 +12,6 @@ dependsOn:
   - vue-router-configs
   - vue-unhead-composables
 
-env:
-  DEV_HOST: espace.lychen.local
-  PRODUCTION_HOST: espace.lychen.org
-  STAGING_HOST: staging.espace.lychen.org
-
 id: espace-website
 
 language: typescript

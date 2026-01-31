@@ -7,6 +7,12 @@ inputs:
   stack:
     description: 'Targeted stack' # e.g. 'frontend'
     required: false
+  tasks:
+    description: 'Targeted tasks' # e.g. 'build'
+    required: false
+  tags:
+    description: 'Targeted tags' # e.g. 'docker'
+    required: false
 outputs:
   projects: 
     description: "Projects list"
@@ -24,6 +30,12 @@ runs:
         fi
         if [[ -n "${{ inputs.stack }}" ]]; then
           ARGS="$ARGS --stack ${{ inputs.stack }}"
+        fi
+        if [[ -n "${{ inputs.tasks }}" ]]; then
+          ARGS="$ARGS --tasks ${{ inputs.tasks }}"
+        fi
+        if [[ -n "${{ inputs.tags }}" ]]; then
+          ARGS="$ARGS --tags ${{ inputs.tags }}"
         fi
         
         PROJECTS_LIST=$(moon query projects $ARGS --json | jq -r '.projects | map(.id | @json) | join(",")' | sed 's/^/\[/; s/$/\]/')

@@ -13,13 +13,8 @@ dependsOn:
   - vue-tera
 
 env:
-  DEV_DOMAIN: app.tera.lychen.local
-  PRODUCTION_DOCKER_IMAGE: lychen/production/tera/app
   PRODUCTION_DOKPLOY_COMPOSE_ID: 1yP_nHkip2nMiN-xuHAiR
-  PRODUCTION_DOMAIN: app.tera.lychen.org
-  STAGING_DOCKER_IMAGE: lychen/staging/tera/app
   STAGING_DOKPLOY_COMPOSE_ID: f0fzklLF69wpejz9f89ir
-  STAGING_DOMAIN: staging.app.tera.lychen.org
 
 id: tera-app
 
@@ -36,8 +31,8 @@ stack: frontend
 tags:
   - pwa
   - asset
-  - docker
-  - dokploy
+  #- docker
+  #- dokploy
 
 tasks:
   assets-sync:

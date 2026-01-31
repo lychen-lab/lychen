@@ -1909,6 +1909,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@isaacs/balanced-match@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@isaacs/balanced-match@npm:4.0.1"
+  checksum: 10c0/7da011805b259ec5c955f01cee903da72ad97c5e6f01ca96197267d3f33103d5b2f8a1af192140f3aa64526c593c8d098ae366c2b11f7f17645d12387c2fd420
+  languageName: node
+  linkType: hard
+
+"@isaacs/brace-expansion@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "@isaacs/brace-expansion@npm:5.0.0"
+  dependencies:
+    "@isaacs/balanced-match": "npm:^4.0.1"
+  checksum: 10c0/b4d4812f4be53afc2c5b6c545001ff7a4659af68d4484804e9d514e183d20269bb81def8682c01a22b17c4d6aed14292c8494f7d2ac664e547101c1a905aa977
+  languageName: node
+  linkType: hard
+
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
   resolution: "@isaacs/cliui@npm:8.0.2"
@@ -2002,30 +2018,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@lychen/design@workspace:projects/design":
-  version: 0.0.0-use.local
-  resolution: "@lychen/design@workspace:projects/design"
-  dependencies:
-    "@lychen/css-core": "workspace:*"
-    "@lychen/vite-ssg": "workspace:*"
-    "@lychen/vue-components-app": "workspace:*"
-    "@lychen/vue-components-core": "workspace:*"
-    "@lychen/vue-components-extra": "workspace:*"
-    "@lychen/vue-i18n": "workspace:*"
-    "@tailwindcss/vite": "npm:^4.1.18"
-    "@unhead/schema-org": "npm:^2.0.19"
-    "@unhead/vue": "npm:^2.0.19"
-    "@vitejs/plugin-vue": "npm:^6.0.1"
-    html-to-image: "npm:^1.11.13"
-    unhead: "npm:^2.0.19"
-    vite: "npm:^7.3.0"
-    vite-ssg: "npm:^28.2.2"
-    vite-ssg-sitemap: "npm:^0.10.0"
-    vue: "npm:^3.5.25"
-    vue-router: "npm:^4.6.4"
-  languageName: unknown
-  linkType: soft
-
 "@lychen/drawio-core@workspace:*, @lychen/drawio-core@workspace:libs/drawio/core":
   version: 0.0.0-use.local
   resolution: "@lychen/drawio-core@workspace:libs/drawio/core"
@@ -2057,6 +2049,7 @@ __metadata:
     "@vite-pwa/assets-generator": "npm:^1.0.0"
     tailwindcss: "npm:^4.1.18"
     vite: "npm:^7.3.0"
+    vite-plugin-env-runtime: "npm:^0.3.7"
     vite-plugin-mkcert: "npm:^1.17.9"
     vite-plugin-pwa: "npm:^1.0.3"
     vite-plugin-vue-devtools: "npm:^8.0.2"
@@ -2087,6 +2080,7 @@ __metadata:
     "@vitejs/plugin-vue": "npm:^6.0.1"
     unhead: "npm:^2.0.19"
     vite: "npm:^7.3.0"
+    vite-plugin-env-runtime: "npm:^0.3.7"
     vite-plugin-mkcert: "npm:^1.17.9"
     vite-plugin-vue-devtools: "npm:^8.0.3"
     vite-ssg: "npm:^28.2.2"
@@ -2125,6 +2119,7 @@ __metadata:
     "@vitejs/plugin-vue": "npm:^6.0.1"
     unhead: "npm:^2.0.19"
     vite: "npm:^7.3.0"
+    vite-plugin-env-runtime: "npm:^0.3.7"
     vite-plugin-mkcert: "npm:^1.17.9"
     vite-ssg: "npm:^28.2.2"
     vite-ssg-sitemap: "npm:^0.10.0"
@@ -2752,6 +2747,7 @@ __metadata:
     "@vueuse/core": "npm:^14.1.0"
     unhead: "npm:^2.0.19"
     vite: "npm:^7.3.0"
+    vite-plugin-env-runtime: "npm:^0.3.7"
     vite-plugin-mkcert: "npm:^1.17.9"
     vite-ssg: "npm:^28.2.2"
     vite-ssg-sitemap: "npm:^0.10.0"
@@ -5507,7 +5503,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"consola@npm:^3.4.2":
+"consola@npm:^3.2.3, consola@npm:^3.4.2":
   version: 3.4.2
   resolution: "consola@npm:3.4.2"
   checksum: 10c0/7cebe57ecf646ba74b300bcce23bff43034ed6fbec9f7e39c27cee1dc00df8a21cd336b466ad32e304ea70fba04ec9e890c200270de9a526ce021ba8a7e4c11a
@@ -5881,6 +5877,13 @@ __metadata:
     no-case: "npm:^3.0.4"
     tslib: "npm:^2.0.3"
   checksum: 10c0/5b859ea65097a7ea870e2c91b5768b72ddf7fa947223fd29e167bcdff58fe731d941c48e47a38ec8aa8e43044c8fbd15cd8fa21689a526bc34b6548197cd5b05
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^16.4.5":
+  version: 16.6.1
+  resolution: "dotenv@npm:16.6.1"
+  checksum: 10c0/15ce56608326ea0d1d9414a5c8ee6dcf0fffc79d2c16422b4ac2268e7e2d76ff5a572d37ffe747c377de12005f14b3cc22361e79fc7f1061cce81f77d2c973dc
   languageName: node
   linkType: hard
 
@@ -7149,13 +7152,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-to-image@npm:^1.11.13":
-  version: 1.11.13
-  resolution: "html-to-image@npm:1.11.13"
-  checksum: 10c0/03bd7192d87b99499e37ff12a8e2b41ddce4cf8e33a93dfadff18df0f213434c7f1ba8328db2158f4805da07b7aec3c90aec3152908281153217e86784218b10
-  languageName: node
-  linkType: hard
-
 "html5parser@npm:^2.0.2":
   version: 2.0.2
   resolution: "html5parser@npm:2.0.2"
@@ -8195,7 +8191,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"magic-string@npm:^0.30.0, magic-string@npm:^0.30.17, magic-string@npm:^0.30.21, magic-string@npm:^0.30.4":
+"magic-string@npm:^0.30.0, magic-string@npm:^0.30.11, magic-string@npm:^0.30.17, magic-string@npm:^0.30.21, magic-string@npm:^0.30.4":
   version: 0.30.21
   resolution: "magic-string@npm:0.30.21"
   dependencies:
@@ -8804,6 +8800,15 @@ __metadata:
   version: 1.0.1
   resolution: "min-indent@npm:1.0.1"
   checksum: 10c0/7e207bd5c20401b292de291f02913230cb1163abca162044f7db1d951fa245b174dc00869d40dd9a9f32a885ad6a5f3e767ee104cf278f399cb4e92d3f582d5c
+  languageName: node
+  linkType: hard
+
+"minimatch@npm:^10.0.1":
+  version: 10.1.1
+  resolution: "minimatch@npm:10.1.1"
+  dependencies:
+    "@isaacs/brace-expansion": "npm:^5.0.0"
+  checksum: 10c0/c85d44821c71973d636091fddbfbffe62370f5ee3caf0241c5b60c18cd289e916200acb2361b7e987558cd06896d153e25d505db9fc1e43e6b4b6752e2702902
   languageName: node
   linkType: hard
 
@@ -11561,6 +11566,21 @@ __metadata:
   peerDependencies:
     vite: ^2.6.0 || ^3.0.0 || ^4.0.0 || ^5.0.0-0 || ^6.0.0-0 || ^7.0.0-0
   checksum: 10c0/449f9d09e70f29fa0dbdde7dbfeae94a65ef115d4e53073a688b0d1301d9967aa80f4b236e6fff2067824e23620c7a78eb5478f09c7da3342423c1849ed89ee8
+  languageName: node
+  linkType: hard
+
+"vite-plugin-env-runtime@npm:^0.3.7":
+  version: 0.3.7
+  resolution: "vite-plugin-env-runtime@npm:0.3.7"
+  dependencies:
+    consola: "npm:^3.2.3"
+    defu: "npm:^6.1.4"
+    dotenv: "npm:^16.4.5"
+    magic-string: "npm:^0.30.11"
+    minimatch: "npm:^10.0.1"
+  peerDependencies:
+    vite: ">=5.0.0"
+  checksum: 10c0/a99efb4b26352f48b297f4fc3a29a487dbae79aa9d3a76ba00fee53e612f6f6c4571d2520cbe259aa24bc989daf018f4b9ff1d642b890d4c7b1362f6455ef385
   languageName: node
   linkType: hard
 
