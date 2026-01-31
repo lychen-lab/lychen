@@ -6,15 +6,11 @@ tasks:
     deps:
       - args: $projectRoot/.nginx-build
         target: nginx-configs:sync-pwa
-    env:
-      VITE_APP_ID: $project
     options:
       cache: false
 
   dev:
     command: yarn dev
-    env:
-      VITE_APP_ID: $project
     options:
       persistent: true
 

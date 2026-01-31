@@ -31,8 +31,8 @@
     "@tailwindcss/vite": "^4.1.18",
     "@vitejs/plugin-vue": "^6.0.1",
     "vite": "^7.3.0",
+    "vite-plugin-env-runtime": "^0.3.7",
     "vite-plugin-mkcert": "^1.17.9",
-    "vite-plugin-runtime-env": "^1.0.0",
     "vite-plugin-vue-devtools": "^8.0.3",
     "vite-ssg": "^28.2.2",
     "vite-ssg-sitemap": "^0.10.0"
