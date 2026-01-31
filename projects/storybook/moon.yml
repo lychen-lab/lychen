@@ -7,10 +7,6 @@ dependsOn:
   - vue-i18n
   - vue-icons
 
-env:
-  STAGING_DOKPLOY_COMPOSE_ID: ''
-  STAGING_DOMAIN: storybook.lychen.org
-
 id: storybook
 
 language: typescript
@@ -36,9 +32,3 @@ tasks:
     command: yarn dev
     options:
       persistent: true
-
-  production-build:
-    extends: build
-
-  staging-build:
-    extends: build
