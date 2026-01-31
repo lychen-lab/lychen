@@ -36,13 +36,11 @@ import { defineAsyncComponent } from 'vue';
 import { CONFIG } from './i18n';
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import Container from '@lychen/vue-components-website/container/Container.vue';
-import TextHighlight from '@lychen/vue-components-extra/text-highlight/TextHighlight.vue';
 
 const DivScalingDown = defineAsyncComponent(
   () => import('@lychen/vue-components-extra/div-scaling-down/DivScalingDown.vue'),
 );
 
-const Hero = defineAsyncComponent(() => import('@lychen/vue-components-website/hero/Hero.vue'));
 const Button = defineAsyncComponent(() => import('@lychen/vue-components-core/button/Button.vue'));
 const Title = defineAsyncComponent(() => import('@lychen/vue-components-website/title/Title.vue'));
 const Paragraph = defineAsyncComponent(
