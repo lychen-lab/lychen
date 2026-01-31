@@ -23,6 +23,6 @@ tasks:
       cache: false
 
   get-dockerfiles:
-    command: cp -R $workspaceRoot/libs/docker/frontend/* . && sed -i '' "s/__PROJECT__/$project/g" compose.yml
+    command: cp -R $workspaceRoot/libs/docker/frontend/* . && sed -i.bak "s/__PROJECT__/$project/g" compose.yml && rm compose.yml.bak
     options:
       cache: false
