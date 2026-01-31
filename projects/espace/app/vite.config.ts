@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue';
 import mkcert from 'vite-plugin-mkcert';
 import { VitePWA } from 'vite-plugin-pwa';
 import tailwindcss from '@tailwindcss/vite';
-import runtimeEnv from 'vite-plugin-runtime-env';
+import EnvRuntime from 'vite-plugin-env-runtime';
 
 const config: UserConfig = {
   server: {
@@ -14,7 +14,7 @@ const config: UserConfig = {
   },
   plugins: [
     tailwindcss(),
-    runtimeEnv(),
+    EnvRuntime(),
     mkcert({
       hosts: ['app.espace.lychen.local'],
     }),

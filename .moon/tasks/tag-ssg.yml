@@ -2,7 +2,7 @@ $schema: 'https://moonrepo.dev/schemas/tasks.json'
 
 tasks:
   build:
-    command: yarn build --mode production
+    command: yarn build
     deps:
       - args: $projectRoot/.nginx-build
         target: nginx-configs:sync-ssg

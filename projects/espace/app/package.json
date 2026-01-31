@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build ${0}",
+    "build": "vite build --mode production",
     "preview": "vite preview",
     "generate-pwa-assets": "pwa-assets-generator"
   },
@@ -29,9 +29,9 @@
     "@vite-pwa/assets-generator": "^1.0.0",
     "tailwindcss": "^4.1.18",
     "vite": "^7.3.0",
+    "vite-plugin-env-runtime": "^0.3.7",
     "vite-plugin-mkcert": "^1.17.9",
     "vite-plugin-pwa": "^1.0.3",
-    "vite-plugin-runtime-env": "^1.0.0",
     "vite-plugin-vue-devtools": "^8.0.2"
   }
 }
