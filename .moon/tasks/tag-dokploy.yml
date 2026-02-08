@@ -3,6 +3,8 @@ $schema: 'https://moonrepo.dev/schemas/tasks.json'
 tasks:
   dokploy-compose-deploy:
     command: bash $workspaceRoot/.moon/scripts/dokploy-compose-deploy.sh
+    deps:
+      - dokploy-compose-update
     options:
       inferInputs: false
 
