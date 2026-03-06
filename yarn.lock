@@ -2759,7 +2759,7 @@ __metadata:
     "@tiptap/extension-text-align": "npm:^3.20.0"
     "@tiptap/extension-underline": "npm:^3.20.0"
     "@tiptap/pm": "npm:^3.20.0"
-    "@tiptap/suggestion": "npm:^2.11.5"
+    "@tiptap/suggestion": "npm:^3.20.0"
     "@tiptap/vue-3": "npm:^2.11.5"
     vue: "npm:^3.5.25"
   languageName: unknown
@@ -3889,13 +3889,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/suggestion@npm:^2.11.5":
-  version: 2.23.0
-  resolution: "@tiptap/suggestion@npm:2.23.0"
+"@tiptap/suggestion@npm:^3.20.0":
+  version: 3.20.0
+  resolution: "@tiptap/suggestion@npm:3.20.0"
   peerDependencies:
-    "@tiptap/core": ^2.7.0
-    "@tiptap/pm": ^2.7.0
-  checksum: 10c0/7540228111f03930a89175ddde5253705db6fafa58edc3e8e930aa92fcb18890b459dd9d3fd5b889f289a886792d207238683c76561a8b3d32c522e884bb60e0
+    "@tiptap/core": ^3.20.0
+    "@tiptap/pm": ^3.20.0
+  checksum: 10c0/cc57258b4b4d738272c45b653e6954d6a803c921430eac4db203aea470d3e34070f45a965c97c4045763a2c422f2781eb3551cb0a74aecde78c51b22e20a95e4
   languageName: node
   linkType: hard
 
