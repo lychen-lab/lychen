@@ -2755,7 +2755,7 @@ __metadata:
     "@tiptap/extension-paragraph": "npm:^3.20.0"
     "@tiptap/extension-placeholder": "npm:^3.20.0"
     "@tiptap/extension-strike": "npm:^3.20.0"
-    "@tiptap/extension-text": "npm:^2.11.5"
+    "@tiptap/extension-text": "npm:^3.20.0"
     "@tiptap/extension-text-align": "npm:^2.11.5"
     "@tiptap/extension-underline": "npm:^2.11.5"
     "@tiptap/pm": "npm:^2.11.5"
@@ -3845,12 +3845,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-text@npm:^2.11.5":
-  version: 2.23.0
-  resolution: "@tiptap/extension-text@npm:2.23.0"
+"@tiptap/extension-text@npm:^3.20.0":
+  version: 3.20.0
+  resolution: "@tiptap/extension-text@npm:3.20.0"
   peerDependencies:
-    "@tiptap/core": ^2.7.0
-  checksum: 10c0/95ea17918b1234df4bf0da566357c4cfdea525a2df6ff22c2c85742c7875656db4c416d51b420cf1dc40ab00f2357e3c5ed8479dbc46982532143532b479cc37
+    "@tiptap/core": ^3.20.0
+  checksum: 10c0/8bbea62613ed3958524d5087cdf27794421f597148c3b862c30ea33bb55ba23684f4a50696a2d43367d9bd9049faa61f2080b22e06054e16b7e74f31cf76a877
   languageName: node
   linkType: hard
 
