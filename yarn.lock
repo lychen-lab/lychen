@@ -2418,7 +2418,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@lychen/typescript-zitadel@workspace:libs/typescript/zitadel"
   dependencies:
-    "@zitadel/vue": "npm:^1.1.4"
+    "@zitadel/vue": "npm:^1.1.7"
     oidc-client: "npm:^1.11.5"
     vue-oidc-client: "npm:^1.0.0-alpha.5"
   languageName: unknown
@@ -4785,12 +4785,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zitadel/vue@npm:^1.1.4":
-  version: 1.1.4
-  resolution: "@zitadel/vue@npm:1.1.4"
+"@zitadel/vue@npm:^1.1.7":
+  version: 1.1.7
+  resolution: "@zitadel/vue@npm:1.1.7"
   dependencies:
     vue-oidc-client: "npm:^1.0.0-alpha.5"
-  checksum: 10c0/c0c3367a75da0ef93de3b558b4f346350cd6279fe474d67524167122daf990a512387e92c9340a407f2ed5bec248a10752886af0d9da5dacf096634261e7341e
+  checksum: 10c0/9183b0a68406baa5c56a76bd5aa68b22b61b695ceb72140058db93db6f6906f180e0baf87c9b081e91e391109e52f01af782ec09362c4c19928124a92420204b
   languageName: node
   linkType: hard
 
