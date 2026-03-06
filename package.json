@@ -7,7 +7,7 @@
     "@eslint/markdown": "^7.5.1",
     "@types/eslint": "^9.6.1",
     "@types/node": "^25.3.5",
-    "eslint": "^9.39.1",
+    "eslint": "^10.0.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-check-file": "^3.3.1",
     "eslint-plugin-import": "^2.32.0",
