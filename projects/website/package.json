@@ -27,7 +27,7 @@
     "@lychen/vue-router-configs": "workspace:*",
     "@lychen/vue-sustainable-development-goals": "workspace:*",
     "@lychen/vue-unhead-composables": "workspace:*",
-    "@unhead/schema-org": "^2.0.19",
+    "@unhead/schema-org": "^2.1.10",
     "@unhead/vue": "^2.0.19",
     "@vueuse/core": "^14.1.0",
     "unhead": "^2.0.19",

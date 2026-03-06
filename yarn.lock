@@ -2142,7 +2142,7 @@ __metadata:
     "@lychen/vue-router-configs": "workspace:*"
     "@lychen/vue-unhead-composables": "workspace:*"
     "@tailwindcss/vite": "npm:^4.2.1"
-    "@unhead/schema-org": "npm:^2.0.19"
+    "@unhead/schema-org": "npm:^2.1.10"
     "@unhead/vue": "npm:^2.0.19"
     "@vitejs/plugin-vue": "npm:^6.0.1"
     unhead: "npm:^2.0.19"
@@ -2181,7 +2181,7 @@ __metadata:
     "@lychen/vue-router-configs": "workspace:*"
     "@lychen/vue-unhead-composables": "workspace:*"
     "@tailwindcss/vite": "npm:^4.2.1"
-    "@unhead/schema-org": "npm:^2.0.19"
+    "@unhead/schema-org": "npm:^2.1.10"
     "@unhead/vue": "npm:^2.0.19"
     "@vitejs/plugin-vue": "npm:^6.0.1"
     unhead: "npm:^2.0.19"
@@ -2287,7 +2287,7 @@ __metadata:
     "@lychen/vue-tera": "workspace:*"
     "@lychen/vue-unhead-composables": "workspace:*"
     "@tailwindcss/vite": "npm:^4.2.1"
-    "@unhead/schema-org": "npm:^2.0.19"
+    "@unhead/schema-org": "npm:^2.1.10"
     "@unhead/vue": "npm:^2.0.19"
     "@vitejs/plugin-vue": "npm:^6.0.1"
     unhead: "npm:^2.0.19"
@@ -2808,7 +2808,7 @@ __metadata:
     "@lychen/vue-sustainable-development-goals": "workspace:*"
     "@lychen/vue-unhead-composables": "workspace:*"
     "@tailwindcss/vite": "npm:^4.2.1"
-    "@unhead/schema-org": "npm:^2.0.19"
+    "@unhead/schema-org": "npm:^2.1.10"
     "@unhead/vue": "npm:^2.0.19"
     "@vitejs/plugin-vue": "npm:^6.0.1"
     "@vueuse/core": "npm:^14.1.0"
@@ -4219,19 +4219,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@unhead/schema-org@npm:^2.0.19":
-  version: 2.0.19
-  resolution: "@unhead/schema-org@npm:2.0.19"
+"@unhead/schema-org@npm:^2.1.10":
+  version: 2.1.10
+  resolution: "@unhead/schema-org@npm:2.1.10"
   dependencies:
-    defu: "npm:^6.1.4"
-    ohash: "npm:^2.0.11"
-    ufo: "npm:^1.6.1"
-    unhead: "npm:2.0.19"
+    ufo: "npm:^1.6.3"
+    unhead: "npm:2.1.10"
   peerDependencies:
-    "@unhead/react": 2.0.19
-    "@unhead/solid-js": 2.0.19
-    "@unhead/svelte": 2.0.19
-    "@unhead/vue": 2.0.19
+    "@unhead/react": 2.1.10
+    "@unhead/solid-js": 2.1.10
+    "@unhead/svelte": 2.1.10
+    "@unhead/vue": 2.1.10
   peerDependenciesMeta:
     "@unhead/react":
       optional: true
@@ -4241,7 +4239,7 @@ __metadata:
       optional: true
     "@unhead/vue":
       optional: true
-  checksum: 10c0/6847327dfab07ba003a542e736669c01f16680c4e803e88c550e5c087fd8cf1a9e8e9c601766cc2c6edee56731f6f27aad66d8c5923e523c06a737a49157dd64
+  checksum: 10c0/f1f34c70d49eabc420c2d7a1b554d21e693e887458d628274a6a802d56c8a214af593d87280fe4110bbc77a116deb2e010c2d4adfc752cd7f449e4c3d94e7f18
   languageName: node
   linkType: hard
 
@@ -7165,6 +7163,13 @@ __metadata:
   version: 5.5.3
   resolution: "hookable@npm:5.5.3"
   checksum: 10c0/275f4cc84d27f8d48c5a5cd5685b6c0fea9291be9deea5bff0cfa72856ed566abde1dcd8cb1da0f9a70b4da3d7ec0d60dc3554c4edbba647058cc38816eced3d
+  languageName: node
+  linkType: hard
+
+"hookable@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "hookable@npm:6.0.1"
+  checksum: 10c0/a53592937c1aa74a650b3b92a9d8cf8bd58eee48422124a90299344f81e90cd2ee2f3d9f3686c45c0bc87edbc9fede4de709edf6b987dd6837bdcfa502447fa0
   languageName: node
   linkType: hard
 
@@ -11363,6 +11368,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ufo@npm:^1.6.3":
+  version: 1.6.3
+  resolution: "ufo@npm:1.6.3"
+  checksum: 10c0/bf0e4ebff99e54da1b9c7182ac2f40475988b41faa881d579bc97bc2a0509672107b0a0e94c4b8d31a0ab8c4bf07f4aa0b469ac6da8536d56bda5b085ea2e953
+  languageName: node
+  linkType: hard
+
 "unbox-primitive@npm:^1.1.0":
   version: 1.1.0
   resolution: "unbox-primitive@npm:1.1.0"
@@ -11400,6 +11412,15 @@ __metadata:
   dependencies:
     hookable: "npm:^5.5.3"
   checksum: 10c0/a7904c1e9041cc1b15fafbbeb2526f180a9bd05751eb1bd2b1f3f9f5f3caada6372cbbf72e0879df6be78773ed1dbc6a724aaee35031e3b664cf6f6fb5f9e27a
+  languageName: node
+  linkType: hard
+
+"unhead@npm:2.1.10":
+  version: 2.1.10
+  resolution: "unhead@npm:2.1.10"
+  dependencies:
+    hookable: "npm:^6.0.1"
+  checksum: 10c0/c94ebad9ef6fae99fb1c34fe5454960bdc0dfbffcd7998d481a095d3cb1b2579430a1016f85528e74a63a85c0102ea2768331ac79e906c87f2bbc9cb25625ea4
   languageName: node
   linkType: hard
 
