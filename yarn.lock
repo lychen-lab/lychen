@@ -1575,7 +1575,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/core@npm:^1.1.0":
+"@eslint/core@npm:^1.0.1, @eslint/core@npm:^1.1.0":
   version: 1.1.0
   resolution: "@eslint/core@npm:1.1.0"
   dependencies:
@@ -2894,6 +2894,13 @@ __metadata:
   dependencies:
     semver: "npm:^7.3.5"
   checksum: 10c0/c90935d5ce670c87b6b14fab04a965a3b8137e585f8b2a6257263bd7f97756dd736cb165bb470e5156a9e718ecd99413dccc54b1138c1a46d6ec7cf325982fe5
+  languageName: node
+  linkType: hard
+
+"@ota-meshi/ast-token-store@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "@ota-meshi/ast-token-store@npm:0.3.0"
+  checksum: 10c0/cb36d5b3e1379901e197d03869772f96d6505be8c06701dd56a02123a9a5484cfe8d759610622058675434ee2dcdba37b939cc249abe9babefcd400a63a77e9a
   languageName: node
   linkType: hard
 
@@ -5904,10 +5911,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"diff-sequences@npm:^27.5.1":
-  version: 27.5.1
-  resolution: "diff-sequences@npm:27.5.1"
-  checksum: 10c0/a52566d891b89a666f48ba69f54262fa8293ae6264ae04da82c7bf3b6661cba75561de0729f18463179d56003cc0fd69aa09845f2c2cd7a353b1ec1e1a96beb9
+"diff-sequences@npm:^29.0.0":
+  version: 29.6.3
+  resolution: "diff-sequences@npm:29.6.3"
+  checksum: 10c0/32e27ac7dbffdf2fb0eb5a84efd98a9ad084fbabd5ac9abb8757c6770d5320d2acd172830b28c4add29bb873d59420601dfc805ac4064330ce59b1adfd0593b2
   languageName: node
   linkType: hard
 
@@ -6296,10 +6303,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"escape-string-regexp@npm:4.0.0, escape-string-regexp@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "escape-string-regexp@npm:4.0.0"
-  checksum: 10c0/9497d4dd307d845bd7f75180d8188bb17ea8c151c1edbf6b6717c100e104d629dc2dfb687686181b0f4b7d732c7dfdc4d5e7a8ff72de1b0ca283a75bbb3a9cd9
+"escape-string-regexp@npm:5.0.0, escape-string-regexp@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "escape-string-regexp@npm:5.0.0"
+  checksum: 10c0/6366f474c6f37a802800a435232395e04e9885919873e382b157ab7e8f0feb8fed71497f84a6f6a81a49aab41815522f5839112bd38026d203aea0c91622df95
   languageName: node
   linkType: hard
 
@@ -6310,21 +6317,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"escape-string-regexp@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "escape-string-regexp@npm:5.0.0"
-  checksum: 10c0/6366f474c6f37a802800a435232395e04e9885919873e382b157ab7e8f0feb8fed71497f84a6f6a81a49aab41815522f5839112bd38026d203aea0c91622df95
-  languageName: node
-  linkType: hard
-
-"eslint-compat-utils@npm:^0.6.0":
-  version: 0.6.4
-  resolution: "eslint-compat-utils@npm:0.6.4"
-  dependencies:
-    semver: "npm:^7.5.4"
-  peerDependencies:
-    eslint: ">=6.0.0"
-  checksum: 10c0/5b665c4051e978b9f9c48621f63d07e6b2a8ba1b334fc430f1ce0d8b596968677bdb54c23c00ca961ad5b4673d5e83e014a52b4baf9a2f7d4ccd79e3c213acfb
+"escape-string-regexp@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "escape-string-regexp@npm:4.0.0"
+  checksum: 10c0/9497d4dd307d845bd7f75180d8188bb17ea8c151c1edbf6b6717c100e104d629dc2dfb687686181b0f4b7d732c7dfdc4d5e7a8ff72de1b0ca283a75bbb3a9cd9
   languageName: node
   linkType: hard
 
@@ -6485,19 +6481,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-yml@npm:^1.19.0":
-  version: 1.19.0
-  resolution: "eslint-plugin-yml@npm:1.19.0"
+"eslint-plugin-yml@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "eslint-plugin-yml@npm:3.3.1"
   dependencies:
+    "@eslint/core": "npm:^1.0.1"
+    "@eslint/plugin-kit": "npm:^0.6.0"
+    "@ota-meshi/ast-token-store": "npm:^0.3.0"
     debug: "npm:^4.3.2"
-    diff-sequences: "npm:^27.5.1"
-    escape-string-regexp: "npm:4.0.0"
-    eslint-compat-utils: "npm:^0.6.0"
+    diff-sequences: "npm:^29.0.0"
+    escape-string-regexp: "npm:5.0.0"
     natural-compare: "npm:^1.4.0"
-    yaml-eslint-parser: "npm:^1.2.1"
+    yaml-eslint-parser: "npm:^2.0.0"
   peerDependencies:
-    eslint: ">=6.0.0"
-  checksum: 10c0/5e418d3e5f847491a143f048b9aece30c0bbb6c2218185bfb24d5be2d31974aa71f92ead4fe5f8c51d356577c5b2c36e26b2406f1baeb501bed86344a4d0f40c
+    eslint: ">=9.38.0"
+  checksum: 10c0/b82e0b852db7b98f46c3aea54068a2038e209388ffa331dc45194e841273ce4154959bfec17ede43614c43eda525d1731f15678801f117b1897a10227768f6c2
   languageName: node
   linkType: hard
 
@@ -6523,7 +6521,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-visitor-keys@npm:^3.0.0, eslint-visitor-keys@npm:^3.4.3":
+"eslint-visitor-keys@npm:^3.4.3":
   version: 3.4.3
   resolution: "eslint-visitor-keys@npm:3.4.3"
   checksum: 10c0/92708e882c0a5ffd88c23c0b404ac1628cf20104a108c745f240a13c332a11aac54f49a22d5762efbffc18ecbc9a580d1b7ad034bf5f3cc3307e5cbff2ec9820
@@ -6537,7 +6535,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-visitor-keys@npm:^5.0.1":
+"eslint-visitor-keys@npm:^5.0.0, eslint-visitor-keys@npm:^5.0.1":
   version: 5.0.1
   resolution: "eslint-visitor-keys@npm:5.0.1"
   checksum: 10c0/16190bdf2cbae40a1109384c94450c526a79b0b9c3cb21e544256ed85ac48a4b84db66b74a6561d20fe6ab77447f150d711c2ad5ad74df4fcc133736bce99678
@@ -8137,7 +8135,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.20, lodash@npm:^4.17.21":
+"lodash@npm:^4.17.20":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: 10c0/d8cbea072bb08655bb4c989da418994b073a608dffa608b09ac04b43a791b12aeae7cd7ad919aa4c925f33b48490b5cfe6c1f71d827956071dae2e7bb3a6b74c
@@ -8222,7 +8220,7 @@ __metadata:
     eslint-plugin-tailwindcss: "npm:^3.18.2"
     eslint-plugin-unicorn: "npm:^63.0.0"
     eslint-plugin-vue: "npm:^10.8.0"
-    eslint-plugin-yml: "npm:^1.19.0"
+    eslint-plugin-yml: "npm:^3.3.1"
     globals: "npm:^16.5.0"
     prettier: "npm:^3.7.4"
     tailwindcss: "npm:^4.2.1"
@@ -10385,7 +10383,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.3.5, semver@npm:^7.5.4, semver@npm:^7.6.0, semver@npm:^7.6.2, semver@npm:^7.6.3, semver@npm:^7.7.3":
+"semver@npm:^7.3.5, semver@npm:^7.6.0, semver@npm:^7.6.2, semver@npm:^7.6.3, semver@npm:^7.7.3":
   version: 7.7.3
   resolution: "semver@npm:7.7.3"
   bin:
@@ -12431,14 +12429,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yaml-eslint-parser@npm:^1.2.1":
-  version: 1.2.3
-  resolution: "yaml-eslint-parser@npm:1.2.3"
+"yaml-eslint-parser@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "yaml-eslint-parser@npm:2.0.0"
   dependencies:
-    eslint-visitor-keys: "npm:^3.0.0"
-    lodash: "npm:^4.17.21"
+    eslint-visitor-keys: "npm:^5.0.0"
     yaml: "npm:^2.0.0"
-  checksum: 10c0/dc2263f3e83ea8958d882f355039a2b72b4852a9492545fb7753fae070b1e73e211d2555318fb3ab8a4c7545d8f9b4e4670ffa5ef63d54622b3483de7401f633
+  checksum: 10c0/3c5619bf1745e8aa4fb17fc02824b68a2244947e56104d86fcad96e796ba0eea3fc2595b2c5e0a6b132f7840303f064eb6acd6c990da3bc70bc033443448241c
   languageName: node
   linkType: hard
 
