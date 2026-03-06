@@ -2753,7 +2753,7 @@ __metadata:
     "@tiptap/extension-list-item": "npm:^3.20.0"
     "@tiptap/extension-ordered-list": "npm:^3.20.0"
     "@tiptap/extension-paragraph": "npm:^3.20.0"
-    "@tiptap/extension-placeholder": "npm:^2.11.5"
+    "@tiptap/extension-placeholder": "npm:^3.20.0"
     "@tiptap/extension-strike": "npm:^2.11.5"
     "@tiptap/extension-text": "npm:^2.11.5"
     "@tiptap/extension-text-align": "npm:^2.11.5"
@@ -3818,13 +3818,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-placeholder@npm:^2.11.5":
-  version: 2.23.0
-  resolution: "@tiptap/extension-placeholder@npm:2.23.0"
+"@tiptap/extension-placeholder@npm:^3.20.0":
+  version: 3.20.0
+  resolution: "@tiptap/extension-placeholder@npm:3.20.0"
   peerDependencies:
-    "@tiptap/core": ^2.7.0
-    "@tiptap/pm": ^2.7.0
-  checksum: 10c0/845d84e7b102f508e3eccbce1f35ef83f6bf53f94da15ae40363e091004a512ffd29f0ab8e8b9c88c1016964b61a46644428a6598287636b6b951ed241a2390d
+    "@tiptap/extensions": ^3.20.0
+  checksum: 10c0/f533d6df593fb07412ab400bd63cd11c181e03a88498f0fd0a0532360487629fb50e66855662ebbaf3fbbc235619cba0be573e2e45f668bd96828c54f9498a3d
   languageName: node
   linkType: hard
 
