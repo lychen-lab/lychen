@@ -2151,7 +2151,7 @@ __metadata:
     "@unhead/schema-org": "npm:^2.1.10"
     "@unhead/vue": "npm:^2.1.10"
     "@vitejs/plugin-vue": "npm:^6.0.4"
-    unhead: "npm:^2.0.19"
+    unhead: "npm:^2.1.10"
     vite: "npm:^7.3.0"
     vite-plugin-env-runtime: "npm:^0.3.7"
     vite-plugin-mkcert: "npm:^1.17.9"
@@ -2190,7 +2190,7 @@ __metadata:
     "@unhead/schema-org": "npm:^2.1.10"
     "@unhead/vue": "npm:^2.1.10"
     "@vitejs/plugin-vue": "npm:^6.0.4"
-    unhead: "npm:^2.0.19"
+    unhead: "npm:^2.1.10"
     vite: "npm:^7.3.0"
     vite-plugin-env-runtime: "npm:^0.3.7"
     vite-plugin-mkcert: "npm:^1.17.9"
@@ -2296,7 +2296,7 @@ __metadata:
     "@unhead/schema-org": "npm:^2.1.10"
     "@unhead/vue": "npm:^2.1.10"
     "@vitejs/plugin-vue": "npm:^6.0.4"
-    unhead: "npm:^2.0.19"
+    unhead: "npm:^2.1.10"
     vite: "npm:^7.3.0"
     vite-plugin-mkcert: "npm:^1.17.9"
     vite-ssg: "npm:^28.2.2"
@@ -2818,7 +2818,7 @@ __metadata:
     "@unhead/vue": "npm:^2.1.10"
     "@vitejs/plugin-vue": "npm:^6.0.4"
     "@vueuse/core": "npm:^14.2.1"
-    unhead: "npm:^2.0.19"
+    unhead: "npm:^2.1.10"
     vite: "npm:^7.3.0"
     vite-plugin-env-runtime: "npm:^0.3.7"
     vite-plugin-mkcert: "npm:^1.17.9"
@@ -11366,7 +11366,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unhead@npm:2.0.19, unhead@npm:^2.0.19":
+"unhead@npm:2.0.19":
   version: 2.0.19
   resolution: "unhead@npm:2.0.19"
   dependencies:
@@ -11375,7 +11375,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unhead@npm:2.1.10":
+"unhead@npm:2.1.10, unhead@npm:^2.1.10":
   version: 2.1.10
   resolution: "unhead@npm:2.1.10"
   dependencies:

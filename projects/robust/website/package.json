@@ -24,7 +24,7 @@
     "@lychen/vue-unhead-composables": "workspace:*",
     "@unhead/schema-org": "^2.1.10",
     "@unhead/vue": "^2.1.10",
-    "unhead": "^2.0.19",
+    "unhead": "^2.1.10",
     "vue": "^3.5.25",
     "vue-router": "^4.6.4"
   },
