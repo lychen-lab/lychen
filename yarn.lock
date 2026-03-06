@@ -2143,7 +2143,7 @@ __metadata:
     "@lychen/vue-unhead-composables": "workspace:*"
     "@tailwindcss/vite": "npm:^4.2.1"
     "@unhead/schema-org": "npm:^2.1.10"
-    "@unhead/vue": "npm:^2.0.19"
+    "@unhead/vue": "npm:^2.1.10"
     "@vitejs/plugin-vue": "npm:^6.0.1"
     unhead: "npm:^2.0.19"
     vite: "npm:^7.3.0"
@@ -2182,7 +2182,7 @@ __metadata:
     "@lychen/vue-unhead-composables": "workspace:*"
     "@tailwindcss/vite": "npm:^4.2.1"
     "@unhead/schema-org": "npm:^2.1.10"
-    "@unhead/vue": "npm:^2.0.19"
+    "@unhead/vue": "npm:^2.1.10"
     "@vitejs/plugin-vue": "npm:^6.0.1"
     unhead: "npm:^2.0.19"
     vite: "npm:^7.3.0"
@@ -2288,7 +2288,7 @@ __metadata:
     "@lychen/vue-unhead-composables": "workspace:*"
     "@tailwindcss/vite": "npm:^4.2.1"
     "@unhead/schema-org": "npm:^2.1.10"
-    "@unhead/vue": "npm:^2.0.19"
+    "@unhead/vue": "npm:^2.1.10"
     "@vitejs/plugin-vue": "npm:^6.0.1"
     unhead: "npm:^2.0.19"
     vite: "npm:^7.3.0"
@@ -2769,7 +2769,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@lychen/vue-unhead-composables@workspace:libs/vue/unhead/composables"
   dependencies:
-    "@unhead/vue": "npm:^2.0.19"
+    "@unhead/vue": "npm:^2.1.10"
     vue: "npm:^3.5.25"
     vue-router: "npm:^4.6.4"
   languageName: unknown
@@ -2809,7 +2809,7 @@ __metadata:
     "@lychen/vue-unhead-composables": "workspace:*"
     "@tailwindcss/vite": "npm:^4.2.1"
     "@unhead/schema-org": "npm:^2.1.10"
-    "@unhead/vue": "npm:^2.0.19"
+    "@unhead/vue": "npm:^2.1.10"
     "@vitejs/plugin-vue": "npm:^6.0.1"
     "@vueuse/core": "npm:^14.1.0"
     unhead: "npm:^2.0.19"
@@ -4252,6 +4252,18 @@ __metadata:
   peerDependencies:
     vue: ">=3.5.18"
   checksum: 10c0/a8acb37e03a2ae0d2a59960c5c894d620e9d61c538e10e5dcc668c1333f3f6a4390aa88300c6c6ffd306276e6fef38fd93cb79d9d36f9fd79bdc206899281d1a
+  languageName: node
+  linkType: hard
+
+"@unhead/vue@npm:^2.1.10":
+  version: 2.1.10
+  resolution: "@unhead/vue@npm:2.1.10"
+  dependencies:
+    hookable: "npm:^6.0.1"
+    unhead: "npm:2.1.10"
+  peerDependencies:
+    vue: ">=3.5.18"
+  checksum: 10c0/00174ebc15e81ce923ecab0e017daad6928f6789ee3676d04a151d3f6f45c09496b8c58eeb20e02aa0c609076beabc6ba0422b633ba43655a5c44ff6837f85f1
   languageName: node
   linkType: hard
 
