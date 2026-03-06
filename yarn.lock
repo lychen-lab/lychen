@@ -2113,7 +2113,7 @@ __metadata:
     "@lychen/vue-layouts": "workspace:*"
     "@tailwindcss/vite": "npm:^4.2.1"
     "@tanstack/vue-query": "npm:^5.92.9"
-    "@vite-pwa/assets-generator": "npm:^1.0.0"
+    "@vite-pwa/assets-generator": "npm:^1.0.2"
     tailwindcss: "npm:^4.2.1"
     vite: "npm:^7.3.0"
     vite-plugin-env-runtime: "npm:^0.3.7"
@@ -2242,7 +2242,7 @@ __metadata:
     "@tailwindcss/vite": "npm:^4.2.1"
     "@tanstack/vue-query": "npm:^5.92.9"
     "@tanstack/vue-table": "npm:^8.21.3"
-    "@vite-pwa/assets-generator": "npm:^1.0.0"
+    "@vite-pwa/assets-generator": "npm:^1.0.2"
     "@vitejs/plugin-vue": "npm:^6.0.1"
     "@vueuse/core": "npm:^14.1.0"
     tailwindcss: "npm:^4.2.1"
@@ -4279,9 +4279,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vite-pwa/assets-generator@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@vite-pwa/assets-generator@npm:1.0.0"
+"@vite-pwa/assets-generator@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@vite-pwa/assets-generator@npm:1.0.2"
   dependencies:
     cac: "npm:^6.7.14"
     colorette: "npm:^2.0.20"
@@ -4291,7 +4291,7 @@ __metadata:
     unconfig: "npm:^7.3.1"
   bin:
     pwa-assets-generator: bin/pwa-assets-generator.mjs
-  checksum: 10c0/ddb58659ef9d0e91bd0e075acece94b04c2c8a210124a4ffd7b54f9d835728af3b320111d8018e6f87cfdca89bcb3c5284c2d6926619ba748cc12515d999f458
+  checksum: 10c0/bbe117fffc30c762521be9400b6b6f6dccec731e5524af7a42a7b75b9efb0e2c9eb4d834b813e829c66e2a422e040462d9bc8df63ef0df9bd2825bce87634ea7
   languageName: node
   linkType: hard
 
