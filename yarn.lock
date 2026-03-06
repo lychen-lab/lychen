@@ -2738,7 +2738,7 @@ __metadata:
   resolution: "@lychen/vue-tiptap@workspace:libs/vue/tiptap"
   dependencies:
     "@tiptap/core": "npm:^3.20.0"
-    "@tiptap/extension-bold": "npm:^2.11.5"
+    "@tiptap/extension-bold": "npm:^3.20.0"
     "@tiptap/extension-bullet-list": "npm:^2.11.5"
     "@tiptap/extension-character-count": "npm:^2.11.5"
     "@tiptap/extension-code": "npm:^2.11.5"
@@ -3658,12 +3658,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-bold@npm:^2.11.5":
-  version: 2.23.0
-  resolution: "@tiptap/extension-bold@npm:2.23.0"
+"@tiptap/extension-bold@npm:^3.20.0":
+  version: 3.20.0
+  resolution: "@tiptap/extension-bold@npm:3.20.0"
   peerDependencies:
-    "@tiptap/core": ^2.7.0
-  checksum: 10c0/bd46bb7ba9e1b99bd3cfe8f923a138e6da22859e1faf56bdfb4282eccdfb18eac4079672a922f6cdea9011aab2dc70c4737b52eda1458429c7777c31ce18d4a1
+    "@tiptap/core": ^3.20.0
+  checksum: 10c0/e07c50414aef8b0b02040e1a4f6ce2494e2087980de9b19b73463f61ed96ccc446ff311afd1582686336d8428b0e0e3b0bb1a6287c85fbc3592d967d17267388
   languageName: node
   linkType: hard
 
