@@ -22,7 +22,7 @@
     "@storybook/addon-docs": "^10.2.15",
     "@storybook/vue3-vite": "^10.2.15",
     "@types/node": "^25.3.5",
-    "@vitejs/plugin-vue": "^6.0.1",
+    "@vitejs/plugin-vue": "^6.0.4",
     "@vue/tsconfig": "^0.8.1",
     "@vueless/storybook-dark-mode": "^10.0.4",
     "storybook": "^10.1.10",
