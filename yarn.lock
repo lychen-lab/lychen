@@ -2404,7 +2404,7 @@ __metadata:
   resolution: "@lychen/typescript-utils@workspace:libs/typescript/utils"
   dependencies:
     clsx: "npm:^2.1.1"
-    tailwind-merge: "npm:^2.5.2"
+    tailwind-merge: "npm:^3.5.0"
   languageName: unknown
   linkType: soft
 
@@ -2506,7 +2506,7 @@ __metadata:
     clsx: "npm:^2.1.1"
     embla-carousel-vue: "npm:^8.6.0"
     reka-ui: "npm:^2.9.0"
-    tailwind-merge: "npm:^3.1.0"
+    tailwind-merge: "npm:^3.5.0"
     tailwindcss: "npm:^4.2.1"
     vaul-vue: "npm:^0.4.1"
     vee-validate: "npm:^4.15.1"
@@ -10977,17 +10977,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwind-merge@npm:^2.5.2":
-  version: 2.6.0
-  resolution: "tailwind-merge@npm:2.6.0"
-  checksum: 10c0/fc8a5535524de9f4dacf1c16ab298581c7bb757d68a95faaf28942b1c555a619bba9d4c6726fe83986e44973b315410c1a5226e5354c30ba82353bd6d2288fa5
-  languageName: node
-  linkType: hard
-
-"tailwind-merge@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "tailwind-merge@npm:3.1.0"
-  checksum: 10c0/71d6dc5f8bae2f87950eefa2605a391ffef45a09759de22ba0e90976180ab3cd4fc48ed37063a617dc2ff0f48768c0006090a78bcd1f5ad0ae1c373aad16d2b6
+"tailwind-merge@npm:^3.5.0":
+  version: 3.5.0
+  resolution: "tailwind-merge@npm:3.5.0"
+  checksum: 10c0/4dc588f5b5296ba3f38e1ebb41f02b6d24a8c5bb45e44b33748c118fb4b5767dd0efc464431ca3e75404056b618b5f67bec3708158baa65fed8a2fc9201e0c53
   languageName: node
   linkType: hard
 
