@@ -32,6 +32,6 @@
     "vite-plugin-env-runtime": "^0.3.7",
     "vite-plugin-mkcert": "^1.17.10",
     "vite-plugin-pwa": "^1.2.0",
-    "vite-plugin-vue-devtools": "^8.0.2"
+    "vite-plugin-vue-devtools": "^8.0.7"
   }
 }
