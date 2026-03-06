@@ -2014,7 +2014,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@lychen/css-core@workspace:libs/css/core"
   dependencies:
-    tailwindcss: "npm:^4.1.18"
+    tailwindcss: "npm:^4.2.1"
   languageName: unknown
   linkType: soft
 
@@ -2047,7 +2047,7 @@ __metadata:
     "@tailwindcss/vite": "npm:^4.1.18"
     "@tanstack/vue-query": "npm:^5.91.1"
     "@vite-pwa/assets-generator": "npm:^1.0.0"
-    tailwindcss: "npm:^4.1.18"
+    tailwindcss: "npm:^4.2.1"
     vite: "npm:^7.3.0"
     vite-plugin-env-runtime: "npm:^0.3.7"
     vite-plugin-mkcert: "npm:^1.17.9"
@@ -2147,7 +2147,7 @@ __metadata:
     "@vue/tsconfig": "npm:^0.8.1"
     "@vueless/storybook-dark-mode": "npm:^10.0.4"
     storybook: "npm:^10.1.10"
-    tailwindcss: "npm:^4.1.18"
+    tailwindcss: "npm:^4.2.1"
     typescript: "npm:~5.9.3"
     vite: "npm:^7.3.0"
     vite-plugin-mkcert: "npm:1.17.8"
@@ -2178,7 +2178,7 @@ __metadata:
     "@vite-pwa/assets-generator": "npm:^1.0.0"
     "@vitejs/plugin-vue": "npm:^6.0.1"
     "@vueuse/core": "npm:^14.1.0"
-    tailwindcss: "npm:^4.1.18"
+    tailwindcss: "npm:^4.2.1"
     vite: "npm:^7.3.0"
     vite-plugin-mkcert: "npm:^1.17.9"
     vite-plugin-pwa: "npm:^1.0.3"
@@ -2438,7 +2438,7 @@ __metadata:
     embla-carousel-vue: "npm:^8.6.0"
     reka-ui: "npm:^2.5.1"
     tailwind-merge: "npm:^3.1.0"
-    tailwindcss: "npm:^4.1.18"
+    tailwindcss: "npm:^4.2.1"
     vaul-vue: "npm:^0.4.1"
     vee-validate: "npm:^4.15.1"
     vue: "npm:^3.5.25"
@@ -8174,7 +8174,7 @@ __metadata:
     eslint-plugin-yml: "npm:^1.19.0"
     globals: "npm:^16.5.0"
     prettier: "npm:^3.7.4"
-    tailwindcss: "npm:^4.1.18"
+    tailwindcss: "npm:^4.2.1"
     tsconfig-moon: "npm:^1.4.1"
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.49.0"
@@ -10947,10 +10947,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:4.1.18, tailwindcss@npm:^4.1.18":
+"tailwindcss@npm:4.1.18":
   version: 4.1.18
   resolution: "tailwindcss@npm:4.1.18"
   checksum: 10c0/c79263cea0b2c577859b02f28284caa4eb3844e4d0f563686726ca97817c045c5c395a55bc776daaa351ba9e4aefa9a75bfbb43c22d86f3c573eecc2b87d6bf1
+  languageName: node
+  linkType: hard
+
+"tailwindcss@npm:^4.2.1":
+  version: 4.2.1
+  resolution: "tailwindcss@npm:4.2.1"
+  checksum: 10c0/482d734b582e9da509042ff59c1d7564d99e39e238c50ae907c20fa56177a8a00c3902f6971329971bd6a1c5357026ac76a849b8f2c69c94f0f59be99530ba54
   languageName: node
   linkType: hard
 
