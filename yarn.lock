@@ -2760,7 +2760,7 @@ __metadata:
     "@tiptap/extension-underline": "npm:^3.20.0"
     "@tiptap/pm": "npm:^3.20.0"
     "@tiptap/suggestion": "npm:^3.20.0"
-    "@tiptap/vue-3": "npm:^2.11.5"
+    "@tiptap/vue-3": "npm:^3.20.0"
     vue: "npm:^3.5.25"
   languageName: unknown
   linkType: soft
@@ -2924,13 +2924,6 @@ __metadata:
   version: 1.0.0-next.29
   resolution: "@polka/url@npm:1.0.0-next.29"
   checksum: 10c0/0d58e081844095cb029d3c19a659bfefd09d5d51a2f791bc61eba7ea826f13d6ee204a8a448c2f5a855c17df07b37517373ff916dd05801063c0568ae9937684
-  languageName: node
-  linkType: hard
-
-"@popperjs/core@npm:^2.9.0":
-  version: 2.11.8
-  resolution: "@popperjs/core@npm:2.11.8"
-  checksum: 10c0/4681e682abc006d25eb380d0cf3efc7557043f53b6aea7a5057d0d1e7df849a00e281cd8ea79c902a35a414d7919621fc2ba293ecec05f413598e0b23d5a1e63
   languageName: node
   linkType: hard
 
@@ -3667,15 +3660,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-bubble-menu@npm:^2.23.0":
-  version: 2.23.0
-  resolution: "@tiptap/extension-bubble-menu@npm:2.23.0"
+"@tiptap/extension-bubble-menu@npm:^3.20.0":
+  version: 3.20.0
+  resolution: "@tiptap/extension-bubble-menu@npm:3.20.0"
   dependencies:
-    tippy.js: "npm:^6.3.7"
+    "@floating-ui/dom": "npm:^1.0.0"
   peerDependencies:
-    "@tiptap/core": ^2.7.0
-    "@tiptap/pm": ^2.7.0
-  checksum: 10c0/0363b069063f6dfdffba20624a6845323443e36ed1fe20500115f01f4f91570a56e56269d5769a613036c3d4a63532bd4fe8ddbbf65fe3a4b71dde34f68c6486
+    "@tiptap/core": ^3.20.0
+    "@tiptap/pm": ^3.20.0
+  checksum: 10c0/c9d435ebe7236165e0b3e5594d96950f06145ffcfcaaa0bcfc65c3bf4e833952ad2f02d3959c9ff4e7162c77ef8b565535a0fba2e061afe74784cc49e0c6ced8
   languageName: node
   linkType: hard
 
@@ -3724,15 +3717,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-floating-menu@npm:^2.23.0":
-  version: 2.23.0
-  resolution: "@tiptap/extension-floating-menu@npm:2.23.0"
-  dependencies:
-    tippy.js: "npm:^6.3.7"
+"@tiptap/extension-floating-menu@npm:^3.20.0":
+  version: 3.20.0
+  resolution: "@tiptap/extension-floating-menu@npm:3.20.0"
   peerDependencies:
-    "@tiptap/core": ^2.7.0
-    "@tiptap/pm": ^2.7.0
-  checksum: 10c0/f3a992110e5c7e2fe29686c857545b9826ce20c07d70f2cef699a91bf290f827f1c8947d37d3ea5a5355759d94890e20b154b006fb3c034c0048b2342adb2c04
+    "@floating-ui/dom": ^1.0.0
+    "@tiptap/core": ^3.20.0
+    "@tiptap/pm": ^3.20.0
+  checksum: 10c0/69ff4b552772c71261abbb5f0cda9d972fd688717c8ad989cfa349f48a781a7fb9912b28d74fa5f2ee901a8c02e837cb6c6e4027cf8d435bf007267773acd7cb
   languageName: node
   linkType: hard
 
@@ -3899,17 +3891,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/vue-3@npm:^2.11.5":
-  version: 2.23.0
-  resolution: "@tiptap/vue-3@npm:2.23.0"
+"@tiptap/vue-3@npm:^3.20.0":
+  version: 3.20.0
+  resolution: "@tiptap/vue-3@npm:3.20.0"
   dependencies:
-    "@tiptap/extension-bubble-menu": "npm:^2.23.0"
-    "@tiptap/extension-floating-menu": "npm:^2.23.0"
+    "@tiptap/extension-bubble-menu": "npm:^3.20.0"
+    "@tiptap/extension-floating-menu": "npm:^3.20.0"
   peerDependencies:
-    "@tiptap/core": ^2.7.0
-    "@tiptap/pm": ^2.7.0
+    "@floating-ui/dom": ^1.0.0
+    "@tiptap/core": ^3.20.0
+    "@tiptap/pm": ^3.20.0
     vue: ^3.0.0
-  checksum: 10c0/9ef0c6fe08e209c53a308c6bb83dea5280aeef6178ac33cf4cf55eb17b942d1d21b93bbdd9c9fb93c7433c58ab3904b686331dc2a38616f3d777966804cc037a
+  dependenciesMeta:
+    "@tiptap/extension-bubble-menu":
+      optional: true
+    "@tiptap/extension-floating-menu":
+      optional: true
+  checksum: 10c0/e710b232f10b7ff6308eda3cdd633200974714150907a378f484c48f8981950edccb2094f489cf841c158a1685f83e40cf1baa887da3c0dff9d7498ca1891848
   languageName: node
   linkType: hard
 
@@ -11106,15 +11104,6 @@ __metadata:
   version: 4.0.4
   resolution: "tinyspy@npm:4.0.4"
   checksum: 10c0/a8020fc17799251e06a8398dcc352601d2770aa91c556b9531ecd7a12581161fd1c14e81cbdaff0c1306c93bfdde8ff6d1c1a3f9bbe6d91604f0fd4e01e2f1eb
-  languageName: node
-  linkType: hard
-
-"tippy.js@npm:^6.3.7":
-  version: 6.3.7
-  resolution: "tippy.js@npm:6.3.7"
-  dependencies:
-    "@popperjs/core": "npm:^2.9.0"
-  checksum: 10c0/ec3677beb8caec791ee1f715663f28f42d60e0f7250074a047d13d5e6db95fdb6d26d8a3ac16cecb4ebcaf33ae919dbc889cf97948d115e8d3c81518c911b379
   languageName: node
   linkType: hard
 
