@@ -2,7 +2,7 @@
   "name": "@lychen/vue-i18n",
   "type": "module",
   "dependencies": {
-    "@intlify/core-base": "^11.2.2",
+    "@intlify/core-base": "^11.2.8",
     "@lychen/vue-components-core": "workspace:*",
     "@lychen/vue-icons": "workspace:*",
     "vue": "^3.5.25",
