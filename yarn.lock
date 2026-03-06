@@ -2742,7 +2742,7 @@ __metadata:
     "@tiptap/extension-bullet-list": "npm:^3.20.0"
     "@tiptap/extension-character-count": "npm:^3.20.0"
     "@tiptap/extension-code": "npm:^3.20.0"
-    "@tiptap/extension-document": "npm:^2.11.5"
+    "@tiptap/extension-document": "npm:^3.20.0"
     "@tiptap/extension-dropcursor": "npm:^2.11.5"
     "@tiptap/extension-gapcursor": "npm:^2.11.5"
     "@tiptap/extension-hard-break": "npm:^2.11.5"
@@ -3706,12 +3706,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-document@npm:^2.11.5":
-  version: 2.23.0
-  resolution: "@tiptap/extension-document@npm:2.23.0"
+"@tiptap/extension-document@npm:^3.20.0":
+  version: 3.20.0
+  resolution: "@tiptap/extension-document@npm:3.20.0"
   peerDependencies:
-    "@tiptap/core": ^2.7.0
-  checksum: 10c0/d94e88b2c57b556ef8880cb4cd7e69e9c32f7701e5565a6b7dcbfbdd64e145621ddc985b9bea6e538a7736a0ade4ea5df6102a40994be9843c7f94947d407d4f
+    "@tiptap/core": ^3.20.0
+  checksum: 10c0/2d0c473ae14cd45d9be47eedd33f0d454b18cfce568ecc6f15f63716cc6d8f68b282634f7a453ce952c4d19ef6935154f533169bb8f0f1c6550a351d772c8385
   languageName: node
   linkType: hard
 
