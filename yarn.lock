@@ -6002,7 +6002,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enhanced-resolve@npm:^5.19.0":
+"enhanced-resolve@npm:^5.18.1, enhanced-resolve@npm:^5.19.0":
   version: 5.20.0
   resolution: "enhanced-resolve@npm:5.20.0"
   dependencies:
@@ -6383,15 +6383,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-tailwindcss@npm:^3.18.2":
-  version: 3.18.2
-  resolution: "eslint-plugin-tailwindcss@npm:3.18.2"
+"eslint-plugin-tailwindcss@npm:beta":
+  version: 4.0.0-beta.0
+  resolution: "eslint-plugin-tailwindcss@npm:4.0.0-beta.0"
   dependencies:
     fast-glob: "npm:^3.2.5"
     postcss: "npm:^8.4.4"
+    synckit: "npm:^0.11.4"
+    tailwind-api-utils: "npm:^1.0.3"
   peerDependencies:
-    tailwindcss: ^3.4.0
-  checksum: 10c0/2903923f81d5dd1813279cc419421612d7d3f58ba57aa48a931beaa18e2529fdea223e0c60135c3fd2aa55e3d798b4299a0280602c8c508480bebd4f6019ac9c
+    tailwindcss: ^3.4.0 || ^4.0.0
+  checksum: 10c0/eaf0a139d23cd3520ce6fca8ce8cb4ed2e8a72fd3b25a395b938d424c1ab10a81a4a4be568676312fd6790c09e895c2a11fa62e868f18cd616e9502dc1c8529f
   languageName: node
   linkType: hard
 
@@ -8034,7 +8036,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"local-pkg@npm:^1.1.2":
+"local-pkg@npm:^1.1.1, local-pkg@npm:^1.1.2":
   version: 1.1.2
   resolution: "local-pkg@npm:1.1.2"
   dependencies:
@@ -8157,7 +8159,7 @@ __metadata:
     eslint-plugin-check-file: "npm:^3.3.1"
     eslint-plugin-import: "npm:^2.32.0"
     eslint-plugin-prettier: "npm:^5.5.5"
-    eslint-plugin-tailwindcss: "npm:^3.18.2"
+    eslint-plugin-tailwindcss: "npm:beta"
     eslint-plugin-unicorn: "npm:^63.0.0"
     eslint-plugin-vue: "npm:^10.8.0"
     eslint-plugin-yml: "npm:^3.3.1"
@@ -10885,12 +10887,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synckit@npm:^0.11.12":
+"synckit@npm:^0.11.12, synckit@npm:^0.11.4":
   version: 0.11.12
   resolution: "synckit@npm:0.11.12"
   dependencies:
     "@pkgr/core": "npm:^0.2.9"
   checksum: 10c0/cc4d446806688ae0d728ae7bb3f53176d065cf9536647fb85bdd721dcefbd7bf94874df6799ff61580f2b03a392659219b778a9254ad499f9a1f56c34787c235
+  languageName: node
+  linkType: hard
+
+"tailwind-api-utils@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "tailwind-api-utils@npm:1.0.3"
+  dependencies:
+    enhanced-resolve: "npm:^5.18.1"
+    jiti: "npm:^2.4.2"
+    local-pkg: "npm:^1.1.1"
+  peerDependencies:
+    tailwindcss: ^3.3.0 || ^4.0.0 || ^4.0.0-beta
+  checksum: 10c0/60c23af7c17ffccb0f835d063d129a6be7f4966d6b93a8c7ba51faf0c955da7adef95a9bb42b955b2c851d3d348b8b3befd2d10bb903cd48fc571c792c124d7b
   languageName: node
   linkType: hard
 
