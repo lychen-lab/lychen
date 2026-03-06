@@ -2,6 +2,6 @@
   "name": "@lychen/typescript-utils",
   "dependencies": {
     "clsx": "^2.1.1",
-    "tailwind-merge": "^2.5.2"
+    "tailwind-merge": "^3.5.0"
   }
 }

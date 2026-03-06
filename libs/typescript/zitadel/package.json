@@ -1,7 +1,7 @@
 {
   "name": "@lychen/typescript-zitadel",
   "dependencies": {
-    "@zitadel/vue": "^1.1.4",
+    "@zitadel/vue": "^1.1.7",
     "oidc-client": "^1.11.5",
     "vue-oidc-client": "^1.0.0-alpha.5"
   }
