@@ -1876,7 +1876,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@internationalized/date@npm:^3.5.0, @internationalized/date@npm:^3.9.0":
+"@internationalized/date@npm:^3.12.0":
+  version: 3.12.0
+  resolution: "@internationalized/date@npm:3.12.0"
+  dependencies:
+    "@swc/helpers": "npm:^0.5.0"
+  checksum: 10c0/6a26495d32f010b227a1f506da02cdf8438506014b41cfb81576c707a3dfe3d0fd207f80bcf28acd9eef8248a2c2da115cf9016515d513653ea1b22a796d0246
+  languageName: node
+  linkType: hard
+
+"@internationalized/date@npm:^3.5.0":
   version: 3.9.0
   resolution: "@internationalized/date@npm:3.9.0"
   dependencies:
@@ -2440,7 +2449,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@lychen/vue-components-core@workspace:libs/vue/components-core"
   dependencies:
-    "@internationalized/date": "npm:^3.9.0"
+    "@internationalized/date": "npm:^3.12.0"
     "@lychen/typescript-utils": "workspace:*"
     "@lychen/vue-icons": "workspace:*"
     "@vee-validate/zod": "npm:^4.15.1"
