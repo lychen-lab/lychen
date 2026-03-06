@@ -2112,7 +2112,7 @@ __metadata:
     "@lychen/vue-icons": "workspace:*"
     "@lychen/vue-layouts": "workspace:*"
     "@tailwindcss/vite": "npm:^4.2.1"
-    "@tanstack/vue-query": "npm:^5.91.1"
+    "@tanstack/vue-query": "npm:^5.92.9"
     "@vite-pwa/assets-generator": "npm:^1.0.0"
     tailwindcss: "npm:^4.2.1"
     vite: "npm:^7.3.0"
@@ -2240,7 +2240,7 @@ __metadata:
     "@lychen/vue-layouts": "workspace:*"
     "@lychen/vue-tera": "workspace:*"
     "@tailwindcss/vite": "npm:^4.2.1"
-    "@tanstack/vue-query": "npm:^5.91.1"
+    "@tanstack/vue-query": "npm:^5.92.9"
     "@tanstack/vue-table": "npm:^8.21.3"
     "@vite-pwa/assets-generator": "npm:^1.0.0"
     "@vitejs/plugin-vue": "npm:^6.0.1"
@@ -3565,10 +3565,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.90.9":
-  version: 5.90.9
-  resolution: "@tanstack/query-core@npm:5.90.9"
-  checksum: 10c0/d3759529c714658a492e860365452db165f673f9a777c57339072231f90554628798deaadc9fd8b115b028c1dcd3b0fe3fd8d8a2ab25f799d853e2fd020b5734
+"@tanstack/query-core@npm:5.90.20":
+  version: 5.90.20
+  resolution: "@tanstack/query-core@npm:5.90.20"
+  checksum: 10c0/70637dfcecd5ed9d810629aa27f1632af8a4bcd083e75cf29408d058c32f8234704a3231ec280e2c4016ea0485b16124fdf70ab97793b5a7b670f43f7659e9fe
   languageName: node
   linkType: hard
 
@@ -3586,12 +3586,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/vue-query@npm:^5.91.1":
-  version: 5.91.1
-  resolution: "@tanstack/vue-query@npm:5.91.1"
+"@tanstack/vue-query@npm:^5.92.9":
+  version: 5.92.9
+  resolution: "@tanstack/vue-query@npm:5.92.9"
   dependencies:
     "@tanstack/match-sorter-utils": "npm:^8.19.4"
-    "@tanstack/query-core": "npm:5.90.9"
+    "@tanstack/query-core": "npm:5.90.20"
     "@vue/devtools-api": "npm:^6.6.3"
     vue-demi: "npm:^0.14.10"
   peerDependencies:
@@ -3600,7 +3600,7 @@ __metadata:
   peerDependenciesMeta:
     "@vue/composition-api":
       optional: true
-  checksum: 10c0/9790ef4d0e286271930eb01e2896cc205927c162fb9e0275ec95a27d1aee99c585207e94ac6a20dfe506ebc412cc5895f9625a814c08f2bb0a59d721609c1fc5
+  checksum: 10c0/de40ec65315197cbd29a19fa66d82c54043667031421769db49d6307688a0772ebf562230d9df12196635356dcdad34ba8376cf55262882447783d41a52469ab
   languageName: node
   linkType: hard
 

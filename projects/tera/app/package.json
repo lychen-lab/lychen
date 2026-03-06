@@ -22,7 +22,7 @@
     "@lychen/vue-icons": "workspace:*",
     "@lychen/vue-layouts": "workspace:*",
     "@lychen/vue-tera": "workspace:*",
-    "@tanstack/vue-query": "^5.91.1",
+    "@tanstack/vue-query": "^5.92.9",
     "@tanstack/vue-table": "^8.21.3",
     "@vueuse/core": "^14.1.0",
     "vue": "^3.5.25",
