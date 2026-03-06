@@ -34,7 +34,7 @@
     "vite-plugin-env-runtime": "^0.3.7",
     "vite-plugin-mkcert": "^1.17.10",
     "vite-plugin-vue-devtools": "^8.0.7",
-    "vite-ssg": "^28.2.2",
+    "vite-ssg": "^28.3.0",
     "vite-ssg-sitemap": "^0.10.0"
   }
 }
