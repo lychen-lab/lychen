@@ -2616,7 +2616,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@lychen/vue-icons@workspace:libs/vue/icons"
   dependencies:
-    lucide-vue-next: "npm:^0.562.0"
+    lucide-vue-next: "npm:^0.577.0"
     vue: "npm:^3.5.25"
   languageName: unknown
   linkType: soft
@@ -8202,12 +8202,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-vue-next@npm:^0.562.0":
-  version: 0.562.0
-  resolution: "lucide-vue-next@npm:0.562.0"
+"lucide-vue-next@npm:^0.577.0":
+  version: 0.577.0
+  resolution: "lucide-vue-next@npm:0.577.0"
   peerDependencies:
     vue: ">=3.0.1"
-  checksum: 10c0/5ba792ea5e48d01fc99a3c5ae4a59d9767e5d4c7826901800831cf051cf85eb4a680b3564d2910ed4d17dc1d35223c37d006bdbcdb291d90a9491b9c6a20ae14
+  checksum: 10c0/0a1b5e7e390546ebc1f3f5ab15bc6a73eade96305727f5583f878faa52755680a0d63035828ee55b28839cebe7cf71600ee41a9da74dec9e469e5b3b50363984
   languageName: node
   linkType: hard
 
