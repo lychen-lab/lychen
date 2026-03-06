@@ -21,7 +21,7 @@
     "@lychen/vue-icons": "workspace:*",
     "@lychen/vue-layouts": "workspace:*",
     "@tanstack/vue-query": "^5.92.9",
-    "vue": "^3.5.25",
+    "vue": "^3.5.29",
     "vue-router": "^4.6.4"
   },
   "devDependencies": {

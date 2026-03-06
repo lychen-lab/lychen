@@ -1,7 +1,7 @@
 {
   "name": "@lychen/vue-router-configs",
   "dependencies": {
-    "vue": "^3.5.25",
+    "vue": "^3.5.29",
     "vue-router": "^4.6.4"
   }
 }
