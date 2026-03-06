@@ -2750,7 +2750,7 @@ __metadata:
     "@tiptap/extension-highlight": "npm:^3.20.0"
     "@tiptap/extension-horizontal-rule": "npm:^3.20.0"
     "@tiptap/extension-italic": "npm:^3.20.0"
-    "@tiptap/extension-list-item": "npm:^2.11.5"
+    "@tiptap/extension-list-item": "npm:^3.20.0"
     "@tiptap/extension-ordered-list": "npm:^2.11.5"
     "@tiptap/extension-paragraph": "npm:^2.11.5"
     "@tiptap/extension-placeholder": "npm:^2.11.5"
@@ -3791,12 +3791,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-list-item@npm:^2.11.5":
-  version: 2.23.0
-  resolution: "@tiptap/extension-list-item@npm:2.23.0"
+"@tiptap/extension-list-item@npm:^3.20.0":
+  version: 3.20.0
+  resolution: "@tiptap/extension-list-item@npm:3.20.0"
   peerDependencies:
-    "@tiptap/core": ^2.7.0
-  checksum: 10c0/6266d9ffb357275d6051f0d5978d268783d4f087641deba9b124fa391773745030d92ac8c6c46df6ff0ad437d249eeaab6e071e31ccb264f0f0ffc8c19e721cf
+    "@tiptap/extension-list": ^3.20.0
+  checksum: 10c0/0c82a8a60da784f4d8e9d4b1bbc3f81afc10159a25cdcde4bcabb6b93c5535745cfd544edd9e29bb89d87180bd6a39addb36f45218845b5e66b5420f305537e6
   languageName: node
   linkType: hard
 
