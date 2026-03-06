@@ -4,7 +4,7 @@
     "@faker-js/faker": "^10.3.0",
     "@playwright/test": "^1.58.2",
     "vue": "^3.5.29",
-    "vue-i18n": "^11.2.2"
+    "vue-i18n": "^11.2.8"
   },
   "dependencies": {
     "@lychen/tera-app": "workspace:*"

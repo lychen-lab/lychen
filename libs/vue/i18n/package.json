@@ -6,7 +6,7 @@
     "@lychen/vue-components-core": "workspace:*",
     "@lychen/vue-icons": "workspace:*",
     "vue": "^3.5.29",
-    "vue-i18n": "^11.2.2",
+    "vue-i18n": "^11.2.8",
     "vue-router": "^4.6.4"
   }
 }
