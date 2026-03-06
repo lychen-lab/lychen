@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^10.2.15",
-    "@storybook/addon-docs": "^10.1.10",
+    "@storybook/addon-docs": "^10.2.15",
     "@storybook/vue3-vite": "^10.1.10",
     "@types/node": "^25.0.3",
     "@vitejs/plugin-vue": "^6.0.1",

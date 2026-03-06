@@ -2188,7 +2188,7 @@ __metadata:
     "@lychen/vue-i18n": "workspace:*"
     "@lychen/vue-icons": "workspace:*"
     "@storybook/addon-a11y": "npm:^10.2.15"
-    "@storybook/addon-docs": "npm:^10.1.10"
+    "@storybook/addon-docs": "npm:^10.2.15"
     "@storybook/vue3-vite": "npm:^10.1.10"
     "@types/node": "npm:^25.0.3"
     "@vitejs/plugin-vue": "npm:^6.0.1"
@@ -3239,20 +3239,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-docs@npm:^10.1.10":
-  version: 10.1.10
-  resolution: "@storybook/addon-docs@npm:10.1.10"
+"@storybook/addon-docs@npm:^10.2.15":
+  version: 10.2.15
+  resolution: "@storybook/addon-docs@npm:10.2.15"
   dependencies:
     "@mdx-js/react": "npm:^3.0.0"
-    "@storybook/csf-plugin": "npm:10.1.10"
-    "@storybook/icons": "npm:^2.0.0"
-    "@storybook/react-dom-shim": "npm:10.1.10"
+    "@storybook/csf-plugin": "npm:10.2.15"
+    "@storybook/icons": "npm:^2.0.1"
+    "@storybook/react-dom-shim": "npm:10.2.15"
     react: "npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
     react-dom: "npm:^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
     ts-dedent: "npm:^2.0.0"
   peerDependencies:
-    storybook: ^10.1.10
-  checksum: 10c0/b6560b9f61c0fe7257325ae72ac88b9b001f909b25b18378a622b8cba799bfa1b887ec48a46d71e76da7e4425fe4c9d9b5fa10f3405c72e7141c053de44fe6ca
+    storybook: ^10.2.15
+  checksum: 10c0/924958446d85716b4df48b790453048bc88d75b803aae95fa9c8026c02293ab49eb7cecc8d2ab1041ad26e157c33e0d878619074bad64efe362e75e40ebbec1f
   languageName: node
   linkType: hard
 
@@ -3294,6 +3294,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/csf-plugin@npm:10.2.15":
+  version: 10.2.15
+  resolution: "@storybook/csf-plugin@npm:10.2.15"
+  dependencies:
+    unplugin: "npm:^2.3.5"
+  peerDependencies:
+    esbuild: "*"
+    rollup: "*"
+    storybook: ^10.2.15
+    vite: "*"
+    webpack: "*"
+  peerDependenciesMeta:
+    esbuild:
+      optional: true
+    rollup:
+      optional: true
+    vite:
+      optional: true
+    webpack:
+      optional: true
+  checksum: 10c0/301ebda3a0a282f8e1ed485aecd96576b7319f5e76125e31091c0fb2b984bc30bb520faf4569e2c9b13a58dbf350acff166f2afd26f145578d96e6c0bcc2274f
+  languageName: node
+  linkType: hard
+
 "@storybook/global@npm:^5.0.0":
   version: 5.0.0
   resolution: "@storybook/global@npm:5.0.0"
@@ -3301,7 +3325,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/icons@npm:^2.0.0":
+"@storybook/icons@npm:^2.0.0, @storybook/icons@npm:^2.0.1":
   version: 2.0.1
   resolution: "@storybook/icons@npm:2.0.1"
   peerDependencies:
@@ -3311,14 +3335,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/react-dom-shim@npm:10.1.10":
-  version: 10.1.10
-  resolution: "@storybook/react-dom-shim@npm:10.1.10"
+"@storybook/react-dom-shim@npm:10.2.15":
+  version: 10.2.15
+  resolution: "@storybook/react-dom-shim@npm:10.2.15"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-    storybook: ^10.1.10
-  checksum: 10c0/78bc51e99f538b6bff76c2753733b84e18c8234dd0fad90da9ce280cdb68a505181da813f8a364814113e9c0857bee412bad4d1d3690c4d5005ab9b243aa8f11
+    storybook: ^10.2.15
+  checksum: 10c0/238653cf2e8ab47d386d1ff3b8a35ad591779362920532d33fe88224713edfcd279a69c32daae8a2e8762a8a9b32836ee3c5a3c9cbf1d75e93d00f72503f82d0
   languageName: node
   linkType: hard
 
