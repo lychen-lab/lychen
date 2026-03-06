@@ -2211,7 +2211,7 @@ __metadata:
     "@storybook/vue3-vite": "npm:^10.2.15"
     "@types/node": "npm:^25.3.5"
     "@vitejs/plugin-vue": "npm:^6.0.4"
-    "@vue/tsconfig": "npm:^0.8.1"
+    "@vue/tsconfig": "npm:^0.9.0"
     "@vueless/storybook-dark-mode": "npm:^10.0.4"
     storybook: "npm:^10.1.10"
     tailwindcss: "npm:^4.2.1"
@@ -4673,9 +4673,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/tsconfig@npm:^0.8.1":
-  version: 0.8.1
-  resolution: "@vue/tsconfig@npm:0.8.1"
+"@vue/tsconfig@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "@vue/tsconfig@npm:0.9.0"
   peerDependencies:
     typescript: 5.x
     vue: ^3.4.0
@@ -4684,7 +4684,7 @@ __metadata:
       optional: true
     vue:
       optional: true
-  checksum: 10c0/f4e37182dc2560ce2c78e66fbf837000dba5460c12913ef37f5d54b6c0da518df1118fcc1968ff51d9541287a9d9d105fb17072b0dbb095919cfb50d1fe67a78
+  checksum: 10c0/9f6f6d1d34e775e620e1ffd8396b8806e5d571779d878cd5d2badde33450a3a99cf420f1714eccc89c966262fe0dde4ea719aa2d0518025bf5fa9344a53d3c3f
   languageName: node
   linkType: hard
 
