@@ -9,6 +9,7 @@ import markdown from '@eslint/markdown';
 import checkFile from 'eslint-plugin-check-file';
 import eslintPluginYml from 'eslint-plugin-yml';
 import { defineConfig } from 'eslint/config';
+import tailwind from 'eslint-plugin-tailwindcss';
 import path from 'node:path';
 
 export default defineConfig([
@@ -44,6 +45,14 @@ export default defineConfig([
   importPlugin.flatConfigs.recommended,
   ...markdown.configs.processor,
   ...eslintPluginYml.configs['flat/recommended'],
+  ...tailwind.configs['flat/recommended'],
+  {
+    settings: {
+      tailwindcss: {
+        config: false,
+      },
+    },
+  },
   {
     files: ['**/*.vue'],
     languageOptions: {
@@ -101,6 +110,7 @@ export default defineConfig([
       'yml/quotes': ['error', { prefer: 'single', avoidEscape: true }],
       'yml/sort-sequence-values': ['error', { order: { type: 'asc' }, pathPattern: '^dependsOn$' }],
       'yml/no-empty-sequence-entry': ['error'],
+      'tailwindcss/no-custom-classname': 'off',
     },
   },
 ]);
