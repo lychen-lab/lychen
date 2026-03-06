@@ -24,7 +24,7 @@
     "@types/node": "^25.3.5",
     "@vitejs/plugin-vue": "^6.0.4",
     "@vue/tsconfig": "^0.9.0",
-    "@vueless/storybook-dark-mode": "^10.0.4",
+    "@vueless/storybook-dark-mode": "^10.0.7",
     "storybook": "^10.1.10",
     "tailwindcss": "^4.2.1",
     "typescript": "~5.9.3",

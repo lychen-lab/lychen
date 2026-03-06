@@ -2212,7 +2212,7 @@ __metadata:
     "@types/node": "npm:^25.3.5"
     "@vitejs/plugin-vue": "npm:^6.0.4"
     "@vue/tsconfig": "npm:^0.9.0"
-    "@vueless/storybook-dark-mode": "npm:^10.0.4"
+    "@vueless/storybook-dark-mode": "npm:^10.0.7"
     storybook: "npm:^10.1.10"
     tailwindcss: "npm:^4.2.1"
     typescript: "npm:~5.9.3"
@@ -4688,15 +4688,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueless/storybook-dark-mode@npm:^10.0.4":
-  version: 10.0.4
-  resolution: "@vueless/storybook-dark-mode@npm:10.0.4"
+"@vueless/storybook-dark-mode@npm:^10.0.7":
+  version: 10.0.7
+  resolution: "@vueless/storybook-dark-mode@npm:10.0.7"
   dependencies:
     "@storybook/global": "npm:^5.0.0"
-    lodash-es: "npm:^4.17.21"
+    lodash-es: "npm:^4.17.23"
   peerDependencies:
     storybook: ^10.0.0
-  checksum: 10c0/d1c138f99cd5cabdb8bb8da6c1fc2624a2e31d33e3ae70c4413868f43590fec9f23807d9328d3a70bfa0943e8dc93b3affdb23403fd5161a1925a524d1a15a02
+  checksum: 10c0/425240586b184c25a6beadb0bac3d98c6a43d3ef303eb57bd3b57373d6dcf5c20a1a0cc19287761379c89f599ffb539c77a3270ef53c14d69267ab5990c20962
   languageName: node
   linkType: hard
 
@@ -8117,10 +8117,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash-es@npm:^4.17.21":
-  version: 4.17.22
-  resolution: "lodash-es@npm:4.17.22"
-  checksum: 10c0/5f28a262183cca43e08c580622557f393cb889386df2d8adf7c852bfdff7a84c5e629df5aa6c5c6274e83b38172f239d3e4e72e1ad27352d9ae9766627338089
+"lodash-es@npm:^4.17.23":
+  version: 4.17.23
+  resolution: "lodash-es@npm:4.17.23"
+  checksum: 10c0/3150fb6660c14c7a6b5f23bd11597d884b140c0e862a17fdb415aaa5ef7741523182904a6b7929f04e5f60a11edb5a79499eb448734381c99ffb3c4734beeddd
   languageName: node
   linkType: hard
 
