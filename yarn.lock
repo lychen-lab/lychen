@@ -2475,7 +2475,7 @@ __metadata:
     "@lychen/vue-components-extra": "workspace:*"
     "@vueuse/core": "npm:^14.2.1"
     class-variance-authority: "npm:^0.7.1"
-    reka-ui: "npm:^2.5.1"
+    reka-ui: "npm:^2.9.0"
     vue: "npm:^3.5.25"
   languageName: unknown
   linkType: soft
@@ -2488,7 +2488,7 @@ __metadata:
     "@lychen/vue-components-core": "workspace:*"
     "@vueuse/core": "npm:^14.2.1"
     class-variance-authority: "npm:^0.7.1"
-    reka-ui: "npm:^2.5.1"
+    reka-ui: "npm:^2.9.0"
     vue: "npm:^3.5.25"
   languageName: unknown
   linkType: soft
@@ -2505,7 +2505,7 @@ __metadata:
     class-variance-authority: "npm:^0.7.1"
     clsx: "npm:^2.1.1"
     embla-carousel-vue: "npm:^8.6.0"
-    reka-ui: "npm:^2.5.1"
+    reka-ui: "npm:^2.9.0"
     tailwind-merge: "npm:^3.1.0"
     tailwindcss: "npm:^4.2.1"
     vaul-vue: "npm:^0.4.1"
@@ -2524,7 +2524,7 @@ __metadata:
     "@lychen/vue-components-core": "workspace:*"
     "@vueuse/core": "npm:^14.2.1"
     class-variance-authority: "npm:^0.7.1"
-    reka-ui: "npm:^2.5.1"
+    reka-ui: "npm:^2.9.0"
     vue: "npm:^3.5.25"
   languageName: unknown
   linkType: soft
@@ -2541,7 +2541,7 @@ __metadata:
     "@lychen/vue-icons": "workspace:*"
     "@vueuse/core": "npm:^14.2.1"
     class-variance-authority: "npm:^0.7.1"
-    reka-ui: "npm:^2.5.1"
+    reka-ui: "npm:^2.9.0"
     vue: "npm:^3.5.25"
   languageName: unknown
   linkType: soft
@@ -4740,7 +4740,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueuse/core@npm:^14.2.1":
+"@vueuse/core@npm:^14.1.0, @vueuse/core@npm:^14.2.1":
   version: 14.2.1
   resolution: "@vueuse/core@npm:14.2.1"
   dependencies:
@@ -4792,7 +4792,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueuse/shared@npm:14.2.1":
+"@vueuse/shared@npm:14.2.1, @vueuse/shared@npm:^14.1.0":
   version: 14.2.1
   resolution: "@vueuse/shared@npm:14.2.1"
   peerDependencies:
@@ -10120,7 +10120,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reka-ui@npm:^2.0.0, reka-ui@npm:^2.5.1":
+"reka-ui@npm:^2.0.0":
   version: 2.5.1
   resolution: "reka-ui@npm:2.5.1"
   dependencies:
@@ -10137,6 +10137,26 @@ __metadata:
   peerDependencies:
     vue: ">= 3.2.0"
   checksum: 10c0/085f3d58d5044a24a4d182e9e4d6f873371d01639bc03598133686211f278b86e5b0a66b4ffae0f6b4002a7c477dcf2af1048cea45c6751dc42c1712cc6c02f3
+  languageName: node
+  linkType: hard
+
+"reka-ui@npm:^2.9.0":
+  version: 2.9.0
+  resolution: "reka-ui@npm:2.9.0"
+  dependencies:
+    "@floating-ui/dom": "npm:^1.6.13"
+    "@floating-ui/vue": "npm:^1.1.6"
+    "@internationalized/date": "npm:^3.5.0"
+    "@internationalized/number": "npm:^3.5.0"
+    "@tanstack/vue-virtual": "npm:^3.12.0"
+    "@vueuse/core": "npm:^14.1.0"
+    "@vueuse/shared": "npm:^14.1.0"
+    aria-hidden: "npm:^1.2.4"
+    defu: "npm:^6.1.4"
+    ohash: "npm:^2.0.11"
+  peerDependencies:
+    vue: ">= 3.4.0"
+  checksum: 10c0/b2f3f33fdb16438a6cdae4c8a8ce720d2b360bb9cd8777799c3f891ecb903e2da005d40cc157753db307ba054972177ced76f3c5b860ccca9369e717f39843be
   languageName: node
   linkType: hard
 
