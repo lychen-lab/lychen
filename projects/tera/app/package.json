@@ -24,7 +24,7 @@
     "@lychen/vue-tera": "workspace:*",
     "@tanstack/vue-query": "^5.92.9",
     "@tanstack/vue-table": "^8.21.3",
-    "@vueuse/core": "^14.1.0",
+    "@vueuse/core": "^14.2.1",
     "vue": "^3.5.25",
     "vue-router": "^4.6.4"
   },
