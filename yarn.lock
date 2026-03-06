@@ -8231,7 +8231,7 @@ __metadata:
     globals: "npm:^17.4.0"
     prettier: "npm:^3.8.1"
     tailwindcss: "npm:^4.2.1"
-    tsconfig-moon: "npm:^1.4.1"
+    tsconfig-moon: "npm:^1.4.2"
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.49.0"
     vue-eslint-parser: "npm:^10.2.0"
@@ -11173,10 +11173,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsconfig-moon@npm:^1.4.1":
-  version: 1.4.1
-  resolution: "tsconfig-moon@npm:1.4.1"
-  checksum: 10c0/4e4305544496f2551f87d90d699f0eda5996bcd39e60af533a14dfdbad08a3138051e0ce8fceac8f0414fc7d9ca67e8fadbc99f5d694142d7b786dc5ca701ef1
+"tsconfig-moon@npm:^1.4.2":
+  version: 1.4.2
+  resolution: "tsconfig-moon@npm:1.4.2"
+  checksum: 10c0/71edfcde758f06e4f017698992f34c6689865de8d2baf427ac97cd3dbb7f1df8b3372929bec0026107ae32ceed4caae7317f8559cb5d5ec9602cb289feb713e3
   languageName: node
   linkType: hard
 
