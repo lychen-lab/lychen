@@ -9,6 +9,8 @@ tasks:
       inferInputs: false
 
   dokploy-compose-update:
+    deps:
+      - get-dockerfiles
     env:
       COMPOSE_FILE: $projectRoot/compose.yml
     options:
