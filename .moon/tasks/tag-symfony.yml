@@ -84,3 +84,5 @@ tasks:
   test-phpunit:
     command: docker compose run --rm $project php -d memory_limit=-1 ./vendor/bin/phpunit
 
+  get-dockerfiles:
+    command: noop
