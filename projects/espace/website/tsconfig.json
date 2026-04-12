@@ -6,6 +6,9 @@
       "path": "../../../libs/typescript/constants"
     },
     {
+      "path": "../../../libs/typescript/espace"
+    },
+    {
       "path": "../../../libs/vite/ssg"
     },
     {

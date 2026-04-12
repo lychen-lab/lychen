@@ -20,7 +20,12 @@
             d'augmenter l'autonomie alimentaire et créer des liens sociaux.
           </h2>
           <div class="flex flex-col items-start gap-2">
-            <Button size="lg">Partagez votre espace</Button>
+            <a
+              :href="LINK.LandProposalForm"
+              target="_blank"
+            >
+              <Button size="lg">Partagez votre espace</Button>
+            </a>
             <p class="text-xs opacity-80">
               ou envoyez nous un email sur
               <a
@@ -148,6 +153,7 @@ import planetEarth from './assets/planet-earth.png';
 import planetPluton from './assets/planet-pluton.png';
 import planetMars from './assets/planet-mars.png';
 import { Popover, PopoverContent, PopoverTrigger } from '@lychen/vue-components-core/popover';
+import { LINK } from '@lychen/typescript-espace/constants/App';
 
 const { t } = usePrefixedI18n(CONFIG);
 

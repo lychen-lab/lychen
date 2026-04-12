@@ -1,6 +1,7 @@
 dependsOn:
   - css-core
   - typescript-constants
+  - typescript-espace
   - vite-ssg
   - vue-color-scheme
   - vue-components-business
