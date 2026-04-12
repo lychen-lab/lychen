@@ -2109,6 +2109,34 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@lychen/myko-app@workspace:projects/myko/app":
+  version: 0.0.0-use.local
+  resolution: "@lychen/myko-app@workspace:projects/myko/app"
+  dependencies:
+    "@lychen/css-core": "workspace:*"
+    "@lychen/typescript-zitadel": "workspace:*"
+    "@lychen/vue-color-scheme": "workspace:*"
+    "@lychen/vue-components-app": "workspace:*"
+    "@lychen/vue-components-business": "workspace:*"
+    "@lychen/vue-components-core": "workspace:*"
+    "@lychen/vue-components-extra": "workspace:*"
+    "@lychen/vue-i18n": "workspace:*"
+    "@lychen/vue-icons": "workspace:*"
+    "@lychen/vue-layouts": "workspace:*"
+    "@tailwindcss/vite": "npm:^4.2.1"
+    "@tanstack/vue-query": "npm:^5.92.9"
+    "@vite-pwa/assets-generator": "npm:^1.0.2"
+    tailwindcss: "npm:^4.2.1"
+    vite: "npm:^7.3.1"
+    vite-plugin-env-runtime: "npm:^0.3.7"
+    vite-plugin-mkcert: "npm:^1.17.10"
+    vite-plugin-pwa: "npm:^1.2.0"
+    vite-plugin-vue-devtools: "npm:^8.0.7"
+    vue: "npm:^3.5.29"
+    vue-router: "npm:^5.0.3"
+  languageName: unknown
+  linkType: soft
+
 "@lychen/robust-website@workspace:projects/robust/website":
   version: 0.0.0-use.local
   resolution: "@lychen/robust-website@workspace:projects/robust/website"

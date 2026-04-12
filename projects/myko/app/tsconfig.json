@@ -1,0 +1,39 @@
+{
+  "extends": "../../../tsconfig.options.json",
+  "include": ["**/*"],
+  "references": [
+    {
+      "path": "../../../libs/typescript/zitadel"
+    },
+    {
+      "path": "../../../libs/vue/color-scheme"
+    },
+    {
+      "path": "../../../libs/vue/components-app"
+    },
+    {
+      "path": "../../../libs/vue/components-business"
+    },
+    {
+      "path": "../../../libs/vue/components-core"
+    },
+    {
+      "path": "../../../libs/vue/components-extra"
+    },
+    {
+      "path": "../../../libs/vue/i18n"
+    },
+    {
+      "path": "../../../libs/vue/icons"
+    },
+    {
+      "path": "../../../libs/vue/layouts"
+    }
+  ],
+  "compilerOptions": {
+    "outDir": "../../../.moon/cache/types/projects/myko/app",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
