@@ -24,6 +24,12 @@
         </div>
 
         <Paragraph class="opacity-80">{{ application.description }}</Paragraph>
+        <a
+          v-if="application.alias === 'espace'"
+          :href="'https://' + application.alias + '.lychen.org'"
+          target="_blank"
+          ><Button size="xs">Site web</Button></a
+        >
       </div>
     </div>
   </Container>
