@@ -22,7 +22,7 @@
     "@lychen/vue-layouts": "workspace:*",
     "@tanstack/vue-query": "^5.92.9",
     "vue": "^3.5.32",
-    "vue-router": "^5.0.3"
+    "vue-router": "^5.0.4"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.1",
