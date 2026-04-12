@@ -2077,6 +2077,7 @@ __metadata:
   dependencies:
     "@lychen/css-core": "workspace:*"
     "@lychen/typescript-constants": "workspace:*"
+    "@lychen/typescript-espace": "workspace:*"
     "@lychen/vite-ssg": "workspace:*"
     "@lychen/vue-color-scheme": "workspace:*"
     "@lychen/vue-components-business": "workspace:*"

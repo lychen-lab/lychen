@@ -14,16 +14,22 @@
           </RouterLink>
         </div>
         <div class="flex flex-row items-center gap-2">
-          <RouterLink :to="{ name: ROUTE_HOME.name }">
-            <Button size="xs">Partager mon terrain</Button>
-          </RouterLink>
-          <RouterLink :to="{ name: ROUTE_HOME.name }">
+          <a
+            :href="LINK.LandProposalForm"
+            target="_blank"
+          >
+            <Button size="xs">Partager mon espace</Button>
+          </a>
+          <a
+            :href="LINK.LandRequestForm"
+            target="_blank"
+          >
             <Button
               size="xs"
-              variant="ghost"
-              >Connexion</Button
+              class="bg-surface-container-highest text-on-surface"
+              >Trouver un espace</Button
             >
-          </RouterLink>
+          </a>
         </div>
       </div>
     </template>
@@ -40,6 +46,7 @@
 <script lang="ts" setup>
 import TheFooter from './TheFooter.vue';
 import { ROUTE_HOME } from '@/views/home';
+import { LINK } from '@lychen/typescript-espace/constants/App';
 import { Button } from '@lychen/vue-components-core/button';
 import LayoutMain from '@lychen/vue-layouts/website-main/LayoutWebsiteMain.vue';
 </script>

@@ -42,13 +42,6 @@ export default [
       'https://res.cloudinary.com/ddhvfiezg/image/upload/v1765547005/019b12cd-d1d1-7ba8-9e6b-a5374a571d2f.webp',
   },
   {
-    firstname: 'Justine',
-    lastname: 'Delalleau',
-    id: 'justine_delalleau',
-    image:
-      'https://res.cloudinary.com/ddhvfiezg/image/upload/v1765547130/019b12d1-58a5-7021-b8d0-ffd3d8f72ad9.webp',
-  },
-  {
     firstname: 'Thomas',
     lastname: '',
     id: 'thomas',
