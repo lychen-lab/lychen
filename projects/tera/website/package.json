@@ -27,7 +27,7 @@
     "@unhead/schema-org": "^2.1.10",
     "@unhead/vue": "^2.1.10",
     "unhead": "^2.1.10",
-    "vue": "^3.5.29",
+    "vue": "^3.5.32",
     "vue-router": "^5.0.3"
   },
   "devDependencies": {

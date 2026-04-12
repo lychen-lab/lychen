@@ -15,7 +15,7 @@
     "@lychen/vue-components-extra": "workspace:*",
     "@lychen/vue-i18n": "workspace:*",
     "@lychen/vue-icons": "workspace:*",
-    "vue": "^3.5.29"
+    "vue": "^3.5.32"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^10.2.15",
