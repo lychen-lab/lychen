@@ -3,27 +3,28 @@
     <template #navigation>
       <div class="flex w-full flex-row items-center justify-between">
         <div>
-          <RouterLink
-            :to="{ name: ROUTE_HOME.name }"
-            class="flex flex-row"
-          >
-            <div class="font-lexend flex flex-row items-center gap-0">
+          <div class="font-lexend flex flex-row items-center gap-0">
+            <RouterLink
+              :to="{ name: ROUTE_HOME.name }"
+              class="flex flex-row"
+            >
               <span class="text-on-surface font-medium tracking-normal">espace</span>
-              <Tooltip>
-                <TooltipTrigger as-child>
-                  <a
-                    href="https://lychen.org"
-                    class="text-on-surface/40 hover:text-lime-300/50"
-                  >
-                    .lychen
-                  </a>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Découvrir l'association sur <span class="underline">lychen.org</span></p>
-                </TooltipContent>
-              </Tooltip>
-            </div>
-          </RouterLink>
+            </RouterLink>
+            <Tooltip>
+              <TooltipTrigger as-child>
+                <a
+                  href="https://lychen.org"
+                  target="_blank"
+                  class="text-on-surface/40 hover:text-lime-300/50"
+                >
+                  .lychen
+                </a>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Découvrir l'association sur <span class="underline">lychen.org</span></p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
         </div>
         <div class="flex flex-row items-center gap-2">
           <a
