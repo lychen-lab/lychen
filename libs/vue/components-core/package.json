@@ -9,15 +9,15 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "embla-carousel-vue": "^8.6.0",
-    "reka-ui": "^2.9.0",
+    "reka-ui": "^2.9.5",
     "tailwind-merge": "^3.5.0",
     "vaul-vue": "^0.4.1",
     "vee-validate": "^4.15.1",
-    "vue": "^3.5.29",
-    "vue-router": "^5.0.3",
+    "vue": "^3.5.32",
+    "vue-router": "^5.0.4",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.2.2"
   }
 }

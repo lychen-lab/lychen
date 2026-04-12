@@ -4,12 +4,12 @@
   "dependencies": {
     "@lychen/vue-i18n": "workspace:*",
     "@lychen/vue-router-configs": "workspace:*",
-    "vue": "^3.5.29",
-    "vue-router": "^5.0.3"
+    "vue": "^3.5.32",
+    "vue-router": "^5.0.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.4",
-    "vite": "^7.3.1",
+    "@vitejs/plugin-vue": "^6.0.5",
+    "vite": "^8.0.8",
     "vite-ssg": "^28.3.0",
     "vite-ssg-sitemap": "^0.10.0"
   }

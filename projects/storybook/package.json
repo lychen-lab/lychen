@@ -15,21 +15,21 @@
     "@lychen/vue-components-extra": "workspace:*",
     "@lychen/vue-i18n": "workspace:*",
     "@lychen/vue-icons": "workspace:*",
-    "vue": "^3.5.29"
+    "vue": "^3.5.32"
   },
   "devDependencies": {
-    "@storybook/addon-a11y": "^10.2.15",
-    "@storybook/addon-docs": "^10.2.15",
-    "@storybook/vue3-vite": "^10.2.15",
-    "@types/node": "^25.3.5",
-    "@vitejs/plugin-vue": "^6.0.4",
-    "@vue/tsconfig": "^0.9.0",
+    "@storybook/addon-a11y": "^10.3.5",
+    "@storybook/addon-docs": "^10.3.5",
+    "@storybook/vue3-vite": "^10.3.5",
+    "@types/node": "^25.6.0",
+    "@vitejs/plugin-vue": "^6.0.5",
+    "@vue/tsconfig": "^0.9.1",
     "@vueless/storybook-dark-mode": "^10.0.7",
-    "storybook": "^10.2.15",
-    "tailwindcss": "^4.2.1",
-    "typescript": "^5.9.3",
-    "vite": "^7.3.1",
-    "vite-plugin-mkcert": "^1.17.10",
-    "vue-tsc": "^3.2.5"
+    "storybook": "^10.3.5",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.8",
+    "vite-plugin-mkcert": "^2.0.0",
+    "vue-tsc": "^3.2.6"
   }
 }
