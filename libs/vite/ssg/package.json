@@ -8,7 +8,7 @@
     "vue-router": "^5.0.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.4",
+    "@vitejs/plugin-vue": "^6.0.5",
     "vite": "^8.0.8",
     "vite-ssg": "^28.3.0",
     "vite-ssg-sitemap": "^0.10.0"
