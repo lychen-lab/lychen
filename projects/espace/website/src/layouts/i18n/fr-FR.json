@@ -5,5 +5,9 @@
       "terms_of_use": "Conditions générales d'utilisation",
       "privacy_policy": "Protection des données"
     }
+  },
+  "nav": {
+    "cta_proposal": "Partager mon espace",
+    "cta_request": "Trouver un espace"
   }
 }
