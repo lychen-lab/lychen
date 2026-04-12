@@ -5,7 +5,7 @@
     >
       <slot></slot>
 
-      <div class="flex flex-row items-center lg:hidden">
+      <div class="flex flex-row items-center lg:hidden" v-if="mobileMenu">
         <Sheet
           v-model:open="isOpen"
           side="right"
@@ -45,6 +45,8 @@ const SheetContent = defineAsyncComponent(
 const isOpen = ref<boolean>(false);
 
 provide('mobileMenuIsOpen', isOpen);
+
+defineProps<{mobileMenu?: boolean;}>()
 </script>
 
 <style scoped>

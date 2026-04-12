@@ -1,6 +1,6 @@
 <template>
   <div class="website-main-layout">
-    <LayoutWebsiteMainNavigation class="fixed p-2">
+    <LayoutWebsiteMainNavigation class="fixed p-2" :mobile-menu>
       <slot name="navigation"></slot>
       <template #mobile>
         <slot name="mobile"></slot>
@@ -23,6 +23,7 @@
 <script setup lang="ts">
 import LayoutWebsiteMainFooter from './LayoutWebsiteMainFooter.vue';
 import LayoutWebsiteMainNavigation from './LayoutWebsiteMainNavigation.vue';
+defineProps<{mobileMenu?: boolean;}>()
 </script>
 
 <style lang="css" scoped>

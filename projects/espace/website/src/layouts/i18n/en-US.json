@@ -5,5 +5,9 @@
       "terms_of_use": "Terms of Use",
       "privacy_policy": "Privacy Policy"
     }
+  },
+  "nav": {
+    "cta_proposal": "Share my space",
+    "cta_request": "Find a space"
   }
 }

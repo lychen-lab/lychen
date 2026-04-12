@@ -18,7 +18,7 @@
             :href="LINK.LandProposalForm"
             target="_blank"
           >
-            <Button size="xs">Partager mon espace</Button>
+            <Button size="xs">{{ t('nav.cta_proposal') }}</Button>
           </a>
           <a
             :href="LINK.LandRequestForm"
@@ -27,16 +27,14 @@
             <Button
               size="xs"
               class="bg-surface-container-highest text-on-surface"
-              >Trouver un espace</Button
+              >{{ t('nav.cta_request') }}</Button
             >
           </a>
         </div>
       </div>
     </template>
     <template #header></template>
-    <template #mobile>
-      <TheNavigationMobile />
-    </template>
+    <template #mobile> </template>
     <template #footer>
       <TheFooter />
     </template>
@@ -44,9 +42,13 @@
 </template>
 
 <script lang="ts" setup>
+import { CONFIG } from './i18n';
+import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import TheFooter from './TheFooter.vue';
 import { ROUTE_HOME } from '@/views/home';
 import { LINK } from '@lychen/typescript-espace/constants/App';
 import { Button } from '@lychen/vue-components-core/button';
 import LayoutMain from '@lychen/vue-layouts/website-main/LayoutWebsiteMain.vue';
+
+const { t } = usePrefixedI18n(CONFIG);
 </script>

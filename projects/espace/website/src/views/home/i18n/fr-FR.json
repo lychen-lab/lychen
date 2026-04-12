@@ -1,8 +1,35 @@
 {
   "meta": {
-    "title": "",
-    "description": ""
+    "title": "Espace Lychen - Collectif d'autonomie alimentaire",
+    "description": "Trouvez un espace de culture ou partagez le vôtre pour augmenter l'autonomie alimentaire et créer des liens sociaux."
   },
-  "cta_request": "Je cherche un lieu de culture",
-  "cta_proposal": "Je souhaite partager un lieu"
+  "hero": {
+    "description": "Nous recherchons activement des terrains, jardins, caves et autres lieux pour permettre d'augmenter l'autonomie alimentaire et créer des liens sociaux.",
+    "cta_share": "Partagez votre espace",
+    "email_prefix": "ou envoyez nous un email sur"
+  },
+  "search": {
+    "title": "Trouvez un espace de culture",
+    "subtitle": "Bientôt les espaces disponibles ici, en attendant indiquez nous votre recherche",
+    "cta_form": "Répondre au questionnaire",
+    "placeholder_city": "Rechercher par ville",
+    "btn_search": "Rechercher",
+    "stats_count": "10 lieux en France",
+    "btn_all": "Voir tous les espaces",
+    "result_1_title": "Terrain de culture",
+    "result_2_title": "Cave à champignons",
+    "result_3_title": "Fleurs et arbres",
+    "result_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante feugiat finibus."
+  },
+  "cta_bottom": {
+    "line_1": "Actuellement,",
+    "line_2": "des humains",
+    "line_3": "recherchent un espace de culture.",
+    "cta_share": "Partagez votre espace"
+  },
+  "example": {
+    "title": "Exemple sur Annecy",
+    "paragraph": "Jennifer Geoffroy et son conjoint, à Annecy, ont redonné vie au jardin d’Éric, un octogénaire qui ne pouvait plus en assurer l’entretien. De cette belle rencontre est née une collaboration intergénérationnelle, transformant ce jardin en un véritable écosystème durable. Chaque espace a été repensé en tenant compte des contraintes environnementales et des éléments déjà présents. La mare a été réaménagée, les haies et les zones potagères progressivement réhabilitées. Le jardin repose aujourd’hui sur des principes de résilience : couverture permanente du sol, cultures étagées offrant de l’ombrage aux plantes sensibles et gestion écologique des ressources.",
+    "video_title": "Jardiner autrement"
+  }
 }
