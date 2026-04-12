@@ -1,25 +1,16 @@
 @font-face {
   font-family: OpenSans;
   src: url('/fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
 }
 
 @font-face {
   font-family: Inter;
   src: url('/fonts/Inter/Inter-VariableFont_opsz,wght.ttf') format('truetype');
-  font-weight: normal;
-  font-display: swap;
-  font-style: normal;
 }
 
 @font-face {
   font-family: Lexend;
   src: url('/fonts/Lexend/Lexend-VariableFont_wght.ttf') format('truetype');
-  font-weight: normal;
-  font-display: swap;
-  font-style: normal;
 }
 
 @theme {
