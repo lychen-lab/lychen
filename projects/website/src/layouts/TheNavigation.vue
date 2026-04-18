@@ -101,6 +101,17 @@
 
     <div class="flex flex-row items-center gap-2">
       <a
+        href="https://tally.so/r/D4vJ85"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Button
+          :label="t('preregistration')"
+          size="sm"
+          variant="outlined"
+        />
+      </a>
+      <a
         :href="LINK.HelloAssoDonation"
         target="_blank"
       >
