@@ -56,6 +56,9 @@ jobs:
       - name: Set up Moon Toolchain
         uses: 'moonrepo/setup-toolchain@v0'
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
