@@ -10,8 +10,8 @@
     "bradlc.vscode-tailwindcss",
     "vue.volar",
     "jock.svg",
-    "prettier.prettier-vscode",
-    "oderwat.indent-rainbow"
+    "oderwat.indent-rainbow",
+    "esbenp.prettier-vscode"
   ],
   "unwantedRecommendations": [
     "octref.vetur",

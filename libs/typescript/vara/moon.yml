@@ -1,8 +1,5 @@
 dependsOn:
-  - typescript-utils
-
+- typescript-utils
 id: typescript-vara
-
 language: typescript
-
 layer: library

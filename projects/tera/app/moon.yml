@@ -11,31 +11,19 @@ dependsOn:
   - vue-icons
   - vue-layouts
   - vue-tera
-
 env:
   PRODUCTION_DOKPLOY_COMPOSE_ID: 1yP_nHkip2nMiN-xuHAiR
   STAGING_DOKPLOY_COMPOSE_ID: f0fzklLF69wpejz9f89ir
-
 id: tera-app
-
-language:
-  typescript
-
-  #dev:
-  # deps:
-  #- typescript-tera-api-sdk:generate-api
-
+language: typescript
 layer: application
-
 stack: frontend
 tags:
   - pwa
   - asset
-  #- docker
-  #- dokploy
-
 tasks:
   assets-sync:
     deps:
-      - args: '$projectRoot/public/icons'
+      - args:
+          - $projectRoot/public/icons
         target: assets-tera:create-symlink-on-icons

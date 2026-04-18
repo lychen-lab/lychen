@@ -1,10 +1,7 @@
 dependsOn:
-  - typescript-novi
-  - vue-composables
-  - vue-i18n
-
+- typescript-novi
+- vue-composables
+- vue-i18n
 id: vue-novi
-
 language: typescript
-
 layer: library

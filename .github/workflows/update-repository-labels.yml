@@ -22,13 +22,11 @@ jobs:
 
       - name: 'Set up Moon Toolchain'
         uses: 'moonrepo/setup-toolchain@v0'
-        with: 
-          moon-version: 1.41.8
 
       - name: 'Get application projects'
         id: get-projects
         run: |
-          PROJECTS=$(moon query projects projectLayer=application --json | jq -r '.projects | map(.id | @json) | join(",")')
+          PROJECTS=$(moon query projects projectLayer=application | jq -r '.projects | map(.id | @json) | join(",")')
           echo "projects<<EOF" >> "$GITHUB_OUTPUT"
           echo "$PROJECTS" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
@@ -38,7 +36,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Fetch existing labels
-          EXISTING_LABELS=$(gh label list --json name -q '.[].name')
+          EXISTING_LABELS=$(gh label list name -q '.[].name')
           
           # Remove quotes and set Internal Field Separator to comma to loop over projects
           PROJECTS_NO_QUOTES=$(echo "${{ steps.get-projects.outputs.projects }}" | tr -d '"')

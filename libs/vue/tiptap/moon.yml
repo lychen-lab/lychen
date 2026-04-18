@@ -1,5 +1,3 @@
 id: vue-tiptap
-
 language: typescript
-
 layer: library

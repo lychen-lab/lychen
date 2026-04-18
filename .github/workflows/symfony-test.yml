@@ -34,7 +34,7 @@ jobs:
       - name: Define Projects
         id: projects
         run: |
-          echo "projects=$(moon query projects --tags symfony --affected --downstream deep --json | jq -r '.projects | map(.id | @json) | join(",")' | sed 's/^/\[/; s/$/\]/')" >> "$GITHUB_OUTPUT"
+          echo "projects=$(moon query projects --tags symfony --affected --downstream deep | jq -r '.projects | map(.id | @json) | join(",")' | sed 's/^/\[/; s/$/\]/')" >> "$GITHUB_OUTPUT"
       - run: echo ${{ steps.projects.outputs.projects }}
 
   build-and-push-test-image:
@@ -123,7 +123,7 @@ jobs:
         id: project-paths
         run: |
           # Get project path from moon
-          PROJECT_PATH=$(moon project ${{ matrix.projects }} --json | jq -r '.source')
+          PROJECT_PATH=$(moon project ${{ matrix.projects }} | jq -r '.source')
 
           # Set cache paths for all dependency folders
           echo "cache_paths<<EOF" >> $GITHUB_OUTPUT
@@ -253,7 +253,7 @@ jobs:
       - name: Get project path
         id: project-paths
         run: |
-          PROJECT_PATH=$(moon project ${{ matrix.projects }} --json | jq -r '.source')
+          PROJECT_PATH=$(moon project ${{ matrix.projects }} | jq -r '.source')
           echo "project_path=$PROJECT_PATH" >> $GITHUB_OUTPUT
 
       - name: Download vendor directories
@@ -301,7 +301,7 @@ jobs:
       - name: Get project path
         id: project-paths
         run: |
-          PROJECT_PATH=$(moon project ${{ matrix.projects }} --json | jq -r '.source')
+          PROJECT_PATH=$(moon project ${{ matrix.projects }} | jq -r '.source')
           echo "project_path=$PROJECT_PATH" >> $GITHUB_OUTPUT
 
       - name: Download vendor directories
@@ -346,7 +346,7 @@ jobs:
       - name: Get project path
         id: project-paths
         run: |
-          PROJECT_PATH=$(moon project ${{ matrix.projects }} --json | jq -r '.source')
+          PROJECT_PATH=$(moon project ${{ matrix.projects }} | jq -r '.source')
           echo "project_path=$PROJECT_PATH" >> $GITHUB_OUTPUT
 
       - name: Download vendor directories

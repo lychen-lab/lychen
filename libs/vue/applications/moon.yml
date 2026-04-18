@@ -1,12 +1,9 @@
 dependsOn:
-  - typescript-applications
-  - typescript-utils
-  - vue-components-core
-  - vue-components-extra
-  - vue-i18n
-
+- typescript-applications
+- typescript-utils
+- vue-components-core
+- vue-components-extra
+- vue-i18n
 id: vue-applications
-
 language: typescript
-
 layer: library

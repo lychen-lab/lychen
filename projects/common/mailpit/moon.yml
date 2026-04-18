@@ -1,9 +1,6 @@
 id: common-mailpit
-
 language: unknown
-
 layer: automation
-
 stack: backend
 tags:
-  - compose
+- compose

@@ -1,9 +1,8 @@
 dependsOn:
-  - lychen-php-core
-  - lychen-php-model
-  - lychen-php-tiptap
-  - lychen-php-zitadel
-
+- lychen-php-core
+- lychen-php-model
+- lychen-php-tiptap
+- lychen-php-zitadel
 env:
   DEV_DOMAIN: api.tera.lychen.local
   PRODUCTION_DOCKER_IMAGE: lychen/production/tera/api
@@ -11,14 +10,11 @@ env:
   PRODUCTION_DOMAIN: api.tera.lychen.org
   STAGING_DOKPLOY_COMPOSE_ID: HZTto2h6QCq5g5lT1exQP
   STAGING_DOMAIN: staging.api.tera.lychen.org
-
 id: tera-api
-
 language: php
 layer: application
 stack: backend
-
 tags:
-  - symfony
-  - dokploy
-  - compose
+- symfony
+- dokploy
+- compose

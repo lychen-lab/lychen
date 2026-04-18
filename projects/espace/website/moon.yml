@@ -12,15 +12,10 @@ dependsOn:
   - vue-layouts
   - vue-router-configs
   - vue-unhead-composables
-
 id: espace-website
-
 language: typescript
-
 layer: application
-
 stack: frontend
-
 tags:
   - ssg
   - asset

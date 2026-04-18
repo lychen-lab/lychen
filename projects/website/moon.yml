@@ -15,51 +15,54 @@ dependsOn:
   - vue-router-configs
   - vue-sustainable-development-goals
   - vue-unhead-composables
-
 id: website
-
 language: typescript
-
 layer: application
-
 stack: frontend
-
 tags:
   - ssg
   - asset
   - docker
   - dokploy
-
 tasks:
   assets-sync:
     deps:
-      - args: '$projectRoot/public/fonts'
+      - args:
+          - $projectRoot/public/fonts
         target: assets-fonts:create-symlink-on-content
-      - args: '$projectRoot/public/vara'
+      - args:
+          - $projectRoot/public/vara
         target: assets-vara:create-symlink-on-content
-      - args: '$projectRoot/public/humu'
+      - args:
+          - $projectRoot/public/humu
         target: assets-humu:create-symlink-on-content
-      - args: '$projectRoot/public/myko'
+      - args:
+          - $projectRoot/public/myko
         target: assets-myko:create-symlink-on-content
-      - args: '$projectRoot/public/kiro'
+      - args:
+          - $projectRoot/public/kiro
         target: assets-kiro:create-symlink-on-content
-      - args: '$projectRoot/public/kolo'
+      - args:
+          - $projectRoot/public/kolo
         target: assets-kolo:create-symlink-on-content
-      - args: '$projectRoot/public/novi'
+      - args:
+          - $projectRoot/public/novi
         target: assets-novi:create-symlink-on-content
-      - args: '$projectRoot/public/robust'
+      - args:
+          - $projectRoot/public/robust
         target: assets-robust:create-symlink-on-content
-      - args: '$projectRoot/public/meli'
+      - args:
+          - $projectRoot/public/meli
         target: assets-meli:create-symlink-on-content
-      - args: '$projectRoot/public/tera'
+      - args:
+          - $projectRoot/public/tera
         target: assets-tera:create-symlink-on-content
-      - args: '$projectRoot/public/sustainable-development-goals'
+      - args:
+          - $projectRoot/public/sustainable-development-goals
         target: assets-sustainable-development-goals:create-symlink-on-content
-
   build:
     deps:
       - assets-sync
-
   dev:
     deps:
       - assets-sync

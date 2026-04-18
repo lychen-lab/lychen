@@ -1,9 +1,7 @@
 id: common-network
-
 language: unknown
-
 layer: automation
 stack: backend
 tasks:
   create-network:
-    command: docker network create lychen-network >/dev/null 2>&1 || docker network inspect lychen-network
+    script: docker network create lychen-network >/dev/null 2>&1 || docker network inspect lychen-network

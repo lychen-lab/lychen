@@ -1,9 +1,6 @@
 dependsOn:
-  - typescript-robust
-  - vue-i18n
-
+- typescript-robust
+- vue-i18n
 id: vue-robust
-
 language: typescript
-
 layer: library

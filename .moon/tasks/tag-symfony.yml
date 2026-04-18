@@ -1,88 +1,66 @@
-$schema: 'https://moonrepo.dev/schemas/tasks.json'
-
+$schema: https://moonrepo.dev/schemas/tasks.json
 tasks:
   ci-check-vulnerabilities:
     command: docker compose -f compose.yml -f compose.ci.yml run --rm $project ./local-php-security-checker
-
   ci-copy-packages:
-    command: cp -R $workspaceRoot/libs/php $projectRoot/packages && find $projectRoot/packages -name "moon.yml" -type f -delete
-
+    script: cp -R $workspaceRoot/libs/php $projectRoot/packages && find $projectRoot/packages -name "moon.yml" -type f -delete
   ci-create-db:
     command: docker compose -f compose.yml -f compose.ci.yml run --rm $project bin/console doctrine:database:create -n --if-not-exists
-
   ci-export-openapi:
     command: docker compose -f compose.yml -f compose.ci.yml run --rm $project bin/console api:openapi:export --spec-version=3.0.0 --output=openapi_docs.json
-
   ci-install-tools:
     command: docker compose -f compose.yml -f compose.ci.yml run --rm $project composer install --no-interaction --working-dir=tools/
-
   ci-install-vendors:
-    # Can't get it works in CI only with https://getcomposer.org/doc/03-cli.md#composer-mirror-path-repos
     command: docker compose -f compose.yml -f compose.ci.yml run --rm $project composer install --no-interaction
-
   ci-php-cs-fixer-src:
     command: docker compose -f compose.yml -f compose.ci.yml run --rm $project tools/vendor/bin/php-cs-fixer fix src/ --rules=@Symfony
-
   ci-php-cs-fixer-test:
     command: docker compose -f compose.yml -f compose.ci.yml run --rm $project tools/vendor/bin/php-cs-fixer fix tests/ --rules=@Symfony
-
   ci-test-build-docker-image:
-    command: docker build $projectRoot --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${TEST_IMAGE_NAME}:latest --tag ${TEST_IMAGE_NAME}:${GITHUB_SHA} --tag ${TEST_IMAGE_NAME}:latest --target frankenphp_test 
-
+    command: docker build $projectRoot --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${TEST_IMAGE_NAME}:latest --tag ${TEST_IMAGE_NAME}:${GITHUB_SHA} --tag ${TEST_IMAGE_NAME}:latest --target frankenphp_test
   ci-test-phpunit:
     command: docker compose -f compose.yml -f compose.ci.yml run --rm $project php -d memory_limit=-1 ./vendor/bin/phpunit
-
   ci-update-db:
     command: docker compose -f compose.yml -f compose.ci.yml run --rm $project bin/console doctrine:schema:update --force
-
   ci-validate-db-schema:
     command: docker compose -f compose.yml -f compose.ci.yml run --rm $project bin/console doctrine:schema:validate -n
-
   dev:
     command: docker compose up -d
     deps:
-      - common-mailpit:up
-      - common-rabbitmq:up
-      - common-redis:up
-
+    - common-mailpit:up
+    - common-rabbitmq:up
+    - common-redis:up
   docker-build:
     command: docker buildx build $projectRoot --cache-from ${DOCKER_IMAGE_NAME}:latest --platform linux/arm64,linux/amd64 --target frankenphp_prod -t ${DOCKER_IMAGE_NAME}:latest --push
     deps:
-      - ci-copy-packages
+    - ci-copy-packages
     options:
       cache: false
-
   docker-push:
     command: noop
     options:
       cache: false
-
   export-openapi:
     command: docker compose run --rm $project bin/console api:openapi:export --spec-version=3.0.0 --output=openapi_docs.json
-
   load-fixtures:
     command: docker compose run --rm $project bin/console do:fi:lo -n
-
   production-docker-build:
     env:
-      DOCKER_IMAGE_NAME: 'ghcr.io/lychen-lab/${PRODUCTION_DOCKER_IMAGE}'
+      DOCKER_IMAGE_NAME: ghcr.io/lychen-lab/${PRODUCTION_DOCKER_IMAGE}
     extends: docker-build
-
   production-docker-push:
     args:
-      - 'ghcr.io/lychen-lab/${PRODUCTION_DOCKER_IMAGE}'
+    - ghcr.io/lychen-lab/${PRODUCTION_DOCKER_IMAGE}
     deps:
-      - production-docker-build
+    - production-docker-build
     extends: docker-push
-
   staging-docker-build:
     command: noop
-
   staging-docker-push:
     command: noop
-
   test-phpunit:
     command: docker compose run --rm $project php -d memory_limit=-1 ./vendor/bin/phpunit
-
   get-dockerfiles:
     command: noop
+inheritedBy:
+  tag: symfony

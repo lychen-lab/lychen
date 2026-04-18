@@ -1,12 +1,9 @@
 dependsOn:
-  - typescript-utils
-  - vue-color-scheme
-  - vue-components-extra
-  - vue-i18n
-  - vue-icons
-
+- typescript-utils
+- vue-color-scheme
+- vue-components-extra
+- vue-i18n
+- vue-icons
 id: vue-components-website
-
 language: typescript
-
 layer: library

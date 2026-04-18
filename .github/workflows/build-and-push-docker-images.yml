@@ -29,8 +29,6 @@ jobs:
           fetch-depth: 0
       - name: Set up Moon Toolchain
         uses: 'moonrepo/setup-toolchain@v0'
-        with: 
-          moon-version: 1.41.8
       - id: gather-projects
         uses: ./.github/actions/moon-affected-projects-list
         with:
@@ -57,9 +55,6 @@ jobs:
 
       - name: Set up Moon Toolchain
         uses: 'moonrepo/setup-toolchain@v0'
-        with:
-          moon-version: 1.41.8
-          auto-install: true
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3

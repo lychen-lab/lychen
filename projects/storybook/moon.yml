@@ -6,28 +6,19 @@ dependsOn:
   - vue-components-extra
   - vue-i18n
   - vue-icons
-
 id: storybook
-
 language: typescript
-
 layer: application
-
 stack: frontend
-
-#tags:
-#- docker
-#- dokploy
-
 tasks:
   build:
     command: yarn build
     deps:
-      - args: $projectRoot/.nginx-build
+      - args:
+          - $projectRoot/.nginx-build
         target: nginx-configs:sync-ssg
     options:
       cache: false
-
   dev:
     command: yarn dev
     options:

@@ -12,27 +12,19 @@ dependsOn:
   - vue-robust
   - vue-router-configs
   - vue-unhead-composables
-
 env:
   PRODUCTION_DOKPLOY_COMPOSE_ID: 3rKOlYtb1unLJ4SyZ9FxD
   STAGING_DOKPLOY_COMPOSE_ID: 9Y63cSyEdXcqY7jJHCunV
-
 id: robust-website
-
 language: typescript
-
 layer: application
-
 stack: frontend
-
 tags:
   - ssg
   - asset
-  #- docker
-  #- dokploy
-
 tasks:
   asset-sync:
     deps:
-      - args: '$projectRoot/public/fonts'
+      - args:
+          - $projectRoot/public/fonts
         target: assets-fonts:create-symlink-on-content
