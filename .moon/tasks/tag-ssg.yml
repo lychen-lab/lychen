@@ -1,4 +1,6 @@
 $schema: https://moonrepo.dev/schemas/tasks.json
+inheritedBy:
+  tag: ssg
 tasks:
   build:
     command: yarn build
@@ -7,7 +9,7 @@ tasks:
       - $projectRoot/.nginx-build
       target: nginx-configs:sync-ssg
     env:
-      VITE_UNHEAD_HOST: ${HOST}
+      VITE_UNHEAD_HOST: ${HOST!}
     options:
       cache: false
   dev:
@@ -17,5 +19,3 @@ tasks:
       VITE_UNHEAD_HOST: ${HOST}
     options:
       persistent: true
-inheritedBy:
-  tag: ssg
