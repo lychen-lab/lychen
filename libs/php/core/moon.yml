@@ -1,8 +1,5 @@
 id: lychen-php-core
-
 language: php
-
 layer: library
-
 tags:
-  - composer
+- composer

@@ -1,9 +1,6 @@
 dependsOn:
-  - vue-components-core
-  - vue-icons
-
+- vue-components-core
+- vue-icons
 id: vue-i18n
-
 language: typescript
-
 layer: library

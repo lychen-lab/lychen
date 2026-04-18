@@ -1,27 +1,20 @@
 dependsOn:
-  - tera-api
-  - tera-app
-
+- tera-api
+- tera-app
 id: tera-tests-e2e
-
 language: typescript
-
 tags:
-  - playwright
-
+- playwright
 tasks:
   open:
     command: yarn playwright test --ui
     options:
       cache: false
       persistent: true
-
   report:
     command: yarn playwright show-report
-
   run:
     command: yarn playwright test
     options:
       cache: false
-
-type: automation
+layer: automation

@@ -22,8 +22,6 @@ jobs:
 
       - name: 'Set up Moon Toolchain'
         uses: 'moonrepo/setup-toolchain@v0'
-        with: 
-          moon-version: 1.41.8
 
       - name: 'Get application projects'
         id: get-projects

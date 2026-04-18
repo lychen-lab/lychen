@@ -1,9 +1,6 @@
 dependsOn:
-  - vue-i18n
-  - vue-router-configs
-
+- vue-i18n
+- vue-router-configs
 id: vite-ssg
-
 language: typescript
-
 layer: library

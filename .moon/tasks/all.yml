@@ -1,0 +1,10 @@
+$schema: https://moonrepo.dev/schemas/tasks.json
+implicitDeps:
+- ^:affected
+tasks:
+  affected:
+    command: noop
+    options:
+      internal: true
+inheritedBy:
+  language: tasks

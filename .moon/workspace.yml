@@ -1,37 +1,31 @@
-$schema: './cache/schemas/workspace.json'
-
+$schema: ./cache/schemas/workspace.json
 constraints:
-  enforceProjectTypeRelationships: true
-  
+  enforceLayerRelationships: true
 generator:
   templates:
-    - ./templates
-
+  - ./templates
 hasher:
   ignorePatterns:
-    - '**/*.png'
-    - '**/*.webp'
-    - '**/*.webm'
-    - '**/*.jpg'
-    - '**/*.jpeg'
-    - '**/*.ttf'
-    - '**/vendor/**/*'
-    - '**/public/bundles/**/*'
-    - '**/bin/**/*'
-    - '**/var/**/*'
+  - '**/*.png'
+  - '**/*.webp'
+  - '**/*.webm'
+  - '**/*.jpg'
+  - '**/*.jpeg'
+  - '**/*.ttf'
+  - '**/vendor/**/*'
+  - '**/public/bundles/**/*'
+  - '**/bin/**/*'
+  - '**/var/**/*'
   walkStrategy: glob
-
 projects:
-  - 'libs/**/*/moon.yml'
-  - 'projects/**/*/moon.yml'
-
+- libs/**/*/moon.yml
+- projects/**/*/moon.yml
 vcs:
+  client: git
   defaultBranch: main
   hooks:
     pre-commit:
-      #- 'moon :format-fix --affected --logFile .moon/logs/pre-commit-format-fix.txt --log trace'
-      - 'moon :format-fix --affected'
-      - 'moon :lint-fix --affected'
-      - 'git add -u'
-  manager: git
-  syncHooks: true
+    - moon run :format-fix --affected
+    - moon run :lint-fix --affected
+    - git add -u
+  sync: true
