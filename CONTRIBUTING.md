@@ -56,8 +56,6 @@ Use clear, descriptive branch names:
 
 ## Working on project
 
-Run
-
 ```bash
 moon run <project-id>:dev
 ```
