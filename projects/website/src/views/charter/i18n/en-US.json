@@ -1,6 +1,8 @@
 {
-  "title": "Our charter",
-  "description": "This charter defines the fundamental principles, ethical values, and operating rules that guide our collective action. It serves as a compass for every actor, ensuring the coherence, integrity, and sustainability of our ecosystem.",
+  "meta": {
+    "title": "Our charter",
+    "description": "This charter defines the fundamental principles, ethical values, and operating rules that guide our collective action. It serves as a compass for every actor, ensuring the coherence, integrity, and sustainability of our ecosystem."
+  },
   "document_change": "This document changes over time: everything is tracked here",
   "charter": {
     "section": {

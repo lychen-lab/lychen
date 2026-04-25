@@ -114,8 +114,10 @@ import { ref } from 'vue';
 import CardPerson from '@/views/team/CardPerson.vue';
 import Title from '@lychen/vue-components-website/title/Title.vue';
 import BentoCard from '@/views/team/BentoCard.vue';
+import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
 
 const { t } = usePrefixedI18n(CONFIG);
+useExtendedHead(t);
 
 const contactEmail = ref(EMAIL.Contact);
 const { copy, isSupported } = useClipboard({ source: contactEmail });

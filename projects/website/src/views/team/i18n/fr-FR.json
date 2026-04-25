@@ -1,5 +1,7 @@
 {
-  "title": "Notre équipe",
+  "meta": {
+    "title": "Notre équipe"
+  },
   "header_subtitle": "Développer la robustesse et la résilience des territoires face aux changements climatiques.",
   "team_section": {
     "title": "L'équipe Lychen",
