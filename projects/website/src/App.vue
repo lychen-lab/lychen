@@ -22,7 +22,7 @@ const { locale } = useI18nExtended();
 useHead({
   titleTemplate: 'lychen | %s',
   htmlAttrs: {
-    lang: locale.value,
+    lang: () => locale.value,
   },
   templateParams: {
     schemaOrg: {

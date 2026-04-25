@@ -1,8 +1,8 @@
 {
   "meta": {
-    "title": "Notre équipe"
+    "title": "Notre équipe",
+    "description": "Développer la robustesse et la résilience des territoires face aux changements climatiques."
   },
-  "header_subtitle": "Développer la robustesse et la résilience des territoires face aux changements climatiques.",
   "team_section": {
     "title": "L'équipe Lychen",
     "description": "Nous sommes une équipe dédiée à la création d'un écosystème numérique open-source. Notre mission : connecter citoyens, producteurs, associations et collectivités pour favoriser une agriculture durable et la protection de la biodiversité."

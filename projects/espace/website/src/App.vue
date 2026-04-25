@@ -17,7 +17,7 @@ const title = 'espace';
 useHead({
   titleTemplate: `${title} | %s`,
   htmlAttrs: {
-    lang: locale.value,
+    lang: () => locale.value,
   },
   templateParams: {
     schemaOrg: {

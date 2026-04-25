@@ -1,7 +1,7 @@
 <template>
   <Container class="flex flex-col items-center gap-4 pt-20">
-    <Title variant="h1">{{ t('title') }}</Title>
-    <Paragraph class="w-3/4 text-center opacity-60">{{ t('header_subtitle') }}</Paragraph>
+    <Title variant="h1">{{ t('meta.title') }}</Title>
+    <Paragraph class="w-3/4 text-center opacity-60">{{ t('meta.description') }}</Paragraph>
     <div
       class="grid-rows-auto grid h-180 w-full grid-cols-2 gap-4 px-4 md:grid-cols-4 md:grid-rows-3 md:px-20"
     >
