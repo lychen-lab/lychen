@@ -57,5 +57,5 @@ Use clear, descriptive branch names:
 ## Working on project
 
 ```bash
-moon <project-id>:dev
+moon run <project-id>:dev
 ```
