@@ -20,4 +20,6 @@ final class AreaProposalCollection
     public ?int $surfaceToShare;
     public ?string $city;
     public ?int $altitude;
+    public ?string $soilType;
+    public ?string $status;
 }

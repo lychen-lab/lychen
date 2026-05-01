@@ -12,6 +12,8 @@ final class AreaProposalPatch
     public ?int $surfaceToShare;
     public ?string $city;
     public ?int $altitude;
+    public ?string $soilType;
+    public ?string $availableAt;
 
     /**
      * @var string[]

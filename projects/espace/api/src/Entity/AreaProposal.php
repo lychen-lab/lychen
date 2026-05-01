@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\AreaProposalStatus;
 use App\Repository\AreaProposalRepository;
 use App\Workflow\AreaProposal\AreaProposalWorkflow;
 use DateTimeImmutable;
@@ -46,6 +47,18 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
 
     #[ORM\Column(nullable: true)]
     private ?int $altitude = 0;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $soilType = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?DateTimeImmutable $availableAt = null;
+
+    #[ORM\Column(enumType: AreaProposalStatus::class)]
+    private AreaProposalStatus $status = AreaProposalStatus::PendingValidation;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $workflowId = null;
 
     /**
      * @var Collection<int, AreaActivity>
@@ -175,6 +188,54 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
     public function removeActivity(AreaActivity $activity): static
     {
         $this->activities->removeElement($activity);
+
+        return $this;
+    }
+
+    public function getSoilType(): ?string
+    {
+        return $this->soilType;
+    }
+
+    public function setSoilType(?string $soilType): static
+    {
+        $this->soilType = $soilType;
+
+        return $this;
+    }
+
+    public function getAvailableAt(): ?DateTimeImmutable
+    {
+        return $this->availableAt;
+    }
+
+    public function setAvailableAt(?DateTimeImmutable $availableAt): static
+    {
+        $this->availableAt = $availableAt;
+
+        return $this;
+    }
+
+    public function getStatus(): AreaProposalStatus
+    {
+        return $this->status;
+    }
+
+    public function setStatus(AreaProposalStatus $status): static
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getWorkflowId(): ?string
+    {
+        return $this->workflowId;
+    }
+
+    public function setWorkflowId(?string $workflowId): static
+    {
+        $this->workflowId = $workflowId;
 
         return $this;
     }

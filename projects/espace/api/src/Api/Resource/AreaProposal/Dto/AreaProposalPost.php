@@ -28,6 +28,10 @@ final class AreaProposalPost
     #[NotBlank]
     public ?int $altitude;
 
+    public ?string $soilType;
+
+    public ?string $availableAt;
+
     /**
      * @var string[]
      */

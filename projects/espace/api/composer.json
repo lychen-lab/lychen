@@ -45,6 +45,7 @@
         "symfony/mailer": "7.4.*",
         "symfony/messenger": "7.4.*",
         "symfony/monolog-bundle": "4.0.*",
+        "symfony/object-mapper": "7.4.*",
         "symfony/process": "7.4.*",
         "symfony/property-access": "7.4.*",
         "symfony/property-info": "7.4.*",
@@ -58,7 +59,7 @@
         "symfony/validator": "7.4.*",
         "symfony/workflow": "7.4.*",
         "symfony/yaml": "7.4.*",
-        "symfony/object-mapper": "7.4.*"
+        "temporal/sdk": "^2.17"
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "8.4.*",

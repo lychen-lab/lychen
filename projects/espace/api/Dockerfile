@@ -28,6 +28,8 @@ RUN set -eux; \
         pdo_pgsql \
 	;
 
+RUN install-php-extensions grpc;
+
 RUN set -eux; \
     git clone https://github.com/php-amqp/php-amqp.git /tmp/php-amqp; \
     cd /tmp/php-amqp; \

@@ -56,7 +56,10 @@ final class AreaProposal
     public ?string $archivedAt;
     public ?int $surfaceTotal;
     public ?int $surfaceToShare;
-
     public ?string $city;
     public ?int $altitude;
+    public ?string $soilType;
+    public ?string $availableAt;
+    public ?string $status;
+    public ?string $workflowId;
 }
