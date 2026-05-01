@@ -1,7 +1,7 @@
 <template>
   <Container class="flex flex-col items-center gap-4 pt-20">
-    <Title variant="h1">{{ t('title') }}</Title>
-    <Paragraph class="text-center opacity-80">{{ t('description') }}</Paragraph>
+    <Title variant="h1">{{ t('meta.title') }}</Title>
+    <Paragraph class="text-center opacity-80">{{ t('meta.description') }}</Paragraph>
     <p class="text-xs font-light italic opacity-60">
       {{ t('document_change') }}
       <a
@@ -61,6 +61,9 @@ import Title from '@lychen/vue-components-website/title/Title.vue';
 import Paragraph from '@lychen/vue-components-website/paragraph/Paragraph.vue';
 import CharterSection from './CharterSection.vue';
 import CharterArticle from './CharterArticle.vue';
+import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
 
 const { t } = usePrefixedI18n(CONFIG);
+
+useExtendedHead(t);
 </script>

@@ -172,8 +172,11 @@ import planetPluton from './assets/planet-pluton.png';
 import planetMars from './assets/planet-mars.png';
 import { Popover, PopoverContent, PopoverTrigger } from '@lychen/vue-components-core/popover';
 import { LINK } from '@lychen/typescript-espace/constants/App';
+import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
 
 const { t } = usePrefixedI18n(CONFIG);
+
+useExtendedHead(t);
 
 const planets = [
   { id: 'earth', img: planetEarth },

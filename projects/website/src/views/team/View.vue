@@ -1,7 +1,7 @@
 <template>
   <Container class="flex flex-col items-center gap-4 pt-20">
-    <Title variant="h1">{{ t('title') }}</Title>
-    <Paragraph class="w-3/4 text-center opacity-60">{{ t('header_subtitle') }}</Paragraph>
+    <Title variant="h1">{{ t('meta.title') }}</Title>
+    <Paragraph class="w-3/4 text-center opacity-60">{{ t('meta.description') }}</Paragraph>
     <div
       class="grid-rows-auto grid h-180 w-full grid-cols-2 gap-4 px-4 md:grid-cols-4 md:grid-rows-3 md:px-20"
     >
@@ -114,8 +114,10 @@ import { ref } from 'vue';
 import CardPerson from '@/views/team/CardPerson.vue';
 import Title from '@lychen/vue-components-website/title/Title.vue';
 import BentoCard from '@/views/team/BentoCard.vue';
+import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
 
 const { t } = usePrefixedI18n(CONFIG);
+useExtendedHead(t);
 
 const contactEmail = ref(EMAIL.Contact);
 const { copy, isSupported } = useClipboard({ source: contactEmail });

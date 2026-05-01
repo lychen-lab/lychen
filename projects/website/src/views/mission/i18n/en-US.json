@@ -1,6 +1,8 @@
 {
-  "title": "A Mission for Resilience",
-  "description": "We put technology at the service of life. Our ambition is to provide territories with the tools to understand, preserve, and regenerate their ecosystems.",
+  "meta": {
+    "title": "A Mission for Resilience",
+    "description": "We put technology at the service of life. Our ambition is to provide territories with the tools to understand, preserve, and regenerate their ecosystems."
+  },
   "goals": {
     "title": "Our Areas of Impact",
     "description": "To meet the challenges of our century, we structure our action around three complementary pillars.",

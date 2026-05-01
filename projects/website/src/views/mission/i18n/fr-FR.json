@@ -1,6 +1,8 @@
 {
-  "title": "Une Mission pour la Résilience",
-  "description": "Nous mettons la technologie au service du vivant. Notre ambition est de fournir aux territoires les outils pour comprendre, préserver et régénérer leurs écosystèmes.",
+  "meta": {
+    "title": "Une Mission pour la Résilience",
+    "description": "Nous mettons la technologie au service du vivant. Notre ambition est de fournir aux territoires les outils pour comprendre, préserver et régénérer leurs écosystèmes."
+  },
   "goals": {
     "title": "Nos Axes d'Impact",
     "description": "Pour relever les défis de notre siècle, nous structurons notre action autour de trois piliers complémentaires.",
