@@ -12,5 +12,11 @@ else
   echo "Warning: $CONFIG_FILE not found."
 fi
 
+# Replace ${HOST} in SSG HTML files (canonical tags baked at build time)
+echo "Replacing variables in HTML files..."
+find /usr/share/nginx/html -name "*.html" | while read -r file; do
+  envsubst '${HOST}' < "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+done
+
 # Execute the CMD from Dockerfile (usually nginx)
 exec "$@"
