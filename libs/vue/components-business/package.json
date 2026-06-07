@@ -5,7 +5,7 @@
     "@lychen/vue-components-core": "workspace:*",
     "@vueuse/core": "^14.3.0",
     "class-variance-authority": "^0.7.1",
-    "reka-ui": "^2.9.8",
+    "reka-ui": "^2.9.9",
     "vue": "^3.5.35"
   }
 }

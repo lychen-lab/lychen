@@ -22,7 +22,7 @@
     "@lychen/vue-icons": "workspace:*",
     "@lychen/vue-layouts": "workspace:*",
     "@lychen/vue-tera": "workspace:*",
-    "@tanstack/vue-query": "^5.100.14",
+    "@tanstack/vue-query": "^5.101.0",
     "@tanstack/vue-table": "^8.21.3",
     "@vueuse/core": "^14.3.0",
     "vue": "^3.5.35",
@@ -33,8 +33,8 @@
     "@vite-pwa/assets-generator": "^1.0.2",
     "@vitejs/plugin-vue": "^6.0.7",
     "tailwindcss": "^4.3.0",
-    "vite": "^8.0.14",
-    "vite-plugin-mkcert": "^2.0.0",
+    "vite": "^8.0.16",
+    "vite-plugin-mkcert": "^2.1.0",
     "vite-plugin-pwa": "^1.3.0",
     "vite-plugin-vue-devtools": "^8.1.2"
   }
