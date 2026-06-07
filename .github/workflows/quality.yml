@@ -48,7 +48,10 @@ jobs:
 
       - name: Set up Moon Toolchain
         uses: 'moonrepo/setup-toolchain@v0'
-      
+
+      - name: Install proto tools
+        run: proto install
+
       - name: Enable Corepack
         run: corepack enable
 
