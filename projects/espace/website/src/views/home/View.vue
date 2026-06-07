@@ -42,7 +42,7 @@
   </Container>
   <Container class="flex flex-col items-start justify-center gap-8">
     <Title variant="h1">{{ t('search.title') }}</Title>
-    <div class="flex flex-col items-start gap-2 md:flex-row md:items-center">
+    <div class="flex flex-col items-start gap-2 lg:flex-row lg:items-center">
       <Paragraph>{{ t('search.subtitle') }}</Paragraph>
       <a
         :href="LINK.LandRequestForm"
@@ -53,7 +53,7 @@
         ></Button>
       </a>
     </div>
-    <div class="flex w-1/3 flex-row items-center gap-2 opacity-20">
+    <div class="flex w-full flex-row items-center gap-2 opacity-20 lg:w-1/3">
       <Popover>
         <PopoverTrigger as-child>
           <Button
