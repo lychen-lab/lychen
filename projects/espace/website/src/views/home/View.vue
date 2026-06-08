@@ -14,28 +14,26 @@
         <div
           class="bg-surface-container/70 z-10 flex w-full flex-col items-start gap-4 rounded-2xl px-8 py-10 backdrop-blur-md lg:w-1/3"
         >
-          <IconHeartHandshake class="size-18!" />
+          <IconHeartHandshake class="hidden size-18! lg:block" />
           <h2 class="text-on-white text-xl font-bold">
             {{ t('hero.description') }}
           </h2>
-          <div class="flex flex-col items-start gap-2">
+          <p class="text-xs opacity-80">
+            {{ t('hero.email_prefix') }}
             <a
-              :href="LINK.LandProposalForm"
-              target="_blank"
+              href="mailto:contact@lychen.org"
+              class="underline"
+              >contact@lychen.org</a
             >
-              <Button size="lg"
-                >{{ t('hero.cta_share') }} <template #icon><IconArrowRight /></template
-              ></Button>
-            </a>
-            <p class="text-xs opacity-80">
-              {{ t('hero.email_prefix') }}
-              <a
-                href="mailto:contact@lychen.org"
-                class="underline"
-                >contact@lychen.org</a
-              >
-            </p>
-          </div>
+          </p>
+          <a
+            :href="LINK.LandProposalForm"
+            target="_blank"
+          >
+            <Button size="lg"
+              >{{ t('hero.cta_share') }} <template #icon><IconArrowRight /></template
+            ></Button>
+          </a>
         </div>
       </div>
     </div>
