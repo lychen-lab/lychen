@@ -8,8 +8,6 @@ tasks:
     - args:
       - $projectRoot/.nginx-build
       target: nginx-configs:sync-ssg
-    env:
-      VITE_UNHEAD_HOST: ${HOST!}
     options:
       cache: false
   dev:
