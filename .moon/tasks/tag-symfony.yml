@@ -13,9 +13,11 @@ tasks:
   ci-install-vendors:
     command: docker compose -f compose.yml -f compose.ci.yml run --rm $project composer install --no-interaction
   ci-php-cs-fixer-src:
-    command: docker compose -f compose.yml -f compose.ci.yml run --rm $project tools/vendor/bin/php-cs-fixer fix src/ --rules=@Symfony
+    command: docker compose -f compose.yml -f compose.ci.yml run --rm $project tools/vendor/bin/php-cs-fixer fix src/ --rules=@Symfony --dry-run --diff
   ci-php-cs-fixer-test:
-    command: docker compose -f compose.yml -f compose.ci.yml run --rm $project tools/vendor/bin/php-cs-fixer fix tests/ --rules=@Symfony
+    command: docker compose -f compose.yml -f compose.ci.yml run --rm $project tools/vendor/bin/php-cs-fixer fix tests/ --rules=@Symfony --dry-run --diff
+  ci-phpstan:
+    command: docker compose -f compose.yml -f compose.ci.yml run --rm $project tools/vendor/bin/phpstan analyse --memory-limit=-1
   ci-test-build-docker-image:
     command: docker build $projectRoot --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${TEST_IMAGE_NAME}:latest --tag ${TEST_IMAGE_NAME}:${GITHUB_SHA} --tag ${TEST_IMAGE_NAME}:latest --target frankenphp_test
   ci-test-phpunit:
