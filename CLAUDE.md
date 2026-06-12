@@ -9,7 +9,7 @@ Lychen is an environmental and agricultural symbiosis platform connecting food p
 ## Toolchain Setup
 
 Toolchain versions are enforced via [proto](https://moonrepo.dev/proto) (`.prototools`):
-- Node 24.12.0, Yarn 4.12.0, Moon 2.2.0
+- Node 24.16.0, Yarn 4.12.0, Moon 2.3.2
 
 ```bash
 proto install    # Install all required toolchain versions

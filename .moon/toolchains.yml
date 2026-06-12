@@ -5,8 +5,7 @@ javascript:
   packageManager: yarn
   syncPackageManagerField: true
   syncProjectWorkspaceDependencies: true
-node:
-  version: 24.12.0
+node: {}
 typescript:
   createMissingConfig: true
   includeProjectReferenceSources: false
