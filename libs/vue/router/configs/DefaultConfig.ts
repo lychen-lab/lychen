@@ -3,28 +3,19 @@ import { scrollBehavior } from './ScrollBehavior';
 
 export function buildConfigObject(
   routes: RouteRecordRaw[],
-  i18nUtilities?: unknown,
   beforeEnter?: NavigationGuardWithThis<undefined>,
 ) {
-  if (i18nUtilities && beforeEnter) {
-    const localizedRoutes: RouteRecordRaw[] = [
-      {
-        path: '/:locale?',
-        component: RouterView,
-        beforeEnter: beforeEnter,
-        children: routes,
-      },
-    ];
-    return {
-      scrollBehavior,
-      routes: localizedRoutes,
-      base: import.meta.env.BASE_URL,
-    };
-  }
-
+  const localizedRoutes: RouteRecordRaw[] = [
+    {
+      path: '/:locale?',
+      component: RouterView,
+      ...(beforeEnter ? { beforeEnter } : {}),
+      children: routes,
+    },
+  ];
   return {
     scrollBehavior,
-    routes,
+    routes: localizedRoutes,
     base: import.meta.env.BASE_URL,
   };
 }

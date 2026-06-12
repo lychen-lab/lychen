@@ -1,41 +1,51 @@
 import path from 'node:path';
-
-import type { UserConfig } from 'vite';
+import { defineConfig, loadEnv, type UserConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import mkcert from 'vite-plugin-mkcert';
-import generateSitemap from 'vite-ssg-sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import vueDevTools from 'vite-plugin-vue-devtools';
+import type { ViteSSGOptions } from 'vite-ssg';
+import { ssgOptions } from '@lychen/vite-ssg/ssgOptions';
+import EnvRuntime from 'vite-plugin-env-runtime';
 
-const config: UserConfig = {
-  server: {
-    https: {},
-    port: 5142,
-  },
-  plugins: [
-    tailwindcss(),
-    mkcert({
-      hosts: ['tera.lychen.local'],
-    }),
-    vue({
-      template: {
-        transformAssetUrls: {
-          includeAbsolute: false,
+export default defineConfig(({ isSsrBuild, mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+
+  const config: UserConfig & ViteSSGOptions = {
+    server: {
+      https: {},
+      port: 5142,
+    },
+    define: {
+      'window.__PRODUCTION__APP__CONF__': isSsrBuild
+        ? JSON.stringify({
+            VITE_APP_ID: process.env.VITE_APP_ID ?? env.VITE_APP_ID,
+            VITE_UNHEAD_HOST: process.env.VITE_UNHEAD_HOST || env.VITE_UNHEAD_HOST || '${HOST}',
+          })
+        : 'window.__PRODUCTION__APP__CONF__',
+    },
+    plugins: [
+      vueDevTools(),
+      tailwindcss(),
+      EnvRuntime(),
+      mkcert({
+        hosts: [process.env.VITE_UNHEAD_HOST || 'localhost'],
+      }),
+      vue({
+        template: {
+          transformAssetUrls: {
+            includeAbsolute: false,
+          },
         },
+      }),
+    ],
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src'),
       },
-    }),
-  ],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
     },
-  },
-  ssgOptions: {
-    script: 'async',
-    formatting: 'prettify',
-    onFinished() {
-      generateSitemap({ hostname: `https://${process.env.VITE_UNHEAD_HOST}` });
-    },
-  },
-};
+    ssgOptions,
+  };
 
-export default config;
+  return config;
+});
