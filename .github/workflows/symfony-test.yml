@@ -310,7 +310,7 @@ jobs:
           path: ${{ steps.project-paths.outputs.project_path }}
 
       - name: Security tests
-        run: moon ${{ matrix.projects }}:ci-test-phpunit -- tests/Security
+        run: moon run ${{ matrix.projects }}:ci-test-phpunit -- tests/Security
 
   phpunit-functional:
     name: '${{ matrix.projects }} | Functional PHPUnit'
@@ -355,4 +355,4 @@ jobs:
           path: ${{ steps.project-paths.outputs.project_path }}
 
       - name: Functional tests
-        run: moon ${{ matrix.projects }}:ci-test-phpunit -- tests/Functional
+        run: moon run ${{ matrix.projects }}:ci-test-phpunit -- tests/Functional
