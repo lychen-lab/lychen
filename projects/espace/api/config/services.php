@@ -21,6 +21,4 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->exclude([
             __DIR__ . '/../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}',
         ]);
-
-
 };

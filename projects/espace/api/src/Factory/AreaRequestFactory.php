@@ -3,7 +3,6 @@
 namespace App\Factory;
 
 use App\Entity\AreaRequest;
-use Override;
 use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
@@ -11,23 +10,22 @@ use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
  */
 final class AreaRequestFactory extends PersistentObjectFactory
 {
-    #[Override]
+    #[\Override]
     public static function class(): string
     {
         return AreaRequest::class;
     }
 
-    #[Override]
+    #[\Override]
     protected function defaults(): array|callable
     {
         return [
-
             'description' => self::faker()->text(),
             'title' => self::faker()->text(255),
         ];
     }
 
-    #[Override]
+    #[\Override]
     protected function initialize(): static
     {
         return $this;

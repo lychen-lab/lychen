@@ -7,6 +7,9 @@ use Zenstruck\Browser\KernelBrowser;
 
 class TestBrowser extends KernelBrowser
 {
+    /**
+     * @param array<string, mixed> $options
+     */
     public function patch(string $url, $options = ['json' => []]): self
     {
         $this->setDefaultHttpOptions(
