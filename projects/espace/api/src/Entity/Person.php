@@ -11,5 +11,4 @@ use Lychen\UtilZitadelBundle\Abstract\AbstractZitadelUser;
 #[ORM\HasLifecycleCallbacks]
 class Person extends AbstractZitadelUser
 {
-    private array $permissions = [];
 }

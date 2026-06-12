@@ -8,6 +8,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Lychen\UtilZitadelBundle\Services\User;
 use Symfony\Component\HttpClient\Exception\ClientException;
+
 use function Zenstruck\Foundry\faker;
 
 class PersonFixtures extends Fixture
@@ -42,47 +43,54 @@ class PersonFixtures extends Fixture
     private function createUserOnZitadel(string $reference): Person
     {
         $userEmail = $this->buildUserEmail($reference);
-        $data = null;
 
-        $createdData = [
-            'email' => $userEmail,
-            'givenName' => faker()->firstName(),
-            'familyName' => faker()->lastName(),
-        ];
+        $givenName = faker()->firstName();
+        $familyName = faker()->lastName();
+
         try {
             $data = $this->user->createHumanUser([
                 'profile' => [
-                    'givenName' => $createdData['givenName'],
-                    'familyName' => $createdData['familyName'],
+                    'givenName' => $givenName,
+                    'familyName' => $familyName,
                 ],
                 'email' => [
-                    'email' => $createdData['email'],
+                    'email' => $userEmail,
                     'isVerified' => true,
                 ],
                 'password' => [
                     'password' => self::DEFAULT_PASSWORD,
                     'changeRequired' => false,
-                ]
+                ],
             ]);
         } catch (ClientException $exception) {
-            if ($exception->getResponse()->getStatusCode() === 409) {
-                $data = $this->user->searchByEmail($userEmail);
-            } else {
+            if (409 !== $exception->getResponse()->getStatusCode()) {
                 throw $exception;
             }
+
+            // The user already exists on Zitadel: reuse its identity and profile.
+            $data = $this->user->searchByEmail($userEmail);
+            $profile = $data['human']['profile'] ?? [];
+            $givenName = $profile['givenName'] ?? $givenName;
+            $familyName = $profile['familyName'] ?? $familyName;
         }
-        return $this->createPersonAndAddReference($reference, ['authId' => $data['userId'], ...$createdData]);
+
+        return $this->createPersonAndAddReference($reference, [
+            'authId' => $data['userId'],
+            'email' => $userEmail,
+            'givenName' => $givenName,
+            'familyName' => $familyName,
+        ]);
     }
 
     public static function buildUserEmail(string $reference): string
     {
-        return $reference . self::DEFAULT_EMAIL_DOMAIN;
+        return $reference.self::DEFAULT_EMAIL_DOMAIN;
     }
 
     private function createPersonAndAddReference(string $reference, array|callable $attributes = []): Person
     {
-        $person = PersonFactory::new()->create($attributes);
-        $this->addReference($reference, $person->_real());
+        $person = PersonFactory::new()->create($attributes)->_real();
+        $this->addReference($reference, $person);
 
         return $person;
     }

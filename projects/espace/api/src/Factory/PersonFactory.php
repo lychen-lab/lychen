@@ -5,6 +5,7 @@ namespace App\Factory;
 use App\Entity\Person;
 use Symfony\Component\Uid\Uuid;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+
 use function Zenstruck\Foundry\faker;
 
 /**
@@ -21,7 +22,7 @@ final class PersonFactory extends PersistentProxyObjectFactory
     {
         return [
             'authId' => Uuid::v4(),
-            'email' => faker()->email()
+            'email' => faker()->email(),
         ];
     }
 
