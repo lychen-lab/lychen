@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { defineConfig, type UserConfig } from 'vite'; // Added defineConfig
+import { defineConfig, loadEnv, type UserConfig } from 'vite'; // Added defineConfig
 import vue from '@vitejs/plugin-vue';
 import mkcert from 'vite-plugin-mkcert';
 import tailwindcss from '@tailwindcss/vite';
@@ -8,7 +8,9 @@ import type { ViteSSGOptions } from 'vite-ssg';
 import { ssgOptions } from '@lychen/vite-ssg/ssgOptions';
 import EnvRuntime from 'vite-plugin-env-runtime';
 
-export default defineConfig(({ isSsrBuild }) => {
+export default defineConfig(({ isSsrBuild, mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+
   const config: UserConfig & ViteSSGOptions = {
     server: {
       https: {},
@@ -16,7 +18,10 @@ export default defineConfig(({ isSsrBuild }) => {
     },
     define: {
       'window.__PRODUCTION__APP__CONF__': isSsrBuild
-        ? JSON.stringify({})
+        ? JSON.stringify({
+            VITE_APP_ID: process.env.VITE_APP_ID ?? env.VITE_APP_ID,
+            VITE_UNHEAD_HOST: process.env.VITE_UNHEAD_HOST || env.VITE_UNHEAD_HOST || '${HOST}',
+          })
         : 'window.__PRODUCTION__APP__CONF__',
     },
     plugins: [

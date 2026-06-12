@@ -2,6 +2,24 @@
   "extends": "./tsconfig.options.json",
   "references": [
     {
+      "path": "./libs/vite/ssg"
+    },
+    {
+      "path": "./libs/vue/unhead/composables"
+    },
+    {
+      "path": "./projects/espace/website"
+    },
+    {
+      "path": "./projects/robust/website"
+    },
+    {
+      "path": "./projects/tera/website"
+    },
+    {
+      "path": "./projects/website"
+    },
+    {
       "path": "libs/i18n/tera"
     },
     {
@@ -48,9 +66,6 @@
     },
     {
       "path": "libs/typescript/zitadel"
-    },
-    {
-      "path": "libs/vite/ssg"
     },
     {
       "path": "libs/vue/applications"
@@ -131,19 +146,10 @@
       "path": "libs/vue/tiptap"
     },
     {
-      "path": "libs/vue/unhead/composables"
-    },
-    {
       "path": "libs/vue/vara"
     },
     {
       "path": "projects/espace/app"
-    },
-    {
-      "path": "projects/espace/website"
-    },
-    {
-      "path": "projects/robust/website"
     },
     {
       "path": "projects/storybook"
@@ -153,12 +159,6 @@
     },
     {
       "path": "projects/tera/tests-e2e"
-    },
-    {
-      "path": "projects/tera/website"
-    },
-    {
-      "path": "projects/website"
     }
   ]
 }
