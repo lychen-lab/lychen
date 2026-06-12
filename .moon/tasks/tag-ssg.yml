@@ -8,8 +8,28 @@ tasks:
     - args:
       - $projectRoot/.nginx-build
       target: nginx-configs:sync-ssg
-    options:
-      cache: false
+    inputs:
+    - .env*
+    - index.html
+    - package.json
+    - public/**/*
+    - src/**/*
+    - tsconfig.json
+    - vite.config.ts
+    - /libs/css/**/*
+    - /libs/drawio/**/*
+    - /libs/i18n/**/*
+    - /libs/typescript/**/*
+    - /libs/vite/**/*
+    - /libs/vue/**/*
+    - /yarn.lock
+    - project://^
+    - $APP_ID
+    - $ESPACE_WEBSITE_HOST
+    - $HOST
+    - $VITE_*
+    outputs:
+    - dist
   dev:
     command: yarn dev
     env:
