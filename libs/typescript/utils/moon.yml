@@ -1,3 +1,4 @@
 id: typescript-utils
 language: typescript
 layer: library
+stack: frontend

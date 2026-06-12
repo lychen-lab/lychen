@@ -36,5 +36,17 @@ tasks:
     - args:
       - --fix
       target: lint
+  test:
+    command:
+    - vitest
+    - run
+    - --passWithNoTests
+    inputs:
+    - '**/*.{vue,ts,js}'
+    - '!**/build/'
+    - '!**/dist/'
+    - '!**/vendor/'
+    - '!**/playwright-report/'
+    - '!**/.vite-ssg-temp/'
 inheritedBy:
   stack: frontend
