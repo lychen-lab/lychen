@@ -1,0 +1,29 @@
+name: 'Frontend | Quality'
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-and-format:
+    name: 'Lint & Format affected projects'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: 'actions/checkout@v4'
+        with:
+          fetch-depth: 0
+
+      - name: Set up Moon Toolchain
+        uses: 'moonrepo/setup-toolchain@v0'
+
+      - name: Install proto tools
+        run: proto install
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Lint and check formatting
+        run: moon ci :lint :format

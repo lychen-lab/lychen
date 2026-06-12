@@ -6,6 +6,9 @@
       "path": "../../../libs/i18n/tera"
     },
     {
+      "path": "../../../libs/typescript/tera/api-sdk"
+    },
+    {
       "path": "../../../libs/typescript/tera/core"
     },
     {
