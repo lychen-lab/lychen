@@ -2403,6 +2403,7 @@ __metadata:
   dependencies:
     "@lychen/css-core": "workspace:*"
     "@lychen/i18n-tera": "workspace:*"
+    "@lychen/typescript-tera-api-sdk": "workspace:*"
     "@lychen/typescript-tera-core": "workspace:*"
     "@lychen/typescript-zitadel": "workspace:*"
     "@lychen/vue-color-scheme": "workspace:*"
