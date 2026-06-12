@@ -59,3 +59,14 @@ Use clear, descriptive branch names:
 ```bash
 moon run <project-id>:dev
 ```
+
+## 📦 Creating a new library
+
+New TypeScript and Vue libraries can be scaffolded with the Moon generator:
+
+```bash
+moon generate typescript-lib
+moon generate vue-lib
+```
+
+You will be prompted for the library name (without the `typescript-` / `vue-` prefix). The library is created in `libs/typescript/<name>` or `libs/vue/<name>` with the standard `package.json`, `moon.yml` and `tsconfig.json`. TypeScript project references are synced automatically by Moon.
