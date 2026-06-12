@@ -11,7 +11,48 @@
     },
     "description": "Un écosystème conçu pour connecter, organiser et renforcer la résilience des territoires face aux changements climatiques.",
     "discover": "Découvrir",
-    "sponsor_us": "Nous soutenir"
+    "sponsor_us": "Nous soutenir",
+    "badge": "Open-source · Biodiversité · Territoires",
+    "mission": "Notre mission",
+    "scroll_hint": "Faire défiler vers la suite"
+  },
+  "symbiosis": {
+    "kicker": "La symbiose d'un territoire",
+    "title": {
+      "prepend": "Relier celles et ceux qui font ",
+      "key_word": "vivre le territoire",
+      "append": ""
+    },
+    "description": "Producteur·rice·s, citoyen·ne·s, associations, entreprises, collectivités et chercheur·euse·s : Lychen les connecte autour de projets concrets — jardins partagés, circuits courts, données ouvertes — pour faire émerger une symbiose locale, durable et vivante.",
+    "cards": {
+      "hands": {
+        "label": "Producteur·rice·s",
+        "alt": "Mains plantant un jeune semis dans une terre riche"
+      },
+      "women": {
+        "label": "Citoyen·ne·s",
+        "alt": "Deux personnes souriantes tenant un plant dans un jardin urbain"
+      },
+      "market": {
+        "label": "Circuits courts",
+        "alt": "Étal de légumes frais sur un marché local"
+      },
+      "garden": {
+        "label": "Jardins partagés",
+        "alt": "Deux personnes cultivant un potager partagé en ville"
+      },
+      "aerial": {
+        "label": "Territoires",
+        "alt": "Vue aérienne d'un patchwork de parcelles agricoles"
+      }
+    }
+  },
+  "cta": {
+    "kicker": "Et maintenant ?",
+    "title": "Construisons ensemble des territoires robustes",
+    "description": "Lychen est un commun numérique : ouvert, transparent et porté par celles et ceux qui s'y engagent. Devenez partenaire, sponsor ou contributeur — et faites grandir la résilience de votre territoire.",
+    "partner": "Devenir partenaire",
+    "applications": "Explorer les applications"
   },
   "bento": {
     "integrability": {
