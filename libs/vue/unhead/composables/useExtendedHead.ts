@@ -11,6 +11,11 @@ export function useExtendedHead(
 
   const host = import.meta.env.VITE_UNHEAD_HOST;
 
+  // Crawlers (Open Graph, Twitter) require absolute URLs for images.
+  function resolveAbsoluteUrl(url: string): string {
+    return url.startsWith('http') ? url : `https://${host}${url}`;
+  }
+
   function resolveLocalizedUrl(locale: string): string {
     if (route.name) {
       return `https://${host}${router.resolve({ name: route.name, params: { ...route.params, locale } }).path}`;
@@ -19,13 +24,15 @@ export function useExtendedHead(
     return `https://${host}${route.path.replace(localePattern, `/${locale}$2`)}`;
   }
 
+  const canonicalUrl =
+    options?.canonical ??
+    `https://${host}${router.resolve(route.name ? { name: route.name } : route).path}`;
+
   useHead({
     link: [
       {
         rel: 'canonical',
-        href:
-          options?.canonical ??
-          `https://${host}${router.resolve(route.name ? { name: route.name } : route).path}`,
+        href: canonicalUrl,
       },
       ...AVAILABLE_LOCALES.map(
         (locale) =>
@@ -50,7 +57,8 @@ export function useExtendedHead(
     description: t('meta.description'),
     ogDescription: t('meta.description'),
     ogTitle: t('meta.title'),
-    ogImage: options?.ogImage,
+    ogUrl: canonicalUrl,
+    ogImage: options?.ogImage ? resolveAbsoluteUrl(options.ogImage) : undefined,
     twitterCard: 'summary_large_image',
     twitterTitle: t('meta.title'),
     twitterDescription: t('meta.description'),

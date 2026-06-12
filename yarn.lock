@@ -2606,6 +2606,7 @@ __metadata:
   dependencies:
     "@lychen/vue-i18n": "workspace:*"
     "@lychen/vue-router-configs": "workspace:*"
+    "@unhead/vue": "npm:^3.1.3"
     "@vitejs/plugin-vue": "npm:^6.0.7"
     vite: "npm:^8.0.16"
     vite-ssg: "npm:^28.3.0"
@@ -5204,14 +5205,14 @@ __metadata:
   linkType: hard
 
 "@unhead/vue@npm:^2.1.2":
-  version: 2.1.10
-  resolution: "@unhead/vue@npm:2.1.10"
+  version: 2.1.15
+  resolution: "@unhead/vue@npm:2.1.15"
   dependencies:
     hookable: "npm:^6.0.1"
-    unhead: "npm:2.1.10"
+    unhead: "npm:2.1.15"
   peerDependencies:
     vue: ">=3.5.18"
-  checksum: 10c0/00174ebc15e81ce923ecab0e017daad6928f6789ee3676d04a151d3f6f45c09496b8c58eeb20e02aa0c609076beabc6ba0422b633ba43655a5c44ff6837f85f1
+  checksum: 10c0/f0923ec4a01b4449b458c8554c7498e59c137b642b225fca28132948a797db5dc4bc807d64600e5ec17137d73723d3750bafa73935addaf6898bc4f11f89c15b
   languageName: node
   linkType: hard
 
@@ -13011,12 +13012,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unhead@npm:2.1.10":
-  version: 2.1.10
-  resolution: "unhead@npm:2.1.10"
+"unhead@npm:2.1.15":
+  version: 2.1.15
+  resolution: "unhead@npm:2.1.15"
   dependencies:
     hookable: "npm:^6.0.1"
-  checksum: 10c0/c94ebad9ef6fae99fb1c34fe5454960bdc0dfbffcd7998d481a095d3cb1b2579430a1016f85528e74a63a85c0102ea2768331ac79e906c87f2bbc9cb25625ea4
+  checksum: 10c0/ab266e9cda44d0b528ae3b62ce9136cb4f81bd2aa1e2d66431cefe6b41151a811971951e05b4d81e6adea105b65901d9091dffa29d646f1be6246691606b2407
   languageName: node
   linkType: hard
 
