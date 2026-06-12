@@ -22,6 +22,7 @@
     "tsconfig-moon": "^1.4.2",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.60.1",
+    "vitest": "^4.1.8",
     "vue-eslint-parser": "^10.4.0"
   },
   "engines": {
