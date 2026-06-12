@@ -4,7 +4,7 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "9e8acb42a42edbe19b4cda30d18e43b1",
+  "content-hash": "2a1b1b51ea52a0c39cc496796d898947",
   "packages": [
     {
       "name": "api-platform/core",
@@ -1720,7 +1720,7 @@
       "dist": {
         "type": "path",
         "url": "../packages/core",
-        "reference": "75340f7be94dfd12db1875e4e792f98e93918713"
+        "reference": "bc2e533a9186ec84cfdaa37682dee8793677b48e"
       },
       "require": {
         "php": "^8.4"
@@ -1743,7 +1743,7 @@
         }
       ],
       "transport-options": {
-        "symlink": true,
+        "symlink": false,
         "relative": true
       }
     },
@@ -1753,7 +1753,7 @@
       "dist": {
         "type": "path",
         "url": "../packages/model",
-        "reference": "b8d92ddb6fc46eaec3ab2a470117c2dfa6cfa2be"
+        "reference": "fe6b25f0304bcc024be4c383e0aa00fc160bc624"
       },
       "require": {
         "api-platform/core": "^4.1",
@@ -1779,7 +1779,7 @@
         }
       ],
       "transport-options": {
-        "symlink": true,
+        "symlink": false,
         "relative": true
       }
     },
@@ -1789,7 +1789,7 @@
       "dist": {
         "type": "path",
         "url": "../packages/tiptap",
-        "reference": "c280c85098849519ab1961394ec5be7c3bfdbfdc"
+        "reference": "e81bbcd15193211ddfb47100f9074ea38eef7501"
       },
       "require": {
         "ueberdosis/tiptap-php": "^1.4"
@@ -1815,7 +1815,7 @@
         }
       ],
       "transport-options": {
-        "symlink": true,
+        "symlink": false,
         "relative": true
       }
     },
@@ -1825,7 +1825,7 @@
       "dist": {
         "type": "path",
         "url": "../packages/zitadel",
-        "reference": "b0ef2de0a98bd853f4e7f7c2560bcdc33c514092"
+        "reference": "ca7bebc3d9301ad91805c248c22445a839fdb2e1"
       },
       "require": {
         "symfony/dependency-injection": "^7.4",
@@ -1852,7 +1852,7 @@
         }
       ],
       "transport-options": {
-        "symlink": true,
+        "symlink": false,
         "relative": true
       }
     },
