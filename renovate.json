@@ -1,0 +1,86 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":semanticCommits"],
+  "timezone": "Europe/Paris",
+  "schedule": ["before 6am on monday"],
+  "prConcurrentLimit": 5,
+  "dependencyDashboard": true,
+  "rangeStrategy": "bump",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"]
+  },
+  "packageRules": [
+    {
+      "description": "Internal workspace packages are managed by the monorepo, never by Renovate",
+      "matchPackageNames": ["@lychen/**", "lychen/**"],
+      "enabled": false
+    },
+    {
+      "description": "Group Vue ecosystem (Vue, Router, Vite and its plugins, vue-tsc)",
+      "groupName": "vue ecosystem",
+      "matchPackageNames": [
+        "vue",
+        "vue-router",
+        "vue-tsc",
+        "vite",
+        "vite-**",
+        "@vitejs/**",
+        "@vite-pwa/**",
+        "@vue/**"
+      ],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "description": "Group Tailwind CSS and styling utilities",
+      "groupName": "tailwind",
+      "matchPackageNames": [
+        "tailwindcss",
+        "@tailwindcss/**",
+        "tailwind-merge",
+        "class-variance-authority"
+      ],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "description": "Group Tanstack packages (Query, Table)",
+      "groupName": "tanstack",
+      "matchPackageNames": ["@tanstack/**"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "description": "Group lint and format tooling",
+      "groupName": "lint and format tooling",
+      "matchPackageNames": [
+        "eslint",
+        "eslint-**",
+        "@eslint/**",
+        "@types/eslint",
+        "vue-eslint-parser",
+        "typescript-eslint",
+        "prettier",
+        "prettier-**",
+        "globals"
+      ],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "description": "Group Reka UI / shadcn-vue related UI primitives",
+      "groupName": "reka ui",
+      "matchPackageNames": ["reka-ui", "vaul-vue", "embla-carousel-**"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "description": "Group all Composer (Symfony APIs) updates into a single weekly PR",
+      "groupName": "composer packages",
+      "matchManagers": ["composer"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "description": "Group GitHub Actions updates",
+      "groupName": "github actions",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch"]
+    }
+  ]
+}
