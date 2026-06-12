@@ -11,7 +11,48 @@
     },
     "description": "An ecosystem designed to connect, organize, and strengthen the resilience of territories in the face of climate change.",
     "discover": "Discover",
-    "sponsor_us": "Support us"
+    "sponsor_us": "Support us",
+    "badge": "Open source · Biodiversity · Territories",
+    "mission": "Our mission",
+    "scroll_hint": "Scroll to the next section"
+  },
+  "symbiosis": {
+    "kicker": "A territory's symbiosis",
+    "title": {
+      "prepend": "Connecting the people who bring ",
+      "key_word": "a territory to life",
+      "append": ""
+    },
+    "description": "Producers, citizens, associations, companies, local authorities and researchers: Lychen connects them around concrete projects — shared gardens, short food circuits, open data — to grow a living, lasting local symbiosis.",
+    "cards": {
+      "hands": {
+        "label": "Producers",
+        "alt": "Hands planting a young seedling in rich soil"
+      },
+      "women": {
+        "label": "Citizens",
+        "alt": "Two smiling gardeners holding a plant in an urban garden"
+      },
+      "market": {
+        "label": "Short food circuits",
+        "alt": "Fresh vegetable stall at a local market"
+      },
+      "garden": {
+        "label": "Shared gardens",
+        "alt": "Two residents tending a shared vegetable garden in the city"
+      },
+      "aerial": {
+        "label": "Territories",
+        "alt": "Aerial view of a patchwork of farmland plots"
+      }
+    }
+  },
+  "cta": {
+    "kicker": "What's next?",
+    "title": "Let's build robust territories, together",
+    "description": "Lychen is a digital commons: open, transparent and carried by the people who commit to it. Become a partner, sponsor or contributor — and grow your territory's resilience.",
+    "partner": "Become a partner",
+    "applications": "Explore the applications"
   },
   "applications": {
     "title": "A single ecosystem",
