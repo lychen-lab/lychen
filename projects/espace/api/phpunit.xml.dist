@@ -35,7 +35,6 @@
     </source>
 
     <extensions>
-        <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
         <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
         <bootstrap class="Zenstruck\Browser\Test\BrowserExtension"/>
     </extensions>

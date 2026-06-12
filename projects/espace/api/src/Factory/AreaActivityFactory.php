@@ -3,7 +3,6 @@
 namespace App\Factory;
 
 use App\Entity\AreaActivity;
-use Override;
 use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
@@ -11,13 +10,13 @@ use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
  */
 final class AreaActivityFactory extends PersistentObjectFactory
 {
-    #[Override]
+    #[\Override]
     public static function class(): string
     {
         return AreaActivity::class;
     }
 
-    #[Override]
+    #[\Override]
     protected function defaults(): array|callable
     {
         return [
@@ -25,7 +24,7 @@ final class AreaActivityFactory extends PersistentObjectFactory
         ];
     }
 
-    #[Override]
+    #[\Override]
     protected function initialize(): static
     {
         return $this;

@@ -3,7 +3,6 @@
 namespace App\Factory;
 
 use App\Entity\AreaProposal;
-use Override;
 use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
@@ -11,16 +10,17 @@ use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
  */
 final class AreaProposalFactory extends PersistentObjectFactory
 {
-    #[Override]
+    #[\Override]
     public static function class(): string
     {
         return AreaProposal::class;
     }
 
-    #[Override]
+    #[\Override]
     protected function defaults(): array|callable
     {
         $surfaceTotal = self::faker()->numberBetween(5, 1000);
+
         return [
             'description' => self::faker()->text(),
             'title' => self::faker()->text(120),
@@ -32,7 +32,7 @@ final class AreaProposalFactory extends PersistentObjectFactory
         ];
     }
 
-    #[Override]
+    #[\Override]
     protected function initialize(): static
     {
         return $this;
