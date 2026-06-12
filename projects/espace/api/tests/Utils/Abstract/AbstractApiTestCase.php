@@ -4,7 +4,6 @@ namespace App\Tests\Utils\Abstract;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use DAMA\DoctrineTestBundle\Doctrine\DBAL\StaticDriver;
-use JetBrains\PhpStorm\NoReturn;
 use Zenstruck\Browser\HttpOptions;
 use Zenstruck\Browser\KernelBrowser;
 use Zenstruck\Browser\Test\HasBrowser;
@@ -21,6 +20,10 @@ class AbstractApiTestCase extends ApiTestCase
         browser as baseKernelBrowser;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $server
+     */
     protected function browser(array $options = [], array $server = []): KernelBrowser
     {
         return $this->baseKernelBrowser($options, $server)
@@ -31,7 +34,7 @@ class AbstractApiTestCase extends ApiTestCase
             );
     }
 
-    #[NoReturn] protected function commitAndDie(): void
+    protected function commitAndDie(): void
     {
         StaticDriver::commit();
         exit;

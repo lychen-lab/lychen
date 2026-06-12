@@ -31,7 +31,7 @@ use Symfony\Component\ObjectMapper\Attribute\Map;
     parameters: [
         'place' => new QueryParameter(
             filter: new PlaceFilter(),
-        )
+        ),
     ],
 )]
 #[Post(

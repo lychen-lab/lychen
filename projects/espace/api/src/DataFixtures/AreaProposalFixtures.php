@@ -17,7 +17,7 @@ class AreaProposalFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            AreaActivityFixtures::class
+            AreaActivityFixtures::class,
         ];
     }
 }

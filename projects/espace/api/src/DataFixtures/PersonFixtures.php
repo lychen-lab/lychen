@@ -25,7 +25,7 @@ class PersonFixtures extends Fixture
     public const string PERSON_7 = 'person-7';
     public const string ADMIN_1 = 'admin-1';
 
-    public function __construct(private readonly User $user, private readonly string $zitadelProjectId)
+    public function __construct(private readonly User $user)
     {
     }
 
@@ -87,6 +87,9 @@ class PersonFixtures extends Fixture
         return $reference.self::DEFAULT_EMAIL_DOMAIN;
     }
 
+    /**
+     * @param array<string, mixed>|callable $attributes
+     */
     private function createPersonAndAddReference(string $reference, array|callable $attributes = []): Person
     {
         $person = PersonFactory::new()->create($attributes)->_real();

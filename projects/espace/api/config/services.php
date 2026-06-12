@@ -15,8 +15,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->defaults()
         ->autoconfigure()
-        ->autowire()
-        ->bind('$zitadelProjectId', '%env(ZITADEL_PROJECT_ID)%');
+        ->autowire();
 
     $services->load('App\\', __DIR__ . '/../src/*')
         ->exclude([

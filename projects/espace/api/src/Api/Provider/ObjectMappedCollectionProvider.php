@@ -10,14 +10,18 @@ use ApiPlatform\State\ProviderInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 
+/**
+ * @implements ProviderInterface<object>
+ */
 readonly class ObjectMappedCollectionProvider implements ProviderInterface
 {
-
+    /**
+     * @param ProviderInterface<object> $collectionProvider
+     */
     public function __construct(
         private ObjectMapperInterface $objectMapper,
-        #[Autowire(service: CollectionProvider::class)] private ProviderInterface $collectionProvider
-    )
-    {
+        #[Autowire(service: CollectionProvider::class)] private ProviderInterface $collectionProvider,
+    ) {
     }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
@@ -28,6 +32,7 @@ readonly class ObjectMappedCollectionProvider implements ProviderInterface
         foreach ($entities as $entity) {
             $dtos[] = $this->objectMapper->map($entity, $operation->getClass());
         }
+
         return new TraversablePaginator(
             new \ArrayIterator($dtos),
             $entities->getCurrentPage(),

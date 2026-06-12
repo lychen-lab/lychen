@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\AreaProposalRepository;
 use App\Workflow\AreaProposal\AreaProposalWorkflow;
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -28,10 +27,10 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
 
     #[ORM\Column(length: 255)]
     #[Choice(AreaProposalWorkflow::PLACES)]
-    private ?string $place = AreaProposalWorkflow::PLACE_DRAFT;
+    private string $place = AreaProposalWorkflow::PLACE_DRAFT;
 
     #[ORM\Column(nullable: true)]
-    private ?DateTimeImmutable $archivedAt = null;
+    private ?\DateTimeImmutable $archivedAt = null;
 
     #[ORM\Column(nullable: true)]
     #[Positive]
@@ -58,7 +57,7 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
         parent::__construct();
         $this->activities = new ArrayCollection();
     }
-    
+
     public function getTitle(): ?string
     {
         return $this->title;
@@ -95,12 +94,12 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
         return $this;
     }
 
-    public function getArchivedAt(): ?DateTimeImmutable
+    public function getArchivedAt(): ?\DateTimeImmutable
     {
         return $this->archivedAt;
     }
 
-    public function setArchivedAt(?DateTimeImmutable $archivedAt): static
+    public function setArchivedAt(?\DateTimeImmutable $archivedAt): static
     {
         $this->archivedAt = $archivedAt;
 
