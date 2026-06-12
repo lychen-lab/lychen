@@ -1,5 +1,5 @@
+dependsOn:
+  - vue-i18n
 id: vue-unhead-composables
-
 language: typescript
-
 layer: library

@@ -22,20 +22,20 @@
     "@lychen/vue-icons": "workspace:*",
     "@lychen/vue-layouts": "workspace:*",
     "@lychen/vue-tera": "workspace:*",
-    "@tanstack/vue-query": "^5.91.1",
+    "@tanstack/vue-query": "^5.101.0",
     "@tanstack/vue-table": "^8.21.3",
-    "@vueuse/core": "^14.1.0",
-    "vue": "^3.5.25",
-    "vue-router": "^4.6.4"
+    "@vueuse/core": "^14.3.0",
+    "vue": "^3.5.35",
+    "vue-router": "^5.1.0"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.18",
-    "@vite-pwa/assets-generator": "^1.0.0",
-    "@vitejs/plugin-vue": "^6.0.1",
-    "tailwindcss": "^4.1.18",
-    "vite": "^7.3.0",
-    "vite-plugin-mkcert": "^1.17.9",
-    "vite-plugin-pwa": "^1.0.3",
-    "vite-plugin-vue-devtools": "^8.0.2"
+    "@tailwindcss/vite": "^4.3.0",
+    "@vite-pwa/assets-generator": "^1.0.2",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "tailwindcss": "^4.3.0",
+    "vite": "^8.0.16",
+    "vite-plugin-mkcert": "^2.1.0",
+    "vite-plugin-pwa": "^1.3.0",
+    "vite-plugin-vue-devtools": "^8.1.2"
   }
 }

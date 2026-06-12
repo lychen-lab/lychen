@@ -3,7 +3,16 @@
     :legal-menus
     :seo-paragraph="t('footer.seo_paragraph')"
     display-pronunciation
-  />
+  >
+    <span class="text-sm"
+      >Découvrir l'association sur
+      <a
+        href="https://lychen.org"
+        class="underline"
+        >lychen.org</a
+      ></span
+    >
+  </FooterMain>
 </template>
 
 <script lang="ts" setup>

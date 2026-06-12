@@ -20,6 +20,7 @@
         >
           {{ seoParagraph }}
         </p>
+        <slot/>
       </div>
 
       <div class="flex basis-1/4 flex-col items-end justify-start gap-2 text-sm">

@@ -68,6 +68,8 @@ jobs:
           fetch-depth: 0
       - name: Set up Moon Toolchain
         uses: 'moonrepo/setup-toolchain@v0'
+      - name: Enable Corepack
+        run: corepack enable
       - name: 'Deploy'
         env:
           DOKPLOY_API_TOKEN: ${{ secrets.DOKPLOY_API_TOKEN }}
@@ -97,6 +99,8 @@ jobs:
           fetch-depth: 0
       - name: Set up Moon Toolchain
         uses: 'moonrepo/setup-toolchain@v0'
+      - name: Enable Corepack
+        run: corepack enable
       - name: 'Deploy'
         env:
           DOKPLOY_API_TOKEN: ${{ secrets.DOKPLOY_API_TOKEN }}

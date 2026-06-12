@@ -1,15 +1,11 @@
 dependsOn:
-  - typescript-utils
-  - vue-icons
-
+- typescript-utils
+- vue-icons
 id: vue-components-core
-
 language: typescript
-
 tasks:
   shadcn-add:
     command: 'npx shadcn-vue@latest add '
     options:
       interactive: true
-
 layer: library

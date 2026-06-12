@@ -1,15 +1,12 @@
 dependsOn:
-  - typescript-constants
-  - vue-applications
-  - vue-components-app
-  - vue-components-core
-  - vue-components-extra
-  - vue-components-website
-  - vue-i18n
-  - vue-icons
-
+- typescript-constants
+- vue-applications
+- vue-components-app
+- vue-components-core
+- vue-components-extra
+- vue-components-website
+- vue-i18n
+- vue-icons
 id: vue-layouts
-
 language: typescript
-
 layer: library

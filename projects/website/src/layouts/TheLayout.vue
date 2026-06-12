@@ -1,5 +1,5 @@
 <template>
-  <LayoutMain>
+  <LayoutMain :mobile-menu="true">
     <template #navigation>
       <TheNavigation />
     </template>

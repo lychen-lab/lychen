@@ -1,40 +1,40 @@
-$schema: 'https://moonrepo.dev/schemas/tasks.json'
-
+$schema: https://moonrepo.dev/schemas/tasks.json
 tasks:
   format:
     command:
-      - prettier
-      - --no-error-on-unmatched-pattern
-      - .
+    - prettier
+    - --no-error-on-unmatched-pattern
+    - .
     inputs:
-      - '**/*.{vue,ts,js,yaml,yml,json,md}'
-      - '!**/build/'
-      - '!**/dist/'
-      - '!**/playwright-report/'
-      - '!**/vendor/'
-      - '!**/.vite-ssg-temp/'
-
+    - '**/*.{vue,ts,js,yaml,yml,json,md}'
+    - '!**/build/'
+    - '!**/dist/'
+    - '!**/playwright-report/'
+    - '!**/vendor/'
+    - '!**/.vite-ssg-temp/'
   format-fix:
     deps:
-      - args: '--write'
-        target: 'format'
-
+    - args:
+      - --write
+      target: format
   lint:
     command:
-      - eslint
-      - --report-unused-disable-directives
-      - --no-error-on-unmatched-pattern
-      - --exit-on-fatal-error
-      - .
+    - eslint
+    - --report-unused-disable-directives
+    - --no-error-on-unmatched-pattern
+    - --exit-on-fatal-error
+    - .
     inputs:
-      - '**/*.{vue,ts,js,yaml,yml,json,md}'
-      - '!**/build/'
-      - '!**/dist/'
-      - '!**/vendor/'
-      - '!**/playwright-report/'
-      - '!**/.vite-ssg-temp/'
-
+    - '**/*.{vue,ts,js,yaml,yml,json,md}'
+    - '!**/build/'
+    - '!**/dist/'
+    - '!**/vendor/'
+    - '!**/playwright-report/'
+    - '!**/.vite-ssg-temp/'
   lint-fix:
     deps:
-      - args: '--fix'
-        target: 'lint'
+    - args:
+      - --fix
+      target: lint
+inheritedBy:
+  stack: frontend

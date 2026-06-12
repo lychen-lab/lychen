@@ -13,21 +13,13 @@ dependsOn:
   - vue-router-configs
   - vue-tera
   - vue-unhead-composables
-
 env:
   PRODUCTION_DOKPLOY_COMPOSE_ID: LulVMVE94GbMfcW4RLo7s
   STAGING_DOKPLOY_COMPOSE_ID: 1XUUxxSsvm8GRr2g7W3ic
-
 id: tera-website
-
 language: typescript
-
 layer: application
-
 stack: frontend
-
 tags:
   - ssg
   - asset
-  #- docker
-  #- dokploy

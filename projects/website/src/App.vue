@@ -20,9 +20,9 @@ usePreferredColorScheme();
 const { locale } = useI18nExtended();
 
 useHead({
-  titleTemplate: 'Lychen | %s',
+  titleTemplate: 'lychen | %s',
   htmlAttrs: {
-    lang: locale,
+    lang: () => locale.value,
   },
   templateParams: {
     schemaOrg: {
@@ -32,11 +32,11 @@ useHead({
 });
 
 defineOrganization({
-  name: 'Lychen',
+  name: 'lychen',
   logo: '/logos/lychen/logo-lychen.svg',
 });
 defineWebSite({
-  name: 'Lychen',
+  name: 'lychen',
 });
 defineWebPage();
 </script>

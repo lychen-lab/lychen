@@ -1,9 +1,6 @@
 dependsOn:
-  - typescript-utils
-  - vue-color-scheme
-
+- typescript-utils
+- vue-color-scheme
 id: vue-components-app
-
 language: typescript
-
 layer: library

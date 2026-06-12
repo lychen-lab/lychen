@@ -1,8 +1,5 @@
 dependsOn:
-  - vue-drawio-components
-
+- vue-drawio-components
 id: vue-drawio-tera
-
 language: typescript
-
 layer: library

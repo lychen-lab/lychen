@@ -1,8 +1,5 @@
 id: lychen-php-tiptap
-
 language: php
-
 layer: library
-
 tags:
-  - composer
+- composer

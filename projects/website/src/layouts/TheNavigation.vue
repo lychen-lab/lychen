@@ -22,7 +22,7 @@
           <NavigationMenuItem>
             <NavigationMenuTrigger>{{ t(`navigation.initiatives.title`) }}</NavigationMenuTrigger>
             <NavigationMenuContent
-              class="bg-surface-container/70 grid grid-cols-2 gap-4 rounded-lg p-4 backdrop-blur-lg md:w-[600px]"
+              class="bg-surface-container/70 grid grid-cols-2 gap-4 rounded-lg p-4 backdrop-blur-lg md:w-150"
             >
               <div class="h-50 overflow-hidden rounded-lg">
                 <img
@@ -51,7 +51,7 @@
           <NavigationMenuItem>
             <NavigationMenuTrigger>{{ t(`navigation.about.title`) }}</NavigationMenuTrigger>
             <NavigationMenuContent
-              class="bg-surface-container/70 grid grid-cols-2 gap-4 rounded-lg p-4 backdrop-blur-lg md:w-[600px]"
+              class="bg-surface-container/70 grid grid-cols-2 gap-4 rounded-lg p-4 backdrop-blur-lg md:w-150"
             >
               <div class="flex flex-col justify-between gap-4">
                 <NavigationMenuSubLink
@@ -100,6 +100,17 @@
     </div>
 
     <div class="flex flex-row items-center gap-2">
+      <a
+        href="https://tally.so/r/D4vJ85"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Button
+          :label="t('preregistration')"
+          size="sm"
+          variant="outlined"
+        />
+      </a>
       <a
         :href="LINK.HelloAssoDonation"
         target="_blank"

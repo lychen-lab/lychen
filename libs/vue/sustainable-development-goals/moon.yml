@@ -1,8 +1,5 @@
 dependsOn:
-  - vue-i18n
-
+- vue-i18n
 id: vue-sustainable-development-goals
-
 language: typescript
-
 layer: library

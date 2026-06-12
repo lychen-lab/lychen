@@ -1,16 +1,18 @@
 tasks:
   create-symlink-on-content:
     command:
-      - ln
-      - -sfn
-      - $projectRoot/content/
+    - ln
+    - -sfn
+    - $projectRoot/content/
     options:
       cache: false
-
   create-symlink-on-icons:
     command:
-      - ln
-      - -sfn
-      - $projectRoot/content/icons
+    - ln
+    - -sfn
+    - $projectRoot/content/icons
     options:
       cache: false
+inheritedBy:
+  language: assets
+  layer: library

@@ -122,7 +122,7 @@ jobs:
         id: project-paths
         run: |
           # Get project path from moon
-          PROJECT_PATH=$(moon project ${{ matrix.projects }} --json | jq -r '.source')
+          PROJECT_PATH=$(moon project ${{ matrix.projects }} | jq -r '.source')
 
           # Set cache paths for all dependency folders
           echo "cache_paths<<EOF" >> $GITHUB_OUTPUT
@@ -252,7 +252,7 @@ jobs:
       - name: Get project path
         id: project-paths
         run: |
-          PROJECT_PATH=$(moon project ${{ matrix.projects }} --json | jq -r '.source')
+          PROJECT_PATH=$(moon project ${{ matrix.projects }} | jq -r '.source')
           echo "project_path=$PROJECT_PATH" >> $GITHUB_OUTPUT
 
       - name: Download vendor directories
@@ -300,7 +300,7 @@ jobs:
       - name: Get project path
         id: project-paths
         run: |
-          PROJECT_PATH=$(moon project ${{ matrix.projects }} --json | jq -r '.source')
+          PROJECT_PATH=$(moon project ${{ matrix.projects }} | jq -r '.source')
           echo "project_path=$PROJECT_PATH" >> $GITHUB_OUTPUT
 
       - name: Download vendor directories
@@ -345,7 +345,7 @@ jobs:
       - name: Get project path
         id: project-paths
         run: |
-          PROJECT_PATH=$(moon project ${{ matrix.projects }} --json | jq -r '.source')
+          PROJECT_PATH=$(moon project ${{ matrix.projects }} | jq -r '.source')
           echo "project_path=$PROJECT_PATH" >> $GITHUB_OUTPUT
 
       - name: Download vendor directories

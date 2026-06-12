@@ -1,16 +1,11 @@
-$schema: './cache/schemas/toolchain.json'
-
-node:
-  addEnginesConstraint: true
+$schema: ./cache/schemas/toolchain.json
+javascript:
   dedupeOnLockfileChange: true
   inferTasksFromScripts: false
   packageManager: yarn
   syncPackageManagerField: true
   syncProjectWorkspaceDependencies: true
-  version: 24.12.0
-  yarn:
-    version: 4.12.0
-
+node: {}
 typescript:
   createMissingConfig: true
   includeProjectReferenceSources: false
@@ -18,3 +13,5 @@ typescript:
   routeOutDirToCache: true
   syncProjectReferences: true
   syncProjectReferencesToPaths: false
+yarn:
+  version: 4.12.0

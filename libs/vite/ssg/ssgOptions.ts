@@ -14,10 +14,9 @@ export const ssgOptions: ViteSSGOptions = {
   },
   dirStyle: 'nested',
   onFinished() {
-    const host = process.env.VITE_UNHEAD_HOST;
-    if (!host) {
-      throw new Error('VITE_UNHEAD_HOST environment variable is required for sitemap generation');
-    }
+    // Fall back to the literal ${HOST} placeholder so a host-agnostic build can be
+    // produced; the docker entrypoint substitutes it (envsubst) at container start.
+    const host = process.env.VITE_UNHEAD_HOST || '${HOST}';
     generateSitemap({ hostname: `https://${host}` });
   },
 };

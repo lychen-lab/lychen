@@ -1,9 +1,13 @@
 {
   "footer": {
-    "seo_paragraph": "",
+    "seo_paragraph": "Espace est un collectif d'autonomie alimentaire qui met en relation des propriétaires de terrains, jardins et caves avec des personnes souhaitant cultiver. Ensemble, nous créons des liens sociaux et développons une alimentation locale et durable.",
     "legal_menus": {
       "terms_of_use": "Conditions générales d'utilisation",
       "privacy_policy": "Protection des données"
     }
+  },
+  "nav": {
+    "cta_proposal": "Partager mon espace",
+    "cta_request": "Trouver un espace"
   }
 }

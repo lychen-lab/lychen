@@ -1,6 +1,35 @@
 {
   "meta": {
-    "title": "",
-    "description": ""
+    "title": "Food Autonomy Collective",
+    "description": "Find a cultivation space or share yours to increase food autonomy and create social links."
+  },
+  "hero": {
+    "description": "We are actively looking for land, gardens, cellars and other places to increase food autonomy and create social links.",
+    "cta_share": "Share your space",
+    "email_prefix": "or send us an email at"
+  },
+  "search": {
+    "title": "Find a cultivation space",
+    "subtitle": "Available spaces soon here, in the meantime tell us about your search",
+    "cta_form": "Answer the questionnaire",
+    "placeholder_city": "Search by city",
+    "btn_search": "Search",
+    "stats_count": "10 places in France",
+    "btn_all": "See all spaces",
+    "result_1_title": "Cultivation land",
+    "result_2_title": "Mushroom cellar",
+    "result_3_title": "Flowers and trees",
+    "result_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante feugiat finibus."
+  },
+  "cta_bottom": {
+    "line_1": "Currently,",
+    "line_2": "humans",
+    "line_3": "are looking for a cultivation space.",
+    "cta_share": "Share your space"
+  },
+  "example": {
+    "title": "Example in Annecy",
+    "paragraph": "Jennifer Geoffroy and her partner, in Annecy, have brought Eric's garden back to life, an octogenarian who could no longer maintain it. From this beautiful encounter was born an intergenerational collaboration, transforming this garden into a true sustainable ecosystem. Each space was redesigned taking into account environmental constraints and existing elements. The pond was redeveloped, hedges and vegetable areas gradually rehabilitated. Today, the garden is based on principles of resilience: permanent soil cover, layered crops providing shade for sensitive plants and ecological resource management.",
+    "video_title": "Gardening differently"
   }
 }

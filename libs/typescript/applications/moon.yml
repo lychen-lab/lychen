@@ -1,10 +1,7 @@
 dependsOn:
-  - typescript-robust
-  - typescript-tera-core
-  - typescript-utils
-
+- typescript-robust
+- typescript-tera-core
+- typescript-utils
 id: typescript-applications
-
 language: typescript
-
 layer: library

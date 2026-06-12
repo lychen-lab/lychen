@@ -1,16 +1,13 @@
 dependsOn:
-  - i18n-tera
-  - typescript-tera-api-sdk
-  - typescript-tera-core
-  - typescript-utils
-  - typescript-zitadel
-  - vue-components-core
-  - vue-composables
-  - vue-i18n
-  - vue-icons
-
+- i18n-tera
+- typescript-tera-api-sdk
+- typescript-tera-core
+- typescript-utils
+- typescript-zitadel
+- vue-components-core
+- vue-composables
+- vue-i18n
+- vue-icons
 id: vue-tera
-
 language: typescript
-
 layer: library

@@ -1,8 +1,5 @@
 id: lychen-php-model
-
 language: php
-
 layer: library
-
 tags:
-  - composer
+- composer

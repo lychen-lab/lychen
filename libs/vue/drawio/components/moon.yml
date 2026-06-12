@@ -1,8 +1,5 @@
 dependsOn:
-  - vue-i18n
-
+- vue-i18n
 id: vue-drawio-components
-
 language: typescript
-
 layer: library

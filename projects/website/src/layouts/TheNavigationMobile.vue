@@ -80,6 +80,17 @@
         {{ t(`navigation.blog.title`) }}
       </NavigationMenuLink>
     </a>
+    <a
+      href="https://tally.so/r/D4vJ85"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <Button
+        :label="t('preregistration')"
+        class="w-full"
+        variant="outlined"
+      />
+    </a>
   </div>
 </template>
 
@@ -99,6 +110,7 @@ import { ROUTE_TEAM } from '@/views/team';
 import { ROUTE_CHARTER } from '@/views/charter';
 import { LINK } from '@lychen/typescript-constants/Link';
 import { NavigationMenuLink } from '@lychen/vue-components-core/navigation-menu';
+import Button from '@lychen/vue-components-core/button/Button.vue';
 
 const { t, i18nRoute } = usePrefixedI18n(CONFIG);
 </script>

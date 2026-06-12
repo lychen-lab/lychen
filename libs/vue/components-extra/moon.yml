@@ -1,9 +1,6 @@
 dependsOn:
-  - typescript-utils
-  - vue-components-core
-
+- typescript-utils
+- vue-components-core
 id: vue-components-extra
-
 language: typescript
-
 layer: library

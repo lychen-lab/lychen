@@ -1,14 +1,10 @@
 env:
   OPENAPI_SCHEMA_JSON: ../../../../projects/tera/api/openapi_docs.json
-
 id: typescript-tera-api-sdk
-
 language: typescript
-
 tasks:
   generate-api:
-    command: 'npx openapi-typescript ${OPENAPI_SCHEMA_JSON} -o ./generated/tera-api.ts --enum-values --enum' #do not dedupe enums cause name are not relevant
+    command: npx openapi-typescript ${OPENAPI_SCHEMA_JSON} -o ./generated/tera-api.ts --enum-values --enum
     deps:
-      - tera-api:export-openapi
-
+    - tera-api:export-openapi
 layer: library

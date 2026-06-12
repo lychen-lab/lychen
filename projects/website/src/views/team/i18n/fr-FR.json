@@ -1,6 +1,8 @@
 {
-  "title": "Notre équipe",
-  "header_subtitle": "Développer la robustesse et la résilience des territoires face aux changements climatiques.",
+  "meta": {
+    "title": "Notre équipe",
+    "description": "Développer la robustesse et la résilience des territoires face aux changements climatiques."
+  },
   "team_section": {
     "title": "L'équipe Lychen",
     "description": "Nous sommes une équipe dédiée à la création d'un écosystème numérique open-source. Notre mission : connecter citoyens, producteurs, associations et collectivités pour favoriser une agriculture durable et la protection de la biodiversité."
@@ -19,7 +21,6 @@
       "nadege_crepel": "Transforme les idées abstraites en stratégies tangibles. Apporte couleur et créativité à tout ce qu'elle touche.",
       "noellie": "L'étincelle qui allume nos projets les plus ambitieux. Sa curiosité n'a d'égal que son enthousiasme.",
       "luc_auvigne": "Architecte du code, construisant des fondations solides une ligne à la fois. Pragmatique et efficace.",
-      "justine_delalleau": "L'œil du design. Elle s'assure que chaque pixel est à sa place et que l'expérience utilisateur est impeccable.",
       "thomas": "Le bâtisseur. Transforme les concepts en réalité structurelle avec une précision d'ingénieur.",
       "agnes_balquet": "La Picasso de l'équipe. Favorise la cohérence graphique de l'écosystème."
     }

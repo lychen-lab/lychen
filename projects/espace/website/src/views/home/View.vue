@@ -16,17 +16,23 @@
         >
           <IconHeartHandshake class="size-18!" />
           <h2 class="text-on-white text-xl font-bold">
-            Nous recherchons activement des terrains, jardins, caves et autres lieux pour permettre
-            d'augmenter l'autonomie alimentaire et créer des liens sociaux.
+            {{ t('hero.description') }}
           </h2>
           <div class="flex flex-col items-start gap-2">
-            <Button size="lg">Partagez votre espace</Button>
+            <a
+              :href="LINK.LandProposalForm"
+              target="_blank"
+            >
+              <Button size="lg"
+                >{{ t('hero.cta_share') }} <template #icon><IconArrowRight /></template
+              ></Button>
+            </a>
             <p class="text-xs opacity-80">
-              ou envoyez nous un email sur
+              {{ t('hero.email_prefix') }}
               <a
-                href="mailto:espace@lychen.org"
+                href="mailto:contact@lychen.org"
                 class="underline"
-                >espace@lychen.org</a
+                >contact@lychen.org</a
               >
             </p>
           </div>
@@ -35,8 +41,19 @@
     </div>
   </Container>
   <Container class="flex flex-col items-start justify-center gap-8">
-    <Title variant="h1">Trouvez un espace de culture</Title>
-    <div class="flex w-1/3 flex-row items-center gap-2">
+    <Title variant="h1">{{ t('search.title') }}</Title>
+    <div class="flex flex-col items-start gap-2 md:flex-row md:items-center">
+      <Paragraph>{{ t('search.subtitle') }}</Paragraph>
+      <a
+        :href="LINK.LandRequestForm"
+        target="_blank"
+      >
+        <Button
+          >{{ t('search.cta_form') }} <template #icon><IconArrowRight /></template
+        ></Button>
+      </a>
+    </div>
+    <div class="flex w-1/3 flex-row items-center gap-2 opacity-20">
       <Popover>
         <PopoverTrigger as-child>
           <Button
@@ -56,14 +73,14 @@
         </PopoverContent>
       </Popover>
 
-      <Input placeholder="Rechercher par ville" />
+      <Input :placeholder="t('search.placeholder_city')" />
       <Button
         size="sm"
-        label="Rechercher"
+        :label="t('search.btn_search')"
         ><template #icon><IconSearch /></template
       ></Button>
     </div>
-    <div class="flex w-full flex-row gap-4 overflow-x-scroll pb-2">
+    <div class="flex w-full flex-row gap-4 overflow-x-scroll pb-2 opacity-20">
       <CardLandProposal
         v-for="item in fakeLandProposals"
         :key="item.uuid"
@@ -71,37 +88,42 @@
         display-city
       />
     </div>
-    <div class="flex w-full flex-row items-center justify-start gap-4">
-      <Badge>10 lieux en France</Badge>
+    <div class="flex w-full flex-row items-center justify-start gap-4 opacity-20">
+      <Badge>{{ t('search.stats_count') }}</Badge>
       <Button
         variant="ghost"
         size="sm"
-        >Voir tous les espaces <template #icon><IconArrowRight /></template
+        >{{ t('search.btn_all') }} <template #icon><IconArrowRight /></template
       ></Button>
     </div>
   </Container>
   <Container class="flex flex-col items-start justify-center gap-8 text-left">
     <h2 class="text-[3rem]/[3rem] lg:text-[5rem]/[5rem]">
-      Actuellement,
+      {{ t('cta_bottom.line_1') }}
       <span
         class="font-lexend bg-linear-to-r from-purple-500 via-orange-300 to-sky-500 bg-clip-text font-extrabold text-transparent"
-        >10 humains</span
+        >{{ t('cta_bottom.line_2') }}</span
       >
-      recherchent un espace de culture.
+      {{ t('cta_bottom.line_3') }}
     </h2>
-    <Button>Partagez votre espace</Button>
+    <a
+      :href="LINK.LandProposalForm"
+      target="_blank"
+    >
+      <Button size="lg"
+        >{{ t('cta_bottom.cta_share') }} <template #icon><IconArrowRight /></template
+      ></Button>
+    </a>
   </Container>
   <Container
     class="flex flex-col items-center justify-center gap-8 lg:grid lg:grid-cols-3 lg:flex-row lg:gap-8"
   >
     <div class="flex flex-col items-start justify-center gap-4">
-      <Title variant="h2">Exemple sur Annecy</Title>
+      <Title variant="h2">{{ t('example.title') }}</Title>
       <Paragraph
         variant="website-default"
         class="opacity-80"
-        >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante feugiat
-        finibus. Nullam nec metus vel ante feugiat finibus. Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit. Nullam nec metus vel ante feugiat finibus.</Paragraph
+        >{{ t('example.paragraph') }}</Paragraph
       >
     </div>
     <div class="flex items-center justify-center lg:col-span-2">
@@ -110,7 +132,7 @@
         width="100%"
         height="auto"
         src="https://www.youtube.com/embed/t43-zErA2V8?si=3WqOKdcuc0Z992Hx&amp;controls=0"
-        title="Jardiner autrement"
+        :title="t('example.video_title')"
         frameborder="0"
         allow="
           accelerometer;
@@ -129,6 +151,7 @@
 </template>
 
 <script lang="ts" setup>
+import { type ComputedRef, computed } from 'vue';
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import {
   Card as CardLandProposal,
@@ -148,20 +171,23 @@ import planetEarth from './assets/planet-earth.png';
 import planetPluton from './assets/planet-pluton.png';
 import planetMars from './assets/planet-mars.png';
 import { Popover, PopoverContent, PopoverTrigger } from '@lychen/vue-components-core/popover';
+import { LINK } from '@lychen/typescript-espace/constants/App';
+import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
 
 const { t } = usePrefixedI18n(CONFIG);
+
+useExtendedHead(t);
 
 const planets = [
   { id: 'earth', img: planetEarth },
   { id: 'mars', img: planetMars },
   { id: 'pluton', img: planetPluton },
 ];
-const fakeLandProposals: LandProposal[] = [
+const fakeLandProposals: ComputedRef<LandProposal[]> = computed(() => [
   {
     uuid: '1',
-    title: 'Terrain de culture',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante feugiat finibus. Nullam nec metus vel ante feugiat finibus.',
+    title: t('search.result_1_title'),
+    description: t('search.result_description'),
     surface: 130,
     altitude: 678,
     city: 'Lille',
@@ -169,9 +195,8 @@ const fakeLandProposals: LandProposal[] = [
   },
   {
     uuid: '2',
-    title: 'Cave à champignons',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante feugiat finibus. Nullam nec metus vel ante feugiat finibus.',
+    title: t('search.result_2_title'),
+    description: t('search.result_description'),
     surface: 40,
     altitude: 150,
     city: 'Toulouse',
@@ -179,8 +204,8 @@ const fakeLandProposals: LandProposal[] = [
   },
   {
     uuid: '3',
-    title: 'Fleurs et arbres',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: t('search.result_3_title'),
+    description: t('search.result_description'),
     surface: 75,
     altitude: 0,
     city: 'Lyon',
@@ -188,14 +213,14 @@ const fakeLandProposals: LandProposal[] = [
   },
   {
     uuid: '4',
-    title: 'Terrain de culture',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: t('search.result_1_title'),
+    description: t('search.result_description'),
     surface: 37,
     altitude: 345,
     city: 'Grenoble',
     image: 'https://images.pexels.com/photos/1084540/pexels-photo-1084540.jpeg',
   },
-];
+]);
 </script>
 
 <style lang="css" scoped></style>
