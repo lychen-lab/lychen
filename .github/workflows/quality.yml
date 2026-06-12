@@ -32,7 +32,6 @@ jobs:
     if: ${{ needs.define-matrix.outputs.projects != '[]' && needs.define-matrix.outputs.projects != '' }}
     name: 'Build image'
     needs: define-matrix
-    continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
