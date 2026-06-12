@@ -21,7 +21,7 @@ final class PersonFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'authId' => Uuid::v4(),
+            'authId' => Uuid::v7(),
             'email' => faker()->email(),
         ];
     }

@@ -29,7 +29,7 @@ export default defineConfig(({ isSsrBuild, mode }) => {
       tailwindcss(),
       EnvRuntime(),
       mkcert({
-        hosts: ['espace.lychen.local'],
+        hosts: [process.env.VITE_UNHEAD_HOST || 'localhost'],
       }),
       vue({
         template: {
