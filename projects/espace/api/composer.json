@@ -84,7 +84,7 @@
             "type": "path",
             "url": "../packages/*",
             "options": {
-                "symlink": true,
+                "symlink": false,
                 "versions": {
                     "lychen/model": "0.0.0",
                     "lychen/zitadel": "0.0.0",

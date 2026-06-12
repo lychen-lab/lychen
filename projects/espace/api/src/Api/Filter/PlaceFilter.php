@@ -2,7 +2,6 @@
 
 namespace App\Api\Filter;
 
-
 use ApiPlatform\Doctrine\Orm\Filter\FilterInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
@@ -18,13 +17,13 @@ final class PlaceFilter implements FilterInterface
         $property = 'place';
 
         $alias = $queryBuilder->getRootAliases()[0];
-        $field = $alias . '.' . $property;
+        $field = $alias.'.'.$property;
 
         $parameterName = $queryNameGenerator->generateParameterName($property);
 
         $queryBuilder
-            ->andWhere($queryBuilder->expr()->like('LOWER(' . $field . ')', ':' . $parameterName))
-            ->setParameter($parameterName, '%' . strtolower($value) . '%');
+            ->andWhere($queryBuilder->expr()->like('LOWER('.$field.')', ':'.$parameterName))
+            ->setParameter($parameterName, '%'.strtolower($value).'%');
     }
 
     public function getDescription(string $resourceClass): array

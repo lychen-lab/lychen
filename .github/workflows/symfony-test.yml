@@ -23,19 +23,18 @@ jobs:
     name: 'Gather affected projects'
     runs-on: ubuntu-latest
     outputs:
-      projects: ${{ steps.projects.outputs.projects }}
+      projects: ${{ steps.gather-projects.outputs.projects }}
     steps:
       - uses: 'actions/checkout@v4'
         with:
           fetch-depth: 0
       - name: Set up Moon Toolchain
         uses: 'moonrepo/setup-toolchain@v0'
-      - run: moon query projects --tags symfony --affected --downstream deep
-      - name: Define Projects
-        id: projects
-        run: |
-          echo "projects=$(moon query projects --tags symfony --affected --downstream deep | jq -r '.projects | map(.id | @json) | join(",")' | sed 's/^/\[/; s/$/\]/')" >> "$GITHUB_OUTPUT"
-      - run: echo ${{ steps.projects.outputs.projects }}
+      - id: gather-projects
+        uses: ./.github/actions/moon-affected-projects-list
+        with:
+          layer: application
+          tags: symfony
 
   build-and-push-test-image:
     if: ${{ needs.define-matrix.outputs.projects != '[]' && needs.define-matrix.outputs.projects != '' }}
@@ -122,7 +121,7 @@ jobs:
         id: project-paths
         run: |
           # Get project path from moon
-          PROJECT_PATH=$(moon project ${{ matrix.projects }} | jq -r '.source')
+          PROJECT_PATH=$(moon project ${{ matrix.projects }} --json | jq -r '.source')
 
           # Set cache paths for all dependency folders
           echo "cache_paths<<EOF" >> $GITHUB_OUTPUT
@@ -252,7 +251,7 @@ jobs:
       - name: Get project path
         id: project-paths
         run: |
-          PROJECT_PATH=$(moon project ${{ matrix.projects }} | jq -r '.source')
+          PROJECT_PATH=$(moon project ${{ matrix.projects }} --json | jq -r '.source')
           echo "project_path=$PROJECT_PATH" >> $GITHUB_OUTPUT
 
       - name: Download vendor directories
@@ -297,7 +296,7 @@ jobs:
       - name: Get project path
         id: project-paths
         run: |
-          PROJECT_PATH=$(moon project ${{ matrix.projects }} | jq -r '.source')
+          PROJECT_PATH=$(moon project ${{ matrix.projects }} --json | jq -r '.source')
           echo "project_path=$PROJECT_PATH" >> $GITHUB_OUTPUT
 
       - name: Download vendor directories
@@ -348,7 +347,7 @@ jobs:
       - name: Get project path
         id: project-paths
         run: |
-          PROJECT_PATH=$(moon project ${{ matrix.projects }} | jq -r '.source')
+          PROJECT_PATH=$(moon project ${{ matrix.projects }} --json | jq -r '.source')
           echo "project_path=$PROJECT_PATH" >> $GITHUB_OUTPUT
 
       - name: Download vendor directories
@@ -358,7 +357,7 @@ jobs:
           path: ${{ steps.project-paths.outputs.project_path }}
 
       - name: Security tests
-        run: moon ${{ matrix.projects }}:ci-test-phpunit -- tests/Security
+        run: moon run ${{ matrix.projects }}:ci-test-phpunit -- tests/Security
 
   phpunit-functional:
     name: '${{ matrix.projects }} | Functional PHPUnit'
@@ -393,7 +392,7 @@ jobs:
       - name: Get project path
         id: project-paths
         run: |
-          PROJECT_PATH=$(moon project ${{ matrix.projects }} | jq -r '.source')
+          PROJECT_PATH=$(moon project ${{ matrix.projects }} --json | jq -r '.source')
           echo "project_path=$PROJECT_PATH" >> $GITHUB_OUTPUT
 
       - name: Download vendor directories
@@ -403,4 +402,4 @@ jobs:
           path: ${{ steps.project-paths.outputs.project_path }}
 
       - name: Functional tests
-        run: moon ${{ matrix.projects }}:ci-test-phpunit -- tests/Functional
+        run: moon run ${{ matrix.projects }}:ci-test-phpunit -- tests/Functional
