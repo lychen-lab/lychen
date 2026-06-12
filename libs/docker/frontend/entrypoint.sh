@@ -18,5 +18,15 @@ find /usr/share/nginx/html -name "*.html" | while read -r file; do
   envsubst '${HOST}' < "$file" > "$file.tmp" && mv "$file.tmp" "$file"
 done
 
+# Replace ${HOST} in sitemap.xml. vite-ssg-sitemap passes the hostname through
+# new URL(), which lowercases it, so the baked placeholder ends up as ${host}.
+SITEMAP_FILE="/usr/share/nginx/html/sitemap.xml"
+if [ -f "$SITEMAP_FILE" ]; then
+  echo "Replacing variables in $SITEMAP_FILE..."
+  sed -e "s|\${HOST}|${HOST}|g" -e "s|\${host}|${HOST}|g" "$SITEMAP_FILE" > "$SITEMAP_FILE.tmp" && mv "$SITEMAP_FILE.tmp" "$SITEMAP_FILE"
+else
+  echo "Warning: $SITEMAP_FILE not found."
+fi
+
 # Execute the CMD from Dockerfile (usually nginx)
 exec "$@"

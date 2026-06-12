@@ -25,7 +25,5 @@ vcs:
   defaultBranch: main
   hooks:
     pre-commit:
-    - moon run :format-fix --affected
-    - moon run :lint-fix --affected
-    - git add -u
+    - bash .moon/scripts/pre-commit-fix.sh
   sync: true

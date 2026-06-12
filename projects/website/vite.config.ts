@@ -20,7 +20,7 @@ export default defineConfig(({ isSsrBuild, mode }) => {
       'window.__PRODUCTION__APP__CONF__': isSsrBuild
         ? JSON.stringify({
             VITE_APP_ID: process.env.VITE_APP_ID ?? env.VITE_APP_ID,
-            VITE_UNHEAD_HOST: process.env.VITE_UNHEAD_HOST ?? env.VITE_UNHEAD_HOST,
+            VITE_UNHEAD_HOST: process.env.VITE_UNHEAD_HOST || env.VITE_UNHEAD_HOST || '${HOST}',
           })
         : 'window.__PRODUCTION__APP__CONF__',
     },
