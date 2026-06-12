@@ -7,7 +7,12 @@
 <script setup lang="ts">
 import { usePreferredColorScheme } from '@lychen/vue-color-scheme/composables/usePreferredColorScheme';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { defineOrganization, defineWebPage, defineWebSite } from '@unhead/schema-org';
+import {
+  defineOrganization,
+  defineWebPage,
+  defineWebSite,
+  useSchemaOrg,
+} from '@unhead/schema-org/vue';
 import { useHead } from '@unhead/vue';
 import { defineAsyncComponent } from 'vue';
 
@@ -26,17 +31,19 @@ useHead({
   },
   templateParams: {
     schemaOrg: {
-      host: import.meta.env.VITE_UNHEAD_HOST,
+      host: `https://${import.meta.env.VITE_UNHEAD_HOST}`,
     },
   },
 });
 
-defineOrganization({
-  name: 'lychen',
-  logo: '/logos/lychen/logo-lychen.svg',
-});
-defineWebSite({
-  name: 'lychen',
-});
-defineWebPage();
+useSchemaOrg([
+  defineOrganization({
+    name: 'lychen',
+    logo: '/logos/lychen/logo-lychen.svg',
+  }),
+  defineWebSite({
+    name: 'lychen',
+  }),
+  defineWebPage(),
+]);
 </script>
