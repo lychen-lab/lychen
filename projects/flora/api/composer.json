@@ -51,7 +51,7 @@
     "symfony/property-access": "7.3.*",
     "symfony/property-info": "7.3.*",
     "symfony/rate-limiter": "7.3.*",
-    "symfony/runtime": "7.3.*",
+    "symfony/runtime": "7.4.*",
     "symfony/security-bundle": "7.3.*",
     "symfony/serializer": "7.3.*",
     "symfony/translation": "7.3.*",
