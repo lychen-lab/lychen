@@ -5,29 +5,55 @@
   },
   "title": "Label Robust",
   "hero": {
-    "title": "Robust : L'Échelle de la Résilience et de l'Autonomie",
-    "description": "Un seul label pour mesurer la robustesse, de la transition à la régénération du vivant. Une échelle unique de 1 à 10 pour tous les systèmes (villes, entreprises, associations, produits)."
+    "badge": "Le label du vivant",
+    "title": {
+      "prepend": "Robust : l'échelle de la ",
+      "key_word": "résilience",
+      "append": " et de l'autonomie"
+    },
+    "description": "Un seul label pour mesurer la robustesse, de la transition à la régénération du vivant. Une échelle unique de 1 à 10 pour tous les systèmes (villes, entreprises, associations, produits).",
+    "scale_hint": "Transition → Préservation → Régénération",
+    "stats": {
+      "levels": { "value": "1 → 10", "label": "Niveaux de robustesse" },
+      "tranches": { "value": "3", "label": "Grandes étapes" },
+      "scope": { "value": "∞", "label": "Systèmes concernés" }
+    }
+  },
+  "scale": {
+    "kicker": "L'échelle Robust",
+    "title": {
+      "prepend": "De la transition à la ",
+      "key_word": "régénération",
+      "append": " du vivant"
+    },
+    "description": "Chaque niveau marque une avancée concrète. On progresse pas à pas, d'un premier sursaut de transition jusqu'à une contribution active à la restauration des écosystèmes."
   },
   "tranches": {
     "transition": {
       "title": "Transition",
       "subtitle": "Niveaux 1 à 3",
-      "description": "Le système amorce son changement de modèle. Il met en place les premières initiatives pour réduire son impact négatif et s'orienter vers des pratiques durables."
+      "description": "Le système amorce son changement de modèle. Il met en place les premières initiatives pour réduire son impact négatif et s'orienter vers des pratiques durables.",
+      "image_alt": "Champ en début de conversion, premières bandes enherbées et haies replantées"
     },
     "preservation": {
       "title": "Préservation",
       "subtitle": "Niveaux 4 à 7",
-      "description": "Le système préserve l'écosystème. Il a atteint un équilibre où ses activités ne nuisent plus à l'environnement et permettent de maintenir les ressources existantes."
+      "description": "Le système préserve l'écosystème. Il a atteint un équilibre où ses activités ne nuisent plus à l'environnement et permettent de maintenir les ressources existantes.",
+      "image_alt": "Parcelles cultivées en équilibre avec des bosquets et des mares préservées"
     },
     "regeneration": {
       "title": "Régénération",
       "subtitle": "Niveaux 8 à 10",
-      "description": "Le système régénère l'écosystème qui l'entoure. Il vise une autonomie complète et contribue activement à la restauration du vivant et de la biodiversité."
+      "description": "Le système régénère l'écosystème qui l'entoure. Il vise une autonomie complète et contribue activement à la restauration du vivant et de la biodiversité.",
+      "image_alt": "Ferme agroécologique foisonnante vue du ciel, mosaïque de cultures et de forêts"
     }
   },
   "gamification": {
-    "title": "Gamification Cohérente & Mesurable",
+    "kicker": "Comparable & mesurable",
+    "title": "Gamification cohérente & mesurable",
     "description": "Le Label Robust permet de comparer et valider les efforts de chaque acteur, quelle que soit sa nature. Plus le système est gros, plus le niveau est complexe à atteindre, mettant en évidence les petites initiatives locales agiles.",
+    "image_alt": "Communauté locale célébrant la progression de son territoire autour d'un tableau de scores",
+    "examples_title": "Quelques scores",
     "examples": {
       "0": { "role": "Asso Locale", "points": "Niveau 6 (100 pts)" },
       "1": { "role": "Entreprise Y", "points": "Niveau 4 (20 pts)" },
@@ -36,7 +62,9 @@
     }
   },
   "vision": {
-    "title": "Une Vision Unique",
-    "description": "En parlant uniquement de 'Robust Niveau X', nous simplifions la communication tout en gardant une précision scientifique sur l'impact réel. C'est un outil de reconnaissance universel pour la transition écologique."
+    "kicker": "Un langage commun",
+    "title": "Une vision unique",
+    "description": "En parlant uniquement de 'Robust Niveau X', nous simplifions la communication tout en gardant une précision scientifique sur l'impact réel. C'est un outil de reconnaissance universel pour la transition écologique.",
+    "image_alt": "Étiquette Robust apposée fièrement sur un produit local, sous une lumière douce"
   }
 }
