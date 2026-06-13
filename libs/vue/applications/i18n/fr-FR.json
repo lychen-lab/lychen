@@ -9,6 +9,10 @@
     "name": "tera",
     "description": "Facilite la gestion des cultures et connecte citoyens et maraîchers à des espaces partagés"
   },
+  "website": {
+    "name": "website",
+    "description": "Le site web principal du projet Lychen"
+  },
   "myko": {
     "name": "myko",
     "description": "Optimise la culture de champignons et sensibilise à la mycologie"
