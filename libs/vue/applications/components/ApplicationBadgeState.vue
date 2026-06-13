@@ -7,13 +7,13 @@
 </template>
 
 <script setup lang="ts">
-import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { messages, TRANSLATION_KEY } from '@lychen/vue-applications/i18n';
+import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
+import { CONFIG } from '@lychen/vue-applications/i18n';
 import { type ApplicationState } from '@lychen/typescript-applications/constants/ApplicationState';
 import { APPLICATION_STATE } from '@lychen/typescript-applications/constants/ApplicationState';
 import Badge from '@lychen/vue-components-core/badge/Badge.vue';
 
-const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
+const { t } = usePrefixedI18n(CONFIG);
 
 const { state = APPLICATION_STATE.Development } = defineProps<{ state?: ApplicationState }>();
 </script>

@@ -88,7 +88,7 @@
       <Button
         :label="t('preregistration')"
         class="w-full"
-        variant="outlined"
+        variant="outline"
       />
     </a>
   </div>

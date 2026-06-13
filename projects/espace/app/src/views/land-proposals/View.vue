@@ -33,7 +33,7 @@ import { MESSAGES, TRANSLATION_KEY } from './i18n';
 import { Card } from '@lychen/vue-components-business/land-proposal/card';
 import { ROUTE_LAND_PROPOSAL } from '@/views/land-proposal';
 
-const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
+useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 
 const favorites = ref(new Set<string>(['3']));
 

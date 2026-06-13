@@ -11,7 +11,9 @@ export interface UseCustomI18nOptions extends UseI18nOptions {
 
 // Define the return type explicitly for clarity
 export type UseI18nExtendedReturn = ReturnType<typeof useI18n> & {
-  i18nRoute: (to: RouteLocationAsRelativeGeneric) => RouteLocationAsRelativeGeneric;
+  i18nRoute: (
+    to?: Pick<RouteLocationAsRelativeGeneric, 'name' | 'params'>,
+  ) => RouteLocationAsRelativeGeneric;
 };
 
 export type Config = { messages: UseI18nOptions['messages']; rootKey: string };
@@ -97,21 +99,25 @@ export function useI18nExtended(options?: UseCustomI18nOptions): UseI18nExtended
     return originalD(...(passThroughArgs as Parameters<typeof originalD>));
   }
 
-  function i18nRoute(to: Pick<RouteLocationAsRelativeGeneric, 'name' | 'params'>) {
+  function i18nRoute(
+    to?: Pick<RouteLocationAsRelativeGeneric, 'name' | 'params'>,
+  ): RouteLocationAsRelativeGeneric {
     return {
       ...to,
       params: {
         locale: i18n.locale.value,
-        ...to.params,
+        ...to?.params,
       },
     };
   }
 
+  // `useI18n` is overloaded, so the spread context's inferred type does not structurally
+  // match `UseI18nExtendedReturn` even though it does at runtime; assert the declared contract.
   return {
     ...i18n, // Spread the original i18n context first (includes locale, etc.)
     i18nRoute,
     t: customT as typeof originalT, // Override t
     n: customN as typeof originalN, // Override n
     d: customD as typeof originalD, // Override d
-  };
+  } as UseI18nExtendedReturn;
 }

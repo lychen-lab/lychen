@@ -20,7 +20,7 @@ import { MESSAGES, TRANSLATION_KEY } from './i18n';
 import { Button } from '@lychen/vue-components-core/button';
 import IconArrowLeft from '@lychen/vue-icons/IconArrowLeft.vue';
 
-const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
+useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 </script>
 
 <style lang="css" scoped></style>

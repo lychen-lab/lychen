@@ -94,11 +94,6 @@ import {
 } from '@lychen/vue-components-core/form';
 import { useFilter } from 'reka-ui';
 import { computed, ref, onMounted } from 'vue';
-import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import {
-  messages as landRoleMessages,
-  TRANSLATION_KEY as LAND_ROLE_TRANSLATION_KEY,
-} from '@lychen/i18n-tera/land-role';
 
 import { useQuery } from '@tanstack/vue-query';
 import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
@@ -113,19 +108,19 @@ import {
 import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import IconCheck from '@lychen/vue-icons/IconCheck.vue';
 
-const { t } = useI18nExtended({
-  messages: landRoleMessages,
-  rootKey: LAND_ROLE_TRANSLATION_KEY,
-  prefixed: true,
-});
+// Land roles reach this field from several API projections (land_role / land_member /
+// land_member_invitation collections). The field only needs `@id` (selection key) and `name`
+// (label), so model the minimal shape all projections satisfy. Same convention as
+// CardTeraLandMemberInvitation's `landRoles` prop.
+type LandRoleOption = Pick<components['schemas']['LandRole.jsonld'], '@id' | 'name'>;
 
 const props = defineProps<{
   land: components['schemas']['Land.jsonld'];
   isFieldDirty: boolean;
-  initialValues?: components['schemas']['LandRole.jsonld'][];
+  initialValues?: LandRoleOption[];
 }>();
 
-const model = defineModel<components['schemas']['LandRole.jsonld'][]>({ default: [] });
+const model = defineModel<LandRoleOption[]>({ default: [] });
 
 const fieldSchema = toTypedSchema(
   z.array(z.object({ '@id': z.string() })).min(1, {
@@ -178,7 +173,7 @@ const filteredOptions = computed(() => {
     : options;
 });
 
-function handleSelect(value: components['schemas']['LandRole.jsonld']) {
+function handleSelect(value: LandRoleOption) {
   searchTerm.value = '';
 
   model.value.push(value);

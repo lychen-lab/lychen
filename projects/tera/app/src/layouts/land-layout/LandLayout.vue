@@ -16,9 +16,10 @@
 import { RoutePageDashboard } from '@/pages/dashboard';
 import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
 import { useQuery } from '@tanstack/vue-query';
-import { computed, provide, watch } from 'vue';
+import { computed, provide, watch, type Ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { INJECTION_KEY_LAND, INJECTION_KEY_LAND_MEMBER } from './index';
+import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import { landPatchSucceededEvent } from '@lychen/vue-tera/events/LandEvents';
 import { useEventBus } from '@vueuse/core';
 import { BaseHeading } from '@lychen/vue-components-app/base-heading';
@@ -43,7 +44,14 @@ const { data: land, refetch } = useQuery({
   enabled: !!route.params.landUlid,
 });
 
-provide(INJECTION_KEY_LAND, land);
+// The `/api/lands/{ulid}` endpoint returns the `Land.jsonld-land.get` serialization
+// group, which differs from the base `Land.jsonld` only by a generated `@context`
+// enum that is never read by consumers. Cast at the provide boundary so downstream
+// components receive the broader `Land.jsonld` shape they expect.
+provide(
+  INJECTION_KEY_LAND,
+  land as unknown as Ref<components['schemas']['Land.jsonld'] | undefined>,
+);
 
 const { on } = useEventBus(landPatchSucceededEvent);
 

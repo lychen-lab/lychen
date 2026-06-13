@@ -15,10 +15,11 @@
 <script lang="ts" setup>
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { MESSAGES, TRANSLATION_KEY } from './i18n';
+import type { LandRequest } from '@lychen/vue-components-business/land-request/card';
 
-const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
+useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 
-const fakeLandRequests = [];
+const fakeLandRequests: LandRequest[] = [];
 </script>
 
 <style lang="css" scoped></style>

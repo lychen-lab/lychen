@@ -59,7 +59,10 @@
             <LayoutInAppSideNavigationItem
               v-for="(item, indexItems) in landSection.items"
               :key="indexItems"
-              :to="{ name: item.to.name, params: { landUlid: selectedLand.ulid } }"
+              :to="{
+                name: typeof item.to === 'object' && 'name' in item.to ? item.to.name : undefined,
+                params: { landUlid: selectedLand.ulid },
+              }"
               :icon="item.icon"
               :label="item.label"
           /></template>

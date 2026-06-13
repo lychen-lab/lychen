@@ -7,6 +7,7 @@ export const INJECTION_KEY_NAVIGATION_EXPANDED: InjectionKey<Ref<boolean>> = Sym
 export interface NavigationItem {
   label: string;
   to: string | RouteLocationAsRelativeGeneric | RouteLocationAsPathGeneric;
+  icon?: string;
 }
 
 export interface NavigationSection {

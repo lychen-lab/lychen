@@ -110,8 +110,8 @@ function updateTaskDate(task: Task, newStartOffset: number, newDuration: number)
   const newEndDate = new Date(newStartDate);
   newEndDate.setDate(newEndDate.getDate() + newDuration);
 
-  task.start = newStartDate.toISOString().split('T')[0];
-  task.end = newEndDate.toISOString().split('T')[0];
+  task.start = newStartDate.toISOString().slice(0, 10);
+  task.end = newEndDate.toISOString().slice(0, 10);
 }
 
 // Drag & Resize handlers
@@ -120,9 +120,15 @@ const resizeStartRefs = new Map<number, HTMLElement>();
 const resizeEndRefs = new Map<number, HTMLElement>();
 
 function makeDraggable(task: Task) {
-  const { x } = useDraggable(dragRefs.get(task.id), {
-    onEnd: ({ deltaX }) => {
-      const daysMoved = Math.round(deltaX / 30);
+  // `useDraggable` reports absolute positions, so capture the pointer x on start and
+  // derive the horizontal delta on end (vueuse's `Position` has no `deltaX`).
+  let dragStartX = 0;
+  useDraggable(dragRefs.get(task.id), {
+    onStart: ({ x }) => {
+      dragStartX = x;
+    },
+    onEnd: ({ x }) => {
+      const daysMoved = Math.round((x - dragStartX) / 30);
       updateTaskDate(
         task,
         getTaskPosition(task).startOffset + daysMoved,
@@ -131,9 +137,13 @@ function makeDraggable(task: Task) {
     },
   });
 
+  let resizeStartX = 0;
   useDraggable(resizeStartRefs.get(task.id), {
-    onEnd: ({ deltaX }) => {
-      const daysResized = Math.round(deltaX / 30);
+    onStart: ({ x }) => {
+      resizeStartX = x;
+    },
+    onEnd: ({ x }) => {
+      const daysResized = Math.round((x - resizeStartX) / 30);
       updateTaskDate(
         task,
         getTaskPosition(task).startOffset + daysResized,
@@ -142,9 +152,13 @@ function makeDraggable(task: Task) {
     },
   });
 
+  let resizeEndX = 0;
   useDraggable(resizeEndRefs.get(task.id), {
-    onEnd: ({ deltaX }) => {
-      const daysResized = Math.round(deltaX / 30);
+    onStart: ({ x }) => {
+      resizeEndX = x;
+    },
+    onEnd: ({ x }) => {
+      const daysResized = Math.round((x - resizeEndX) / 30);
       updateTaskDate(
         task,
         getTaskPosition(task).startOffset,

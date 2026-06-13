@@ -35,7 +35,7 @@ export function useExtendedHead(
         href: canonicalUrl,
       },
       ...AVAILABLE_LOCALES.map(
-        (locale) =>
+        (locale: string) =>
           ({
             rel: 'alternate' as const,
             hreflang: locale,

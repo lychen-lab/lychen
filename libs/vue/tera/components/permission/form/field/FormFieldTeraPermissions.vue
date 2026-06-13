@@ -159,11 +159,7 @@ onMounted(async () => {
 });
 
 const fieldSchema = toTypedSchema(
-  z
-    .array(z.nativeEnum(LandRolePermissions), {
-      required_error: 'Please select at least one permission.',
-    })
-    .min(1),
+  z.array(z.nativeEnum(LandRolePermissions)).min(1, 'Please select at least one permission.'),
 );
 
 const searchTerm = ref('');

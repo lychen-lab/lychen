@@ -4,7 +4,7 @@
     @submit.prevent="onSubmit"
   >
     <FormFieldTeraLandRole
-      :is-field-dirty="isFieldDirty"
+      :is-field-dirty="isFieldDirty('landRoles')"
       :land="land"
       :initial-values="landMember.landRoles"
       @update:model-value="setFieldValue('landRoles', $event)"
@@ -41,13 +41,13 @@ const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: tr
 
 const { landMember } = defineProps<{
   landMember: Omit<components['schemas']['LandMember.jsonld'], 'landRoles'> & {
-    landRoles?: components['schemas']['LandRole.jsonld'][];
+    landRoles?: Pick<components['schemas']['LandRole.jsonld'], '@id' | 'name'>[];
   };
   land: components['schemas']['Land.jsonld'];
 }>();
 
 interface FormType {
-  landRoles: components['schemas']['LandRole.jsonld'][];
+  landRoles: Pick<components['schemas']['LandRole.jsonld'], '@id' | 'name'>[];
 }
 
 const { handleSubmit, meta, setFieldValue, isFieldDirty } = useForm<FormType>({

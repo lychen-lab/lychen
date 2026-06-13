@@ -8,7 +8,11 @@ export function addRootKey(
   const transformed: { [x: string]: LocaleMessage<VueMessageType> } = {};
 
   for (const key of Object.keys(obj)) {
-    transformed[key] = { [rootKey]: obj[key] };
+    const value = obj[key];
+    if (value === undefined) {
+      continue;
+    }
+    transformed[key] = { [rootKey]: value };
   }
 
   return transformed;

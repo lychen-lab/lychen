@@ -33,15 +33,11 @@ import {
   DialogTrigger,
 } from '@lychen/vue-components-core/dialog';
 import DialogDescription from '@lychen/vue-components-core/dialog/DialogDescription.vue';
-import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { messages, TRANSLATION_KEY } from './i18n';
 import DialogClose from '@lychen/vue-components-core/dialog/DialogClose.vue';
 import { ref, computed } from 'vue';
 import Button from '@lychen/vue-components-core/button/Button.vue';
 import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
 import { useQuery } from '@tanstack/vue-query';
-
-const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 
 const open = ref(false);
 
@@ -50,7 +46,7 @@ const landUlid = computed(() => land?.value?.ulid);
 const enabled = computed(() => !!landUlid.value);
 const { api } = useTeraApi();
 
-const { data: landProposals } = useQuery({
+useQuery({
   queryKey: ['landProposalsCollection', land],
   queryFn: async () => {
     if (!landUlid.value) {

@@ -22,7 +22,12 @@ export function useLandGuard(
       return false;
     }
 
-    const allPermissions = landMember.value.landRoles.flatMap((role) => role.permissions);
+    // Each role's `permissions` is an array of permission strings at runtime, but the generated SDK
+    // types it as a scalar enum union (openapi-typescript `@enum {array}` quirk). Read it as a string
+    // array so it can be flattened and compared against the requested `permissions`.
+    const allPermissions = landMember.value.landRoles.flatMap(
+      (role) => (role.permissions as unknown as string[] | undefined) ?? [],
+    );
     if (strategy === 'unanimous') {
       return permissions.every((permission) => allPermissions.includes(permission));
     } else if (strategy === 'affirmative') {

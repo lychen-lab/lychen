@@ -1,4 +1,4 @@
-import { type ApplicationState } from '@lychen/typescript-applications/model/Application';
+import { type ApplicationState } from '@lychen/typescript-applications/constants/ApplicationState';
 import { type RouteRecordRaw } from 'vue-router';
 
 export interface LayoutWebsiteApplicationNavigationProps {

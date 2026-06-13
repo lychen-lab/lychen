@@ -2,6 +2,7 @@
   "extends": "tsconfig-moon/tsconfig.json",
   "compilerOptions": {
     "rootDir": "./", //If not setup generate TS6059 error on .vue files import
+    "types": ["vite/client", "node"],
 
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
