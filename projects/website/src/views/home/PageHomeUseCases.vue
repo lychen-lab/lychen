@@ -224,29 +224,29 @@ function isFlagship(alias: ApplicationAlias) {
 }
 
 const APP_DOT: Record<string, string> = {
-  espace: 'bg-positive',
-  tera: 'bg-primary',
-  myko: 'bg-warning',
-  meli: 'bg-warning',
-  kiro: 'bg-tertiary',
-  humu: 'bg-secondary',
-  novi: 'bg-tertiary',
-  vara: 'bg-positive',
-  kolo: 'bg-primary',
-  robust: 'bg-secondary',
+  espace: 'bg-app-espace',
+  tera: 'bg-app-tera',
+  myko: 'bg-app-myko',
+  meli: 'bg-app-meli',
+  kiro: 'bg-app-kiro',
+  humu: 'bg-app-humu',
+  novi: 'bg-app-novi',
+  vara: 'bg-app-vara',
+  kolo: 'bg-app-kolo',
+  robust: 'bg-app-robust',
 };
 
 const APP_NODE_COLOR: Record<string, string> = {
-  espace: 'var(--color-positive)',
-  tera: 'var(--color-primary)',
-  myko: 'var(--color-warning)',
-  meli: 'var(--color-warning)',
-  kiro: 'var(--color-tertiary)',
-  humu: 'var(--color-secondary)',
-  novi: 'var(--color-tertiary)',
-  vara: 'var(--color-positive)',
-  kolo: 'var(--color-primary)',
-  robust: 'var(--color-secondary)',
+  espace: 'var(--color-app-espace)',
+  tera: 'var(--color-app-tera)',
+  myko: 'var(--color-app-myko)',
+  meli: 'var(--color-app-meli)',
+  kiro: 'var(--color-app-kiro)',
+  humu: 'var(--color-app-humu)',
+  novi: 'var(--color-app-novi)',
+  vara: 'var(--color-app-vara)',
+  kolo: 'var(--color-app-kolo)',
+  robust: 'var(--color-app-robust)',
 };
 
 // Hub & spokes: nodes evenly spaced on a ring, each linked to the hub and to its neighbour.
