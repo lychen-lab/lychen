@@ -14,6 +14,27 @@
       "path": "./libs/typescript/espace"
     },
     {
+      "path": "./libs/typescript/espace-api-sdk"
+    },
+    {
+      "path": "./libs/typescript/humu"
+    },
+    {
+      "path": "./libs/typescript/kiro"
+    },
+    {
+      "path": "./libs/typescript/kolo"
+    },
+    {
+      "path": "./libs/typescript/meli"
+    },
+    {
+      "path": "./libs/typescript/myko"
+    },
+    {
+      "path": "./libs/typescript/novi"
+    },
+    {
       "path": "./libs/typescript/robust"
     },
     {
@@ -24,6 +45,9 @@
     },
     {
       "path": "./libs/typescript/utils"
+    },
+    {
+      "path": "./libs/typescript/vara"
     },
     {
       "path": "./libs/typescript/zitadel"
@@ -68,13 +92,31 @@
       "path": "./libs/vue/espace"
     },
     {
+      "path": "./libs/vue/humu"
+    },
+    {
       "path": "./libs/vue/i18n"
     },
     {
       "path": "./libs/vue/icons"
     },
     {
+      "path": "./libs/vue/kiro"
+    },
+    {
+      "path": "./libs/vue/kolo"
+    },
+    {
       "path": "./libs/vue/layouts"
+    },
+    {
+      "path": "./libs/vue/meli"
+    },
+    {
+      "path": "./libs/vue/myko"
+    },
+    {
+      "path": "./libs/vue/novi"
     },
     {
       "path": "./libs/vue/robust"
@@ -89,7 +131,13 @@
       "path": "./libs/vue/tera"
     },
     {
+      "path": "./libs/vue/tiptap"
+    },
+    {
       "path": "./libs/vue/unhead/composables"
+    },
+    {
+      "path": "./libs/vue/vara"
     },
     {
       "path": "./projects/espace/app"
@@ -107,58 +155,13 @@
       "path": "./projects/tera/app"
     },
     {
+      "path": "./projects/tera/tests-e2e"
+    },
+    {
       "path": "./projects/tera/website"
     },
     {
       "path": "./projects/website"
-    },
-    {
-      "path": "libs/typescript/humu"
-    },
-    {
-      "path": "libs/typescript/kiro"
-    },
-    {
-      "path": "libs/typescript/kolo"
-    },
-    {
-      "path": "libs/typescript/meli"
-    },
-    {
-      "path": "libs/typescript/myko"
-    },
-    {
-      "path": "libs/typescript/novi"
-    },
-    {
-      "path": "libs/typescript/vara"
-    },
-    {
-      "path": "libs/vue/humu"
-    },
-    {
-      "path": "libs/vue/kiro"
-    },
-    {
-      "path": "libs/vue/kolo"
-    },
-    {
-      "path": "libs/vue/meli"
-    },
-    {
-      "path": "libs/vue/myko"
-    },
-    {
-      "path": "libs/vue/novi"
-    },
-    {
-      "path": "libs/vue/tiptap"
-    },
-    {
-      "path": "libs/vue/vara"
-    },
-    {
-      "path": "projects/tera/tests-e2e"
     }
   ]
 }

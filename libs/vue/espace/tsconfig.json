@@ -8,6 +8,12 @@
       "path": "../../typescript/espace"
     },
     {
+      "path": "../../typescript/espace-api-sdk"
+    },
+    {
+      "path": "../../typescript/zitadel"
+    },
+    {
       "path": "../i18n"
     }
   ],

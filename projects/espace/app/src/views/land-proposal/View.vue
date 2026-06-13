@@ -280,7 +280,9 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { useQuery } from '@tanstack/vue-query';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
+import { useEspaceApi } from '@lychen/vue-espace/composables/use-espace-api/useEspaceApi';
 import { MESSAGES, TRANSLATION_KEY } from './i18n';
 import IconArrowLeft from '@lychen/vue-icons/IconArrowLeft.vue';
 import IconShare2 from '@lychen/vue-icons/IconShare2.vue';
@@ -301,7 +303,20 @@ import IconMessagesSquare from '@lychen/vue-icons/IconMessagesSquare.vue';
 useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 
 const route = useRoute();
+const uuid = computed(() => String(route.params.uuid));
 const isFavorite = ref(false);
+
+const { api } = useEspaceApi();
+
+const { data: proposal } = useQuery({
+  queryKey: ['area-proposal', uuid],
+  queryFn: async () => {
+    const response = await api.GET('/api/area_proposals/{uuid}', {
+      params: { path: { uuid: uuid.value } },
+    });
+    return response.data;
+  },
+});
 const galleryRef = ref<HTMLElement | null>(null);
 const activeIndex = ref(0);
 
@@ -517,16 +532,24 @@ const allTerrains = [
   },
 ];
 
+// La présentation détaillée (galerie, hôte, règles, caractéristiques) reste mockée :
+// le modèle AreaProposal est enrichi au lot 2. On superpose ici les champs réels de l'API.
+const presentationBase = allTerrains[0];
+if (!presentationBase) {
+  throw new Error('allTerrains must contain at least one terrain');
+}
+
 const terrain = computed(() => {
-  const found = allTerrains.find((item) => item.uuid === route.params.uuid);
-  if (found) {
-    return found;
-  }
-  const fallback = allTerrains[0];
-  if (!fallback) {
-    throw new Error('allTerrains must contain at least one terrain');
-  }
-  return fallback;
+  const data = proposal.value;
+  if (!data) return presentationBase;
+  return {
+    ...presentationBase,
+    title: data.title ?? presentationBase.title,
+    description: data.description ?? presentationBase.description,
+    surface: data.surfaceTotal ?? presentationBase.surface,
+    city: data.city ?? presentationBase.city,
+    altitude: data.altitude ?? presentationBase.altitude,
+  };
 });
 </script>
 

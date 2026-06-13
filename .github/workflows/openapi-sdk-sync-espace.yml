@@ -1,0 +1,83 @@
+name: OpenAPI | SDK sync (espace)
+
+env:
+  REGISTRY: ghcr.io/lychen-lab/lychen/test
+
+on:
+  pull_request:
+    paths:
+      - 'projects/espace/api/**'
+      - 'libs/php/**'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  packages: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-sdk-sync:
+    name: 'espace-api | Check OpenAPI spec & generated SDK sync'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: 'actions/checkout@v4'
+        with:
+          fetch-depth: 0
+
+      - name: Set up Moon Toolchain
+        uses: 'moonrepo/setup-toolchain@v0'
+
+      - name: Install proto tools
+        run: proto install
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Calculate IMAGE_NAME
+        run: echo "TEST_IMAGE_NAME=${{ env.REGISTRY }}/espace-api" >> $GITHUB_ENV
+
+      - name: Pull test image if exists
+        run: docker pull ${{ env.TEST_IMAGE_NAME }}:latest || true
+
+      # Built with the default docker driver (no buildx container builder) so the
+      # image is loaded into the local daemon for the compose-based tasks below.
+      # The image is not pushed; symfony-test.yml owns the ghcr test image.
+      - name: Build docker test image
+        run: moon ci espace-api:ci-test-build-docker-image
+
+      - name: Install vendors
+        run: moon ci espace-api:ci-install-vendors
+
+      - name: Export OpenAPI spec
+        run: moon ci espace-api:ci-export-openapi
+
+      - name: Install node dependencies
+        run: yarn install
+
+      # Same command, flags and relative paths as typescript-espace-api-sdk:generate-api,
+      # using the workspace-pinned openapi-typescript version from yarn.lock.
+      - name: Regenerate TypeScript SDK
+        run: yarn workspace @lychen/typescript-espace-api-sdk run openapi-typescript ../../../projects/espace/api/openapi_docs.json -o ./generated/espace-api.ts --enum-values --enum
+
+      - name: Check committed spec & SDK are in sync
+        run: |
+          if ! git diff --exit-code -- projects/espace/api/openapi_docs.json libs/typescript/espace-api-sdk/generated/; then
+            echo ""
+            echo "The committed OpenAPI spec and/or generated TypeScript SDK are out of sync with the espace API."
+            echo "Regenerate them locally and commit the result:"
+            echo ""
+            echo "  moon run typescript-espace-api-sdk:generate-api"
+            echo ""
+            echo "::error::projects/espace/api/openapi_docs.json and/or libs/typescript/espace-api-sdk/generated/espace-api.ts are out of sync with the espace API. Run 'moon run typescript-espace-api-sdk:generate-api' locally and commit the result."
+            exit 1
+          fi

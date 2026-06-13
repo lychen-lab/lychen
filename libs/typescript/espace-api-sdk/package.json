@@ -1,0 +1,8 @@
+{
+  "name": "@lychen/typescript-espace-api-sdk",
+  "type": "module",
+  "devDependencies": {
+    "openapi-typescript": "^7.13.0",
+    "typescript": "^6.0.3"
+  }
+}

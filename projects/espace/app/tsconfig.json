@@ -3,6 +3,9 @@
   "include": ["**/*"],
   "references": [
     {
+      "path": "../../../libs/typescript/espace-api-sdk"
+    },
+    {
       "path": "../../../libs/typescript/zitadel"
     },
     {
@@ -19,6 +22,9 @@
     },
     {
       "path": "../../../libs/vue/components-extra"
+    },
+    {
+      "path": "../../../libs/vue/espace"
     },
     {
       "path": "../../../libs/vue/i18n"

@@ -1,0 +1,10 @@
+env:
+  OPENAPI_SCHEMA_JSON: ../../../projects/espace/api/openapi_docs.json
+id: typescript-espace-api-sdk
+language: typescript
+tasks:
+  generate-api:
+    command: npx openapi-typescript ${OPENAPI_SCHEMA_JSON} -o ./generated/espace-api.ts --enum-values --enum
+    deps:
+    - espace-api:export-openapi
+layer: library

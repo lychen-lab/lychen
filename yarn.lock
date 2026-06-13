@@ -2160,12 +2160,14 @@ __metadata:
   resolution: "@lychen/espace-app@workspace:projects/espace/app"
   dependencies:
     "@lychen/css-core": "workspace:*"
+    "@lychen/typescript-espace-api-sdk": "workspace:*"
     "@lychen/typescript-zitadel": "workspace:*"
     "@lychen/vue-color-scheme": "workspace:*"
     "@lychen/vue-components-app": "workspace:*"
     "@lychen/vue-components-business": "workspace:*"
     "@lychen/vue-components-core": "workspace:*"
     "@lychen/vue-components-extra": "workspace:*"
+    "@lychen/vue-espace": "workspace:*"
     "@lychen/vue-i18n": "workspace:*"
     "@lychen/vue-icons": "workspace:*"
     "@lychen/vue-layouts": "workspace:*"
@@ -2376,6 +2378,15 @@ __metadata:
 "@lychen/typescript-constants@workspace:*, @lychen/typescript-constants@workspace:libs/typescript/constants":
   version: 0.0.0-use.local
   resolution: "@lychen/typescript-constants@workspace:libs/typescript/constants"
+  languageName: unknown
+  linkType: soft
+
+"@lychen/typescript-espace-api-sdk@workspace:*, @lychen/typescript-espace-api-sdk@workspace:libs/typescript/espace-api-sdk":
+  version: 0.0.0-use.local
+  resolution: "@lychen/typescript-espace-api-sdk@workspace:libs/typescript/espace-api-sdk"
+  dependencies:
+    openapi-typescript: "npm:^7.13.0"
+    typescript: "npm:^6.0.3"
   languageName: unknown
   linkType: soft
 
@@ -2647,7 +2658,10 @@ __metadata:
   resolution: "@lychen/vue-espace@workspace:libs/vue/espace"
   dependencies:
     "@lychen/typescript-espace": "workspace:*"
+    "@lychen/typescript-espace-api-sdk": "workspace:*"
+    "@lychen/typescript-zitadel": "workspace:*"
     "@lychen/vue-i18n": "workspace:*"
+    openapi-fetch: "npm:^0.17.0"
   languageName: unknown
   linkType: soft
 

@@ -1,5 +1,7 @@
 dependsOn:
 - typescript-espace
+- typescript-espace-api-sdk
+- typescript-zitadel
 - vue-i18n
 id: vue-espace
 language: typescript
