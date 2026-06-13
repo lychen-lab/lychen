@@ -2,11 +2,37 @@
   <section class="flex flex-col gap-6">
     <div class="flex flex-col gap-1">
       <h2 class="text-2xl font-bold">Espaces proposés</h2>
-      <p class="text-on-surface/60 text-sm">{{ fakeLandProposals.length }} terrains disponibles</p>
+      <p class="text-on-surface/60 text-sm">
+        {{ proposals.length }} terrain{{ proposals.length !== 1 ? 's' : '' }} disponible{{
+          proposals.length !== 1 ? 's' : ''
+        }}
+      </p>
     </div>
-    <div class="grid grid-cols-2 gap-3">
+
+    <p
+      v-if="isPending"
+      class="text-on-surface/60 text-sm"
+    >
+      Chargement des terrains…
+    </p>
+    <p
+      v-else-if="isError"
+      class="text-sm text-red-700"
+    >
+      Impossible de charger les terrains.
+    </p>
+    <p
+      v-else-if="proposals.length === 0"
+      class="text-on-surface/60 text-sm"
+    >
+      Aucun terrain disponible pour le moment.
+    </p>
+    <div
+      v-else
+      class="grid grid-cols-2 gap-3"
+    >
       <RouterLink
-        v-for="proposal in fakeLandProposals"
+        v-for="proposal in proposals"
         :key="proposal.uuid"
         :to="{ name: ROUTE_LAND_PROPOSAL.name, params: { uuid: proposal.uuid } }"
         class="contents"
@@ -26,16 +52,45 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { RouterLink } from 'vue-router';
+import { useQuery } from '@tanstack/vue-query';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { MESSAGES, TRANSLATION_KEY } from './i18n';
+import { useEspaceApi } from '@lychen/vue-espace/composables/use-espace-api/useEspaceApi';
 import { Card } from '@lychen/vue-components-business/land-proposal/card';
+import type { LandProposal } from '@lychen/vue-components-business/land-proposal/card';
+import { MESSAGES, TRANSLATION_KEY } from './i18n';
 import { ROUTE_LAND_PROPOSAL } from '@/views/land-proposal';
+
+// Image de remplacement en attendant la modélisation des médias côté API (lot 2).
+const PLACEHOLDER_IMAGE = 'https://images.pexels.com/photos/59321/pexels-photo-59321.jpeg';
 
 const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 
-const favorites = ref(new Set<string>(['3']));
+const { api } = useEspaceApi();
+
+const { data, isPending, isError } = useQuery({
+  queryKey: ['area-proposals'],
+  queryFn: async () => {
+    const response = await api.GET('/api/area_proposals');
+    return response.data;
+  },
+});
+
+const proposals = computed<LandProposal[]>(
+  () =>
+    data.value?.member?.map((proposal) => ({
+      uuid: proposal.uuid ?? '',
+      title: proposal.title ?? '',
+      description: proposal.description ?? '',
+      surface: proposal.surfaceToShare ?? 0,
+      altitude: proposal.altitude ?? 0,
+      city: proposal.city ?? undefined,
+      image: PLACEHOLDER_IMAGE,
+    })) ?? [],
+);
+
+const favorites = ref(new Set<string>());
 
 function toggleFavorite(uuid: string) {
   if (favorites.value.has(uuid)) {
@@ -44,69 +99,6 @@ function toggleFavorite(uuid: string) {
     favorites.value.add(uuid);
   }
 }
-
-const fakeLandProposals = [
-  {
-    uuid: '1',
-    title: 'Terrain de culture',
-    description:
-      'Grand terrain ensoleillé idéal pour la culture maraîchère. Sol argileux riche en nutriments, eau disponible sur place.',
-    surface: 130,
-    altitude: 678,
-    city: 'Lille',
-    image: 'https://images.pexels.com/photos/59321/pexels-photo-59321.jpeg',
-  },
-  {
-    uuid: '2',
-    title: 'Cave à champignons',
-    description:
-      'Cave naturelle fraîche et humide, parfaite pour la culture de champignons en toute saison.',
-    surface: 40,
-    altitude: 150,
-    city: 'Toulouse',
-    image: 'https://images.pexels.com/photos/2499862/pexels-photo-2499862.jpeg',
-  },
-  {
-    uuid: '3',
-    title: 'Jardin partagé',
-    description:
-      'Espace vert urbain divisé en plusieurs parcelles. Accès facile, composteur et outils disponibles sur place.',
-    surface: 220,
-    altitude: 45,
-    city: 'Lyon',
-    image: 'https://images.pexels.com/photos/1084540/pexels-photo-1084540.jpeg',
-  },
-  {
-    uuid: '4',
-    title: 'Serre horticole',
-    description:
-      'Serre en verre chauffée, idéale pour les cultures tropicales ou les semis précoces de printemps.',
-    surface: 75,
-    altitude: 320,
-    city: 'Bordeaux',
-    image: 'https://images.pexels.com/photos/1389460/pexels-photo-1389460.jpeg',
-  },
-  {
-    uuid: '5',
-    title: 'Verger familial',
-    description:
-      'Verger de 30 arbres fruitiers : pommiers, poiriers, pruniers. Récolte partagée entre propriétaire et cultivateur.',
-    surface: 500,
-    altitude: 210,
-    city: 'Strasbourg',
-    image: 'https://images.pexels.com/photos/213399/pexels-photo-213399.jpeg',
-  },
-  {
-    uuid: '6',
-    title: 'Balcon potager',
-    description:
-      'Grand balcon exposé plein sud, idéal pour les herbes aromatiques, tomates cerises et légumes en pots.',
-    surface: 12,
-    altitude: 28,
-    city: 'Paris',
-    image: 'https://images.pexels.com/photos/4750270/pexels-photo-4750270.jpeg',
-  },
-];
 </script>
 
 <style lang="css" scoped></style>

@@ -2,10 +2,70 @@
   "extends": "./tsconfig.options.json",
   "references": [
     {
+      "path": "./libs/typescript/applications"
+    },
+    {
+      "path": "./libs/typescript/constants"
+    },
+    {
+      "path": "./libs/typescript/espace"
+    },
+    {
+      "path": "./libs/typescript/espace-api-sdk"
+    },
+    {
+      "path": "./libs/typescript/robust"
+    },
+    {
+      "path": "./libs/typescript/tera/core"
+    },
+    {
+      "path": "./libs/typescript/utils"
+    },
+    {
+      "path": "./libs/typescript/zitadel"
+    },
+    {
       "path": "./libs/vite/ssg"
     },
     {
+      "path": "./libs/vue/applications"
+    },
+    {
+      "path": "./libs/vue/color-scheme"
+    },
+    {
+      "path": "./libs/vue/components-app"
+    },
+    {
+      "path": "./libs/vue/components-business"
+    },
+    {
+      "path": "./libs/vue/components-core"
+    },
+    {
+      "path": "./libs/vue/components-extra"
+    },
+    {
+      "path": "./libs/vue/components-website"
+    },
+    {
+      "path": "./libs/vue/espace"
+    },
+    {
+      "path": "./libs/vue/i18n"
+    },
+    {
+      "path": "./libs/vue/icons"
+    },
+    {
+      "path": "./libs/vue/layouts"
+    },
+    {
       "path": "./libs/vue/unhead/composables"
+    },
+    {
+      "path": "./projects/espace/app"
     },
     {
       "path": "./projects/espace/website"
@@ -21,15 +81,6 @@
     },
     {
       "path": "libs/i18n/tera"
-    },
-    {
-      "path": "libs/typescript/applications"
-    },
-    {
-      "path": "libs/typescript/constants"
-    },
-    {
-      "path": "libs/typescript/espace"
     },
     {
       "path": "libs/typescript/humu"
@@ -50,43 +101,10 @@
       "path": "libs/typescript/novi"
     },
     {
-      "path": "libs/typescript/robust"
-    },
-    {
       "path": "libs/typescript/tera/api-sdk"
     },
     {
-      "path": "libs/typescript/tera/core"
-    },
-    {
-      "path": "libs/typescript/utils"
-    },
-    {
       "path": "libs/typescript/vara"
-    },
-    {
-      "path": "libs/typescript/zitadel"
-    },
-    {
-      "path": "libs/vue/applications"
-    },
-    {
-      "path": "libs/vue/color-scheme"
-    },
-    {
-      "path": "libs/vue/components-app"
-    },
-    {
-      "path": "libs/vue/components-business"
-    },
-    {
-      "path": "libs/vue/components-core"
-    },
-    {
-      "path": "libs/vue/components-extra"
-    },
-    {
-      "path": "libs/vue/components-website"
     },
     {
       "path": "libs/vue/composables"
@@ -101,25 +119,13 @@
       "path": "libs/vue/drawio/tera"
     },
     {
-      "path": "libs/vue/espace"
-    },
-    {
       "path": "libs/vue/humu"
-    },
-    {
-      "path": "libs/vue/i18n"
-    },
-    {
-      "path": "libs/vue/icons"
     },
     {
       "path": "libs/vue/kiro"
     },
     {
       "path": "libs/vue/kolo"
-    },
-    {
-      "path": "libs/vue/layouts"
     },
     {
       "path": "libs/vue/meli"
@@ -147,9 +153,6 @@
     },
     {
       "path": "libs/vue/vara"
-    },
-    {
-      "path": "projects/espace/app"
     },
     {
       "path": "projects/storybook"
