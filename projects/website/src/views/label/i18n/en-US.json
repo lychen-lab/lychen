@@ -13,6 +13,10 @@
     },
     "description": "A single label to measure robustness, from transition to the regeneration of life. A unique scale from 1 to 10 for all systems (cities, companies, associations, products).",
     "scale_hint": "Transition → Preservation → Regeneration",
+    "cta_primary": "Explore the scale",
+    "cta_secondary": "Our mission",
+    "scroll_hint": "Discover the Robust scale",
+    "card_title": "A single score, 1 to 10",
     "stats": {
       "levels": { "value": "1 → 10", "label": "Robustness levels" },
       "tranches": { "value": "3", "label": "Major stages" },
@@ -45,7 +49,7 @@
       "title": "Regeneration",
       "subtitle": "Levels 8 to 10",
       "description": "The system regenerates the surrounding ecosystem. It aims for complete autonomy and actively contributes to the restoration of life and biodiversity.",
-      "image_alt": "A thriving agroecological farm seen from above, a mosaic of crops and forests"
+      "image_alt": "Rows of lush market-garden crops, thriving and productive agroecology"
     }
   },
   "gamification": {
@@ -53,6 +57,8 @@
     "title": "Coherent & measurable gamification",
     "description": "The Robust Label allows comparing and validating the efforts of each actor, whatever their nature. The larger the system, the harder the level is to reach, highlighting agile small local initiatives.",
     "image_alt": "A local community celebrating their territory's progress around a scoreboard",
+    "figure_caption": "Local community",
+    "score_highlight": "+100 pts",
     "examples_title": "A few scores",
     "examples": {
       "0": { "role": "Local Association", "points": "Level 6 (100 pts)" },
@@ -65,6 +71,8 @@
     "kicker": "A shared language",
     "title": "A unique vision",
     "description": "By speaking only of 'Robust Level X', we simplify communication while maintaining scientific precision on real impact. It is a universal recognition tool for ecological transition.",
-    "image_alt": "A Robust label proudly displayed on a local product, in soft light"
+    "image_alt": "A Robust label proudly displayed on a local product, in soft light",
+    "sticker_label": "Verified label",
+    "sticker_level": "Level 9"
   }
 }
