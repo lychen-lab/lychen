@@ -60,7 +60,7 @@
     "symfony/uid": "7.3.*",
     "symfony/validator": "7.3.*",
     "symfony/workflow": "7.3.*",
-    "symfony/yaml": "7.3.*"
+    "symfony/yaml": "7.4.*"
   },
   "require-dev": {
     "dama/doctrine-test-bundle": "8.3.*",
