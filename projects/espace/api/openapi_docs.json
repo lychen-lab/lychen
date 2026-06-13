@@ -64,7 +64,7 @@
                             "default": 1
                         },
                         "style": "form",
-                        "explode": false
+                        "explode": true
                     },
                     {
                         "name": "itemsPerPage",
@@ -79,7 +79,7 @@
                             "maximum": 30
                         },
                         "style": "form",
-                        "explode": false
+                        "explode": true
                     },
                     {
                         "name": "pagination",
@@ -91,7 +91,7 @@
                             "type": "boolean"
                         },
                         "style": "form",
-                        "explode": false
+                        "explode": true
                     }
                 ]
             },
@@ -437,7 +437,7 @@
                             "default": 1
                         },
                         "style": "form",
-                        "explode": false
+                        "explode": true
                     },
                     {
                         "name": "itemsPerPage",
@@ -452,7 +452,7 @@
                             "maximum": 30
                         },
                         "style": "form",
-                        "explode": false
+                        "explode": true
                     },
                     {
                         "name": "pagination",
@@ -464,7 +464,7 @@
                             "type": "boolean"
                         },
                         "style": "form",
-                        "explode": false
+                        "explode": true
                     },
                     {
                         "name": "place",
@@ -476,7 +476,7 @@
                             "type": "string"
                         },
                         "style": "form",
-                        "explode": false
+                        "explode": true
                     }
                 ]
             },
@@ -782,17 +782,13 @@
                         "type": "object",
                         "properties": {
                             "code": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ]
+                                "type": "string",
+                                "nullable": true
                             },
                             "uuid": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ],
-                                "format": "uuid"
+                                "type": "string",
+                                "format": "uuid",
+                                "nullable": true
                             }
                         }
                     }
@@ -802,25 +798,13 @@
                 "type": "object",
                 "properties": {
                     "code": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "string",
+                        "nullable": true
                     },
                     "uuid": {
+                        "type": "string",
                         "format": "uuid",
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "nullable": true
                     }
                 }
             },
@@ -831,25 +815,13 @@
                 ],
                 "properties": {
                     "code": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "string",
+                        "nullable": true
                     },
                     "uuid": {
+                        "type": "string",
                         "format": "uuid",
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "nullable": true
                     }
                 }
             },
@@ -862,18 +834,14 @@
                         "type": "object",
                         "properties": {
                             "uuid": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ],
-                                "format": "uuid"
+                                "type": "string",
+                                "format": "uuid",
+                                "nullable": true
                             },
                             "createdAt": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ],
-                                "format": "date-time"
+                                "type": "string",
+                                "format": "date-time",
+                                "nullable": true
                             }
                         }
                     }
@@ -888,47 +856,33 @@
                         "type": "object",
                         "properties": {
                             "title": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ]
+                                "type": "string",
+                                "nullable": true
                             },
                             "description": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ]
+                                "type": "string",
+                                "nullable": true
                             },
                             "surfaceToShare": {
-                                "type": [
-                                    "integer",
-                                    "null"
-                                ]
+                                "type": "integer",
+                                "nullable": true
                             },
                             "city": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ]
+                                "type": "string",
+                                "nullable": true
                             },
                             "altitude": {
-                                "type": [
-                                    "integer",
-                                    "null"
-                                ]
+                                "type": "integer",
+                                "nullable": true
                             },
                             "uuid": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ],
-                                "format": "uuid"
+                                "type": "string",
+                                "format": "uuid",
+                                "nullable": true
                             },
                             "place": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ]
+                                "type": "string",
+                                "nullable": true
                             },
                             "activities": {
                                 "type": "array",
@@ -944,64 +898,28 @@
                 "type": "object",
                 "properties": {
                     "title": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "string",
+                        "nullable": true
                     },
                     "description": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "string",
+                        "nullable": true
                     },
                     "surfaceTotal": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "integer",
+                        "nullable": true
                     },
                     "surfaceToShare": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "integer",
+                        "nullable": true
                     },
                     "city": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "string",
+                        "nullable": true
                     },
                     "altitude": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "integer",
+                        "nullable": true
                     },
                     "activities": {
                         "type": "array",
@@ -1015,75 +933,33 @@
                 "type": "object",
                 "properties": {
                     "uuid": {
+                        "type": "string",
                         "format": "uuid",
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "nullable": true
                     },
                     "title": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "string",
+                        "nullable": true
                     },
                     "description": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "string",
+                        "nullable": true
                     },
                     "surfaceTotal": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "integer",
+                        "nullable": true
                     },
                     "surfaceToShare": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "integer",
+                        "nullable": true
                     },
                     "city": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "string",
+                        "nullable": true
                     },
                     "altitude": {
-                        "anyOf": [
-                            {
-                                "type": "integer"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "integer",
+                        "nullable": true
                     },
                     "activities": {
                         "type": "array",
@@ -1110,66 +986,46 @@
                         "type": "object",
                         "properties": {
                             "title": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ]
+                                "type": "string",
+                                "nullable": true
                             },
                             "description": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ]
+                                "type": "string",
+                                "nullable": true
                             },
                             "archivedAt": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ]
+                                "type": "string",
+                                "nullable": true
                             },
                             "surfaceTotal": {
-                                "type": [
-                                    "integer",
-                                    "null"
-                                ]
+                                "type": "integer",
+                                "nullable": true
                             },
                             "surfaceToShare": {
-                                "type": [
-                                    "integer",
-                                    "null"
-                                ]
+                                "type": "integer",
+                                "nullable": true
                             },
                             "city": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ]
+                                "type": "string",
+                                "nullable": true
                             },
                             "altitude": {
-                                "type": [
-                                    "integer",
-                                    "null"
-                                ]
+                                "type": "integer",
+                                "nullable": true
                             },
                             "uuid": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ],
-                                "format": "uuid"
+                                "type": "string",
+                                "format": "uuid",
+                                "nullable": true
                             },
                             "createdAt": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ],
-                                "format": "date-time"
+                                "type": "string",
+                                "format": "date-time",
+                                "nullable": true
                             },
                             "place": {
-                                "type": [
-                                    "string",
-                                    "null"
-                                ]
+                                "type": "string",
+                                "nullable": true
                             },
                             "activities": {
                                 "type": "array",
@@ -1226,31 +1082,39 @@
                         "readOnly": true,
                         "type": "string"
                     },
+                    "id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "description": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
                     "type": {
                         "readOnly": true,
                         "type": "string"
                     },
                     "title": {
                         "readOnly": true,
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "string",
+                        "nullable": true
                     },
                     "instance": {
                         "readOnly": true,
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "statusCode": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "headers": {
+                        "readOnly": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "nullable": true
+                        }
                     }
                 }
             },
@@ -1303,6 +1167,10 @@
                                 "readOnly": true,
                                 "type": "string"
                             },
+                            "id": {
+                                "readOnly": true,
+                                "type": "string"
+                            },
                             "description": {
                                 "readOnly": true,
                                 "type": "string"
@@ -1313,17 +1181,25 @@
                             },
                             "title": {
                                 "readOnly": true,
-                                "type": [
-                                    "string",
-                                    "null"
-                                ]
+                                "type": "string",
+                                "nullable": true
                             },
                             "instance": {
                                 "readOnly": true,
-                                "type": [
-                                    "string",
-                                    "null"
-                                ]
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "statusCode": {
+                                "readOnly": true,
+                                "type": "integer"
+                            },
+                            "headers": {
+                                "readOnly": true,
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "nullable": true
+                                }
                             }
                         }
                     }
@@ -1334,40 +1210,26 @@
                 "type": "object",
                 "description": "A representation of common errors.",
                 "properties": {
+                    "id": {
+                        "type": "string",
+                        "nullable": true
+                    },
                     "title": {
                         "readOnly": true,
                         "description": "A short, human-readable summary of the problem.",
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "string",
+                        "nullable": true
                     },
                     "detail": {
                         "readOnly": true,
                         "description": "A human-readable explanation specific to this occurrence of the problem.",
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "string",
+                        "nullable": true
                     },
                     "status": {
+                        "type": "integer",
                         "default": 400,
-                        "anyOf": [
-                            {
-                                "type": "number"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
+                        "nullable": true,
                         "example": [
                             404
                         ]
@@ -1375,19 +1237,44 @@
                     "instance": {
                         "readOnly": true,
                         "description": "A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.",
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ]
+                        "type": "string",
+                        "nullable": true
                     },
                     "type": {
                         "readOnly": true,
                         "description": "A URI reference that identifies the problem type",
                         "type": "string"
+                    },
+                    "meta": {
+                        "type": "object"
+                    },
+                    "source": {
+                        "type": "object",
+                        "properties": {
+                            "pointer": {
+                                "type": "string"
+                            },
+                            "parameter": {
+                                "type": "string"
+                            },
+                            "header": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "description": {
+                        "readOnly": true,
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "trace": {
+                        "readOnly": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "nullable": true
                     }
                 }
             },
@@ -1399,51 +1286,71 @@
                     {
                         "type": "object",
                         "properties": {
+                            "id": {
+                                "type": "string",
+                                "nullable": true
+                            },
                             "title": {
                                 "readOnly": true,
                                 "description": "A short, human-readable summary of the problem.",
-                                "type": [
-                                    "string",
-                                    "null"
-                                ]
+                                "type": "string",
+                                "nullable": true
                             },
                             "detail": {
                                 "readOnly": true,
                                 "description": "A human-readable explanation specific to this occurrence of the problem.",
-                                "type": [
-                                    "string",
-                                    "null"
-                                ]
+                                "type": "string",
+                                "nullable": true
                             },
                             "status": {
-                                "type": [
-                                    "number",
-                                    "null"
-                                ],
-                                "examples": [
+                                "type": "integer",
+                                "default": 400,
+                                "nullable": true,
+                                "example": [
                                     404
-                                ],
-                                "default": 400
+                                ]
                             },
                             "instance": {
                                 "readOnly": true,
                                 "description": "A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.",
-                                "type": [
-                                    "string",
-                                    "null"
-                                ]
+                                "type": "string",
+                                "nullable": true
                             },
                             "type": {
                                 "readOnly": true,
                                 "description": "A URI reference that identifies the problem type",
                                 "type": "string"
                             },
+                            "meta": {
+                                "type": "object"
+                            },
+                            "source": {
+                                "type": "object",
+                                "properties": {
+                                    "pointer": {
+                                        "type": "string"
+                                    },
+                                    "parameter": {
+                                        "type": "string"
+                                    },
+                                    "header": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
                             "description": {
                                 "readOnly": true,
-                                "type": [
-                                    "string",
-                                    "null"
-                                ]
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "trace": {
+                                "readOnly": true,
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "nullable": true
+                                },
+                                "nullable": true
                             }
                         }
                     }
@@ -1470,24 +1377,28 @@
                                     },
                                     "first": {
                                         "type": "string",
-                                        "format": "iri-reference"
+                                        "format": "iri-reference",
+                                        "nullable": true
                                     },
                                     "last": {
                                         "type": "string",
-                                        "format": "iri-reference"
+                                        "format": "iri-reference",
+                                        "nullable": true
                                     },
                                     "previous": {
                                         "type": "string",
-                                        "format": "iri-reference"
+                                        "format": "iri-reference",
+                                        "nullable": true
                                     },
                                     "next": {
                                         "type": "string",
-                                        "format": "iri-reference"
+                                        "format": "iri-reference",
+                                        "nullable": true
                                     }
                                 },
                                 "example": {
                                     "@id": "string",
-                                    "type": "string",
+                                    "@type": "string",
                                     "first": "string",
                                     "last": "string",
                                     "previous": "string",
@@ -1529,10 +1440,8 @@
                                             "type": "string"
                                         },
                                         "property": {
-                                            "type": [
-                                                "string",
-                                                "null"
-                                            ]
+                                            "type": "string",
+                                            "nullable": true
                                         },
                                         "required": {
                                             "type": "boolean"

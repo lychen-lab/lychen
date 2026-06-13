@@ -13,6 +13,7 @@
     "ext-openssl": "*",
     "ext-xml": "*",
     "api-platform/core": "4.3.*",
+    "aws/aws-sdk-php": "^3",
     "doctrine/annotations": "2.0.*",
     "doctrine/cache": "2.2.*",
     "doctrine/doctrine-bundle": "3.2.*",
@@ -60,7 +61,8 @@
     "symfony/uid": "8.1.*",
     "symfony/validator": "8.1.*",
     "symfony/workflow": "8.1.*",
-    "symfony/yaml": "8.1.*"
+    "symfony/yaml": "8.1.*",
+    "stripe/stripe-php": "^20.2"
   },
   "require-dev": {
     "dama/doctrine-test-bundle": "8.6.*",

@@ -198,9 +198,13 @@ export interface components {
                 };
             }[];
             readonly detail?: string;
+            readonly id?: string;
+            readonly description?: string;
             readonly type?: string;
             readonly title?: string | null;
             readonly instance?: string | null;
+            readonly statusCode?: number;
+            readonly headers?: (string | null)[];
         };
         /** @description Unprocessable entity */
         "ConstraintViolation.jsonld": components["schemas"]["HydraItemBaseSchema"] & {
@@ -221,13 +225,17 @@ export interface components {
                 };
             }[];
             readonly detail?: string;
+            readonly id?: string;
             readonly description?: string;
             readonly type?: string;
             readonly title?: string | null;
             readonly instance?: string | null;
+            readonly statusCode?: number;
+            readonly headers?: (string | null)[];
         };
         /** @description A representation of common errors. */
         Error: {
+            id?: string | null;
             /** @description A short, human-readable summary of the problem. */
             readonly title?: string | null;
             /** @description A human-readable explanation specific to this occurrence of the problem. */
@@ -243,29 +251,47 @@ export interface components {
             readonly instance?: string | null;
             /** @description A URI reference that identifies the problem type */
             readonly type?: string;
+            meta?: Record<string, never>;
+            source?: {
+                pointer?: string;
+                parameter?: string;
+                header?: string;
+            };
+            readonly description?: string | null;
+            readonly trace?: (string | null)[] | null;
         };
         /** @description A representation of common errors. */
         "Error.jsonld": components["schemas"]["HydraItemBaseSchema"] & {
+            id?: string | null;
             /** @description A short, human-readable summary of the problem. */
             readonly title?: string | null;
             /** @description A human-readable explanation specific to this occurrence of the problem. */
             readonly detail?: string | null;
             /**
              * @default 400
-             * @example 404
+             * @example [
+             *       404
+             *     ]
              */
             status: number | null;
             /** @description A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced. */
             readonly instance?: string | null;
             /** @description A URI reference that identifies the problem type */
             readonly type?: string;
+            meta?: Record<string, never>;
+            source?: {
+                pointer?: string;
+                parameter?: string;
+                header?: string;
+            };
             readonly description?: string | null;
+            readonly trace?: (string | null)[] | null;
         };
         HydraCollectionBaseSchema: components["schemas"]["HydraCollectionBaseSchemaNoPagination"] & {
             /**
              * @example {
              *       "@id": "string",
-             *       "type": "string",
+             *       "@type": "string",
              *       "first": "string",
              *       "last": "string",
              *       "previous": "string",
@@ -277,13 +303,13 @@ export interface components {
                 "@id"?: string;
                 "@type"?: string;
                 /** Format: iri-reference */
-                first?: string;
+                first?: string | null;
                 /** Format: iri-reference */
-                last?: string;
+                last?: string | null;
                 /** Format: iri-reference */
-                previous?: string;
+                previous?: string | null;
                 /** Format: iri-reference */
-                next?: string;
+                next?: string | null;
             };
         };
         HydraCollectionBaseSchemaNoPagination: {

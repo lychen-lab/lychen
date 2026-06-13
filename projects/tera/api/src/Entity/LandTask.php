@@ -123,7 +123,7 @@ class LandTask extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
 
     #[ORM\Column(length: 255)]
     #[Groups(["land_task:collection", "land_task:get", "land_task:patch:output", "land_task:post:output"])]
-    #[Assert\Choice(LandTaskWorkflowPlace::PLACES)]
+    #[Assert\Choice(choices: LandTaskWorkflowPlace::PLACES)]
     #[ApiProperty(openapiContext: ['type' => 'string',
                                    'enum' => LandTaskWorkflowPlace::PLACES,
                                    'example' => LandTaskWorkflowPlace::TO_BE_DONE])]

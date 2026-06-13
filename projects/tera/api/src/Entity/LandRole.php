@@ -91,7 +91,7 @@ class LandRole extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
     private Collection $landMembers;
 
     #[ORM\Column(nullable: true, options: ['jsonb' => true])]
-    #[Assert\Choice(LandMemberPermission::ALL, multiple: true)]
+    #[Assert\Choice(choices: LandMemberPermission::ALL, multiple: true)]
     #[Groups(["land_role:collection", "land_role:get", "land_role:patch", "land_role:post", "land_member:me"])]
     #[ApiProperty(openapiContext: [
         'type' => 'array',

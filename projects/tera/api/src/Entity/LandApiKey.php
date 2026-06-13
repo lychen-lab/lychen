@@ -58,7 +58,7 @@ class LandApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permission
     public const string PREFIX = 'tera-land_';
 
     #[ORM\Column(nullable: true, options: ['jsonb' => true])]
-    #[Assert\Choice(LandMemberPermission::ALL, multiple: true)]
+    #[Assert\Choice(choices: LandMemberPermission::ALL, multiple: true)]
     #[Groups(['land_api_key:post', 'land_api_key:get'])]
     private array $permissions = [];
 
