@@ -115,12 +115,30 @@
     "second_title": "Tous les outils pour le territoire",
     "see_features": "Voir les fonctionnalités"
   },
-  "use_cases": {
-    "title": "Des solutions adaptées à chaque acteur du territoire",
-    "description": "Explorez comment Lychen connecte les producteurs, citoyens, associations, entreprises, collectivités et chercheurs autour des Objectifs de Développement Durable. Cliquez sur chaque acteur pour découvrir les fonctionnalités spécifiques qui facilitent leur engagement et collaboration au sein de l'écosystème."
+  "ecosystem": {
+    "kicker": "Un écosystème connecté",
+    "title": {
+      "prepend": "Des applications ",
+      "key_word": "reliées entre elles",
+      "append": ""
+    },
+    "description": "Chaque application répond à un usage concret du territoire. Toutes partagent la même identité, les mêmes données ouvertes et la même philosophie : un seul écosystème, des outils qui se parlent.",
+    "hub": {
+      "title": "Une plateforme, dix applications",
+      "description": "Une identité unique, des données qui circulent, des outils qui coopèrent — pensés pour fonctionner ensemble.",
+      "features": {
+        "identity": "Identité unique",
+        "data": "Données partagées",
+        "opensource": "100 % open source",
+        "interop": "Inter-opérables"
+      }
+    },
+    "explore": "Explorer les applications"
   },
   "goals": {
+    "kicker": "Notre cap",
     "title": "Objectifs de développement durable",
+    "description": "Lychen agit concrètement pour trois Objectifs de développement durable de l'ONU — au cœur de chaque fonctionnalité que nous construisons.",
     "link_title": {
       "2": "Voir plus",
       "11": "Découvrir plus",
