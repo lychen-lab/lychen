@@ -1,20 +1,24 @@
-import { type I18n } from 'vue-i18n';
-import { AVAILABLE_LOCALES, LOCAL_STORAGE_KEY } from '../configs/Default';
+import { type Composer, type I18n } from 'vue-i18n';
+import { AVAILABLE_LOCALES, LOCAL_STORAGE_KEY, defaultFallbackLocale } from '../configs/Default';
 
 export function useTrans(i18n: I18n) {
-  function getDefaultLocale() {
-    return i18n.global.fallbackLocale.value;
+  // The app is always created with `legacy: false`, so the global context is a Composer.
+  const global = i18n.global as Composer;
+
+  function getDefaultLocale(): string {
+    const fallback = global.fallbackLocale.value;
+    return typeof fallback === 'string' ? fallback : defaultFallbackLocale;
   }
 
   function setCurrentLocale(newLocale: string) {
-    return (i18n.global.locale.value = newLocale);
+    return (global.locale.value = newLocale);
   }
 
   function getAvailableLocales(): string[] {
     return AVAILABLE_LOCALES;
   }
 
-  function isLocaleSupported(locale: string | null) {
+  function isLocaleSupported(locale: string | null | undefined): locale is string {
     if (!locale) {
       return false;
     }
@@ -24,12 +28,12 @@ export function useTrans(i18n: I18n) {
   function getUserLocale() {
     const locale =
       !import.meta.env.SSR && !import.meta.env.VITE_SSG
-        ? window.navigator.language || window.navigator.userLanguage
+        ? window.navigator.language
         : getDefaultLocale();
 
     return {
       locale: locale,
-      localeNoRegion: locale.split('-')[0],
+      localeNoRegion: locale.split('-')[0] ?? locale,
     };
   }
 

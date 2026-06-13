@@ -11,15 +11,19 @@ import {
   useSchemaOrg,
 } from '@unhead/schema-org/vue';
 import { useHead } from '@unhead/vue';
-import { TRANSLATION_KEY, messages } from '@lychen/vue-robust/i18n';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 
-const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
+const title = 'robust';
+
+const { locale } = useI18nExtended();
 
 usePreferredColorScheme();
 
 useHead({
-  titleTemplate: `${t('name')} | %s`,
+  titleTemplate: `${title} | %s`,
+  htmlAttrs: {
+    lang: () => locale.value,
+  },
   templateParams: {
     schemaOrg: {
       host: `https://${import.meta.env.VITE_UNHEAD_HOST}`,
@@ -29,11 +33,11 @@ useHead({
 
 useSchemaOrg([
   defineOrganization({
-    name: t('name'),
+    name: title,
     logo: '/logos/lychen/logo-lychen.svg',
   }),
   defineWebSite({
-    name: t('name'),
+    name: title,
   }),
   defineWebPage(),
 ]);

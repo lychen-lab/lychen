@@ -57,7 +57,7 @@ export function useGenericApplicationsFeatures<
 
   function getOrganizedFeatures(): OrganizedFeaturesByGroup {
     return listConst.reduce((acc, feature) => {
-      const { group, alias } = feature;
+      const { group } = feature;
       if (!acc[group]) {
         acc[group] = {
           title: t(`${group}.title`),

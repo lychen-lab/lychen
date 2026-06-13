@@ -65,7 +65,7 @@ import { ROUTE_LAND_PROPOSAL } from '@/views/land-proposal';
 // Image de remplacement en attendant la modélisation des médias côté API (lot 2).
 const PLACEHOLDER_IMAGE = 'https://images.pexels.com/photos/59321/pexels-photo-59321.jpeg';
 
-const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
+useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 
 const { api } = useEspaceApi();
 

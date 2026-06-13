@@ -117,7 +117,8 @@
 
 <script lang="ts" setup>
 import { type EditorModelValue, type EditorProps, useEditor } from '../composables/useEditor';
-import { BubbleMenu, EditorContent } from '@tiptap/vue-3';
+import { EditorContent } from '@tiptap/vue-3';
+import { BubbleMenu } from '@tiptap/vue-3/menus';
 import { onBeforeUnmount } from 'vue';
 
 import { type NoStylingProps } from './TipTapEditor.component';

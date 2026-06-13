@@ -2828,6 +2828,7 @@ __metadata:
     "@tiptap/extension-highlight": "npm:^3.26.0"
     "@tiptap/extension-horizontal-rule": "npm:^3.26.0"
     "@tiptap/extension-italic": "npm:^3.26.0"
+    "@tiptap/extension-list": "npm:^3.26.0"
     "@tiptap/extension-list-item": "npm:^3.26.0"
     "@tiptap/extension-ordered-list": "npm:^3.26.0"
     "@tiptap/extension-paragraph": "npm:^3.26.0"
@@ -2836,6 +2837,7 @@ __metadata:
     "@tiptap/extension-text": "npm:^3.26.0"
     "@tiptap/extension-text-align": "npm:^3.26.0"
     "@tiptap/extension-underline": "npm:^3.26.0"
+    "@tiptap/extensions": "npm:^3.26.0"
     "@tiptap/pm": "npm:^3.26.0"
     "@tiptap/suggestion": "npm:^3.26.0"
     "@tiptap/vue-3": "npm:^3.26.0"
@@ -4597,6 +4599,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tiptap/extension-list@npm:^3.26.0":
+  version: 3.26.1
+  resolution: "@tiptap/extension-list@npm:3.26.1"
+  peerDependencies:
+    "@tiptap/core": 3.26.1
+    "@tiptap/pm": 3.26.1
+  checksum: 10c0/8fcec5e0a3263f4a208fba4b2831cf3f1caa134b5b033590ab7a33610345ee2f296e20da0053aba23516a61a17dd5920c200053feaced1a4bdf610bad18be00d
+  languageName: node
+  linkType: hard
+
 "@tiptap/extension-ordered-list@npm:^3.26.0":
   version: 3.26.1
   resolution: "@tiptap/extension-ordered-list@npm:3.26.1"
@@ -4657,6 +4669,16 @@ __metadata:
   peerDependencies:
     "@tiptap/core": 3.26.1
   checksum: 10c0/c8a6faec281671b82219bf419fe832283f187e1d8717ce4b9c2a50a5c2600142e5d41afc8f94a50bd2c23ea9ec0e796314d31e3a899f8a764434f845ad717407
+  languageName: node
+  linkType: hard
+
+"@tiptap/extensions@npm:^3.26.0":
+  version: 3.26.1
+  resolution: "@tiptap/extensions@npm:3.26.1"
+  peerDependencies:
+    "@tiptap/core": 3.26.1
+    "@tiptap/pm": 3.26.1
+  checksum: 10c0/3f46bd079dd657ca76a5911779e45d2162e9d49caaee025d839f3f587aa37ca0324d3e3c9a48aef8741ba32d999ac833cfa1aee50a903fcd88bf3e067e119aa2
   languageName: node
   linkType: hard
 
@@ -9198,6 +9220,7 @@ __metadata:
     typescript-eslint: "npm:^8.60.1"
     vitest: "npm:^4.1.8"
     vue-eslint-parser: "npm:^10.4.0"
+    vue-tsc: "npm:^3.3.4"
   languageName: unknown
   linkType: soft
 
@@ -13445,7 +13468,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-tsc@npm:^3.3.3":
+"vue-tsc@npm:^3.3.3, vue-tsc@npm:^3.3.4":
   version: 3.3.4
   resolution: "vue-tsc@npm:3.3.4"
   dependencies:

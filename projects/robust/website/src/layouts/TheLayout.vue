@@ -1,7 +1,7 @@
 <template>
   <LayoutWebsiteApplication
-    :application-name="t('name')"
-    :application-state="APP_STATE"
+    :application-name="applicationName"
+    :application-state="applicationState"
     :route-home="RoutePageHome"
   >
     <template #navigation>
@@ -19,10 +19,9 @@
 
 <script lang="ts" setup>
 import { RoutePageHome } from '@/pages/home';
-import { APP_STATE } from '@lychen/typescript-robust/constants/App';
+import { APPLICATION_ALIAS } from '@lychen/typescript-applications/constants/ApplicationAlias';
+import { APPLICATIONS } from '@lychen/vue-applications/constants/Applications';
 import { defineAsyncComponent } from 'vue';
-import { TRANSLATION_KEY, messages } from '@lychen/vue-robust/i18n';
-import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 
 const LayoutWebsiteApplication = defineAsyncComponent(
   () => import('@lychen/vue-layouts/website-app/LayoutWebsiteApplication.vue'),
@@ -35,5 +34,6 @@ const TheNavigation = defineAsyncComponent(() => import('./TheNavigation.vue'));
 const TheNavigationMobile = defineAsyncComponent(() => import('./TheNavigationMobile.vue'));
 const TheFooter = defineAsyncComponent(() => import('./TheFooter.vue'));
 
-const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
+const applicationName = 'Robust';
+const applicationState = APPLICATIONS[APPLICATION_ALIAS.Robust].state;
 </script>

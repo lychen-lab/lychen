@@ -1,12 +1,12 @@
 import type { ObjectValues } from '@lychen/typescript-utils/transformers/ObjectValues';
 
-export const FEATURE_GROUP: { [key: string]: string } = {
+export const FEATURE_GROUP = {
   Citizen: 'citizen',
   Producer: 'producer',
   Community: 'community',
 } as const;
 
-export const FEATURE_ALIAS: { [key: string]: string } = {
+export const FEATURE_ALIAS = {
   StoreDiscovery: 'store_discovery',
   ProductReservation: 'product_reservation',
   CommunityEngagement: 'community_engagement',

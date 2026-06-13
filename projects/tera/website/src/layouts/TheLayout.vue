@@ -1,7 +1,7 @@
 <template>
   <LayoutWebsiteApplication
-    :application-name="t('name')"
-    :application-state="APP_STATE"
+    :application-name="applicationName"
+    :application-state="applicationState"
     :route-home="RoutePageHome"
   >
     <template #navigation>
@@ -20,9 +20,8 @@
 <script lang="ts" setup>
 import { RoutePageHome } from '@/pages/home';
 
-import { APP_STATE } from '@lychen/typescript-tera-core/constants/App';
-import { TRANSLATION_KEY, messages } from '@lychen/vue-tera/i18n';
-import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
+import { APPLICATION_ALIAS } from '@lychen/typescript-applications/constants/ApplicationAlias';
+import { APPLICATIONS } from '@lychen/vue-applications/constants/Applications';
 import { defineAsyncComponent } from 'vue';
 
 const LayoutWebsiteApplication = defineAsyncComponent(
@@ -36,5 +35,6 @@ const TheNavigation = defineAsyncComponent(() => import('./TheNavigation.vue'));
 const TheNavigationMobile = defineAsyncComponent(() => import('./TheNavigationMobile.vue'));
 const TheFooter = defineAsyncComponent(() => import('./TheFooter.vue'));
 
-const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
+const applicationName = 'Tera';
+const applicationState = APPLICATIONS[APPLICATION_ALIAS.Tera].state;
 </script>

@@ -300,7 +300,7 @@ import IconStar from '@lychen/vue-icons/IconStar.vue';
 import IconCircleCheck from '@lychen/vue-icons/IconCircleCheck.vue';
 import IconMessagesSquare from '@lychen/vue-icons/IconMessagesSquare.vue';
 
-const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
+useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 
 const route = useRoute();
 const uuid = computed(() => String(route.params.uuid));
@@ -535,6 +535,9 @@ const allTerrains = [
 // La présentation détaillée (galerie, hôte, règles, caractéristiques) reste mockée :
 // le modèle AreaProposal est enrichi au lot 2. On superpose ici les champs réels de l'API.
 const presentationBase = allTerrains[0];
+if (!presentationBase) {
+  throw new Error('allTerrains must contain at least one terrain');
+}
 
 const terrain = computed(() => {
   const data = proposal.value;

@@ -3,7 +3,6 @@
     data-slot="calendar-next-button"
     :class="
       cn(
-        VARIANT_VALUES['container-high'],
         'absolute right-1',
         'size-7 bg-transparent p-0 opacity-50 hover:opacity-100 rounded-md cursor-pointer',
         props.class,
@@ -19,7 +18,6 @@
 
 <script lang="ts" setup>
 import { cn } from '@lychen/typescript-utils/tailwind/Cn';
-import { VARIANT_VALUES } from '../button';
 import { CalendarNext, type CalendarNextProps, useForwardProps } from 'reka-ui';
 import { computed, type HTMLAttributes } from 'vue';
 import IconChevronRight from '@lychen/vue-icons/IconChevronRight.vue';

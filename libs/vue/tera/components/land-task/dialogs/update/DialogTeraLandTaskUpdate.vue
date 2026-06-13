@@ -66,7 +66,6 @@ import IconEllipsisVertical from '@lychen/vue-icons/IconEllipsisVertical.vue';
 import { Badge } from '@lychen/vue-components-core/badge';
 import FormTeraLandTaskUpdate from '@lychen/vue-tera/components/land-task/forms/FormTeraLandTaskUpdate.vue';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { messages, TRANSLATION_KEY } from './i18n';
 import { useEventBus } from '@vueuse/core';
 import {
   EVENT_landTaskDeleteSucceeded,
@@ -83,8 +82,7 @@ import DropdownMenuTeraLandTaskMain from '../../dropdown-menu/DropdownMenuTeraLa
 import { useRouter } from 'vue-router';
 import { INJECTKEY_DIALOG_LAND_TASK_UPDATE_LAND } from '.';
 
-const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
-const { t: tLandTask, d } = useI18nExtended({
+const { d } = useI18nExtended({
   messages: landTaskMessages,
   rootKey: LAND_TASK_TRANSLATION_KEY,
   prefixed: true,

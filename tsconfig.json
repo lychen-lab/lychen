@@ -2,6 +2,9 @@
   "extends": "./tsconfig.options.json",
   "references": [
     {
+      "path": "./libs/i18n/tera"
+    },
+    {
       "path": "./libs/typescript/applications"
     },
     {
@@ -14,13 +17,37 @@
       "path": "./libs/typescript/espace-api-sdk"
     },
     {
+      "path": "./libs/typescript/humu"
+    },
+    {
+      "path": "./libs/typescript/kiro"
+    },
+    {
+      "path": "./libs/typescript/kolo"
+    },
+    {
+      "path": "./libs/typescript/meli"
+    },
+    {
+      "path": "./libs/typescript/myko"
+    },
+    {
+      "path": "./libs/typescript/novi"
+    },
+    {
       "path": "./libs/typescript/robust"
+    },
+    {
+      "path": "./libs/typescript/tera/api-sdk"
     },
     {
       "path": "./libs/typescript/tera/core"
     },
     {
       "path": "./libs/typescript/utils"
+    },
+    {
+      "path": "./libs/typescript/vara"
     },
     {
       "path": "./libs/typescript/zitadel"
@@ -50,7 +77,22 @@
       "path": "./libs/vue/components-website"
     },
     {
+      "path": "./libs/vue/composables"
+    },
+    {
+      "path": "./libs/vue/drawio/components"
+    },
+    {
+      "path": "./libs/vue/drawio/core"
+    },
+    {
+      "path": "./libs/vue/drawio/tera"
+    },
+    {
       "path": "./libs/vue/espace"
+    },
+    {
+      "path": "./libs/vue/humu"
     },
     {
       "path": "./libs/vue/i18n"
@@ -59,10 +101,43 @@
       "path": "./libs/vue/icons"
     },
     {
+      "path": "./libs/vue/kiro"
+    },
+    {
+      "path": "./libs/vue/kolo"
+    },
+    {
       "path": "./libs/vue/layouts"
     },
     {
+      "path": "./libs/vue/meli"
+    },
+    {
+      "path": "./libs/vue/myko"
+    },
+    {
+      "path": "./libs/vue/novi"
+    },
+    {
+      "path": "./libs/vue/robust"
+    },
+    {
+      "path": "./libs/vue/router/configs"
+    },
+    {
+      "path": "./libs/vue/sustainable-development-goals"
+    },
+    {
+      "path": "./libs/vue/tera"
+    },
+    {
+      "path": "./libs/vue/tiptap"
+    },
+    {
       "path": "./libs/vue/unhead/composables"
+    },
+    {
+      "path": "./libs/vue/vara"
     },
     {
       "path": "./projects/espace/app"
@@ -74,94 +149,19 @@
       "path": "./projects/robust/website"
     },
     {
+      "path": "./projects/storybook"
+    },
+    {
+      "path": "./projects/tera/app"
+    },
+    {
+      "path": "./projects/tera/tests-e2e"
+    },
+    {
       "path": "./projects/tera/website"
     },
     {
       "path": "./projects/website"
-    },
-    {
-      "path": "libs/i18n/tera"
-    },
-    {
-      "path": "libs/typescript/humu"
-    },
-    {
-      "path": "libs/typescript/kiro"
-    },
-    {
-      "path": "libs/typescript/kolo"
-    },
-    {
-      "path": "libs/typescript/meli"
-    },
-    {
-      "path": "libs/typescript/myko"
-    },
-    {
-      "path": "libs/typescript/novi"
-    },
-    {
-      "path": "libs/typescript/tera/api-sdk"
-    },
-    {
-      "path": "libs/typescript/vara"
-    },
-    {
-      "path": "libs/vue/composables"
-    },
-    {
-      "path": "libs/vue/drawio/components"
-    },
-    {
-      "path": "libs/vue/drawio/core"
-    },
-    {
-      "path": "libs/vue/drawio/tera"
-    },
-    {
-      "path": "libs/vue/humu"
-    },
-    {
-      "path": "libs/vue/kiro"
-    },
-    {
-      "path": "libs/vue/kolo"
-    },
-    {
-      "path": "libs/vue/meli"
-    },
-    {
-      "path": "libs/vue/myko"
-    },
-    {
-      "path": "libs/vue/novi"
-    },
-    {
-      "path": "libs/vue/robust"
-    },
-    {
-      "path": "libs/vue/router/configs"
-    },
-    {
-      "path": "libs/vue/sustainable-development-goals"
-    },
-    {
-      "path": "libs/vue/tera"
-    },
-    {
-      "path": "libs/vue/tiptap"
-    },
-    {
-      "path": "libs/vue/vara"
-    },
-    {
-      "path": "projects/storybook"
-    },
-    {
-      "path": "projects/tera/app"
-    },
-    {
-      "path": "projects/tera/tests-e2e"
     }
   ]
 }

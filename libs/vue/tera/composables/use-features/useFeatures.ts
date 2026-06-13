@@ -15,7 +15,10 @@ export function useFeatures(): UseGenericApplicationsFeatures<FeatureGroup> {
   return useGenericApplicationsFeatures<FeatureAlias, FeatureGroup>(
     FEATURE_ALIAS,
     FEATURE_GROUP,
-    FEATURES_LIST,
+    // FEATURES_LIST is built entirely from FEATURE_ALIAS / FEATURE_GROUP values, so every entry is a
+    // valid (FeatureAlias, FeatureGroup) pair. Its source declaration lacks `as const`, so TypeScript
+    // widens the members to `string`; assert back to the precise element type.
+    FEATURES_LIST as { alias: FeatureAlias; group: FeatureGroup }[],
     {
       messages,
       rootKey: TRANSLATION_KEY,

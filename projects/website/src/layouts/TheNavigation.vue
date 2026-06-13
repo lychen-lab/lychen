@@ -108,7 +108,7 @@
         <Button
           :label="t('preregistration')"
           size="sm"
-          variant="outlined"
+          variant="outline"
         />
       </a>
       <a

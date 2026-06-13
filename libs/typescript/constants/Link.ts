@@ -5,4 +5,5 @@ export const LINK = {
   Alpsify: 'https://alpsify.com',
   HumusAndCo: 'https://humusandco.fr',
   HelloAssoDonation: 'https://www.helloasso.com/associations/lychen/formulaires/1',
+  TallyPreregisterForm: 'https://tally.so/r/D4vJ85',
 } as const;

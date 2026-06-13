@@ -6,7 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import { PRESETS } from '../utils/Preset';
 import { cn } from '@lychen/typescript-utils/tailwind/Cn';
 import { TagsInputInput, type TagsInputInputProps, useForwardProps } from 'reka-ui';
 import { computed, type HTMLAttributes } from 'vue';

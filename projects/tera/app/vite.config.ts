@@ -15,9 +15,12 @@ const config: UserConfig = {
   plugins: [
     vueDevTools(),
     tailwindcss(),
-    mkcert({
-      hosts: ['app.tera.lychen.local'],
-    }),
+    // mkcert downloads and executes a shared binary; concurrent vitest/CI workers race on it (ETXTBSY) and dev certs are pointless there
+    !process.env.VITEST &&
+      !process.env.CI &&
+      mkcert({
+        hosts: ['app.tera.lychen.local'],
+      }),
     vue({
       template: {
         transformAssetUrls: {

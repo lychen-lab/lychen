@@ -1,6 +1,7 @@
 import { type JSONContent } from '@tiptap/core';
 import Bold from '@tiptap/extension-bold';
 import BulletList from '@tiptap/extension-bullet-list';
+import CharacterCount from '@tiptap/extension-character-count';
 import Document from '@tiptap/extension-document';
 import DropCursor from '@tiptap/extension-dropcursor';
 import GapCursor from '@tiptap/extension-gapcursor';
@@ -22,6 +23,7 @@ import { computed, type ComputedRef, type Ref, watch } from 'vue';
 export type EditorProps = {
   placeholder?: string;
   oneLine?: boolean;
+  maxlength?: number;
   modelValue: EditorModelValue;
 };
 
@@ -53,6 +55,7 @@ export function useEditor(
       OrderedList,
       BulletList,
       ListItem,
+      CharacterCount,
       Highlight,
       Italic,
       Bold,
@@ -99,7 +102,7 @@ export function useEditor(
         return;
       }
 
-      editor.value.commands.setContent(value, false);
+      editor.value.commands.setContent(value, { emitUpdate: false });
     },
   );
 

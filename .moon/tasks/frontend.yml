@@ -48,5 +48,18 @@ tasks:
     - '!**/vendor/'
     - '!**/playwright-report/'
     - '!**/.vite-ssg-temp/'
+  typecheck:
+    command:
+    - vue-tsc
+    - --build
+    inputs:
+    - '**/*.{vue,ts,tsx,json}'
+    - tsconfig.json
+    - /tsconfig.options.json
+    - '!**/build/'
+    - '!**/dist/'
+    - '!**/vendor/'
+    - '!**/playwright-report/'
+    - '!**/.vite-ssg-temp/'
 inheritedBy:
   stack: frontend

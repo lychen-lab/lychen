@@ -20,7 +20,7 @@
         >
           <template v-if="tasksQueries[index]?.data?.member">
             <DataTableTeraLandTask
-              :data="tasksQueries[index].data.member"
+              :data="asLandTaskList(tasksQueries[index].data.member)"
               :state="state"
               :total-items="tasksQueries[index]?.data?.totalItems"
             />
@@ -43,7 +43,10 @@
               v-if="state === LandTaskState.to_be_done"
               #actions
             >
-              <DialogTeraLandTaskCreate :land="land">
+              <DialogTeraLandTaskCreate
+                v-if="land"
+                :land="land"
+              >
                 <Button
                   variant="ghost"
                   size="xs"
@@ -59,7 +62,7 @@
                 :state="state"
               >
                 <CardTeraLandTask
-                  :land-task="landTask"
+                  :land-task="asLandTask(landTask)"
                   no-state
                   class="cursor-pointer"
                   @click="openDialog(landTask)"
@@ -105,6 +108,7 @@ import DialogTeraLandTaskUpdate from '@lychen/vue-tera/components/land-task/dial
 import DialogTeraLandTaskCreate from '@lychen/vue-tera/components/land-task/dialogs/create/DialogTeraLandTaskCreate.vue';
 import {
   LandTaskJsonldState as LandTaskState,
+  PathsApiLand_tasksGetParametersQueryOrderDueDate,
   type components,
 } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import SectionDevelopmentInProgress from '@lychen/vue-components-app/section-development-in-progress/SectionDevelopmentInProgress.vue';
@@ -135,7 +139,7 @@ const queries = computed(() =>
           params: {
             query: {
               land: landUlid.value!,
-              'order[dueDate]': 'asc',
+              'order[dueDate]': PathsApiLand_tasksGetParametersQueryOrderDueDate.asc,
               state: state,
             },
           },
@@ -186,8 +190,22 @@ const isDialogForTaskVisible = ref(false);
 
 const currentLandTask = ref();
 
-function openDialog(landTask: components['schemas']['LandTask.jsonld']) {
-  currentLandTask.value = landTask;
+type LandTaskCollectionItem = components['schemas']['LandTask.jsonld-land_task.collection'];
+
+// The list/kanban queries return the leaner `land_task.collection` projection, while
+// the display components and dialog are typed against the base `LandTask.jsonld`. The
+// projection is a runtime subset (it only omits optional base fields and uses a nominally
+// distinct but value-identical `state` enum), so it is safe to widen at these boundaries.
+function asLandTask(landTask: LandTaskCollectionItem) {
+  return landTask as unknown as components['schemas']['LandTask.jsonld'];
+}
+
+function asLandTaskList(landTasks: LandTaskCollectionItem[]) {
+  return landTasks as unknown as components['schemas']['LandTask.jsonld'][];
+}
+
+function openDialog(landTask: LandTaskCollectionItem) {
+  currentLandTask.value = asLandTask(landTask);
   isDialogForTaskVisible.value = true;
 }
 

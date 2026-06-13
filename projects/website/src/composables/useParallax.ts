@@ -22,10 +22,13 @@ export function useParallax(target: Ref<HTMLElement | null>, options: UseParalla
   let cleanup: (() => void) | undefined;
 
   onMounted(() => {
-    const element = target.value;
-    if (!element) {
+    const root = target.value;
+    if (!root) {
       return;
     }
+    // `root` is captured by the closures below; binding the narrowed value to a fresh
+    // const keeps its non-null type inside those nested functions.
+    const element: HTMLElement = root;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let frame = 0;

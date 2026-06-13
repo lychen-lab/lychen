@@ -4,11 +4,11 @@
     @submit.prevent="onSubmit"
   >
     <FormFieldEmail
-      :is-field-dirty="isFieldDirty"
+      :is-field-dirty="isFieldDirty('email')"
       :rules="emailFieldSchema"
     />
     <FormFieldTeraLandRole
-      :is-field-dirty="isFieldDirty"
+      :is-field-dirty="isFieldDirty('landRoles')"
       :land="land"
       @update:model-value="setFieldValue('landRoles', $event)"
     />
@@ -48,7 +48,7 @@ const { land } = defineProps<{ land: components['schemas']['Land.jsonld'] }>();
 type FormType = Omit<
   paths['/api/land_member_invitations']['post']['requestBody']['content']['application/ld+json'],
   'landRoles'
-> & { landRoles: components['schemas']['LandRole.jsonld'][] };
+> & { landRoles: Pick<components['schemas']['LandRole.jsonld'], '@id' | 'name'>[] };
 
 const emailFieldSchema = toTypedSchema(
   z

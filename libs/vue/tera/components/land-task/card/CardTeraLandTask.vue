@@ -35,21 +35,17 @@ import { computed } from 'vue';
 
 import { messages, TRANSLATION_KEY } from '@lychen/i18n-tera/land';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { VARIANT, type Variant } from '.';
+import type { Variant } from '.';
 import BadgeTeraLandTaskState from '../badges/state/BadgeTeraLandTaskState.vue';
 import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
-const {
-  variant = VARIANT.Default,
-  landTask,
-  noState = false,
-} = defineProps<{
+const { landTask, noState = false } = defineProps<{
   landTask: components['schemas']['LandTask.jsonld'];
   noState?: boolean;
   variant?: Variant;
 }>();
 
-const { t, d } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
+const { d } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 
 const overdue = computed<boolean>(() => {
   if (!landTask.dueDate) return false;

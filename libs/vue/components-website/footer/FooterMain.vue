@@ -20,7 +20,7 @@
         >
           {{ seoParagraph }}
         </p>
-        <slot/>
+        <slot />
       </div>
 
       <div class="flex basis-1/4 flex-col items-end justify-start gap-2 text-sm">
@@ -52,6 +52,7 @@
 import { defineAsyncComponent } from 'vue';
 
 import { CONFIG } from './i18n';
+import type { RouteLocationAsRelativeGeneric } from 'vue-router';
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { EMAIL } from '@lychen/typescript-constants/Email';
 import { INFORMATION } from '@lychen/typescript-constants/Information';
@@ -65,7 +66,7 @@ const LogoLychenFull = defineAsyncComponent(
 const { t, i18nRoute } = usePrefixedI18n(CONFIG);
 
 interface Props {
-  legalMenus?: { title: string; to: unknown }[];
+  legalMenus?: { title: string; to?: Pick<RouteLocationAsRelativeGeneric, 'name' | 'params'> }[];
   seoParagraph?: string;
   displayPronunciation?: boolean;
 }
