@@ -13,6 +13,10 @@
     },
     "description": "Un seul label pour mesurer la robustesse, de la transition à la régénération du vivant. Une échelle unique de 1 à 10 pour tous les systèmes (villes, entreprises, associations, produits).",
     "scale_hint": "Transition → Préservation → Régénération",
+    "cta_primary": "Découvrir l'échelle",
+    "cta_secondary": "Notre mission",
+    "scroll_hint": "Découvrir l'échelle Robust",
+    "card_title": "Un seul score, de 1 à 10",
     "stats": {
       "levels": { "value": "1 → 10", "label": "Niveaux de robustesse" },
       "tranches": { "value": "3", "label": "Grandes étapes" },
@@ -45,7 +49,7 @@
       "title": "Régénération",
       "subtitle": "Niveaux 8 à 10",
       "description": "Le système régénère l'écosystème qui l'entoure. Il vise une autonomie complète et contribue activement à la restauration du vivant et de la biodiversité.",
-      "image_alt": "Ferme agroécologique foisonnante vue du ciel, mosaïque de cultures et de forêts"
+      "image_alt": "Rangées de cultures maraîchères luxuriantes, agroécologie foisonnante et productive"
     }
   },
   "gamification": {
@@ -53,6 +57,8 @@
     "title": "Gamification cohérente & mesurable",
     "description": "Le Label Robust permet de comparer et valider les efforts de chaque acteur, quelle que soit sa nature. Plus le système est gros, plus le niveau est complexe à atteindre, mettant en évidence les petites initiatives locales agiles.",
     "image_alt": "Communauté locale célébrant la progression de son territoire autour d'un tableau de scores",
+    "figure_caption": "Communauté locale",
+    "score_highlight": "+100 pts",
     "examples_title": "Quelques scores",
     "examples": {
       "0": { "role": "Asso Locale", "points": "Niveau 6 (100 pts)" },
@@ -65,6 +71,8 @@
     "kicker": "Un langage commun",
     "title": "Une vision unique",
     "description": "En parlant uniquement de 'Robust Niveau X', nous simplifions la communication tout en gardant une précision scientifique sur l'impact réel. C'est un outil de reconnaissance universel pour la transition écologique.",
-    "image_alt": "Étiquette Robust apposée fièrement sur un produit local, sous une lumière douce"
+    "image_alt": "Étiquette Robust apposée fièrement sur un produit local, sous une lumière douce",
+    "sticker_label": "Label vérifié",
+    "sticker_level": "Niveau 9"
   }
 }

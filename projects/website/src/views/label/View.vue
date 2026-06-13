@@ -1,28 +1,33 @@
 <template>
   <!-- ============================================================= HERO -->
-  <section class="label-hero relative overflow-hidden">
-    <!-- Layered decorative background: gradient wash + blobs -->
-    <div
+  <!-- Photo: Pexels #12208088 (aerial farmland) — free to use, no attribution required. -->
+  <section
+    class="label-hero relative isolate flex min-h-[640px] items-end overflow-hidden md:min-h-[88svh]"
+  >
+    <img
+      :src="heroFieldsUrl"
+      alt=""
       aria-hidden="true"
-      class="label-hero-grade absolute inset-0 z-0"
+      fetchpriority="high"
+      class="absolute inset-0 size-full object-cover"
     />
     <div
       aria-hidden="true"
-      class="label-blob label-blob-transition absolute z-0"
+      class="label-hero-grade absolute inset-0 z-[1]"
     />
     <div
       aria-hidden="true"
-      class="label-blob label-blob-preservation absolute z-0"
+      class="label-hero-contrast absolute inset-0 z-[1]"
     />
     <div
       aria-hidden="true"
-      class="label-blob label-blob-regeneration absolute z-0"
+      class="label-hero-vignette pointer-events-none absolute inset-0 z-[1]"
     />
 
-    <!-- Decorative ridge silhouette at the bottom of the hero -->
+    <!-- Decorative ridge silhouette blending the hero into the page. -->
     <svg
       aria-hidden="true"
-      class="label-hero-ridge absolute inset-x-0 -bottom-px z-[1] h-[22svh] w-full dark:brightness-[0.6]"
+      class="absolute inset-x-0 -bottom-px z-[2] h-[16svh] w-full dark:brightness-[0.55]"
       viewBox="0 0 1440 320"
       preserveAspectRatio="none"
       fill="none"
@@ -38,11 +43,11 @@
         >
           <stop
             offset="0"
-            stop-color="oklch(0.62 0.05 150)"
+            stop-color="oklch(0.27 0.06 140)"
           />
           <stop
             offset="1"
-            stop-color="oklch(0.45 0.055 145)"
+            stop-color="oklch(0.14 0.04 138)"
           />
         </linearGradient>
       </defs>
@@ -57,67 +62,133 @@
         vector-effect="non-scaling-stroke"
       />
     </svg>
+    <div
+      aria-hidden="true"
+      class="label-hero-blend pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[14svh]"
+    />
 
-    <Container class="relative z-10">
+    <Container class="relative z-10 w-full pt-28 pb-24 md:pt-32 md:pb-28">
       <div
         ref="heroCopy"
-        class="label-reveal-group mx-auto flex max-w-4xl flex-col items-center gap-6 pt-28 pb-32 text-center md:pt-36"
-        :class="{ 'label-revealed': heroRevealed }"
+        class="grid items-end gap-10 lg:grid-cols-[1.05fr_0.95fr]"
       >
-        <span
-          class="border-on-surface/15 bg-surface-container-low/70 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold tracking-widest uppercase backdrop-blur-md"
+        <!-- LEFT — copy -->
+        <div
+          class="label-reveal-group flex flex-col items-start gap-6"
+          :class="{ 'label-revealed': heroRevealed }"
         >
-          <span class="bg-primary size-1.5 animate-pulse rounded-full" />
-          {{ t('hero.badge') }}
-        </span>
-
-        <Title
-          variant="h1"
-          class="font-lexend max-w-4xl text-[clamp(2.5rem,6vw,4.75rem)] leading-[1.06] font-extrabold tracking-tight text-balance"
-          >{{ t('hero.title.prepend')
-          }}<span
-            class="from-primary bg-gradient-to-r via-[oklch(0.65_0.1_150)] to-[oklch(0.6_0.12_180)] bg-clip-text text-transparent dark:from-[oklch(0.88_0.13_131)] dark:via-[oklch(0.85_0.11_150)] dark:to-[oklch(0.82_0.1_180)]"
-            >{{ t('hero.title.key_word') }}</span
-          >{{ t('hero.title.append') }}</Title
-        >
-
-        <Paragraph
-          variant="website-highlight"
-          class="max-w-2xl opacity-80"
-          >{{ t('hero.description') }}</Paragraph
-        >
-
-        <!-- Scale hint chip -->
-        <span
-          class="border-on-surface/10 bg-surface-container-low/60 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold backdrop-blur-md"
-        >
-          <IconSprout class="text-primary size-4" />
-          {{ t('hero.scale_hint') }}
-        </span>
-
-        <!-- Stats row -->
-        <dl class="mt-4 grid w-full max-w-2xl grid-cols-3 gap-4">
-          <div
-            v-for="stat in HERO_STATS"
-            :key="stat.key"
-            class="border-on-surface/10 bg-surface-container-low/50 flex flex-col items-center gap-1 rounded-2xl border px-3 py-5 backdrop-blur-sm"
+          <span
+            class="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-semibold tracking-widest text-white/90 uppercase backdrop-blur-md"
           >
-            <dt
-              class="from-primary bg-gradient-to-r to-[oklch(0.6_0.12_180)] bg-clip-text font-lexend text-3xl font-black text-transparent md:text-4xl"
-            >
-              {{ t(`hero.stats.${stat.key}.value`) }}
-            </dt>
-            <dd class="text-xs font-medium opacity-60">
-              {{ t(`hero.stats.${stat.key}.label`) }}
-            </dd>
+            <span class="size-1.5 animate-pulse rounded-full bg-[oklch(0.87_0.12_131)]" />
+            {{ t('hero.badge') }}
+          </span>
+
+          <Title
+            variant="h1"
+            class="font-lexend max-w-3xl text-[clamp(2.5rem,6vw,4.75rem)] leading-[1.05] font-extrabold tracking-tight text-balance text-[oklch(0.985_0.01_120)] drop-shadow-[0_2px_24px_rgba(0,0,0,0.45)]"
+            >{{ t('hero.title.prepend')
+            }}<span
+              class="bg-gradient-to-r from-[oklch(0.88_0.13_131)] via-[oklch(0.85_0.11_150)] to-[oklch(0.82_0.1_180)] bg-clip-text text-transparent"
+              >{{ t('hero.title.key_word') }}</span
+            >{{ t('hero.title.append') }}</Title
+          >
+
+          <Paragraph
+            variant="website-highlight"
+            class="max-w-xl text-white/85 drop-shadow-[0_1px_12px_rgba(0,0,0,0.5)]"
+            >{{ t('hero.description') }}</Paragraph
+          >
+
+          <div class="mt-1 flex flex-wrap items-center gap-3">
+            <RouterLink to="#scale">
+              <Button
+                size="lg"
+                data-umami-event="label-scale-button"
+                :label="t('hero.cta_primary')"
+                class="border-0 bg-[oklch(0.87_0.12_131)] text-[oklch(0.22_0.06_135)] shadow-[0_8px_30px_oklch(0.87_0.12_131_/_0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[oklch(0.91_0.12_131)] hover:shadow-[0_12px_40px_oklch(0.87_0.12_131_/_0.5)]"
+              >
+                {{ t('hero.cta_primary') }}
+                <template #icon><IconArrowRight class="size-4" /></template>
+              </Button>
+            </RouterLink>
+            <RouterLink :to="{ name: ROUTE_MISSION.name }">
+              <Button
+                size="lg"
+                variant="ghost"
+                data-umami-event="label-mission-button"
+                :label="t('hero.cta_secondary')"
+                class="border border-white/30 bg-white/10 text-white backdrop-blur-md transition-all duration-300 hover:bg-white/20 hover:text-white"
+              />
+            </RouterLink>
           </div>
-        </dl>
+        </div>
+
+        <!-- RIGHT — floating scale card -->
+        <aside
+          class="label-reveal-figure border-on-surface/10 bg-surface/85 flex flex-col gap-5 rounded-3xl border p-6 shadow-2xl backdrop-blur-2xl md:p-7"
+          :class="{ 'label-figure-revealed': heroRevealed }"
+        >
+          <div class="flex items-center gap-2">
+            <span
+              class="bg-primary/12 text-primary flex size-9 items-center justify-center rounded-xl"
+            >
+              <IconSprout class="size-5" />
+            </span>
+            <div class="flex flex-col">
+              <span class="text-xs font-bold tracking-[0.18em] uppercase opacity-55">{{
+                t('scale.kicker')
+              }}</span>
+              <span class="font-lexend text-lg leading-tight font-extrabold">{{
+                t('hero.card_title')
+              }}</span>
+            </div>
+          </div>
+
+          <ScaleBar
+            :transition-label="t('tranches.transition.title')"
+            :preservation-label="t('tranches.preservation.title')"
+            :regeneration-label="t('tranches.regeneration.title')"
+          />
+
+          <dl class="grid grid-cols-3 gap-2.5">
+            <div
+              v-for="stat in HERO_STATS"
+              :key="stat.key"
+              class="border-on-surface/5 bg-surface-container-low/70 flex flex-col items-center gap-1 rounded-2xl border px-2 py-3.5"
+            >
+              <dt
+                class="from-primary font-lexend bg-gradient-to-r to-[oklch(0.6_0.12_180)] bg-clip-text text-2xl font-black text-transparent"
+              >
+                {{ t(`hero.stats.${stat.key}.value`) }}
+              </dt>
+              <dd class="text-center text-[11px] leading-tight font-medium opacity-60">
+                {{ t(`hero.stats.${stat.key}.label`) }}
+              </dd>
+            </div>
+          </dl>
+        </aside>
       </div>
     </Container>
+
+    <RouterLink
+      to="#scale"
+      :aria-label="t('hero.scroll_hint')"
+      class="absolute bottom-5 left-1/2 z-20 hidden -translate-x-1/2 lg:block"
+    >
+      <span
+        class="label-hero-scroll-hint flex size-11 items-center justify-center rounded-full border border-white/25 bg-white/10 backdrop-blur-md"
+      >
+        <IconChevronDown class="size-5 text-white/90" />
+      </span>
+    </RouterLink>
   </section>
 
   <!-- ====================================================== SCALE SECTION -->
-  <section class="relative overflow-hidden py-20 md:py-28">
+  <section
+    id="scale"
+    class="relative scroll-mt-24 overflow-hidden py-20 md:py-28"
+  >
     <div
       aria-hidden="true"
       class="label-blob label-blob-soft absolute top-10 -left-24 z-0"
@@ -147,6 +218,15 @@
           class="opacity-80"
           >{{ t('scale.description') }}</Paragraph
         >
+
+        <!-- Continuum scale, full width — the visual backbone of the section. -->
+        <div class="mt-2 w-full max-w-2xl">
+          <ScaleBar
+            :transition-label="t('tranches.transition.title')"
+            :preservation-label="t('tranches.preservation.title')"
+            :regeneration-label="t('tranches.regeneration.title')"
+          />
+        </div>
       </div>
 
       <!-- Three tranches -->
@@ -158,20 +238,19 @@
           :class="[tranche.surfaceClass, { 'label-tranche-revealed': scaleRevealed }]"
           :style="{ '--reveal-delay': `${0.1 + index * 0.14}s` }"
         >
-          <!--
-            IMAGE PLACEHOLDER: tranche illustration
-            (transition = field starting conversion, preservation = balanced
-            plots with groves/ponds, regeneration = thriving agroecological
-            farm seen from above). Midjourney prompts in ClickUp.
-          -->
-          <div
-            aria-hidden="true"
-            class="label-placeholder relative flex h-40 items-end justify-between overflow-hidden rounded-2xl p-4"
-            :class="tranche.placeholderClass"
-          >
-            <span class="label-placeholder-grain absolute inset-0" />
+          <figure class="relative h-44 overflow-hidden rounded-2xl">
+            <img
+              :src="tranche.image"
+              :alt="t(`tranches.${tranche.key}.image_alt`)"
+              loading="lazy"
+              class="size-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div
+              aria-hidden="true"
+              class="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent"
+            />
             <span
-              class="bg-surface/70 text-on-surface relative z-10 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-bold backdrop-blur-md"
+              class="bg-surface/80 text-on-surface absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-bold backdrop-blur-md"
             >
               <component
                 :is="tranche.icon"
@@ -180,26 +259,29 @@
               />
               {{ t(`tranches.${tranche.key}.subtitle`) }}
             </span>
-            <span class="relative z-10 font-lexend text-5xl font-black text-white/35">
+            <span
+              class="font-lexend absolute right-3 bottom-2 text-4xl font-black text-white/80 drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
+            >
               {{ tranche.levels }}
             </span>
-          </div>
+          </figure>
 
-          <div class="flex flex-col items-center gap-1.5 text-center">
+          <div class="flex flex-col items-center gap-2 text-center">
             <Title
               variant="h3"
               :class="tranche.accentClass"
               >{{ t(`tranches.${tranche.key}.title`) }}</Title
             >
-            <span class="text-sm opacity-60">{{ t(`tranches.${tranche.key}.subtitle`) }}</span>
-          </div>
-
-          <div class="flex flex-wrap justify-center gap-4">
-            <RobustLabel
-              v-for="level in tranche.badges"
-              :key="level"
-              :level="level"
-            />
+            <!-- Level chips: a clean replacement for the old shield badges. -->
+            <div class="flex flex-wrap justify-center gap-1.5">
+              <span
+                v-for="level in tranche.badges"
+                :key="level"
+                class="flex size-7 items-center justify-center rounded-lg text-xs font-bold tabular-nums ring-1 ring-inset"
+                :class="tranche.chipClass"
+                >{{ level }}</span
+              >
+            </div>
           </div>
 
           <Paragraph class="text-center text-sm opacity-80">{{
@@ -242,10 +324,9 @@
               :key="i"
               class="border-on-surface/10 bg-surface-container-low/60 flex items-center gap-4 rounded-2xl border p-3 backdrop-blur-sm transition-transform duration-300 hover:translate-x-1"
             >
-              <RobustLabel
+              <LevelBadge
                 :level="example.level"
                 size="sm"
-                class="scale-75"
               />
               <div class="flex flex-col">
                 <span class="font-bold">{{ t(`gamification.examples.${i}.role`) }}</span>
@@ -255,26 +336,37 @@
           </ul>
         </div>
 
-        <!--
-          IMAGE PLACEHOLDER: local community celebrating their territory's
-          progress around a scoreboard. Midjourney prompt in ClickUp.
-        -->
+        <!-- Photo: Pexels #33352121 (community gardeners) — free to use, no attribution required. -->
         <div
           class="label-reveal-figure order-first lg:order-last"
           :class="{ 'label-figure-revealed': gamificationRevealed }"
         >
-          <div
-            aria-hidden="true"
-            class="label-placeholder label-placeholder-community ring-on-surface/10 relative flex aspect-[4/3] items-end overflow-hidden rounded-3xl shadow-xl ring-1"
+          <figure
+            class="ring-on-surface/10 relative aspect-[4/3] overflow-hidden rounded-3xl shadow-xl ring-1"
           >
-            <span class="label-placeholder-grain absolute inset-0" />
+            <img
+              :src="communityUrl"
+              :alt="t('gamification.image_alt')"
+              loading="lazy"
+              class="size-full object-cover"
+            />
+            <div
+              aria-hidden="true"
+              class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"
+            />
             <span
-              class="bg-surface/70 text-on-surface relative z-10 m-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold backdrop-blur-md"
+              class="bg-surface/80 text-on-surface absolute bottom-4 left-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold backdrop-blur-md"
             >
               <IconUsers class="text-primary size-3.5" />
-              {{ t('gamification.image_alt') }}
+              {{ t('gamification.figure_caption') }}
             </span>
-          </div>
+            <span
+              class="bg-primary absolute top-4 right-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold text-[oklch(0.22_0.06_135)] shadow-lg"
+            >
+              <IconStar class="size-3.5" />
+              {{ t('gamification.score_highlight') }}
+            </span>
+          </figure>
         </div>
       </div>
     </Container>
@@ -284,31 +376,45 @@
   <section class="relative overflow-hidden py-20 md:py-28">
     <Container class="relative z-10">
       <div class="grid items-center gap-12 lg:grid-cols-2">
-        <!--
-          IMAGE PLACEHOLDER: a Robust label proudly displayed on a local
-          product, in soft natural light. Midjourney prompt in ClickUp.
-        -->
+        <!-- Photo: Pexels #7341749 (local market produce) — free to use, no attribution required. -->
         <div
           class="label-reveal-figure"
           :class="{ 'label-figure-revealed': visionRevealed }"
         >
-          <div
-            aria-hidden="true"
-            class="label-placeholder label-placeholder-product ring-on-surface/10 relative flex aspect-[4/3] items-end overflow-hidden rounded-3xl shadow-xl ring-1"
+          <figure
+            class="ring-on-surface/10 relative aspect-[4/3] overflow-hidden rounded-3xl shadow-xl ring-1"
           >
-            <span class="label-placeholder-grain absolute inset-0" />
-            <RobustLabel
-              :level="9"
-              size="lg"
-              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            <img
+              :src="visionProductUrl"
+              :alt="t('vision.image_alt')"
+              loading="lazy"
+              class="size-full object-cover"
             />
-            <span
-              class="bg-surface/70 text-on-surface relative z-10 m-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold backdrop-blur-md"
+            <div
+              aria-hidden="true"
+              class="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"
+            />
+            <!-- Product certification sticker — the label as it appears in the field. -->
+            <div
+              class="border-on-surface/10 bg-surface/90 absolute top-4 left-4 flex items-center gap-3 rounded-2xl border px-3.5 py-2.5 shadow-lg backdrop-blur-md"
             >
-              <IconBadgeCheck class="text-primary size-3.5" />
-              {{ t('vision.image_alt') }}
-            </span>
-          </div>
+              <LevelBadge
+                :level="9"
+                size="sm"
+              />
+              <div class="flex flex-col pr-1">
+                <span
+                  class="inline-flex items-center gap-1 text-[11px] font-semibold tracking-wider uppercase opacity-60"
+                >
+                  <IconBadgeCheck class="text-primary size-3.5" />
+                  {{ t('vision.sticker_label') }}
+                </span>
+                <span class="font-lexend text-lg leading-tight font-extrabold">{{
+                  t('vision.sticker_level')
+                }}</span>
+              </div>
+            </div>
+          </figure>
         </div>
 
         <div
@@ -334,62 +440,80 @@
 <script lang="ts" setup>
 import { ref, type Ref } from 'vue';
 import { useIntersectionObserver } from '@vueuse/core';
+import { useHead } from '@unhead/vue';
 
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { CONFIG } from './i18n';
 import Container from '@lychen/vue-components-website/container/Container.vue';
 import Title from '@lychen/vue-components-website/title/Title.vue';
 import Paragraph from '@lychen/vue-components-website/paragraph/Paragraph.vue';
-import RobustLabel from './RobustLabel.vue';
+import Button from '@lychen/vue-components-core/button/Button.vue';
 import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
+import { ROUTE_MISSION } from '@/views/mission';
 import IconSprout from '@lychen/vue-icons/IconSprout.vue';
-import IconShieldCheck from '@lychen/vue-icons/IconShieldCheck.vue';
+import IconCircleCheck from '@lychen/vue-icons/IconCircleCheck.vue';
 import IconEarth from '@lychen/vue-icons/IconEarth.vue';
 import IconUsers from '@lychen/vue-icons/IconUsers.vue';
 import IconBadgeCheck from '@lychen/vue-icons/IconBadgeCheck.vue';
+import IconArrowRight from '@lychen/vue-icons/IconArrowRight.vue';
+import IconChevronDown from '@lychen/vue-icons/IconChevronDown.vue';
+import IconStar from '@lychen/vue-icons/IconStar.vue';
+import LevelBadge from './LevelBadge.vue';
+import ScaleBar from './ScaleBar.vue';
+
+import heroFieldsUrl from './assets/hero-fields.webp';
+import transitionUrl from './assets/transition.webp';
+import preservationUrl from './assets/preservation.webp';
+import regenerationUrl from './assets/regeneration.webp';
+import communityUrl from './assets/community.webp';
+import visionProductUrl from './assets/vision-product.webp';
+import ogImageUrl from './assets/LabelOgImage.webp';
 
 const { t } = usePrefixedI18n(CONFIG);
-useExtendedHead(t);
+useExtendedHead(t, { ogImage: ogImageUrl });
+useHead({
+  link: [{ rel: 'preload', as: 'image', href: heroFieldsUrl, fetchpriority: 'high' }],
+});
 
 const HERO_STATS = [{ key: 'levels' }, { key: 'tranches' }, { key: 'scope' }] as const;
 
+// Tranche photos (Pexels, free to use, no attribution required):
+// #7944396 seedling in soil, #13127129 hedgerow farmland, #89267 market-garden rows.
 const TRANCHES = [
   {
     key: 'transition',
     levels: '1–3',
     badges: [1, 2, 3],
     icon: IconSprout,
+    image: transitionUrl,
     accentClass: 'text-yellow-600 dark:text-yellow-400',
+    chipClass: 'bg-yellow-500/15 text-yellow-700 ring-yellow-500/30 dark:text-yellow-300',
     surfaceClass: 'bg-yellow-50/40 dark:bg-yellow-950/15',
-    placeholderClass: 'label-placeholder-transition',
   },
   {
     key: 'preservation',
     levels: '4–7',
     badges: [4, 5, 6, 7],
-    icon: IconShieldCheck,
+    icon: IconCircleCheck,
+    image: preservationUrl,
     accentClass: 'text-emerald-600 dark:text-emerald-400',
+    chipClass: 'bg-emerald-500/15 text-emerald-700 ring-emerald-500/30 dark:text-emerald-300',
     surfaceClass: 'bg-emerald-50/40 dark:bg-emerald-950/15',
-    placeholderClass: 'label-placeholder-preservation',
   },
   {
     key: 'regeneration',
     levels: '8–10',
     badges: [8, 9, 10],
     icon: IconEarth,
+    image: regenerationUrl,
     accentClass: 'text-amber-600 dark:text-amber-400',
+    chipClass: 'bg-amber-500/15 text-amber-700 ring-amber-500/35 dark:text-amber-200',
     surfaceClass:
       'bg-amber-50/50 shadow-lg shadow-amber-500/10 dark:bg-amber-950/15 dark:shadow-amber-500/5',
-    placeholderClass: 'label-placeholder-regeneration',
   },
 ] as const;
 
-const GAMIFICATION_EXAMPLES = [
-  { level: 6 },
-  { level: 4 },
-  { level: 5 },
-  { level: 8 },
-] as const;
+const GAMIFICATION_EXAMPLES = [{ level: 6 }, { level: 4 }, { level: 5 }, { level: 8 }] as const;
 
 function useReveal(target: Ref<HTMLElement | null>, threshold = 0.25) {
   const revealed = ref(false);
@@ -418,15 +542,32 @@ const visionRevealed = useReveal(visionCopy, 0.2);
 <style scoped>
 /* ---------------------------------------------------------------- HERO */
 .label-hero-grade {
-  background:
-    radial-gradient(80% 60% at 50% 0%, oklch(0.7 0.08 150 / 0.18), transparent 70%),
-    linear-gradient(180deg, oklch(0.95 0.02 150 / 0.5) 0%, transparent 60%);
+  background: linear-gradient(
+    180deg,
+    oklch(0.6 0.07 160 / 0.3) 0%,
+    oklch(0.45 0.09 145 / 0.42) 55%,
+    oklch(0.3 0.08 140 / 0.55) 100%
+  );
+  mix-blend-mode: color;
 }
 
-:global(.dark) .label-hero-grade {
+.label-hero-contrast {
   background:
-    radial-gradient(80% 60% at 50% 0%, oklch(0.6 0.1 150 / 0.18), transparent 70%),
-    linear-gradient(180deg, oklch(0.3 0.06 150 / 0.35) 0%, transparent 60%);
+    linear-gradient(180deg, rgb(0 0 0 / 0.28) 0%, rgb(0 0 0 / 0.05) 32%, rgb(0 0 0 / 0.45) 100%),
+    linear-gradient(90deg, rgb(0 0 0 / 0.42) 0%, rgb(0 0 0 / 0.12) 48%, transparent 70%);
+}
+
+.label-hero-vignette {
+  background: radial-gradient(120% 90% at 40% 38%, transparent 52%, rgb(0 0 0 / 0.4) 100%);
+  mask-image: linear-gradient(180deg, black 72%, transparent 100%);
+}
+
+.label-hero-blend {
+  background: linear-gradient(180deg, transparent 0%, var(--color-surface) 82%);
+}
+
+.label-hero-scroll-hint {
+  animation: label-scroll-bounce 2.4s ease-in-out infinite;
 }
 
 /* ----------------------------------------------------- DECORATIVE BLOBS */
@@ -438,89 +579,9 @@ const visionRevealed = useReveal(visionCopy, 0.2);
   pointer-events: none;
 }
 
-.label-blob-transition {
-  top: -8%;
-  left: -6%;
-  background: oklch(0.85 0.13 95);
-  opacity: 0.14;
-}
-
-.label-blob-preservation {
-  top: 10%;
-  right: -8%;
-  background: oklch(0.7 0.13 150);
-  opacity: 0.12;
-}
-
-.label-blob-regeneration {
-  bottom: -10%;
-  left: 30%;
-  background: oklch(0.78 0.13 75);
-  opacity: 0.1;
-}
-
 .label-blob-soft {
   background: var(--color-primary);
   opacity: 0.08;
-}
-
-/* ------------------------------------------------------ IMAGE PLACEHOLDERS */
-.label-placeholder {
-  background-position: center;
-  background-size: cover;
-}
-
-/* Subtle grain/texture overlay shared by every placeholder block */
-.label-placeholder-grain {
-  background-image: radial-gradient(rgb(255 255 255 / 0.16) 1px, transparent 1.4px);
-  background-size: 14px 14px;
-  mix-blend-mode: overlay;
-  opacity: 0.5;
-}
-
-.label-placeholder-transition {
-  background-image: linear-gradient(
-    135deg,
-    oklch(0.82 0.13 95) 0%,
-    oklch(0.72 0.12 120) 60%,
-    oklch(0.6 0.11 135) 100%
-  );
-}
-
-.label-placeholder-preservation {
-  background-image: linear-gradient(
-    135deg,
-    oklch(0.74 0.12 150) 0%,
-    oklch(0.6 0.12 160) 55%,
-    oklch(0.46 0.1 165) 100%
-  );
-}
-
-.label-placeholder-regeneration {
-  background-image: linear-gradient(
-    135deg,
-    oklch(0.8 0.13 80) 0%,
-    oklch(0.66 0.13 110) 55%,
-    oklch(0.5 0.12 150) 100%
-  );
-}
-
-.label-placeholder-community {
-  background-image: linear-gradient(
-    140deg,
-    oklch(0.74 0.11 150) 0%,
-    oklch(0.58 0.12 165) 50%,
-    oklch(0.44 0.1 175) 100%
-  );
-}
-
-.label-placeholder-product {
-  background-image: linear-gradient(
-    140deg,
-    oklch(0.85 0.1 95) 0%,
-    oklch(0.7 0.12 130) 55%,
-    oklch(0.52 0.11 155) 100%
-  );
 }
 
 /* --------------------------------------------------- SCROLL REVEALS */
@@ -587,6 +648,16 @@ const visionRevealed = useReveal(visionCopy, 0.2);
   translate: 0 0;
 }
 
+@keyframes label-scroll-bounce {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 8px, 0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .label-reveal-group > *,
   .label-tranche,
@@ -594,6 +665,10 @@ const visionRevealed = useReveal(visionCopy, 0.2);
     opacity: 1;
     translate: 0 0;
     transition: none;
+  }
+
+  .label-hero-scroll-hint {
+    animation: none;
   }
 }
 </style>
