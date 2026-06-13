@@ -29,20 +29,20 @@
       <div class="grid grid-cols-1 gap-4 md:grid-cols-[1fr_1.4fr]">
         <OddBentoCard
           :goal="two"
-          :image="images[2]"
+          :image="Goal2Url"
           :link-title="t('goals.link_title.2')"
           large
           class="min-h-80 md:col-start-2 md:row-span-2 md:row-start-1"
         />
         <OddBentoCard
           :goal="eleven"
-          :image="images[11]"
+          :image="Goal11Url"
           :link-title="t('goals.link_title.11')"
           class="min-h-56 md:col-start-1 md:row-start-1"
         />
         <OddBentoCard
           :goal="twelve"
-          :image="images[12]"
+          :image="Goal12Url"
           :link-title="t('goals.link_title.12')"
           class="min-h-56 md:col-start-1 md:row-start-2"
         />
@@ -76,12 +76,6 @@ const Container = defineAsyncComponent(
 const { t } = usePrefixedI18n(CONFIG);
 
 const { two, eleven, twelve } = useSustainableDevelopmentGoals();
-
-const images: { [key: number]: string } = {
-  2: Goal2Url,
-  11: Goal11Url,
-  12: Goal12Url,
-};
 
 const headerRef = ref<HTMLElement | null>(null);
 const headerVisible = ref(false);
