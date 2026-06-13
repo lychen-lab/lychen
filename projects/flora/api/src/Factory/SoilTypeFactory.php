@@ -3,12 +3,12 @@
 namespace App\Factory;
 
 use App\Entity\SoilType;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<SoilType>
+ * @extends PersistentObjectFactory<SoilType>
  */
-final class SoilTypeFactory extends PersistentProxyObjectFactory
+final class SoilTypeFactory extends PersistentObjectFactory
 {
 
     public function __construct()

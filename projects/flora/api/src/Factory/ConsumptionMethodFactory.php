@@ -3,12 +3,12 @@
 namespace App\Factory;
 
 use App\Entity\ConsumptionMethod;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<ConsumptionMethod>
+ * @extends PersistentObjectFactory<ConsumptionMethod>
  */
-final class ConsumptionMethodFactory extends PersistentProxyObjectFactory
+final class ConsumptionMethodFactory extends PersistentObjectFactory
 {
 
     public function __construct()

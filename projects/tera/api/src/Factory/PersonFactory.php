@@ -4,13 +4,13 @@ namespace App\Factory;
 
 use App\Entity\Person;
 use Symfony\Component\Uid\Uuid;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 use function Zenstruck\Foundry\faker;
 
 /**
- * @extends PersistentProxyObjectFactory<Person>
+ * @extends PersistentObjectFactory<Person>
  */
-final class PersonFactory extends PersistentProxyObjectFactory
+final class PersonFactory extends PersistentObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services

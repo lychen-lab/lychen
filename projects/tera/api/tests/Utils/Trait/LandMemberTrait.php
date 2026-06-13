@@ -6,11 +6,10 @@ use App\Entity\Land;
 use App\Entity\LandMember;
 use App\Entity\Person;
 use App\Factory\LandMemberFactory;
-use Zenstruck\Foundry\Persistence\Proxy;
 
 trait LandMemberTrait
 {
-    protected function createLandMember(Land|Proxy $land, Person|Proxy $person, ?array $roles = null): LandMember|Proxy
+    protected function createLandMember(Land $land, Person $person, ?array $roles = null): LandMember
     {
         return LandMemberFactory::new()->create([
             'land' => $land,

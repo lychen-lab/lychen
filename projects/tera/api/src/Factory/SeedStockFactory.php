@@ -4,12 +4,12 @@ namespace App\Factory;
 
 use App\Entity\SeedStock;
 use DateTimeImmutable;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<SeedStock>
+ * @extends PersistentObjectFactory<SeedStock>
  */
-final class SeedStockFactory extends PersistentProxyObjectFactory
+final class SeedStockFactory extends PersistentObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services

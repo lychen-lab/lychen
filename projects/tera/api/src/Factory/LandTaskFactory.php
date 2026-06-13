@@ -5,12 +5,12 @@ namespace App\Factory;
 use App\Entity\LandTask;
 use App\Workflow\LandTask\LandTaskWorkflowPlace;
 use Lychen\UtilTiptap\Service\TipTapFaker;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<LandTask>
+ * @extends PersistentObjectFactory<LandTask>
  */
-final class LandTaskFactory extends PersistentProxyObjectFactory
+final class LandTaskFactory extends PersistentObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services

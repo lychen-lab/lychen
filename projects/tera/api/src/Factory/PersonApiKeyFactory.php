@@ -3,12 +3,12 @@
 namespace App\Factory;
 
 use App\Entity\PersonApiKey;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<PersonApiKey>
+ * @extends PersistentObjectFactory<PersonApiKey>
  */
-final class PersonApiKeyFactory extends PersistentProxyObjectFactory
+final class PersonApiKeyFactory extends PersistentObjectFactory
 {
     public function __construct()
     {

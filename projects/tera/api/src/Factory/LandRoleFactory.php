@@ -3,12 +3,12 @@
 namespace App\Factory;
 
 use App\Entity\LandRole;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<LandRole>
+ * @extends PersistentObjectFactory<LandRole>
  */
-final class LandRoleFactory extends PersistentProxyObjectFactory
+final class LandRoleFactory extends PersistentObjectFactory
 {
     public function __construct()
     {

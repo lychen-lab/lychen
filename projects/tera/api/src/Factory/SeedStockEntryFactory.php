@@ -3,12 +3,12 @@
 namespace App\Factory;
 
 use App\Entity\SeedStockEntry;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<SeedStockEntry>
+ * @extends PersistentObjectFactory<SeedStockEntry>
  */
-final class SeedStockEntryFactory extends PersistentProxyObjectFactory
+final class SeedStockEntryFactory extends PersistentObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services

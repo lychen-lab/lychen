@@ -3,12 +3,12 @@
 namespace App\Factory;
 
 use App\Entity\Address;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<Address>
+ * @extends PersistentObjectFactory<Address>
  */
-final class AddressFactory extends PersistentProxyObjectFactory
+final class AddressFactory extends PersistentObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services

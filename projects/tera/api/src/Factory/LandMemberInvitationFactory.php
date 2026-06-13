@@ -3,12 +3,12 @@
 namespace App\Factory;
 
 use App\Entity\LandMemberInvitation;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<LandMemberInvitation>
+ * @extends PersistentObjectFactory<LandMemberInvitation>
  */
-final class LandMemberInvitationFactory extends PersistentProxyObjectFactory
+final class LandMemberInvitationFactory extends PersistentObjectFactory
 {
     public static function class(): string
     {
