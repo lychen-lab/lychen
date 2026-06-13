@@ -1,0 +1,127 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Property App\\Entity\\Plant\:\:\$medicinal \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/Plant.php
+
+		-
+			message: '#^Property App\\Entity\\Plant\:\:\$melliferous \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/Plant.php
+
+		-
+			message: '#^Property App\\Entity\\Plant\:\:\$perennial \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/Plant.php
+
+		-
+			message: '#^Property App\\Entity\\PlantPart\:\:\$consumable \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/PlantPart.php
+
+		-
+			message: '#^Class App\\Factory\\CultivationFactory extends generic class Zenstruck\\Foundry\\Persistence\\PersistentObjectFactory but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Factory/CultivationFactory.php
+
+		-
+			message: '#^Call to static method decode\(\) on an unknown class Firebase\\JWT\\JWT\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Security/JWT/JWTDecoder.php
+
+		-
+			message: '#^Instantiated class Firebase\\JWT\\Key not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Security/JWT/JWTDecoder.php
+
+		-
+			message: '#^Call to static method encode\(\) on an unknown class Firebase\\JWT\\JWT\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Security/JWT/JWTEncoder.php
+
+		-
+			message: '#^Method App\\Security\\JWT\\JWTEncoder\:\:encode\(\) has parameter \$payload with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/JWT/JWTEncoder.php
+
+		-
+			message: '#^Method App\\Security\\JWT\\JWTEncoder\:\:preparePayload\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/JWT/JWTEncoder.php
+
+		-
+			message: '#^Method App\\Security\\JWT\\JWTPayloadable\:\:getJWTPayload\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/JWT/JWTPayloadable.php
+
+		-
+			message: '#^Method App\\Story\\DefaultPlantsStory\:\:createPlant\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Story/DefaultPlantsStory.php
+
+		-
+			message: '#^Method App\\Story\\DefaultPlantsStory\:\:createPlant\(\) has parameter \$cultivationAttributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Story/DefaultPlantsStory.php
+
+		-
+			message: '#^Method App\\Story\\DefaultPlantsStory\:\:createPlant\(\) has parameter \$plantPartList with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Story/DefaultPlantsStory.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\DefaultTest\:\:testOne\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/DefaultTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\DefaultSecurityTest\:\:testOne\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/DefaultSecurityTest.php
+
+		-
+			message: '#^Attribute class JetBrains\\PhpStorm\\NoReturn does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:browser\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:browser\(\) has parameter \$server with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\TestBrowser\:\:patch\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/TestBrowser.php
+
+		-
+			message: '#^Call to function method_exists\(\) with ''Symfony\\\\Component\\\\Dotenv\\\\Dotenv'' and ''bootEnv'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: tests/bootstrap.php

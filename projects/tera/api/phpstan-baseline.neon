@@ -1,0 +1,2239 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method App\\DataFixtures\\LandFixtures\:\:createLandAndAddReference\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataFixtures/LandFixtures.php
+
+		-
+			message: '#^Method App\\DataFixtures\\LandRoleFixtures\:\:createLandRoleAndAddReference\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataFixtures/LandRoleFixtures.php
+
+		-
+			message: '#^Method App\\DataFixtures\\PersonFixtures\:\:createPersonAndAddReference\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataFixtures/PersonFixtures.php
+
+		-
+			message: '#^Method App\\Doctrine\\Listener\\LandCleanDefaultRoleBeforeRemoveListener\:\:__invoke\(\) has parameter \$event with generic class Doctrine\\Persistence\\Event\\LifecycleEventArgs but does not specify its types\: TObjectManager$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Doctrine/Listener/LandCleanDefaultRoleBeforeRemoveListener.php
+
+		-
+			message: '#^Method App\\Doctrine\\Listener\\LandLinkOwnerListener\:\:__invoke\(\) has parameter \$event with generic class Doctrine\\Persistence\\Event\\LifecycleEventArgs but does not specify its types\: TObjectManager$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Doctrine/Listener/LandLinkOwnerListener.php
+
+		-
+			message: '#^Method App\\Doctrine\\Listener\\LandMemberInvitationAutoLink\:\:onNewMemberInvitation\(\) has parameter \$event with generic class Doctrine\\Persistence\\Event\\LifecycleEventArgs but does not specify its types\: TObjectManager$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Doctrine/Listener/LandMemberInvitationAutoLink.php
+
+		-
+			message: '#^Method App\\Doctrine\\Listener\\LandMemberInvitationAutoLink\:\:onNewPerson\(\) has parameter \$event with generic class Doctrine\\Persistence\\Event\\LifecycleEventArgs but does not specify its types\: TObjectManager$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Doctrine/Listener/LandMemberInvitationAutoLink.php
+
+		-
+			message: '#^Method App\\Doctrine\\Listener\\LandRequestLinkPersonListener\:\:__invoke\(\) has parameter \$event with generic class Doctrine\\Persistence\\Event\\LifecycleEventArgs but does not specify its types\: TObjectManager$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Doctrine/Listener/LandRequestLinkPersonListener.php
+
+		-
+			message: '#^Method App\\Doctrine\\Listener\\LandRolesBelongToLandValidateListener\:\:__invoke\(\) has parameter \$event with generic class Doctrine\\Persistence\\Event\\LifecycleEventArgs but does not specify its types\: TObjectManager$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Doctrine/Listener/LandRolesBelongToLandValidateListener.php
+
+		-
+			message: '#^Method App\\Doctrine\\Listener\\PersonApiKeyLinkOwnerListener\:\:__invoke\(\) has parameter \$event with generic class Doctrine\\Persistence\\Event\\LifecycleEventArgs but does not specify its types\: TObjectManager$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Doctrine/Listener/PersonApiKeyLinkOwnerListener.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Security\\Core\\User\\UserInterface\:\:getId\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Doctrine/QueryExtension/LandExtension.php
+
+		-
+			message: '#^Call to an undefined method ApiPlatform\\Metadata\\Operation\:\:getUriTemplate\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Doctrine/QueryExtension/LandProposalExtension.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Security\\Core\\User\\UserInterface\:\:getId\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/Doctrine/QueryExtension/LandRequestExtension.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Security\\Core\\User\\UserInterface\:\:getId\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Doctrine/QueryExtension/SeedStockCustomExtension.php
+
+		-
+			message: '#^Attribute class Symfony\\Component\\Serializer\\Annotation\\Groups does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: src/Dto/LandMemberInvitationCheckEmailUnicityDto.php
+
+		-
+			message: '#^Attribute class Symfony\\Component\\Serializer\\Annotation\\Groups does not exist\.$#'
+			identifier: attribute.notFound
+			count: 7
+			path: src/Entity/LandApiKey.php
+
+		-
+			message: '#^Method App\\Entity\\LandApiKey\:\:getApiKeys\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandApiKey.php
+
+		-
+			message: '#^Method App\\Entity\\LandApiKey\:\:getJWTPayload\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandApiKey.php
+
+		-
+			message: '#^Method App\\Entity\\LandApiKey\:\:getPermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandApiKey.php
+
+		-
+			message: '#^Method App\\Entity\\LandApiKey\:\:getUserIdentifier\(\) should return non\-empty\-string but returns Symfony\\Component\\Uid\\Ulid\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Entity/LandApiKey.php
+
+		-
+			message: '#^Method App\\Entity\\LandApiKey\:\:setPermissions\(\) has parameter \$permissions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandApiKey.php
+
+		-
+			message: '#^Parameter \$parameters of attribute class ApiPlatform\\Metadata\\GetCollection constructor expects ApiPlatform\\Metadata\\Parameters\|array\<string, ApiPlatform\\Metadata\\Parameter\>\|null, array\<int, ApiPlatform\\Metadata\\QueryParameter\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Entity/LandApiKey.php
+
+		-
+			message: '#^Property App\\Entity\\LandApiKey\:\:\$permissions type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandApiKey.php
+
+		-
+			message: '#^Parameter \$parameters of attribute class ApiPlatform\\Metadata\\GetCollection constructor expects ApiPlatform\\Metadata\\Parameters\|array\<string, ApiPlatform\\Metadata\\Parameter\>\|null, array\<int, ApiPlatform\\Metadata\\QueryParameter\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Entity/LandArea.php
+
+		-
+			message: '#^Property App\\Entity\\LandArea\:\:\$kind \(string\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandArea.php
+
+		-
+			message: '#^Property App\\Entity\\LandArea\:\:\$state \(string\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandArea.php
+
+		-
+			message: '#^Property App\\Entity\\LandAreaParameter\:\:\$aboveGround \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandAreaParameter.php
+
+		-
+			message: '#^Property App\\Entity\\LandAreaSetting\:\:\$rotationActivated \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandAreaSetting.php
+
+		-
+			message: '#^Parameter \$parameters of attribute class ApiPlatform\\Metadata\\GetCollection constructor expects ApiPlatform\\Metadata\\Parameters\|array\<string, ApiPlatform\\Metadata\\Parameter\>\|null, array\<int, ApiPlatform\\Metadata\\QueryParameter\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Entity/LandCultivationPlan.php
+
+		-
+			message: '#^Property App\\Entity\\LandCultivationPlan\:\:\$state \(string\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandCultivationPlan.php
+
+		-
+			message: '#^Property App\\Entity\\LandDeal\:\:\$state \(string\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandDeal.php
+
+		-
+			message: '#^Parameter \$parameters of attribute class ApiPlatform\\Metadata\\GetCollection constructor expects ApiPlatform\\Metadata\\Parameters\|array\<string, ApiPlatform\\Metadata\\Parameter\>\|null, array\<int, ApiPlatform\\Metadata\\QueryParameter\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Entity/LandGreenhouse.php
+
+		-
+			message: '#^Method App\\Entity\\LandHarvestEntry\:\:getNotes\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandHarvestEntry.php
+
+		-
+			message: '#^Method App\\Entity\\LandHarvestEntry\:\:setNotes\(\) has parameter \$notes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandHarvestEntry.php
+
+		-
+			message: '#^Parameter \$parameters of attribute class ApiPlatform\\Metadata\\GetCollection constructor expects ApiPlatform\\Metadata\\Parameters\|array\<string, ApiPlatform\\Metadata\\Parameter\>\|null, array\<int\|string, ApiPlatform\\Metadata\\QueryParameter\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Entity/LandHarvestEntry.php
+
+		-
+			message: '#^Property App\\Entity\\LandHarvestEntry\:\:\$notes type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandHarvestEntry.php
+
+		-
+			message: '#^Property App\\Entity\\LandHarvestEntry\:\:\$quality \(string\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandHarvestEntry.php
+
+		-
+			message: '#^Method App\\Entity\\LandMember\:\:getPermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandMember.php
+
+		-
+			message: '#^Method App\\Entity\\LandMember\:\:setLandRoles\(\) has parameter \$landRoles with generic interface Doctrine\\Common\\Collections\\Collection but does not specify its types\: TKey, T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Entity/LandMember.php
+
+		-
+			message: '#^Parameter \$parameters of attribute class ApiPlatform\\Metadata\\Get constructor expects ApiPlatform\\Metadata\\Parameters\|array\<string, ApiPlatform\\Metadata\\Parameter\>\|null, array\<int, ApiPlatform\\Metadata\\QueryParameter\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Entity/LandMember.php
+
+		-
+			message: '#^Parameter \$parameters of attribute class ApiPlatform\\Metadata\\GetCollection constructor expects ApiPlatform\\Metadata\\Parameters\|array\<string, ApiPlatform\\Metadata\\Parameter\>\|null, array\<int, ApiPlatform\\Metadata\\QueryParameter\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Entity/LandMember.php
+
+		-
+			message: '#^Property App\\Entity\\LandMember\:\:\$owner \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandMember.php
+
+		-
+			message: '#^Parameter \$parameters of attribute class ApiPlatform\\Metadata\\GetCollection constructor expects ApiPlatform\\Metadata\\Parameters\|array\<string, ApiPlatform\\Metadata\\Parameter\>\|null, array\<int, ApiPlatform\\Metadata\\QueryParameter\> given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Entity/LandMemberInvitation.php
+
+		-
+			message: '#^Property App\\Entity\\LandMemberInvitation\:\:\$state \(string\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandMemberInvitation.php
+
+		-
+			message: '#^Property App\\Entity\\LandMemberSetting\:\:\$emailNotificationActivated \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandMemberSetting.php
+
+		-
+			message: '#^Method App\\Entity\\LandProposal\:\:getDescription\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandProposal.php
+
+		-
+			message: '#^Method App\\Entity\\LandProposal\:\:getSharingConditions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandProposal.php
+
+		-
+			message: '#^Method App\\Entity\\LandProposal\:\:setDescription\(\) has parameter \$description with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandProposal.php
+
+		-
+			message: '#^Method App\\Entity\\LandProposal\:\:setSharingConditions\(\) has parameter \$sharingConditions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandProposal.php
+
+		-
+			message: '#^Parameter \$parameters of attribute class ApiPlatform\\Metadata\\GetCollection constructor expects ApiPlatform\\Metadata\\Parameters\|array\<string, ApiPlatform\\Metadata\\Parameter\>\|null, array\<int\|string, ApiPlatform\\Metadata\\QueryParameter\> given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Entity/LandProposal.php
+
+		-
+			message: '#^Property App\\Entity\\LandProposal\:\:\$description type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandProposal.php
+
+		-
+			message: '#^Property App\\Entity\\LandProposal\:\:\$foodSecurityParticipation \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandProposal.php
+
+		-
+			message: '#^Property App\\Entity\\LandProposal\:\:\$gardeningLevel \(string\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandProposal.php
+
+		-
+			message: '#^Property App\\Entity\\LandProposal\:\:\$hasIndependentAccess \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandProposal.php
+
+		-
+			message: '#^Property App\\Entity\\LandProposal\:\:\$hasParking \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandProposal.php
+
+		-
+			message: '#^Property App\\Entity\\LandProposal\:\:\$hasShed \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandProposal.php
+
+		-
+			message: '#^Property App\\Entity\\LandProposal\:\:\$hasTools \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandProposal.php
+
+		-
+			message: '#^Property App\\Entity\\LandProposal\:\:\$hasWaterPoint \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandProposal.php
+
+		-
+			message: '#^Property App\\Entity\\LandProposal\:\:\$preferredInteractionMode \(string\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandProposal.php
+
+		-
+			message: '#^Property App\\Entity\\LandProposal\:\:\$sharingConditions type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandProposal.php
+
+		-
+			message: '#^Property App\\Entity\\LandProposal\:\:\$state \(string\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandProposal.php
+
+		-
+			message: '#^Method App\\Entity\\LandRequest\:\:getMessage\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandRequest.php
+
+		-
+			message: '#^Method App\\Entity\\LandRequest\:\:getSharingConditions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandRequest.php
+
+		-
+			message: '#^Method App\\Entity\\LandRequest\:\:setMessage\(\) has parameter \$message with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandRequest.php
+
+		-
+			message: '#^Method App\\Entity\\LandRequest\:\:setSharingConditions\(\) has parameter \$sharingConditions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandRequest.php
+
+		-
+			message: '#^Parameter \$parameters of attribute class ApiPlatform\\Metadata\\GetCollection constructor expects ApiPlatform\\Metadata\\Parameters\|array\<string, ApiPlatform\\Metadata\\Parameter\>\|null, array\<int\|string, ApiPlatform\\Metadata\\QueryParameter\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Entity/LandRequest.php
+
+		-
+			message: '#^Property App\\Entity\\LandRequest\:\:\$gardeningLevel \(string\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandRequest.php
+
+		-
+			message: '#^Property App\\Entity\\LandRequest\:\:\$hasTools \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandRequest.php
+
+		-
+			message: '#^Property App\\Entity\\LandRequest\:\:\$message type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandRequest.php
+
+		-
+			message: '#^Property App\\Entity\\LandRequest\:\:\$sharingConditions type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandRequest.php
+
+		-
+			message: '#^Property App\\Entity\\LandRequest\:\:\$state \(string\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandRequest.php
+
+		-
+			message: '#^Property App\\Entity\\LandRequest\:\:\$supportsLocalFoodSecurity \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandRequest.php
+
+		-
+			message: '#^Method App\\Entity\\LandRole\:\:getPermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandRole.php
+
+		-
+			message: '#^Method App\\Entity\\LandRole\:\:setPermissions\(\) has parameter \$permissions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandRole.php
+
+		-
+			message: '#^Parameter \$parameters of attribute class ApiPlatform\\Metadata\\GetCollection constructor expects ApiPlatform\\Metadata\\Parameters\|array\<string, ApiPlatform\\Metadata\\Parameter\>\|null, array\<int\|string, ApiPlatform\\Metadata\\QueryParameter\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Entity/LandRole.php
+
+		-
+			message: '#^Property App\\Entity\\LandRole\:\:\$permissions type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandRole.php
+
+		-
+			message: '#^Property App\\Entity\\LandSetting\:\:\$lookingForMember \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandSetting.php
+
+		-
+			message: '#^Method App\\Entity\\LandTask\:\:getContent\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandTask.php
+
+		-
+			message: '#^Method App\\Entity\\LandTask\:\:setContent\(\) has parameter \$content with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandTask.php
+
+		-
+			message: '#^Parameter \$parameters of attribute class ApiPlatform\\Metadata\\GetCollection constructor expects ApiPlatform\\Metadata\\Parameters\|array\<string, ApiPlatform\\Metadata\\Parameter\>\|null, array\<int\|string, ApiPlatform\\Metadata\\QueryParameter\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Entity/LandTask.php
+
+		-
+			message: '#^Property App\\Entity\\LandTask\:\:\$content type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/LandTask.php
+
+		-
+			message: '#^Property App\\Entity\\LandTask\:\:\$state \(string\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/LandTask.php
+
+		-
+			message: '#^Method App\\Entity\\Person\:\:getPermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/Person.php
+
+		-
+			message: '#^Method App\\Entity\\Person\:\:setPermissions\(\) has parameter \$permissions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/Person.php
+
+		-
+			message: '#^Property App\\Entity\\Person\:\:\$permissions type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/Person.php
+
+		-
+			message: '#^Attribute class Symfony\\Component\\Serializer\\Annotation\\Groups does not exist\.$#'
+			identifier: attribute.notFound
+			count: 6
+			path: src/Entity/PersonApiKey.php
+
+		-
+			message: '#^Method App\\Entity\\PersonApiKey\:\:getJWTPayload\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/PersonApiKey.php
+
+		-
+			message: '#^Method App\\Entity\\PersonApiKey\:\:getPermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/PersonApiKey.php
+
+		-
+			message: '#^Method App\\Entity\\PersonApiKey\:\:getUserIdentifier\(\) should return non\-empty\-string but returns Symfony\\Component\\Uid\\Ulid\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Entity/PersonApiKey.php
+
+		-
+			message: '#^Method App\\Entity\\PersonApiKey\:\:setPermissions\(\) has parameter \$permissions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/PersonApiKey.php
+
+		-
+			message: '#^Property App\\Entity\\PersonApiKey\:\:\$permissions type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Entity/PersonApiKey.php
+
+		-
+			message: '#^Property App\\Entity\\SeedStockEntry\:\:\$publiclyShared \(bool\|null\) is never assigned null so it can be removed from the property type\.$#'
+			identifier: property.unusedType
+			count: 1
+			path: src/Entity/SeedStockEntry.php
+
+		-
+			message: '#^Method App\\Filter\\EmailFilter\:\:__construct\(\) has parameter \$properties with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Filter/EmailFilter.php
+
+		-
+			message: '#^Method App\\Filter\\EmailFilter\:\:filterProperty\(\) has parameter \$value with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Filter/EmailFilter.php
+
+		-
+			message: '#^Method App\\Filter\\JsonbContainsFilter\:\:__construct\(\) has parameter \$properties with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Filter/JsonbContainsFilter.php
+
+		-
+			message: '#^Parameter \#2 \$logger of method ApiPlatform\\Doctrine\\Orm\\Filter\\AbstractFilter\:\:__construct\(\) expects Psr\\Log\\LoggerInterface\|null, array\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Filter/JsonbContainsFilter.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between null and non\-empty\-string will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: src/Filter/JsonbContainsFilter.php
+
+		-
+			message: '#^Method App\\Filter\\LandFilter\:\:__construct\(\) has parameter \$properties with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Filter/LandFilter.php
+
+		-
+			message: '#^Method App\\Filter\\LandFilter\:\:filterProperty\(\) has parameter \$value with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Filter/LandFilter.php
+
+		-
+			message: '#^Class App\\Processor\\DebugProcessor implements generic interface ApiPlatform\\State\\ProcessorInterface but does not specify its types\: T1, T2$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Processor/DebugProcessor.php
+
+		-
+			message: '#^Call to an undefined method ApiPlatform\\Metadata\\Operation\:\:getOptions\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Processor/WorkflowTransitionProcessor.php
+
+		-
+			message: '#^Class App\\Processor\\WorkflowTransitionProcessor implements generic interface ApiPlatform\\State\\ProcessorInterface but does not specify its types\: T1, T2$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Processor/WorkflowTransitionProcessor.php
+
+		-
+			message: '#^Method App\\Processor\\WorkflowTransitionProcessor\:\:__construct\(\) has parameter \$persistProcessor with generic interface ApiPlatform\\State\\ProcessorInterface but does not specify its types\: T1, T2$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Processor/WorkflowTransitionProcessor.php
+
+		-
+			message: '#^Class App\\Provider\\LandMemberInvitationCheckEmailUnicityProvider implements generic interface ApiPlatform\\State\\ProviderInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Provider/LandMemberInvitationCheckEmailUnicityProvider.php
+
+		-
+			message: '#^Method App\\Provider\\LandMemberInvitationCheckEmailUnicityProvider\:\:provide\(\) never returns null so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: src/Provider/LandMemberInvitationCheckEmailUnicityProvider.php
+
+		-
+			message: '#^Class App\\Provider\\LandMembersMeProvider implements generic interface ApiPlatform\\State\\ProviderInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Provider/LandMembersMeProvider.php
+
+		-
+			message: '#^Method App\\Provider\\LandMembersMeProvider\:\:provide\(\) never returns null so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: src/Provider/LandMembersMeProvider.php
+
+		-
+			message: '#^Class App\\Provider\\LandsLookingForMembersProvider implements generic interface ApiPlatform\\State\\ProviderInterface but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Provider/LandsLookingForMembersProvider.php
+
+		-
+			message: '#^Method App\\Provider\\LandsLookingForMembersProvider\:\:provide\(\) never returns null so it can be removed from the return type\.$#'
+			identifier: return.unusedType
+			count: 1
+			path: src/Provider/LandsLookingForMembersProvider.php
+
+		-
+			message: '#^Method App\\Repository\\LandRepository\:\:findLookingForMembers\(\) return type with generic class Doctrine\\ORM\\Tools\\Pagination\\Paginator does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Repository/LandRepository.php
+
+		-
+			message: '#^Method App\\Security\\Interface\\PermissionHolder\:\:getPermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/Interface/PermissionHolder.php
+
+		-
+			message: '#^Method App\\Security\\JWT\\JWTEncoder\:\:encode\(\) has parameter \$payload with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/JWT/JWTEncoder.php
+
+		-
+			message: '#^Method App\\Security\\JWT\\JWTEncoder\:\:preparePayload\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/JWT/JWTEncoder.php
+
+		-
+			message: '#^Method App\\Security\\JWT\\JWTPayloadable\:\:getJWTPayload\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/JWT/JWTPayloadable.php
+
+		-
+			message: '#^PHPDoc tag @return with type bool\|null is not subtype of native type bool\.$#'
+			identifier: return.phpDocType
+			count: 1
+			path: src/Security/Voter/AbstractLandAwareVoterInterface.php
+
+		-
+			message: '#^Class App\\Security\\Voter\\AbstractPermissionVoter extends generic class Symfony\\Component\\Security\\Core\\Authorization\\Voter\\Voter but does not specify its types\: TAttribute, TSubject$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Security/Voter/AbstractPermissionVoter.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\LandApiKeyVoter\:\:getAvailablePermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/Voter/LandApiKeyVoter.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\LandAreaParameterVoter\:\:getAvailablePermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/Voter/LandAreaParameterVoter.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\LandAreaSettingVoter\:\:getAvailablePermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/Voter/LandAreaSettingVoter.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\LandAreaVoter\:\:getAvailablePermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/Voter/LandAreaVoter.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\LandAwareVoterInterface\:\:getAvailablePermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/Voter/LandAwareVoterInterface.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\LandCultivationPlanVoter\:\:getAvailablePermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/Voter/LandCultivationPlanVoter.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\LandGreenhouseParameterVoter\:\:getAvailablePermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/Voter/LandGreenhouseParameterVoter.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\LandGreenhouseSettingVoter\:\:getAvailablePermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/Voter/LandGreenhouseSettingVoter.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\LandGreenhouseVoter\:\:getAvailablePermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/Voter/LandGreenhouseVoter.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\LandHarvestEntryVoter\:\:getAvailablePermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/Voter/LandHarvestEntryVoter.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\LandMemberInvitationVoter\:\:getAvailablePermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/Voter/LandMemberInvitationVoter.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\LandProposalVoter\:\:getAvailablePermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/Voter/LandProposalVoter.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\LandRequestVoter\:\:canPost\(\) has parameter \$permissionHolder with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Security/Voter/LandRequestVoter.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\LandRoleVoter\:\:getAvailablePermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/Voter/LandRoleVoter.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\LandSettingVoter\:\:getAvailablePermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/Voter/LandSettingVoter.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\LandTaskVoter\:\:getAvailablePermissions\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/Voter/LandTaskVoter.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\PersonApiKeyVoter\:\:canGet\(\) has parameter \$permissionHolder with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Security/Voter/PersonApiKeyVoter.php
+
+		-
+			message: '#^Method App\\Security\\Voter\\PersonApiKeyVoter\:\:canPost\(\) has parameter \$permissionHolder with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Security/Voter/PersonApiKeyVoter.php
+
+		-
+			message: '#^Method App\\Validator\\LandProposalOnlyOneStatePerLand\:\:__construct\(\) has parameter \$states with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Validator/LandProposalOnlyOneStatePerLand.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\Interface\\StateLandInterface\:\:getId\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Validator/LandProposalOnlyOneStatePerLandValidator.php
+
+		-
+			message: '#^Method App\\Validator\\LandProposalOnlyOneStatePerLandValidator\:\:validate\(\) has parameter \$value with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Validator/LandProposalOnlyOneStatePerLandValidator.php
+
+		-
+			message: '#^Access to an undefined property Symfony\\Component\\Validator\\Constraint\:\:\$message\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Validator/PlantUlidValidator.php
+
+		-
+			message: '#^Method App\\Validator\\UniqueStatePerPerson\:\:__construct\(\) has parameter \$states with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Validator/UniqueStatePerPerson.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\Interface\\StatePersonInterface\:\:getId\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Validator/UniqueStatePerPersonValidator.php
+
+		-
+			message: '#^Call to an undefined method App\\Entity\\Interface\\StatePersonInterface\:\:setPerson\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Validator/UniqueStatePerPersonValidator.php
+
+		-
+			message: '#^Method App\\Validator\\UniqueStatePerPersonValidator\:\:validate\(\) has parameter \$value with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Validator/UniqueStatePerPersonValidator.php
+
+		-
+			message: '#^Method App\\Workflow\\LandMemberInvitation\\Subscriber\\LandMemberInvitationTransitionAccept\:\:createLandMember\(\) has parameter \$event with generic class Symfony\\Component\\Workflow\\Event\\Event but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Workflow/LandMemberInvitation/Subscriber/LandMemberInvitationTransitionAccept.php
+
+		-
+			message: '#^Method App\\Workflow\\LandMemberInvitation\\Subscriber\\LandMemberInvitationTransitionAccept\:\:onTransition\(\) has parameter \$event with generic class Symfony\\Component\\Workflow\\Event\\Event but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Workflow/LandMemberInvitation/Subscriber/LandMemberInvitationTransitionAccept.php
+
+		-
+			message: '#^Method App\\Workflow\\LandMemberInvitation\\Subscriber\\LandMemberInvitationTransitionRefuse\:\:onTransition\(\) has parameter \$event with generic class Symfony\\Component\\Workflow\\Event\\Event but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Workflow/LandMemberInvitation/Subscriber/LandMemberInvitationTransitionRefuse.php
+
+		-
+			message: '#^Method App\\Workflow\\LandMemberInvitation\\Subscriber\\LandMemberInvitationTransitionRefuse\:\:sendEmailToLandOwner\(\) has parameter \$event with generic class Symfony\\Component\\Workflow\\Event\\Event but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Workflow/LandMemberInvitation/Subscriber/LandMemberInvitationTransitionRefuse.php
+
+		-
+			message: '#^Method App\\Workflow\\LandProposal\\Subscriber\\LandProposalTransitionArchive\:\:onTransition\(\) has parameter \$event with generic class Symfony\\Component\\Workflow\\Event\\Event but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Workflow/LandProposal/Subscriber/LandProposalTransitionArchive.php
+
+		-
+			message: '#^Method App\\Workflow\\LandProposal\\Subscriber\\LandProposalTransitionPublish\:\:onTransition\(\) has parameter \$event with generic class Symfony\\Component\\Workflow\\Event\\Event but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Workflow/LandProposal/Subscriber/LandProposalTransitionPublish.php
+
+		-
+			message: '#^Method App\\Workflow\\LandRequest\\Subscriber\\LandRequestTransitionArchive\:\:onTransition\(\) has parameter \$event with generic class Symfony\\Component\\Workflow\\Event\\Event but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Workflow/LandRequest/Subscriber/LandRequestTransitionArchive.php
+
+		-
+			message: '#^Method App\\Workflow\\LandRequest\\Subscriber\\LandRequestTransitionPublish\:\:onTransition\(\) has parameter \$event with generic class Symfony\\Component\\Workflow\\Event\\Event but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Workflow/LandRequest/Subscriber/LandRequestTransitionPublish.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandApiKeyTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandApiKeyTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandAreaParameterTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandAreaParameterTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandAreaParameterTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandAreaParameterTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandAreaSettingTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandAreaSettingTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandAreaSettingTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandAreaSettingTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandAreaTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandAreaTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandAreaTest\:\:testCollectionPagination\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandAreaTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandAreaTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandAreaTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandAreaTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandAreaTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandAreaTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandAreaTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandAreaTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandAreaTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandCultivationPlanTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandCultivationPlanTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandDealTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandDealTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandGreenhouseParameterTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandGreenhouseParameterTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandGreenhouseParameterTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandGreenhouseParameterTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandGreenhouseSettingTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandGreenhouseSettingTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandGreenhouseSettingTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandGreenhouseSettingTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandGreenhouseTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandGreenhouseTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandGreenhouseTest\:\:testCollectionPagination\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandGreenhouseTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandGreenhouseTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandGreenhouseTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandGreenhouseTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandGreenhouseTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandGreenhouseTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandGreenhouseTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandGreenhouseTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandGreenhouseTest.php
+
+		-
+			message: '#^Call to an undefined method Zenstruck\\Browser\\KernelBrowser\:\:addMock\(\)\.$#'
+			identifier: method.notFound
+			count: 4
+			path: tests/Functional/Land/LandHarvestEntryTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandHarvestEntryTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandHarvestEntryTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandHarvestEntryTest\:\:testCollectionPagination\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandHarvestEntryTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandHarvestEntryTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandHarvestEntryTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandHarvestEntryTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandHarvestEntryTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandHarvestEntryTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandHarvestEntryTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandHarvestEntryTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandHarvestEntryTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberInvitationTest\:\:testAccept\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberInvitationTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberInvitationTest\:\:testAutoLink\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberInvitationTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberInvitationTest\:\:testCheckUnicity\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberInvitationTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberInvitationTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberInvitationTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberInvitationTest\:\:testCollectionByEmail\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberInvitationTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberInvitationTest\:\:testCollectionPagination\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberInvitationTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberInvitationTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberInvitationTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberInvitationTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberInvitationTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberInvitationTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberInvitationTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberInvitationTest\:\:testRefuse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberInvitationTest.php
+
+		-
+			message: '#^Parameter \#3 \$keysToBeIgnored of method PHPUnit\\Framework\\Assert\:\:assertArrayIsEqualToArrayIgnoringListOfKeys\(\) expects non\-empty\-list\<\(int\|string\)\>, array\{\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: tests/Functional/Land/LandMemberInvitationTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberSettingTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberSettingTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberSettingTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberSettingTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberTest\:\:testCantDeleteOwner\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberTest\:\:testCollectionPagination\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberTest\:\:testMe\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandMemberTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandMemberTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandProposalTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandProposalTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandProposalTest\:\:testCollectionPublic\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandProposalTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandProposalTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandProposalTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandRequestTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandRequestTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandRequestTest\:\:testCollectionPublic\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandRequestTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandSettingTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandSettingTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandSettingTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandSettingTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandTaskTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandTaskTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandTaskTest\:\:testCollectionFilterPerState\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandTaskTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandTaskTest\:\:testCollectionPagination\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandTaskTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandTaskTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandTaskTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandTaskTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandTaskTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandTaskTest\:\:testMarkAsDone\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandTaskTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandTaskTest\:\:testMarkAsInProgress\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandTaskTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandTaskTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandTaskTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandTaskTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandTaskTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandTest\:\:testCollectionPagination\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandTest\:\:testPatchWithInvalidSurface\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Land\\LandTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Land/LandTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Person\\PersonApiKeyTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Person/PersonApiKeyTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\Person\\PersonTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/Person/PersonTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\SeedStock\\SeedStockEntryTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/SeedStock/SeedStockEntryTest.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\SeedStock\\SeedStockTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/SeedStock/SeedStockTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandApiKeySecurityTest\:\:testAuthentication\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandApiKeySecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandApiKeySecurityTest\:\:testAuthenticationWithInvalidToken\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandApiKeySecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandApiKeySecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandApiKeySecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaParameterSecurityTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaParameterSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaParameterSecurityTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaParameterSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaParameterSecurityTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaParameterSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaParameterSecurityTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaParameterSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaParameterSecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaParameterSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaParameterSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaParameterSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaSecurityTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaSecurityTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaSecurityTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaSecurityTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaSecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaSettingSecurityTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaSettingSecurityTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaSettingSecurityTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaSettingSecurityTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaSettingSecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandAreaSettingSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandAreaSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandCultivationPlanSecurityTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandCultivationPlanSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandCultivationPlanSecurityTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandCultivationPlanSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandCultivationPlanSecurityTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandCultivationPlanSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandCultivationPlanSecurityTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandCultivationPlanSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandCultivationPlanSecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandCultivationPlanSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandCultivationPlanSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandCultivationPlanSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandDealSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandDealSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseParameterSecurityTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseParameterSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseParameterSecurityTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseParameterSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseParameterSecurityTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseParameterSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseParameterSecurityTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseParameterSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseParameterSecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseParameterSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseParameterSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseParameterSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseSecurityTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseSecurityTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseSecurityTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseSecurityTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseSecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseSettingSecurityTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseSettingSecurityTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseSettingSecurityTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseSettingSecurityTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseSettingSecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandGreenhouseSettingSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandGreenhouseSettingSecurityTest.php
+
+		-
+			message: '#^Call to an undefined method Zenstruck\\Browser\\KernelBrowser\:\:addMock\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/Security/LandHarvestEntrySecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandHarvestEntrySecurityTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandHarvestEntrySecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandHarvestEntrySecurityTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandHarvestEntrySecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandHarvestEntrySecurityTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandHarvestEntrySecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandHarvestEntrySecurityTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandHarvestEntrySecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandHarvestEntrySecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandHarvestEntrySecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandHarvestEntrySecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandHarvestEntrySecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberInvitationSecurityTest\:\:testAccept\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberInvitationSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberInvitationSecurityTest\:\:testCantAddRolesFromAnotherLand\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberInvitationSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberInvitationSecurityTest\:\:testCheckUnicity\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberInvitationSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberInvitationSecurityTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberInvitationSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberInvitationSecurityTest\:\:testCollectionByEmail\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberInvitationSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberInvitationSecurityTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberInvitationSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberInvitationSecurityTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberInvitationSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberInvitationSecurityTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberInvitationSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberInvitationSecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberInvitationSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberInvitationSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberInvitationSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberInvitationSecurityTest\:\:testRefuse\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberInvitationSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberSecurityTest\:\:testCantAddRolesFromAnotherLand\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberSecurityTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberSecurityTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberSecurityTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberSecurityTest\:\:testGetMe\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberSecurityTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberSecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberSettingSecurityTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberSettingSecurityTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberSettingSecurityTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberSettingSecurityTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberSettingSecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandMemberSettingSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandMemberSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandProposalSecurityTest\:\:testArchive\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandProposalSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandProposalSecurityTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandProposalSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandProposalSecurityTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandProposalSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandProposalSecurityTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandProposalSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandProposalSecurityTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandProposalSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandProposalSecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandProposalSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandProposalSecurityTest\:\:testPublish\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandProposalSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandProposalSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandProposalSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandRequestSecurityTest\:\:testArchive\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandRequestSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandRequestSecurityTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandRequestSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandRequestSecurityTest\:\:testCollectionPublic\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandRequestSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandRequestSecurityTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandRequestSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandRequestSecurityTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandRequestSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandRequestSecurityTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandRequestSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandRequestSecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandRequestSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandRequestSecurityTest\:\:testPublish\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandRequestSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandRequestSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandRequestSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandRoleSecurityTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandRoleSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandRoleSecurityTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandRoleSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandRoleSecurityTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandRoleSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandRoleSecurityTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandRoleSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandRoleSecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandRoleSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandRoleSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandRoleSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandSecurityTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandSecurityTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandSecurityTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandSecurityTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandSecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandSettingSecurityTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandSettingSecurityTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandSettingSecurityTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandSettingSecurityTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandSettingSecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandSettingSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandSettingSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandTaskSecurityTest\:\:testCollection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandTaskSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandTaskSecurityTest\:\:testDelete\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandTaskSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandTaskSecurityTest\:\:testGet\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandTaskSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandTaskSecurityTest\:\:testPatch\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandTaskSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandTaskSecurityTest\:\:testPost\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandTaskSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\LandTaskSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/LandTaskSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\PersonSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/PersonSecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\SeedStockEntrySecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/SeedStockEntrySecurityTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\SeedStockSecurityTest\:\:testPut\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/SeedStockSecurityTest.php
+
+		-
+			message: '#^Attribute class JetBrains\\PhpStorm\\NoReturn does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:addLandMember\(\) has parameter \$roles with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:addOneLandHarvestEntry\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:addOneLandMemberInvitation\(\) has parameter \$roles with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:addOneLandRole\(\) has parameter \$permissions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:addOneLandTask\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:browser\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:browser\(\) has parameter \$server with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:createLandApiKey\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:createLandApiKey\(\) has parameter \$excludedPermissions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:createLandDeal\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:createLandHarvestEntry\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:createLandMember\(\) has parameter \$roles with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:createLandMemberInvitation\(\) has parameter \$roles with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:createLandProposal\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:createLandRequest\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:createLandRole\(\) has parameter \$permissions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:createLandTask\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:createPerson\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:createPersonApiKey\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:createPersonApiKey\(\) has parameter \$excludedPermissions with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:landDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\TestBrowser\:\:patch\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/TestBrowser.php
+
+		-
+			message: '#^Call to function method_exists\(\) with ''Symfony\\\\Component\\\\Dotenv\\\\Dotenv'' and ''bootEnv'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: tests/bootstrap.php
