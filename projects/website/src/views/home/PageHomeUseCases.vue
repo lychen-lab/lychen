@@ -109,7 +109,7 @@
                   :cx="node.x"
                   :cy="node.y"
                   r="7"
-                  fill="oklch(0.92 0.1 131)"
+                  :fill="node.color"
                   class="ecosystem-node"
                   :style="{ '--node-delay': `${node.i * 0.32}s` }"
                 />
@@ -130,9 +130,13 @@
         ref="gridRef"
         class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
       >
-        <article
+        <component
+          :is="application.url ? 'a' : 'article'"
           v-for="(application, index) in applications"
           :key="application.alias"
+          :href="application.url"
+          :target="application.url ? '_blank' : undefined"
+          :rel="application.url ? 'noopener noreferrer' : undefined"
           class="ecosystem-app group flex flex-col gap-3 rounded-3xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
           :class="[
             isFlagship(application.alias)
@@ -154,15 +158,22 @@
                 >{{ application.title }}</Title
               >
             </div>
-            <span
-              class="rounded-full px-2.5 py-0.5 text-[11px] font-semibold whitespace-nowrap"
-              :class="
-                isFlagship(application.alias)
-                  ? 'bg-white/15 text-white'
-                  : 'bg-surface-container text-on-surface/60'
-              "
-              >{{ application.state }}</span
-            >
+            <div class="flex items-center gap-2">
+              <span
+                class="rounded-full px-2.5 py-0.5 text-[11px] font-semibold whitespace-nowrap"
+                :class="
+                  isFlagship(application.alias)
+                    ? 'bg-white/15 text-white'
+                    : 'bg-surface-container text-on-surface/60'
+                "
+                >{{ application.state }}</span
+              >
+              <IconArrowUpRight
+                v-if="application.url"
+                class="size-3.5 shrink-0 opacity-60"
+                :class="isFlagship(application.alias) ? 'text-white' : 'text-on-surface'"
+              />
+            </div>
           </div>
           <p
             class="line-clamp-3 text-sm"
@@ -170,7 +181,7 @@
           >
             {{ application.description }}
           </p>
-        </article>
+        </component>
       </div>
 
       <RouterLink :to="{ name: ROUTE_APPLICATIONS.name }">
@@ -207,6 +218,7 @@ import IconBadgeCheck from '@lychen/vue-icons/IconBadgeCheck.vue';
 import IconShare2 from '@lychen/vue-icons/IconShare2.vue';
 import IconGithub from '@lychen/vue-icons/IconGithub.vue';
 import IconLink from '@lychen/vue-icons/IconLink.vue';
+import IconArrowUpRight from '@lychen/vue-icons/IconArrowUpRight.vue';
 
 const { t } = usePrefixedI18n(CONFIG);
 const { opiniatedApplicationsList: applications } = useApplicationsCatalog();
@@ -224,16 +236,29 @@ function isFlagship(alias: ApplicationAlias) {
 }
 
 const APP_DOT: Record<string, string> = {
-  espace: 'bg-positive',
-  tera: 'bg-primary',
-  myko: 'bg-warning',
-  meli: 'bg-warning',
-  kiro: 'bg-tertiary',
-  humu: 'bg-secondary',
-  novi: 'bg-tertiary',
-  vara: 'bg-positive',
-  kolo: 'bg-primary',
-  robust: 'bg-secondary',
+  espace: 'bg-app-espace',
+  tera: 'bg-app-tera',
+  myko: 'bg-app-myko',
+  meli: 'bg-app-meli',
+  kiro: 'bg-app-kiro',
+  humu: 'bg-app-humu',
+  novi: 'bg-app-novi',
+  vara: 'bg-app-vara',
+  kolo: 'bg-app-kolo',
+  robust: 'bg-app-robust',
+};
+
+const APP_NODE_COLOR: Record<string, string> = {
+  espace: 'var(--color-app-espace)',
+  tera: 'var(--color-app-tera)',
+  myko: 'var(--color-app-myko)',
+  meli: 'var(--color-app-meli)',
+  kiro: 'var(--color-app-kiro)',
+  humu: 'var(--color-app-humu)',
+  novi: 'var(--color-app-novi)',
+  vara: 'var(--color-app-vara)',
+  kolo: 'var(--color-app-kolo)',
+  robust: 'var(--color-app-robust)',
 };
 
 // Hub & spokes: nodes evenly spaced on a ring, each linked to the hub and to its neighbour.
@@ -245,12 +270,14 @@ const NODES = computed(() =>
     const angle = (i / NODE_COUNT) * Math.PI * 2 - Math.PI / 2;
     const next = ((i + 1) % NODE_COUNT) / NODE_COUNT;
     const nextAngle = next * Math.PI * 2 - Math.PI / 2;
+    const alias = applications.value[i]?.alias;
     return {
       i,
       x: CENTER + Math.cos(angle) * RADIUS,
       y: CENTER + Math.sin(angle) * RADIUS,
       nextX: CENTER + Math.cos(nextAngle) * RADIUS,
       nextY: CENTER + Math.sin(nextAngle) * RADIUS,
+      color: alias ? (APP_NODE_COLOR[alias] ?? 'oklch(0.92 0.1 131)') : 'oklch(0.92 0.1 131)',
     };
   }),
 );

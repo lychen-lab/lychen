@@ -30,6 +30,18 @@
   --lychen-color-warning-container: oklch(0.9 0.15 70);
   --lychen-color-on-warning-container: oklch(0.3 0.2 70);
 
+  /* Per-application accent colors */
+  --lychen-color-app-espace: oklch(0.55 0.16 175);
+  --lychen-color-app-tera: oklch(0.48 0.16 145);
+  --lychen-color-app-myko: oklch(0.55 0.20 295);
+  --lychen-color-app-meli: oklch(0.62 0.18 68);
+  --lychen-color-app-kiro: oklch(0.60 0.19 42);
+  --lychen-color-app-humu: oklch(0.55 0.13 98);
+  --lychen-color-app-novi: oklch(0.55 0.17 248);
+  --lychen-color-app-vara: oklch(0.60 0.17 115);
+  --lychen-color-app-kolo: oklch(0.55 0.21 22);
+  --lychen-color-app-robust: oklch(0.52 0.13 225);
+
   --lychen-color-surface-hue: 93.57;
   --lychen-color-surface-chroma: 0.014;
   --lychen-color-surface-lightness: 0.98;
@@ -94,6 +106,18 @@
   --lychen-color-warning-container: oklch(0.4 0.2 70);
   --lychen-color-on-warning-container: oklch(0.9 0.15 70);
 
+  /* Per-application accent colors */
+  --lychen-color-app-espace: oklch(0.78 0.13 175);
+  --lychen-color-app-tera: oklch(0.72 0.13 145);
+  --lychen-color-app-myko: oklch(0.78 0.17 295);
+  --lychen-color-app-meli: oklch(0.83 0.15 68);
+  --lychen-color-app-kiro: oklch(0.80 0.17 42);
+  --lychen-color-app-humu: oklch(0.78 0.11 98);
+  --lychen-color-app-novi: oklch(0.78 0.14 248);
+  --lychen-color-app-vara: oklch(0.80 0.15 115);
+  --lychen-color-app-kolo: oklch(0.78 0.18 22);
+  --lychen-color-app-robust: oklch(0.78 0.10 225);
+
   --lychen-color-surface-lightness: 0.15;
 
   --lychen-color-surface: oklch(
@@ -155,6 +179,17 @@
   --color-on-warning: var(--lychen-color-on-warning);
   --color-warning-container: var(--lychen-color-warning-container);
   --color-on-warning-container: var(--lychen-color-on-warning-container);
+
+  --color-app-espace: var(--lychen-color-app-espace);
+  --color-app-tera: var(--lychen-color-app-tera);
+  --color-app-myko: var(--lychen-color-app-myko);
+  --color-app-meli: var(--lychen-color-app-meli);
+  --color-app-kiro: var(--lychen-color-app-kiro);
+  --color-app-humu: var(--lychen-color-app-humu);
+  --color-app-novi: var(--lychen-color-app-novi);
+  --color-app-vara: var(--lychen-color-app-vara);
+  --color-app-kolo: var(--lychen-color-app-kolo);
+  --color-app-robust: var(--lychen-color-app-robust);
 
   --color-surface: var(--lychen-color-surface);
   --color-on-surface: var(--lychen-color-on-surface);

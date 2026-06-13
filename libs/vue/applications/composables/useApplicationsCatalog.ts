@@ -10,6 +10,7 @@ export type TranslatedApplication = {
   description: string;
   state: string;
   alias: ApplicationAlias;
+  url?: string;
 };
 
 export function useApplicationsCatalog(): {
@@ -26,6 +27,7 @@ export function useApplicationsCatalog(): {
       description: t(`${alias}.description`),
       state: t(`state.${APPLICATIONS[alias].state}`),
       alias,
+      url: APPLICATIONS[alias].url,
     };
   }
 
