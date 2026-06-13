@@ -3,24 +3,37 @@
     "title": "Une Mission pour la Résilience",
     "description": "Nous mettons la technologie au service du vivant. Notre ambition est de fournir aux territoires les outils pour comprendre, préserver et régénérer leurs écosystèmes."
   },
+  "hero": {
+    "badge": "Notre Mission",
+    "titlePrepend": "Une Mission pour ",
+    "titleHighlight": "la Résilience",
+    "titleAppend": "",
+    "scroll_hint": "Découvrir nos axes d'impact",
+    "imageLabel": "Vivant & territoires"
+  },
   "goals": {
     "title": "Nos Axes d'Impact",
+    "kicker": "Trois piliers",
     "description": "Pour relever les défis de notre siècle, nous structurons notre action autour de trois piliers complémentaires.",
     "food": {
       "title": "Souveraineté Alimentaire",
+      "label": "Production locale",
       "description": "Déployer des outils pour une production locale, résiliente et respectueuse de la biodiversité."
     },
     "biodiversity": {
       "title": "Protection du Vivant",
+      "label": "Donnée territoriale",
       "description": "Observer et quantifier la biodiversité pour mieux la protéger grâce à la donnée territoriale."
     },
     "social": {
       "title": "Lien Social & Économique",
+      "label": "Coopération locale",
       "description": "Faire du numérique un levier de coopération, de solidarité et de partage entre les acteurs locaux."
     }
   },
   "status": {
     "title": "Cadre Officiel",
+    "kicker": "Nos statuts",
     "description": "Notre engagement est inscrit dans nos statuts, garantissant la pérennité de notre mission.",
     "content": "Cette association a pour objet de favoriser la résilience des territoires face aux enjeux environnementaux et sociétaux.\n\nLes activités envisagées pour atteindre cet objectif (sans limitation) sont notamment :\n- Développer et diffuser des outils numériques (logiciels, plateformes, bases de données).\n- Collecter, analyser et partager des données territoriales.\n- Promouvoir une technologie éthique et durable.\n- Offrir des services de conseil, de formation et de recherche.\n\nTous les autres moyens susceptibles de concourir à la réalisation de son objet social.\n\nL'association a une activité économique."
   }
