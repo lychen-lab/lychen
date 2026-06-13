@@ -10,6 +10,7 @@ use App\Security\Interface\PermissionHolder;
 use Exception;
 use LogicException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 
 class LandVoter extends AbstractPermissionVoter
 {
@@ -55,7 +56,7 @@ class LandVoter extends AbstractPermissionVoter
 
     protected function voteOnAttribute(string         $attribute,
                                        mixed          $subject,
-                                       TokenInterface $token): bool
+                                       TokenInterface $token, ?Vote $vote = null): bool
     {
         $permissionHolder = $this->getPermissionHolder($subject);
 

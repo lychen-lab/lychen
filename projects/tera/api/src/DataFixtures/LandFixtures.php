@@ -39,7 +39,7 @@ class LandFixtures extends Fixture implements DependentFixtureInterface
     private function createLandAndAddReference(string $reference, array|callable $attributes = []): void
     {
         $land = LandFactory::new()->create($attributes);
-        $this->addReference($reference, $land->_real());
+        $this->addReference($reference, $land);
     }
 
     public function getDependencies(): array

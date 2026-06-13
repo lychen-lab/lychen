@@ -116,14 +116,14 @@ class LandMemberTest extends AbstractApiTestCase
         $this->addLandMember($context, [$landRole]);
 
         $this->browser()->actingAs($context->landMembers[2]->getPerson())
-            ->get('/api/land_members', ['query' => ['land' => $context->land->_real()->getUlid()->toString()]])
+            ->get('/api/land_members', ['query' => ['land' => $context->land->getUlid()->toString()]])
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', count($context->landMembers) + 1);
 
         // API Key
         $landApiKey = $this->createLandApiKey($context->land, ['permissions' => [LandMemberVoter::COLLECTION]]);
         $this->browser()->actingAs($landApiKey)
-            ->get('/api/land_members', ['query' => ['land' => $context->land->_real()->getUlid()->toString()]])
+            ->get('/api/land_members', ['query' => ['land' => $context->land->getUlid()->toString()]])
             ->assertSuccessful();
     }
 
@@ -186,8 +186,8 @@ class LandMemberTest extends AbstractApiTestCase
         $context = $this->createLandContext();
 
         $landMemberRepository = static::getContainer()->get(LandMemberRepository::class);
-        $landMember = $landMemberRepository->findOneBy(['person' => $context->owner->_real(),
-                                                        'land' => $context->land->_real()]);
+        $landMember = $landMemberRepository->findOneBy(['person' => $context->owner,
+                                                        'land' => $context->land]);
 
         $this->browser()->actingAs($context->owner)
             ->delete($this->getIriFromResource($landMember))
@@ -208,15 +208,15 @@ class LandMemberTest extends AbstractApiTestCase
         $this->addLandMember($context2, [$context2->landRoles[0]], $context->owner);
 
         $landMemberRepository = static::getContainer()->get(LandMemberRepository::class);
-        $landMember = $landMemberRepository->findOneBy(['person' => $context->owner->_real(),
-                                                        'land' => $context->land->_real()]);
+        $landMember = $landMemberRepository->findOneBy(['person' => $context->owner,
+                                                        'land' => $context->land]);
 
         $this->browser()->actingAs($context->owner)
             ->get('/api/land_members/me', ['query' => ['land' => $context->land->getUlid()->toString()]])
             ->assertSuccessful()
             ->assertJsonMatches('ulid', $landMember->getUlid()->toString())
             ->assertJsonMatches('owner', $landMember->isOwner())
-            ->assertJsonMatches('land', $this->getIriFromResource($context->land->_real()))
+            ->assertJsonMatches('land', $this->getIriFromResource($context->land))
             ->use(function (Json $json) {
                 $json->assertThat('landRoles', fn(Json $json) => $json->hasCount(0));
             });
@@ -226,11 +226,11 @@ class LandMemberTest extends AbstractApiTestCase
         $landMember = $context->landMembers[0];
 
         $this->browser()->actingAs($landMember->getPerson())
-            ->get('/api/land_members/me', ['query' => ['land' => $context->land->_real()->getUlid()->toString()]])
+            ->get('/api/land_members/me', ['query' => ['land' => $context->land->getUlid()->toString()]])
             ->assertSuccessful()
             ->assertJsonMatches('ulid', $landMember->getUlid()->toString())
             ->assertJsonMatches('owner', $landMember->isOwner())
-            ->assertJsonMatches('land', $this->getIriFromResource($context->land->_real()))
+            ->assertJsonMatches('land', $this->getIriFromResource($context->land))
             ->use(function (Json $json) {
                 $json->assertThat('landRoles', fn(Json $json) => $json->hasCount(1));
                 $json->assertThat('landRoles[0].permissions', fn(Json $json) => $json->isNotNull());
@@ -240,7 +240,7 @@ class LandMemberTest extends AbstractApiTestCase
         // API Key
         $personApiKey = $this->createPersonApiKey($context->owner, ['permissions' => [LandMemberVoter::ME]]);
         $this->browser()->actingAs($personApiKey)
-            ->get('/api/land_members/me', ['query' => ['land' => $context->land->_real()->getUlid()->toString()]])
+            ->get('/api/land_members/me', ['query' => ['land' => $context->land->getUlid()->toString()]])
             ->assertStatus(200);
     }
 }

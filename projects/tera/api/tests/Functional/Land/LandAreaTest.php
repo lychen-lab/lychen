@@ -47,7 +47,7 @@ class LandAreaTest extends AbstractApiTestCase
                 ['json' => [
                     'name' => $name,
                     'description' => $description,
-                    'land' => $this->getIriFromResource($context->land->_real())
+                    'land' => $this->getIriFromResource($context->land)
                 ]])
             ->assertStatus(201)
             ->assertJsonMatches('name', $name)
@@ -172,7 +172,7 @@ class LandAreaTest extends AbstractApiTestCase
         $this->addLandMember($context, [$landRole]);
 
         $this->browser()->actingAs($context->landMembers[0]->getPerson())
-            ->get('/api/land_areas', ['query' => ['land' => $context->land->_real()->getUlid()->toString()]])
+            ->get('/api/land_areas', ['query' => ['land' => $context->land->getUlid()->toString()]])
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', count($context->landAreas))
             ->assertJsonMatches('member[0].ulid', $context->landAreas[0]->getUlid()->toString())

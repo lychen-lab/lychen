@@ -3,12 +3,12 @@
 namespace App\Factory;
 
 use App\Entity\LandMember;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<LandMember>
+ * @extends PersistentObjectFactory<LandMember>
  */
-final class LandMemberFactory extends PersistentProxyObjectFactory
+final class LandMemberFactory extends PersistentObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services

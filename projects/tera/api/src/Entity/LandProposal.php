@@ -333,7 +333,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
     private ?Land $land = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Choice(LandProposalWorkflowPlace::PLACES)]
+    #[Assert\Choice(choices: LandProposalWorkflowPlace::PLACES)]
     #[Groups(["land_proposal:collection",
               "land_proposal:collection-public",
               "land_proposal:get",

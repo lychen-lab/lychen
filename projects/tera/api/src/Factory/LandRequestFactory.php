@@ -7,12 +7,12 @@ use App\Constant\LandInteractionMode;
 use App\Constant\LandSharingCondition;
 use App\Entity\LandRequest;
 use Lychen\UtilTiptap\Service\TipTapFaker;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<LandRequest>
+ * @extends PersistentObjectFactory<LandRequest>
  */
-final class LandRequestFactory extends PersistentProxyObjectFactory
+final class LandRequestFactory extends PersistentObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services

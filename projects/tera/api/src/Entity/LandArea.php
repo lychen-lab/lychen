@@ -89,7 +89,7 @@ class LandArea extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
     #[Groups(["land_area:collection", "land_area:get", "land_area:patch:output", "land_area:post:output"])]
     private Collection $landTasks;
 
-    #[Assert\Choice(LandAreaWorkflowPlace::PLACES)]
+    #[Assert\Choice(choices: LandAreaWorkflowPlace::PLACES)]
     #[ORM\Column(length: 255)]
     #[Groups(["land_area:collection", "land_area:get", "land_area:patch:output", "land_area:post:output"])]
     #[Assert\NotBlank()]
@@ -103,7 +103,7 @@ class LandArea extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
     private Collection $landCultivationPlans;
 
     #[ORM\Column(length: 150, options: ['default' => LandAreaKind::OPEN_SOIL])]
-    #[Assert\Choice(LandAreaKind::ALL)]
+    #[Assert\Choice(choices: LandAreaKind::ALL)]
     #[Groups(["land_area:collection", "land_area:get", "land_area:patch", "land_area:post"])]
     private ?string $kind = LandAreaKind::OPEN_SOIL;
 

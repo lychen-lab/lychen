@@ -6,12 +6,12 @@ use App\Constant\HarvestQuality;
 use App\Entity\LandHarvestEntry;
 use Lychen\UtilTiptap\Service\TipTapFaker;
 use Symfony\Component\Uid\Ulid;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<LandHarvestEntry>
+ * @extends PersistentObjectFactory<LandHarvestEntry>
  */
-final class LandHarvestEntryFactory extends PersistentProxyObjectFactory
+final class LandHarvestEntryFactory extends PersistentObjectFactory
 {
     public static function class(): string
     {

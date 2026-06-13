@@ -10,7 +10,6 @@ use App\Entity\Land;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\PropertyInfo\Type;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 
 class LandFilter extends AbstractFilter
@@ -29,7 +28,7 @@ class LandFilter extends AbstractFilter
         return [
             'land' => [
                 'property' => 'land',
-                'type' => Type::BUILTIN_TYPE_STRING,
+                'type' => 'string',
                 'openApi' => new Parameter(
                     name           : 'land',
                     in             : 'query',

@@ -3,12 +3,12 @@
 namespace App\Factory;
 
 use App\Entity\LunarType;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<LunarType>
+ * @extends PersistentObjectFactory<LunarType>
  */
-final class LunarTypeFactory extends PersistentProxyObjectFactory
+final class LunarTypeFactory extends PersistentObjectFactory
 {
 
     public function __construct()

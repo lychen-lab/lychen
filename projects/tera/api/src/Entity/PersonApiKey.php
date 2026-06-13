@@ -49,7 +49,7 @@ class PersonApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permissi
     public const string PREFIX = 'tera-person_';
 
     #[ORM\Column(nullable: true, options: ['jsonb' => true])]
-    #[Assert\Choice(PersonPermission::ALL, multiple: true)]
+    #[Assert\Choice(choices: PersonPermission::ALL, multiple: true)]
     #[Groups(['person_api_key:post', 'person_api_key:get'])]
     private array $permissions = [];
 

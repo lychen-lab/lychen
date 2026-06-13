@@ -20,6 +20,7 @@ use LogicException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 
 class LandMemberVoter extends AbstractPermissionVoter
 {
@@ -78,7 +79,7 @@ class LandMemberVoter extends AbstractPermissionVoter
         return ($supportsSubject || $operationIsPost || $operationIsCollection || $operationIsGetMe) && $supportsAttribute;
     }
 
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
     {
         $permissionHolder = $this->getPermissionHolder($subject);
 

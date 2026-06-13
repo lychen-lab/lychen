@@ -63,7 +63,7 @@ class LandTest extends AbstractApiTestCase
         $this->addLandMember($context, [$landRole]);
 
         $this->browser()->actingAs($context->landMembers[0]->getPerson())
-            ->get($this->getIriFromResource($context->land->_real()))
+            ->get($this->getIriFromResource($context->land))
             ->assertSuccessful()
             ->assertJsonMatches('ulid', $context->land->getUlid()->toString())
             ->assertJsonMatches('name', $context->land->getName())
@@ -78,7 +78,7 @@ class LandTest extends AbstractApiTestCase
         // API Key
         $landApiKey = $this->createLandApiKey($context->land, ['permissions' => [LandVoter::GET]]);
         $this->browser()->actingAs($landApiKey)
-            ->get($this->getIriFromResource($context->land->_real()))
+            ->get($this->getIriFromResource($context->land))
             ->assertStatus(200);
     }
 
@@ -117,7 +117,7 @@ class LandTest extends AbstractApiTestCase
         $newAltitude = faker()->numberBetween(-10, 1200);
 
         $this->browser()->actingAs($context->landMembers[0]->getPerson())
-            ->patch($this->getIriFromResource($context->land->_real()), [
+            ->patch($this->getIriFromResource($context->land), [
                 'json' => [
                     'name' => $newName,
                     'surface' => $newSurface,
@@ -137,7 +137,7 @@ class LandTest extends AbstractApiTestCase
         // API Key
         $landApiKey = $this->createLandApiKey($context->land, ['permissions' => [LandVoter::PATCH]]);
         $this->browser()->actingAs($landApiKey)
-            ->patch($this->getIriFromResource($context->land->_real()), [
+            ->patch($this->getIriFromResource($context->land), [
                 'json' => [
                     'name' => $newName,
                     'surface' => $newSurface,
@@ -174,14 +174,14 @@ class LandTest extends AbstractApiTestCase
         $this->addLandMember($context, [$landRole]);
 
         $this->browser()->actingAs($context->landMembers[0]->getPerson())
-            ->delete($this->getIriFromResource($context->land->_real()))
+            ->delete($this->getIriFromResource($context->land))
             ->assertStatus(204);
 
         // API Key
         $context = $this->createLandContext();
         $landApiKey = $this->createLandApiKey($context->land, ['permissions' => [LandVoter::DELETE]]);
         $this->browser()->actingAs($landApiKey)
-            ->delete($this->getIriFromResource($context->land->_real()))
+            ->delete($this->getIriFromResource($context->land))
             ->assertStatus(204);
     }
 

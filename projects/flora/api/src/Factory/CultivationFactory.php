@@ -3,9 +3,9 @@
 namespace App\Factory;
 
 use App\Entity\Cultivation;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
-final class CultivationFactory extends PersistentProxyObjectFactory
+final class CultivationFactory extends PersistentObjectFactory
 {
     public function __construct()
     {

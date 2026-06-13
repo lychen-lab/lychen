@@ -5,11 +5,10 @@ namespace App\Tests\Utils\Trait;
 use App\Entity\Land;
 use App\Entity\LandProposal;
 use App\Factory\LandProposalFactory;
-use Zenstruck\Foundry\Persistence\Proxy;
 
 trait LandProposalTrait
 {
-    protected function createLandProposal(Land|Proxy $land, ?array $attributes = null): LandProposal|Proxy
+    protected function createLandProposal(Land $land, ?array $attributes = null): LandProposal
     {
         return LandProposalFactory::new()->create(array_merge([
             'land' => $land,

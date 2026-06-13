@@ -59,7 +59,7 @@ class LandRequestSecurityTest extends AbstractApiTestCase
 
         $landRequestRepository = static::getContainer()->get(LandMemberRepository::class);
 
-        $landRequest = $landRequestRepository->findOneBy(['person' => $person2->_real()]);
+        $landRequest = $landRequestRepository->findOneBy(['person' => $person2]);
 
         $this->assertNull($landRequest);
 

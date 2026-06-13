@@ -9,12 +9,12 @@ use App\Constant\Orientation;
 use App\Constant\SoilType;
 use App\Entity\LandProposal;
 use Lychen\UtilTiptap\Service\TipTapFaker;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<LandProposal>
+ * @extends PersistentObjectFactory<LandProposal>
  */
-final class LandProposalFactory extends PersistentProxyObjectFactory
+final class LandProposalFactory extends PersistentObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services

@@ -18,6 +18,7 @@
         <server name="APP_ENV" value="test" force="true"/>
         <server name="SHELL_VERBOSITY" value="-1"/>
         <server name="BROWSER_ALWAYS_START_WEBSERVER" value="1"/>
+        <server name="KERNEL_BROWSER_CLASS" value="App\Tests\Utils\TestBrowser"/>
     </php>
 
     <testsuites>

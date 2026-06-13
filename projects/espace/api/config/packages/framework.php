@@ -6,9 +6,6 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->extension('framework', [
-        'annotations' => [
-            'enabled' => false,
-        ],
         'disallow_search_engine_index' => true,
         'handle_all_throwables' => true,
         'http_method_override' => false,

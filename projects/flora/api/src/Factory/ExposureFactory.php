@@ -3,12 +3,12 @@
 namespace App\Factory;
 
 use App\Entity\Exposure;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<Exposure>
+ * @extends PersistentObjectFactory<Exposure>
  */
-final class ExposureFactory extends PersistentProxyObjectFactory
+final class ExposureFactory extends PersistentObjectFactory
 {
 
     public function __construct()

@@ -9,6 +9,7 @@ use App\Entity\PersonApiKey;
 use App\Security\Interface\PermissionHolder;
 use LogicException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 
 class PersonApiKeyVoter extends AbstractPermissionVoter
 {
@@ -52,7 +53,7 @@ class PersonApiKeyVoter extends AbstractPermissionVoter
 
     protected function voteOnAttribute(string         $attribute,
                                        mixed          $subject,
-                                       TokenInterface $token): bool
+                                       TokenInterface $token, ?Vote $vote = null): bool
     {
         $permissionHolder = $this->getPermissionHolder($subject);
 

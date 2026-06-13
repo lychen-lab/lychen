@@ -12,92 +12,91 @@ use App\Entity\LandMemberInvitation;
 use App\Entity\LandRole;
 use App\Entity\LandTask;
 use App\Entity\Person;
-use Zenstruck\Foundry\Persistence\Proxy;
 
 class LandTestContext
 {
-    public Person|Proxy $owner;
-    public Land|Proxy $land;
+    public Person $owner;
+    public Land $land;
 
-    /** @var LandArea|Proxy[] */
+    /** @var LandArea[] */
     public array $landAreas;
 
-    /** @var LandMember|Proxy[] */
+    /** @var LandMember[] */
     public array $landMembers;
 
-    /** @var LandGreenhouse|Proxy[] */
+    /** @var LandGreenhouse[] */
     public array $landGreenhouses;
 
-    /** @var LandCultivationPlan|Proxy[] */
+    /** @var LandCultivationPlan[] */
     public array $landCultivationPlans;
 
-    /** @var LandTask|Proxy[] */
+    /** @var LandTask[] */
     public array $landTasks;
 
-    /** @var LandRole|Proxy[] */
+    /** @var LandRole[] */
     public array $landRoles;
 
-    /** @var LandMemberInvitation|Proxy[] */
+    /** @var LandMemberInvitation[] */
     public array $landMemberInvitations;
 
-    /** @var LandHarvestEntry|Proxy[] */
+    /** @var LandHarvestEntry[] */
     public array $landHarvestEntries;
 
-    public function setOwner(Person|Proxy $owner): static
+    public function setOwner(Person $owner): static
     {
         $this->owner = $owner;
         return $this;
     }
 
-    public function setLand(Land|Proxy $land): static
+    public function setLand(Land $land): static
     {
         $this->land = $land;
         return $this;
     }
 
-    public function addLandArea(LandArea|Proxy $landArea): static
+    public function addLandArea(LandArea $landArea): static
     {
         $this->landAreas[] = $landArea;
         return $this;
     }
 
-    public function addLandMember(LandMember|Proxy $landMember): static
+    public function addLandMember(LandMember $landMember): static
     {
         $this->landMembers[] = $landMember;
         return $this;
     }
 
-    public function addLandGreenhouse(LandGreenhouse|Proxy $landGreenhouse): static
+    public function addLandGreenhouse(LandGreenhouse $landGreenhouse): static
     {
         $this->landGreenhouses[] = $landGreenhouse;
         return $this;
     }
 
-    public function addLandCultivationPlan(LandCultivationPlan|Proxy $landCultivationPlan): static
+    public function addLandCultivationPlan(LandCultivationPlan $landCultivationPlan): static
     {
         $this->landCultivationPlans[] = $landCultivationPlan;
         return $this;
     }
 
-    public function addLandTask(LandTask|Proxy $landTask): static
+    public function addLandTask(LandTask $landTask): static
     {
         $this->landTasks[] = $landTask;
         return $this;
     }
 
-    public function addLandRole(LandRole|Proxy $landRole): static
+    public function addLandRole(LandRole $landRole): static
     {
         $this->landRoles[] = $landRole;
         return $this;
     }
 
-    public function addLandMemberInvitation(LandMemberInvitation|Proxy $landMemberInvitation): static
+    public function addLandMemberInvitation(LandMemberInvitation $landMemberInvitation): static
     {
         $this->landMemberInvitations[] = $landMemberInvitation;
         return $this;
     }
 
-    public function addLandHarvestEntry(LandHarvestEntry|Proxy $landHarvestEntry): static
+    public function addLandHarvestEntry(LandHarvestEntry $landHarvestEntry): static
     {
         $this->landHarvestEntries[] = $landHarvestEntry;
         return $this;

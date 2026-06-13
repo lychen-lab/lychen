@@ -4,7 +4,6 @@ namespace App\Tests\Utils\Trait;
 
 use App\Entity\Person;
 use App\Tests\Utils\Model\LandTestContext;
-use Zenstruck\Foundry\Persistence\Proxy;
 
 trait ContextTrait
 {
@@ -61,7 +60,7 @@ trait ContextTrait
         return $landTestContext;
     }
 
-    protected function addLandMember(LandTestContext $landTestContext, ?array $roles = null, Person|Proxy|null $person = null): LandTestContext
+    protected function addLandMember(LandTestContext $landTestContext, ?array $roles = null, Person|null $person = null): LandTestContext
     {
         if (!$person) {
             $person = $this->createPerson();

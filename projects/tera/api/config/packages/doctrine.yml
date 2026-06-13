@@ -4,16 +4,13 @@ doctrine:
       default:
         driver: 'pdo_pgsql'
         url: '%env(resolve:DATABASE_URL)%'
-        use_savepoints: true
         #schema_filter: ~^(?!doctrine_)~
     default_connection: default
 
   orm:
-    auto_generate_proxy_classes: true
     controller_resolver:
       auto_mapping: false
     default_entity_manager: default
-    enable_lazy_ghost_objects: true
     entity_managers:
       default:
         connection: default
@@ -32,8 +29,6 @@ doctrine:
 when@prod:
   doctrine:
     orm:
-      auto_generate_proxy_classes: false
-      proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
       query_cache_driver:
         pool: doctrine.system_cache_pool
         type: pool

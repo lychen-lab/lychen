@@ -83,7 +83,7 @@ class PersonFixtures extends Fixture
     private function createPersonAndAddReference(string $reference, array|callable $attributes = []): Person
     {
         $person = PersonFactory::new()->create($attributes);
-        $this->addReference($reference, $person->_real());
+        $this->addReference($reference, $person);
 
         return $person;
     }

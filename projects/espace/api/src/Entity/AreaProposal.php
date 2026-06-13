@@ -26,7 +26,7 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    #[Choice(AreaProposalWorkflow::PLACES)]
+    #[Choice(choices: AreaProposalWorkflow::PLACES)]
     private string $place = AreaProposalWorkflow::PLACE_DRAFT;
 
     #[ORM\Column(nullable: true)]

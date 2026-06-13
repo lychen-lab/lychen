@@ -65,7 +65,7 @@ class LandDeal extends AbstractIdOrmAndUlidApiIdentified
     use UpdatedAtTrait;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Choice(LandDealWorkflowPlace::PLACES)]
+    #[Assert\Choice(choices: LandDealWorkflowPlace::PLACES)]
     private ?string $state = LandDealWorkflowPlace::OPENED;
 
     #[ORM\ManyToOne(inversedBy: 'landDeals')]

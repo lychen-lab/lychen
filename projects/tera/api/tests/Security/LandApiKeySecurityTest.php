@@ -76,7 +76,7 @@ class LandApiKeySecurityTest extends AbstractApiTestCase
                 ['json' => [
                     'name' => 'Test API Key',
                     'permissions' => ['land_member:land_task:post'],
-                    'land' => $this->getIriFromResource($context->land->_real())
+                    'land' => $this->getIriFromResource($context->land)
                 ]])->assertStatus(403);
 
         $this->browser()->actingAs($landApiKey)
@@ -84,7 +84,7 @@ class LandApiKeySecurityTest extends AbstractApiTestCase
                 ['json' => [
                     'name' => 'Test API Key',
                     'permissions' => ['land_member:land_task:post'],
-                    'land' => $this->getIriFromResource($context->land->_real())
+                    'land' => $this->getIriFromResource($context->land)
                 ]])->assertStatus(403);
     }
 }

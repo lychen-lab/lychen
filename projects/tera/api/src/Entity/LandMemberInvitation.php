@@ -11,6 +11,7 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\QueryParameter;
 use ApiPlatform\OpenApi\Model\Operation;
 use ApiPlatform\OpenApi\Model\Parameter;
+use ApiPlatform\OpenApi\Model\Response as OpenApiResponse;
 use App\Dto\LandMemberInvitationCheckEmailUnicityDto;
 use App\Filter\EmailFilter;
 use App\Filter\LandFilter;
@@ -115,9 +116,9 @@ use Symfony\Component\Validator\Constraints as Assert;
     uriTemplate         : '/land_member_invitations/check_email_unicity',
     openapi             : new Operation(
         responses  : [
-            Response::HTTP_OK => [
-                'description' => 'Email unicity check result',
-                'content' => [
+            Response::HTTP_OK => new OpenApiResponse(
+                description: 'Email unicity check result',
+                content: new \ArrayObject([
                     'application/json' => [
                         'schema' => [
                             'type' => 'object',
@@ -126,11 +127,11 @@ use Symfony\Component\Validator\Constraints as Assert;
                             ],
                         ],
                     ],
-                ],
-            ],
-            Response::HTTP_BAD_REQUEST => [
-                'description' => 'Bad request',
-            ],
+                ]),
+            ),
+            Response::HTTP_BAD_REQUEST => new OpenApiResponse(
+                description: 'Bad request',
+            ),
         ],
         summary    : 'Check if an email is unique for a given land',
         parameters : [
@@ -193,7 +194,7 @@ class LandMemberInvitation extends AbstractIdOrmAndUlidApiIdentified implements 
 
     #[ORM\Column(length: 255)]
     #[Groups(["land_member_invitation:collection", "land_member_invitation:get"])]
-    #[Assert\Choice(LandMemberInvitationWorkflowPlace::PLACES)]
+    #[Assert\Choice(choices: LandMemberInvitationWorkflowPlace::PLACES)]
     private ?string $state = LandMemberInvitationWorkflowPlace::PENDING;
 
     #[ORM\ManyToOne(inversedBy: 'landMemberInvitations')]

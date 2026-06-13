@@ -42,7 +42,7 @@ class LandMemberInvitationTest extends AbstractApiTestCase
             ->post('/api/land_member_invitations',
                 ['json' => [
                     'email' => $email,
-                    'land' => $this->getIriFromResource($context->land->_real())
+                    'land' => $this->getIriFromResource($context->land)
                 ]])
             ->assertStatus(201)
             ->assertJsonMatches('email', $email)
@@ -110,7 +110,7 @@ class LandMemberInvitationTest extends AbstractApiTestCase
 
         $this->browser()->actingAs($context->landMembers[0]->getPerson())
             ->get('/api/land_member_invitations',
-                ['query' => ['land' => $context->land->_real()->getUlid()->toString()]])
+                ['query' => ['land' => $context->land->getUlid()->toString()]])
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', count($context->landMemberInvitations))
             ->assertJsonMatches('member[0].ulid', $context->landMemberInvitations[0]->getUlid()->toString())
@@ -170,17 +170,22 @@ class LandMemberInvitationTest extends AbstractApiTestCase
             ->assertSuccessful();
 
         $landMemberRepository = static::getContainer()->get(LandMemberRepository::class);
-        $landMember = $landMemberRepository->findOneBy(['person' => $invited->_real(),
-                                                        'land' => $context->land->_real()]);
+        $landMember = $landMemberRepository->findOneBy(['person' => $invited,
+                                                        'land' => $context->land]);
 
         $this->assertNotNull($landMember);
-        $this->assertArrayIsEqualToArrayIgnoringListOfKeys($landMember->getLandRoles()->toArray(),
-            $context->landMemberInvitations[0]->getLandRoles()->toArray(),
-            []);
+        $roleUlids = static fn (array $roles): array => array_map(
+            static fn ($role): string => $role->getUlid()->toString(),
+            $roles
+        );
+        $this->assertEqualsCanonicalizing(
+            $roleUlids($landMember->getLandRoles()->toArray()),
+            $roleUlids($context->landMemberInvitations[0]->getLandRoles()->toArray())
+        );
 
         $landMemberInvitationRepository = static::getContainer()->get(LandMemberInvitationRepository::class);
-        $landMemberInvitation = $landMemberInvitationRepository->findOneBy(['person' => $invited->_real(),
-                                                                            'land' => $context->land->_real(),
+        $landMemberInvitation = $landMemberInvitationRepository->findOneBy(['person' => $invited,
+                                                                            'land' => $context->land,
                                                                             'state' => LandMemberInvitationWorkflowPlace::ACCEPTED]);
 
         $this->assertNotNull($landMemberInvitation);
@@ -196,8 +201,8 @@ class LandMemberInvitationTest extends AbstractApiTestCase
         $this->addOneLandMemberInvitation($context, [$context->landRoles[0]], $invited->getEmail());
 
         $landMemberInvitationRepository = static::getContainer()->get(LandMemberInvitationRepository::class);
-        $landMemberInvitation = $landMemberInvitationRepository->findOneBy(['person' => $invited->_real(),
-                                                                            'land' => $context->land->_real(),
+        $landMemberInvitation = $landMemberInvitationRepository->findOneBy(['person' => $invited,
+                                                                            'land' => $context->land,
                                                                             'state' => LandMemberInvitationWorkflowPlace::PENDING]);
 
         $this->assertNotNull($landMemberInvitation);
@@ -205,15 +210,15 @@ class LandMemberInvitationTest extends AbstractApiTestCase
         $email = faker()->email();
         $this->addOneLandMemberInvitation($context, [$context->landRoles[0]], $email);
 
-        $landMemberInvitation = $landMemberInvitationRepository->findOneBy(['land' => $context->land->_real(),
+        $landMemberInvitation = $landMemberInvitationRepository->findOneBy(['land' => $context->land,
                                                                             'state' => LandMemberInvitationWorkflowPlace::PENDING,
                                                                             'person' => null]);
         $this->assertNotNull($landMemberInvitation);
 
         $invited = $this->createPerson(['email' => $email]);
-        $landMemberInvitation = $landMemberInvitationRepository->findOneBy(['land' => $context->land->_real(),
+        $landMemberInvitation = $landMemberInvitationRepository->findOneBy(['land' => $context->land,
                                                                             'state' => LandMemberInvitationWorkflowPlace::PENDING,
-                                                                            'person' => $invited->_real()]);
+                                                                            'person' => $invited]);
         $this->assertNotNull($landMemberInvitation);
     }
 
@@ -230,14 +235,14 @@ class LandMemberInvitationTest extends AbstractApiTestCase
             ->assertSuccessful();
 
         $landMemberRepository = static::getContainer()->get(LandMemberRepository::class);
-        $landMember = $landMemberRepository->findOneBy(['person' => $invited->_real(),
-                                                        'land' => $context->land->_real()]);
+        $landMember = $landMemberRepository->findOneBy(['person' => $invited,
+                                                        'land' => $context->land]);
 
         $this->assertNull($landMember);
 
         $landMemberInvitationRepository = static::getContainer()->get(LandMemberInvitationRepository::class);
         $landMemberInvitation = $landMemberInvitationRepository->findOneBy(['id' => $context->landMemberInvitations[0]->getId(),
-                                                                            'land' => $context->land->_real(),
+                                                                            'land' => $context->land,
                                                                             'state' => LandMemberInvitationWorkflowPlace::REFUSED]);
 
         $this->assertNotNull($landMemberInvitation);

@@ -109,7 +109,7 @@ class LandRequest extends AbstractIdOrmAndUlidApiIdentified implements StatePers
     private ?Person $person = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Choice(LandRequestWorkflowPlace::PLACES)]
+    #[Assert\Choice(choices: LandRequestWorkflowPlace::PLACES)]
     #[Groups(["land_request:collection",
               "land_request:collection-public",
               "land_request:get",

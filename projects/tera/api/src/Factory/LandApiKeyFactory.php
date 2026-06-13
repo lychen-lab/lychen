@@ -3,12 +3,12 @@
 namespace App\Factory;
 
 use App\Entity\LandApiKey;
-use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<LandApiKey>
+ * @extends PersistentObjectFactory<LandApiKey>
  */
-final class LandApiKeyFactory extends PersistentProxyObjectFactory
+final class LandApiKeyFactory extends PersistentObjectFactory
 {
     public function __construct()
     {

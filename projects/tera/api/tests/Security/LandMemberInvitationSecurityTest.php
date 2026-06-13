@@ -45,7 +45,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
         $this->addLandMember($context1, [$landRole]);
         $this->browser()->actingAs($context1->landMembers[0]->getPerson())
             ->post('/api/land_member_invitations',
-                ['json' => ['land' => $this->getIriFromResource($context1->land->_real())]])
+                ['json' => ['land' => $this->getIriFromResource($context1->land)]])
             ->assertStatus(403);
     }
 
@@ -212,7 +212,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
         $this->addLandMember($context1, [$landRole]);
         $this->browser()->actingAs($context1->landMembers[0]->getPerson())
             ->get('/api/land_member_invitations',
-                ['query' => ['land' => $context1->land->_real()->getUlid()->toString()]])
+                ['query' => ['land' => $context1->land->getUlid()->toString()]])
             ->assertStatus(403);
     }
 
@@ -227,7 +227,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
                 ['query'
                  => [
                         'email' => $email,
-                        'land' => $context1->land->_real()->getUlid()->toString()
+                        'land' => $context1->land->getUlid()->toString()
                     ]])
             ->assertStatus(403);
 
@@ -238,7 +238,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
                 ['query'
                  => [
                         'email' => $email,
-                        'land' => $context1->land->_real()->getUlid()->toString()
+                        'land' => $context1->land->getUlid()->toString()
                     ]])
             ->assertStatus(401);
     }
