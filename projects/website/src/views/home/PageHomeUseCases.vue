@@ -109,7 +109,7 @@
                   :cx="node.x"
                   :cy="node.y"
                   r="7"
-                  fill="oklch(0.92 0.1 131)"
+                  :fill="node.color"
                   class="ecosystem-node"
                   :style="{ '--node-delay': `${node.i * 0.32}s` }"
                 />
@@ -236,6 +236,19 @@ const APP_DOT: Record<string, string> = {
   robust: 'bg-secondary',
 };
 
+const APP_NODE_COLOR: Record<string, string> = {
+  espace: 'var(--color-positive)',
+  tera: 'var(--color-primary)',
+  myko: 'var(--color-warning)',
+  meli: 'var(--color-warning)',
+  kiro: 'var(--color-tertiary)',
+  humu: 'var(--color-secondary)',
+  novi: 'var(--color-tertiary)',
+  vara: 'var(--color-positive)',
+  kolo: 'var(--color-primary)',
+  robust: 'var(--color-secondary)',
+};
+
 // Hub & spokes: nodes evenly spaced on a ring, each linked to the hub and to its neighbour.
 const NODE_COUNT = 10;
 const RADIUS = 150;
@@ -245,12 +258,14 @@ const NODES = computed(() =>
     const angle = (i / NODE_COUNT) * Math.PI * 2 - Math.PI / 2;
     const next = ((i + 1) % NODE_COUNT) / NODE_COUNT;
     const nextAngle = next * Math.PI * 2 - Math.PI / 2;
+    const alias = applications.value[i]?.alias;
     return {
       i,
       x: CENTER + Math.cos(angle) * RADIUS,
       y: CENTER + Math.sin(angle) * RADIUS,
       nextX: CENTER + Math.cos(nextAngle) * RADIUS,
       nextY: CENTER + Math.sin(nextAngle) * RADIUS,
+      color: alias ? (APP_NODE_COLOR[alias] ?? 'oklch(0.92 0.1 131)') : 'oklch(0.92 0.1 131)',
     };
   }),
 );
