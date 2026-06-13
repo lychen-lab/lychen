@@ -3,25 +3,91 @@
     "title": "A Mission for Resilience",
     "description": "We put technology at the service of life. Our ambition is to provide territories with the tools to understand, preserve, and regenerate their ecosystems."
   },
+  "hero": {
+    "badge": "Our Mission",
+    "titlePrepend": "A mission for the ",
+    "titleHighlight": "resilience",
+    "titleAppend": " of life",
+    "subtitle": "We put technology at the service of life to help territories understand, preserve, and regenerate their ecosystems.",
+    "primaryCta": "Explore our focus",
+    "scrollHint": "Discover our areas of impact"
+  },
+  "conviction": {
+    "kicker": "Our conviction",
+    "title": "Technology in the service of ",
+    "titleHighlight": "life",
+    "description": "Lychen builds open-source applications and digital commons that give local stakeholders the means to observe, protect, and regenerate their ecosystems. No greenwashing: open code, shared data, and tools that are genuinely useful in the field.",
+    "quote": "We believe in a symbiosis between people and the living world, made possible by ethical, open, and sustainable technology.",
+    "imageHandsLabel": "Sowing change",
+    "imageLandscapeLabel": "Living territories",
+    "tags": {
+      "nonprofit": "Non-profit association",
+      "openSource": "Open-source software",
+      "openData": "Open data"
+    }
+  },
   "goals": {
     "title": "Our Areas of Impact",
+    "kicker": "Three pillars",
     "description": "To meet the challenges of our century, we structure our action around three complementary pillars.",
     "food": {
       "title": "Food Sovereignty",
+      "label": "Local production",
       "description": "Deploying tools for local production that is resilient and respectful of biodiversity."
     },
     "biodiversity": {
       "title": "Protecting Life",
+      "label": "Territorial data",
       "description": "Observing and quantifying biodiversity to better protect it through territorial data."
     },
     "social": {
       "title": "Social & Economic Bond",
+      "label": "Local cooperation",
       "description": "Making digital technology a lever for cooperation, solidarity, and sharing among local actors."
     }
   },
+  "approach": {
+    "kicker": "Our approach",
+    "title": "Acting as a single ",
+    "titleHighlight": "ecosystem",
+    "description": "From observation to regeneration, we connect people, data, and tools within a single approach, built to last.",
+    "imageLabel": "Mapping the territory",
+    "steps": {
+      "observe": {
+        "title": "Observe",
+        "description": "Measure and map a territory's biodiversity and resources through data."
+      },
+      "equip": {
+        "title": "Equip",
+        "description": "Build open-source software, platforms, and databases, close to real needs on the ground."
+      },
+      "cooperate": {
+        "title": "Cooperate",
+        "description": "Connect farmers, citizens, researchers, and local authorities around shared projects."
+      },
+      "regenerate": {
+        "title": "Regenerate",
+        "description": "Deploy resilient practices that restore soils, landscapes, and the social fabric."
+      }
+    }
+  },
+  "band": {
+    "quote": "To care for the living world is to care for ourselves.",
+    "author": "The Lychen collective"
+  },
   "status": {
     "title": "Official Framework",
+    "kicker": "Our statutes",
     "description": "Our commitment is enshrined in our statutes, guaranteeing the longevity of our mission.",
-    "content": "The purpose of this association is to promote the resilience of territories in the face of environmental and societal challenges.\n\nThe activities envisaged to achieve this objective (without limitation) specifically include:\n- Developing and distributing digital tools (software, platforms, databases).\n- Collecting, analyzing, and sharing territorial data.\n- Promoting ethical and sustainable technology.\n- Offering consulting, training, and research services.\n\nAll other means likely to contribute to the realization of its social object.\n\nThe association has an economic activity."
+    "content": "The purpose of this association is to promote the resilience of territories in the face of environmental and societal challenges.\n\nThe activities envisaged to achieve this objective (without limitation) specifically include:\n- Developing and distributing digital tools (software, platforms, databases).\n- Collecting, analyzing, and sharing territorial data.\n- Promoting ethical and sustainable technology.\n- Offering consulting, training, and research services.\n\nAll other means likely to contribute to the realization of its social object.\n\nThe association has an economic activity.",
+    "imageLabel": "Lichen, a living symbiosis",
+    "linkLabel": "Read our charter"
+  },
+  "cta": {
+    "title": "Let's build resilience ",
+    "titleHighlight": "together",
+    "description": "Citizen, farmer, researcher, or local authority: there's a place for you in the symbiosis. Explore our applications or join the movement.",
+    "primary": "Explore our applications",
+    "secondary": "Become a partner"
   }
 }

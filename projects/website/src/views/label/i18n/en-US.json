@@ -5,29 +5,61 @@
   },
   "title": "Robust Label",
   "hero": {
-    "title": "Robust: The Scale of Resilience and Autonomy",
-    "description": "A single label to measure robustness, from transition to the regeneration of life. A unique scale from 1 to 10 for all systems (cities, companies, associations, products)."
+    "badge": "The label of life",
+    "title": {
+      "prepend": "Robust: the scale of ",
+      "key_word": "resilience",
+      "append": " and autonomy"
+    },
+    "description": "A single label to measure robustness, from transition to the regeneration of life. A unique scale from 1 to 10 for all systems (cities, companies, associations, products).",
+    "scale_hint": "Transition → Preservation → Regeneration",
+    "cta_primary": "Explore the scale",
+    "cta_secondary": "Our mission",
+    "scroll_hint": "Discover the Robust scale",
+    "card_title": "A single score, 1 to 10",
+    "stats": {
+      "levels": { "value": "1 → 10", "label": "Robustness levels" },
+      "tranches": { "value": "3", "label": "Major stages" },
+      "scope": { "value": "∞", "label": "Systems covered" }
+    }
+  },
+  "scale": {
+    "kicker": "The Robust scale",
+    "title": {
+      "prepend": "From transition to the ",
+      "key_word": "regeneration",
+      "append": " of life"
+    },
+    "description": "Each level marks a concrete step forward. Progress happens one stage at a time, from a first burst of transition to actively contributing to the restoration of ecosystems."
   },
   "tranches": {
     "transition": {
       "title": "Transition",
       "subtitle": "Levels 1 to 3",
-      "description": "The system initiates its model change. It implements initial initiatives to reduce negative impact and move towards sustainable practices."
+      "description": "The system initiates its model change. It implements initial initiatives to reduce negative impact and move towards sustainable practices.",
+      "image_alt": "A field at the start of its conversion, with first grass strips and replanted hedgerows"
     },
     "preservation": {
       "title": "Preservation",
       "subtitle": "Levels 4 to 7",
-      "description": "The system preserves the ecosystem. It has reached a balance where its activities no longer harm the environment and maintain existing resources."
+      "description": "The system preserves the ecosystem. It has reached a balance where its activities no longer harm the environment and maintain existing resources.",
+      "image_alt": "Cultivated plots in balance with preserved groves and ponds"
     },
     "regeneration": {
       "title": "Regeneration",
       "subtitle": "Levels 8 to 10",
-      "description": "The system regenerates the surrounding ecosystem. It aims for complete autonomy and actively contributes to the restoration of life and biodiversity."
+      "description": "The system regenerates the surrounding ecosystem. It aims for complete autonomy and actively contributes to the restoration of life and biodiversity.",
+      "image_alt": "Rows of lush market-garden crops, thriving and productive agroecology"
     }
   },
   "gamification": {
-    "title": "Coherent & Measurable Gamification",
+    "kicker": "Comparable & measurable",
+    "title": "Coherent & measurable gamification",
     "description": "The Robust Label allows comparing and validating the efforts of each actor, whatever their nature. The larger the system, the harder the level is to reach, highlighting agile small local initiatives.",
+    "image_alt": "A local community celebrating their territory's progress around a scoreboard",
+    "figure_caption": "Local community",
+    "score_highlight": "+100 pts",
+    "examples_title": "A few scores",
     "examples": {
       "0": { "role": "Local Association", "points": "Level 6 (100 pts)" },
       "1": { "role": "Company Y", "points": "Level 4 (20 pts)" },
@@ -36,7 +68,11 @@
     }
   },
   "vision": {
-    "title": "A Unique Vision",
-    "description": "By speaking only of 'Robust Level X', we simplify communication while maintaining scientific precision on real impact. It is a universal recognition tool for ecological transition."
+    "kicker": "A shared language",
+    "title": "A unique vision",
+    "description": "By speaking only of 'Robust Level X', we simplify communication while maintaining scientific precision on real impact. It is a universal recognition tool for ecological transition.",
+    "image_alt": "A Robust label proudly displayed on a local product, in soft light",
+    "sticker_label": "Verified label",
+    "sticker_level": "Level 9"
   }
 }
