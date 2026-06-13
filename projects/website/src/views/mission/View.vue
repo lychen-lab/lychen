@@ -443,7 +443,7 @@
       <span
         aria-hidden="true"
         class="mission-wordmark"
-        >Lychen</span
+        >lychen</span
       >
       <div
         class="relative z-10 container flex max-w-3xl flex-col items-center gap-6 py-20 text-center"
