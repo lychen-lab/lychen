@@ -66,7 +66,7 @@ class LandHarvestEntryTest extends AbstractApiTestCase
                     'weight' => $weight,
                     'notes' => $notes,
                     'quality' => $quality,
-                    'land' => $this->getIriFromResource($context->land->_real()),
+                    'land' => $this->getIriFromResource($context->land),
                     'plantId' => $plantId
                 ]])
             ->assertStatus(201)
@@ -229,7 +229,7 @@ class LandHarvestEntryTest extends AbstractApiTestCase
         $this->addLandMember($context, [$landRole]);
 
         $this->browser()->actingAs($context->landMembers[0]->getPerson())
-            ->get('/api/land_harvest_entries', ['query' => ['land' => $context->land->_real()->getUlid()->toString()]])
+            ->get('/api/land_harvest_entries', ['query' => ['land' => $context->land->getUlid()->toString()]])
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', count($context->landHarvestEntries))
             ->assertJsonMatches('member[0].ulid', $context->landHarvestEntries[0]->getUlid()->toString())

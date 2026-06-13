@@ -43,7 +43,7 @@ class LandTaskSecurityTest extends AbstractApiTestCase
         $landRole = $this->createLandRole($context1->land);
         $this->addLandMember($context1, [$landRole]);
         $this->browser()->actingAs($context1->landMembers[0]->getPerson())
-            ->post('/api/land_tasks', ['json' => ['land' => $this->getIriFromResource($context1->land->_real())]])
+            ->post('/api/land_tasks', ['json' => ['land' => $this->getIriFromResource($context1->land)]])
             ->assertStatus(403);
     }
 
@@ -172,7 +172,7 @@ class LandTaskSecurityTest extends AbstractApiTestCase
         $landRole = $this->createLandRole($context1->land);
         $this->addLandMember($context1, [$landRole]);
         $this->browser()->actingAs($context1->landMembers[0]->getPerson())
-            ->get('/api/land_tasks', ['query' => ['land' => $context1->land->_real()->getUlid()->toString()]])
+            ->get('/api/land_tasks', ['query' => ['land' => $context1->land->getUlid()->toString()]])
             ->assertStatus(403);
     }
 }

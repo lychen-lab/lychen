@@ -64,7 +64,7 @@ class LandRoleFixtures extends Fixture implements DependentFixtureInterface
                                                    array|callable $attributes = []): void
     {
         $landRole = LandRoleFactory::new()->create($attributes);
-        $this->addReference($reference, $landRole->_real());
+        $this->addReference($reference, $landRole);
     }
 
     public function getDependencies(): array

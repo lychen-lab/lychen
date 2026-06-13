@@ -48,7 +48,7 @@ class LandTaskTest extends AbstractApiTestCase
                 ['json' => [
                     'title' => $title,
                     'content' => $content,
-                    'land' => $this->getIriFromResource($context->land->_real())
+                    'land' => $this->getIriFromResource($context->land)
                 ]])
             ->assertStatus(201)
             ->assertJsonMatches('title', $title)
@@ -172,7 +172,7 @@ class LandTaskTest extends AbstractApiTestCase
         $this->addLandMember($context, [$landRole]);
 
         $this->browser()->actingAs($context->landMembers[0]->getPerson())
-            ->get('/api/land_tasks', ['query' => ['land' => $context->land->_real()->getUlid()->toString()]])
+            ->get('/api/land_tasks', ['query' => ['land' => $context->land->getUlid()->toString()]])
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', count($context->landTasks))
             ->assertJsonMatches('member[0].ulid', $context->landTasks[0]->getUlid()->toString())
@@ -271,7 +271,7 @@ class LandTaskTest extends AbstractApiTestCase
                 $uri,
                 ['json' => []])
             ->assertSuccessful();
-        $landTask = $landTaskRepository->findOneBy(['land' => $context->land->_real(),
+        $landTask = $landTaskRepository->findOneBy(['land' => $context->land,
                                                     'state' => LandTaskWorkflowPlace::DONE]);
         $this->assertNotNull($landTask);
     }
@@ -289,7 +289,7 @@ class LandTaskTest extends AbstractApiTestCase
                 $uri,
                 ['json' => []])
             ->assertSuccessful();
-        $landTask = $landTaskRepository->findOneBy(['land' => $context->land->_real(),
+        $landTask = $landTaskRepository->findOneBy(['land' => $context->land,
                                                     'state' => LandTaskWorkflowPlace::IN_PROGRESS]);
         $this->assertNotNull($landTask);
 
@@ -299,7 +299,7 @@ class LandTaskTest extends AbstractApiTestCase
                 $uri,
                 ['json' => []])
             ->assertSuccessful();
-        $landTask = $landTaskRepository->findOneBy(['land' => $context->land->_real(),
+        $landTask = $landTaskRepository->findOneBy(['land' => $context->land,
                                                     'state' => LandTaskWorkflowPlace::DONE]);
         $this->assertNotNull($landTask);
     }

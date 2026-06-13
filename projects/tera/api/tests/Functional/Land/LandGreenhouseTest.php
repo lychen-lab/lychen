@@ -44,7 +44,7 @@ class LandGreenhouseTest extends AbstractApiTestCase
                 ['json' => [
                     'name' => $name,
                     'constructionDate' => $constructionDate,
-                    'land' => $this->getIriFromResource($context->land->_real())
+                    'land' => $this->getIriFromResource($context->land)
                 ]])
             ->assertStatus(201)
             ->assertJsonMatches('name', $name)
@@ -168,7 +168,7 @@ class LandGreenhouseTest extends AbstractApiTestCase
         $this->addLandMember($context, [$landRole]);
 
         $this->browser()->actingAs($context->landMembers[0]->getPerson())
-            ->get('/api/land_greenhouses', ['query' => ['land' => $context->land->_real()->getUlid()->toString()]])
+            ->get('/api/land_greenhouses', ['query' => ['land' => $context->land->getUlid()->toString()]])
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', count($context->landGreenhouses))
             ->assertJsonMatches('member[0].ulid', $context->landGreenhouses[0]->getUlid()->toString())
