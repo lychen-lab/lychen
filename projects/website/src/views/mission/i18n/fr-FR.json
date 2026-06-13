@@ -5,11 +5,26 @@
   },
   "hero": {
     "badge": "Notre Mission",
-    "titlePrepend": "Une Mission pour ",
-    "titleHighlight": "la Résilience",
-    "titleAppend": "",
-    "scroll_hint": "Découvrir nos axes d'impact",
-    "imageLabel": "Vivant & territoires"
+    "titlePrepend": "Une mission pour la ",
+    "titleHighlight": "résilience",
+    "titleAppend": " du vivant",
+    "subtitle": "Nous mettons le numérique au service du vivant pour aider les territoires à comprendre, préserver et régénérer leurs écosystèmes.",
+    "primaryCta": "Découvrir nos axes",
+    "scrollHint": "Découvrir nos axes d'impact"
+  },
+  "conviction": {
+    "kicker": "Notre conviction",
+    "title": "Le numérique au service du ",
+    "titleHighlight": "vivant",
+    "description": "Lychen conçoit des applications et des communs numériques libres pour donner aux acteurs des territoires les moyens d'observer, de protéger et de régénérer leurs écosystèmes. Pas de greenwashing : du code ouvert, des données partagées et des outils réellement utiles sur le terrain.",
+    "quote": "Nous croyons en une symbiose entre les humains et le vivant, rendue possible par une technologie éthique, ouverte et durable.",
+    "imageHandsLabel": "Semer le changement",
+    "imageLandscapeLabel": "Des territoires vivants",
+    "tags": {
+      "nonprofit": "Association à but non lucratif",
+      "openSource": "Logiciels libres",
+      "openData": "Données ouvertes"
+    }
   },
   "goals": {
     "title": "Nos Axes d'Impact",
@@ -31,10 +46,48 @@
       "description": "Faire du numérique un levier de coopération, de solidarité et de partage entre les acteurs locaux."
     }
   },
+  "approach": {
+    "kicker": "Notre démarche",
+    "title": "Agir comme un seul ",
+    "titleHighlight": "écosystème",
+    "description": "De l'observation à la régénération, nous relions les acteurs, les données et les outils au sein d'une même démarche, pensée pour durer.",
+    "imageLabel": "Cartographier le territoire",
+    "steps": {
+      "observe": {
+        "title": "Observer",
+        "description": "Mesurer et cartographier la biodiversité et les ressources d'un territoire grâce à la donnée."
+      },
+      "equip": {
+        "title": "Outiller",
+        "description": "Concevoir des logiciels, plateformes et bases de données libres, au plus près des besoins du terrain."
+      },
+      "cooperate": {
+        "title": "Coopérer",
+        "description": "Relier agriculteurs, citoyens, chercheurs et collectivités autour de projets communs."
+      },
+      "regenerate": {
+        "title": "Régénérer",
+        "description": "Déployer des pratiques résilientes qui restaurent les sols, les paysages et le lien social."
+      }
+    }
+  },
+  "band": {
+    "quote": "Prendre soin du vivant, c'est prendre soin de nous-mêmes.",
+    "author": "Le collectif Lychen"
+  },
   "status": {
     "title": "Cadre Officiel",
     "kicker": "Nos statuts",
     "description": "Notre engagement est inscrit dans nos statuts, garantissant la pérennité de notre mission.",
-    "content": "Cette association a pour objet de favoriser la résilience des territoires face aux enjeux environnementaux et sociétaux.\n\nLes activités envisagées pour atteindre cet objectif (sans limitation) sont notamment :\n- Développer et diffuser des outils numériques (logiciels, plateformes, bases de données).\n- Collecter, analyser et partager des données territoriales.\n- Promouvoir une technologie éthique et durable.\n- Offrir des services de conseil, de formation et de recherche.\n\nTous les autres moyens susceptibles de concourir à la réalisation de son objet social.\n\nL'association a une activité économique."
+    "content": "Cette association a pour objet de favoriser la résilience des territoires face aux enjeux environnementaux et sociétaux.\n\nLes activités envisagées pour atteindre cet objectif (sans limitation) sont notamment :\n- Développer et diffuser des outils numériques (logiciels, plateformes, bases de données).\n- Collecter, analyser et partager des données territoriales.\n- Promouvoir une technologie éthique et durable.\n- Offrir des services de conseil, de formation et de recherche.\n\nTous les autres moyens susceptibles de concourir à la réalisation de son objet social.\n\nL'association a une activité économique.",
+    "imageLabel": "Le lichen, une symbiose vivante",
+    "linkLabel": "Lire notre charte"
+  },
+  "cta": {
+    "title": "Construisons la résilience ",
+    "titleHighlight": "ensemble",
+    "description": "Citoyen, agriculteur, chercheur ou collectivité : il y a une place pour vous dans la symbiose. Découvrez nos applications ou rejoignez le mouvement.",
+    "primary": "Découvrir nos applications",
+    "secondary": "Devenir partenaire"
   }
 }
