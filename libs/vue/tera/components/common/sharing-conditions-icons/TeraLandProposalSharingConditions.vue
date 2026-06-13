@@ -22,8 +22,6 @@
 </template>
 
 <script lang="ts" setup>
-import { defineAsyncComponent } from 'vue';
-
 import { messages, TRANSLATION_KEY } from '@lychen/i18n-tera/land-proposal';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { type Display, DISPLAY } from '.';
@@ -42,5 +40,5 @@ const {
   displayLabel?: boolean;
 }>();
 
-const { t, d } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
+const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 </script>

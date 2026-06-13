@@ -3,9 +3,9 @@
     class="flex flex-col gap-6"
     @submit.prevent="onSubmit"
   >
-    <FormFieldTeraLandRoleName :is-field-dirty="isFieldDirty" />
+    <FormFieldTeraLandRoleName :is-field-dirty="isFieldDirty('name')" />
     <FormFieldTeraPermissions
-      :is-field-dirty="isFieldDirty"
+      :is-field-dirty="isFieldDirty('permissions')"
       @update:model-value="setFieldValue('permissions', $event)"
     />
     <Button

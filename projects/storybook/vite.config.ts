@@ -7,8 +7,11 @@ export default defineConfig({
   plugins: [
     vue(),
     tailwindcss(),
-    mkcert({
-      hosts: ['storybook.lychen.local'],
-    }),
+    // mkcert downloads and executes a shared binary; concurrent vitest/CI workers race on it (ETXTBSY) and dev certs are pointless there
+    !process.env.VITEST &&
+      !process.env.CI &&
+      mkcert({
+        hosts: ['storybook.lychen.local'],
+      }),
   ],
 });

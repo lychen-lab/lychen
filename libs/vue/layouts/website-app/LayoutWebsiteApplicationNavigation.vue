@@ -127,8 +127,6 @@ const isOpen = ref<boolean>(false);
 
 provide('mobileMenuIsOpen', isOpen);
 
-const lychenLogo = ref();
-
 defineProps<LayoutWebsiteApplicationNavigationProps>();
 </script>
 

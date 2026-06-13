@@ -96,7 +96,7 @@ import SectionLuk from '@/views/home/SectionLuk.vue';
 import { Card as LandProposalCard } from '@lychen/vue-components-business/land-proposal/card';
 import { ROUTE_LAND_PROPOSAL } from '@/views/land-proposal';
 
-const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
+useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 
 const fakeLandProposals = [
   {

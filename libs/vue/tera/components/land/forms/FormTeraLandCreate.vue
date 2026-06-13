@@ -3,13 +3,13 @@
     class="flex flex-col gap-6"
     @submit.prevent="onSubmit"
   >
-    <FormFieldTeraLandName :is-field-dirty="isFieldDirty" />
+    <FormFieldTeraLandName :is-field-dirty="isFieldDirty('name')" />
     <FormFieldTeraLandSurface
-      :is-field-dirty="isFieldDirty"
+      :is-field-dirty="isFieldDirty('surface')"
       @update:model-value="setFieldValue('surface', $event)"
     />
     <FormFieldTeraLandAltitude
-      :is-field-dirty="isFieldDirty"
+      :is-field-dirty="isFieldDirty('altitude')"
       @update:model-value="setFieldValue('altitude', $event)"
     />
     <Button

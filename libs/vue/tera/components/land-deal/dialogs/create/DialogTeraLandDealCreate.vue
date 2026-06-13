@@ -8,7 +8,7 @@
     >
       <DialogHeader class="flex flex-row items-center justify-between gap-10">
         <div class="flex flex-col gap-2">
-          <DialogTitle>Partage pour le jardin {{ land.name }}</DialogTitle>
+          <DialogTitle>Partage pour le jardin {{ land?.name }}</DialogTitle>
         </div>
         <div class="flex flex-row gap-2">
           <DialogClose />
@@ -31,13 +31,9 @@ import {
   DialogTrigger,
 } from '@lychen/vue-components-core/dialog';
 import DialogDescription from '@lychen/vue-components-core/dialog/DialogDescription.vue';
-import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { messages, TRANSLATION_KEY } from './i18n';
 import DialogClose from '@lychen/vue-components-core/dialog/DialogClose.vue';
 import { ref } from 'vue';
 import Button from '@lychen/vue-components-core/button/Button.vue';
-
-const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 
 defineProps<{
   land?: {

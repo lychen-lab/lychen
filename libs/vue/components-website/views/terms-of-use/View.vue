@@ -11,7 +11,7 @@
   <Container>
     <div class="flex flex-col gap-6">
       <div
-        v-for="section in tm('view_terms_of_use.sections')"
+        v-for="section in sections"
         :key="section.title"
         class="flex flex-col gap-2"
       >
@@ -29,8 +29,15 @@ import Container from '@lychen/vue-components-website/container/Container.vue';
 import Title from '@lychen/vue-components-website/title/Title.vue';
 import Paragraph from '@lychen/vue-components-website/paragraph/Paragraph.vue';
 import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
+import { computed } from 'vue';
 
 const { t, d, tm, rt } = usePrefixedI18n(CONFIG);
+
+// `tm` returns vue-i18n's deeply-recursive LocaleMessage type; flattening it here to the
+// known section shape keeps the template iteration from tripping TS2589.
+const sections = computed(
+  () => tm('view_terms_of_use.sections') as { title: string; content: string }[],
+);
 
 useExtendedHead(t);
 </script>

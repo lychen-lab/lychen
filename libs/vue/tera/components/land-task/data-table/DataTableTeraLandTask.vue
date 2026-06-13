@@ -144,6 +144,7 @@ import {
   useVueTable,
 } from '@tanstack/vue-table';
 import { Checkbox } from '@lychen/vue-components-core/checkbox';
+import type { CheckboxCheckedState } from 'reka-ui';
 import IconChevronDown from '@lychen/vue-icons/IconChevronDown.vue';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { DropdownMenu } from '@lychen/vue-components-core/dropdown-menu';
@@ -185,13 +186,14 @@ const columns = [
         modelValue:
           table.getIsAllPageRowsSelected() ||
           (table.getIsSomePageRowsSelected() && 'indeterminate'),
-        'onUpdate:modelValue': (value) => table.toggleAllPageRowsSelected(!!value),
+        'onUpdate:modelValue': (value: CheckboxCheckedState) =>
+          table.toggleAllPageRowsSelected(!!value),
         ariaLabel: 'Select all',
       }),
     cell: ({ row }) => {
       return h(Checkbox, {
         modelValue: row.getIsSelected(),
-        'onUpdate:modelValue': (value) => row.toggleSelected(!!value),
+        'onUpdate:modelValue': (value: CheckboxCheckedState) => row.toggleSelected(!!value),
         ariaLabel: 'Select row',
       });
     },
@@ -224,8 +226,8 @@ const columns = [
         }),
       ]),
     cell: ({ row }) => {
-      // Format the amount as a dollar amount
-      const formatted = row.getValue('startDate') ? d(row.getValue('startDate'), 'short') : '';
+      const startDate = row.original.startDate;
+      const formatted = startDate ? d(startDate, 'short') : '';
 
       return h('div', { class: '' }, formatted);
     },
@@ -242,8 +244,8 @@ const columns = [
         }),
       ]),
     cell: ({ row }) => {
-      // Format the amount as a dollar amount
-      const formatted = row.getValue('dueDate') ? d(row.getValue('dueDate'), 'short') : '';
+      const dueDate = row.original.dueDate;
+      const formatted = dueDate ? d(dueDate, 'short') : '';
 
       return h('div', { class: '' }, formatted);
     },
@@ -265,7 +267,7 @@ const columns = [
         h(
           DropdownMenuTeraLandTaskMain,
           {
-            'land-task': landTask,
+            landTask,
           },
           {
             default: () =>

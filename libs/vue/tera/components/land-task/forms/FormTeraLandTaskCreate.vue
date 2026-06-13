@@ -3,7 +3,7 @@
     class="flex flex-col gap-6"
     @submit.prevent="onSubmit"
   >
-    <FormFieldTeraLandTaskTitle :is-field-dirty="isFieldDirty" />
+    <FormFieldTeraLandTaskTitle :is-field-dirty="isFieldDirty('title')" />
     <Button
       :disabled="!meta.valid || isPending"
       :loading="isPending"
@@ -26,20 +26,19 @@ import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { useEventBus } from '@vueuse/core';
 import FormFieldTeraLandTaskTitle from './fields/FormFieldTeraLandTaskTitle.vue';
-import type { paths } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
-import { inject } from 'vue';
+import type { components, paths } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import { EVENT_landTaskPostSucceeded } from '@lychen/vue-tera/events/LandTaskEvents';
 
-const land = inject('fg'); // To rebuild
+const { land } = defineProps<{ land: components['schemas']['Land.jsonld'] }>();
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 
 type LandTaskPostRequest =
   paths['/api/land_tasks']['post']['requestBody']['content']['application/ld+json'];
 
-const { isFieldDirty, handleSubmit, meta, setFieldValue } = useForm<LandTaskPostRequest>({
+const { isFieldDirty, handleSubmit, meta } = useForm<LandTaskPostRequest>({
   initialValues: {
-    land: land?.value?.['@id'],
+    land: land['@id'],
   },
 });
 

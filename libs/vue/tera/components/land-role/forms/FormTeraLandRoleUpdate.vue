@@ -3,9 +3,9 @@
     class="flex flex-col gap-6"
     @submit.prevent="onSubmit"
   >
-    <FormFieldTeraLandRoleName :is-field-dirty="isFieldDirty" />
+    <FormFieldTeraLandRoleName :is-field-dirty="isFieldDirty('name')" />
     <FormFieldTeraPermissions
-      :is-field-dirty="isFieldDirty"
+      :is-field-dirty="isFieldDirty('permissions')"
       :model-value="values.permissions"
       @update:model-value="handlePermissionsUpdate"
     />
@@ -35,23 +35,28 @@ import FormFieldTeraLandRoleName from './fields/FormFieldTeraLandRoleName.vue';
 import FormFieldTeraPermissions from '../../permission/form/field/FormFieldTeraPermissions.vue';
 
 import { landRolePatchSucceededEvent } from '@lychen/vue-tera/events/LandRoleEvents';
-import type {
-  components,
-  LandRoleUserLand_rolePatchPermissions,
-  paths,
+import {
+  type components,
+  LandRoleLand_rolePatch_land_rolePatchInputPermissions,
+  type paths,
 } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 
 const { landRole } = defineProps<{ landRole: components['schemas']['LandRole.jsonld'] }>();
 
-type FormType =
+type PatchInput =
   paths['/api/land_roles/{ulid}']['patch']['requestBody']['content']['application/merge-patch+json'];
+// The generated SDK types `permissions` as a scalar enum union (openapi-typescript `@enum {array}`
+// quirk), but the API accepts/returns an array of those permission strings. Model it as an array
+// here so the form and FormFieldTeraPermissions (which manages a string list) line up.
+type FormType = Omit<PatchInput, 'permissions'> & { permissions?: string[] };
 
 const { isFieldDirty, handleSubmit, meta, setFieldValue, values } = useForm<FormType>({
   initialValues: {
     name: landRole.name,
-    permissions: landRole.permissions,
+    // `landRole.permissions` is an array of permission strings at runtime despite its scalar enum type.
+    permissions: landRole.permissions as unknown as string[] | undefined,
   },
 });
 
@@ -68,7 +73,13 @@ const { mutate, isPending } = useMutation({
       params: {
         path: { ulid: landRole.ulid },
       },
-      body: data,
+      body: {
+        ...data,
+        // Send the permission list using the generated enum element type (see FormType note above).
+        permissions: data.permissions as unknown as
+          | LandRoleLand_rolePatch_land_rolePatchInputPermissions
+          | undefined,
+      },
     });
     return response.data;
   },
@@ -92,7 +103,7 @@ const onSubmit = handleSubmit((values) => {
   mutate(values);
 });
 
-function handlePermissionsUpdate(newPermissions: LandRoleUserLand_rolePatchPermissions[]) {
+function handlePermissionsUpdate(newPermissions: string[]) {
   setFieldValue('permissions', newPermissions);
 }
 </script>

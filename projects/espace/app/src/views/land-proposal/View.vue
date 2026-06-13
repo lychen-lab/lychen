@@ -298,7 +298,7 @@ import IconStar from '@lychen/vue-icons/IconStar.vue';
 import IconCircleCheck from '@lychen/vue-icons/IconCircleCheck.vue';
 import IconMessagesSquare from '@lychen/vue-icons/IconMessagesSquare.vue';
 
-const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
+useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 
 const route = useRoute();
 const isFavorite = ref(false);
@@ -517,9 +517,17 @@ const allTerrains = [
   },
 ];
 
-const terrain = computed(
-  () => allTerrains.find((t) => t.uuid === route.params.uuid) ?? allTerrains[0],
-);
+const terrain = computed(() => {
+  const found = allTerrains.find((item) => item.uuid === route.params.uuid);
+  if (found) {
+    return found;
+  }
+  const fallback = allTerrains[0];
+  if (!fallback) {
+    throw new Error('allTerrains must contain at least one terrain');
+  }
+  return fallback;
+});
 </script>
 
 <style lang="css" scoped>

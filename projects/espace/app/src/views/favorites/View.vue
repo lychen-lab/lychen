@@ -59,7 +59,7 @@ import Button from '@lychen/vue-components-core/button/Button.vue';
 import { ROUTE_LAND_PROPOSAL } from '@/views/land-proposal';
 import { ROUTE_LAND_PROPOSALS } from '@/views/land-proposals';
 
-const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
+useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 
 const favoriteIds = ref(new Set<string>(['3', '5']));
 

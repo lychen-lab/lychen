@@ -9,16 +9,18 @@
     >
       <CardTeraLandMember
         v-if="owner"
-        :land-member="owner"
+        :land-member="asLandMember(owner)"
         :hoverable="false"
       />
       <DialogTeraLandMemberUpdate
-        v-for="(item, index) in landMembers.member.filter((item) => !item.owner)"
+        v-for="(item, index) in landMembers.member.filter(
+          (item: LandMemberCollectionItem) => !item.owner,
+        )"
         :key="index"
-        :land-member="item"
+        :land-member="asLandMember(item)"
         :land="land"
       >
-        <CardTeraLandMember :land-member="item" />
+        <CardTeraLandMember :land-member="asLandMember(item)" />
       </DialogTeraLandMemberUpdate>
     </div>
   </SectionSetting>
@@ -47,11 +49,11 @@
       <DialogTeraLandMemberInvitationUpdate
         v-for="(item, index) in landMemberInvitations.member"
         :key="index"
-        :land-member-invitation="item"
+        :land-member-invitation="asLandMemberInvitation(item)"
         :land="land"
       >
         <CardTeraLandMemberInvitation
-          :land-member-invitation="item"
+          :land-member-invitation="asLandMemberInvitation(item)"
           :land-roles="item.landRoles"
         />
       </DialogTeraLandMemberInvitationUpdate>
@@ -88,9 +90,9 @@
       <DialogTeraLandRoleUpdate
         v-for="(item, index) in landRoles.member"
         :key="index"
-        :land-role="item"
+        :land-role="asLandRole(item)"
       >
-        <CardTeraLandRole :land-role="item" />
+        <CardTeraLandRole :land-role="asLandRole(item)" />
       </DialogTeraLandRoleUpdate>
     </div>
   </SectionSetting>
@@ -139,6 +141,39 @@ import {
 } from '@lychen/vue-tera/events/LandMemberInvitationEvents';
 import CardTeraLandMemberInvitation from '@lychen/vue-tera/components/land-member-invitation/card/CardTeraLandMemberInvitation.vue';
 import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
+import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+
+type LandMemberCollectionItem = components['schemas']['LandMember.jsonld-land_member.collection'];
+type LandMemberInvitationCollectionItem =
+  components['schemas']['LandMemberInvitation.jsonld-land_member_invitation.collection'];
+type LandRoleCollectionItem = components['schemas']['LandRole.jsonld-land_role.collection'];
+
+// The team queries return the leaner `*.collection` projections, while the cards and update
+// dialogs are typed against the base `*.jsonld` shapes. Each projection is a runtime subset
+// (it only omits optional base fields and uses nominally distinct but value-identical enums),
+// and the consuming components read only fields present in the projection, so it is safe to
+// widen at these prop boundaries.
+type LandMemberCardInput = Omit<components['schemas']['LandMember.jsonld'], 'landRoles'> & {
+  landRoles?: components['schemas']['LandRole.jsonld'][];
+};
+type LandMemberInvitationCardInput = Omit<
+  components['schemas']['LandMemberInvitation.jsonld'],
+  'landRoles'
+> & {
+  landRoles?: components['schemas']['LandRole.jsonld'][];
+};
+
+function asLandMember(landMember: LandMemberCollectionItem) {
+  return landMember as unknown as LandMemberCardInput;
+}
+
+function asLandMemberInvitation(invitation: LandMemberInvitationCollectionItem) {
+  return invitation as unknown as LandMemberInvitationCardInput;
+}
+
+function asLandRole(landRole: LandRoleCollectionItem) {
+  return landRole as unknown as components['schemas']['LandRole.jsonld'];
+}
 
 const land = inject(INJECTION_KEY_LAND);
 const landUlid = computed(() => land?.value?.ulid);
@@ -258,7 +293,7 @@ const { data: landMembers, refetch: refetchLandMembers } = useQuery({
 
 const owner = computed(() => {
   if (landMembers.value) {
-    return landMembers.value.member.find((item) => item.owner);
+    return landMembers.value.member.find((item: LandMemberCollectionItem) => item.owner);
   }
   return null;
 });

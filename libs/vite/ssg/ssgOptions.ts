@@ -22,7 +22,10 @@ export const ssgOptions: ViteSSGOptions = {
   // Drop this hook once vite-ssg ships unhead v3 support.
   onPageRendered(_route, renderedHTML, appCtx) {
     if (!appCtx.head) return renderedHTML;
-    return transformHtmlTemplate(appCtx.head, renderedHTML);
+    // vite-ssg types `appCtx.head` as a v2 VueHeadClient, but at runtime the apps
+    // create a v3 unhead instance — the exact input `transformHtmlTemplate` expects.
+    const head = appCtx.head as unknown as Parameters<typeof transformHtmlTemplate>[0];
+    return transformHtmlTemplate(head, renderedHTML);
   },
   onFinished() {
     // Fall back to the literal ${HOST} placeholder so a host-agnostic build can be

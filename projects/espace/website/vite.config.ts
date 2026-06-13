@@ -28,9 +28,12 @@ export default defineConfig(({ isSsrBuild, mode }) => {
       vueDevTools(),
       tailwindcss(),
       EnvRuntime(),
-      mkcert({
-        hosts: [process.env.VITE_UNHEAD_HOST || 'localhost'],
-      }),
+      // mkcert downloads and executes a shared binary; concurrent vitest/CI workers race on it (ETXTBSY) and dev certs are pointless there
+      !process.env.VITEST &&
+        !process.env.CI &&
+        mkcert({
+          hosts: [process.env.VITE_UNHEAD_HOST || 'localhost'],
+        }),
       vue({
         template: {
           transformAssetUrls: {

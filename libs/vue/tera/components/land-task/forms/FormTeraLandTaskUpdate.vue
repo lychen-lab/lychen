@@ -3,7 +3,7 @@
     class="flex flex-col gap-6"
     @submit.prevent="onSubmit"
   >
-    <FormFieldTeraLandTaskTitle :is-field-dirty="isFieldDirty" />
+    <FormFieldTeraLandTaskTitle :is-field-dirty="isFieldDirty('title')" />
     <div class="grid grid-cols-2">
       <ul>
         <li>Status</li>
@@ -53,7 +53,7 @@ interface FormType {
   title: components['schemas']['LandTask.jsonld']['title'];
 }
 
-const { handleSubmit, meta, setFieldValue, isFieldDirty } = useForm<FormType>({
+const { handleSubmit, meta, isFieldDirty } = useForm<FormType>({
   initialValues: {
     title: landTask.title || '',
   },

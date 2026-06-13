@@ -18,11 +18,11 @@
 
 <script lang="ts" setup>
 import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
-import { VARIANT, type Variant } from '.';
+import type { Variant } from '.';
 import BadgeTeraLandAreaKind from '../badges/kind/BadgeTeraLandAreaKind.vue';
 import BaseHeading from '@lychen/vue-components-app/base-heading/BaseHeading.vue';
 
-const { variant = VARIANT.Default, landArea } = defineProps<{
+const { landArea } = defineProps<{
   landArea: components['schemas']['LandArea.jsonld'];
   variant?: Variant;
 }>();

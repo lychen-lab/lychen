@@ -7,7 +7,7 @@ export const landMemberDeleteSucceededEvent: EventBusKey<
   components['schemas']['LandMember.jsonld']
 > = Symbol('land-member-delete-succeeded');
 export const landMemberPatchSucceededEvent: EventBusKey<
-  components['schemas']['LandMember.jsonld']
+  components['schemas']['LandMember.jsonld-land_member.patch_land_member.patch.output']
 > = Symbol('land-member-patch-succeeded');
 export const landMemberLeaveSucceededEvent: EventBusKey<
   components['schemas']['LandMember.jsonld']

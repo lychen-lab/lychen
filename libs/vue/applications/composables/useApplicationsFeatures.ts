@@ -14,6 +14,9 @@ import { type ApplicationFeatureGroup } from '@lychen/typescript-applications/mo
 import { type OrganizedFeaturesByGroup } from '@lychen/typescript-applications/model/OrganizedFeaturesByGroup';
 
 export function useApplicationsFeatures() {
+  // Each `useXxxFeatures()` is narrowed to its own feature-group union. They are aggregated
+  // here under the base group type; `getList` only filters by group equality at runtime, so
+  // widening the parameter type is safe (the generic narrowing is contravariant on `getList`).
   const map: {
     [key: ApplicationFeatureAlias]: UseGenericApplicationsFeatures<ApplicationFeatureGroup>;
   } = {
@@ -25,7 +28,7 @@ export function useApplicationsFeatures() {
     [APPLICATION_ALIAS.Novi]: useNoviFeatures(),
     [APPLICATION_ALIAS.Kolo]: useKoloFeatures(),
     [APPLICATION_ALIAS.Humu]: useHumuFeatures(),
-  };
+  } as Record<ApplicationFeatureAlias, UseGenericApplicationsFeatures<ApplicationFeatureGroup>>;
 
   function getFeatures(
     applicationAlias: keyof typeof map,
@@ -42,15 +45,12 @@ export function useApplicationsFeatures() {
 
   function getApplicationComposable(
     applicationAlias: keyof typeof map,
-  ): UseGenericApplicationsFeatures<ApplicationFeatureGroup> | never {
-    try {
-      return map[applicationAlias];
-    } catch (e) {
-      if (e instanceof TypeError) {
-        throw new Error(`'${applicationAlias}' is not defined in the features map`);
-      }
-      throw e;
+  ): UseGenericApplicationsFeatures<ApplicationFeatureGroup> {
+    const composable = map[applicationAlias];
+    if (!composable) {
+      throw new Error(`'${applicationAlias}' is not defined in the features map`);
     }
+    return composable;
   }
 
   return {

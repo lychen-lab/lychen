@@ -7,6 +7,7 @@
     }
   ],
   "compilerOptions": {
-    "outDir": "../../../.moon/cache/types/projects/tera/tests-e2e"
+    "outDir": "../../../.moon/cache/types/projects/tera/tests-e2e",
+    "types": ["node"]
   }
 }
