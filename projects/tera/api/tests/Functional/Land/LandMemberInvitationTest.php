@@ -174,9 +174,14 @@ class LandMemberInvitationTest extends AbstractApiTestCase
                                                         'land' => $context->land]);
 
         $this->assertNotNull($landMember);
-        $this->assertArrayIsEqualToArrayIgnoringListOfKeys($landMember->getLandRoles()->toArray(),
-            $context->landMemberInvitations[0]->getLandRoles()->toArray(),
-            []);
+        $roleUlids = static fn (array $roles): array => array_map(
+            static fn ($role): string => $role->getUlid()->toString(),
+            $roles
+        );
+        $this->assertEqualsCanonicalizing(
+            $roleUlids($landMember->getLandRoles()->toArray()),
+            $roleUlids($context->landMemberInvitations[0]->getLandRoles()->toArray())
+        );
 
         $landMemberInvitationRepository = static::getContainer()->get(LandMemberInvitationRepository::class);
         $landMemberInvitation = $landMemberInvitationRepository->findOneBy(['person' => $invited,
