@@ -28,11 +28,11 @@
       <Container class="relative z-10 w-full pt-28 pb-24 md:pt-32 md:pb-28">
         <div
           ref="heroCopy"
-          class="flex flex-col gap-9 md:gap-11"
+          class="flex flex-col items-center gap-9 md:gap-11"
         >
           <!-- Copy -->
           <div
-            class="label-reveal-group flex max-w-3xl flex-col items-start gap-6"
+            class="label-reveal-group flex w-full max-w-3xl flex-col items-center gap-6 text-center"
             :class="{ 'label-revealed': heroRevealed }"
           >
             <span
@@ -58,7 +58,7 @@
               >{{ t('hero.description') }}</Paragraph
             >
 
-            <div class="mt-1 flex flex-wrap items-center gap-3">
+            <div class="mt-1 flex flex-wrap items-center justify-center gap-3">
               <RouterLink to="#scale">
                 <Button
                   size="lg"
@@ -84,7 +84,7 @@
 
           <!-- Scale card — below the copy, superimposed on the hero image -->
           <aside
-            class="label-reveal-card border-on-surface/10 bg-surface/85 flex flex-col gap-5 rounded-3xl border p-6 shadow-2xl backdrop-blur-2xl md:p-8"
+            class="label-reveal-card border-on-surface/10 bg-surface/85 flex w-full max-w-3xl flex-col gap-5 rounded-3xl border p-6 shadow-2xl backdrop-blur-2xl md:p-8"
             :class="{ 'label-card-revealed': heroRevealed }"
           >
             <div class="flex items-center gap-2">
