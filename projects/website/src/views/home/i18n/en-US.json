@@ -115,17 +115,35 @@
       "subtitle": "Open-Source Software"
     }
   },
+  "ecosystem": {
+    "kicker": "A connected ecosystem",
+    "title": {
+      "prepend": "Applications ",
+      "key_word": "linked together",
+      "append": ""
+    },
+    "description": "Each application addresses a concrete need of the territory. They all share the same identity, the same open data and the same philosophy: a single ecosystem of tools that talk to each other.",
+    "hub": {
+      "title": "One platform, ten applications",
+      "description": "A single identity, data that flows, tools that cooperate — built to work together.",
+      "features": {
+        "identity": "Single identity",
+        "data": "Shared data",
+        "opensource": "100% open source",
+        "interop": "Interoperable"
+      }
+    },
+    "explore": "Explore the applications"
+  },
   "goals": {
+    "kicker": "Our compass",
     "title": "Sustainable Development Goals",
+    "description": "Lychen takes concrete action on three of the UN Sustainable Development Goals — at the heart of every feature we build.",
     "link_title": {
       "2": "Learn more",
       "11": "Discover more",
       "12": "More details"
     }
-  },
-  "use_cases": {
-    "title": "Solutions tailored to each actor of the territory",
-    "description": "Explore how Lychen connects producers, citizens, associations, businesses, communities, and researchers around the Sustainable Development Goals. Click on each actor to discover the specific features that facilitate their engagement and collaboration within the ecosystem."
   },
   "presentation": {
     "title": "Together, let's sow the seeds of a sustainable future.",

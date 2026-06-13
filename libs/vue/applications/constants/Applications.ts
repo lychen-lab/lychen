@@ -7,7 +7,7 @@ import {
   type ApplicationState,
 } from '@lychen/typescript-applications/constants/ApplicationState';
 
-export const APPLICATIONS: Record<ApplicationAlias, { state: ApplicationState }> = {
+export const APPLICATIONS: Record<ApplicationAlias, { state: ApplicationState; url?: string }> = {
   [APPLICATION_ALIAS.Tera]: { state: APPLICATION_STATE.Development },
   [APPLICATION_ALIAS.Myko]: { state: APPLICATION_STATE.Funding },
   [APPLICATION_ALIAS.Kiro]: { state: APPLICATION_STATE.Funding },
@@ -17,5 +17,5 @@ export const APPLICATIONS: Record<ApplicationAlias, { state: ApplicationState }>
   [APPLICATION_ALIAS.Vara]: { state: APPLICATION_STATE.Funding },
   [APPLICATION_ALIAS.Novi]: { state: APPLICATION_STATE.Funding },
   [APPLICATION_ALIAS.Robust]: { state: APPLICATION_STATE.Funding },
-  [APPLICATION_ALIAS.Espace]: { state: APPLICATION_STATE.Development },
+  [APPLICATION_ALIAS.Espace]: { state: APPLICATION_STATE.Development, url: 'https://espace.lychen.org' },
 };
