@@ -109,7 +109,7 @@
                   :cx="node.x"
                   :cy="node.y"
                   r="7"
-                  fill="oklch(0.92 0.1 131)"
+                  :fill="node.color"
                   class="ecosystem-node"
                   :style="{ '--node-delay': `${node.i * 0.32}s` }"
                 />
@@ -236,16 +236,29 @@ function isFlagship(alias: ApplicationAlias) {
 }
 
 const APP_DOT: Record<string, string> = {
-  espace: 'bg-positive',
-  tera: 'bg-primary',
-  myko: 'bg-warning',
-  meli: 'bg-warning',
-  kiro: 'bg-tertiary',
-  humu: 'bg-secondary',
-  novi: 'bg-tertiary',
-  vara: 'bg-positive',
-  kolo: 'bg-primary',
-  robust: 'bg-secondary',
+  espace: 'bg-app-espace',
+  tera: 'bg-app-tera',
+  myko: 'bg-app-myko',
+  meli: 'bg-app-meli',
+  kiro: 'bg-app-kiro',
+  humu: 'bg-app-humu',
+  novi: 'bg-app-novi',
+  vara: 'bg-app-vara',
+  kolo: 'bg-app-kolo',
+  robust: 'bg-app-robust',
+};
+
+const APP_NODE_COLOR: Record<string, string> = {
+  espace: 'var(--color-app-espace)',
+  tera: 'var(--color-app-tera)',
+  myko: 'var(--color-app-myko)',
+  meli: 'var(--color-app-meli)',
+  kiro: 'var(--color-app-kiro)',
+  humu: 'var(--color-app-humu)',
+  novi: 'var(--color-app-novi)',
+  vara: 'var(--color-app-vara)',
+  kolo: 'var(--color-app-kolo)',
+  robust: 'var(--color-app-robust)',
 };
 
 // Hub & spokes: nodes evenly spaced on a ring, each linked to the hub and to its neighbour.
@@ -257,12 +270,14 @@ const NODES = computed(() =>
     const angle = (i / NODE_COUNT) * Math.PI * 2 - Math.PI / 2;
     const next = ((i + 1) % NODE_COUNT) / NODE_COUNT;
     const nextAngle = next * Math.PI * 2 - Math.PI / 2;
+    const alias = applications.value[i]?.alias;
     return {
       i,
       x: CENTER + Math.cos(angle) * RADIUS,
       y: CENTER + Math.sin(angle) * RADIUS,
       nextX: CENTER + Math.cos(nextAngle) * RADIUS,
       nextY: CENTER + Math.sin(nextAngle) * RADIUS,
+      color: alias ? (APP_NODE_COLOR[alias] ?? 'oklch(0.92 0.1 131)') : 'oklch(0.92 0.1 131)',
     };
   }),
 );
