@@ -1,9 +1,6 @@
 <template>
   <!-- ============================================================= HERO -->
-  <section
-    ref="heroRoot"
-    class="label-hero relative overflow-hidden"
-  >
+  <section class="label-hero relative overflow-hidden">
     <!-- Layered decorative background: gradient wash + blobs -->
     <div
       aria-hidden="true"
@@ -120,10 +117,7 @@
   </section>
 
   <!-- ====================================================== SCALE SECTION -->
-  <section
-    ref="scaleRoot"
-    class="relative overflow-hidden py-20 md:py-28"
-  >
+  <section class="relative overflow-hidden py-20 md:py-28">
     <div
       aria-hidden="true"
       class="label-blob label-blob-soft absolute top-10 -left-24 z-0"
@@ -160,7 +154,6 @@
         <article
           v-for="(tranche, index) in TRANCHES"
           :key="tranche.key"
-          ref="trancheCards"
           class="label-tranche group border-on-surface/10 relative flex flex-col gap-5 overflow-hidden rounded-3xl border p-6"
           :class="[tranche.surfaceClass, { 'label-tranche-revealed': scaleRevealed }]"
           :style="{ '--reveal-delay': `${0.1 + index * 0.14}s` }"
@@ -218,10 +211,7 @@
   </section>
 
   <!-- =============================================== GAMIFICATION SECTION -->
-  <section
-    ref="gamificationRoot"
-    class="relative overflow-hidden py-20 md:py-28"
-  >
+  <section class="relative overflow-hidden py-20 md:py-28">
     <div
       aria-hidden="true"
       class="label-blob label-blob-soft absolute -right-24 bottom-0 z-0"
@@ -270,7 +260,6 @@
           progress around a scoreboard. Midjourney prompt in ClickUp.
         -->
         <div
-          ref="gamificationFigure"
           class="label-reveal-figure order-first lg:order-last"
           :class="{ 'label-figure-revealed': gamificationRevealed }"
         >
@@ -292,10 +281,7 @@
   </section>
 
   <!-- ===================================================== VISION SECTION -->
-  <section
-    ref="visionRoot"
-    class="relative overflow-hidden py-20 md:py-28"
-  >
+  <section class="relative overflow-hidden py-20 md:py-28">
     <Container class="relative z-10">
       <div class="grid items-center gap-12 lg:grid-cols-2">
         <!--
@@ -303,7 +289,6 @@
           product, in soft natural light. Midjourney prompt in ClickUp.
         -->
         <div
-          ref="visionFigure"
           class="label-reveal-figure"
           :class="{ 'label-figure-revealed': visionRevealed }"
         >
@@ -347,7 +332,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import { useIntersectionObserver } from '@vueuse/core';
 
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
@@ -406,8 +391,7 @@ const GAMIFICATION_EXAMPLES = [
   { level: 8 },
 ] as const;
 
-function useReveal(threshold = 0.25) {
-  const target = ref<HTMLElement | null>(null);
+function useReveal(target: Ref<HTMLElement | null>, threshold = 0.25) {
   const revealed = ref(false);
   useIntersectionObserver(
     target,
@@ -418,22 +402,17 @@ function useReveal(threshold = 0.25) {
     },
     { threshold },
   );
-  return { target, revealed };
+  return revealed;
 }
 
-const { target: heroCopy, revealed: heroRevealed } = useReveal(0.1);
-const { target: scaleHeading, revealed: scaleRevealed } = useReveal(0.2);
-const { target: gamificationCopy, revealed: gamificationRevealed } = useReveal(0.2);
-const { target: visionCopy, revealed: visionRevealed } = useReveal(0.2);
-
-// Refs used only as scroll/animation anchors (kept for clarity & future parallax).
-const heroRoot = ref<HTMLElement | null>(null);
-const scaleRoot = ref<HTMLElement | null>(null);
-const trancheCards = ref<HTMLElement[] | null>(null);
-const gamificationRoot = ref<HTMLElement | null>(null);
-const gamificationFigure = ref<HTMLElement | null>(null);
-const visionRoot = ref<HTMLElement | null>(null);
-const visionFigure = ref<HTMLElement | null>(null);
+const heroCopy = ref<HTMLElement | null>(null);
+const heroRevealed = useReveal(heroCopy, 0.1);
+const scaleHeading = ref<HTMLElement | null>(null);
+const scaleRevealed = useReveal(scaleHeading, 0.2);
+const gamificationCopy = ref<HTMLElement | null>(null);
+const gamificationRevealed = useReveal(gamificationCopy, 0.2);
+const visionCopy = ref<HTMLElement | null>(null);
+const visionRevealed = useReveal(visionCopy, 0.2);
 </script>
 
 <style scoped>

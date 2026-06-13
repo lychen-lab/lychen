@@ -189,7 +189,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import { useIntersectionObserver } from '@vueuse/core';
 
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
@@ -232,8 +232,7 @@ const PILLARS = [
   },
 ] as const;
 
-function useReveal() {
-  const target = ref<HTMLElement | null>(null);
+function useReveal(target: Ref<HTMLElement | null>) {
   const revealed = ref(false);
   useIntersectionObserver(
     target,
@@ -244,11 +243,13 @@ function useReveal() {
     },
     { threshold: 0.25 },
   );
-  return { target, revealed };
+  return revealed;
 }
 
-const { target: goalsCopy, revealed: goalsRevealed } = useReveal();
-const { target: statusCopy, revealed: statusRevealed } = useReveal();
+const goalsCopy = ref<HTMLElement | null>(null);
+const goalsRevealed = useReveal(goalsCopy);
+const statusCopy = ref<HTMLElement | null>(null);
+const statusRevealed = useReveal(statusCopy);
 </script>
 
 <style scoped>
