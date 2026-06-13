@@ -1,188 +1,135 @@
 <template>
   <!-- ============================================================= HERO -->
   <!-- Photo: Pexels #12208088 (aerial farmland) — free to use, no attribution required. -->
-  <section
-    class="label-hero relative isolate flex min-h-[640px] items-end overflow-hidden md:min-h-[88svh]"
-  >
-    <img
-      :src="heroFieldsUrl"
-      alt=""
-      aria-hidden="true"
-      fetchpriority="high"
-      class="absolute inset-0 size-full object-cover"
-    />
-    <div
-      aria-hidden="true"
-      class="label-hero-grade absolute inset-0 z-[1]"
-    />
-    <div
-      aria-hidden="true"
-      class="label-hero-contrast absolute inset-0 z-[1]"
-    />
-    <div
-      aria-hidden="true"
-      class="label-hero-vignette pointer-events-none absolute inset-0 z-[1]"
-    />
-
-    <!-- Decorative ridge silhouette blending the hero into the page. -->
-    <svg
-      aria-hidden="true"
-      class="absolute inset-x-0 -bottom-px z-[2] h-[16svh] w-full dark:brightness-[0.55]"
-      viewBox="0 0 1440 320"
-      preserveAspectRatio="none"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+  <DivScalingDown class="flex flex-col justify-start">
+    <section
+      class="label-hero relative isolate flex min-h-[640px] items-center overflow-hidden md:min-h-[88svh]"
     >
-      <defs>
-        <linearGradient
-          id="label-hero-ridge-gradient"
-          x1="0"
-          y1="0"
-          x2="0"
-          y2="1"
-        >
-          <stop
-            offset="0"
-            stop-color="oklch(0.27 0.06 140)"
-          />
-          <stop
-            offset="1"
-            stop-color="oklch(0.14 0.04 138)"
-          />
-        </linearGradient>
-      </defs>
-      <path
-        d="M0 190 C 140 160, 260 118, 420 130 C 580 142, 660 194, 820 198 C 980 202, 1100 148, 1240 152 C 1320 154, 1400 168, 1440 174 L 1440 320 L 0 320 Z"
-        fill="url(#label-hero-ridge-gradient)"
+      <img
+        :src="heroFieldsUrl"
+        alt=""
+        aria-hidden="true"
+        fetchpriority="high"
+        class="absolute inset-0 size-full object-cover"
       />
-      <path
-        d="M0 190 C 140 160, 260 118, 420 130 C 580 142, 660 194, 820 198 C 980 202, 1100 148, 1240 152 C 1320 154, 1400 168, 1440 174"
-        stroke="oklch(0.95 0.03 140 / 0.2)"
-        stroke-width="1.5"
-        vector-effect="non-scaling-stroke"
-      />
-    </svg>
-    <div
-      aria-hidden="true"
-      class="label-hero-blend pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[14svh]"
-    />
-
-    <Container class="relative z-10 w-full pt-28 pb-24 md:pt-32 md:pb-28">
       <div
-        ref="heroCopy"
-        class="grid items-end gap-10 lg:grid-cols-[1.05fr_0.95fr]"
-      >
-        <!-- LEFT — copy -->
+        aria-hidden="true"
+        class="label-hero-grade absolute inset-0 z-[1]"
+      />
+      <div
+        aria-hidden="true"
+        class="label-hero-contrast absolute inset-0 z-[1]"
+      />
+      <div
+        aria-hidden="true"
+        class="label-hero-vignette pointer-events-none absolute inset-0 z-[1]"
+      />
+
+      <Container class="relative z-10 w-full pt-28 pb-24 md:pt-32 md:pb-28">
         <div
-          class="label-reveal-group flex flex-col items-start gap-6"
-          :class="{ 'label-revealed': heroRevealed }"
+          ref="heroCopy"
+          class="flex flex-col gap-9 md:gap-11"
         >
-          <span
-            class="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-semibold tracking-widest text-white/90 uppercase backdrop-blur-md"
+          <!-- Copy -->
+          <div
+            class="label-reveal-group flex max-w-3xl flex-col items-start gap-6"
+            :class="{ 'label-revealed': heroRevealed }"
           >
-            <span class="size-1.5 animate-pulse rounded-full bg-[oklch(0.87_0.12_131)]" />
-            {{ t('hero.badge') }}
-          </span>
-
-          <Title
-            variant="h1"
-            class="font-lexend max-w-3xl text-[clamp(2.5rem,6vw,4.75rem)] leading-[1.05] font-extrabold tracking-tight text-balance text-[oklch(0.985_0.01_120)] drop-shadow-[0_2px_24px_rgba(0,0,0,0.45)]"
-            >{{ t('hero.title.prepend')
-            }}<span
-              class="bg-gradient-to-r from-[oklch(0.88_0.13_131)] via-[oklch(0.85_0.11_150)] to-[oklch(0.82_0.1_180)] bg-clip-text text-transparent"
-              >{{ t('hero.title.key_word') }}</span
-            >{{ t('hero.title.append') }}</Title
-          >
-
-          <Paragraph
-            variant="website-highlight"
-            class="max-w-xl text-white/85 drop-shadow-[0_1px_12px_rgba(0,0,0,0.5)]"
-            >{{ t('hero.description') }}</Paragraph
-          >
-
-          <div class="mt-1 flex flex-wrap items-center gap-3">
-            <RouterLink to="#scale">
-              <Button
-                size="lg"
-                data-umami-event="label-scale-button"
-                :label="t('hero.cta_primary')"
-                class="border-0 bg-[oklch(0.87_0.12_131)] text-[oklch(0.22_0.06_135)] shadow-[0_8px_30px_oklch(0.87_0.12_131_/_0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[oklch(0.91_0.12_131)] hover:shadow-[0_12px_40px_oklch(0.87_0.12_131_/_0.5)]"
-              >
-                {{ t('hero.cta_primary') }}
-                <template #icon><IconArrowRight class="size-4" /></template>
-              </Button>
-            </RouterLink>
-            <RouterLink :to="{ name: ROUTE_MISSION.name }">
-              <Button
-                size="lg"
-                variant="ghost"
-                data-umami-event="label-mission-button"
-                :label="t('hero.cta_secondary')"
-                class="border border-white/30 bg-white/10 text-white backdrop-blur-md transition-all duration-300 hover:bg-white/20 hover:text-white"
-              />
-            </RouterLink>
-          </div>
-        </div>
-
-        <!-- RIGHT — floating scale card -->
-        <aside
-          class="label-reveal-figure border-on-surface/10 bg-surface/85 flex flex-col gap-5 rounded-3xl border p-6 shadow-2xl backdrop-blur-2xl md:p-7"
-          :class="{ 'label-figure-revealed': heroRevealed }"
-        >
-          <div class="flex items-center gap-2">
             <span
-              class="bg-primary/12 text-primary flex size-9 items-center justify-center rounded-xl"
+              class="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-semibold tracking-widest text-white/90 uppercase backdrop-blur-md"
             >
-              <IconSprout class="size-5" />
+              <span class="size-1.5 animate-pulse rounded-full bg-[oklch(0.87_0.12_131)]" />
+              {{ t('hero.badge') }}
             </span>
-            <div class="flex flex-col">
-              <span class="text-xs font-bold tracking-[0.18em] uppercase opacity-55">{{
-                t('scale.kicker')
-              }}</span>
-              <span class="font-lexend text-lg leading-tight font-extrabold">{{
-                t('hero.card_title')
-              }}</span>
+
+            <Title
+              variant="h1"
+              class="font-lexend max-w-3xl text-[clamp(2.5rem,6vw,4.75rem)] leading-[1.05] font-extrabold tracking-tight text-balance text-[oklch(0.985_0.01_120)] drop-shadow-[0_2px_24px_rgba(0,0,0,0.45)]"
+              >{{ t('hero.title.prepend')
+              }}<span
+                class="bg-gradient-to-r from-[oklch(0.88_0.13_131)] via-[oklch(0.85_0.11_150)] to-[oklch(0.82_0.1_180)] bg-clip-text text-transparent"
+                >{{ t('hero.title.key_word') }}</span
+              >{{ t('hero.title.append') }}</Title
+            >
+
+            <Paragraph
+              variant="website-highlight"
+              class="max-w-xl text-white/85 drop-shadow-[0_1px_12px_rgba(0,0,0,0.5)]"
+              >{{ t('hero.description') }}</Paragraph
+            >
+
+            <div class="mt-1 flex flex-wrap items-center gap-3">
+              <RouterLink to="#scale">
+                <Button
+                  size="lg"
+                  data-umami-event="label-scale-button"
+                  :label="t('hero.cta_primary')"
+                  class="border-0 bg-[oklch(0.87_0.12_131)] text-[oklch(0.22_0.06_135)] shadow-[0_8px_30px_oklch(0.87_0.12_131_/_0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[oklch(0.91_0.12_131)] hover:shadow-[0_12px_40px_oklch(0.87_0.12_131_/_0.5)]"
+                >
+                  {{ t('hero.cta_primary') }}
+                  <template #icon><IconArrowRight class="size-4" /></template>
+                </Button>
+              </RouterLink>
+              <RouterLink :to="{ name: ROUTE_MISSION.name }">
+                <Button
+                  size="lg"
+                  variant="ghost"
+                  data-umami-event="label-mission-button"
+                  :label="t('hero.cta_secondary')"
+                  class="border border-white/30 bg-white/10 text-white backdrop-blur-md transition-all duration-300 hover:bg-white/20 hover:text-white"
+                />
+              </RouterLink>
             </div>
           </div>
 
-          <ScaleBar
-            :transition-label="t('tranches.transition.title')"
-            :preservation-label="t('tranches.preservation.title')"
-            :regeneration-label="t('tranches.regeneration.title')"
-          />
-
-          <dl class="grid grid-cols-3 gap-2.5">
-            <div
-              v-for="stat in HERO_STATS"
-              :key="stat.key"
-              class="border-on-surface/5 bg-surface-container-low/70 flex flex-col items-center gap-1 rounded-2xl border px-2 py-3.5"
-            >
-              <dt
-                class="from-primary font-lexend bg-gradient-to-r to-[oklch(0.6_0.12_180)] bg-clip-text text-2xl font-black text-transparent"
+          <!-- Scale card — below the copy, superimposed on the hero image -->
+          <aside
+            class="label-reveal-card border-on-surface/10 bg-surface/85 flex flex-col gap-5 rounded-3xl border p-6 shadow-2xl backdrop-blur-2xl md:p-8"
+            :class="{ 'label-card-revealed': heroRevealed }"
+          >
+            <div class="flex items-center gap-2">
+              <span
+                class="bg-primary/12 text-primary flex size-9 items-center justify-center rounded-xl"
               >
-                {{ t(`hero.stats.${stat.key}.value`) }}
-              </dt>
-              <dd class="text-center text-[11px] leading-tight font-medium opacity-60">
-                {{ t(`hero.stats.${stat.key}.label`) }}
-              </dd>
+                <IconSprout class="size-5" />
+              </span>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold tracking-[0.18em] uppercase opacity-55">{{
+                  t('scale.kicker')
+                }}</span>
+                <span class="font-lexend text-lg leading-tight font-extrabold">{{
+                  t('hero.card_title')
+                }}</span>
+              </div>
             </div>
-          </dl>
-        </aside>
-      </div>
-    </Container>
 
-    <RouterLink
-      to="#scale"
-      :aria-label="t('hero.scroll_hint')"
-      class="absolute bottom-5 left-1/2 z-20 hidden -translate-x-1/2 lg:block"
-    >
-      <span
-        class="label-hero-scroll-hint flex size-11 items-center justify-center rounded-full border border-white/25 bg-white/10 backdrop-blur-md"
-      >
-        <IconChevronDown class="size-5 text-white/90" />
-      </span>
-    </RouterLink>
-  </section>
+            <ScaleBar
+              :transition-label="t('tranches.transition.title')"
+              :preservation-label="t('tranches.preservation.title')"
+              :regeneration-label="t('tranches.regeneration.title')"
+            />
+
+            <dl class="grid grid-cols-3 gap-2.5 md:gap-4">
+              <div
+                v-for="stat in HERO_STATS"
+                :key="stat.key"
+                class="border-on-surface/5 bg-surface-container-low/70 flex flex-col items-center gap-1 rounded-2xl border px-2 py-3.5 md:py-4"
+              >
+                <dt
+                  class="from-primary font-lexend bg-gradient-to-r to-[oklch(0.6_0.12_180)] bg-clip-text text-2xl font-black text-transparent md:text-3xl"
+                >
+                  {{ t(`hero.stats.${stat.key}.value`) }}
+                </dt>
+                <dd class="text-center text-[11px] leading-tight font-medium opacity-60 md:text-xs">
+                  {{ t(`hero.stats.${stat.key}.label`) }}
+                </dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+      </Container>
+    </section>
+  </DivScalingDown>
 
   <!-- ====================================================== SCALE SECTION -->
   <section
@@ -438,7 +385,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, type Ref } from 'vue';
+import { defineAsyncComponent, ref, type Ref } from 'vue';
 import { useIntersectionObserver } from '@vueuse/core';
 import { useHead } from '@unhead/vue';
 
@@ -456,7 +403,6 @@ import IconEarth from '@lychen/vue-icons/IconEarth.vue';
 import IconUsers from '@lychen/vue-icons/IconUsers.vue';
 import IconBadgeCheck from '@lychen/vue-icons/IconBadgeCheck.vue';
 import IconArrowRight from '@lychen/vue-icons/IconArrowRight.vue';
-import IconChevronDown from '@lychen/vue-icons/IconChevronDown.vue';
 import IconStar from '@lychen/vue-icons/IconStar.vue';
 import LevelBadge from './LevelBadge.vue';
 import ScaleBar from './ScaleBar.vue';
@@ -468,6 +414,10 @@ import regenerationUrl from './assets/regeneration.webp';
 import communityUrl from './assets/community.webp';
 import visionProductUrl from './assets/vision-product.webp';
 import ogImageUrl from './assets/LabelOgImage.webp';
+
+const DivScalingDown = defineAsyncComponent(
+  () => import('@lychen/vue-components-extra/div-scaling-down/DivScalingDown.vue'),
+);
 
 const { t } = usePrefixedI18n(CONFIG);
 useExtendedHead(t, { ogImage: ogImageUrl });
@@ -562,14 +512,6 @@ const visionRevealed = useReveal(visionCopy, 0.2);
   mask-image: linear-gradient(180deg, black 72%, transparent 100%);
 }
 
-.label-hero-blend {
-  background: linear-gradient(180deg, transparent 0%, var(--color-surface) 82%);
-}
-
-.label-hero-scroll-hint {
-  animation: label-scroll-bounce 2.4s ease-in-out infinite;
-}
-
 /* ----------------------------------------------------- DECORATIVE BLOBS */
 .label-blob {
   width: clamp(280px, 38vw, 560px);
@@ -648,27 +590,29 @@ const visionRevealed = useReveal(visionCopy, 0.2);
   translate: 0 0;
 }
 
-@keyframes label-scroll-bounce {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-  50% {
-    transform: translate3d(0, 8px, 0);
-  }
+/* Scale card: slides up beneath the hero copy. */
+.label-reveal-card {
+  opacity: 0;
+  translate: 0 28px;
+  transition:
+    opacity 0.8s ease,
+    translate 0.8s ease;
+  transition-delay: 0.25s;
+}
+
+.label-card-revealed {
+  opacity: 1;
+  translate: 0 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .label-reveal-group > *,
   .label-tranche,
-  .label-reveal-figure {
+  .label-reveal-figure,
+  .label-reveal-card {
     opacity: 1;
     translate: 0 0;
     transition: none;
-  }
-
-  .label-hero-scroll-hint {
-    animation: none;
   }
 }
 </style>
