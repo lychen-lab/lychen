@@ -1,0 +1,41 @@
+{
+  "name": "lychen/frankenphp-symfony",
+  "description": "FrankenPHP runtime for Symfony — vendored from runtime/frankenphp-symfony with Symfony 8 support added (upstream caps at Symfony 7).",
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Kévin Dunglas",
+      "email": "kevin@dunglas.dev"
+    },
+    {
+      "name": "Lychen",
+      "email": "bonjour@lychen.org"
+    }
+  ],
+  "require": {
+    "php": "^8.4",
+    "symfony/dependency-injection": "^7.4 || ^8.0",
+    "symfony/http-kernel": "^7.4 || ^8.0",
+    "symfony/runtime": "^7.4 || ^8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Runtime\\FrankenPhpSymfony\\": "src/"
+    }
+  },
+  "replace": {
+    "runtime/frankenphp-symfony": "*"
+  },
+  "minimum-stability": "stable",
+  "config": {
+    "allow-plugins": {
+      "symfony/runtime": true
+    }
+  },
+  "archive": {
+    "exclude": [
+      "/moon.yml"
+    ]
+  }
+}

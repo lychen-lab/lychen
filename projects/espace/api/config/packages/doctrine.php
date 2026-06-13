@@ -46,8 +46,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     if ($containerConfigurator->env() === 'prod') {
         $containerConfigurator->extension('doctrine', [
             'orm' => [
-                'auto_generate_proxy_classes' => false,
-                'proxy_dir' => '%kernel.build_dir%/doctrine/orm/Proxies',
                 'query_cache_driver' => [
                     'pool' => 'doctrine.system_cache_pool',
                     'type' => 'pool',

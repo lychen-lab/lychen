@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:1.7-php8.4.8 AS frankenphp_upstream
+FROM dunglas/frankenphp:1.12-php8.5 AS frankenphp_upstream
 
 FROM frankenphp_upstream AS frankenphp_base
 
@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	gettext \
 	git \
     unzip \
+    librabbitmq-dev \
+    $PHPIZE_DEPS \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -22,16 +24,19 @@ RUN set -eux; \
 		opcache \
         exif \
 		zip \
-        amqp \
         curl \
+        pdo_pgsql \
 	;
 
-###> recipes ###
-###> doctrine/doctrine-bundle ###
 RUN set -eux; \
-	install-php-extensions pdo_pgsql
-###< doctrine/doctrine-bundle ###
-###< recipes ###
+    git clone https://github.com/php-amqp/php-amqp.git /tmp/php-amqp; \
+    cd /tmp/php-amqp; \
+    phpize; \
+    ./configure; \
+    make -j$(nproc); \
+    make install; \
+    docker-php-ext-enable amqp; \
+    rm -rf /tmp/php-amqp;
 
 ENV PHP_INI_SCAN_DIR=":$PHP_INI_DIR/app.conf.d"
 

@@ -14,11 +14,11 @@
   ],
   "minimum-stability": "stable",
   "require": {
-    "symfony/http-kernel": "^7.4",
-    "symfony/security-bundle": "^7.4",
-    "symfony/http-foundation": "^7.4",
-    "symfony/dependency-injection": "^7.4",
-    "symfony/http-client": "^7.4"
+    "symfony/http-kernel": "^7.4 || ^8.0",
+    "symfony/security-bundle": "^7.4 || ^8.0",
+    "symfony/http-foundation": "^7.4 || ^8.0",
+    "symfony/dependency-injection": "^7.4 || ^8.0",
+    "symfony/http-client": "^7.4 || ^8.0"
   },
   "archive": {
     "exclude": [

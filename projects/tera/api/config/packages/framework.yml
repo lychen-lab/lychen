@@ -10,9 +10,6 @@ framework:
   #cookie_samesite: "none"
   #save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
 
-  annotations:
-    enabled: false
-
   disallow_search_engine_index: true
 
   handle_all_throwables: true

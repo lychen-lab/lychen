@@ -77,7 +77,7 @@ make phpunit c="--group e2e"                         # Run by group
   /css/core        # Tailwind design tokens
   /typescript/     # 16 TypeScript-only libraries
   /vue/            # 29 Vue component/composable libraries
-  /php/            # 4 PHP/Symfony bundle libraries
+  /php/            # 5 PHP/Symfony bundle libraries
   /i18n/           # Translation files
 
 /.moon             # Moonrepo configuration
@@ -100,7 +100,7 @@ make phpunit c="--group e2e"                         # Run by group
 - **Routing** via Vue Router 5; **auth** via Zitadel OIDC
 - **Websites** use Vite-SSG for static generation
 
-### Backend (Symfony 7.3 + API Platform 4.1 + PHP 8.4)
+### Backend (Symfony 8.1 + API Platform 4.3 + PHP 8.5)
 - API Platform auto-generates REST APIs from Doctrine entities
 - OpenAPI spec is used to generate the TypeScript SDK at `libs/typescript/tera/api-sdk`
 - State management via Symfony Workflow; messaging via RabbitMQ

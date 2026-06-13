@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 
 abstract class AbstractLandAwareVoterInterface extends AbstractPermissionVoter implements LandAwareVoterInterface
 {
@@ -58,7 +59,7 @@ abstract class AbstractLandAwareVoterInterface extends AbstractPermissionVoter i
 
     protected function voteOnAttribute(string $attribute,
         mixed $subject,
-        TokenInterface $token): bool
+        TokenInterface $token, ?Vote $vote = null): bool
     {
         $permissionHolder = $this->getPermissionHolder($subject);
 
