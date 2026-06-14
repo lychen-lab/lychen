@@ -1,19 +1,15 @@
 dependsOn:
-- lychen-php-core
-- lychen-php-model
-- lychen-php-zitadel
+  - lychen-php-core
+  - lychen-php-model
+  - lychen-php-zitadel
 env:
   DEV_DOMAIN: api.flora.lychen.local
   PRODUCTION_DOCKER_IMAGE: lychen/production/flora/api
-  PRODUCTION_DOKPLOY_COMPOSE_ID: ''
-  PRODUCTION_DOMAIN: api.flora.lychen.org
-  STAGING_DOKPLOY_COMPOSE_ID: ''
-  STAGING_DOMAIN: staging.api.flora.lychen.org
 id: flora-api
 language: php
 layer: application
 stack: backend
 tags:
-- symfony
-- dokploy
-- compose
+  - symfony
+  - dokploy
+  - compose
