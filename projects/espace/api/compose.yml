@@ -27,6 +27,10 @@ services:
         depends_on:
             espace-database:
                 condition: service_healthy
+            espace-rabbitmq:
+                condition: service_started
+            espace-redis:
+                condition: service_started
         environment:
             # Run "composer require symfony/mercure-bundle" to install and configure the Mercure integration
             #MERCURE_URL: ${CADDY_MERCURE_URL:-http://php/.well-known/mercure}
@@ -35,6 +39,8 @@ services:
             APP_RUNTIME: Runtime\FrankenPhpSymfony\Runtime
             # Run "composer require symfony/orm-pack" to install and configure Doctrine ORM
             DATABASE_URL: postgresql://${POSTGRES_USER:-userlocal}:${POSTGRES_PASSWORD:-PasswordForLocal!}@espace-database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
+            MESSENGER_TRANSPORT_DSN: amqp://app:app@espace-rabbitmq:5672/app
+            REDIS_URL: redis://espace-redis:6379
             SERVER_NAME: ${SERVER_NAME:-localhost}, php:80
             TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-example\.com|localhost}|php$$}
             #MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
@@ -47,7 +53,33 @@ services:
             - espace_caddy_config:/config
             - ../../../libs/php:/packages
 
+    espace-redis:
+        healthcheck:
+            retries: 5
+            start_period: 10s
+            test: [ 'CMD', 'redis-cli', 'ping' ]
+            timeout: 3s
+        image: redis:alpine
+        volumes:
+            - espace_redis_data:/data
+
+    espace-rabbitmq:
+        environment:
+            - RABBITMQ_DEFAULT_USER=app
+            - RABBITMQ_DEFAULT_PASS=app
+            - RABBITMQ_DEFAULT_VHOST=app
+        healthcheck:
+            retries: 5
+            start_period: 30s
+            test: [ 'CMD', 'rabbitmq-diagnostics', '-q', 'ping' ]
+            timeout: 10s
+        image: rabbitmq:4.0.4-management-alpine
+        volumes:
+            - espace_rabbitmq_data:/var/lib/rabbitmq/
+
 volumes:
     espace_caddy_config:
     espace_caddy_data:
     espace_database_data:
+    espace_rabbitmq_data:
+    espace_redis_data:

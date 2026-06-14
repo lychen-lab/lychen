@@ -1,3 +1,5 @@
+name: flora-api
+
 services:
   flora-database:
     environment:
@@ -17,9 +19,15 @@ services:
     depends_on:
       flora-database:
         condition: service_healthy
+      flora-rabbitmq:
+        condition: service_started
+      flora-redis:
+        condition: service_started
     environment:
       APP_RUNTIME: Runtime\FrankenPhpSymfony\Runtime
       DATABASE_URL: postgresql://${POSTGRES_USER:-userlocal}:${POSTGRES_PASSWORD:-PasswordForLocal!}@flora-database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
+      MESSENGER_TRANSPORT_DSN: amqp://app:app@flora-rabbitmq:5672/app
+      REDIS_URL: redis://flora-redis:6379
       SERVER_NAME: ${SERVER_NAME:-localhost}, php:80
       TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-example\.com|localhost}|php$$}
       TRUSTED_PROXIES: ${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
@@ -30,7 +38,33 @@ services:
       - flora_caddy_config:/config
       - ../../../libs/php:/packages
 
+  flora-redis:
+    healthcheck:
+      retries: 5
+      start_period: 10s
+      test: [ 'CMD', 'redis-cli', 'ping' ]
+      timeout: 3s
+    image: redis:alpine
+    volumes:
+      - flora_redis_data:/data
+
+  flora-rabbitmq:
+    environment:
+      - RABBITMQ_DEFAULT_USER=app
+      - RABBITMQ_DEFAULT_PASS=app
+      - RABBITMQ_DEFAULT_VHOST=app
+    healthcheck:
+      retries: 5
+      start_period: 30s
+      test: [ 'CMD', 'rabbitmq-diagnostics', '-q', 'ping' ]
+      timeout: 10s
+    image: rabbitmq:4.0.4-management-alpine
+    volumes:
+      - flora_rabbitmq_data:/var/lib/rabbitmq/
+
 volumes:
   flora_caddy_config:
   flora_caddy_data:
   flora_database_data:
+  flora_rabbitmq_data:
+  flora_redis_data:
