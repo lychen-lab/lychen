@@ -15,21 +15,11 @@ tasks:
   dokploy-compose-deploy:
     command: bash $workspaceRoot/.moon/scripts/dokploy-compose-deploy.sh
     deps:
-    - dokploy-compose-update
+    - cloudflare-provision
+    - dokploy-provision
     env:
       COMPOSE_ID_FILE: $projectRoot/.dokploy-compose-id
     options:
       inferInputs: false
-  dokploy-compose-update:
-    deps:
-    - get-dockerfiles
-    - dokploy-provision
-    - cloudflare-provision
-    env:
-      COMPOSE_FILE: $projectRoot/compose.yml
-      COMPOSE_ID_FILE: $projectRoot/.dokploy-compose-id
-    options:
-      cache: false
-    script: bash $workspaceRoot/.moon/scripts/dokploy-compose-update-from-file.sh
 inheritedBy:
   tag: dokploy

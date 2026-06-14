@@ -8,15 +8,17 @@
 #   Dokploy project   == $DOKPLOY_PROJECT          (the "domain group": tera, espace, ...)
 #     └─ environment   == $DOKPLOY_ENVIRONMENT      (staging | production)
 #         └─ compose    == $MOON_PROJECT_ID          (e.g. tera-api, website)
+#             ├─ source  == GitHub provider, composePath ./<src>/compose.<env>.yml
 #             └─ domain  == $STAGING_DOMAIN / $PRODUCTION_DOMAIN (optional)
 #
-# Everything is resolved *by name* so no compose ids need to be stored anywhere.
-# The resolved compose id is written to $COMPOSE_ID_FILE for the subsequent
-# dokploy-compose-update / dokploy-compose-deploy tasks to consume.
+# The compose is wired to the GitHub provider so Dokploy pulls the per-environment
+# compose file from git itself (compose.staging.yml / compose.prod.yml) and
+# deploys it on `compose.deploy` — nothing is uploaded. Everything is resolved
+# *by name* so no compose ids need to be stored anywhere; the resolved id is
+# written to $COMPOSE_ID_FILE for the dokploy-compose-deploy task.
 #
 # This script only talks to the Dokploy API. DNS records are handled separately
-# by cloudflare-provision.sh. When no domain is configured for the environment
-# the domain step is skipped, so the structure is still created.
+# by cloudflare-provision.sh.
 #
 set -euo pipefail
 
@@ -35,7 +37,19 @@ esac
 
 COMPOSE_NAME="$MOON_PROJECT_ID"
 
-# Pick the domain for this environment (either may be unset -> no domain).
+# GitHub provider config — Dokploy clones the repo at $GIT_BRANCH and deploys the
+# compose file at $COMPOSE_PATH (relative to the repo root). production -> prod.
+GIT_OWNER="${DOKPLOY_GIT_OWNER:-lychen-lab}"
+GIT_REPOSITORY="${DOKPLOY_GIT_REPOSITORY:-lychen}"
+GIT_BRANCH="${DOKPLOY_GIT_BRANCH:-main}"
+case "$DOKPLOY_ENVIRONMENT" in
+  production) COMPOSE_ENV_SUFFIX="prod" ;;
+  *) COMPOSE_ENV_SUFFIX="$DOKPLOY_ENVIRONMENT" ;;
+esac
+PROJECT_SOURCE="${MOON_PROJECT_SOURCE:-${MOON_PROJECT_ROOT#"${MOON_WORKSPACE_ROOT:-}"/}}"
+COMPOSE_PATH="./${PROJECT_SOURCE}/compose.${COMPOSE_ENV_SUFFIX}.yml"
+
+# Domain for this environment (either may be unset -> no domain).
 if [ "$DOKPLOY_ENVIRONMENT" = "production" ]; then
   DOMAIN="${PRODUCTION_DOMAIN:-}"
 else
@@ -69,6 +83,18 @@ dokploy_api() {
     return 1
   fi
   printf '%s' "$payload"
+}
+
+# Resolve the Dokploy GitHub provider id. Matches DOKPLOY_GITHUB_PROVIDER against
+# the provider display name, or auto-selects when exactly one is configured.
+resolve_github_id() {
+  local providers
+  providers="$(dokploy_api GET "/github.githubProviders")" || return 1
+  if [ -n "${DOKPLOY_GITHUB_PROVIDER:-}" ]; then
+    printf '%s' "$providers" | jq -r --arg n "$DOKPLOY_GITHUB_PROVIDER" '[.[]? | select(.gitProvider.name == $n)] | .[0].githubId // empty'
+  else
+    printf '%s' "$providers" | jq -r 'if (type == "array" and length == 1) then .[0].githubId else empty end'
+  fi
 }
 
 # --- 1. Ensure the project ---------------------------------------------------
@@ -126,10 +152,27 @@ fi
 [ -n "$compose_id" ] || { echo "Error: could not resolve composeId for '$COMPOSE_NAME'" >&2; exit 1; }
 echo "  - composeId: $compose_id"
 
-# Hand the resolved id to the update/deploy tasks.
+# Hand the resolved id to the deploy task.
 printf '%s' "$compose_id" > "$COMPOSE_ID_FILE"
 
-# --- 4. Ensure the domain (optional) ----------------------------------------
+# --- 4. Wire the GitHub provider --------------------------------------------
+# compose.create cannot set git fields, so configure the source here. Idempotent:
+# re-running just re-asserts the same provider config.
+echo "> Wiring GitHub provider -> ${GIT_OWNER}/${GIT_REPOSITORY}@${GIT_BRANCH} : ${COMPOSE_PATH}"
+github_id="$(resolve_github_id)"
+[ -n "$github_id" ] || { echo "Error: no Dokploy GitHub provider resolved - set DOKPLOY_GITHUB_PROVIDER to the provider's display name" >&2; exit 1; }
+dokploy_api POST "/compose.update" \
+  "$(jq -nc \
+      --arg id "$compose_id" \
+      --arg gh "$github_id" \
+      --arg owner "$GIT_OWNER" \
+      --arg repo "$GIT_REPOSITORY" \
+      --arg branch "$GIT_BRANCH" \
+      --arg path "$COMPOSE_PATH" \
+      '{composeId: $id, sourceType: "github", githubId: $gh, owner: $owner, repository: $repo, branch: $branch, composePath: $path, triggerType: "tag", autoDeploy: true, enableSubmodules: false}')" >/dev/null
+echo "  - provider set (githubId: $github_id)"
+
+# --- 5. Ensure the domain (optional) ----------------------------------------
 if [ -z "$DOMAIN" ]; then
   echo "> No domain configured for $DOKPLOY_ENVIRONMENT (set STAGING_DOMAIN/PRODUCTION_DOMAIN to enable) - skipping domain"
   echo "> Dokploy provisioning complete"

@@ -71,15 +71,17 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
       - name: 'Provision & deploy'
-        # dokploy-compose-deploy depends on dokploy-provision, which ensures the
-        # Dokploy project/environment/compose exist (resolved by name), attaches
-        # the domain and upserts the Cloudflare DNS record before deploying.
+        # dokploy-compose-deploy depends on dokploy-provision + cloudflare-provision,
+        # which ensure the Dokploy project/environment/compose exist (resolved by
+        # name), wire the GitHub provider (composePath = compose.<env>.yml), attach
+        # the domain and upsert the Cloudflare DNS record before deploying.
         env:
           DOKPLOY_API_TOKEN: ${{ secrets.DOKPLOY_API_TOKEN }}
           DOKPLOY_API_URL: ${{ secrets.DOKPLOY_API_URL }}
           DOKPLOY_ENVIRONMENT: staging
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           DOKPLOY_SERVER_IPV4: ${{ vars.DOKPLOY_SERVER_IPV4 }}
+          DOKPLOY_GITHUB_PROVIDER: ${{ vars.DOKPLOY_GITHUB_PROVIDER }}
         run: moon ci ${{ matrix.projects }}:dokploy-compose-deploy
 
   deploy-production:
@@ -103,13 +105,15 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
       - name: 'Provision & deploy'
-        # dokploy-compose-deploy depends on dokploy-provision, which ensures the
-        # Dokploy project/environment/compose exist (resolved by name), attaches
-        # the domain and upserts the Cloudflare DNS record before deploying.
+        # dokploy-compose-deploy depends on dokploy-provision + cloudflare-provision,
+        # which ensure the Dokploy project/environment/compose exist (resolved by
+        # name), wire the GitHub provider (composePath = compose.<env>.yml), attach
+        # the domain and upsert the Cloudflare DNS record before deploying.
         env:
           DOKPLOY_API_TOKEN: ${{ secrets.DOKPLOY_API_TOKEN }}
           DOKPLOY_API_URL: ${{ secrets.DOKPLOY_API_URL }}
           DOKPLOY_ENVIRONMENT: production
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           DOKPLOY_SERVER_IPV4: ${{ vars.DOKPLOY_SERVER_IPV4 }}
+          DOKPLOY_GITHUB_PROVIDER: ${{ vars.DOKPLOY_GITHUB_PROVIDER }}
         run: moon ci ${{ matrix.projects }}:dokploy-compose-deploy
