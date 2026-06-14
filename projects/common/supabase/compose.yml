@@ -1,0 +1,91 @@
+name: supabase
+
+# Self-hosted Supabase, scoped to its role as the PostgreSQL provider for the
+# Lychen APIs (tera / espace / flora). Auth stays on Zitadel and Storage is a
+# follow-up; this stack therefore runs ONLY the database engine by default.
+#
+# - `supabase-db` is the genuine Supabase Postgres image (extensions + tuning).
+# - `supabase-studio` + `supabase-meta` are an OPTIONAL dashboard, gated behind
+#   the `studio` compose profile and bound to localhost (see README for why).
+#
+# Local (optional, for parity): `moon common-supabase:up`
+# With dashboard:                `docker compose --profile studio up -d`
+# Staging / production:          deployed on the VPS via Dokploy (see README).
+
+services:
+  supabase-db:
+    image: supabase/postgres:15.8.1.085
+    restart: unless-stopped
+    environment:
+      POSTGRES_HOST: /var/run/postgresql
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_PORT: 5432
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-PasswordForLocal!}
+      # Consumed by the supabase/postgres first-boot init scripts:
+      JWT_SECRET: ${JWT_SECRET:-super-secret-jwt-token-with-at-least-32-chars-change-me}
+      JWT_EXP: ${JWT_EXP:-3600}
+      # Consumed by init/01-app-databases.sh to create one database + owner role
+      # per application. OVERRIDE every password in staging/production.
+      TERA_DB_USER: ${TERA_DB_USER:-tera_app}
+      TERA_DB_PASSWORD: ${TERA_DB_PASSWORD:-PasswordForLocal!}
+      ESPACE_DB_USER: ${ESPACE_DB_USER:-espace_app}
+      ESPACE_DB_PASSWORD: ${ESPACE_DB_PASSWORD:-PasswordForLocal!}
+      FLORA_DB_USER: ${FLORA_DB_USER:-flora_app}
+      FLORA_DB_PASSWORD: ${FLORA_DB_PASSWORD:-PasswordForLocal!}
+    volumes:
+      - supabase_db_data:/var/lib/postgresql/data:rw
+      - ./init/01-app-databases.sh:/docker-entrypoint-initdb.d/01-app-databases.sh:ro
+    ports:
+      # Bound to loopback: reachable by desktop DB clients on the host, never
+      # exposed publicly. App containers reach it in-network as `supabase-db`.
+      - '127.0.0.1:${SUPABASE_DB_PORT:-54322}:5432'
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-U', 'postgres', '-h', 'localhost']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  supabase-meta:
+    image: supabase/postgres-meta:v0.96.6
+    profiles: [studio]
+    restart: unless-stopped
+    depends_on:
+      supabase-db:
+        condition: service_healthy
+    environment:
+      PG_META_PORT: 8080
+      PG_META_DB_HOST: supabase-db
+      PG_META_DB_PORT: 5432
+      PG_META_DB_NAME: ${POSTGRES_DB:-postgres}
+      PG_META_DB_USER: supabase_admin
+      PG_META_DB_PASSWORD: ${POSTGRES_PASSWORD:-PasswordForLocal!}
+
+  supabase-studio:
+    image: supabase/studio:2026.06.03-sha-0bca601
+    profiles: [studio]
+    restart: unless-stopped
+    depends_on:
+      - supabase-meta
+    environment:
+      STUDIO_PG_META_URL: http://supabase-meta:8080
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-PasswordForLocal!}
+      DEFAULT_ORGANIZATION_NAME: ${STUDIO_DEFAULT_ORGANIZATION:-Lychen}
+      DEFAULT_PROJECT_NAME: ${STUDIO_DEFAULT_PROJECT:-Lychen}
+      AUTH_JWT_SECRET: ${JWT_SECRET:-super-secret-jwt-token-with-at-least-32-chars-change-me}
+      # Only needed for Studio's API/Auth/Storage panels (not run here); the
+      # Table & SQL editors work through postgres-meta without them.
+      SUPABASE_ANON_KEY: ${ANON_KEY:-}
+      SUPABASE_SERVICE_KEY: ${SERVICE_ROLE_KEY:-}
+    ports:
+      - '127.0.0.1:${SUPABASE_STUDIO_PORT:-54323}:3000'
+
+volumes:
+  supabase_db_data:
+
+networks:
+  # Local: the external `lychen-network` created by `common-network:create-network`.
+  # VPS:   set SUPABASE_NETWORK to the shared Dokploy network the APIs also join.
+  default:
+    name: ${SUPABASE_NETWORK:-lychen-network}
+    external: true

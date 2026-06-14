@@ -1,0 +1,6 @@
+id: common-supabase
+language: unknown
+layer: automation
+stack: backend
+tags:
+- compose
