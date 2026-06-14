@@ -5,7 +5,7 @@ dependsOn:
 env:
   DEV_DOMAIN: api.flora.lychen.local
   DOKPLOY_PROJECT: flora
-  DOMAIN_SERVICE: flora-api
+  DOMAIN_SERVICE: api
   PRODUCTION_DOCKER_IMAGE: lychen/production/flora/api
   PRODUCTION_DOMAIN: api.flora.lychen.org
   STAGING_DOMAIN: staging.api.flora.lychen.org

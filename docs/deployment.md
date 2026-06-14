@@ -1,10 +1,18 @@
-# Deployment & Dokploy provisioning
+# Deployment & provisioning
 
 CI/CD builds the Docker images, then **provisions and deploys** each affected
-application to [Dokploy](https://dokploy.com/). Provisioning is automatic and
-idempotent: the Dokploy project, environment, compose service, public domain and
-the Cloudflare DNS record are created on first run and reconciled on every run —
-nothing has to be clicked in the Dokploy UI and no compose ids are stored.
+application. Provisioning is automatic and idempotent: the Cloudflare DNS record,
+the Dokploy project / environment / compose service and its public domain are
+created on first run and reconciled on every run — nothing has to be clicked in
+the Dokploy UI and no compose ids are stored.
+
+DNS and Dokploy are provisioned by **two independent scripts** so each side can
+be run, skipped or debugged on its own:
+
+| Script | Talks to | Responsibility |
+| --- | --- | --- |
+| [.moon/scripts/cloudflare-provision.sh](../.moon/scripts/cloudflare-provision.sh) | Cloudflare | Upsert a DNS-only `A` record `host → DOKPLOY_SERVER_IPV4`. |
+| [.moon/scripts/dokploy-provision.sh](../.moon/scripts/dokploy-provision.sh) | Dokploy | Ensure project → environment → compose, attach the compose domain (Traefik route). |
 
 ## Model
 
@@ -19,9 +27,13 @@ Dokploy project   = $DOKPLOY_PROJECT      domain group: tera, espace, flora, web
 ```
 
 A Dokploy project groups every service of one product (api / app / website) and
-splits them across a `staging` and a `production` environment. When a project is
-created Dokploy automatically provides the default `production` environment; the
-`staging` environment is created on demand.
+splits them across a `staging` and a `production` environment. **Each environment
+holds its own compose service**, so e.g. `espace-api` becomes two Dokploy compose
+services — one in `espace/staging` (→ `staging.api.espace.lychen.org`) and one in
+`espace/production` (→ `api.espace.lychen.org`).
+
+When a project is created Dokploy automatically provides the default `production`
+environment; the `staging` environment is created on demand.
 
 ## Pipeline
 
@@ -31,78 +43,97 @@ project, once in the `staging` GitHub environment and once in `production`. The
 moon task graph chains:
 
 ```
-dokploy-provision  ─▶  dokploy-compose-update  ─▶  dokploy-compose-deploy
-(ensure project/env/      (upload compose.yml as       (compose.deploy)
- compose + domain + DNS,    sourceType=raw)
- write .dokploy-compose-id)
+cloudflare-provision ┐
+dokploy-provision    ├─▶ dokploy-compose-update ─▶ dokploy-compose-deploy
+get-dockerfiles      ┘   (upload compose.<env>.yml    (compose.deploy)
+                          as sourceType=raw)
 ```
 
-`dokploy-provision` ([.moon/scripts/dokploy-provision.sh](../.moon/scripts/dokploy-provision.sh)):
+- `cloudflare-provision` — upserts the DNS record (runs first so the host resolves before Let's Encrypt is requested on deploy).
+- `dokploy-provision` — ensures `project.all`/`project.create`, `environment.byProjectId`/`environment.create` (staging), `project.one`/`compose.create` (`composeType: docker-compose`); writes the resolved `composeId` to a gitignored `.dokploy-compose-id`; attaches the domain via `domain.create` (`domainType: compose`, Let's Encrypt) if a host is set, de-duping against `domain.byComposeId`.
+- `dokploy-compose-update` — uploads the compose file as `sourceType: raw`.
+- `dokploy-compose-deploy` — triggers `compose.deploy`.
 
-1. **Project** — `project.all`, create via `project.create` if missing.
-2. **Environment** — `environment.byProjectId`, create `staging` via `environment.create` if missing (`production` exists by default).
-3. **Compose** — `project.one`, create via `compose.create` (`composeType: docker-compose`) if missing; writes the resolved `composeId` to `.dokploy-compose-id` for the update/deploy tasks.
-4. **Domain** (only if `STAGING_DOMAIN`/`PRODUCTION_DOMAIN` is set) — `domain.byComposeId`, attach via `domain.create` (`domainType: compose`, `certificateType: letsencrypt`, `https: true`) if not already present. Dokploy does **not** enforce host uniqueness, so we de-dupe before creating.
-5. **DNS** (only if `CLOUDFLARE_API_TOKEN` is set) — upsert a **DNS-only** `A` record for the host → `DOKPLOY_SERVER_IPV4` in the host's Cloudflare zone.
+### Per-environment compose file
 
-Steps 4 and 5 are skipped gracefully when their inputs are absent, so a service
-without a domain yet still gets its structure created.
+The update step uploads the **environment-specific** compose file:
 
-## Required GitHub configuration
+- `compose.staging.yml` for staging, `compose.prod.yml` for production (`compose.production.yml` is also accepted);
+- falls back to `compose.yml` when the per-environment file is absent (e.g. the template-generated frontends).
 
-Set on the `staging` and `production` **GitHub Environments** (so each stage can
-point at the right Dokploy server / token):
+The service named by `DOMAIN_SERVICE` (below) must exist in that compose file and
+listen on `DOMAIN_PORT`.
 
-| Name | Kind | Purpose |
+## What to configure, and where
+
+### GitHub → Settings → Environments → `staging` and `production`
+
+Each GitHub environment gets its own copy, so staging and production can point at
+different Dokploy targets / tokens.
+
+| Name | Kind | Value / purpose |
 | --- | --- | --- |
-| `DOKPLOY_API_URL` | secret | Base URL of the Dokploy API (e.g. `https://panel.example.com/api`). |
-| `DOKPLOY_API_TOKEN` | secret | Dokploy **admin** API key (`x-api-key`) — must be able to create projects/environments/composes/domains, not just deploy. |
-| `CLOUDFLARE_API_TOKEN` | secret | Cloudflare token with **Zone → DNS → Edit** and **Zone → Read** on the `lychen.org` zone. Omit to skip DNS management. |
-| `DOKPLOY_SERVER_IPV4` | variable | Public IPv4 of the Dokploy server; the A-record target. |
+| `DOKPLOY_API_URL` | secret | Dokploy API base URL, e.g. `https://panel.example.com/api`. |
+| `DOKPLOY_API_TOKEN` | secret | Dokploy **admin** API key (`x-api-key`) — must create projects/environments/composes/domains, not just deploy. |
+| `CLOUDFLARE_API_TOKEN` | secret | Cloudflare token with **Zone → DNS → Edit** + **Zone → Read** on the `lychen.org` zone. Omit to skip DNS management. |
+| `DOKPLOY_SERVER_IPV4` | variable | Public IPv4 of the Dokploy server (the A-record target). |
 
-Optional overrides (env vars on the provision step, rarely needed):
+Optional overrides (env vars, rarely needed):
 
 - `CLOUDFLARE_ZONE_NAME` — force the Cloudflare zone instead of deriving the last two labels of the host.
-- `CLOUDFLARE_PROXIED` — `true` to create proxied (orange-cloud) records. Default `false`; proxied records break Let's Encrypt HTTP-01, so only use with Cloudflare origin certs.
+- `CLOUDFLARE_PROXIED` — `true` for proxied (orange-cloud) records. Default `false`; proxied records break Let's Encrypt HTTP-01 unless you use Cloudflare origin certs.
 
-## Per-project metadata (`moon.yml`)
+The old per-project `<PROJECT>_DOKPLOY_ID` secrets are **no longer used** and can be deleted.
 
-Each `dokploy`-tagged project declares, in its `env:` block:
+### Per project — `moon.yml` `env:` block
 
-- `DOKPLOY_PROJECT` — the Dokploy project / domain group (e.g. `tera`).
-- `DOMAIN_SERVICE` — the compose service the domain routes to (`<id>` for APIs, `app` for the nginx frontends).
-- `DOMAIN_PORT` — container port, optional (defaults to `80`).
-- `STAGING_DOMAIN` / `PRODUCTION_DOMAIN` — the public host per environment, optional.
+| Key | Purpose |
+| --- | --- |
+| `DOKPLOY_PROJECT` | Dokploy project / domain group (e.g. `tera`). |
+| `DOMAIN_SERVICE` | Compose service the domain routes to (`api` for the APIs, `app` for the nginx frontends). Must match a service in the compose file. |
+| `DOMAIN_PORT` | Container port, optional (defaults to `80`). |
+| `STAGING_DOMAIN` / `PRODUCTION_DOMAIN` | Public host per environment, optional. |
 
-Current deploy set:
+### Per project — compose files (you own these)
+
+`compose.staging.yml` and `compose.production.yml` describe the full stack per
+environment. The service named in `DOMAIN_SERVICE` must exist and listen on
+`DOMAIN_PORT`. Until they exist, the pipeline falls back to `compose.yml`.
+
+## Current deploy set
 
 | moon project | Dokploy project | compose | service | domains |
 | --- | --- | --- | --- | --- |
-| `tera-api` | `tera` | `tera-api` | `tera-api` | ✅ staging + production |
-| `espace-api` | `espace` | `espace-api` | `espace-api` | ✅ staging + production |
-| `flora-api` | `flora` | `flora-api` | `flora-api` | ✅ staging + production |
+| `tera-api` | `tera` | `tera-api` | `api` | ✅ staging + production |
+| `espace-api` | `espace` | `espace-api` | `api` | ✅ staging + production |
+| `flora-api` | `flora` | `flora-api` | `api` | ✅ staging + production |
 | `espace-app` | `espace` | `espace-app` | `app` | ⚠️ none yet |
 | `espace-website` | `espace` | `espace-website` | `app` | ⚠️ none yet |
 | `website` | `website` | `website` | `app` | ⚠️ none yet |
 
 > ⚠️ The three frontends are provisioned (project + environment + compose) but
 > **no domain or DNS record is created** until `STAGING_DOMAIN` / `PRODUCTION_DOMAIN`
-> are added to their `moon.yml`. Add them to enable automatic domain + DNS.
+> are added to their `moon.yml`.
 
-## Bootstrapping / running provisioning by hand
+## Bootstrapping / running by hand
 
-To create the Dokploy structure for one project without deploying:
+Each side can be run independently for one project + environment:
 
 ```bash
-DOKPLOY_API_URL=https://panel.example.com/api \
-DOKPLOY_API_TOKEN=*** \
+# DNS only
 DOKPLOY_ENVIRONMENT=staging \
 CLOUDFLARE_API_TOKEN=*** \
 DOKPLOY_SERVER_IPV4=203.0.113.10 \
-moon run tera-api:dokploy-provision
+moon run espace-api:cloudflare-provision
+
+# Dokploy structure + domain only
+DOKPLOY_API_URL=https://panel.example.com/api \
+DOKPLOY_API_TOKEN=*** \
+DOKPLOY_ENVIRONMENT=staging \
+moon run espace-api:dokploy-provision
 ```
 
-It is safe to re-run: existing resources are reused, the DNS record is reconciled.
+Both are safe to re-run: existing resources are reused and reconciled.
 
 ## Migrating existing services
 

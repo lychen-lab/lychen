@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Idempotent provisioning of a Dokploy compose service + its public domain + DNS.
+# Idempotent provisioning of a Dokploy compose service + its public domain.
 #
 # Given a moon project, this ensures the following exist on the Dokploy server
 # (creating whatever is missing) and resolves the compose id used by the deploy:
@@ -14,10 +14,9 @@
 # The resolved compose id is written to $COMPOSE_ID_FILE for the subsequent
 # dokploy-compose-update / dokploy-compose-deploy tasks to consume.
 #
-# When a domain is configured for the environment it is attached to the compose
-# (Traefik route) and a DNS-only A record is upserted in Cloudflare pointing at
-# the Dokploy server. Both steps are skipped gracefully when their inputs are
-# absent, so projects without a domain yet still get their structure created.
+# This script only talks to the Dokploy API. DNS records are handled separately
+# by cloudflare-provision.sh. When no domain is configured for the environment
+# the domain step is skipped, so the structure is still created.
 #
 set -euo pipefail
 
@@ -132,8 +131,8 @@ printf '%s' "$compose_id" > "$COMPOSE_ID_FILE"
 
 # --- 4. Ensure the domain (optional) ----------------------------------------
 if [ -z "$DOMAIN" ]; then
-  echo "> No domain configured for $DOKPLOY_ENVIRONMENT (set STAGING_DOMAIN/PRODUCTION_DOMAIN to enable) - skipping domain + DNS"
-  echo "> Provisioning complete"
+  echo "> No domain configured for $DOKPLOY_ENVIRONMENT (set STAGING_DOMAIN/PRODUCTION_DOMAIN to enable) - skipping domain"
+  echo "> Dokploy provisioning complete"
   exit 0
 fi
 
@@ -157,59 +156,4 @@ else
         '{host: $host, composeId: $composeId, serviceName: $serviceName, port: $port, domainType: "compose", https: true, certificateType: "letsencrypt"}')" >/dev/null
 fi
 
-# --- 5. Upsert the Cloudflare DNS record (optional) --------------------------
-if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
-  echo "> CLOUDFLARE_API_TOKEN not set - skipping DNS record for $DOMAIN"
-  echo "> Provisioning complete"
-  exit 0
-fi
-: "${DOKPLOY_SERVER_IPV4:?DOKPLOY_SERVER_IPV4 is required to create DNS records}"
-
-CF_API="https://api.cloudflare.com/client/v4"
-CLOUDFLARE_PROXIED="${CLOUDFLARE_PROXIED:-false}"
-# Registrable zone = last two labels of the host (e.g. lychen.org), overridable.
-zone_name="${CLOUDFLARE_ZONE_NAME:-$(printf '%s' "$DOMAIN" | awk -F. '{print $(NF-1)"."$NF}')}"
-
-# cloudflare_api <GET|POST|PUT> <path> [json-body]
-cloudflare_api() {
-  local method="$1" path="$2" body="${3:-}"
-  local curl_args=(
-    -sS -X "$method" "${CF_API}${path}"
-    -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
-    -H "Content-Type: application/json"
-    -w $'\n%{http_code}'
-  )
-  if [ -n "$body" ]; then curl_args+=(-d "$body"); fi
-
-  local response http_code payload
-  response="$(curl "${curl_args[@]}")" || { echo "Error: curl failed for Cloudflare $method $path" >&2; return 1; }
-  http_code="$(printf '%s' "$response" | tail -n1)"
-  payload="$(printf '%s' "$response" | sed '$d')"
-  if [ "$http_code" -ge 400 ] || [ "$(printf '%s' "$payload" | jq -r '.success')" != "true" ]; then
-    echo "Error: Cloudflare API $method $path -> HTTP $http_code" >&2
-    echo "       $payload" >&2
-    return 1
-  fi
-  printf '%s' "$payload"
-}
-
-echo "> Upserting Cloudflare A record '$DOMAIN' -> $DOKPLOY_SERVER_IPV4 (zone: $zone_name, proxied: $CLOUDFLARE_PROXIED)"
-zone_id="$(cloudflare_api GET "/zones?name=${zone_name}" | jq -r '.result[0].id // empty')"
-[ -n "$zone_id" ] || { echo "Error: Cloudflare zone '$zone_name' not found (check token zone scope)" >&2; exit 1; }
-
-record_id="$(cloudflare_api GET "/zones/${zone_id}/dns_records?type=A&name=${DOMAIN}" | jq -r '.result[0].id // empty')"
-record_body="$(jq -nc \
-  --arg name "$DOMAIN" \
-  --arg content "$DOKPLOY_SERVER_IPV4" \
-  --argjson proxied "$CLOUDFLARE_PROXIED" \
-  '{type: "A", name: $name, content: $content, ttl: 1, proxied: $proxied}')"
-
-if [ -n "$record_id" ]; then
-  echo "  - updating existing record"
-  cloudflare_api PUT "/zones/${zone_id}/dns_records/${record_id}" "$record_body" >/dev/null
-else
-  echo "  - creating record"
-  cloudflare_api POST "/zones/${zone_id}/dns_records" "$record_body" >/dev/null
-fi
-
-echo "> Provisioning complete"
+echo "> Dokploy provisioning complete"

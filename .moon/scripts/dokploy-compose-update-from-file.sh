@@ -13,6 +13,24 @@ if [ -z "$DOKPLOY_COMPOSE_ID" ]; then
   exit 1
 fi
 
+# Prefer the environment-specific compose file. The APIs ship compose.staging.yml
+# and compose.prod.yml (compose.production.yml is also accepted); anything else
+# falls back to COMPOSE_FILE (compose.yml), e.g. the template-generated frontends.
+PROJECT_ROOT="${MOON_PROJECT_ROOT:-$PWD}"
+case "${DOKPLOY_ENVIRONMENT:-}" in
+  production) envCandidates=("compose.prod.yml" "compose.production.yml") ;;
+  staging) envCandidates=("compose.staging.yml") ;;
+  *) envCandidates=() ;;
+esac
+if [ "${#envCandidates[@]}" -gt 0 ]; then
+  for candidate in "${envCandidates[@]}"; do
+    if [ -f "${PROJECT_ROOT}/${candidate}" ]; then
+      COMPOSE_FILE="${PROJECT_ROOT}/${candidate}"
+      break
+    fi
+  done
+fi
+
 echo "> Get content from $COMPOSE_FILE"
 if [ ! -f "$COMPOSE_FILE" ]; then
   echo "Error: Compose file not found: $COMPOSE_FILE" >&2

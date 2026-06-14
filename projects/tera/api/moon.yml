@@ -6,7 +6,7 @@ dependsOn:
 env:
   DEV_DOMAIN: api.tera.lychen.local
   DOKPLOY_PROJECT: tera
-  DOMAIN_SERVICE: tera-api
+  DOMAIN_SERVICE: api
   PRODUCTION_DOCKER_IMAGE: lychen/production/tera/api
   PRODUCTION_DOMAIN: api.tera.lychen.org
   STAGING_DOMAIN: staging.api.tera.lychen.org

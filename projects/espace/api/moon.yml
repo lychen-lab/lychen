@@ -5,7 +5,7 @@ dependsOn:
 env:
   DEV_DOMAIN: api.espace.lychen.local
   DOKPLOY_PROJECT: espace
-  DOMAIN_SERVICE: espace-api
+  DOMAIN_SERVICE: api
   PRODUCTION_DOCKER_IMAGE: lychen/production/espace/api
   PRODUCTION_DOMAIN: api.espace.lychen.org
   STAGING_DOMAIN: staging.api.espace.lychen.org
