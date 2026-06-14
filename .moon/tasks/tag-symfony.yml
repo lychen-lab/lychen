@@ -48,11 +48,11 @@ tasks:
     command: docker compose -p $project run --rm api bin/console do:fi:lo -n
   production-docker-build:
     env:
-      DOCKER_IMAGE_NAME: ghcr.io/lychen-lab/${PRODUCTION_DOCKER_IMAGE}
+      DOCKER_IMAGE_NAME: ghcr.io/lychen-lab/$project
     extends: docker-build
   production-docker-push:
     args:
-    - ghcr.io/lychen-lab/${PRODUCTION_DOCKER_IMAGE}
+    - ghcr.io/lychen-lab/$project
     deps:
     - production-docker-build
     extends: docker-push

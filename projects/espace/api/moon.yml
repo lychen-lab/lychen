@@ -2,9 +2,6 @@ dependsOn:
   - lychen-php-core
   - lychen-php-model
   - lychen-php-zitadel
-env:
-  DEV_DOMAIN: api.espace.lychen.local
-  PRODUCTION_DOCKER_IMAGE: lychen/production/espace/api
 id: espace-api
 language: php
 layer: application
