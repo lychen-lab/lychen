@@ -75,6 +75,10 @@ jobs:
           DOKPLOY_API_TOKEN: ${{ secrets.DOKPLOY_API_TOKEN }}
           DOKPLOY_API_URL: ${{ secrets.DOKPLOY_API_URL }}
           DOKPLOY_SECRETS: ${{ toJSON(secrets) }}
+          # The image tag built by "Build and push images" for this commit.
+          # The deploy script writes it into the Dokploy compose env (IMAGE_TAG)
+          # so compose.yml pins `image: …:${IMAGE_TAG}` to this exact build.
+          IMAGE_TAG: ${{ github.event.workflow_run.head_sha || github.sha }}
         run: |
           PROJECT_ID_UPPERCASE=$(echo "${{ matrix.projects }}" | tr '[:lower:]-' '[:upper:]_')
           SECRET_NAME="${PROJECT_ID_UPPERCASE}_DOKPLOY_ID"
@@ -106,6 +110,10 @@ jobs:
           DOKPLOY_API_TOKEN: ${{ secrets.DOKPLOY_API_TOKEN }}
           DOKPLOY_API_URL: ${{ secrets.DOKPLOY_API_URL }}
           DOKPLOY_SECRETS: ${{ toJSON(secrets) }}
+          # The image tag built by "Build and push images" for this commit.
+          # The deploy script writes it into the Dokploy compose env (IMAGE_TAG)
+          # so compose.yml pins `image: …:${IMAGE_TAG}` to this exact build.
+          IMAGE_TAG: ${{ github.event.workflow_run.head_sha || github.sha }}
         run: |
           PROJECT_ID_UPPERCASE=$(echo "${{ matrix.projects }}" | tr '[:lower:]-' '[:upper:]_')
           SECRET_NAME="${PROJECT_ID_UPPERCASE}_DOKPLOY_ID"
