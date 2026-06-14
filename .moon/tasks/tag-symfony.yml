@@ -33,7 +33,7 @@ tasks:
     deps:
       - common-mailpit:up
   docker-buildx:
-    command: docker buildx build $projectRoot --cache-from ghcr.io/lychen-lab/$project:latest --platform linux/arm64,linux/amd64 --target frankenphp_prod -t ghcr.io/lychen-lab/$project:latest --push
+    command: docker buildx build $projectRoot --cache-from ghcr.io/lychen-lab/$project:latest --platform linux/arm64,linux/amd64 --target frankenphp_prod -t ghcr.io/lychen-lab/$project:latest -t ghcr.io/lychen-lab/$project:${GITHUB_SHA} --push
     deps:
       - ci-copy-packages
     options:

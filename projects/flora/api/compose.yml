@@ -29,7 +29,7 @@ services:
       SERVER_NAME: ${SERVER_NAME:-localhost}, php:80
       TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-example\.com|localhost}|php$$}
       TRUSTED_PROXIES: ${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
-    image: ${IMAGES_PREFIX:-}flora-api
+    image: ${IMAGES_PREFIX:-}flora-api:${IMAGE_TAG:-latest}
     restart: unless-stopped
     volumes:
       - caddy_data:/data
