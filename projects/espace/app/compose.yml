@@ -1,6 +1,6 @@
 services:
   app:
     env_file: .env
-    image: ghcr.io/lychen-lab/lychen/espace-app:latest
+    image: ghcr.io/lychen-lab/lychen/espace-app:${IMAGE_TAG:-latest}
     pull_policy: always
     restart: unless-stopped
