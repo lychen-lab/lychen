@@ -34,6 +34,14 @@ services:
     networks:
       - lychen-network
 
+  flora-redis:
+    networks:
+      - lychen-network
+
+  flora-rabbitmq:
+    networks:
+      - lychen-network
+
 networks:
   lychen-network:
     external: true

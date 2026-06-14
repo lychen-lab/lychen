@@ -1612,8 +1612,34 @@ export interface components {
              */
             readonly land?: string;
         };
-        LandApiKey: Record<string, never>;
-        "LandApiKey.jsonld": components["schemas"]["HydraItemBaseSchema"] & Record<string, never>;
+        LandApiKey: {
+            permissions?: (string | null)[] | null;
+            name?: string;
+            /**
+             * Format: iri-reference
+             * @example https://example.com/
+             */
+            land?: string;
+            readonly token?: string | null;
+            /** Format: date-time */
+            readonly expirationDate?: string | null;
+            /** Format: ulid */
+            ulid?: string | null;
+        };
+        "LandApiKey.jsonld": components["schemas"]["HydraItemBaseSchema"] & {
+            permissions?: (string | null)[] | null;
+            name?: string;
+            /**
+             * Format: iri-reference
+             * @example https://example.com/
+             */
+            land?: string;
+            readonly token?: string | null;
+            /** Format: date-time */
+            readonly expirationDate?: string | null;
+            /** Format: ulid */
+            ulid?: string | null;
+        };
         LandArea: {
             name: string;
             /**
@@ -2976,8 +3002,24 @@ export interface components {
             familyName?: string | null;
             readonly userIdentifier?: string;
         };
-        PersonApiKey: Record<string, never>;
-        "PersonApiKey.jsonld": components["schemas"]["HydraItemBaseSchema"] & Record<string, never>;
+        PersonApiKey: {
+            permissions?: (string | null)[] | null;
+            name?: string;
+            readonly token?: string | null;
+            /** Format: date-time */
+            readonly expirationDate?: string | null;
+            /** Format: ulid */
+            ulid?: string | null;
+        };
+        "PersonApiKey.jsonld": components["schemas"]["HydraItemBaseSchema"] & {
+            permissions?: (string | null)[] | null;
+            name?: string;
+            readonly token?: string | null;
+            /** Format: date-time */
+            readonly expirationDate?: string | null;
+            /** Format: ulid */
+            ulid?: string | null;
+        };
         SeedStock: {
             name?: string;
             person?: components["schemas"]["Person"];

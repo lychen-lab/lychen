@@ -30,8 +30,6 @@ tasks:
     command: docker compose up -d
     deps:
     - common-mailpit:up
-    - common-rabbitmq:up
-    - common-redis:up
   docker-build:
     command: docker buildx build $projectRoot --cache-from ${DOCKER_IMAGE_NAME}:latest --platform linux/arm64,linux/amd64 --target frankenphp_prod -t ${DOCKER_IMAGE_NAME}:latest --push
     deps:
