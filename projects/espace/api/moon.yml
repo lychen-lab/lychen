@@ -5,6 +5,7 @@ dependsOn:
 id: espace-api
 language: php
 layer: application
+stack: backend
 tags:
   - symfony
   - dokploy
