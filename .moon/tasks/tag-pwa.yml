@@ -4,8 +4,8 @@ tasks:
     command: yarn build
     deps:
     - args:
-      - $projectRoot/.nginx-build
-      target: nginx-configs:sync-pwa
+      - $projectRoot/.caddy-build
+      target: caddy-configs:sync-pwa
     inputs:
     - .env*
     - index.html
