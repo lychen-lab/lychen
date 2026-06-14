@@ -1,3 +1,0 @@
-name: MAIN DATABASE - Doctrine Migrations
-migrations_directory: '../../../migrations'
-migrations_namespace: App\Migrations
