@@ -19641,7 +19641,41 @@
                 ]
             },
             "LandApiKey": {
-                "type": "object"
+                "type": "object",
+                "properties": {
+                    "permissions": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "nullable": true
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "land": {
+                        "type": "string",
+                        "format": "iri-reference",
+                        "example": "https://example.com/"
+                    },
+                    "token": {
+                        "readOnly": true,
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "expirationDate": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "ulid": {
+                        "type": "string",
+                        "format": "ulid",
+                        "nullable": true
+                    }
+                }
             },
             "LandApiKey.jsonld": {
                 "allOf": [
@@ -19649,7 +19683,41 @@
                         "$ref": "#/components/schemas/HydraItemBaseSchema"
                     },
                     {
-                        "type": "object"
+                        "type": "object",
+                        "properties": {
+                            "permissions": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "nullable": true
+                                },
+                                "nullable": true
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "land": {
+                                "type": "string",
+                                "format": "iri-reference",
+                                "example": "https://example.com/"
+                            },
+                            "token": {
+                                "readOnly": true,
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "expirationDate": {
+                                "readOnly": true,
+                                "type": "string",
+                                "format": "date-time",
+                                "nullable": true
+                            },
+                            "ulid": {
+                                "type": "string",
+                                "format": "ulid",
+                                "nullable": true
+                            }
+                        }
                     }
                 ]
             },
@@ -22783,7 +22851,36 @@
                 }
             },
             "PersonApiKey": {
-                "type": "object"
+                "type": "object",
+                "properties": {
+                    "permissions": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "nullable": true
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "token": {
+                        "readOnly": true,
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "expirationDate": {
+                        "readOnly": true,
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "ulid": {
+                        "type": "string",
+                        "format": "ulid",
+                        "nullable": true
+                    }
+                }
             },
             "PersonApiKey.jsonld": {
                 "allOf": [
@@ -22791,7 +22888,36 @@
                         "$ref": "#/components/schemas/HydraItemBaseSchema"
                     },
                     {
-                        "type": "object"
+                        "type": "object",
+                        "properties": {
+                            "permissions": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "nullable": true
+                                },
+                                "nullable": true
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "token": {
+                                "readOnly": true,
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "expirationDate": {
+                                "readOnly": true,
+                                "type": "string",
+                                "format": "date-time",
+                                "nullable": true
+                            },
+                            "ulid": {
+                                "type": "string",
+                                "format": "ulid",
+                                "nullable": true
+                            }
+                        }
                     }
                 ]
             },

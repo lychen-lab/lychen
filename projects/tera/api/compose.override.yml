@@ -34,6 +34,14 @@ services:
     networks:
       - lychen-network
 
+  tera-redis:
+    networks:
+      - lychen-network
+
+  tera-rabbitmq:
+    networks:
+      - lychen-network
+
 networks:
   lychen-network:
     external: true
