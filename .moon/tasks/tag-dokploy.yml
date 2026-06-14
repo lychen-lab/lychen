@@ -1,18 +1,8 @@
 $schema: https://moonrepo.dev/schemas/tasks.json
+inheritedBy:
+  tag: dokploy
 tasks:
   dokploy-compose-deploy:
     command: bash $workspaceRoot/.moon/scripts/dokploy-compose-deploy.sh
-    deps:
-    - dokploy-compose-update
     options:
       inferInputs: false
-  dokploy-compose-update:
-    deps:
-    - get-dockerfiles
-    env:
-      COMPOSE_FILE: $projectRoot/compose.yml
-    options:
-      cache: false
-    script: bash $workspaceRoot/.moon/scripts/dokploy-compose-update-from-file.sh
-inheritedBy:
-  tag: dokploy
