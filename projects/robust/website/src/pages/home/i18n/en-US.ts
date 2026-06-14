@@ -66,7 +66,7 @@ export default {
     description:
       'Whether you are an individual, an association, a business, or a local authority, Robust adapts to all to build a strong and fulfilling local future together.',
     citizen: 'Citizens',
-    association: 'Associations',
+    associations: 'Associations',
     companies: 'Businesses',
     cities: 'Communities',
   },

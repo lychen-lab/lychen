@@ -7,6 +7,9 @@ export default {
     permissions: {
       label: 'Permissions',
     },
+    land_members: {
+      default: 'no member | {count} member | {count} members',
+    },
   },
   action: {
     create: {
