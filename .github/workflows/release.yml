@@ -19,6 +19,9 @@ jobs:
   release-please:
     name: 'Release Please'
     runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
       # Mint a short-lived (~1h) installation token from the org-owned GitHub App.
       # Authoring the release PR with an App token (instead of GITHUB_TOKEN) means
@@ -35,7 +38,44 @@ jobs:
       # Merging it bumps version.txt + .release-please-manifest.json,
       # updates CHANGELOG.md, and creates the `vX.Y.Z` git tag + GitHub Release.
       - uses: 'googleapis/release-please-action@v4'
+        id: release
         with:
           token: ${{ steps.app-token.outputs.token }}
           config-file: 'release-please-config.json'
           manifest-file: '.release-please-manifest.json'
+
+  # When a release is cut, copy each dokploy project's current :latest image to
+  # the release version tag (and :stable) — registry-side, no rebuild, no layer
+  # transfer. Production is then deployed from these version tags via
+  # deploy-prod.yml (manual, "when you decide").
+  promote-images:
+    name: 'Promote release images'
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: 'actions/checkout@v4'
+        with:
+          fetch-depth: 0
+      - name: Set up Moon Toolchain
+        uses: 'moonrepo/setup-toolchain@v0'
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      # `moon run` (not `moon ci`) forces the task to run for EVERY dokploy
+      # project regardless of affected status — all six get the version tag, so
+      # production can pin a coherent version across the board.
+      - name: 'Promote images to ${{ needs.release-please.outputs.tag_name }}'
+        env:
+          VERSION: ${{ needs.release-please.outputs.tag_name }}
+        run: moon run '#dokploy:image-promote'

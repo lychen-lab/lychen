@@ -11,6 +11,15 @@ tasks:
       IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
     options:
       cache: false
+  image-promote:
+    # Re-tag the current :latest manifest as :${VERSION} (+ :stable), registry-side
+    # (no rebuild, no layer transfer). VERSION is forwarded from the host env, the
+    # same way ${GITHUB_SHA} is in docker-buildx. Run via `moon run` (not `moon ci`).
+    command: docker buildx imagetools create -t ${IMAGE_NAME}:${VERSION} -t ${IMAGE_NAME}:stable ${IMAGE_NAME}:latest
+    env:
+      IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
+    options:
+      cache: false
   docker-test-build:
     command: docker build $projectRoot --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${IMAGE_NAME}:latest
     deps:

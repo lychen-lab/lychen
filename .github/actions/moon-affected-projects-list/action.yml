@@ -13,6 +13,10 @@ inputs:
   tags:
     description: 'Targeted tags' # e.g. 'docker'
     required: false
+  affected:
+    description: 'Only affected projects (true, default) or all matching projects (false)'
+    required: false
+    default: 'true'
 outputs:
   projects: 
     description: "Projects list"
@@ -24,7 +28,10 @@ runs:
       shell: bash
       id: list
       run: |
-        ARGS="--affected --downstream deep"
+        ARGS=""
+        if [[ "${{ inputs.affected }}" != "false" ]]; then
+          ARGS="--affected --downstream deep"
+        fi
         if [[ -n "${{ inputs.layer }}" ]]; then
           ARGS="$ARGS --layer ${{ inputs.layer }}"
         fi
