@@ -1,4 +1,6 @@
 $schema: https://moonrepo.dev/schemas/tasks.json
+inheritedBy:
+  tag: docker
 tasks:
   docker-buildx:
     command: docker buildx build $projectRoot --platform linux/arm64,linux/amd64 --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${IMAGE_NAME}:latest --tag ${IMAGE_NAME}:${GITHUB_SHA} --tag ${IMAGE_NAME}:latest --push
@@ -21,6 +23,4 @@ tasks:
   get-dockerfiles:
     options:
       cache: false
-    script: cp -R $workspaceRoot/libs/docker/frontend/* . && sed -i.bak "s/__PROJECT__/$project/g" compose.yml && rm compose.yml.bak
-inheritedBy:
-  tag: docker
+    script: cp -R $workspaceRoot/libs/docker/frontend/* .

@@ -1,6 +1,6 @@
 services:
   app:
     env_file: .env
-    image: ghcr.io/lychen-lab/lychen/__PROJECT__:latest
+    image: ghcr.io/lychen-lab/lychen/website:latest
     pull_policy: always
     restart: unless-stopped
