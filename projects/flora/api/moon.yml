@@ -2,9 +2,6 @@ dependsOn:
   - lychen-php-core
   - lychen-php-model
   - lychen-php-zitadel
-env:
-  DEV_DOMAIN: api.flora.lychen.local
-  PRODUCTION_DOCKER_IMAGE: lychen/production/flora/api
 id: flora-api
 language: php
 layer: application

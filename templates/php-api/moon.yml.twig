@@ -3,14 +3,6 @@ dependsOn:
   - lychen-php-model
   - lychen-php-zitadel
 
-env:
-  DEV_DOMAIN: api.{{ name }}.lychen.local
-  PRODUCTION_DOCKER_IMAGE: lychen/production/{{ name }}/api
-  PRODUCTION_DOKPLOY_COMPOSE_ID: ''
-  PRODUCTION_DOMAIN: api.{{ name }}.lychen.org
-  STAGING_DOKPLOY_COMPOSE_ID: ''
-  STAGING_DOMAIN: staging.api.{{ name }}.lychen.org
-
 id: {{ name }}-api
 
 language: php
