@@ -1,0 +1,35 @@
+name: 'Release'
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    name: 'Release Please'
+    runs-on: ubuntu-latest
+    steps:
+      # Maintains a single rolling "release PR" for the whole monorepo.
+      # Merging it bumps version.txt + .release-please-manifest.json,
+      # updates CHANGELOG.md, and creates the `vX.Y.Z` git tag + GitHub Release.
+      #
+      # NOTE: GITHUB_TOKEN is sufficient today because deploys trigger on push
+      # to main (the release-PR merge), not on the tag. If a later phase adds
+      # tag-triggered workflows (e.g. prod promotion), swap this for a PAT/app
+      # token so the tag event can trigger them.
+      - uses: 'googleapis/release-please-action@v4'
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: 'release-please-config.json'
+          manifest-file: '.release-please-manifest.json'
