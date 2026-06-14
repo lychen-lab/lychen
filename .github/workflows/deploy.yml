@@ -6,7 +6,7 @@ env:
 on:
   workflow_dispatch: {}
   workflow_run:
-    workflows: 
+    workflows:
       - Build and push images
     types:
       - completed
@@ -16,7 +16,7 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-  
+
 jobs:
   on-failure:
     runs-on: ubuntu-latest
@@ -50,7 +50,7 @@ jobs:
           # Fetch environments and extract names into a JSON array
           ENVS=$(gh api repos/${{ github.repository }}/environments --jq '[.environments[].name]')
           echo "environments=$ENVS" >> $GITHUB_OUTPUT
-  
+
   deploy-staging:
     if: ${{ needs.define-matrix.outputs.projects != '[]' && needs.define-matrix.outputs.projects != '' && contains(fromJSON(needs.define-matrix.outputs.environments), 'staging') }}
     name: 'Deployment to staging'
@@ -70,16 +70,17 @@ jobs:
         uses: 'moonrepo/setup-toolchain@v0'
       - name: Enable Corepack
         run: corepack enable
-      - name: 'Deploy'
+      - name: 'Provision & deploy'
+        # dokploy-compose-deploy depends on dokploy-provision, which ensures the
+        # Dokploy project/environment/compose exist (resolved by name), attaches
+        # the domain and upserts the Cloudflare DNS record before deploying.
         env:
           DOKPLOY_API_TOKEN: ${{ secrets.DOKPLOY_API_TOKEN }}
           DOKPLOY_API_URL: ${{ secrets.DOKPLOY_API_URL }}
-          DOKPLOY_SECRETS: ${{ toJSON(secrets) }}
-        run: |
-          PROJECT_ID_UPPERCASE=$(echo "${{ matrix.projects }}" | tr '[:lower:]-' '[:upper:]_')
-          SECRET_NAME="${PROJECT_ID_UPPERCASE}_DOKPLOY_ID"
-          export DOKPLOY_COMPOSE_ID=$(echo "$DOKPLOY_SECRETS" | jq -r --arg key "$SECRET_NAME" '.[$key]')
-          moon ci ${{ matrix.projects }}:dokploy-compose-deploy
+          DOKPLOY_ENVIRONMENT: staging
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          DOKPLOY_SERVER_IPV4: ${{ vars.DOKPLOY_SERVER_IPV4 }}
+        run: moon ci ${{ matrix.projects }}:dokploy-compose-deploy
 
   deploy-production:
     if: ${{ needs.define-matrix.outputs.projects != '[]' && needs.define-matrix.outputs.projects != '' && contains(fromJSON(needs.define-matrix.outputs.environments), 'production') }}
@@ -101,13 +102,14 @@ jobs:
         uses: 'moonrepo/setup-toolchain@v0'
       - name: Enable Corepack
         run: corepack enable
-      - name: 'Deploy'
+      - name: 'Provision & deploy'
+        # dokploy-compose-deploy depends on dokploy-provision, which ensures the
+        # Dokploy project/environment/compose exist (resolved by name), attaches
+        # the domain and upserts the Cloudflare DNS record before deploying.
         env:
           DOKPLOY_API_TOKEN: ${{ secrets.DOKPLOY_API_TOKEN }}
           DOKPLOY_API_URL: ${{ secrets.DOKPLOY_API_URL }}
-          DOKPLOY_SECRETS: ${{ toJSON(secrets) }}
-        run: |
-          PROJECT_ID_UPPERCASE=$(echo "${{ matrix.projects }}" | tr '[:lower:]-' '[:upper:]_')
-          SECRET_NAME="${PROJECT_ID_UPPERCASE}_DOKPLOY_ID"
-          export DOKPLOY_COMPOSE_ID=$(echo "$DOKPLOY_SECRETS" | jq -r --arg key "$SECRET_NAME" '.[$key]')
-          moon ci ${{ matrix.projects }}:dokploy-compose-deploy
+          DOKPLOY_ENVIRONMENT: production
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          DOKPLOY_SERVER_IPV4: ${{ vars.DOKPLOY_SERVER_IPV4 }}
+        run: moon ci ${{ matrix.projects }}:dokploy-compose-deploy

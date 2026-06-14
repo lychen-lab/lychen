@@ -78,6 +78,9 @@ projects/**/public/*
 
 # Env files
 projects/**/*.local
+
+# Dokploy compose id resolved by dokploy-provision (CI hand-off, never committed)
+.dokploy-compose-id
 ###< Project ###
 
 ###> System files ###

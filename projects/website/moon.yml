@@ -15,6 +15,9 @@ dependsOn:
   - vue-router-configs
   - vue-sustainable-development-goals
   - vue-unhead-composables
+env:
+  DOKPLOY_PROJECT: website
+  DOMAIN_SERVICE: app
 id: website
 language: typescript
 layer: application

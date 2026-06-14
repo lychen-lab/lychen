@@ -4,10 +4,10 @@ dependsOn:
 - lychen-php-zitadel
 env:
   DEV_DOMAIN: api.flora.lychen.local
+  DOKPLOY_PROJECT: flora
+  DOMAIN_SERVICE: flora-api
   PRODUCTION_DOCKER_IMAGE: lychen/production/flora/api
-  PRODUCTION_DOKPLOY_COMPOSE_ID: ''
   PRODUCTION_DOMAIN: api.flora.lychen.org
-  STAGING_DOKPLOY_COMPOSE_ID: ''
   STAGING_DOMAIN: staging.api.flora.lychen.org
 id: flora-api
 language: php

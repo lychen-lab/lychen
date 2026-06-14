@@ -1,16 +1,27 @@
 $schema: https://moonrepo.dev/schemas/tasks.json
 tasks:
+  dokploy-provision:
+    env:
+      COMPOSE_ID_FILE: $projectRoot/.dokploy-compose-id
+    options:
+      cache: false
+      inferInputs: false
+    script: bash $workspaceRoot/.moon/scripts/dokploy-provision.sh
   dokploy-compose-deploy:
     command: bash $workspaceRoot/.moon/scripts/dokploy-compose-deploy.sh
     deps:
     - dokploy-compose-update
+    env:
+      COMPOSE_ID_FILE: $projectRoot/.dokploy-compose-id
     options:
       inferInputs: false
   dokploy-compose-update:
     deps:
     - get-dockerfiles
+    - dokploy-provision
     env:
       COMPOSE_FILE: $projectRoot/compose.yml
+      COMPOSE_ID_FILE: $projectRoot/.dokploy-compose-id
     options:
       cache: false
     script: bash $workspaceRoot/.moon/scripts/dokploy-compose-update-from-file.sh

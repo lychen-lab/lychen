@@ -2,38 +2,45 @@
 
 set -euo pipefail
 
+# The compose id is provided either directly (DOKPLOY_COMPOSE_ID) or, when the
+# service was resolved/created by dokploy-provision, via COMPOSE_ID_FILE.
+DOKPLOY_COMPOSE_ID="${DOKPLOY_COMPOSE_ID:-}"
+if [ -z "$DOKPLOY_COMPOSE_ID" ] && [ -n "${COMPOSE_ID_FILE:-}" ] && [ -f "$COMPOSE_ID_FILE" ]; then
+  DOKPLOY_COMPOSE_ID="$(cat "$COMPOSE_ID_FILE")"
+fi
+if [ -z "$DOKPLOY_COMPOSE_ID" ]; then
+  echo "Error: DOKPLOY_COMPOSE_ID is empty and no id found at ${COMPOSE_ID_FILE:-<unset>}" >&2
+  exit 1
+fi
+
 echo "> Get content from $COMPOSE_FILE"
 if [ ! -f "$COMPOSE_FILE" ]; then
   echo "Error: Compose file not found: $COMPOSE_FILE" >&2
   exit 1
 fi
 
-composeContent=$(<$COMPOSE_FILE)
+composeContent=$(<"$COMPOSE_FILE")
 if [ -z "$composeContent" ]; then
   echo "Error: Compose file is empty: $COMPOSE_FILE" >&2
   exit 1
 fi
 
-escapedComposeContent=$(jq -Rs . <<< "$composeContent")
-if [ $? -ne 0 ]; then
-  echo "Error: Failed to escape compose content with jq" >&2
-  exit 1
-fi
+# sourceType "raw" tells Dokploy to deploy from this inline file. A compose
+# created through the API defaults to sourceType "github", so we must set it
+# explicitly (it is a no-op for composes that are already raw).
+payload=$(jq -nc \
+  --arg composeId "$DOKPLOY_COMPOSE_ID" \
+  --arg composeFile "$composeContent" \
+  '{composeId: $composeId, sourceType: "raw", composeFile: $composeFile}')
 
 echo "> Update through Dokploy API"
-response=$(curl -X POST "${DOKPLOY_API_URL}/compose.update" \
+response=$(curl -sS -X POST "${DOKPLOY_API_URL}/compose.update" \
   -H "Content-Type: application/json" \
   -H "x-api-key: ${DOKPLOY_API_TOKEN}" \
-  -d "{\"composeId\": \"${DOKPLOY_COMPOSE_ID}\", \"composeFile\": $escapedComposeContent}")
+  -d "$payload")
 
-if [ $? -ne 0 ]; then
-  echo "Error: Failed to update compose through Dokploy API" >&2
-  echo "Response: $response" >&2
-  exit 1
-fi
-
-# Check for error in the response body
-if echo "$response" | jq -e '.error'; then
+# Check for an error in the response body
+if echo "$response" | jq -e '.error' >/dev/null 2>&1; then
   echo "Error: Dokploy API returned an error" >&2
   echo "Response: $response" >&2
   exit 1

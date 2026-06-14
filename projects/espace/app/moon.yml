@@ -12,6 +12,8 @@ dependsOn:
   - vue-icons
   - vue-layouts
 env:
+  DOKPLOY_PROJECT: espace
+  DOMAIN_SERVICE: app
   HOST: ${ESPACE_APP_HOST}
 id: espace-app
 language: typescript

@@ -12,6 +12,9 @@ dependsOn:
   - vue-layouts
   - vue-router-configs
   - vue-unhead-composables
+env:
+  DOKPLOY_PROJECT: espace
+  DOMAIN_SERVICE: app
 id: espace-website
 language: typescript
 layer: application

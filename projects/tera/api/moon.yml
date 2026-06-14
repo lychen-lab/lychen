@@ -5,10 +5,10 @@ dependsOn:
 - lychen-php-zitadel
 env:
   DEV_DOMAIN: api.tera.lychen.local
+  DOKPLOY_PROJECT: tera
+  DOMAIN_SERVICE: tera-api
   PRODUCTION_DOCKER_IMAGE: lychen/production/tera/api
-  PRODUCTION_DOKPLOY_COMPOSE_ID: ''
   PRODUCTION_DOMAIN: api.tera.lychen.org
-  STAGING_DOKPLOY_COMPOSE_ID: HZTto2h6QCq5g5lT1exQP
   STAGING_DOMAIN: staging.api.tera.lychen.org
 id: tera-api
 language: php

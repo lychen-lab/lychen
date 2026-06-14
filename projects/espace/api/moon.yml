@@ -3,12 +3,12 @@ dependsOn:
 - lychen-php-model
 - lychen-php-zitadel
 env:
-    DEV_DOMAIN: api.espace.lychen.local
-    PRODUCTION_DOCKER_IMAGE: lychen/production/espace/api
-    PRODUCTION_DOKPLOY_COMPOSE_ID: ''
-    PRODUCTION_DOMAIN: api.espace.lychen.org
-    STAGING_DOKPLOY_COMPOSE_ID: ''
-    STAGING_DOMAIN: staging.api.espace.lychen.org
+  DEV_DOMAIN: api.espace.lychen.local
+  DOKPLOY_PROJECT: espace
+  DOMAIN_SERVICE: espace-api
+  PRODUCTION_DOCKER_IMAGE: lychen/production/espace/api
+  PRODUCTION_DOMAIN: api.espace.lychen.org
+  STAGING_DOMAIN: staging.api.espace.lychen.org
 id: espace-api
 language: php
 layer: application
