@@ -10,26 +10,32 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
+# Write permissions now come from the GitHub App installation token minted
+# below (lychen-release-bot), not from GITHUB_TOKEN, so this stays minimal.
 permissions:
-  contents: write
-  issues: write
-  pull-requests: write
+  contents: read
 
 jobs:
   release-please:
     name: 'Release Please'
     runs-on: ubuntu-latest
     steps:
+      # Mint a short-lived (~1h) installation token from the org-owned GitHub App.
+      # Authoring the release PR with an App token (instead of GITHUB_TOKEN) means
+      # the PR TRIGGERS other workflows (CI runs on the release PR) and does not
+      # depend on the org "Actions can create PRs" policy.
+      # Requires repo secrets RELEASE_APP_CLIENT_ID + RELEASE_APP_PRIVATE_KEY.
+      - uses: 'actions/create-github-app-token@v3'
+        id: app-token
+        with:
+          client-id: ${{ secrets.RELEASE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+
       # Maintains a single rolling "release PR" for the whole monorepo.
       # Merging it bumps version.txt + .release-please-manifest.json,
       # updates CHANGELOG.md, and creates the `vX.Y.Z` git tag + GitHub Release.
-      #
-      # NOTE: GITHUB_TOKEN is sufficient today because deploys trigger on push
-      # to main (the release-PR merge), not on the tag. If a later phase adds
-      # tag-triggered workflows (e.g. prod promotion), swap this for a PAT/app
-      # token so the tag event can trigger them.
       - uses: 'googleapis/release-please-action@v4'
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           config-file: 'release-please-config.json'
           manifest-file: '.release-please-manifest.json'
