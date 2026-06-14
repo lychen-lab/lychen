@@ -35,7 +35,10 @@ case "$DOKPLOY_ENVIRONMENT" in
   *) echo "Error: DOKPLOY_ENVIRONMENT must be 'staging' or 'production', got '$DOKPLOY_ENVIRONMENT'" >&2; exit 1 ;;
 esac
 
-COMPOSE_NAME="$MOON_PROJECT_ID"
+# Compose display name within the environment. Defaults to the moon project id;
+# override per project (DOKPLOY_COMPOSE_NAME) to reuse a compose you already named
+# differently in the Dokploy UI (e.g. "API") instead of creating a new one.
+COMPOSE_NAME="${DOKPLOY_COMPOSE_NAME:-$MOON_PROJECT_ID}"
 
 # GitHub provider config — Dokploy clones the repo at $GIT_BRANCH and deploys the
 # compose file at $COMPOSE_PATH (relative to the repo root). production -> prod.

@@ -97,6 +97,7 @@ The old per-project `<PROJECT>_DOKPLOY_ID` secrets are **no longer used** and ca
 | Key | Purpose |
 | --- | --- |
 | `DOKPLOY_PROJECT` | Dokploy project / domain group (e.g. `tera`). |
+| `DOKPLOY_COMPOSE_NAME` | Compose display name in Dokploy. Optional; defaults to the moon project id. Set it to reuse a compose you named differently in the UI (e.g. `API`) instead of creating a new one. |
 | `DOMAIN_SERVICE` | Compose service the domain routes to (`api` for the APIs, `app` for the nginx frontends). Must match a service in the compose file. |
 | `DOMAIN_PORT` | Container port, optional (defaults to `80`). |
 | `STAGING_DOMAIN` / `PRODUCTION_DOMAIN` | Public host per environment, optional. |
