@@ -1,8 +1,10 @@
-FROM nginx:alpine
+FROM caddy:alpine
 
 LABEL org.opencontainers.image.source=https://github.com/lychen-lab/lychen
 
 ARG CACHE_DATE="$(date)"
 
-COPY ./storybook-static /usr/share/nginx/html
-COPY ./.nginx-build/default.conf /etc/nginx/conf.d/default.conf
+COPY ./storybook-static /usr/share/caddy/html
+COPY ./.caddy-build/Caddyfile /etc/caddy/Caddyfile
+
+CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]

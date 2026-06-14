@@ -19,7 +19,7 @@ umd/
 
 ###> Vite ###
 .vite-ssg-temp
-.nginx-build
+.caddy-build
 ###< Vite ###
 
 ###> Node ###
