@@ -1,0 +1,9 @@
+:80 {
+	root * /usr/share/caddy/html
+
+	encode gzip zstd
+
+	# Serve the requested file, then the matching directory index, then fall back to the SPA entrypoint
+	try_files {path} {path}/index.html /index.html
+	file_server
+}

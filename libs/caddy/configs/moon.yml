@@ -1,4 +1,4 @@
-id: nginx-configs
+id: caddy-configs
 language: unknown
 layer: library
 tasks:

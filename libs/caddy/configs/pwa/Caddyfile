@@ -1,0 +1,33 @@
+:80 {
+	root * /usr/share/caddy/html
+
+	encode gzip zstd
+
+	# App shell and manifest must always be fetched fresh
+	@no_store path /index.html /manifest.webmanifest
+	handle @no_store {
+		header Cache-Control "no-store, no-cache, must-revalidate"
+		file_server
+	}
+
+	# Hashed assets and workbox runtime contain a hash in their filename, cache forever
+	@immutable path /assets/* /workbox-*
+	handle @immutable {
+		header Cache-Control "public, max-age=31536000, s-maxage=31536000, immutable"
+		file_server
+	}
+
+	# Fonts and logos change rarely, cache for one week
+	@media path /fonts/* /logos/*
+	handle @media {
+		header Cache-Control "public, max-age=604800, s-maxage=604800"
+		file_server
+	}
+
+	# SPA fallback, everything else must revalidate
+	handle {
+		header Cache-Control "public, max-age=0, s-maxage=0, must-revalidate"
+		try_files {path} /index.html
+		file_server
+	}
+}

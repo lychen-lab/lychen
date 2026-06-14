@@ -6,8 +6,8 @@ tasks:
     command: yarn build
     deps:
     - args:
-      - $projectRoot/.nginx-build
-      target: nginx-configs:sync-ssg
+      - $projectRoot/.caddy-build
+      target: caddy-configs:sync-ssg
     inputs:
     - .env*
     - index.html
