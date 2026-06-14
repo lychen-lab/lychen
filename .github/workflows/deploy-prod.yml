@@ -1,0 +1,83 @@
+name: 'Deploy to production'
+
+# Manual, release-gated production deploy — the "when I decide" step.
+#
+# Staging deploys continuously per commit (deploy.yml). Production is cut from a
+# release: release.yml re-tags every image with `:vX.Y.Z`, then you run THIS
+# workflow to pin production to that version. Rollback = run it with an older
+# version. The same immutable image built once is promoted, never rebuilt.
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version to deploy, e.g. v0.2.0 (blank = latest release tag)'
+        required: false
+        type: string
+
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: false
+
+jobs:
+  define-matrix:
+    name: 'Resolve version & projects'
+    runs-on: ubuntu-latest
+    outputs:
+      projects: ${{ steps.gather-projects.outputs.projects }}
+      version: ${{ steps.resolve-version.outputs.version }}
+    steps:
+      - uses: 'actions/checkout@v4'
+        with:
+          fetch-depth: 0
+      - name: Set up Moon Toolchain
+        uses: 'moonrepo/setup-toolchain@v0'
+      - id: resolve-version
+        name: 'Resolve version'
+        run: |
+          VERSION="${{ inputs.version }}"
+          if [[ -z "$VERSION" ]]; then
+            VERSION="$(git describe --tags --match 'v*' --abbrev=0)"
+          fi
+          echo "Deploying production version: $VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+      # affected:false → ALL dokploy projects (a release deploys the whole set at
+      # one coherent version), not just the ones changed since the last commit.
+      - id: gather-projects
+        uses: ./.github/actions/moon-affected-projects-list
+        with:
+          layer: application
+          tags: dokploy
+          affected: 'false'
+
+  deploy-production:
+    name: 'Deploy to production'
+    needs: define-matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        projects: ${{ fromJSON(needs.define-matrix.outputs.projects) }}
+    environment: production
+    steps:
+      - uses: 'actions/checkout@v4'
+        with:
+          fetch-depth: 0
+      - name: Set up Moon Toolchain
+        uses: 'moonrepo/setup-toolchain@v0'
+      - name: Enable Corepack
+        run: corepack enable
+      - name: 'Deploy'
+        env:
+          DOKPLOY_API_TOKEN: ${{ secrets.DOKPLOY_API_TOKEN }}
+          DOKPLOY_API_URL: ${{ secrets.DOKPLOY_API_URL }}
+          DOKPLOY_SECRETS: ${{ toJSON(secrets) }}
+          # Pin production to the release version. release.yml already re-tagged
+          # each image `:<version>` from the build that shipped this release, so
+          # this resolves to an immutable, reproducible image.
+          IMAGE_TAG: ${{ needs.define-matrix.outputs.version }}
+        run: |
+          PROJECT_ID_UPPERCASE=$(echo "${{ matrix.projects }}" | tr '[:lower:]-' '[:upper:]_')
+          SECRET_NAME="${PROJECT_ID_UPPERCASE}_DOKPLOY_ID"
+          export DOKPLOY_COMPOSE_ID=$(echo "$DOKPLOY_SECRETS" | jq -r --arg key "$SECRET_NAME" '.[$key]')
+          moon run ${{ matrix.projects }}:dokploy-compose-deploy

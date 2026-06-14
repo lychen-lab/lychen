@@ -38,6 +38,15 @@ tasks:
       - ci-copy-packages
     options:
       cache: false
+  image-promote:
+    # Re-tag the current :latest manifest as :${VERSION} (+ :stable), registry-side
+    # (no rebuild, no layer transfer). VERSION is forwarded from the host env, the
+    # same way ${GITHUB_SHA} is in docker-buildx. Run via `moon run` (not `moon ci`).
+    command: docker buildx imagetools create -t ${IMAGE_NAME}:${VERSION} -t ${IMAGE_NAME}:stable ${IMAGE_NAME}:latest
+    env:
+      IMAGE_NAME: ghcr.io/lychen-lab/$project
+    options:
+      cache: false
   export-openapi:
     command: docker compose -p $project run --rm api bin/console api:openapi:export --spec-version=3.0.0 --output=openapi_docs.json
   load-fixtures:
