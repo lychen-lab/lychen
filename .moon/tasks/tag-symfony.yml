@@ -31,34 +31,16 @@ tasks:
   dev:
     command: docker compose -p $project up -d
     deps:
-    - common-mailpit:up
-  docker-build:
-    command: docker buildx build $projectRoot --cache-from ${DOCKER_IMAGE_NAME}:latest --platform linux/arm64,linux/amd64 --target frankenphp_prod -t ${DOCKER_IMAGE_NAME}:latest --push
+      - common-mailpit:up
+  docker-buildx:
+    command: docker buildx build $projectRoot --cache-from ghcr.io/lychen-lab/$project:latest --platform linux/arm64,linux/amd64 --target frankenphp_prod -t ghcr.io/lychen-lab/$project:latest --push
     deps:
-    - ci-copy-packages
-    options:
-      cache: false
-  docker-push:
-    command: noop
+      - ci-copy-packages
     options:
       cache: false
   export-openapi:
     command: docker compose -p $project run --rm api bin/console api:openapi:export --spec-version=3.0.0 --output=openapi_docs.json
   load-fixtures:
     command: docker compose -p $project run --rm api bin/console do:fi:lo -n
-  production-docker-build:
-    env:
-      DOCKER_IMAGE_NAME: ghcr.io/lychen-lab/$project
-    extends: docker-build
-  production-docker-push:
-    args:
-    - ghcr.io/lychen-lab/$project
-    deps:
-    - production-docker-build
-    extends: docker-push
-  staging-docker-build:
-    command: noop
-  staging-docker-push:
-    command: noop
   test-phpunit:
     command: docker compose -p $project run --rm api php -d memory_limit=-1 ./vendor/bin/phpunit

@@ -33,7 +33,7 @@ jobs:
         uses: ./.github/actions/moon-affected-projects-list
         with:
           layer: application
-          tags: docker
+          tasks: docker-buildx
 
   build-and-push:
     if: ${{ needs.define-matrix.outputs.projects != '[]' && needs.define-matrix.outputs.projects != '' }}
