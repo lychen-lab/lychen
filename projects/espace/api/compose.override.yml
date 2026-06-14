@@ -1,9 +1,9 @@
 # Development environment override
 services:
-    espace-database:
+    database:
         ports:
             - "19432:5432/tcp"
-    espace-api:
+    api:
         build:
             context: .
             target: frankenphp_dev
