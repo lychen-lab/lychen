@@ -1,4 +1,0 @@
-services:
-  website:
-    image: ghcr.io/lychen-lab/lychen/production/tera/website:latest
-    restart: unless-stopped

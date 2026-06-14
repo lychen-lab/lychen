@@ -1,0 +1,6 @@
+services:
+  app:
+    env_file: .env
+    image: ghcr.io/lychen-lab/lychen/tera-app:latest
+    pull_policy: always
+    restart: unless-stopped
