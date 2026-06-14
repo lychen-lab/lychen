@@ -14,4 +14,4 @@ typescript:
   syncProjectReferences: true
   syncProjectReferencesToPaths: false
 yarn:
-  version: 4.12.0
+  version: 4.16.0
