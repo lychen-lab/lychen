@@ -1,0 +1,82 @@
+name: 'PR Title Lint'
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  pull-requests: write
+
+jobs:
+  lint-pr-title:
+    name: 'Validate PR title (Conventional Commits)'
+    runs-on: ubuntu-latest
+    steps:
+      # We squash-merge PRs, so the PR title becomes the commit subject that
+      # release-please parses to compute the next version + changelog. Enforce
+      # Conventional Commits here so every merged title stays machine-readable.
+      # Keep `types` in sync with changelog-sections in release-please-config.json.
+      - uses: 'amannn/action-semantic-pull-request@v6'
+        id: lint
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            perf
+            refactor
+            revert
+            docs
+            chore
+            ci
+            test
+            build
+            style
+
+      - name: 'Comment on invalid title'
+        if: always() && steps.lint.outcome == 'failure'
+        continue-on-error: true
+        uses: 'marocchino/sticky-pull-request-comment@v2'
+        with:
+          header: pr-title-lint-error
+          message: |
+            ## ⚠️ PR title is not a valid Conventional Commit
+
+            This repository squash-merges PRs, so the **PR title becomes the commit
+            message** that drives automated versioning and the changelog. Please
+            update the title to:
+
+            ```
+            <type>(optional scope): <description>
+            ```
+
+            Allowed types: `feat`, `fix`, `perf`, `refactor`, `revert`, `docs`,
+            `chore`, `ci`, `test`, `build`, `style`.
+
+            Examples: `feat(tera-api): add CSV export endpoint`,
+            `fix(tera-app): correct locale fallback`.
+
+            <details><summary>Validation error</summary>
+
+            ```
+            ${{ steps.lint.outputs.error_message }}
+            ```
+
+            </details>
+
+      - name: 'Clear the comment once the title is valid'
+        if: always() && steps.lint.outcome == 'success'
+        continue-on-error: true
+        uses: 'marocchino/sticky-pull-request-comment@v2'
+        with:
+          header: pr-title-lint-error
+          delete: true
