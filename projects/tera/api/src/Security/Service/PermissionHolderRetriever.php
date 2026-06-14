@@ -10,7 +10,7 @@ use App\Repository\LandMemberRepository;
 use App\Security\Constant\PersonPermission;
 use App\Security\Interface\LandAwareInterface;
 use App\Security\Interface\PermissionHolder;
-use PHPUnit\Framework\Exception;
+use Exception;
 use Symfony\Bundle\SecurityBundle\Security;
 
 readonly class PermissionHolderRetriever
@@ -29,8 +29,9 @@ readonly class PermissionHolderRetriever
                 return $currentUser;
             }
             try {
-                if ($currentUser instanceof Person) {
-                    return $this->getLandMember($context->subject->getLand(), $currentUser);
+                $land = $context->subject->getLand();
+                if ($currentUser instanceof Person && null !== $land) {
+                    return $this->getLandMember($land, $currentUser);
                 }
             } catch (Exception $exception) {
 
