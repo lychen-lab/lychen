@@ -1,6 +1,6 @@
-# Development environment override
+# CI environment override
 services:
-  flora-database:
+  database:
     environment:
       - POSTGRES_DB=${POSTGRES_DB:-app_test}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-PasswordForLocal!}
@@ -14,8 +14,7 @@ services:
     ports:
       - '5432:5432'
 
-  flora-api:
-    build: !reset null
+  api:
     environment:
       - PHP_CS_FIXER_IGNORE_ENV=1
     extra_hosts:

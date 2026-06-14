@@ -1,7 +1,5 @@
-name: tera-api
-
 services:
-  tera-database:
+  database:
     environment:
       - POSTGRES_DB=${POSTGRES_DB:-app}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-PasswordForLocal!}
@@ -13,32 +11,32 @@ services:
       timeout: 5s
     image: postgres:${POSTGRES_VERSION:-16}-alpine
     volumes:
-      - tera_database_data:/var/lib/postgresql/data:rw
+      - database_data:/var/lib/postgresql/data:rw
 
-  tera-api:
+  api:
     depends_on:
-      tera-database:
+      database:
         condition: service_healthy
-      tera-rabbitmq:
+      rabbitmq:
         condition: service_started
-      tera-redis:
+      redis:
         condition: service_started
     environment:
       APP_RUNTIME: Runtime\FrankenPhpSymfony\Runtime
-      DATABASE_URL: postgresql://${POSTGRES_USER:-userlocal}:${POSTGRES_PASSWORD:-PasswordForLocal!}@tera-database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
-      MESSENGER_TRANSPORT_DSN: amqp://app:app@tera-rabbitmq:5672/app
-      REDIS_URL: redis://tera-redis:6379
+      DATABASE_URL: postgresql://${POSTGRES_USER:-userlocal}:${POSTGRES_PASSWORD:-PasswordForLocal!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
+      MESSENGER_TRANSPORT_DSN: amqp://app:app@rabbitmq:5672/app
+      REDIS_URL: redis://redis:6379
       SERVER_NAME: ${SERVER_NAME:-localhost}, php:80
       TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-example\.com|localhost}|php$$}
       TRUSTED_PROXIES: ${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
     image: ${IMAGES_PREFIX:-}tera-api
     restart: unless-stopped
     volumes:
-      - tera_caddy_data:/data
-      - tera_caddy_config:/config
+      - caddy_data:/data
+      - caddy_config:/config
       - ../../../libs/php:/packages
 
-  tera-redis:
+  redis:
     healthcheck:
       retries: 5
       start_period: 10s
@@ -46,9 +44,9 @@ services:
       timeout: 3s
     image: redis:alpine
     volumes:
-      - tera_redis_data:/data
+      - redis_data:/data
 
-  tera-rabbitmq:
+  rabbitmq:
     environment:
       - RABBITMQ_DEFAULT_USER=app
       - RABBITMQ_DEFAULT_PASS=app
@@ -60,11 +58,11 @@ services:
       timeout: 10s
     image: rabbitmq:4.0.4-management-alpine
     volumes:
-      - tera_rabbitmq_data:/var/lib/rabbitmq/
+      - rabbitmq_data:/var/lib/rabbitmq/
 
 volumes:
-  tera_caddy_config:
-  tera_caddy_data:
-  tera_database_data:
-  tera_rabbitmq_data:
-  tera_redis_data:
+  caddy_config:
+  caddy_data:
+  database_data:
+  rabbitmq_data:
+  redis_data:

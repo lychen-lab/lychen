@@ -1,7 +1,5 @@
-name: flora-api
-
 services:
-  flora-database:
+  database:
     environment:
       - POSTGRES_DB=${POSTGRES_DB:-app}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-PasswordForLocal!}
@@ -13,32 +11,32 @@ services:
       timeout: 5s
     image: postgres:${POSTGRES_VERSION:-16}-alpine
     volumes:
-      - flora_database_data:/var/lib/postgresql/data:rw
+      - database_data:/var/lib/postgresql/data:rw
 
-  flora-api:
+  api:
     depends_on:
-      flora-database:
+      database:
         condition: service_healthy
-      flora-rabbitmq:
+      rabbitmq:
         condition: service_started
-      flora-redis:
+      redis:
         condition: service_started
     environment:
       APP_RUNTIME: Runtime\FrankenPhpSymfony\Runtime
-      DATABASE_URL: postgresql://${POSTGRES_USER:-userlocal}:${POSTGRES_PASSWORD:-PasswordForLocal!}@flora-database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
-      MESSENGER_TRANSPORT_DSN: amqp://app:app@flora-rabbitmq:5672/app
-      REDIS_URL: redis://flora-redis:6379
+      DATABASE_URL: postgresql://${POSTGRES_USER:-userlocal}:${POSTGRES_PASSWORD:-PasswordForLocal!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
+      MESSENGER_TRANSPORT_DSN: amqp://app:app@rabbitmq:5672/app
+      REDIS_URL: redis://redis:6379
       SERVER_NAME: ${SERVER_NAME:-localhost}, php:80
       TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-example\.com|localhost}|php$$}
       TRUSTED_PROXIES: ${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
     image: ${IMAGES_PREFIX:-}flora-api
     restart: unless-stopped
     volumes:
-      - flora_caddy_data:/data
-      - flora_caddy_config:/config
+      - caddy_data:/data
+      - caddy_config:/config
       - ../../../libs/php:/packages
 
-  flora-redis:
+  redis:
     healthcheck:
       retries: 5
       start_period: 10s
@@ -46,9 +44,9 @@ services:
       timeout: 3s
     image: redis:alpine
     volumes:
-      - flora_redis_data:/data
+      - redis_data:/data
 
-  flora-rabbitmq:
+  rabbitmq:
     environment:
       - RABBITMQ_DEFAULT_USER=app
       - RABBITMQ_DEFAULT_PASS=app
@@ -60,11 +58,11 @@ services:
       timeout: 10s
     image: rabbitmq:4.0.4-management-alpine
     volumes:
-      - flora_rabbitmq_data:/var/lib/rabbitmq/
+      - rabbitmq_data:/var/lib/rabbitmq/
 
 volumes:
-  flora_caddy_config:
-  flora_caddy_data:
-  flora_database_data:
-  flora_rabbitmq_data:
-  flora_redis_data:
+  caddy_config:
+  caddy_data:
+  database_data:
+  rabbitmq_data:
+  redis_data:

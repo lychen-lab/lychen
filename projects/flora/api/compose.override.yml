@@ -1,17 +1,17 @@
 # Development environment override
 services:
-  flora-database:
+  database:
     ports:
       - '21432:5432/tcp'
     networks:
       - lychen-network
 
-  flora-api:
+  api:
     build:
       context: .
       target: frankenphp_dev
     environment:
-      SERVER_NAME: api.flora.lychen.local, flora-api:80
+      SERVER_NAME: api.flora.lychen.local, api:80
       XDEBUG_MODE: '${XDEBUG_MODE:-off}'
     extra_hosts:
       - host.docker.internal:host-gateway
@@ -34,11 +34,11 @@ services:
     networks:
       - lychen-network
 
-  flora-redis:
+  redis:
     networks:
       - lychen-network
 
-  flora-rabbitmq:
+  rabbitmq:
     networks:
       - lychen-network
 

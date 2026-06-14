@@ -1,12 +1,12 @@
 # Development environment override
 services:
-  tera-database:
+  database:
     ports:
       - '22432:5432/tcp'
     networks:
       - lychen-network
 
-  tera-api:
+  api:
     build:
       context: .
       target: frankenphp_dev
@@ -34,11 +34,11 @@ services:
     networks:
       - lychen-network
 
-  tera-redis:
+  redis:
     networks:
       - lychen-network
 
-  tera-rabbitmq:
+  rabbitmq:
     networks:
       - lychen-network
 

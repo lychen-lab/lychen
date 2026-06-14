@@ -1,10 +1,10 @@
 $schema: https://moonrepo.dev/schemas/tasks.json
-tasks:
-  down:
-    command: docker compose down
-  up:
-    command: docker compose up -d
-    deps:
-    - common-network:create-network
 inheritedBy:
   tag: compose
+tasks:
+  down:
+    command: docker compose -p $project down
+  up:
+    command: docker compose -p $project up -d
+    deps:
+    - common-network:create-network
