@@ -2,12 +2,20 @@ when@prod:
   monolog:
     handlers:
       sentry:
-        fill_extra_context: true
-        hub_id: Sentry\State\HubInterface
-        level: !php/const Monolog\Logger::ERROR
-        type: sentry
+        type: service
+        id: Sentry\Monolog\Handler
 
   sentry:
     dsn: '%env(SENTRY_DSN)%'
     register_error_handler: false
     register_error_listener: false
+
+  # monolog-bundle 4 removed the built-in "sentry" handler type. Register the
+  # Sentry handler as a service and wire it through the "service" handler above.
+  # https://docs.sentry.io/platforms/php/guides/symfony/integrations/monolog/
+  services:
+    Sentry\Monolog\Handler:
+      arguments:
+        $hub: '@Sentry\State\HubInterface'
+        $level: !php/const Monolog\Logger::ERROR
+        $fillExtraContext: true
