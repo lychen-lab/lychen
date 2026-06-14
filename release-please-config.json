@@ -3,11 +3,13 @@
   "bootstrap-sha": "3fe502e88e2ef6dabb41f557787c459a90f01c4a",
   "include-component-in-tag": false,
   "separate-pull-requests": false,
+  "bump-minor-pre-major": true,
   "packages": {
     ".": {
       "release-type": "simple",
       "package-name": "lychen",
-      "changelog-path": "CHANGELOG.md"
+      "changelog-path": "CHANGELOG.md",
+      "release-as": "0.1.0"
     }
   },
   "changelog-sections": [
