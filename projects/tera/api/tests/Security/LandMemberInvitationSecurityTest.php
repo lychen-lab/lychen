@@ -231,6 +231,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
                     ]])
             ->assertStatus(403);
 
+        // User cannot check email unicity for a Land for which they do not have permission
         $landRole = $this->createLandRole($context1->land);
         $this->addLandMember($context1, [$landRole]);
         $this->browser()->actingAs($context1->landMembers[0]->getPerson())
@@ -240,7 +241,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
                         'email' => $email,
                         'land' => $context1->land->getUlid()->toString()
                     ]])
-            ->assertStatus(401);
+            ->assertStatus(403);
     }
 
     public function testCollectionByEmail()
