@@ -16,9 +16,10 @@ environments — never rebuilt.
   tagged with both the **commit SHA** and `latest`. Frontends (`tag-docker`) and
   APIs (`tag-symfony`) now share a **single namespace**:
   `ghcr.io/lychen-lab/lychen/<project>:<sha>`. Because the path is uniform across
-  layers, `image-promote` is defined once on the shared `dokploy` tag
-  ([`.moon/tasks/tag-dokploy.yml`](../.moon/tasks/tag-dokploy.yml)) instead of
-  being duplicated per layer.
+  layers, the release-versioning task `image-promote` is defined once on a
+  dedicated `version` tag
+  ([`.moon/tasks/tag-version.yml`](../.moon/tasks/tag-version.yml)) — independent
+  of the `dokploy` deploy logic — instead of being duplicated per layer.
 - A deploy pins each Dokploy compose to a specific tag by setting the `IMAGE_TAG`
   variable on the compose (see
   [`.moon/scripts/dokploy-compose-deploy.sh`](../.moon/scripts/dokploy-compose-deploy.sh)),

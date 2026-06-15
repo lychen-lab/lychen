@@ -1,0 +1,19 @@
+$schema: https://moonrepo.dev/schemas/tasks.json
+inheritedBy:
+  tag: version
+tasks:
+  image-promote:
+    # Re-tag the current :latest manifest as :${VERSION} (+ :stable), registry-side
+    # (no rebuild, no layer transfer). VERSION is forwarded from the host env, the
+    # same way ${GITHUB_SHA} is in docker-buildx. Run via `moon run` (not `moon ci`).
+    #
+    # Lives on its own `version` tag (independent of the `dokploy` deploy logic) so
+    # the release-versioning step is a self-contained concern. Defined once and
+    # inherited by every `version`-tagged project, now that fronts and APIs share
+    # the single `ghcr.io/lychen-lab/lychen/<project>` namespace instead of being
+    # duplicated per layer in tag-docker.yml / tag-symfony.yml.
+    command: docker buildx imagetools create -t ${IMAGE_NAME}:${VERSION} -t ${IMAGE_NAME}:stable ${IMAGE_NAME}:latest
+    env:
+      IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
+    options:
+      cache: false
