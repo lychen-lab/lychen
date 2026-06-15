@@ -13,9 +13,12 @@ environments — never rebuilt.
 ## How image tags work
 
 - **Build and push images** builds each affected app and pushes it to GHCR
-  tagged with both the **commit SHA** and `latest`:
-  - Frontends (`tag-docker`): `ghcr.io/lychen-lab/lychen/<project>:<sha>`
-  - APIs (`tag-symfony`): `ghcr.io/lychen-lab/<project>:<sha>`
+  tagged with both the **commit SHA** and `latest`. Frontends (`tag-docker`) and
+  APIs (`tag-symfony`) now share a **single namespace**:
+  `ghcr.io/lychen-lab/lychen/<project>:<sha>`. Because the path is uniform across
+  layers, `image-promote` is defined once on the shared `dokploy` tag
+  ([`.moon/tasks/tag-dokploy.yml`](../.moon/tasks/tag-dokploy.yml)) instead of
+  being duplicated per layer.
 - A deploy pins each Dokploy compose to a specific tag by setting the `IMAGE_TAG`
   variable on the compose (see
   [`.moon/scripts/dokploy-compose-deploy.sh`](../.moon/scripts/dokploy-compose-deploy.sh)),
@@ -98,6 +101,24 @@ in GHCR, so there is **no rebuild**.
 > `IMAGE_TAG` accepts any tag that exists in GHCR — a release version (`v0.2.0`)
 > or a raw commit SHA both work. Releases cut before this pipeline change have no
 > `:vX.Y.Z` image; pin those by commit SHA instead.
+
+### API images built before the namespace unification
+
+API images now publish under `ghcr.io/lychen-lab/lychen/<project>` like the
+frontends. **API** images built *before* this change still live under the old
+`ghcr.io/lychen-lab/<project>` path (without the `/lychen` segment) and are **not**
+re-tagged retroactively. To roll an API back to a pre-migration build, point its
+Dokploy compose `IMAGES_PREFIX` at the old namespace (`ghcr.io/lychen-lab/`) for
+that one deploy, or rebuild from the target commit on `main` so a new image is
+published under the unified path. Keep the old GHCR packages readable until no
+production deploy references a pre-migration SHA.
+
+> **Runtime config (Dokploy, outside this repo):** the API composes resolve their
+> image as `${IMAGES_PREFIX:-}<project>:${IMAGE_TAG:-latest}`. After this change,
+> the staging/prod `IMAGES_PREFIX` for the three APIs must be set to
+> `ghcr.io/lychen-lab/lychen/` (the frontends already hardcode the full path). The
+> same variable also drives prefixed names in dev/CI, so verify local stacks still
+> resolve before rolling it out.
 
 ## Prefer a forward fix
 
