@@ -34,10 +34,10 @@ Projects in the automated pipeline (tagged `dokploy`): `website`, `espace-app`,
 
 ## Staging (continuous)
 
-Every push to `main` triggers **Build and push images** →
-[**Deploy**](../.github/workflows/deploy.yml), which deploys the affected
-projects to the `staging` environment pinned to the commit SHA. Nothing to do —
-staging always reflects `main`.
+Every push to `main` triggers **Deploy | Build & push images** →
+[**Deploy | Staging**](../.github/workflows/deploy.yml), which deploys the
+affected projects to the `staging` environment pinned to the commit SHA. Nothing
+to do — staging always reflects `main`.
 
 ## Releases & production (on demand)
 
@@ -58,7 +58,7 @@ deployable for the whole set.
 
 ### 2. Deploy to production, when you decide
 
-Run the [**Deploy to production**](../.github/workflows/deploy-prod.yml) workflow
+Run the [**Deploy | Production**](../.github/workflows/deploy-prod.yml) workflow
 (`workflow_dispatch`):
 
 - Leave `version` **blank** to deploy the latest release tag, or
@@ -80,7 +80,7 @@ approval on top of who can run the workflow.
 Roll production back by **redeploying an earlier version**. The image is already
 in GHCR, so there is **no rebuild**.
 
-- **Recommended:** run the **Deploy to production** workflow with `version` set
+- **Recommended:** run the **Deploy | Production** workflow with `version` set
   to a previous `vX.Y.Z`.
 - **Via the Dokploy UI:** open the project's **Compose** service →
   **Environment**, set `IMAGE_TAG=<previous-version>` (leave `IMAGES_PREFIX` and

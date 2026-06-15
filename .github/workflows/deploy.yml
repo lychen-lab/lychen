@@ -1,4 +1,4 @@
-name: 'Deploy'
+name: 'Deploy | Staging'
 
 env:
   REGISTRY: ghcr.io
@@ -6,8 +6,8 @@ env:
 on:
   workflow_dispatch: {}
   workflow_run:
-    workflows: 
-      - Build and push images
+    workflows:
+      - Deploy | Build & push images
     types:
       - completed
     branches:
