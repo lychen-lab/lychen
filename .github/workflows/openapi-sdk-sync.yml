@@ -1,4 +1,4 @@
-name: OpenAPI | SDK sync
+name: 'OpenAPI | SDK sync (tera)'
 
 env:
   REGISTRY: ghcr.io/lychen-lab/lychen/test
