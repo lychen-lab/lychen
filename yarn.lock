@@ -2271,7 +2271,7 @@ __metadata:
     "@storybook/addon-a11y": "npm:^10.4.2"
     "@storybook/addon-docs": "npm:^10.4.2"
     "@storybook/vue3-vite": "npm:^10.4.2"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     "@vitejs/plugin-vue": "npm:^6.0.7"
     "@vue/tsconfig": "npm:^0.9.1"
     "@vueless/storybook-dark-mode": "npm:^10.0.8"
@@ -4864,7 +4864,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^25.9.2":
+"@types/node@npm:^25.9.3":
   version: 25.9.3
   resolution: "@types/node@npm:25.9.3"
   dependencies:
@@ -9202,7 +9202,7 @@ __metadata:
     "@eslint/js": "npm:^10.0.1"
     "@eslint/markdown": "npm:^8.0.2"
     "@types/eslint": "npm:^9.6.1"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     eslint: "npm:^10.4.1"
     eslint-config-prettier: "npm:^10.1.8"
     eslint-plugin-check-file: "npm:^3.3.1"
