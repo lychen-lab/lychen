@@ -10,4 +10,5 @@ stack: backend
 tags:
   - symfony
   - dokploy
+  - version
   - compose
