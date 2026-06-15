@@ -1,4 +1,4 @@
-name: OpenAPI | SDK sync (espace)
+name: 'OpenAPI | SDK sync (espace)'
 
 env:
   REGISTRY: ghcr.io/lychen-lab/lychen/test

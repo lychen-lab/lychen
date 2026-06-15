@@ -1,4 +1,4 @@
-name: Symfony | Tests
+name: 'Symfony | Tests'
 
 env:
   REGISTRY: ghcr.io/lychen-lab/lychen/test
