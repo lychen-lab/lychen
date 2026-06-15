@@ -1,4 +1,4 @@
-name: 'PR Auto label'
+name: 'PR | Auto-label'
 
 env:
   REGISTRY: ghcr.io

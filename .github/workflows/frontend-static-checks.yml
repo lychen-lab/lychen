@@ -1,4 +1,9 @@
-name: 'Quality'
+name: 'Frontend | Static checks'
+
+# Static quality gate for the frontend: lint & format, typecheck, and the
+# Docker build of affected apps — grouped into one workflow so a PR shows a
+# single "static checks" entry. Unit tests live in their own workflow
+# (Frontend | Tests) because they grow per app and are run/iterated separately.
 
 env:
   REGISTRY: ghcr.io
@@ -9,8 +14,51 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-  
+
 jobs:
+  lint-and-format:
+    name: 'Lint & Format affected projects'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: 'actions/checkout@v4'
+        with:
+          fetch-depth: 0
+
+      - name: Set up Moon Toolchain
+        uses: 'moonrepo/setup-toolchain@v0'
+
+      - name: Install proto tools
+        run: proto install
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Lint and check formatting
+        run: moon ci :lint :format
+
+  typecheck:
+    name: 'Typecheck'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: 'actions/checkout@v4'
+        with:
+          fetch-depth: 0
+
+      - name: Set up Moon Toolchain
+        uses: 'moonrepo/setup-toolchain@v0'
+
+      - name: Install proto tools
+        run: proto install
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Typecheck
+        run: 'moon ci :typecheck'
+
   define-matrix:
     name: 'Gather affected projects'
     runs-on: ubuntu-latest
@@ -63,4 +111,3 @@ jobs:
 
       - name: Build docker images
         run: 'moon ci ${{ matrix.projects }}:docker-test-build'
-  
