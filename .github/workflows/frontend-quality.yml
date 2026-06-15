@@ -1,4 +1,4 @@
-name: 'Frontend | Quality'
+name: 'Frontend | Lint & format'
 
 on:
   pull_request:
