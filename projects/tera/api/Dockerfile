@@ -38,6 +38,18 @@ RUN set -eux; \
     docker-php-ext-enable amqp; \
     rm -rf /tmp/php-amqp;
 
+# Install the gRPC extension (and its protobuf companion) so the APIs can speak
+# gRPC when needed. grpc and protobuf are very large C/C++ extensions: compiling
+# them with one make job per CPU exhausts memory on multi-core builders, which is
+# the OOM / "memory overflow" failure. Pin install-php-extensions to a single
+# processor so peak memory stays bounded — the build is slower but reliable on
+# any builder.
+RUN set -eux; \
+    IPE_PROCESSOR_COUNT=1 install-php-extensions \
+        grpc \
+        protobuf \
+    ;
+
 ENV PHP_INI_SCAN_DIR=":$PHP_INI_DIR/app.conf.d"
 
 COPY --link frankenphp/conf.d/10-app.ini $PHP_INI_DIR/app.conf.d/
