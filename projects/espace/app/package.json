@@ -27,9 +27,9 @@
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.3.0",
+    "@tailwindcss/vite": "^4.3.1",
     "@vite-pwa/assets-generator": "^1.0.2",
-    "tailwindcss": "^4.3.0",
+    "tailwindcss": "^4.3.1",
     "vite": "^8.0.16",
     "vite-plugin-env-runtime": "^0.3.7",
     "vite-plugin-mkcert": "^2.1.0",
