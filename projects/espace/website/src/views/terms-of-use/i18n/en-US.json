@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "Terms of Use",
+    "description": "Terms of Use for the Espace platform of the Lychen association, available at app.espace.lychen.org."
+  },
+  "title": "Terms of Use",
+  "last_update": "Last updated: {date}",
+  "sections": [
+    {
+      "title": "Legal Information",
+      "content": "Association Lychen\nSIREN: 993 140 904 - SIRET: 993 140 904 00018\nHeadquarters: 1 ALLEE DU TRELOD 74000 ANNECY, France\nCategory: 9220 - Association déclarée\nActivity: 94.99Z - Other organizations working by voluntary membership\nPublication director: Presidency of the association\nContact: contact@lychen.org"
+    },
+    {
+      "title": "Purpose",
+      "content": "These Terms of Use (hereinafter the \"Terms\") set out the conditions governing access to and use of the Espace service operated by the Lychen association (hereinafter the \"Service\"). Espace is a platform connecting people who have a growing space (land, garden, cellar, etc.) with people who wish to grow food, as part of an approach to food autonomy and social connection. The Service consists of the presentation website, the application available at app.espace.lychen.org and the application programming interface (API) available at api.espace.lychen.org."
+    },
+    {
+      "title": "Acceptance of the Terms",
+      "content": "Use of the Service implies the user's full and unreserved acceptance of these Terms. By accessing the Service, creating an account or using the API, the user acknowledges having read these Terms and agrees to comply with them. If the user does not accept these Terms, they must refrain from using the Service."
+    },
+    {
+      "title": "Access to the Service",
+      "content": "Access to the Service is free. The application is available at app.espace.lychen.org and the API at api.espace.lychen.org. The costs of accessing and using the telecommunications network are borne by the user, according to the terms set by their internet service providers and telecommunications operators. The user acknowledges having the skills and means necessary to access and use the Service."
+    },
+    {
+      "title": "User Account",
+      "content": "Some features of the Service require the creation of a user account on app.espace.lychen.org. The user agrees to provide accurate, complete and up-to-date information when registering and to keep it updated. The user is solely responsible for keeping their login credentials confidential and for any action carried out from their account. In the event of unauthorized use of their account, the user agrees to inform the Lychen association as soon as possible at contact@lychen.org."
+    },
+    {
+      "title": "Use of the Service",
+      "content": "The user agrees to use the Service fairly, in accordance with its purpose and with applicable laws and regulations. In particular, the user must not: publish unlawful, misleading, defamatory content or content that infringes the rights of third parties; impersonate a third party; disrupt, slow down or hinder the operation of the Service; attempt to gain unauthorized access to systems, accounts or data they are not entitled to; or use the Service for unauthorized commercial purposes or mass data collection."
+    },
+    {
+      "title": "Use of the API",
+      "content": "The API available at api.espace.lychen.org is provided to enable programmatic interaction with the Service, primarily through the application at app.espace.lychen.org. Any access to the API must comply with these Terms as well as any usage limits (quotas, rate limiting) put in place to preserve the stability and security of the Service. The Lychen association reserves the right to suspend or restrict access to the API in the event of abusive, excessive use or use contrary to these Terms."
+    },
+    {
+      "title": "Service Availability",
+      "content": "The Lychen association strives to keep the Service continuously accessible, without however being bound by an obligation of result. Access to the Service may be interrupted, in particular for maintenance, updates or in the event of force majeure, without this engaging the liability of the association. The Lychen association reserves the right to modify, change or suspend all or part of the Service."
+    },
+    {
+      "title": "Intellectual Property",
+      "content": "The entire Service is subject to French and international legislation on copyright and intellectual property. All reproduction rights are reserved, including for downloadable documents and iconographic and photographic representations. The reproduction of all or part of the Service on any electronic medium whatsoever is strictly prohibited without the express authorization of the publication director. Content published by users remains their property; by publishing it, the user grants the Lychen association a license to use it for the purposes of operating the Service."
+    },
+    {
+      "title": "Liability",
+      "content": "The information provided on the Service is for information purposes only. The Lychen association cannot guarantee the accuracy, completeness or timeliness of the information disseminated, in particular that published by users. The connection made through the Service is the sole responsibility of the users concerned. Consequently, the user acknowledges using the Service and the information it contains under their exclusive responsibility."
+    },
+    {
+      "title": "Personal Data",
+      "content": "Use of the Service results in the processing of personal data. For more information on the nature of the data collected, its purpose and how to exercise your rights, please refer to our Privacy Policy. The Data Protection Officer (DPO) can be contacted at: dpo@lychen.org"
+    },
+    {
+      "title": "Changes to the Terms",
+      "content": "The Lychen association reserves the right to modify these Terms at any time, in particular to adapt them to changes in the Service or in regulations. The applicable Terms are those in force at the date the Service is used. The date of the last update is indicated at the top of this page. In the event of a substantial change, users will be informed by appropriate means."
+    },
+    {
+      "title": "Governing Law",
+      "content": "These Terms are governed by French law. In the event of a dispute relating to their interpretation or performance, and in the absence of an amicable resolution, the French courts shall have sole jurisdiction."
+    },
+    {
+      "title": "Contact",
+      "content": "For any questions regarding these Terms of Use, you can contact us at: contact@lychen.org"
+    }
+  ]
+}
