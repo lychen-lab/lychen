@@ -1,30 +1,70 @@
 {
   "meta": {
     "title": "Privacy Policy",
-    "description": "Privacy Policy regarding personal data for the Lychen Association."
+    "description": "Privacy policy of the Lychen association: data controller, data collected, cookies, retention periods and how to exercise your rights under the GDPR."
   },
   "title": "Privacy Policy",
   "last_update": "Last updated: {date}",
   "sections": [
     {
-      "title": "Data Controller",
-      "content": "The data controller is the Lychen Association.\nHeadquarters: 1 ALLEE DU TRELOD 74000 ANNECY, France\nContact: dpo@lychen.org or contact@lychen.org"
+      "title": "Introduction",
+      "content": "The Lychen association is committed to respecting your privacy and protecting your personal data. This privacy policy explains, in a clear and transparent manner, how your data is collected and processed when you browse this website.\nThis is an informational website (showcase site). It does not offer account creation or online sales. This document is established in accordance with Regulation (EU) 2016/679 of 27 April 2016 (GDPR) and French Law No. 78-17 of 6 January 1978 on data processing, data files and individual liberties."
     },
     {
-      "title": "Data Collected",
-      "content": "Our website is a static site that does not require user accounts. We do not collect personal data directly through the site forms currently (unless otherwise stated). Use of the site does not require providing personal data."
+      "title": "Site publisher and data controller",
+      "content": "This website is published by the Lychen association, a non-profit association governed by the French law of 1 July 1901.\nRegistered office: 1 allée du Trélod, 74000 Annecy, France\nSIREN: 993 140 904 — SIRET: 993 140 904 00018\nPublication director: the association's presidency\nThe controller of personal data is the Lychen association, represented by its presidency.\nContact: contact@lychen.org"
     },
     {
-      "title": "Cookies",
-      "content": "We do not use tracking cookies or marketing cookies. Technical cookies may be used by the hosting provider for security and load balancing purposes, which do not require consent."
+      "title": "Data Protection Officer (DPO)",
+      "content": "For any question regarding the processing of your personal data or the exercise of your rights, you can contact our Data Protection Officer:\nBy email: dpo@lychen.org\nBy post: Association Lychen — DPO, 1 allée du Trélod, 74000 Annecy, France"
     },
     {
-      "title": "User Rights",
-      "content": "In accordance with the GDPR and French law, you have the right to access, rectify, delete, and port your data. You also have the right to object to or limit processing. To exercise these rights, please contact our Data Protection Officer (DPO) at: dpo@lychen.org."
+      "title": "Data collected",
+      "content": "This website is static and informational. No user account is required and no personal data is collected through forms on this site (unless otherwise explicitly stated at the point of collection).\nWhile you browse, technical connection data (IP address, date and time of the request, browser type, pages visited) may be automatically recorded in the hosting provider's logs, for security and proper-operation purposes.\nIf you contact us directly by email, we process the data you provide on your own initiative (email address, message content) in order to respond to your request."
     },
     {
-      "title": "Right to Complain",
-      "content": "If you believe your rights are not respecting, you can file a complaint with the CNIL (Commission Nationale de l'Informatique et des Libertés) in France."
+      "title": "Purposes of processing",
+      "content": "The data mentioned above is processed for the following purposes:\n- to ensure the operation, security and availability of the website;\n- to respond to requests you send us by email;\n- where applicable, to compile strictly anonymous traffic statistics.\nYour data is not subject to any automated decision-making or profiling."
+    },
+    {
+      "title": "Legal basis for processing",
+      "content": "In accordance with Article 6 of the GDPR, the processing relies on the following legal bases:\n- the legitimate interest of the association in ensuring the security and proper operation of the site (technical logs);\n- the performance of measures taken at your request when you contact us by email;\n- your consent, where it is specifically required and obtained."
+    },
+    {
+      "title": "Cookies and trackers",
+      "content": "This website does not use any advertising tracking cookies or audience-measurement tools that require your consent.\nOnly cookies and technical storage strictly necessary for the proper functioning of the site may be used; these are exempt from consent in accordance with the recommendations of the CNIL (the French data protection authority). Your display preferences (language, light or dark theme) are stored locally on your device and are never transmitted to third parties.\nYou can configure your browser at any time to block or delete these items."
+    },
+    {
+      "title": "Recipients of the data",
+      "content": "Your data is never sold, rented or transferred to third parties for commercial purposes.\nIt is accessible only to authorised members of the association who need to know it, as well as to our hosting provider acting as a processor, solely for the technical operation and security of the site."
+    },
+    {
+      "title": "Hosting and transfers outside the EU",
+      "content": "The technical data related to the site is hosted within the European Union. No transfer of personal data outside the European Union is carried out in the course of operating this website."
+    },
+    {
+      "title": "Retention period",
+      "content": "Your data is kept for no longer than is necessary for the purposes for which it is processed:\n- connection logs (IP address, technical logs): up to 12 months;\n- contact emails: for the time needed to handle your request, then archived or deleted no later than 3 years after our last exchange;\n- locally stored preferences: until you delete them yourself (by clearing your browser storage)."
+    },
+    {
+      "title": "Data security",
+      "content": "The association implements appropriate technical and organisational measures to protect your data against loss, alteration, disclosure or unauthorised access. Exchanges with the site are encrypted using the HTTPS (TLS) protocol, and access to data is restricted to authorised persons only."
+    },
+    {
+      "title": "Your rights",
+      "content": "In accordance with the GDPR and the French Data Protection Act, you have the following rights over your data: the right of access, rectification, erasure, restriction of processing, portability, as well as the right to object to processing and the right to set guidelines regarding the fate of your data after your death.\nTo exercise these rights, send your request to our DPO at: dpo@lychen.org. Proof of identity may be requested. We undertake to respond within one month of receiving your request."
+    },
+    {
+      "title": "Right to lodge a complaint with the CNIL",
+      "content": "If, after contacting us, you believe that your rights are not respected, you have the right to lodge a complaint with the French Data Protection Authority (CNIL):\nCNIL — 3 place de Fontenoy, TSA 80715, 75334 Paris Cedex 07, France\nWebsite: www.cnil.fr"
+    },
+    {
+      "title": "Changes to this policy",
+      "content": "This privacy policy may change in order to reflect legal, regulatory or technical developments. The date of the last update appears at the top of the page. We encourage you to review it regularly."
+    },
+    {
+      "title": "Contact",
+      "content": "For any question regarding this privacy policy or the processing of your personal data, you can write to us at: contact@lychen.org (or dpo@lychen.org for requests relating to data protection)."
     }
   ]
 }
