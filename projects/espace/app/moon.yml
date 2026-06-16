@@ -22,6 +22,7 @@ tags:
   - asset
   - docker
   - dokploy
+  - version
 tasks:
   assets-sync:
     deps:

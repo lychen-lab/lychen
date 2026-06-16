@@ -72,10 +72,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      # `moon run` (not `moon ci`) forces the task to run for EVERY dokploy
-      # project regardless of affected status — all six get the version tag, so
-      # production can pin a coherent version across the board.
+      # `moon run` (not `moon ci`) forces the task to run for EVERY `version`-
+      # tagged project regardless of affected status — all six get the release
+      # tag, so production can pin a coherent version across the board.
       - name: 'Promote images to ${{ needs.release-please.outputs.tag_name }}'
         env:
           VERSION: ${{ needs.release-please.outputs.tag_name }}
-        run: moon run '#dokploy:image-promote'
+        run: moon run '#version:image-promote'
