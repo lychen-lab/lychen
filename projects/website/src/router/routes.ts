@@ -9,7 +9,6 @@ import { ROUTE_PARTNERSHIPS } from '@/views/partnerships';
 import { ROUTE_CAREER } from '@/views/career';
 import { ROUTE_LABEL } from '@/views/label';
 import { ROUTE_PRIVACY_POLICY } from '@lychen/vue-components-website/views/privacy-policy';
-import { ROUTE_TERMS_OF_USE } from '@lychen/vue-components-website/views/terms-of-use';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -22,7 +21,6 @@ const routes: RouteRecordRaw[] = [
       ROUTE_TEAM,
       ROUTE_PRIVACY_POLICY,
       ROUTE_APPLICATIONS,
-      ROUTE_TERMS_OF_USE,
       ROUTE_PARTNERSHIPS,
       ROUTE_CAREER,
       ROUTE_LABEL,
