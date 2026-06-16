@@ -3,7 +3,7 @@
   "devDependencies": {
     "@faker-js/faker": "^10.4.0",
     "@playwright/test": "^1.60.0",
-    "vue": "^3.5.35",
+    "vue": "^3.5.38",
     "vue-i18n": "^11.4.5"
   },
   "dependencies": {
