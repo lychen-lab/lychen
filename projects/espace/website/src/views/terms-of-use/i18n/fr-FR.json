@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "Conditions Générales d'Utilisation",
+    "description": "Conditions Générales d'Utilisation de la plateforme Espace de l'association Lychen, accessible sur app.espace.lychen.org."
+  },
+  "title": "Conditions Générales d'Utilisation",
+  "last_update": "Dernière mise à jour : {date}",
+  "sections": [
+    {
+      "title": "Mentions Légales",
+      "content": "Association Lychen\nSIREN : 993 140 904 - SIRET : 993 140 904 00018\nSiège social : 1 ALLEE DU TRELOD 74000 ANNECY\nCatégorie juridique : 9220 - Association déclarée\nActivité Principale Exercée (APE) : 94.99Z - Autres organisations fonctionnant par adhésion volontaire\nDirecteur de la publication : Présidence de l'association\nContact : contact@lychen.org"
+    },
+    {
+      "title": "Objet",
+      "content": "Les présentes Conditions Générales d'Utilisation (ci-après les « CGU ») ont pour objet de définir les modalités et conditions d'accès et d'utilisation du service Espace édité par l'association Lychen (ci-après le « Service »). Espace est une plateforme mettant en relation des personnes disposant d'un espace de culture (terrain, jardin, cave, etc.) avec des personnes souhaitant cultiver, dans une démarche d'autonomie alimentaire et de lien social. Le Service est composé du site de présentation, de l'application accessible à l'adresse app.espace.lychen.org et de l'interface de programmation (API) accessible à l'adresse api.espace.lychen.org."
+    },
+    {
+      "title": "Acceptation des conditions",
+      "content": "L'utilisation du Service implique l'acceptation pleine et entière des présentes CGU par l'utilisateur. En accédant au Service, en créant un compte ou en utilisant l'API, l'utilisateur reconnaît avoir pris connaissance des présentes CGU et s'engage à les respecter. Si l'utilisateur n'accepte pas les présentes CGU, il lui appartient de ne pas utiliser le Service."
+    },
+    {
+      "title": "Accès au Service",
+      "content": "L'accès au Service est gratuit. L'application est accessible à l'adresse app.espace.lychen.org et l'API à l'adresse api.espace.lychen.org. Les frais d'accès et d'utilisation du réseau de télécommunication sont à la charge de l'utilisateur, selon les modalités fixées par ses fournisseurs d'accès et opérateurs de télécommunication. L'utilisateur reconnaît disposer des compétences et des moyens nécessaires pour accéder au Service et l'utiliser."
+    },
+    {
+      "title": "Compte utilisateur",
+      "content": "Certaines fonctionnalités du Service nécessitent la création d'un compte utilisateur sur app.espace.lychen.org. L'utilisateur s'engage à fournir des informations exactes, complètes et à jour lors de son inscription et à les maintenir actualisées. L'utilisateur est seul responsable de la confidentialité de ses identifiants de connexion ainsi que de toute action effectuée à partir de son compte. En cas d'utilisation non autorisée de son compte, l'utilisateur s'engage à en informer l'association Lychen dans les meilleurs délais à l'adresse contact@lychen.org."
+    },
+    {
+      "title": "Utilisation du Service",
+      "content": "L'utilisateur s'engage à utiliser le Service de manière loyale, conformément à sa destination et aux lois et règlements en vigueur. Il s'interdit notamment de : publier des contenus illicites, trompeurs, diffamatoires ou portant atteinte aux droits de tiers ; usurper l'identité d'un tiers ; perturber, ralentir ou entraver le fonctionnement du Service ; tenter d'accéder de manière non autorisée aux systèmes, comptes ou données auxquels il n'a pas droit ; utiliser le Service à des fins commerciales non autorisées ou de collecte massive de données."
+    },
+    {
+      "title": "Utilisation de l'API",
+      "content": "L'API accessible à l'adresse api.espace.lychen.org est mise à disposition pour permettre l'interaction programmatique avec le Service, principalement par l'application app.espace.lychen.org. Tout accès à l'API doit respecter les présentes CGU ainsi que les éventuelles limites d'usage (quotas, limitation du nombre de requêtes) mises en place pour préserver la stabilité et la sécurité du Service. L'association Lychen se réserve le droit de suspendre ou de restreindre l'accès à l'API en cas d'usage abusif, excessif ou contraire aux présentes CGU."
+    },
+    {
+      "title": "Disponibilité du Service",
+      "content": "L'association Lychen s'efforce de maintenir le Service accessible en continu, sans toutefois être tenue à une obligation de résultat. L'accès au Service peut être interrompu, notamment pour des raisons de maintenance, de mise à jour ou en cas de force majeure, sans que cela puisse engager la responsabilité de l'association. L'association Lychen se réserve le droit de faire évoluer, de modifier ou de suspendre tout ou partie du Service."
+    },
+    {
+      "title": "Propriété intellectuelle",
+      "content": "L'ensemble du Service relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle. Tous les droits de reproduction sont réservés, y compris pour les documents téléchargeables et les représentations iconographiques et photographiques. La reproduction de tout ou partie du Service sur un support électronique quel qu'il soit est formellement interdite sauf autorisation expresse du directeur de la publication. Les contenus publiés par les utilisateurs restent leur propriété ; en les publiant, l'utilisateur concède à l'association Lychen une licence d'utilisation pour les besoins du fonctionnement du Service."
+    },
+    {
+      "title": "Responsabilité",
+      "content": "Les informations fournies sur le Service le sont à titre informatif. L'association Lychen ne saurait garantir l'exactitude, la complétude ou l'actualité des informations diffusées, notamment celles publiées par les utilisateurs. La mise en relation effectuée par l'intermédiaire du Service relève de la seule responsabilité des utilisateurs concernés. En conséquence, l'utilisateur reconnaît utiliser le Service et les informations qu'il contient sous sa responsabilité exclusive."
+    },
+    {
+      "title": "Données personnelles",
+      "content": "L'utilisation du Service entraîne le traitement de données personnelles. Pour plus d'information sur la nature des données collectées, leur finalité et l'exercice de vos droits, veuillez consulter notre Politique de Confidentialité. Le Délégué à la Protection des Données (DPO) peut être contacté à l'adresse : dpo@lychen.org"
+    },
+    {
+      "title": "Modification des CGU",
+      "content": "L'association Lychen se réserve le droit de modifier les présentes CGU à tout moment, notamment afin de les adapter aux évolutions du Service ou de la réglementation. Les CGU applicables sont celles en vigueur à la date d'utilisation du Service. La date de dernière mise à jour est indiquée en haut de la présente page. En cas de modification substantielle, les utilisateurs en seront informés par les moyens appropriés."
+    },
+    {
+      "title": "Droit applicable",
+      "content": "Les présentes CGU sont régies par le droit français. En cas de litige relatif à leur interprétation ou à leur exécution, et à défaut de résolution amiable, les tribunaux français seront seuls compétents."
+    },
+    {
+      "title": "Contact",
+      "content": "Pour toute question relative aux présentes conditions d'utilisation du Service, vous pouvez nous écrire à l'adresse suivante : contact@lychen.org"
+    }
+  ]
+}

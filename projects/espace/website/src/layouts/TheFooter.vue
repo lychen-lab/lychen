@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 import { CONFIG } from './i18n';
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { ROUTE_TERMS_OF_USE } from '@lychen/vue-components-website/views/terms-of-use';
+import { ROUTE_TERMS_OF_USE } from '@/views/terms-of-use';
 import { ROUTE_PRIVACY_POLICY } from '@lychen/vue-components-website/views/privacy-policy';
 
 import FooterMain from '@lychen/vue-components-website/footer/FooterMain.vue';
