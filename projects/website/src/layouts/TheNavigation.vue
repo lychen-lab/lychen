@@ -1,4 +1,8 @@
 <template>
+  <!--
+    Photos (Pexels, free to use, no attribution required):
+    #1706972 lichen on bark (Our initiatives), #28436769 misty forest mountains (About).
+  -->
   <div class="flex w-full flex-row items-stretch justify-between gap-4">
     <RouterLink
       :to="{ name: ROUTE_HOME.name }"
@@ -26,7 +30,7 @@
             >
               <div class="h-50 overflow-hidden rounded-lg">
                 <img
-                  src="https://res.cloudinary.com/ddhvfiezg/image/upload/v1765700848/019b1bf9-0a48-73c9-ae92-1956fc25fe64.webp"
+                  :src="initiativesMenuUrl"
                   class="h-full w-full object-cover"
                   alt=""
                   loading="lazy"
@@ -72,7 +76,7 @@
               </div>
               <div class="h-70 overflow-hidden rounded-lg">
                 <img
-                  src="https://res.cloudinary.com/ddhvfiezg/image/upload/v1765700238/019b1bef-b594-7bc0-84b8-2294798cc1f5.webp"
+                  :src="aboutMenuUrl"
                   class="h-full w-full object-cover"
                   alt=""
                   loading="lazy"
@@ -145,6 +149,9 @@ import { ROUTE_MISSION } from '@/views/mission';
 import { ROUTE_APPLICATIONS } from '@/views/applications';
 import IconHeartHandshake from '@lychen/vue-icons/IconHeartHandshake.vue';
 import { ROUTE_LABEL } from '@/views/label';
+
+import initiativesMenuUrl from './assets/initiatives-menu.webp';
+import aboutMenuUrl from './assets/about-menu.webp';
 
 const NavigationMenuSubLink = defineAsyncComponent(
   () => import('@lychen/vue-components-core/navigation-menu/NavigationMenuSubLink.vue'),
