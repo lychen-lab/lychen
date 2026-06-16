@@ -13,9 +13,13 @@ environments — never rebuilt.
 ## How image tags work
 
 - **Build and push images** builds each affected app and pushes it to GHCR
-  tagged with both the **commit SHA** and `latest`:
-  - Frontends (`tag-docker`): `ghcr.io/lychen-lab/lychen/<project>:<sha>`
-  - APIs (`tag-symfony`): `ghcr.io/lychen-lab/<project>:<sha>`
+  tagged with both the **commit SHA** and `latest`. Frontends (`tag-docker`) and
+  APIs (`tag-symfony`) now share a **single namespace**:
+  `ghcr.io/lychen-lab/lychen/<project>:<sha>`. Because the path is uniform across
+  layers, the release-versioning task `image-promote` is defined once on a
+  dedicated `version` tag
+  ([`.moon/tasks/tag-version.yml`](../.moon/tasks/tag-version.yml)) — independent
+  of the `dokploy` deploy logic — instead of being duplicated per layer.
 - A deploy pins each Dokploy compose to a specific tag by setting the `IMAGE_TAG`
   variable on the compose (see
   [`.moon/scripts/dokploy-compose-deploy.sh`](../.moon/scripts/dokploy-compose-deploy.sh)),
@@ -30,10 +34,10 @@ Projects in the automated pipeline (tagged `dokploy`): `website`, `espace-app`,
 
 ## Staging (continuous)
 
-Every push to `main` triggers **Build and push images** →
-[**Deploy**](../.github/workflows/deploy.yml), which deploys the affected
-projects to the `staging` environment pinned to the commit SHA. Nothing to do —
-staging always reflects `main`.
+Every push to `main` triggers **Deploy | Build & push images** →
+[**Deploy | Staging**](../.github/workflows/deploy.yml), which deploys the
+affected projects to the `staging` environment pinned to the commit SHA. Nothing
+to do — staging always reflects `main`.
 
 ## Releases & production (on demand)
 
@@ -54,7 +58,7 @@ deployable for the whole set.
 
 ### 2. Deploy to production, when you decide
 
-Run the [**Deploy to production**](../.github/workflows/deploy-prod.yml) workflow
+Run the [**Deploy | Production**](../.github/workflows/deploy-prod.yml) workflow
 (`workflow_dispatch`):
 
 - Leave `version` **blank** to deploy the latest release tag, or
@@ -76,7 +80,7 @@ approval on top of who can run the workflow.
 Roll production back by **redeploying an earlier version**. The image is already
 in GHCR, so there is **no rebuild**.
 
-- **Recommended:** run the **Deploy to production** workflow with `version` set
+- **Recommended:** run the **Deploy | Production** workflow with `version` set
   to a previous `vX.Y.Z`.
 - **Via the Dokploy UI:** open the project's **Compose** service →
   **Environment**, set `IMAGE_TAG=<previous-version>` (leave `IMAGES_PREFIX` and
@@ -98,6 +102,24 @@ in GHCR, so there is **no rebuild**.
 > `IMAGE_TAG` accepts any tag that exists in GHCR — a release version (`v0.2.0`)
 > or a raw commit SHA both work. Releases cut before this pipeline change have no
 > `:vX.Y.Z` image; pin those by commit SHA instead.
+
+### API images built before the namespace unification
+
+API images now publish under `ghcr.io/lychen-lab/lychen/<project>` like the
+frontends. **API** images built *before* this change still live under the old
+`ghcr.io/lychen-lab/<project>` path (without the `/lychen` segment) and are **not**
+re-tagged retroactively. To roll an API back to a pre-migration build, point its
+Dokploy compose `IMAGES_PREFIX` at the old namespace (`ghcr.io/lychen-lab/`) for
+that one deploy, or rebuild from the target commit on `main` so a new image is
+published under the unified path. Keep the old GHCR packages readable until no
+production deploy references a pre-migration SHA.
+
+> **Runtime config (Dokploy, outside this repo):** the API composes resolve their
+> image as `${IMAGES_PREFIX:-}<project>:${IMAGE_TAG:-latest}`. After this change,
+> the staging/prod `IMAGES_PREFIX` for the three APIs must be set to
+> `ghcr.io/lychen-lab/lychen/` (the frontends already hardcode the full path). The
+> same variable also drives prefixed names in dev/CI, so verify local stacks still
+> resolve before rolling it out.
 
 ## Prefer a forward fix
 

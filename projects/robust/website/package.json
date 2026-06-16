@@ -22,19 +22,19 @@
     "@lychen/vue-robust": "workspace:*",
     "@lychen/vue-router-configs": "workspace:*",
     "@lychen/vue-unhead-composables": "workspace:*",
-    "@unhead/schema-org": "^3.1.3",
-    "@unhead/vue": "^3.1.3",
-    "unhead": "^3.1.3",
-    "vue": "^3.5.35",
+    "@unhead/schema-org": "^3.1.4",
+    "@unhead/vue": "^3.1.4",
+    "unhead": "^3.1.4",
+    "vue": "^3.5.38",
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.3.0",
+    "@tailwindcss/vite": "^4.3.1",
     "@vitejs/plugin-vue": "^6.0.7",
     "vite": "^8.0.16",
     "vite-plugin-env-runtime": "^0.3.7",
     "vite-plugin-mkcert": "^2.1.0",
-    "vite-plugin-vue-devtools": "^8.1.2",
+    "vite-plugin-vue-devtools": "^8.1.3",
     "vite-ssg": "^28.3.0",
     "vite-ssg-sitemap": "^0.10.0"
   }
