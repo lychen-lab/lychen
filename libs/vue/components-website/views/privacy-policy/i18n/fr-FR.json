@@ -1,30 +1,70 @@
 {
   "meta": {
     "title": "Politique de Confidentialité",
-    "description": "Politique de Confidentialité concernant les données personnelles de l'association Lychen."
+    "description": "Politique de confidentialité de l'association Lychen : responsable du traitement, données collectées, cookies, durées de conservation et exercice de vos droits conformément au RGPD."
   },
   "title": "Politique de Confidentialité",
   "last_update": "Dernière mise à jour : {date}",
   "sections": [
     {
-      "title": "Responsable du traitement",
-      "content": "Le responsable du traitement des données est l'Association Lychen.\nSiège social : 1 ALLEE DU TRELOD 74000 ANNECY\nContact DPO : dpo@lychen.org\nContact générique : contact@lychen.org"
+      "title": "Préambule",
+      "content": "L'association Lychen attache une grande importance au respect de votre vie privée et à la protection de vos données à caractère personnel. La présente politique de confidentialité a pour objet de vous informer, de manière claire et transparente, sur la façon dont vos données sont collectées et traitées lorsque vous consultez ce site.\nLe site est un site informatif (site vitrine). Il ne propose ni création de compte, ni vente en ligne. Le présent document est établi conformément au Règlement (UE) 2016/679 du 27 avril 2016 (RGPD) et à la loi n° 78-17 du 6 janvier 1978 relative à l'informatique, aux fichiers et aux libertés, dite « Informatique et Libertés »."
+    },
+    {
+      "title": "Éditeur du site et responsable du traitement",
+      "content": "Le présent site est édité par l'association Lychen, association déclarée régie par la loi du 1er juillet 1901.\nSiège social : 1 allée du Trélod, 74000 Annecy, France\nSIREN : 993 140 904 — SIRET : 993 140 904 00018\nDirecteur de la publication : la présidence de l'association\nLe responsable du traitement des données à caractère personnel est l'association Lychen, représentée par sa présidence.\nContact : contact@lychen.org"
+    },
+    {
+      "title": "Délégué à la protection des données (DPO)",
+      "content": "Pour toute question relative au traitement de vos données personnelles ou à l'exercice de vos droits, vous pouvez contacter notre Délégué à la Protection des Données :\nPar courriel : dpo@lychen.org\nPar courrier : Association Lychen — DPO, 1 allée du Trélod, 74000 Annecy, France"
     },
     {
       "title": "Données collectées",
-      "content": "Notre site internet est un site statique informatif. Nous ne collectons pas de données personnelles nominatives via des formulaires sur ce site (sauf mention contraire explicite). La simple navigation sur le site ne nécessite pas la fourniture de données personnelles."
+      "content": "Ce site est statique et informatif. Aucun compte utilisateur n'est requis et aucune donnée nominative n'est collectée via des formulaires sur ce site (sauf mention contraire explicite à l'endroit de la collecte).\nLors de votre navigation, des données techniques de connexion (adresse IP, date et heure de la requête, type de navigateur, pages consultées) peuvent être enregistrées automatiquement dans les journaux de l'hébergeur, à des fins de sécurité et de bon fonctionnement.\nSi vous nous contactez directement par courriel, nous traitons les données que vous nous communiquez de votre propre initiative (adresse électronique, contenu de votre message) afin de répondre à votre demande."
     },
     {
-      "title": "Cookies",
-      "content": "Nous n'utilisons pas de cookies de traçage publicitaire ou de mesure d'audience nécessitant un consentement. Des cookies techniques peuvent être déposés par l'hébergeur à des fins de sécurité et de bon fonctionnement, exemptés de consentement selon les recommandations de la CNIL."
+      "title": "Finalités du traitement",
+      "content": "Les données susmentionnées sont traitées pour les finalités suivantes :\n- assurer le fonctionnement, la sécurité et la disponibilité du site ;\n- répondre aux demandes que vous nous adressez par courriel ;\n- établir, le cas échéant, des statistiques de fréquentation strictement anonymes.\nVos données ne font l'objet d'aucune décision automatisée ni d'aucun profilage."
+    },
+    {
+      "title": "Base légale du traitement",
+      "content": "Conformément à l'article 6 du RGPD, les traitements reposent sur les bases légales suivantes :\n- l'intérêt légitime de l'association à garantir la sécurité et le bon fonctionnement du site (journaux techniques) ;\n- l'exécution de mesures prises à votre demande, lorsque vous nous contactez par courriel ;\n- votre consentement, lorsqu'il est spécifiquement requis et recueilli."
+    },
+    {
+      "title": "Cookies et traceurs",
+      "content": "Ce site n'utilise aucun cookie de traçage publicitaire ni aucun outil de mesure d'audience nécessitant votre consentement.\nSeuls peuvent être utilisés des cookies et stockages techniques strictement nécessaires au bon fonctionnement du site, exemptés de consentement conformément aux recommandations de la CNIL. Vos préférences d'affichage (langue, thème clair ou sombre) sont enregistrées localement sur votre appareil et ne sont jamais transmises à des tiers.\nVous pouvez à tout moment configurer votre navigateur pour bloquer ou supprimer ces éléments."
+    },
+    {
+      "title": "Destinataires des données",
+      "content": "Vos données ne sont ni vendues, ni louées, ni cédées à des tiers à des fins commerciales.\nElles sont accessibles uniquement aux personnes habilitées de l'association ayant besoin d'en connaître, ainsi qu'à notre hébergeur agissant en qualité de sous-traitant, pour les seuls besoins techniques de fonctionnement et de sécurité du site."
+    },
+    {
+      "title": "Hébergement et transferts hors UE",
+      "content": "Les données techniques liées au site sont hébergées au sein de l'Union européenne. Aucun transfert de données à caractère personnel en dehors de l'Union européenne n'est effectué dans le cadre de l'exploitation de ce site."
+    },
+    {
+      "title": "Durée de conservation",
+      "content": "Vos données sont conservées pour une durée n'excédant pas celle nécessaire aux finalités pour lesquelles elles sont traitées :\n- journaux de connexion (adresse IP, logs techniques) : jusqu'à 12 mois ;\n- courriels de contact : le temps nécessaire au traitement de votre demande, puis archivés ou supprimés au plus tard 3 ans après notre dernier échange ;\n- préférences enregistrées localement : jusqu'à leur effacement par vos soins (vidage du stockage de votre navigateur)."
+    },
+    {
+      "title": "Sécurité des données",
+      "content": "L'association met en œuvre les mesures techniques et organisationnelles appropriées afin de protéger vos données contre toute perte, altération, divulgation ou accès non autorisé. Les échanges avec le site sont chiffrés via le protocole HTTPS (TLS), et l'accès aux données est limité aux seules personnes habilitées."
     },
     {
       "title": "Vos droits",
-      "content": "Conformément au RGPD et à la loi Informatique et Libertés, vous disposez d'un droit d'accès, de rectification, d'effacement, de portabilité, de limitation et d'opposition au traitement de vos données. Pour exercer ces droits, contactez notre Délégué à la Protection des Données (DPO) : dpo@lychen.org."
+      "content": "Conformément au RGPD et à la loi Informatique et Libertés, vous disposez des droits suivants sur vos données : droit d'accès, de rectification, d'effacement, de limitation du traitement, de portabilité, ainsi que d'opposition au traitement et le droit de définir des directives relatives au sort de vos données après votre décès.\nPour exercer ces droits, adressez votre demande à notre DPO : dpo@lychen.org. Une preuve d'identité pourra vous être demandée. Nous nous engageons à vous répondre dans un délai d'un mois à compter de la réception de votre demande."
     },
     {
-      "title": "Réclamation",
-      "content": "Si vous estimez, après nous avoir contactés, que vos droits ne sont pas respectés, vous pouvez adresser une réclamation auprès de la CNIL."
+      "title": "Réclamation auprès de la CNIL",
+      "content": "Si vous estimez, après nous avoir contactés, que vos droits ne sont pas respectés, vous disposez du droit d'introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (CNIL) :\nCNIL — 3 place de Fontenoy, TSA 80715, 75334 Paris Cedex 07\nSite web : www.cnil.fr"
+    },
+    {
+      "title": "Modification de la politique",
+      "content": "La présente politique de confidentialité peut être amenée à évoluer afin de tenir compte des changements légaux, réglementaires ou techniques. La date de dernière mise à jour figure en tête de page. Nous vous invitons à la consulter régulièrement."
+    },
+    {
+      "title": "Contact",
+      "content": "Pour toute question relative à la présente politique de confidentialité ou au traitement de vos données personnelles, vous pouvez nous écrire à l'adresse suivante : contact@lychen.org (ou dpo@lychen.org pour les demandes relatives à la protection des données)."
     }
   ]
 }
