@@ -1,6 +1,16 @@
 import { EMAIL } from '@lychen/typescript-constants/Email';
 
-export default [
+export interface TeamMember {
+  firstname: string;
+  lastname: string;
+  id: string;
+  image: string;
+  role?: string;
+  link?: string;
+  email?: string;
+}
+
+const team: TeamMember[] = [
   {
     firstname: 'Nathan',
     lastname: 'De Pachtere',
@@ -56,3 +66,5 @@ export default [
       'https://res.cloudinary.com/ddhvfiezg/image/upload/v1765547126/019b12d0-5273-7faf-9820-0befe3f270d4.webp',
   },
 ];
+
+export default team;

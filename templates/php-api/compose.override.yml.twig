@@ -1,9 +1,9 @@
 # Development environment override
 services:
-  {{ name }}-database:
+  database:
     ports:
       - '21432:5432/tcp' #TODO Change it
-  {{ name }}-api:
+  api:
     build:
       context: .
       target: frankenphp_dev
