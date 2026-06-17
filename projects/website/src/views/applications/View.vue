@@ -90,7 +90,7 @@ import Badge from '@lychen/vue-components-core/badge/Badge.vue';
 import LychenEcosystem from '@lychen/vue-drawio-core/LychenEcosystem.vue';
 import { BentoSummary } from '@/components/bento-summary';
 import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
-import { useWebPageSchema } from '@lychen/vue-unhead-composables/useWebPageSchema';
+import { useWebPageSchema } from '@/composables/useWebPageSchema';
 
 const { t } = usePrefixedI18n(CONFIG);
 

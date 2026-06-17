@@ -506,7 +506,7 @@ import { useIntersectionObserver } from '@vueuse/core';
 
 import { usePrefixedI18n } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
-import { useWebPageSchema } from '@lychen/vue-unhead-composables/useWebPageSchema';
+import { useWebPageSchema } from '@/composables/useWebPageSchema';
 import { CONFIG } from './i18n';
 import { ROUTE_APPLICATIONS } from '@/views/applications';
 import { ROUTE_PARTNERSHIPS } from '@/views/partnerships';

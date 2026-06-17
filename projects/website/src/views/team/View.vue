@@ -115,7 +115,7 @@ import CardPerson from '@/views/team/CardPerson.vue';
 import Title from '@lychen/vue-components-website/title/Title.vue';
 import BentoCard from '@/views/team/BentoCard.vue';
 import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
-import { useWebPageSchema } from '@lychen/vue-unhead-composables/useWebPageSchema';
+import { useWebPageSchema } from '@/composables/useWebPageSchema';
 import { definePerson, useSchemaOrg } from '@unhead/schema-org/vue';
 
 const { t } = usePrefixedI18n(CONFIG);

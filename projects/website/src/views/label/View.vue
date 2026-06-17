@@ -377,7 +377,7 @@ import Title from '@lychen/vue-components-website/title/Title.vue';
 import Paragraph from '@lychen/vue-components-website/paragraph/Paragraph.vue';
 import Button from '@lychen/vue-components-core/button/Button.vue';
 import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
-import { useWebPageSchema } from '@lychen/vue-unhead-composables/useWebPageSchema';
+import { useWebPageSchema } from '@/composables/useWebPageSchema';
 import { ROUTE_MISSION } from '@/views/mission';
 import IconSprout from '@lychen/vue-icons/IconSprout.vue';
 import IconCircleCheck from '@lychen/vue-icons/IconCircleCheck.vue';

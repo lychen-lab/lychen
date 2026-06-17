@@ -29,7 +29,6 @@ import Container from '@lychen/vue-components-website/container/Container.vue';
 import Title from '@lychen/vue-components-website/title/Title.vue';
 import Paragraph from '@lychen/vue-components-website/paragraph/Paragraph.vue';
 import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
-import { useWebPageSchema } from '@lychen/vue-unhead-composables/useWebPageSchema';
 import { computed } from 'vue';
 
 const { t, d, tm, rt } = usePrefixedI18n(CONFIG);
@@ -41,5 +40,4 @@ const sections = computed(
 );
 
 useExtendedHead(t);
-useWebPageSchema(t, { siteName: 'espace' });
 </script>

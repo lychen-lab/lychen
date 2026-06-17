@@ -54,7 +54,7 @@ import Button from '@lychen/vue-components-core/button/Button.vue';
 import { LINK } from '@lychen/typescript-constants/Link';
 import PartnerCard from '@/views/partnerships/PartnerCard.vue';
 import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
-import { useWebPageSchema } from '@lychen/vue-unhead-composables/useWebPageSchema';
+import { useWebPageSchema } from '@/composables/useWebPageSchema';
 
 const { t } = usePrefixedI18n(CONFIG);
 useExtendedHead(t);

@@ -62,7 +62,7 @@ import Paragraph from '@lychen/vue-components-website/paragraph/Paragraph.vue';
 import CharterSection from './CharterSection.vue';
 import CharterArticle from './CharterArticle.vue';
 import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
-import { useWebPageSchema } from '@lychen/vue-unhead-composables/useWebPageSchema';
+import { useWebPageSchema } from '@/composables/useWebPageSchema';
 
 const { t } = usePrefixedI18n(CONFIG);
 
