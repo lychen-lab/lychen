@@ -67,6 +67,21 @@ Run the [**Deploy | Production**](../.github/workflows/deploy-prod.yml) workflow
 It pins every production compose to that version and redeploys. Cut a release,
 let it bake on staging, and ship it to production whenever you choose.
 
+**No-op deploys are skipped.** A release re-tags *every* dokploy project as
+`:vX.Y.Z`, so a project unchanged since the previous release gets a `:vX.Y.Z`
+that points at the **same digest** as what is already running — redeploying it
+would just restart the container (a brief blip) for an identical image. Before
+deploying each project, the workflow compares the target tag's multi-arch index
+digest against the tag the project's Dokploy compose is **currently pinned to**
+(read via `compose.one` — the live, deployed state, so it stays correct even if
+production skipped a release) and **skips** the deploy when they match. Every
+decision is logged with the digests compared — no silent skips. The check is
+fail-safe: a first deploy (no current tag), an unreachable registry, or any
+unresolvable digest falls through to a normal deploy. The promote step is
+untouched — all six projects still get the `:vX.Y.Z` tag — the optimisation
+lives only in the deploy. See
+[`.moon/scripts/dokploy-prod-image-changed.sh`](../.moon/scripts/dokploy-prod-image-changed.sh).
+
 > **Pin production to an explicit `vX.Y.Z`, never to the moving `:stable`/`:latest`
 > alias.** That's what keeps production immutable and reproducible. `:stable` is
 > only a convenience pointer to the most recent release.
