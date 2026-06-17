@@ -17,6 +17,7 @@ chat apps and search previews carry the lychen branding. The target visual is
 
   ```ts
   import ogImageUrl from './assets/MyPageOgImage.webp';
+
   useExtendedHead(t, { ogImage: ogImageUrl });
   ```
 
