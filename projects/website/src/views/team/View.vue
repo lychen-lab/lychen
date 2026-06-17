@@ -115,9 +115,25 @@ import CardPerson from '@/views/team/CardPerson.vue';
 import Title from '@lychen/vue-components-website/title/Title.vue';
 import BentoCard from '@/views/team/BentoCard.vue';
 import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
+import { useWebPageSchema } from '@lychen/vue-unhead-composables/useWebPageSchema';
+import { definePerson, useSchemaOrg } from '@unhead/schema-org/vue';
 
 const { t } = usePrefixedI18n(CONFIG);
 useExtendedHead(t);
+useWebPageSchema(t, { siteName: 'lychen' });
+
+// Expose each team member as a schema.org Person so search engines can surface
+// the people behind the project (rich results, knowledge-graph linking).
+useSchemaOrg(
+  persons.map((person) =>
+    definePerson({
+      '@id': `#person-${person.id}`,
+      name: `${person.firstname} ${person.lastname}`.trim(),
+      image: person.image,
+      ...(person.link ? { sameAs: [person.link] } : {}),
+    }),
+  ),
+);
 
 const contactEmail = ref(EMAIL.Contact);
 const { copy, isSupported } = useClipboard({ source: contactEmail });
