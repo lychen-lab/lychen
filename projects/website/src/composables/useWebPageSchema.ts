@@ -39,7 +39,9 @@ export function useWebPageSchema(t: (key: string) => string, options: WebPageSch
   const router = useRouter();
 
   const host = import.meta.env.VITE_UNHEAD_HOST;
-  const toAbsolute = (path: string) => `https://${host}${path}`;
+  function toAbsolute(path: string): string {
+    return `https://${host}${path}`;
+  }
 
   const name = options.name ?? t('meta.title');
   const description = options.description ?? t('meta.description');
