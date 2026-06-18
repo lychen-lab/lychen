@@ -1,0 +1,20 @@
+# RoadRunner configuration for the Temporal PHP worker.
+# RoadRunner hosts the long-running PHP processes that Temporal streams
+# workflow and activity tasks to. Start it with: rr serve -c .rr.yml
+version: "3"
+
+rpc:
+  listen: tcp://127.0.0.1:6001
+
+server:
+  command: "php worker.php"
+
+temporal:
+  address: ${TEMPORAL_ADDRESS:-temporal:7233}
+  activities:
+    num_workers: 4
+    max_jobs: 64
+
+logs:
+  level: info
+  mode: production

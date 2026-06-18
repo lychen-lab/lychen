@@ -1,0 +1,30 @@
+{
+    "name": "lychen/espace-api-poc-temporal",
+    "description": "Proof of concept: orchestrating the espace AreaProposal (landProposal) lifecycle with Temporal instead of the Symfony Workflow component.",
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.4",
+        "ext-grpc": "*",
+        "ext-protobuf": "*",
+        "spiral/roadrunner-cli": "^2.6",
+        "temporal/sdk": "^2.12"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\Poc\\Temporal\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "spiral/roadrunner-cli": true
+        }
+    },
+    "scripts": {
+        "rr:get": "rr get-binary",
+        "worker": "rr serve -c .rr.yml",
+        "start": "php bin/start_workflow.php",
+        "drive": "php bin/signal_workflow.php"
+    }
+}

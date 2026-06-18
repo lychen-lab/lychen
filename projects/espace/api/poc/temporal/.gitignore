@@ -1,0 +1,4 @@
+/vendor/
+/rr
+/.rr.pid
+composer.lock
