@@ -7,9 +7,16 @@ tasks:
   ci-copy-packages:
     script: cp -R $workspaceRoot/libs/php $projectRoot/packages && find $projectRoot/packages -name "moon.yml" -type f -delete
   ci-create-db:
-    command: docker compose -p $project -f compose.yml run --rm api bin/console doctrine:database:create -n --if-not-exists
+    # --entrypoint php skips the image entrypoint, which otherwise blocks waiting
+    # for the (not-yet-created) test database. doctrine:database:create connects
+    # to the server's maintenance database and creates app_test (the test env
+    # appends the _test suffix). Replaces the POSTGRES_DB override that the
+    # removed compose.ci.yml used to provide.
+    command: docker compose -p $project -f compose.yml run --rm --entrypoint php api bin/console doctrine:database:create -n --if-not-exists
   ci-export-openapi:
     command: docker compose -p $project -f compose.yml run --rm api bin/console api:openapi:export --spec-version=3.0.0 --output=openapi_docs.json
+    deps:
+      - ci-create-db
   ci-install-tools:
     command: docker compose -p $project -f compose.yml run --rm api composer install --no-interaction --working-dir=tools/
   ci-php-cs-fixer-src:
@@ -24,10 +31,14 @@ tasks:
       - ci-copy-packages
   ci-test-phpunit:
     command: docker compose -p $project -f compose.yml run --rm api php -d memory_limit=-1 ./vendor/bin/phpunit
+    deps:
+      - ci-create-db
   ci-update-db:
     command: docker compose -p $project -f compose.yml run --rm api bin/console doctrine:schema:update --force
   ci-validate-db-schema:
     command: docker compose -p $project -f compose.yml run --rm api bin/console doctrine:schema:validate -n
+    deps:
+      - ci-create-db
   dev:
     command: docker compose -p $project up -d
     deps:
