@@ -1,7 +1,7 @@
 # TODO Needs to be sort to have only moon task as reference
 # Executables (local)
 DOCKER_COMP = docker compose
-DOCKER_COMP_CI = docker compose -f compose.yml -f compose.ci.yml
+DOCKER_COMP_CI = docker compose -f compose.yml
 
 # Docker containers
 PHP_CONT = $(DOCKER_COMP) exec php
