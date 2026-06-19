@@ -2,6 +2,10 @@ name: 'OpenAPI | SDK sync (espace)'
 
 env:
   REGISTRY: ghcr.io/lychen-lab/lychen/test
+  # Make the compose-based CI tasks resolve the `api` service to the locally
+  # built test image (sources + vendors are baked in).
+  IMAGES_PREFIX: ghcr.io/lychen-lab/lychen/test/
+  IMAGE_TAG: ${{ github.sha }}
 
 on:
   pull_request:
@@ -54,9 +58,6 @@ jobs:
       # The image is not pushed; symfony-test.yml owns the ghcr test image.
       - name: Build docker test image
         run: moon ci espace-api:ci-test-build-docker-image
-
-      - name: Install vendors
-        run: moon ci espace-api:ci-install-vendors
 
       - name: Export OpenAPI spec
         run: moon ci espace-api:ci-export-openapi

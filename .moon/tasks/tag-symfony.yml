@@ -3,31 +3,42 @@ inheritedBy:
   tag: symfony
 tasks:
   ci-check-vulnerabilities:
-    command: docker compose -p $project -f compose.yml -f compose.ci.yml run --rm api ./local-php-security-checker
+    command: docker compose -p $project -f compose.yml run --rm api ./local-php-security-checker
   ci-copy-packages:
     script: cp -R $workspaceRoot/libs/php $projectRoot/packages && find $projectRoot/packages -name "moon.yml" -type f -delete
   ci-create-db:
-    command: docker compose -p $project -f compose.yml -f compose.ci.yml run --rm api bin/console doctrine:database:create -n --if-not-exists
+    # --entrypoint php skips the image entrypoint, which otherwise blocks waiting
+    # for the (not-yet-created) test database. doctrine:database:create connects
+    # to the server's maintenance database and creates app_test (the test env
+    # appends the _test suffix). Replaces the POSTGRES_DB override that the
+    # removed compose.ci.yml used to provide.
+    command: docker compose -p $project -f compose.yml run --rm --entrypoint php api bin/console doctrine:database:create -n --if-not-exists
   ci-export-openapi:
-    command: docker compose -p $project -f compose.yml -f compose.ci.yml run --rm api bin/console api:openapi:export --spec-version=3.0.0 --output=openapi_docs.json
+    command: docker compose -p $project -f compose.yml run --rm api bin/console api:openapi:export --spec-version=3.0.0 --output=openapi_docs.json
+    deps:
+      - ci-create-db
   ci-install-tools:
-    command: docker compose -p $project -f compose.yml -f compose.ci.yml run --rm api composer install --no-interaction --working-dir=tools/
-  ci-install-vendors:
-    command: docker compose -p $project -f compose.yml -f compose.ci.yml run --rm api composer install --no-interaction
+    command: docker compose -p $project -f compose.yml run --rm api composer install --no-interaction --working-dir=tools/
   ci-php-cs-fixer-src:
-    command: docker compose -p $project -f compose.yml -f compose.ci.yml run --rm api tools/vendor/bin/php-cs-fixer fix src/ --rules=@Symfony --dry-run --diff
+    command: docker compose -p $project -f compose.yml run --rm api tools/vendor/bin/php-cs-fixer fix src/ --rules=@Symfony --dry-run --diff
   ci-php-cs-fixer-test:
-    command: docker compose -p $project -f compose.yml -f compose.ci.yml run --rm api tools/vendor/bin/php-cs-fixer fix tests/ --rules=@Symfony --dry-run --diff
+    command: docker compose -p $project -f compose.yml run --rm api tools/vendor/bin/php-cs-fixer fix tests/ --rules=@Symfony --dry-run --diff
   ci-phpstan:
-    command: docker compose -p $project -f compose.yml -f compose.ci.yml run --rm api tools/vendor/bin/phpstan analyse --memory-limit=-1
+    command: docker compose -p $project -f compose.yml run --rm api tools/vendor/bin/phpstan analyse --memory-limit=-1
   ci-test-build-docker-image:
     command: docker build $projectRoot --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${TEST_IMAGE_NAME}:latest --tag ${TEST_IMAGE_NAME}:${GITHUB_SHA} --tag ${TEST_IMAGE_NAME}:latest --target frankenphp_test
+    deps:
+      - ci-copy-packages
   ci-test-phpunit:
-    command: docker compose -p $project -f compose.yml -f compose.ci.yml run --rm api php -d memory_limit=-1 ./vendor/bin/phpunit
+    command: docker compose -p $project -f compose.yml run --rm api php -d memory_limit=-1 ./vendor/bin/phpunit
+    deps:
+      - ci-create-db
   ci-update-db:
-    command: docker compose -p $project -f compose.yml -f compose.ci.yml run --rm api bin/console doctrine:schema:update --force
+    command: docker compose -p $project -f compose.yml run --rm api bin/console doctrine:schema:update --force
   ci-validate-db-schema:
-    command: docker compose -p $project -f compose.yml -f compose.ci.yml run --rm api bin/console doctrine:schema:validate -n
+    command: docker compose -p $project -f compose.yml run --rm api bin/console doctrine:schema:validate -n
+    deps:
+      - ci-create-db
   dev:
     command: docker compose -p $project up -d
     deps:
