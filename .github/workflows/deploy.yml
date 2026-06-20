@@ -42,10 +42,6 @@ jobs:
         with:
           layer: application
           tags: dokploy
-          # Keep the staging deploy set in sync with the build set above: a bare
-          # API SDK regeneration must not redeploy the fronts.
-          # See docs/decouple-apis-from-frontends.md.
-          ignore-generated-sdk: 'true'
       - id: fetch-environments
         name: Fetch Environments from GitHub
         env:

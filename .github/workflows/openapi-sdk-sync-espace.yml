@@ -69,15 +69,22 @@ jobs:
       - name: Regenerate TypeScript SDK
         run: yarn workspace @lychen/typescript-espace-api-sdk run openapi-typescript ../../../projects/espace/api/openapi_docs.json -o ./generated/espace-api.ts --enum-values --enum
 
-      - name: Check committed spec & SDK are in sync
+      # SDK generation is intentionally MANUAL and decoupled from API changes: an
+      # API change must NOT force a SDK regeneration (and the resulting frontend
+      # redeploy) in the same PR. This step only *reports* drift as a warning and
+      # never fails the build. Regenerate when you decide to, and committing the
+      # result is what lets the frontends pick up the new contract.
+      # See docs/decouple-apis-from-frontends.md.
+      - name: Report committed spec & SDK drift (non-blocking)
         run: |
           if ! git diff --exit-code -- projects/espace/api/openapi_docs.json libs/typescript/espace-api-sdk/generated/; then
             echo ""
             echo "The committed OpenAPI spec and/or generated TypeScript SDK are out of sync with the espace API."
-            echo "Regenerate them locally and commit the result:"
+            echo "This is not a failure — SDK generation is manual. Regenerate when ready and commit the result:"
             echo ""
             echo "  moon run typescript-espace-api-sdk:generate-api"
             echo ""
-            echo "::error::projects/espace/api/openapi_docs.json and/or libs/typescript/espace-api-sdk/generated/espace-api.ts are out of sync with the espace API. Run 'moon run typescript-espace-api-sdk:generate-api' locally and commit the result."
-            exit 1
+            echo "::warning::espace API spec/SDK drift detected. SDK generation is manual; run 'moon run typescript-espace-api-sdk:generate-api' and commit when you want the frontends to adopt the new contract."
+          else
+            echo "Committed spec & SDK are in sync with the espace API."
           fi

@@ -17,12 +17,6 @@ inputs:
     description: 'Only affected projects (true, default) or all matching projects (false)'
     required: false
     default: 'true'
-  ignore-generated-sdk:
-    # Decouples API/SDK regeneration from frontend redeploys. See
-    # docs/decouple-apis-from-frontends.md (option A). Only applies when affected != false.
-    description: 'Exclude generated API SDK changes (libs/typescript/*/api-sdk/generated/**) from affected detection, so regenerating the SDK after an API change does not, on its own, mark/redeploy the consuming frontends.'
-    required: false
-    default: 'false'
 outputs:
   projects: 
     description: "Projects list"
@@ -35,10 +29,8 @@ runs:
       id: list
       run: |
         ARGS=""
-        AFFECTED=false
         if [[ "${{ inputs.affected }}" != "false" ]]; then
           ARGS="--affected --downstream deep"
-          AFFECTED=true
         fi
         if [[ -n "${{ inputs.layer }}" ]]; then
           ARGS="$ARGS --layer ${{ inputs.layer }}"
@@ -53,24 +45,6 @@ runs:
           ARGS="$ARGS --tags ${{ inputs.tags }}"
         fi
 
-        # When ignore-generated-sdk is enabled, regenerating the API SDK
-        # (libs/typescript/*/api-sdk/generated/**) must NOT, on its own, mark the
-        # consuming frontends as affected — otherwise every API change redeploys all
-        # fronts. We let moon detect the touched files, strip the generated-SDK paths
-        # from that set, then feed the filtered list back into `moon query projects
-        # --affected` over stdin. moon still applies `--downstream deep`, so a front
-        # stays affected when its OWN sources or a hand-written shared lib changed;
-        # only the "generated SDK is the sole change" case is dropped.
-        if [[ "$AFFECTED" == "true" && "${{ inputs.ignore-generated-sdk }}" == "true" ]]; then
-          QUERY_OUTPUT=$(
-            moon query touched-files --json \
-              | jq -c '.files |= map(select(test("/api-sdk/generated/") | not))' \
-              | moon query projects $ARGS
-          )
-        else
-          QUERY_OUTPUT=$(moon query projects $ARGS)
-        fi
-
-        PROJECTS_LIST=$(echo "$QUERY_OUTPUT" | jq -r '.projects | map(.id | @json) | join(",")' | sed 's/^/\[/; s/$/\]/')
+        PROJECTS_LIST=$(moon query projects $ARGS | jq -r '.projects | map(.id | @json) | join(",")' | sed 's/^/\[/; s/$/\]/')
         echo "projects=${PROJECTS_LIST}" >> "$GITHUB_OUTPUT"
         echo "Affected projects: ${PROJECTS_LIST}"

@@ -188,43 +188,42 @@ redéployé **que** pour ses propres changements.
 | Ruptures de contrat | Détectées tard (échec de build) ou non détectées | Détectées au PR API (`oasdiff`) + gérées par dépréciation |
 | Rythme du front | Lockstep avec l'API | Le front adopte **quand il veut**, fenêtre de dépréciation |
 
-## 7. Implémentation retenue — variante ciblée (option A)
+## 7. Implémentation retenue — découpler la **génération du SDK** de l'API
 
-Décision : on part sur la **variante « moins de plomberie »**, dans sa version
-**ciblée SDK** (on garde `workspace:*`, pas de registre pour l'instant). Seule la
-**régénération du SDK** cesse de redéployer les fronts ; les fronts continuent
-d'être rebuildés/redéployés sur **leurs propres changements** *et* sur les libs
-écrites à la main (`vue-components-*`, `i18n-*`, …). L'axe A versionné et les
-axes B/C restent la cible à terme.
+Décision (revue) : plutôt que de couper le lien SDK → front, on coupe le lien
+**API → génération du SDK**, et on **garde** le couplage SDK → front.
+
+- **On garde `workspace:*`** et le couplage SDK → front : quand le SDK change, les
+  fronts qui en dépendent sont rebuildés/redéployés (comportement actuel,
+  inchangé). C'est voulu : un changement de SDK = un changement de contrat que le
+  front doit suivre.
+- **On ne régénère plus le SDK automatiquement à chaque changement d'API.** La
+  génération du SDK redevient **manuelle** (`moon typescript-tera-api-sdk:generate-api`),
+  déclenchée quand on le décide. Un changement d'API seul ne touche donc plus le
+  SDK, et ne redéploie donc plus les fronts.
+
+Conséquence directe sur la question initiale : **un changement d'API ne redéploie
+plus les fronts** (puisqu'il ne régénère plus le SDK), et un front ne se met à
+jour que lorsqu'on régénère puis committe le SDK volontairement.
 
 ### Mécanisme
 
-`moon` n'offre pas d'exclusion « par arête » dans
-`moon query projects --affected --downstream deep`. On filtre donc en amont, dans
-l'action partagée `.github/actions/moon-affected-projects-list` :
+Le forçage venait des workflows `openapi-sdk-sync.yml` / `openapi-sdk-sync-espace.yml`,
+qui **échouaient** le PR tant que la spec + le SDK committés n'étaient pas
+régénérés pour coller à l'API. On les rend **non bloquants** : ils régénèrent la
+spec/le SDK et, en cas d'écart, émettent un simple `::warning::` rappelant de
+lancer `moon …:generate-api` — sans `exit 1`. La génération reste donc à la main
+du développeur.
 
-1. `moon query touched-files --json` — la liste des fichiers touchés (détection de
-   base assurée par moon).
-2. On retire de cette liste les fichiers `**/api-sdk/generated/**` (`jq`).
-3. On redonne la liste filtrée à `moon query projects --affected` **via stdin** ;
-   moon applique toujours `--downstream deep`. Résultat : un front reste
-   « affected » s'il a changé lui-même ou via une lib écrite à la main, mais
-   **plus** quand le seul changement est le SDK régénéré.
+Aucune autre modification : l'action `moon-affected-projects-list` et les
+workflows `build-and-push-docker-images.yml` / `deploy.yml` retrouvent leur
+comportement standard (`--affected --downstream deep`), donc le couplage
+SDK → front est préservé.
 
-Le comportement n'est activé que via l'entrée d'action `ignore-generated-sdk: 'true'`,
-positionnée dans :
+### Compromis assumé (« pour l'instant »)
 
-- `.github/workflows/build-and-push-docker-images.yml` (build + push des images) ;
-- `.github/workflows/deploy.yml` (déploiement staging) — pour garder le set de
-  déploiement aligné sur le set de build.
-
-`deploy-prod.yml` n'est pas concerné : il déploie **tout** l'ensemble `dokploy`
-(`affected: 'false'`) pour livrer une release cohérente, et l'option ne s'applique
-qu'en mode `affected`. Les autres consommateurs de l'action (ex. `symfony-test`,
-filtré par tag `symfony`) ne positionnent pas l'entrée et sont donc inchangés.
-
-> ⚠️ À valider en CI : moon n'étant pas exécutable hors runner, le contrat
-> `moon query touched-files --json | moon query projects --affected` (lecture des
-> fichiers touchés depuis stdin) doit être confirmé sur une première exécution.
-> Le shell par défaut des actions (`bash -eo pipefail`) fait **échouer** l'étape
-> de façon visible si le contrat diffère, plutôt que de déployer un set erroné.
+Le garde-fou de compilation (§2.1) est **affaibli** : si l'API change et que le
+SDK n'est pas régénéré, les types committés sont en retard sur l'API et un front
+peut builder contre un contrat périmé. C'est accepté temporairement ; le `::warning::`
+de drift garde le décalage visible, et la cible reste l'**axe A versionné** +
+détection de breaking changes (axe B) + cycle de dépréciation (axe C).

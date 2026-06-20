@@ -34,9 +34,6 @@ jobs:
         with:
           layer: application
           tasks: docker-buildx
-          # Don't rebuild/redeploy frontends just because the API SDK was
-          # regenerated — see docs/decouple-apis-from-frontends.md.
-          ignore-generated-sdk: 'true'
 
   build-and-push:
     if: ${{ needs.define-matrix.outputs.projects != '[]' && needs.define-matrix.outputs.projects != '' }}
