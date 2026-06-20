@@ -13,8 +13,9 @@ import {
   defineWebSite,
   useSchemaOrg,
 } from '@unhead/schema-org/vue';
-import { useHead } from '@unhead/vue';
+import { useHead, useSeoMeta } from '@unhead/vue';
 import { defineAsyncComponent } from 'vue';
+import ogImageDefault from '@/assets/og-default.webp';
 
 const TooltipProvider = defineAsyncComponent(
   () => import('@lychen/vue-components-core/tooltip/TooltipProvider.vue'),
@@ -34,6 +35,15 @@ useHead({
       host: `https://${import.meta.env.VITE_UNHEAD_HOST}`,
     },
   },
+});
+
+// Site-wide fallback Open Graph / Twitter image. Pages that pass their own
+// `ogImage` to `useExtendedHead` override this; every other page (and any page
+// added later) still embeds a branded thumbnail. Placeholder for now — see
+// `docs/seo-og-images.md` for the per-page branded images roadmap.
+useSeoMeta({
+  ogImage: `https://${import.meta.env.VITE_UNHEAD_HOST}${ogImageDefault}`,
+  twitterCard: 'summary_large_image',
 });
 
 useSchemaOrg([
