@@ -45,7 +45,7 @@ export default defineConfig([
   importPlugin.flatConfigs.recommended,
   ...markdown.configs.processor,
   ...eslintPluginYml.configs['flat/recommended'],
-  tailwind.configs['flat/recommended'],
+  tailwind.configs['recommended'],
   {
     settings: {
       tailwindcss: {
