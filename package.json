@@ -12,7 +12,7 @@
     "eslint-plugin-check-file": "^3.3.1",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.6",
-    "eslint-plugin-tailwindcss": "^4.0.3",
+    "eslint-plugin-tailwindcss": "^4.0.4",
     "eslint-plugin-unicorn": "^68.0.0",
     "eslint-plugin-vue": "^10.9.2",
     "eslint-plugin-yml": "^3.4.0",
