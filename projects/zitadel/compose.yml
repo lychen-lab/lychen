@@ -1,0 +1,87 @@
+services:
+  zitadel:
+    image: ghcr.io/zitadel/zitadel:${ZITADEL_VERSION:-latest}
+    command: 'start-from-init --masterkeyFromEnv --tlsMode external'
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # --- Bundled Postgres (cf. monorepo convention: a service owns its DB) ---
+      ZITADEL_DATABASE_POSTGRES_HOST: db
+      ZITADEL_DATABASE_POSTGRES_PORT: 5432
+      ZITADEL_DATABASE_POSTGRES_DATABASE: ${ZITADEL_DATABASE_POSTGRES_DB:-zitadel}
+      ZITADEL_DATABASE_POSTGRES_USER_USERNAME: ${ZITADEL_DATABASE_POSTGRES_USER_USERNAME:-zitadel}
+      ZITADEL_DATABASE_POSTGRES_USER_PASSWORD: ${ZITADEL_DATABASE_POSTGRES_USER_PASSWORD:-zitadel}
+      ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE: ${ZITADEL_DATABASE_POSTGRES_USER_SSL_MODE:-disable}
+      ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME: ${ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME:-postgres}
+      ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD: ${ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD:-postgres}
+      ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE: ${ZITADEL_DATABASE_POSTGRES_ADMIN_SSL_MODE:-disable}
+      # --- External exposure (TLS terminated upstream by Traefik/Dokploy) ---
+      ZITADEL_EXTERNALSECURE: ${ZITADEL_EXTERNALSECURE:-false}
+      ZITADEL_EXTERNALDOMAIN: ${ZITADEL_EXTERNALDOMAIN:-localhost}
+      ZITADEL_EXTERNALPORT: ${ZITADEL_EXTERNALPORT:-8080}
+      ZITADEL_MASTERKEY: ${ZITADEL_MASTERKEY:-MasterkeyNeedsToHave32Characters}
+      ZITADEL_DEFAULTINSTANCE_DOMAINPOLICY_SMTPSENDERADDRESSMATCHESINSTANCEDOMAIN: ${ZITADEL_SMTP_SENDER_MATCHES_DOMAIN:-false}
+      # --- First-instance human admin ---
+      ZITADEL_FIRSTINSTANCE_ORG_HUMAN_USERNAME: ${ZITADEL_FIRSTINSTANCE_ORG_HUMAN_USERNAME:-root}
+      ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORD: ${ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORD:-RootPassword1!}
+      ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORDCHANGEREQUIRED: ${ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORDCHANGEREQUIRED:-false}
+      # --- Provisioner service account: its PAT is written to /pat on first init,
+      #     then consumed by the `provisioner` service to create default clients ---
+      ZITADEL_FIRSTINSTANCE_ORG_MACHINE_MACHINE_USERNAME: ${ZITADEL_PROVISIONER_USERNAME:-provisioner}
+      ZITADEL_FIRSTINSTANCE_ORG_MACHINE_MACHINE_NAME: ${ZITADEL_PROVISIONER_USERNAME:-provisioner}
+      ZITADEL_FIRSTINSTANCE_ORG_MACHINE_PAT_EXPIRATIONDATE: ${ZITADEL_PROVISIONER_PAT_EXPIRATION:-2100-01-01T00:00:00Z}
+      ZITADEL_FIRSTINSTANCE_PATPATH: /pat/provisioner.pat
+    expose:
+      - '8080'
+    volumes:
+      - zitadel_pat:/pat
+
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${ZITADEL_DATABASE_POSTGRES_ADMIN_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${ZITADEL_DATABASE_POSTGRES_ADMIN_PASSWORD:-postgres}
+      POSTGRES_DB: ${ZITADEL_DATABASE_POSTGRES_DB:-zitadel}
+    healthcheck:
+      test: [ 'CMD-SHELL', 'pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}' ]
+      interval: 10s
+      timeout: 60s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - zitadel_data:/var/lib/postgresql/data:rw
+
+  # One-shot provisioner. Profile-gated => it does NOT start on `up` or on a
+  # Dokploy deploy; run it deliberately with `moon zitadel:provision`. It reads
+  # the provisioner PAT from the shared volume and idempotently creates the
+  # default project + front (OIDC/PKCE) and back (API) clients.
+  provisioner:
+    profiles:
+      - provision
+    image: node:22-alpine
+    depends_on:
+      zitadel:
+        condition: service_started
+    environment:
+      ZITADEL_API_INTERNAL_URL: ${ZITADEL_API_INTERNAL_URL:-http://zitadel:8080}
+      ZITADEL_API_HOST: ${ZITADEL_EXTERNALDOMAIN:-localhost}
+      ZITADEL_EXTERNALSECURE: ${ZITADEL_EXTERNALSECURE:-false}
+      ZITADEL_PAT_FILE: /pat/provisioner.pat
+      ZITADEL_CLIENTS_OUT: /out/clients.env
+      # Base URLs of the SPAs — used to build their OIDC redirect URIs
+      TERA_APP_BASE_URL: ${TERA_APP_BASE_URL:-http://localhost:5800}
+      ESPACE_APP_BASE_URL: ${ESPACE_APP_BASE_URL:-http://localhost:5801}
+    working_dir: /work
+    command: [ 'node', 'provision.mjs' ]
+    volumes:
+      - ./provisioning:/work:ro
+      - zitadel_pat:/pat:ro
+      - zitadel_clients:/out
+
+volumes:
+  zitadel_data:
+  zitadel_pat:
+  zitadel_clients:

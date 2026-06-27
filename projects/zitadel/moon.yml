@@ -1,0 +1,15 @@
+id: zitadel
+language: bash
+layer: application
+stack: backend
+tags:
+  - dokploy
+  - compose
+tasks:
+  # One-shot client provisioning (profile-gated, never runs on `up`/deploy).
+  # Boots its deps via `compose run`, creates the project + default apps, exits.
+  provision:
+    command: docker compose -p $project --profile provision run --rm provisioner
+    options:
+      cache: false
+      runInCI: false
