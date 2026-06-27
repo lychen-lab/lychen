@@ -227,3 +227,18 @@ SDK n'est pas régénéré, les types committés sont en retard sur l'API et un 
 peut builder contre un contrat périmé. C'est accepté temporairement ; le `::warning::`
 de drift garde le décalage visible, et la cible reste l'**axe A versionné** +
 détection de breaking changes (axe B) + cycle de dépréciation (axe C).
+
+### Validation (graphe de dépendances)
+
+Les deux propriétés visées se lisent directement dans le graphe moon, sans
+exécution : un front déclare en `dependsOn` la **lib SDK**
+(`typescript-tera-api-sdk` / `typescript-espace-api-sdk`), **pas** le projet API
+(`tera-api` / `espace-api`).
+
+- **SDK → front conservé** : la lib SDK étant en amont du front,
+  `--affected --downstream deep` (comportement standard, inchangé) remonte le
+  front quand le SDK régénéré est committé → le front se redéploie.
+- **API → front coupé** : aucun front ne dépend du projet API. Un changement
+  `projects/*/api/**` n'affecte donc que l'API ; tant que le SDK n'est pas
+  régénéré (génération désormais manuelle, sync non bloquant), les fronts ne sont
+  pas marqués « affected » et ne sont pas redéployés.
