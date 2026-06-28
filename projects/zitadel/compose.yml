@@ -27,16 +27,8 @@ services:
       ZITADEL_FIRSTINSTANCE_ORG_HUMAN_USERNAME: ${ZITADEL_FIRSTINSTANCE_ORG_HUMAN_USERNAME:-root}
       ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORD: ${ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORD:-RootPassword1!}
       ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORDCHANGEREQUIRED: ${ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORDCHANGEREQUIRED:-false}
-      # --- Provisioner service account: its PAT is written to /pat on first init,
-      #     then consumed by the `provisioner` service to create default clients ---
-      ZITADEL_FIRSTINSTANCE_ORG_MACHINE_MACHINE_USERNAME: ${ZITADEL_PROVISIONER_USERNAME:-provisioner}
-      ZITADEL_FIRSTINSTANCE_ORG_MACHINE_MACHINE_NAME: ${ZITADEL_PROVISIONER_USERNAME:-provisioner}
-      ZITADEL_FIRSTINSTANCE_ORG_MACHINE_PAT_EXPIRATIONDATE: ${ZITADEL_PROVISIONER_PAT_EXPIRATION:-2100-01-01T00:00:00Z}
-      ZITADEL_FIRSTINSTANCE_PATPATH: /pat/provisioner.pat
     expose:
       - '8080'
-    volumes:
-      - zitadel_pat:/pat
 
   db:
     image: postgres:16-alpine
@@ -54,34 +46,5 @@ services:
     volumes:
       - zitadel_data:/var/lib/postgresql/data:rw
 
-  # One-shot provisioner (profile-gated: never starts on a deploy). Run it ONCE
-  # against a freshly-deployed staging/production instance, on the Dokploy host:
-  #   docker compose --profile provision run --rm provisioner
-  # It reads the provisioner PAT from the shared volume (or ZITADEL_PAT) and
-  # idempotently creates the default project + front (OIDC/PKCE) & back (API)
-  # clients. Do NOT run it against dev — that instance already holds its clients.
-  provisioner:
-    profiles:
-      - provision
-    image: node:22-alpine
-    environment:
-      ZITADEL_API_URL: ${ZITADEL_API_URL:-http://zitadel:8080}
-      ZITADEL_API_HOST: ${ZITADEL_EXTERNALDOMAIN:-localhost}
-      ZITADEL_EXTERNALSECURE: ${ZITADEL_EXTERNALSECURE:-false}
-      ZITADEL_PAT: ${ZITADEL_PAT:-}
-      ZITADEL_PAT_FILE: /pat/provisioner.pat
-      ZITADEL_CLIENTS_OUT: /out/clients.env
-      # Base URLs of the SPAs — used to build their OIDC redirect URIs
-      TERA_APP_BASE_URL: ${TERA_APP_BASE_URL:-http://localhost:5800}
-      ESPACE_APP_BASE_URL: ${ESPACE_APP_BASE_URL:-http://localhost:5801}
-    working_dir: /work
-    command: [ 'node', 'provision.mjs' ]
-    volumes:
-      - ./provisioning:/work:ro
-      - zitadel_pat:/pat:ro
-      - zitadel_clients:/out
-
 volumes:
   zitadel_data:
-  zitadel_pat:
-  zitadel_clients:
