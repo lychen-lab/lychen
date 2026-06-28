@@ -49,6 +49,10 @@ login images, keeping them in sync).
 
 1. **Dokploy** → create a Compose service (Git provider, branch `main`, compose
    path `projects/zitadel/compose.yml`). Fill its **Environment** from [`.env`](.env).
+   The compose builds the Login V2 URLs from `ZITADEL_EXTERNALDOMAIN` +
+   `ZITADEL_PUBLIC_SCHEME` + `ZITADEL_EXTERNALPORT`, so set those correctly
+   (staging/prod: `https` / `443` / your domain) — that's what makes the core
+   redirect sign-in to the login container.
 2. Add **two Domains** on the **same host** (this is the v4-specific bit):
 
    | Host | Path | Service | Port | Priority |
@@ -67,9 +71,12 @@ login images, keeping them in sync).
 ## Notes
 
 - **`ZITADEL_VERSION`** — pin a real v4 tag (e.g. `v4.15.3`); the default is `latest`.
-- **First boot** — the `login` container may restart a few times until the core
-  has written the `login-client.pat` to the shared volume. That's expected; it
-  settles once the core finishes its init.
+- **First boot** — `login` waits for the core's healthcheck (`/app/zitadel ready`)
+  before starting, so the `login-client.pat` is already on the shared volume by
+  then. The core itself can take ~1 min to finish init on a fresh DB.
+- **Mirrors the upstream v4 example** — the env (LOGINV2 URLs, `CUSTOM_REQUEST_HEADERS`,
+  `user: "0"`, healthchecks) matches the official `deploy/compose/docker-compose.yml`,
+  minus the bundled Traefik (Dokploy provides the proxy).
 - **Fresh database** — the Postgres volume is named `zitadel_pgdata` (renamed from
   `zitadel_data`) so a redeploy starts on a clean data dir. Postgres only applies
   `POSTGRES_USER`/`PASSWORD` on first init, so if you ever change DB credentials
