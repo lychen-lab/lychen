@@ -1,4 +1,8 @@
 services:
+  # ZITADEL core (API + console). Since v4 it no longer serves the login pages
+  # itself — it delegates to the separate `login` container (Login V2). On first
+  # init it creates the `login-client` machine user (IAM_LOGIN_CLIENT) and writes
+  # its PAT to the shared `zitadel_bootstrap` volume for the login container.
   zitadel:
     image: ghcr.io/zitadel/zitadel:${ZITADEL_VERSION:-latest}
     command: 'start-from-init --masterkeyFromEnv --tlsMode external'
@@ -27,8 +31,33 @@ services:
       ZITADEL_FIRSTINSTANCE_ORG_HUMAN_USERNAME: ${ZITADEL_FIRSTINSTANCE_ORG_HUMAN_USERNAME:-root}
       ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORD: ${ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORD:-RootPassword1!}
       ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORDCHANGEREQUIRED: ${ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORDCHANGEREQUIRED:-false}
+      # --- Login V2 client (auto-created at first init; PAT -> shared volume) ---
+      ZITADEL_FIRSTINSTANCE_ORG_LOGINCLIENT_MACHINE_USERNAME: login-client
+      ZITADEL_FIRSTINSTANCE_ORG_LOGINCLIENT_MACHINE_NAME: Automatically Initialized IAM_LOGIN_CLIENT
+      ZITADEL_FIRSTINSTANCE_ORG_LOGINCLIENT_PAT_EXPIRATIONDATE: ${ZITADEL_LOGINCLIENT_PAT_EXPIRATION:-2100-01-01T00:00:00Z}
+      ZITADEL_FIRSTINSTANCE_LOGINCLIENTPATPATH: /zitadel/bootstrap/login-client.pat
     expose:
       - '8080'
+    volumes:
+      - zitadel_bootstrap:/zitadel/bootstrap:rw
+
+  # Login V2 UI (Next.js). Served under /ui/v2/login on the SAME external domain.
+  # Reads the login-client PAT the core wrote to the shared volume. It may restart
+  # a few times on first boot until that PAT file exists — that's expected.
+  login:
+    image: ghcr.io/zitadel/zitadel-login:${ZITADEL_VERSION:-latest}
+    restart: unless-stopped
+    depends_on:
+      zitadel:
+        condition: service_started
+    environment:
+      ZITADEL_API_URL: http://zitadel:8080
+      ZITADEL_SERVICE_USER_TOKEN_FILE: /zitadel/bootstrap/login-client.pat
+      NEXT_PUBLIC_BASE_PATH: /ui/v2/login
+    expose:
+      - '3000'
+    volumes:
+      - zitadel_bootstrap:/zitadel/bootstrap:ro
 
   db:
     image: postgres:16-alpine
@@ -44,7 +73,11 @@ services:
       retries: 5
       start_period: 10s
     volumes:
-      - zitadel_data:/var/lib/postgresql/data:rw
+      # Renamed from zitadel_data on purpose: forces a brand-new, clean data dir
+      # (Postgres only honours POSTGRES_USER/PASSWORD on first init). Delete the
+      # old `*_zitadel_data` volume once this is up.
+      - zitadel_pgdata:/var/lib/postgresql/data:rw
 
 volumes:
-  zitadel_data:
+  zitadel_pgdata:
+  zitadel_bootstrap:
