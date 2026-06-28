@@ -49,8 +49,7 @@ export default defineConfig([
   {
     settings: {
       tailwindcss: {
-        config: false,
-        entryPoint: 'libs/css/core/all.css',
+        config: path.resolve(import.meta.dirname, 'libs/css/core/all.css'),
       },
     },
   },
