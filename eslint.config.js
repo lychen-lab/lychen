@@ -50,6 +50,7 @@ export default defineConfig([
     settings: {
       tailwindcss: {
         config: false,
+        entryPoint: 'libs/css/core/all.css',
       },
     },
   },
