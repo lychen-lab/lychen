@@ -4,12 +4,12 @@ layer: application
 stack: backend
 tags:
   - dokploy
-  - compose
 tasks:
-  # One-shot client provisioning (profile-gated, never runs on `up`/deploy).
-  # Boots its deps via `compose run`, creates the project + default apps, exits.
+  # Provision default clients against a TARGET instance. Set ZITADEL_API_URL +
+  # ZITADEL_PAT (e.g. in .env.local). Use for a fresh staging/production
+  # instance — never against dev, which already holds its clients.
   provision:
-    command: docker compose -p $project --profile provision run --rm provisioner
+    command: node provisioning/provision.mjs
     options:
       cache: false
       runInCI: false

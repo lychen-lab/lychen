@@ -19,11 +19,16 @@ import { access, readFile, writeFile } from 'node:fs/promises'
 import http from 'node:http'
 import https from 'node:https'
 
-const API_URL = process.env.ZITADEL_API_INTERNAL_URL ?? 'http://zitadel:8080'
-const API_HOST = process.env.ZITADEL_API_HOST ?? 'localhost'
+// ZITADEL_API_URL: where to reach the instance (internal http://zitadel:8080 on
+// the Dokploy host, or a public https URL when run from CI/local).
+const API_URL = process.env.ZITADEL_API_URL ?? process.env.ZITADEL_API_INTERNAL_URL ?? 'http://zitadel:8080'
+// Host header — Zitadel resolves the instance from it. Defaults to the URL host.
+const API_HOST = process.env.ZITADEL_API_HOST ?? new URL(API_URL).hostname
+// PAT: prefer an injected ZITADEL_PAT (CI/local), else the file the core writes.
+const PAT_ENV = process.env.ZITADEL_PAT?.trim()
 const PAT_FILE = process.env.ZITADEL_PAT_FILE ?? '/pat/provisioner.pat'
-const OUT_FILE = process.env.ZITADEL_CLIENTS_OUT ?? '/out/clients.env'
-const CONFIG_FILE = process.env.ZITADEL_APPS_CONFIG ?? './apps.json'
+const OUT_FILE = process.env.ZITADEL_CLIENTS_OUT ?? ''
+const CONFIG_FILE = process.env.ZITADEL_APPS_CONFIG ?? new URL('./apps.json', import.meta.url)
 const DEV_MODE = String(process.env.ZITADEL_EXTERNALSECURE) === 'false'
 
 const url = new URL(API_URL)
@@ -87,6 +92,7 @@ async function waitReady(timeoutMs = 180_000) {
 }
 
 async function readPat(timeoutMs = 180_000) {
+  if (PAT_ENV) return PAT_ENV
   const start = Date.now()
   while (Date.now() - start < timeoutMs) {
     try {
@@ -205,11 +211,13 @@ async function main() {
   const rendered = `${Object.entries(out)
     .map(([k, v]) => `${k}=${v}`)
     .join('\n')}\n`
-  try {
-    await writeFile(OUT_FILE, rendered)
-    console.log(`> wrote ${OUT_FILE}`)
-  } catch (e) {
-    console.warn(`! could not write ${OUT_FILE}: ${e.message}`)
+  if (OUT_FILE) {
+    try {
+      await writeFile(OUT_FILE, rendered)
+      console.log(`> wrote ${OUT_FILE}`)
+    } catch (e) {
+      console.warn(`! could not write ${OUT_FILE}: ${e.message}`)
+    }
   }
 
   console.log('\n=== CLIENTS (copy into each app/api environment) ===')
