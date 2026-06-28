@@ -102,11 +102,12 @@ services:
       retries: 5
       start_period: 10s
     volumes:
-      # Renamed from zitadel_data on purpose: forces a brand-new, clean data dir
-      # (Postgres only honours POSTGRES_USER/PASSWORD on first init). Delete the
-      # old `*_zitadel_data` volume once this is up.
-      - zitadel_pgdata:/var/lib/postgresql/data:rw
+      # Bump this volume name to force a brand-new, clean Postgres data dir.
+      # Postgres only sets POSTGRES_USER/PASSWORD on FIRST init, so a renamed
+      # volume is the reliable reset when credentials were baked wrong — no need
+      # to hunt down and `docker volume rm` the old one (it's just orphaned).
+      - zitadel_pgdata_v2:/var/lib/postgresql/data:rw
 
 volumes:
-  zitadel_pgdata:
+  zitadel_pgdata_v2:
   zitadel_bootstrap:
