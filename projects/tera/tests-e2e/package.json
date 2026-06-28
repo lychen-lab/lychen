@@ -2,8 +2,8 @@
   "name": "@lychen/tera-tests-e2e",
   "devDependencies": {
     "@faker-js/faker": "^10.5.0",
-    "@playwright/test": "^1.61.0",
-    "vue": "^3.5.38",
+    "@playwright/test": "^1.61.1",
+    "vue": "^3.5.39",
     "vue-i18n": "^11.4.6"
   },
   "dependencies": {

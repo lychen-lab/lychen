@@ -15,20 +15,20 @@
     "@lychen/vue-components-extra": "workspace:*",
     "@lychen/vue-i18n": "workspace:*",
     "@lychen/vue-icons": "workspace:*",
-    "vue": "^3.5.38"
+    "vue": "^3.5.39"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^10.4.6",
     "@storybook/addon-docs": "^10.4.6",
     "@storybook/vue3-vite": "^10.4.6",
-    "@types/node": "^26.0.0",
+    "@types/node": "^26.0.1",
     "@vitejs/plugin-vue": "^6.0.7",
     "@vue/tsconfig": "^0.9.1",
     "@vueless/storybook-dark-mode": "^10.0.8",
     "storybook": "^10.4.6",
     "tailwindcss": "^4.3.1",
     "typescript": "^6.0.3",
-    "vite": "^8.0.16",
+    "vite": "^8.1.0",
     "vite-plugin-mkcert": "^2.1.0",
     "vue-tsc": "^3.3.5"
   }

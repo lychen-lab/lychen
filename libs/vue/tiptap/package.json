@@ -27,6 +27,6 @@
     "@tiptap/pm": "^3.27.1",
     "@tiptap/suggestion": "^3.27.1",
     "@tiptap/vue-3": "^3.27.1",
-    "vue": "^3.5.38"
+    "vue": "^3.5.39"
   }
 }
