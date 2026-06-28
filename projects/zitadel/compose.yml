@@ -1,12 +1,24 @@
 services:
+  # ZITADEL core (API + console). Since v4 it no longer serves the login pages
+  # itself — it delegates to the separate `login` container (Login V2), to which
+  # it must point via the LOGINV2 / OIDC default-login URLs below. On first init
+  # it creates the `login-client` machine user (IAM_LOGIN_CLIENT) and writes its
+  # PAT to the shared `zitadel_bootstrap` volume for the login container.
+  #
+  # No bundled Traefik or routing labels here (unlike the upstream example):
+  # Dokploy provides the reverse proxy. Configure the two routes in its UI —
+  # `/ui/v2/login` -> login:3000 and everything else -> zitadel:8080.
   zitadel:
     image: ghcr.io/zitadel/zitadel:${ZITADEL_VERSION:-latest}
-    command: 'start-from-init --masterkeyFromEnv --tlsMode external'
+    command: 'start-from-init --masterkeyFromEnv'
     restart: unless-stopped
+    user: '0'
     depends_on:
       db:
         condition: service_healthy
     environment:
+      ZITADEL_PORT: 8080
+      ZITADEL_TLS_ENABLED: false
       # --- Bundled Postgres (cf. monorepo convention: a service owns its DB) ---
       ZITADEL_DATABASE_POSTGRES_HOST: db
       ZITADEL_DATABASE_POSTGRES_PORT: 5432
@@ -23,12 +35,56 @@ services:
       ZITADEL_EXTERNALPORT: ${ZITADEL_EXTERNALPORT:-8080}
       ZITADEL_MASTERKEY: ${ZITADEL_MASTERKEY:-MasterkeyNeedsToHave32Characters}
       ZITADEL_DEFAULTINSTANCE_DOMAINPOLICY_SMTPSENDERADDRESSMATCHESINSTANCEDOMAIN: ${ZITADEL_SMTP_SENDER_MATCHES_DOMAIN:-false}
+      # --- Login V2: point the core at the external URL of the login container ---
+      ZITADEL_DEFAULTINSTANCE_FEATURES_LOGINV2_REQUIRED: true
+      ZITADEL_DEFAULTINSTANCE_FEATURES_LOGINV2_BASEURI: ${ZITADEL_PUBLIC_SCHEME:-https}://${ZITADEL_EXTERNALDOMAIN:-localhost}:${ZITADEL_EXTERNALPORT:-8080}/ui/v2/login/
+      ZITADEL_OIDC_DEFAULTLOGINURLV2: ${ZITADEL_PUBLIC_SCHEME:-https}://${ZITADEL_EXTERNALDOMAIN:-localhost}:${ZITADEL_EXTERNALPORT:-8080}/ui/v2/login/login?authRequest=
+      ZITADEL_OIDC_DEFAULTLOGOUTURLV2: ${ZITADEL_PUBLIC_SCHEME:-https}://${ZITADEL_EXTERNALDOMAIN:-localhost}:${ZITADEL_EXTERNALPORT:-8080}/ui/v2/login/logout?post_logout_redirect=
       # --- First-instance human admin ---
       ZITADEL_FIRSTINSTANCE_ORG_HUMAN_USERNAME: ${ZITADEL_FIRSTINSTANCE_ORG_HUMAN_USERNAME:-root}
       ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORD: ${ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORD:-RootPassword1!}
       ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORDCHANGEREQUIRED: ${ZITADEL_FIRSTINSTANCE_ORG_HUMAN_PASSWORDCHANGEREQUIRED:-false}
+      # --- Login V2 client (auto-created at first init; PAT -> shared volume) ---
+      ZITADEL_FIRSTINSTANCE_ORG_LOGINCLIENT_MACHINE_USERNAME: login-client
+      ZITADEL_FIRSTINSTANCE_ORG_LOGINCLIENT_MACHINE_NAME: Automatically Initialized IAM_LOGIN_CLIENT
+      ZITADEL_FIRSTINSTANCE_ORG_LOGINCLIENT_PAT_EXPIRATIONDATE: ${ZITADEL_LOGINCLIENT_PAT_EXPIRATION:-2100-01-01T00:00:00Z}
+      ZITADEL_FIRSTINSTANCE_LOGINCLIENTPATPATH: /zitadel/bootstrap/login-client.pat
+    healthcheck:
+      test: [ 'CMD', '/app/zitadel', 'ready' ]
+      interval: 10s
+      timeout: 30s
+      retries: 12
+      start_period: 20s
     expose:
       - '8080'
+    volumes:
+      - zitadel_bootstrap:/zitadel/bootstrap:rw
+
+  # Login V2 UI (Next.js). Served under /ui/v2/login on the SAME external domain.
+  # Reads the login-client PAT the core wrote to the shared volume, and forwards
+  # the public Host/scheme to the core via CUSTOM_REQUEST_HEADERS.
+  login:
+    image: ghcr.io/zitadel/zitadel-login:${ZITADEL_VERSION:-latest}
+    restart: unless-stopped
+    user: '0'
+    depends_on:
+      zitadel:
+        condition: service_healthy
+    environment:
+      ZITADEL_API_URL: http://zitadel:8080
+      ZITADEL_SERVICE_USER_TOKEN_FILE: /zitadel/bootstrap/login-client.pat
+      NEXT_PUBLIC_BASE_PATH: /ui/v2/login
+      CUSTOM_REQUEST_HEADERS: Host:${ZITADEL_EXTERNALDOMAIN:-localhost},X-Forwarded-Proto:${ZITADEL_PUBLIC_SCHEME:-https}
+    healthcheck:
+      test: [ 'CMD', '/bin/sh', '-c', 'node /app/healthcheck.mjs http://localhost:3000/ui/v2/login/healthy' ]
+      interval: 10s
+      timeout: 30s
+      retries: 12
+      start_period: 20s
+    expose:
+      - '3000'
+    volumes:
+      - zitadel_bootstrap:/zitadel/bootstrap:ro
 
   db:
     image: postgres:16-alpine
@@ -44,7 +100,11 @@ services:
       retries: 5
       start_period: 10s
     volumes:
-      - zitadel_data:/var/lib/postgresql/data:rw
+      # Renamed from zitadel_data on purpose: forces a brand-new, clean data dir
+      # (Postgres only honours POSTGRES_USER/PASSWORD on first init). Delete the
+      # old `*_zitadel_data` volume once this is up.
+      - zitadel_pgdata:/var/lib/postgresql/data:rw
 
 volumes:
-  zitadel_data:
+  zitadel_pgdata:
+  zitadel_bootstrap:
