@@ -1,33 +1,33 @@
 {
   "name": "lychen",
-  "packageManager": "yarn@4.16.0",
+  "packageManager": "yarn@4.17.0",
   "type": "module",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@eslint/markdown": "^8.0.2",
     "@types/eslint": "^9.6.1",
-    "@types/node": "^26.0.0",
-    "eslint": "^10.5.0",
+    "@types/node": "^26.0.1",
+    "eslint": "^10.6.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-check-file": "^3.3.1",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.6",
     "eslint-plugin-tailwindcss": "^4.0.4",
-    "eslint-plugin-unicorn": "^68.0.0",
+    "eslint-plugin-unicorn": "^69.0.0",
     "eslint-plugin-vue": "^10.9.2",
-    "eslint-plugin-yml": "^3.4.0",
-    "globals": "^17.6.0",
-    "prettier": "^3.8.4",
+    "eslint-plugin-yml": "^3.5.0",
+    "globals": "^17.7.0",
+    "prettier": "^3.9.1",
     "tailwindcss": "^4.3.1",
     "tsconfig-moon": "^1.4.2",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.61.1",
+    "typescript-eslint": "^8.62.0",
     "vitest": "^4.1.9",
     "vue-eslint-parser": "^10.4.1",
     "vue-tsc": "^3.3.5"
   },
   "engines": {
-    "node": "24.16.0"
+    "node": "24.18.0"
   },
   "workspaces": [
     "projects/**/*",

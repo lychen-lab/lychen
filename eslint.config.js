@@ -49,7 +49,7 @@ export default defineConfig([
   {
     settings: {
       tailwindcss: {
-        config: false,
+        config: path.resolve(import.meta.dirname, 'libs/css/core/all.css'),
       },
     },
   },
