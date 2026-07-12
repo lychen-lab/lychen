@@ -1,6 +1,6 @@
 {
   "name": "@lychen/css-core",
   "devDependencies": {
-    "tailwindcss": "^4.3.1"
+    "tailwindcss": "^4.3.2"
   }
 }
