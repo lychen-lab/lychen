@@ -17,7 +17,7 @@ Dokploy
 ├── Novu
 ├── Zitadel
 ├── Minio
-│   └── Bucket: espace-lychen-land-proposals
+│   └── Bucket: espace-lychen-area-proposals
 └── espace.lychen
     ├── API (Symfony + API Platform)
     ├── Front (Vue.js)
@@ -32,39 +32,39 @@ Dokploy
 
 4 workflows, intentionally separated based on their differing validation business rules.
 
-### 1. `ValidationLandRequestWorkflow`
+### 1. `ValidationAreaRequestWorkflow`
 
-- **Trigger**: `POST` of a `LandRequest`
+- **Trigger**: `POST` of a `AreaRequest`
 - **Role**: checks the seeker profile's completeness and the request's consistency; waits for a human moderation decision if needed (with a timeout)
 - **Outcome**: if approved → triggers `MatchingWorkflow`
 
-### 2. `ValidationLandProposalWorkflow`
+### 2. `ValidationAreaProposalWorkflow`
 
-- **Trigger**: `POST` of a `LandProposal`
-- **Role**: checks land/property information; same moderation logic as above
+- **Trigger**: `POST` of a `AreaProposal`
+- **Role**: checks area/property information; same moderation logic as above
 - **Outcome**: if approved → signals all open `MatchingWorkflow` instances so they re-evaluate their candidates
 
 ### 3. `MatchingWorkflow`
 
-- **Cardinality**: one per approved `LandRequest`
-- **Role**: scans active `LandProposal` entries, scores each pair, spawns one `MatchLifecycleWorkflow` per relevant candidate
-- **Note**: stays alive to process new proposals arriving after it started (via signal from `ValidationLandProposalWorkflow`)
+- **Cardinality**: one per approved `AreaRequest`
+- **Role**: scans active `AreaProposal` entries, scores each pair, spawns one `MatchLifecycleWorkflow` per relevant candidate
+- **Note**: stays alive to process new proposals arriving after it started (via signal from `ValidationAreaProposalWorkflow`)
 - **Ends**: when the request is fulfilled or expires
 
 ### 4. `MatchLifecycleWorkflow`
 
-- **Cardinality**: one per `LandRequest` + `LandProposal` pair
+- **Cardinality**: one per `AreaRequest` + `AreaProposal` pair
 - **Role**: notifies both parties, manages response deadlines, orchestrates mutual acceptance
-- **Ends (success)**: both parties agree → creates the agreement + closes the `LandRequest`
+- **Ends (success)**: both parties agree → creates the agreement + closes the `AreaRequest`
 - **Ends (failure)**: timeout or refusal → terminates silently
 
 ## Temporal conventions — non-negotiable
 
 - **Payloads = IDs only.** No business data ever travels between workflows/activities — only identifiers (UUIDs of Postgres entities).
 - **Source of truth = PostgreSQL.** Business data lives exclusively in the database; Temporal orchestrates, it does not store.
-- **Status duplicated in the database.** The status of entities (`LandRequest`, `LandProposal`, matches...) is duplicated in Postgres to enable API queries; Temporal activities are responsible for keeping it up to date as the workflow progresses.
+- **Status duplicated in the database.** The status of entities (`AreaRequest`, `AreaProposal`, matches...) is duplicated in Postgres to enable API queries; Temporal activities are responsible for keeping it up to date as the workflow progresses.
 - **Notifications = activities only.** All notifications originate exclusively from a Temporal activity, via Novu. Never a direct call to Novu from the API.
-- **Images = direct Minio.** `LandProposal` images are stored in Minio and served directly to the front end (signed or public URLs depending on the bucket) — the API does not proxy the files.
+- **Images = direct Minio.** `AreaProposal` images are stored in Minio and served directly to the front end (signed or public URLs depending on the bucket) — the API does not proxy the files.
 
 ## Implementation implications
 
@@ -72,8 +72,8 @@ When implementing a feature touching this domain:
 
 1. **Activity vs domain logic**: a Temporal PHP activity calls existing (or new) Symfony business services — it should not contain business logic itself, only orchestration + status persistence.
 2. **Idempotency**: activities must be idempotent (Temporal retries) — check before writing, don't just write.
-3. **Naming**: follow the naming of the 4 workflows above verbatim for any corresponding PHP class (`ValidationLandRequestWorkflow`, etc.) and their associated activities (`*Activities`).
-4. **Signals**: `ValidationLandProposalWorkflow` → `MatchingWorkflow` communication happens via a signal, not a new workflow execution; document the signal name and its payload (the `LandProposal` ID) in the code.
+3. **Naming**: follow the naming of the 4 workflows above verbatim for any corresponding PHP class (`ValidationAreaRequestWorkflow`, etc.) and their associated activities (`*Activities`).
+4. **Signals**: `ValidationAreaProposalWorkflow` → `MatchingWorkflow` communication happens via a signal, not a new workflow execution; document the signal name and its payload (the `AreaProposal` ID) in the code.
 5. **Testing**: prefer the Temporal Test Framework (in-memory workflow environment) over relying on the shared instance for unit/PHPUnit tests.
 
 ---

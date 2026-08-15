@@ -11,7 +11,7 @@ Before implementing anything in this project, read in full:
 This document describes:
 
 - the shared infrastructure (Temporal, Novu, Zitadel, Minio) and the DEV environment
-- the 4 business workflows (`ValidationLandRequestWorkflow`, `ValidationLandProposalWorkflow`, `MatchingWorkflow`, `MatchLifecycleWorkflow`)
+- the 4 business workflows (`ValidationAreaRequestWorkflow`, `ValidationAreaProposalWorkflow`, `MatchingWorkflow`, `MatchLifecycleWorkflow`)
 - the non-negotiable Temporal conventions (IDs only between workflows/activities, status duplicated in the database, notifications via activities only, images served directly from Minio)
 
 **Do not deviate from these conventions without explicit validation** — they underpin the consistency of the entire `espace` domain.
