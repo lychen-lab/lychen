@@ -9,6 +9,7 @@ Lychen is an environmental and agricultural symbiosis platform connecting food p
 ## Toolchain Setup
 
 Toolchain versions are enforced via [proto](https://moonrepo.dev/proto) (`.prototools`):
+
 - Node 24.16.0, Yarn 4.12.0, Moon 2.3.2
 
 ```bash
@@ -20,18 +21,21 @@ proto install    # Install all required toolchain versions
 All tasks run through Moon. Use `moon <project-id>:<task>` or `moon :<task>` (colon prefix) for workspace-wide tasks.
 
 ### Development
+
 ```bash
 moon <project>:dev       # Start dev server for a project (e.g., moon tera-app:dev)
 moon storybook:dev       # Component workshop
 ```
 
 ### Building
+
 ```bash
 moon <project>:build     # Build a specific project
 moon :build              # Build all projects
 ```
 
 ### Linting & Formatting
+
 ```bash
 moon :lint               # Check all projects
 moon :lint-fix           # Auto-fix lint issues
@@ -44,6 +48,7 @@ Pre-commit hooks automatically run `format-fix` and `lint-fix` on affected files
 ### Testing
 
 **E2E (Playwright):**
+
 ```bash
 moon tera-tests-e2e:run                               # Run all E2E tests
 moon tera-tests-e2e:open                              # Open Playwright UI
@@ -51,6 +56,7 @@ moon tera-tests-e2e:run -- tests/some.spec.ts         # Run a single test file
 ```
 
 **PHP (PHPUnit) — run from the API project directory:**
+
 ```bash
 make phpunit                                          # Run all PHP tests
 make phpunit c="tests/SomeTest.php"                  # Run a single test file
@@ -68,6 +74,7 @@ make phpunit c="--group e2e"                         # Run by group
     /website       # Static marketing site (SSG)
     /tests-e2e     # Playwright E2E tests
   /espace          # Another domain product (same structure)
+    /CLAUDE.md     # Project-specific context: Temporal workflows, shared DEV infra (Temporal, Novu, Zitadel, Minio). Read this before working in this project — see /projects/espace/ARCHITECTURE.md and ARCHITECTURE.en.md for details.
   /flora           # Flora domain (API only)
   /robust          # Design system project
   /storybook       # Component workshop (Storybook 10)
@@ -89,6 +96,7 @@ make phpunit c="--group e2e"                         # Run by group
 ## Architecture
 
 ### Frontend (Vue 3 + Vite + Tailwind CSS)
+
 - **Composition API** with `<script setup lang="ts">` — no Options API
 - **Component layers** (import order matters):
   - `libs/vue/components-core` → Base UI (buttons, inputs, dialogs, tables)
@@ -101,6 +109,7 @@ make phpunit c="--group e2e"                         # Run by group
 - **Websites** use Vite-SSG for static generation
 
 ### Backend (Symfony 8.1 + API Platform 4.3 + PHP 8.5)
+
 - API Platform auto-generates REST APIs from Doctrine entities
 - OpenAPI spec is used to generate the TypeScript SDK at `libs/typescript/tera/api-sdk`
 - State management via Symfony Workflow; messaging via RabbitMQ
@@ -108,6 +117,7 @@ make phpunit c="--group e2e"                         # Run by group
 - Each API project has its own `compose.yml` for local development
 
 ### Monorepo Wiring
+
 - Workspace dependencies use `@lychen/<lib-name>` with `workspace:*` protocol
 - Each project/lib has a `moon.yml` declaring `dependsOn` and `tasks`
 - Global task definitions in `.moon/tasks/` are inherited by projects based on tags/layer
