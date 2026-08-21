@@ -2,32 +2,44 @@
   "name": "lychen",
   "packageManager": "yarn@4.17.1",
   "type": "module",
+  "resolutions": {
+    "@babel/core": "^7.29.7",
+    "@babel/plugin-transform-modules-systemjs": "^7.29.8",
+    "fast-uri": "^3.1.5",
+    "flatted": "^3.4.4",
+    "js-yaml": "4.3.1",
+    "nanoid": "^3.3.18",
+    "postcss": "^8.5.26",
+    "sharp": "0.35.3",
+    "tar": "^7.5.22",
+    "valibot": "^1.4.2"
+  },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@eslint/markdown": "^8.0.3",
     "@types/eslint": "^9.6.1",
-    "@types/node": "^26.1.1",
-    "eslint": "^10.7.0",
+    "@types/node": "^26.2.0",
+    "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-check-file": "^3.3.2",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.6",
     "eslint-plugin-tailwindcss": "^4.2.0",
     "eslint-plugin-unicorn": "^72.0.0",
-    "eslint-plugin-vue": "^10.9.2",
-    "eslint-plugin-yml": "^3.6.0",
-    "globals": "^17.7.0",
-    "prettier": "^3.9.5",
+    "eslint-plugin-vue": "^10.10.0",
+    "eslint-plugin-yml": "^3.8.1",
+    "globals": "^17.11.0",
+    "prettier": "^3.9.6",
     "tailwindcss": "^4.3.3",
     "tsconfig-moon": "^1.4.2",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.64.0",
+    "typescript-eslint": "^8.67.0",
     "vitest": "^4.1.10",
     "vue-eslint-parser": "^10.4.1",
-    "vue-tsc": "^3.3.7"
+    "vue-tsc": "^3.3.10"
   },
   "engines": {
-    "node": "24.18.0"
+    "node": "24.19.0"
   },
   "workspaces": [
     "projects/**/*",
