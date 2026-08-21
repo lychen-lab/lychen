@@ -1,4 +1,9 @@
 # Development environment override
+# Pin the compose project name: every API lives in a directory called `api`, so
+# without this a bare `docker compose` (or `make up`) derives the project name
+# from that directory and all APIs collide on the same containers and volumes.
+# Moon tasks pass `-p $project`, which resolves to this same value.
+name: flora-api
 services:
   database:
     ports:
