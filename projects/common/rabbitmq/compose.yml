@@ -1,0 +1,39 @@
+# Central message broker, shared by every API over the `lychen-network`, the same
+# way `common/mailpit` is shared.
+#
+# Each API gets its own vhost *and* its own credentials, so the identically-named
+# `async` / `failed` / `sync` queues that the Symfony Messenger stacks declare
+# cannot collide, and no API can read another's queues. Users, vhosts and
+# permissions are rendered from the environment at boot by `entrypoint.sh` — set
+# `RABBITMQ_<TENANT>_PASSWORD` per environment, and add a domain to
+# `RABBITMQ_TENANTS` to provision it.
+#
+# Dev-only bits (published ports, `lychen-network`) live in compose.override.yml,
+# so this file stays deployable as-is to staging and production via Dokploy.
+services:
+  rabbitmq:
+    # `entrypoint` resets `command` under the Compose spec, so the image's own
+    # default command has to be restated here.
+    command: rabbitmq-server
+    entrypoint: /usr/local/bin/lychen-entrypoint.sh
+    environment:
+      RABBITMQ_ADMIN_PASSWORD: ${RABBITMQ_ADMIN_PASSWORD:-admin}
+      RABBITMQ_ADMIN_USER: ${RABBITMQ_ADMIN_USER:-admin}
+      RABBITMQ_ESPACE_PASSWORD: ${RABBITMQ_ESPACE_PASSWORD:-espace}
+      RABBITMQ_FLORA_PASSWORD: ${RABBITMQ_FLORA_PASSWORD:-flora}
+      RABBITMQ_TENANTS: ${RABBITMQ_TENANTS:-tera espace flora}
+      RABBITMQ_TERA_PASSWORD: ${RABBITMQ_TERA_PASSWORD:-tera}
+    healthcheck:
+      retries: 5
+      start_period: 30s
+      test: [ 'CMD', 'rabbitmq-diagnostics', '-q', 'ping' ]
+      timeout: 10s
+    image: rabbitmq:${RABBITMQ_VERSION:-4.0.4}-management-alpine
+    restart: unless-stopped
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/
+      - ./entrypoint.sh:/usr/local/bin/lychen-entrypoint.sh:ro
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+
+volumes:
+  rabbitmq_data:

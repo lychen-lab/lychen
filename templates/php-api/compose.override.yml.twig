@@ -31,3 +31,14 @@ services:
       - protocol: udp
         published: ${HTTP3_PORT:-40443} #TODO Change it
         target: 443
+    networks:
+      # `default` is kept explicitly: naming any network opts a service out of
+      # the implicit one, which would cut the API off from its own database and
+      # redis. Only `api` joins the shared network, where it reaches the central
+      # RabbitMQ and mailpit.
+      - default
+      - lychen-network
+
+networks:
+  lychen-network:
+    external: true
