@@ -2,6 +2,7 @@
 
 namespace App\Api\Resource\AreaProposal\Dto;
 
+use App\Api\Resource\AreaProposal\ProposerTrait;
 use App\Api\Trait\ActivitiesAsStringTrait;
 use App\Api\Trait\PlaceTrait;
 use App\Api\Trait\UuidIdentifierTrait;
@@ -14,6 +15,7 @@ final class AreaProposalCollection
     use UuidIdentifierTrait;
     use PlaceTrait;
     use ActivitiesAsStringTrait;
+    use ProposerTrait;
 
     public ?string $title;
     public ?string $description;

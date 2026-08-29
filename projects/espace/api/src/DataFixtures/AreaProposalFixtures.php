@@ -18,6 +18,7 @@ class AreaProposalFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             AreaActivityFixtures::class,
+            PersonFixtures::class,
         ];
     }
 }

@@ -20,9 +20,6 @@ class AreaRequest extends AbstractIdOrmAndUuidApiIdentified
     use CreatedAtTrait;
 
     #[ORM\Column(length: 255)]
-    private ?string $state = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -56,18 +53,6 @@ class AreaRequest extends AbstractIdOrmAndUuidApiIdentified
     {
         parent::__construct();
         $this->activities = new ArrayCollection();
-    }
-
-    public function getState(): ?string
-    {
-        return $this->state;
-    }
-
-    public function setState(string $state): static
-    {
-        $this->state = $state;
-
-        return $this;
     }
 
     public function getTitle(): ?string
