@@ -74,7 +74,7 @@ make phpunit c="--group e2e"                         # Run by group
     /website       # Static marketing site (SSG)
     /tests-e2e     # Playwright E2E tests
   /espace          # Another domain product (same structure)
-    /CLAUDE.md     # Project-specific context: Temporal workflows, shared DEV infra (Temporal, Novu, Zitadel, Minio). Read this before working in this project — see /projects/espace/ARCHITECTURE.md and ARCHITECTURE.en.md for details.
+    /CLAUDE.md     # Project-specific context: Temporal workflows, shared DEV infra (Temporal, Novu, Zitadel, Minio). Read this before working in this project — see /docs/ARCHITECTURE.md and ARCHITECTURE.fr.md for details.
   /flora           # Flora domain (API only)
   /robust          # Design system project
   /storybook       # Component workshop (Storybook 10)

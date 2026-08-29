@@ -1,6 +1,6 @@
 # CLAUDE.md — espace.lychen (FR)
 
-> **Note** : cette version française est un complément à destination des développeurs humains qui préfèrent lire en français. Elle n'est **pas** chargée automatiquement par Claude Code (qui lit `CLAUDE.md`, la version anglaise, en priorité). En cas de divergence entre les deux, `CLAUDE.md` (anglais) fait foi.
+> **Note** : cette version française est un complément à destination des développeurs qui préfèrent lire en français. Elle n'est **pas** chargée automatiquement par Claude Code (qui lit `CLAUDE.md`, la version anglaise, en priorité). En cas de divergence entre les deux, `CLAUDE.md` (anglais) fait foi.
 
 Ce fichier complète le `CLAUDE.md` racine du monorepo. Il s'applique à tout travail dans `projects/espace/` (`api`, `app`, `worker`).
 
@@ -8,7 +8,7 @@ Ce fichier complète le `CLAUDE.md` racine du monorepo. Il s'applique à tout tr
 
 Avant toute implémentation dans ce projet, lis en entier :
 
-- [`ARCHITECTURE.md`](./ARCHITECTURE.md)
+- [`ARCHITECTURE.md`](../../docs/ARCHITECTURE.md)
 
 Ce document décrit :
 

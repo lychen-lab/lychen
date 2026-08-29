@@ -1,6 +1,6 @@
 # espace.lychen — Architecture (FR)
 
-> **Note** : traduction française à destination des développeurs humains. Ce n'est **pas** la version de référence — en cas de divergence, [`ARCHITECTURE.md`](./ARCHITECTURE.md) (anglais) fait foi.
+> **Note** : traduction française à destination des développeurs. Ce n'est **pas** la version de référence — en cas de divergence, [`ARCHITECTURE.md`](./ARCHITECTURE.md) (anglais) fait foi.
 
 Complète `CLAUDE.md` (racine du monorepo) pour tout ce qui concerne le projet `espace` (`projects/espace/`). Claude Code chargera ce contexte en plus du fichier racine lors des sessions sur ce sous-projet.
 

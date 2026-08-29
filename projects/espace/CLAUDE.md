@@ -6,7 +6,7 @@ This file complements the monorepo root `CLAUDE.md`. It applies to all work in `
 
 Before implementing anything in this project, read in full:
 
-- [`ARCHITECTURE.md`](./ARCHITECTURE.md) — infrastructure, Temporal workflows, conventions
+- [`ARCHITECTURE.md`](../../docs/ARCHITECTURE.md) — infrastructure, Temporal workflows, conventions
 
 This document describes:
 
