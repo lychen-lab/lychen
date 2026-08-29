@@ -8,7 +8,7 @@ Ce fichier complète le `CLAUDE.md` racine du monorepo. Il s'applique à tout tr
 
 Avant toute implémentation dans ce projet, lis en entier :
 
-- [`ARCHITECTURE.md`](../../docs/ARCHITECTURE.md)
+- [`architecture-espace.md`](../../docs/architecture-espace.md)
 
 Ce document décrit :
 
