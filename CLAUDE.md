@@ -73,24 +73,32 @@ make phpunit c="--group e2e"                         # Run by group
     /app           # Vue 3 SPA (PWA, ~port 5800)
     /website       # Static marketing site (SSG)
     /tests-e2e     # Playwright E2E tests
-  /espace          # Another domain product (same structure)
+  /espace          # Another domain product (api/app/website, same structure as tera)
     /CLAUDE.md     # Project-specific context: Temporal workflows, shared DEV infra (Temporal, Novu, Zitadel, Minio). Read this before working in this project — see /docs/architecture-espace.md and architecture-espace.fr.md for details.
   /flora           # Flora domain (API only)
   /robust          # Design system project
   /storybook       # Component workshop (Storybook 10)
   /website         # Main Lychen website (SSG)
+  /common          # Shared local-dev infra (Docker network, Mailpit)
+  /zitadel         # Self-hosted Zitadel identity provider (Dokploy-deployed)
 
 /libs              # Reusable libraries
   /css/core        # Tailwind design tokens
-  /typescript/     # 16 TypeScript-only libraries
-  /vue/            # 29 Vue component/composable libraries
+  /typescript/     # 16 TypeScript libraries
+  /vue/            # 28 Vue component/composable libraries
   /php/            # 5 PHP/Symfony bundle libraries
-  /i18n/           # Translation files
+  /i18n/           # Translation files (per domain, e.g. tera)
+  /assets/         # Shared brand/content assets per domain (fonts, logos, icons)
+  /drawio/         # Architecture diagrams (.drawio) per domain
+  /vite/           # Shared Vite plugins/config (e.g. SSG scaffold)
+  /caddy/          # Shared Caddy server configs (pwa, ssg)
+  /docker/         # Shared Dockerfiles (e.g. frontend image)
 
 /.moon             # Moonrepo configuration
   workspace.yml    # Workspace constraints, VCS hooks
   toolchains.yml   # Node, Yarn, TypeScript settings
-  tasks/           # Shared task definitions (all.yml, frontend.yml, tag-*.yml)
+  hooks/           # Pre-commit hook scripts
+  tasks/           # Shared task definitions (all.yml, frontend.yml, php-library.yml, tag-*.yml)
 ```
 
 ## Architecture
