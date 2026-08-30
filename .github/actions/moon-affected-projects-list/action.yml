@@ -44,7 +44,7 @@ runs:
         if [[ -n "${{ inputs.tags }}" ]]; then
           ARGS="$ARGS --tags ${{ inputs.tags }}"
         fi
-        
+
         PROJECTS_LIST=$(moon query projects $ARGS | jq -r '.projects | map(.id | @json) | join(",")' | sed 's/^/\[/; s/$/\]/')
         echo "projects=${PROJECTS_LIST}" >> "$GITHUB_OUTPUT"
         echo "Affected projects: ${PROJECTS_LIST}"
