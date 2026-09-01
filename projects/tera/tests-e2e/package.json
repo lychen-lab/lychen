@@ -3,8 +3,8 @@
   "devDependencies": {
     "@faker-js/faker": "^10.6.0",
     "@playwright/test": "^1.62.1",
-    "vue": "^3.5.41",
-    "vue-i18n": "^11.4.8"
+    "vue": "^3.5.42",
+    "vue-i18n": "^11.4.10"
   },
   "dependencies": {
     "@lychen/tera-app": "workspace:*"
