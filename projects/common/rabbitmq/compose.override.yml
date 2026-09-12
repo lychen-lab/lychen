@@ -1,0 +1,19 @@
+# Development environment override
+# Pin the compose project name: `docker compose` would otherwise derive it from
+# this directory (`rabbitmq`), while the Moon tasks pass `-p $project`. Pinning it
+# makes both converge on the same stack.
+name: common-rabbitmq
+services:
+  rabbitmq:
+    ports:
+      # AMQP. The APIs reach the broker over lychen-network; this is for
+      # host-side tooling only.
+      - '${RABBITMQ_AMQP_PORT:-5672}:5672'
+      # Management UI -> http://localhost:15672 (admin / admin)
+      - '${RABBITMQ_MANAGEMENT_PORT:-15672}:15672'
+    networks:
+      - lychen-network
+
+networks:
+  lychen-network:
+    external: true

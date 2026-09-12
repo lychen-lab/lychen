@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+      issues: write # To create the project labels that do not exist yet
     outputs:
       projects: ${{ steps.gather-projects.outputs.projects }}
     steps:
@@ -37,5 +38,20 @@ jobs:
         if: steps.gather-projects.outputs.projects != ''
         run: |
           labels=$(echo "${{ steps.gather-projects.outputs.projects }}" | sed 's/\[//g' | sed 's/\]//g' | sed 's/"//g')
+
+          # `gh pr edit --add-label` fails atomically on an unknown label, so the
+          # PR that *introduces* an application project used to fail here until
+          # the nightly `Repo | Sync labels` run created its label. Create the
+          # missing ones first, exactly as that workflow does.
+          existing=$(gh label list --limit 200 --json name -q '.[].name')
+          IFS=','
+          for project in $labels; do
+            if ! echo "$existing" | grep -qx "$project"; then
+              echo "Creating label: $project"
+              gh label create "$project" --description "Issues and PRs related to the $project project."
+            fi
+          done
+          unset IFS
+
           gh pr edit ${{ github.event.pull_request.number }} --add-label "$labels"
   
