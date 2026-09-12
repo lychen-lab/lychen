@@ -43,10 +43,6 @@ services:
     networks:
       - lychen-network
 
-  rabbitmq:
-    networks:
-      - lychen-network
-
 networks:
   lychen-network:
     external: true

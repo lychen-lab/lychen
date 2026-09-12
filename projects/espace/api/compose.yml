@@ -25,14 +25,15 @@ services:
         depends_on:
             database:
                 condition: service_healthy
-            rabbitmq:
-                condition: service_started
             redis:
                 condition: service_started
         environment:
             APP_RUNTIME: Runtime\FrankenPhpSymfony\Runtime
             DATABASE_URL: postgresql://${POSTGRES_USER:-userlocal}:${POSTGRES_PASSWORD:-PasswordForLocal!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
-            MESSENGER_TRANSPORT_DSN: amqp://app:app@rabbitmq:5672/app
+            # Central broker (projects/common/rabbitmq), reached over lychen-network in
+            # dev. Staging and production set MESSENGER_TRANSPORT_DSN on the Dokploy
+            # compose so it points at the deployed broker.
+            MESSENGER_TRANSPORT_DSN: ${MESSENGER_TRANSPORT_DSN:-amqp://espace:espace@rabbitmq:5672/espace}
             REDIS_URL: redis://redis:6379
             SERVER_NAME: ${SERVER_NAME:-localhost}, php:80
             TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-example\.com|localhost}|php$$}
@@ -54,23 +55,8 @@ services:
         volumes:
             - redis_data:/data
 
-    rabbitmq:
-        environment:
-            - RABBITMQ_DEFAULT_USER=app
-            - RABBITMQ_DEFAULT_PASS=app
-            - RABBITMQ_DEFAULT_VHOST=app
-        healthcheck:
-            retries: 5
-            start_period: 30s
-            test: [ 'CMD', 'rabbitmq-diagnostics', '-q', 'ping' ]
-            timeout: 10s
-        image: rabbitmq:4.0.4-management-alpine
-        volumes:
-            - rabbitmq_data:/var/lib/rabbitmq/
-
 volumes:
     caddy_config:
     caddy_data:
     database_data:
-    rabbitmq_data:
     redis_data:
