@@ -51,6 +51,7 @@ final class AreaProposal
     use CreatedAtTrait;
     use PlaceTrait;
     use ActivitiesAsStringTrait;
+    use ProposerTrait;
 
     public ?string $title;
     public ?string $description;

@@ -79,8 +79,8 @@ make phpunit c="--group e2e"                         # Run by group
   /robust          # Design system project
   /storybook       # Component workshop (Storybook 10)
   /website         # Main Lychen website (SSG)
-  /common          # Shared local-dev infra (Docker network, Mailpit)
   /zitadel         # Self-hosted Zitadel identity provider (Dokploy-deployed)
+  /common          # Shared infra: central RabbitMQ, mailpit, lychen-network
 
 /libs              # Reusable libraries
   /css/core        # Tailwind design tokens
@@ -120,9 +120,11 @@ make phpunit c="--group e2e"                         # Run by group
 
 - API Platform auto-generates REST APIs from Doctrine entities
 - OpenAPI spec is used to generate the TypeScript SDK at `libs/typescript/tera/api-sdk`
-- State management via Symfony Workflow; messaging via RabbitMQ
+- State management via Symfony Workflow; messaging via RabbitMQ — one **central**
+  broker (`projects/common/rabbitmq`) shared by every API, each on its own vhost
 - FrankenPHP as PHP runtime in Docker; PostgreSQL for storage; Redis for cache
-- Each API project has its own `compose.yml` for local development
+- Each API project has its own `compose.yml` (Postgres + Redis) for local
+  development; RabbitMQ and mailpit are shared via the `lychen-network`
 
 ### Monorepo Wiring
 

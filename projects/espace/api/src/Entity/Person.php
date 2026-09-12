@@ -19,9 +19,16 @@ class Person extends AbstractZitadelUser
     #[ORM\OneToMany(targetEntity: AreaRequest::class, mappedBy: 'requester', orphanRemoval: true)]
     private Collection $areaRequests;
 
+    /**
+     * @var Collection<int, AreaProposal>
+     */
+    #[ORM\OneToMany(targetEntity: AreaProposal::class, mappedBy: 'proposer', orphanRemoval: true)]
+    private Collection $areaProposals;
+
     public function __construct()
     {
         $this->areaRequests = new ArrayCollection();
+        $this->areaProposals = new ArrayCollection();
     }
 
     /**
@@ -47,6 +54,35 @@ class Person extends AbstractZitadelUser
         if ($this->areaRequests->removeElement($areaRequest)) {
             if ($areaRequest->getRequester() === $this) {
                 $areaRequest->setRequester(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AreaProposal>
+     */
+    public function getAreaProposals(): Collection
+    {
+        return $this->areaProposals;
+    }
+
+    public function addAreaProposal(AreaProposal $areaProposal): static
+    {
+        if (!$this->areaProposals->contains($areaProposal)) {
+            $this->areaProposals->add($areaProposal);
+            $areaProposal->setProposer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAreaProposal(AreaProposal $areaProposal): static
+    {
+        if ($this->areaProposals->removeElement($areaProposal)) {
+            if ($areaProposal->getProposer() === $this) {
+                $areaProposal->setProposer(null);
             }
         }
 
