@@ -45,11 +45,11 @@ export default defineConfig([
   importPlugin.flatConfigs.recommended,
   ...markdown.configs.processor,
   ...eslintPluginYml.configs['flat/recommended'],
-  ...tailwind.configs['flat/recommended'],
+  tailwind.configs['recommended'],
   {
     settings: {
       tailwindcss: {
-        config: false,
+        config: path.resolve(import.meta.dirname, 'libs/css/core/all.css'),
       },
     },
   },

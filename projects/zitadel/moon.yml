@@ -1,0 +1,6 @@
+id: zitadel
+language: bash
+layer: application
+stack: backend
+tags:
+  - dokploy

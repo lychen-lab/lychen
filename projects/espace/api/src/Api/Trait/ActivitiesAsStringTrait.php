@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api\Resource\AreaProposal;
+namespace App\Api\Trait;
 
 use App\Entity\AreaActivity;
 

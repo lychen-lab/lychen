@@ -1,4 +1,9 @@
 # Development environment override
+# Pin the compose project name: every API lives in a directory called `api`, so
+# without this a bare `docker compose` (or `make up`) derives the project name
+# from that directory and all APIs collide on the same containers and volumes.
+# Moon tasks pass `-p $project`, which resolves to this same value.
+name: espace-api
 services:
     database:
         ports:
@@ -31,3 +36,14 @@ services:
             - protocol: udp
               published: ${HTTP3_PORT:-29443}
               target: 443
+        networks:
+            # `default` is kept explicitly: naming any network opts a service out
+            # of the implicit one, which would cut the API off from its own
+            # database and redis. Only `api` joins the shared network — database
+            # and redis keep private, non-colliding names on the stack's own.
+            - default
+            - lychen-network
+
+networks:
+    lychen-network:
+        external: true

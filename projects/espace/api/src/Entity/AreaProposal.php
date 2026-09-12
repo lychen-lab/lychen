@@ -29,6 +29,10 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
     #[Choice(choices: AreaProposalWorkflow::PLACES)]
     private string $place = AreaProposalWorkflow::PLACE_DRAFT;
 
+    #[ORM\ManyToOne(inversedBy: 'areaProposals')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Person $proposer = null;
+
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $archivedAt = null;
 
@@ -90,6 +94,18 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified
     public function setPlace(string $place): static
     {
         $this->place = $place;
+
+        return $this;
+    }
+
+    public function getProposer(): ?Person
+    {
+        return $this->proposer;
+    }
+
+    public function setProposer(?Person $proposer): static
+    {
+        $this->proposer = $proposer;
 
         return $this;
     }

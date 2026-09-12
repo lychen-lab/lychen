@@ -22,6 +22,10 @@ final class AreaRequestFactory extends PersistentObjectFactory
         return [
             'description' => self::faker()->text(),
             'title' => self::faker()->text(255),
+            'city' => self::faker()->city(),
+            'minimalSurfaceRequested' => self::faker()->numberBetween(5, 1000),
+            'requester' => PersonFactory::random(),
+            'activities' => AreaActivityFactory::randomSet(self::faker()->numberBetween(1, 5)),
         ];
     }
 

@@ -16,6 +16,7 @@ use App\Api\Resource\AreaProposal\Dto\AreaProposalPatch;
 use App\Api\Resource\AreaProposal\Dto\AreaProposalPost;
 use App\Api\Resource\AreaProposal\Processor\AreaProposalPatchProcessor;
 use App\Api\Resource\AreaProposal\Processor\AreaProposalPostProcessor;
+use App\Api\Trait\ActivitiesAsStringTrait;
 use App\Api\Trait\CreatedAtTrait;
 use App\Api\Trait\PlaceTrait;
 use App\Api\Trait\UuidIdentifierTrait;
@@ -50,6 +51,7 @@ final class AreaProposal
     use CreatedAtTrait;
     use PlaceTrait;
     use ActivitiesAsStringTrait;
+    use ProposerTrait;
 
     public ?string $title;
     public ?string $description;

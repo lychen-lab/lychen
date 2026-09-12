@@ -1,6 +1,16 @@
 import { EMAIL } from '@lychen/typescript-constants/Email';
 
-export default [
+export interface TeamMember {
+  firstname: string;
+  lastname: string;
+  id: string;
+  image: string;
+  role?: string;
+  link?: string;
+  email?: string;
+}
+
+const team: TeamMember[] = [
   {
     firstname: 'Nathan',
     lastname: 'De Pachtere',
@@ -28,25 +38,11 @@ export default [
       'https://res.cloudinary.com/ddhvfiezg/image/upload/v1765546912/019b12cc-8a55-7544-9618-86d48504a3e5.webp',
   },
   {
-    firstname: 'Noëllie',
-    lastname: '',
-    id: 'noellie',
-    image:
-      'https://res.cloudinary.com/ddhvfiezg/image/upload/v1765547075/019b12ce-bd5e-7312-a8e6-d66d881410ed.webp',
-  },
-  {
     firstname: 'Luc',
     lastname: 'Auvigne',
     id: 'luc_auvigne',
     image:
       'https://res.cloudinary.com/ddhvfiezg/image/upload/v1765547005/019b12cd-d1d1-7ba8-9e6b-a5374a571d2f.webp',
-  },
-  {
-    firstname: 'Thomas',
-    lastname: '',
-    id: 'thomas',
-    image:
-      'https://res.cloudinary.com/ddhvfiezg/image/upload/v1765547128/019b12d0-b72c-7f00-9a0a-7356f7f83718.webp',
   },
   {
     firstname: 'Agnès',
@@ -56,3 +52,5 @@ export default [
       'https://res.cloudinary.com/ddhvfiezg/image/upload/v1765547126/019b12d0-5273-7faf-9820-0befe3f270d4.webp',
   },
 ];
+
+export default team;

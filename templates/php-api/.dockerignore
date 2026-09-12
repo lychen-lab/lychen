@@ -2,7 +2,6 @@
 **/*.md
 **/*.php~
 **/*.dist.php
-**/*.dist
 **/*.cache
 **/._*
 **/.dockerignore
@@ -24,19 +23,16 @@ compose.yml
 .github/
 docs/
 public/bundles/
-tests/
 var/
 vendor/
 .editorconfig
 .env.*.local
 .env.dev
 .env.local.php
-.env.test
 .env.staging
 .run
 Capfile
 commands.txt
-local-php-security-checker
 Makefile
 postcss.config.js
 README.md

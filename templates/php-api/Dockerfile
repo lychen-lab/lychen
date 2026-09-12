@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:1.9-php8.4 AS frankenphp_upstream
+FROM dunglas/frankenphp:1.12-php8.5 AS frankenphp_upstream
 
 FROM frankenphp_upstream AS frankenphp_base
 
@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	gettext \
 	git \
     unzip \
+    librabbitmq-dev \
+    $PHPIZE_DEPS \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -22,16 +24,31 @@ RUN set -eux; \
 		opcache \
         exif \
 		zip \
-        amqp \
         curl \
+        pdo_pgsql \
 	;
 
-###> recipes ###
-###> doctrine/doctrine-bundle ###
 RUN set -eux; \
-	install-php-extensions pdo_pgsql
-###< doctrine/doctrine-bundle ###
-###< recipes ###
+    git clone https://github.com/php-amqp/php-amqp.git /tmp/php-amqp; \
+    cd /tmp/php-amqp; \
+    phpize; \
+    ./configure; \
+    make -j$(nproc); \
+    make install; \
+    docker-php-ext-enable amqp; \
+    rm -rf /tmp/php-amqp;
+
+# Install the gRPC extension (and its protobuf companion) so the APIs can speak
+# gRPC when needed. grpc and protobuf are very large C/C++ extensions: compiling
+# them with one make job per CPU exhausts memory on multi-core builders, which is
+# the OOM / "memory overflow" failure. Pin install-php-extensions to a single
+# processor so peak memory stays bounded — the build is slower but reliable on
+# any builder.
+RUN set -eux; \
+    IPE_PROCESSOR_COUNT=1 install-php-extensions \
+        grpc \
+        protobuf \
+    ;
 
 ENV PHP_INI_SCAN_DIR=":$PHP_INI_DIR/app.conf.d"
 
@@ -69,7 +86,24 @@ ENV APP_ENV=test XDEBUG_MODE=off
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
+# Local path packages (lychen/* bundles) referenced by composer.json (../packages/*)
+COPY --link packages /packages
 COPY --link frankenphp/conf.d/20-app.dev.ini $PHP_INI_DIR/app.conf.d/
+
+# Bake the vendors into the image (dev dependencies included, the test suite needs
+# them) so the CI no longer has to run `composer install` at runtime. Installing
+# before copying the sources keeps this layer cached as long as the lock files
+# don't change.
+COPY --link composer.* symfony.* ./
+RUN set -eux; \
+	composer install --no-cache --prefer-dist --no-autoloader --no-scripts --no-progress
+
+# copy sources (tests, phpunit config and .env.test are required to run the suite)
+COPY --link . ./
+
+RUN set -eux; \
+	mkdir -p var/cache var/log; \
+	composer dump-autoload
 
 CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
 
@@ -93,7 +127,7 @@ RUN set -eux; \
 
 # copy sources
 COPY --link . ./
-RUN rm -Rf frankenphp/ docker/ fixtures/ tests/ tools/ config/jwt/ cron/ packages/
+RUN rm -Rf frankenphp/ docker/ fixtures/ tests/ tools/ config/jwt/ cron/ packages/ local-php-security-checker .env.test phpunit.xml.dist
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \

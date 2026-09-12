@@ -86,7 +86,24 @@ ENV APP_ENV=test XDEBUG_MODE=off
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
+# Local path packages (lychen/* bundles) referenced by composer.json (../packages/*)
+COPY --link packages /packages
 COPY --link frankenphp/conf.d/20-app.dev.ini $PHP_INI_DIR/app.conf.d/
+
+# Bake the vendors into the image (dev dependencies included, the test suite needs
+# them) so the CI no longer has to run `composer install` at runtime. Installing
+# before copying the sources keeps this layer cached as long as the lock files
+# don't change.
+COPY --link composer.* symfony.* ./
+RUN set -eux; \
+	composer install --no-cache --prefer-dist --no-autoloader --no-scripts --no-progress
+
+# copy sources (tests, phpunit config and .env.test are required to run the suite)
+COPY --link . ./
+
+RUN set -eux; \
+	mkdir -p var/cache var/log; \
+	composer dump-autoload
 
 CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
 
@@ -110,7 +127,7 @@ RUN set -eux; \
 
 # copy sources
 COPY --link . ./
-RUN rm -Rf frankenphp/ docker/ fixtures/ tests/ tools/ config/jwt/ cron/ packages/
+RUN rm -Rf frankenphp/ docker/ fixtures/ tests/ tools/ config/jwt/ cron/ packages/ local-php-security-checker .env.test phpunit.xml.dist
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \
