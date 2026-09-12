@@ -9,13 +9,13 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "embla-carousel-vue": "^8.6.0",
-    "reka-ui": "^2.10.3",
+    "reka-ui": "^2.10.4",
     "tailwind-merge": "^3.6.0",
     "vaul-vue": "^0.4.1",
     "vee-validate": "^4.15.1",
-    "vue": "^3.5.41",
-    "vue-router": "^5.2.0",
-    "zod": "^4.4.3"
+    "vue": "^3.5.42",
+    "vue-router": "^5.3.0",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "tailwindcss": "^4.3.3"
