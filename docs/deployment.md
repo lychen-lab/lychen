@@ -30,7 +30,14 @@ A deploy is therefore always a specific, reproducible build — never a moving
 `:latest`.
 
 Projects in the automated pipeline (tagged `dokploy`): `website`, `espace-app`,
-`espace-website`, `tera-api`, `espace-api`, `flora-api`.
+`espace-website`, `tera-api`, `espace-api`, `flora-api`, `common-rabbitmq`.
+
+`common-rabbitmq` is the odd one out: it runs an upstream image rather than one
+we build, so it is absent from **Build & push images** (that matrix selects on the
+`docker-buildx` task) and from the release `image-promote` step (tag `version`).
+It is deployed like the rest — the `IMAGE_TAG` a deploy pins is simply ignored by
+its compose, which pins `RABBITMQ_VERSION` instead. See
+[Central RabbitMQ](#central-rabbitmq) below.
 
 ## Staging (continuous)
 
@@ -128,6 +135,54 @@ Dokploy compose `IMAGES_PREFIX` at the old namespace (`ghcr.io/lychen-lab/`) for
 that one deploy, or rebuild from the target commit on `main` so a new image is
 published under the unified path. Keep the old GHCR packages readable until no
 production deploy references a pre-migration SHA.
+
+## Central RabbitMQ
+
+All three APIs share **one** broker ([`projects/common/rabbitmq`](../projects/common/rabbitmq/)),
+the way they already share `common/mailpit`. Each API gets its **own vhost and
+own credentials**, so the identically-named `async` / `failed` / `sync` queues
+the three Symfony Messenger stacks declare cannot collide, and no API can read
+another's queues.
+
+Users, vhosts and permissions cannot be expressed with `RABBITMQ_DEFAULT_USER`
+and friends (those seed a single vhost, and the node skips them entirely once it
+has definitions to import). They are instead rendered into a definitions file at
+boot by [`entrypoint.sh`](../projects/common/rabbitmq/entrypoint.sh), from these
+variables:
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `RABBITMQ_TENANTS` | `tera espace flora` | Space-separated vhosts to provision. One per API. |
+| `RABBITMQ_<TENANT>_PASSWORD` | the tenant name | Password for that tenant's user, e.g. `RABBITMQ_TERA_PASSWORD`. |
+| `RABBITMQ_ADMIN_USER` / `RABBITMQ_ADMIN_PASSWORD` | `admin` / `admin` | Management-UI account, with access to every vhost. |
+| `RABBITMQ_VERSION` | `4.0.4` | Image tag (`rabbitmq:<version>-management-alpine`). |
+
+The defaults are **local-dev credentials**. Staging and production must override
+every password in the Dokploy compose env. Definitions are re-imported on each
+boot and are idempotent — changing a password there and redeploying updates the
+user in place, leaving queues and messages untouched.
+
+**To deploy it, first (outside this repo):**
+
+1. Create the Compose service in Dokploy from `projects/common/rabbitmq`, and set
+   the passwords above in its env.
+2. Add its compose id as the `COMMON_RABBITMQ_DOKPLOY_ID` secret in the `staging`
+   and `production` GitHub Environments — the deploy workflows derive the secret
+   name from the project id. Without it the deploy job fails.
+3. Attach the API composes to the same Docker network as the broker, and set
+   `MESSENGER_TRANSPORT_DSN` on each of them (see below).
+
+> **Until those three steps are done, deploys of `common-rabbitmq` fail and the
+> APIs have no broker.** Nothing dispatches messages today (no `MessageBusInterface`
+> consumer exists yet) and Messenger connects lazily, so an API still boots and
+> serves traffic without a reachable broker — but the first message dispatched
+> would fail.
+
+> **Runtime config (Dokploy, outside this repo):** each API compose resolves its
+> transport as `${MESSENGER_TRANSPORT_DSN:-amqp://<project>:<project>@rabbitmq:5672/<project>}`.
+> That default is the dev topology (service name `rabbitmq` on `lychen-network`);
+> staging and production must set `MESSENGER_TRANSPORT_DSN` explicitly to the
+> deployed broker's host and the environment's real password.
 
 > **Runtime config (Dokploy, outside this repo):** the API composes resolve their
 > image as `${IMAGES_PREFIX:-}<project>:${IMAGE_TAG:-latest}`. After this change,

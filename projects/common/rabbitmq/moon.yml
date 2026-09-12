@@ -1,0 +1,9 @@
+id: common-rabbitmq
+language: bash
+# `application` (rather than mailpit's `automation`) so the deploy workflows,
+# which filter on `--layer application --tags dokploy`, pick the broker up.
+layer: application
+stack: backend
+tags:
+  - compose
+  - dokploy
