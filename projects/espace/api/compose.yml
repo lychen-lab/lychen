@@ -30,6 +30,15 @@ services:
         environment:
             APP_RUNTIME: Runtime\FrankenPhpSymfony\Runtime
             DATABASE_URL: postgresql://${POSTGRES_USER:-userlocal}:${POSTGRES_PASSWORD:-PasswordForLocal!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
+            # Central Mercure hub (projects/common/mercure), `espace` tenant, reached over
+            # lychen-network in dev: the API publishes to MERCURE_URL, browsers connect to
+            # MERCURE_PUBLIC_URL. The secrets are that tenant's publisher and subscriber
+            # keys, 32 bytes at least. Staging and production set all four on the Dokploy
+            # compose.
+            MERCURE_JWT_SECRET: ${MERCURE_JWT_SECRET:-!ChangeThisDevKey-espace-publisher!}
+            MERCURE_PUBLIC_URL: ${MERCURE_PUBLIC_URL:-http://localhost:8800/espace/.well-known/mercure}
+            MERCURE_SUBSCRIBER_JWT_SECRET: ${MERCURE_SUBSCRIBER_JWT_SECRET:-!ChangeThisDevKey-espace-subscriber!}
+            MERCURE_URL: ${MERCURE_URL:-http://mercure/espace/.well-known/mercure}
             # Central broker (projects/common/rabbitmq), reached over lychen-network in
             # dev. Staging and production set MESSENGER_TRANSPORT_DSN on the Dokploy
             # compose so it points at the deployed broker.
