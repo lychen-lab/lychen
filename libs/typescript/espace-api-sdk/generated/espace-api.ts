@@ -108,6 +108,78 @@ export interface paths {
         patch: operations["api_area_proposals_uuid_patch"];
         trace?: never;
     };
+    "/api/area_requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Retrieves the collection of AreaRequest resources.
+         * @description Retrieves the collection of AreaRequest resources.
+         */
+        get: operations["api_area_requests_get_collection"];
+        put?: never;
+        /**
+         * Creates a AreaRequest resource.
+         * @description Creates a AreaRequest resource.
+         */
+        post: operations["api_area_requests_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/area_requests/{uuid}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Retrieves a AreaRequest resource.
+         * @description Retrieves a AreaRequest resource.
+         */
+        get: operations["api_area_requests_uuid_get"];
+        put?: never;
+        post?: never;
+        /**
+         * Removes the AreaRequest resource.
+         * @description Removes the AreaRequest resource.
+         */
+        delete: operations["api_area_requests_uuid_delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Updates the AreaRequest resource.
+         * @description Updates the AreaRequest resource.
+         */
+        patch: operations["api_area_requests_uuid_patch"];
+        trace?: never;
+    };
+    "/api/mercure_subscription": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Retrieves a MercureSubscription resource.
+         * @description Retrieves a MercureSubscription resource.
+         */
+        get: operations["api_mercure_subscription_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -143,6 +215,9 @@ export interface components {
             uuid?: string | null;
             place?: string | null;
             activities?: string[];
+            proposerFirstName?: string | null;
+            proposerLastName?: string | null;
+            proposer?: components["schemas"]["Person.jsonld"];
         };
         "AreaProposal.AreaProposalPatch.jsonMergePatch": {
             title?: string | null;
@@ -178,6 +253,74 @@ export interface components {
             createdAt?: string | null;
             place?: string | null;
             activities?: string[];
+            proposerFirstName?: string | null;
+            proposerLastName?: string | null;
+            proposer?: components["schemas"]["Person.jsonld"];
+        };
+        "AreaRequest.AreaRequest.AreaRequestCollection.jsonld": components["schemas"]["HydraItemBaseSchema"] & {
+            title?: string | null;
+            description?: string | null;
+            minimalSurfaceRequested?: number | null;
+            city?: string | null;
+            /** Format: uuid */
+            uuid?: string | null;
+            place?: string | null;
+            activities?: string[];
+            requesterFirstName?: string | null;
+            requesterLastName?: string | null;
+            requester?: components["schemas"]["Person.jsonld"];
+        };
+        "AreaRequest.AreaRequest.AreaRequestPatch.jsonMergePatch": {
+            title?: string | null;
+            description?: string | null;
+            minimalSurfaceRequested?: number | null;
+            city?: string | null;
+            activities?: string[];
+        };
+        "AreaRequest.AreaRequest.AreaRequestPost": {
+            /** Format: uuid */
+            uuid?: string | null;
+            title: string | null;
+            description: string | null;
+            minimalSurfaceRequested: number | null;
+            city: string | null;
+            activities?: string[];
+        };
+        "AreaRequest.AreaRequest.jsonld": components["schemas"]["HydraItemBaseSchema"] & {
+            title?: string | null;
+            description?: string | null;
+            archivedAt?: string | null;
+            minimalSurfaceRequested?: number | null;
+            city?: string | null;
+            /** Format: uuid */
+            uuid?: string | null;
+            /** Format: date-time */
+            createdAt?: string | null;
+            place?: string | null;
+            activities?: string[];
+            requesterFirstName?: string | null;
+            requesterLastName?: string | null;
+            requester?: components["schemas"]["Person.jsonld"];
+        };
+        "AreaRequest.jsonld": {
+            title?: string;
+            description?: string;
+            /**
+             * @default draft
+             * @enum {string}
+             */
+            place: AreaRequestJsonldPlace;
+            requester?: components["schemas"]["Person.jsonld"];
+            minimalSurfaceRequested?: number | null;
+            city?: string | null;
+            /** Format: date-time */
+            archivedAt?: string | null;
+            activities?: components["schemas"]["Entity.AreaActivity.jsonld"][];
+            /** Format: date-time */
+            createdAt?: string;
+            readonly id?: number;
+            /** Format: uuid */
+            uuid?: string;
         };
         /** @description Unprocessable entity */
         ConstraintViolation: {
@@ -232,6 +375,37 @@ export interface components {
             readonly instance?: string | null;
             readonly statusCode?: number;
             readonly headers?: (string | null)[];
+        };
+        "Entity.AreaActivity.jsonld": {
+            code?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            readonly id?: number;
+            /** Format: uuid */
+            uuid?: string | null;
+        };
+        "Entity.AreaProposal.jsonld": {
+            title?: string;
+            description?: string;
+            /**
+             * @default draft
+             * @enum {string}
+             */
+            place: EntityAreaProposalJsonldPlace;
+            proposer?: components["schemas"]["Person.jsonld"];
+            /** Format: date-time */
+            archivedAt?: string | null;
+            surfaceTotal?: number | null;
+            surfaceToShare?: number | null;
+            city?: string | null;
+            /** @default 0 */
+            altitude: number | null;
+            activities?: components["schemas"]["Entity.AreaActivity.jsonld"][];
+            /** Format: date-time */
+            createdAt?: string;
+            readonly id?: number;
+            /** Format: uuid */
+            uuid?: string;
         };
         /** @description A representation of common errors. */
         Error: {
@@ -336,6 +510,28 @@ export interface components {
             });
             "@id": string;
             "@type": string;
+        };
+        /**
+         * @description What a signed-in user needs to receive the updates this API publishes on the Mercure
+         *     hub: where the hub is, and a short-lived token stating which topics they may hear.
+         */
+        "MercureSubscription.jsonld": components["schemas"]["HydraItemBaseSchema"] & {
+            /** @description Public URL of the hub, to open an EventSource on. */
+            hubUrl?: string;
+            /** @description Subscriber JWT, to send as the hub's `authorization` query parameter. */
+            token?: string;
+        };
+        "Person.jsonld": {
+            areaRequests?: components["schemas"]["AreaRequest.jsonld"][];
+            areaProposals?: components["schemas"]["Entity.AreaProposal.jsonld"][];
+            authId?: string;
+            /** @description The user roles */
+            roles?: string[];
+            readonly id?: number;
+            email?: string | null;
+            givenName?: string | null;
+            familyName?: string | null;
+            readonly userIdentifier?: string;
         };
     };
     responses: never;
@@ -754,6 +950,255 @@ export interface operations {
             };
         };
     };
+    api_area_requests_get_collection: {
+        parameters: {
+            query?: {
+                /** @description The collection page number */
+                page?: number;
+                /** @description The number of items per page */
+                itemsPerPage?: number;
+                /** @description Enable or disable pagination */
+                pagination?: boolean;
+                /** @description AreaRequest place */
+                place?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description AreaRequest collection */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/ld+json": components["schemas"]["HydraCollectionBaseSchema"] & {
+                        member: components["schemas"]["AreaRequest.AreaRequest.AreaRequestCollection.jsonld"][];
+                    };
+                };
+            };
+        };
+    };
+    api_area_requests_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description The new AreaRequest resource */
+        requestBody: {
+            content: {
+                "application/ld+json": components["schemas"]["AreaRequest.AreaRequest.AreaRequestPost"];
+            };
+        };
+        responses: {
+            /** @description AreaRequest resource created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/ld+json": components["schemas"]["AreaRequest.AreaRequest.jsonld"];
+                };
+            };
+            /** @description Invalid input */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/ld+json": components["schemas"]["Error.jsonld"];
+                    "application/problem+json": components["schemas"]["Error"];
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An error occurred */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/ld+json": components["schemas"]["ConstraintViolation.jsonld"];
+                    "application/problem+json": components["schemas"]["ConstraintViolation"];
+                    "application/json": components["schemas"]["ConstraintViolation"];
+                };
+            };
+        };
+    };
+    api_area_requests_uuid_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description AreaRequest identifier */
+                uuid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description AreaRequest resource */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/ld+json": components["schemas"]["AreaRequest.AreaRequest.jsonld"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/ld+json": components["schemas"]["Error.jsonld"];
+                    "application/problem+json": components["schemas"]["Error"];
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    api_area_requests_uuid_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description AreaRequest identifier */
+                uuid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description AreaRequest resource deleted */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/ld+json": components["schemas"]["Error.jsonld"];
+                    "application/problem+json": components["schemas"]["Error"];
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+    api_area_requests_uuid_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description AreaRequest identifier */
+                uuid: string;
+            };
+            cookie?: never;
+        };
+        /** @description The updated AreaRequest resource */
+        requestBody: {
+            content: {
+                "application/merge-patch+json": components["schemas"]["AreaRequest.AreaRequest.AreaRequestPatch.jsonMergePatch"];
+            };
+        };
+        responses: {
+            /** @description AreaRequest resource updated */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/ld+json": components["schemas"]["AreaRequest.AreaRequest.jsonld"];
+                };
+            };
+            /** @description Invalid input */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/ld+json": components["schemas"]["Error.jsonld"];
+                    "application/problem+json": components["schemas"]["Error"];
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/ld+json": components["schemas"]["Error.jsonld"];
+                    "application/problem+json": components["schemas"]["Error"];
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+            /** @description An error occurred */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/ld+json": components["schemas"]["ConstraintViolation.jsonld"];
+                    "application/problem+json": components["schemas"]["ConstraintViolation"];
+                    "application/json": components["schemas"]["ConstraintViolation"];
+                };
+            };
+        };
+    };
+    api_mercure_subscription_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description MercureSubscription resource */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/ld+json": components["schemas"]["MercureSubscription.jsonld"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/ld+json": components["schemas"]["Error.jsonld"];
+                    "application/problem+json": components["schemas"]["Error"];
+                    "application/json": components["schemas"]["Error"];
+                };
+            };
+        };
+    };
+}
+export enum AreaRequestJsonldPlace {
+    draft = "draft",
+    pending_validation = "pending_validation",
+    active = "active",
+    rejected = "rejected",
+    archived = "archived"
+}
+export enum EntityAreaProposalJsonldPlace {
+    draft = "draft",
+    verification = "verification",
+    published = "published",
+    archived = "archived"
 }
 export enum HydraItemBaseSchemaContextOneOf1Hydra {
     http_www_w3_org_ns_hydra_core_ = "http://www.w3.org/ns/hydra/core#"

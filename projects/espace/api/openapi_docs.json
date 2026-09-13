@@ -769,6 +769,435 @@
                     "required": true
                 }
             }
+        },
+        "/api/area_requests": {
+            "get": {
+                "operationId": "api_area_requests_get_collection",
+                "tags": [
+                    "AreaRequest"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "AreaRequest collection",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "description": "AreaRequest.AreaRequest.AreaRequestCollection.jsonld collection.",
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/HydraCollectionBaseSchema"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "required": [
+                                                "member"
+                                            ],
+                                            "properties": {
+                                                "member": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/AreaRequest.AreaRequest.AreaRequestCollection.jsonld"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Retrieves the collection of AreaRequest resources.",
+                "description": "Retrieves the collection of AreaRequest resources.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The collection page number",
+                        "required": false,
+                        "deprecated": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": true
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 30,
+                            "minimum": 0,
+                            "maximum": 30
+                        },
+                        "style": "form",
+                        "explode": true
+                    },
+                    {
+                        "name": "pagination",
+                        "in": "query",
+                        "description": "Enable or disable pagination",
+                        "required": false,
+                        "deprecated": false,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "style": "form",
+                        "explode": true
+                    },
+                    {
+                        "name": "place",
+                        "in": "query",
+                        "description": "AreaRequest place",
+                        "required": false,
+                        "deprecated": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": true
+                    }
+                ]
+            },
+            "post": {
+                "operationId": "api_area_requests_post",
+                "tags": [
+                    "AreaRequest"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "AreaRequest resource created",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AreaRequest.AreaRequest.jsonld"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error.jsonld"
+                                }
+                            },
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "422": {
+                        "description": "An error occurred",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstraintViolation.jsonld"
+                                }
+                            },
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstraintViolation"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstraintViolation"
+                                }
+                            }
+                        },
+                        "links": {}
+                    }
+                },
+                "summary": "Creates a AreaRequest resource.",
+                "description": "Creates a AreaRequest resource.",
+                "parameters": [],
+                "requestBody": {
+                    "description": "The new AreaRequest resource",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AreaRequest.AreaRequest.AreaRequestPost"
+                            }
+                        }
+                    },
+                    "required": true
+                }
+            }
+        },
+        "/api/area_requests/{uuid}": {
+            "get": {
+                "operationId": "api_area_requests_uuid_get",
+                "tags": [
+                    "AreaRequest"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "AreaRequest resource",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AreaRequest.AreaRequest.jsonld"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error.jsonld"
+                                }
+                            },
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "links": {}
+                    }
+                },
+                "summary": "Retrieves a AreaRequest resource.",
+                "description": "Retrieves a AreaRequest resource.",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "AreaRequest identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false
+                    }
+                ]
+            },
+            "delete": {
+                "operationId": "api_area_requests_uuid_delete",
+                "tags": [
+                    "AreaRequest"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "AreaRequest resource deleted"
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error.jsonld"
+                                }
+                            },
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "links": {}
+                    }
+                },
+                "summary": "Removes the AreaRequest resource.",
+                "description": "Removes the AreaRequest resource.",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "AreaRequest identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false
+                    }
+                ]
+            },
+            "patch": {
+                "operationId": "api_area_requests_uuid_patch",
+                "tags": [
+                    "AreaRequest"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "AreaRequest resource updated",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AreaRequest.AreaRequest.jsonld"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "400": {
+                        "description": "Invalid input",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error.jsonld"
+                                }
+                            },
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "422": {
+                        "description": "An error occurred",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstraintViolation.jsonld"
+                                }
+                            },
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstraintViolation"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConstraintViolation"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error.jsonld"
+                                }
+                            },
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "links": {}
+                    }
+                },
+                "summary": "Updates the AreaRequest resource.",
+                "description": "Updates the AreaRequest resource.",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "AreaRequest identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "The updated AreaRequest resource",
+                    "content": {
+                        "application/merge-patch+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AreaRequest.AreaRequest.AreaRequestPatch.jsonMergePatch"
+                            }
+                        }
+                    },
+                    "required": true
+                }
+            }
+        },
+        "/api/mercure_subscription": {
+            "get": {
+                "operationId": "api_mercure_subscription_get",
+                "tags": [
+                    "MercureSubscription"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "MercureSubscription resource",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MercureSubscription.jsonld"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error.jsonld"
+                                }
+                            },
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        },
+                        "links": {}
+                    }
+                },
+                "summary": "Retrieves a MercureSubscription resource.",
+                "description": "Retrieves a MercureSubscription resource.",
+                "parameters": []
+            }
         }
     },
     "components": {
@@ -889,6 +1318,17 @@
                                 "items": {
                                     "type": "string"
                                 }
+                            },
+                            "proposerFirstName": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "proposerLastName": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "proposer": {
+                                "$ref": "#/components/schemas/Person.jsonld"
                             }
                         }
                     }
@@ -1032,10 +1472,261 @@
                                 "items": {
                                     "type": "string"
                                 }
+                            },
+                            "proposerFirstName": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "proposerLastName": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "proposer": {
+                                "$ref": "#/components/schemas/Person.jsonld"
                             }
                         }
                     }
                 ]
+            },
+            "AreaRequest.AreaRequest.AreaRequestCollection.jsonld": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/HydraItemBaseSchema"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "description": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "minimalSurfaceRequested": {
+                                "type": "integer",
+                                "nullable": true
+                            },
+                            "city": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "uuid": {
+                                "type": "string",
+                                "format": "uuid",
+                                "nullable": true
+                            },
+                            "place": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "activities": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "requesterFirstName": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "requesterLastName": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "requester": {
+                                "$ref": "#/components/schemas/Person.jsonld"
+                            }
+                        }
+                    }
+                ]
+            },
+            "AreaRequest.AreaRequest.AreaRequestPatch.jsonMergePatch": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "description": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "minimalSurfaceRequested": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "city": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "activities": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "AreaRequest.AreaRequest.AreaRequestPost": {
+                "type": "object",
+                "properties": {
+                    "uuid": {
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true
+                    },
+                    "title": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "description": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "minimalSurfaceRequested": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "city": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "activities": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": [
+                    "title",
+                    "description",
+                    "minimalSurfaceRequested",
+                    "city"
+                ]
+            },
+            "AreaRequest.AreaRequest.jsonld": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/HydraItemBaseSchema"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "description": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "archivedAt": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "minimalSurfaceRequested": {
+                                "type": "integer",
+                                "nullable": true
+                            },
+                            "city": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "uuid": {
+                                "type": "string",
+                                "format": "uuid",
+                                "nullable": true
+                            },
+                            "createdAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "nullable": true
+                            },
+                            "place": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "activities": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "requesterFirstName": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "requesterLastName": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "requester": {
+                                "$ref": "#/components/schemas/Person.jsonld"
+                            }
+                        }
+                    }
+                ]
+            },
+            "AreaRequest.jsonld": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "place": {
+                        "enum": [
+                            "draft",
+                            "pending_validation",
+                            "active",
+                            "rejected",
+                            "archived"
+                        ],
+                        "default": "draft",
+                        "type": "string"
+                    },
+                    "requester": {
+                        "$ref": "#/components/schemas/Person.jsonld"
+                    },
+                    "minimalSurfaceRequested": {
+                        "minimum": 0,
+                        "exclusiveMinimum": true,
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "city": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "archivedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "activities": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Entity.AreaActivity.jsonld"
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                }
             },
             "ConstraintViolation": {
                 "type": "object",
@@ -1205,6 +1896,95 @@
                     }
                 ],
                 "description": "Unprocessable entity"
+            },
+            "Entity.AreaActivity.jsonld": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true
+                    }
+                }
+            },
+            "Entity.AreaProposal.jsonld": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "place": {
+                        "enum": [
+                            "draft",
+                            "verification",
+                            "published",
+                            "archived"
+                        ],
+                        "default": "draft",
+                        "type": "string"
+                    },
+                    "proposer": {
+                        "$ref": "#/components/schemas/Person.jsonld"
+                    },
+                    "archivedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "surfaceTotal": {
+                        "minimum": 0,
+                        "exclusiveMinimum": true,
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "surfaceToShare": {
+                        "minimum": 0,
+                        "exclusiveMinimum": true,
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "city": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "altitude": {
+                        "default": 0,
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "activities": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Entity.AreaActivity.jsonld"
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                }
             },
             "Error": {
                 "type": "object",
@@ -1493,6 +2273,74 @@
                     "@id",
                     "@type"
                 ]
+            },
+            "MercureSubscription.jsonld": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/HydraItemBaseSchema"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "hubUrl": {
+                                "description": "Public URL of the hub, to open an EventSource on.",
+                                "type": "string"
+                            },
+                            "token": {
+                                "description": "Subscriber JWT, to send as the hub's `authorization` query parameter.",
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "description": "What a signed-in user needs to receive the updates this API publishes on the Mercure\nhub: where the hub is, and a short-lived token stating which topics they may hear."
+            },
+            "Person.jsonld": {
+                "type": "object",
+                "properties": {
+                    "areaRequests": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AreaRequest.jsonld"
+                        }
+                    },
+                    "areaProposals": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Entity.AreaProposal.jsonld"
+                        }
+                    },
+                    "authId": {
+                        "type": "string"
+                    },
+                    "roles": {
+                        "description": "The user roles",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "email": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "givenName": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "familyName": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "userIdentifier": {
+                        "readOnly": true,
+                        "type": "string"
+                    }
+                }
             }
         },
         "responses": {},
@@ -1522,6 +2370,14 @@
         {
             "name": "AreaProposal",
             "description": "Resource 'AreaProposal' operations."
+        },
+        {
+            "name": "AreaRequest",
+            "description": "Resource 'AreaRequest' operations."
+        },
+        {
+            "name": "MercureSubscription",
+            "description": "What a signed-in user needs to receive the updates this API publishes on the Mercure\nhub: where the hub is, and a short-lived token stating which topics they may hear."
         }
     ],
     "webhooks": {}
