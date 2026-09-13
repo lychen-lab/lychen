@@ -5,6 +5,8 @@ namespace App\Factory;
 use App\Entity\AreaProposal;
 use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
+use function Zenstruck\Foundry\lazy;
+
 /**
  * @extends PersistentObjectFactory<AreaProposal>
  */
@@ -28,8 +30,9 @@ final class AreaProposalFactory extends PersistentObjectFactory
             'surfaceToShare' => self::faker()->numberBetween(5, $surfaceTotal),
             'surfaceTotal' => $surfaceTotal,
             'altitude' => self::faker()->numberBetween(0, 1000),
-            'proposer' => PersonFactory::random(),
-            'activities' => AreaActivityFactory::randomSet(self::faker()->numberBetween(1, 5)),
+            // Lazy so that tests overriding these relations don't need existing rows.
+            'proposer' => lazy(static fn () => PersonFactory::randomOrCreate()),
+            'activities' => lazy(static fn () => AreaActivityFactory::randomRangeOrCreate(1, 5)),
         ];
     }
 

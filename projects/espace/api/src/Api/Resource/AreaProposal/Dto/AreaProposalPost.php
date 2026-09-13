@@ -2,40 +2,42 @@
 
 namespace App\Api\Resource\AreaProposal\Dto;
 
+use App\Api\Transform\ActivityCodesToActivities;
+use App\Entity\AreaProposal;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[Map(target: AreaProposal::class)]
 final class AreaProposalPost
 {
-    public ?Uuid $uuid;
+    public Uuid $uuid;
 
-    #[NotBlank]
-    public ?string $title;
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
+    public string $title;
 
-    #[NotBlank]
-    public ?string $description;
+    #[Assert\NotBlank]
+    public string $description;
 
-    #[NotBlank]
-    public ?int $surfaceTotal;
+    #[Assert\NotNull]
+    #[Assert\Positive]
+    public int $surfaceTotal;
 
-    #[NotBlank]
-    public ?int $surfaceToShare;
+    #[Assert\NotNull]
+    #[Assert\Positive]
+    public int $surfaceToShare;
 
-    #[NotBlank]
-    public ?string $city;
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
+    public string $city;
 
-    #[NotBlank]
-    public ?int $altitude;
+    #[Assert\NotNull]
+    public int $altitude;
 
     /**
-     * @var string[]
+     * @var list<string>
      */
-    #[Map(if: false)]
-    public ?array $activities;
-
-    public function __construct()
-    {
-        $this->activities = [];
-    }
+    #[Map(transform: ActivityCodesToActivities::class)]
+    public array $activities = [];
 }

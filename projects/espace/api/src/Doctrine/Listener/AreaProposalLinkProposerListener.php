@@ -31,6 +31,13 @@ final readonly class AreaProposalLinkProposerListener
             return;
         }
 
+        // The authenticated user is not necessarily managed by this entity manager (the
+        // firewall is stateless, so the token's user is never refreshed): link by reference.
+        $entityManager = $event->getObjectManager();
+        if (!$entityManager->contains($proposer) && null !== $proposer->getId()) {
+            $proposer = $entityManager->getReference(Person::class, $proposer->getId());
+        }
+
         $areaProposal->setProposer($proposer);
     }
 }
