@@ -78,6 +78,22 @@ Quand on implémente une feature touchant ce domaine :
 4. **Signals** : `ValidationAreaProposalWorkflow` → `MatchingWorkflow` se fait via signal, pas via nouvelle exécution de workflow ; documenter le nom du signal et son payload (ID de la `AreaProposal`) dans le code.
 5. **Tests** : privilégier le Temporal Test Framework (workflow environment en mémoire) plutôt que de dépendre de l'instance partagée pour les tests unitaires/PHPUnit.
 
+## Mises à jour en temps réel
+
+L'API pousse les changements de données vers les écrans ouverts via le hub Mercure central
+du monorepo, sur le tenant `espace` — voir [deployment.md](deployment.md#central-mercure-hub).
+
+- **Publiées depuis Doctrine, pas depuis les processors de l'API.** `AreaProposalMercureListener`
+  publie chaque écriture committée d'une `AreaProposal`, quel qu'en soit l'auteur : les
+  changements de statut persistés par les activités Temporal arrivent au front sans code
+  supplémentaire dans les activités.
+- **Updates privées, chemins d'IRI comme topics** (`/api/area_proposals/{uuid}`) : le hub ne
+  délivre que ce que le token de l'utilisateur (`GET /api/mercure_subscription`) autorise, et
+  un worker, qui n'a pas d'hôte de requête, publie sur les mêmes topics que l'API.
+- **Front :** `useEspaceMercure(topics, onUpdate)` dans `libs/vue/espace`.
+- **Pas un canal de notification.** Mercure reflète les données sur les écrans ouverts ;
+  notifier un utilisateur passe toujours par les activités et Novu, comme ci-dessus.
+
 ---
 
 _Document à tenir à jour au fur et à mesure de l'implémentation — notamment ajouter le mapping Workflow ↔ classes PHP réelles une fois codées, et les noms exacts des queues Temporal utilisées._

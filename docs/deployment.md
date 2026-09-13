@@ -270,43 +270,67 @@ The Mercure debugger is at
 3. Attach the API composes to the same Docker network as the hub, and route a
    domain to the hub container's port `80` so browsers can reach it.
 
-> **Until those steps are done, deploys of `common-mercure` fail.** Nothing
-> publishes to the hub today — no API has `symfony/mercure-bundle` installed — so
-> an unreachable hub breaks nothing else.
+> **Until those steps are done, deploys of `common-mercure` fail, and `espace-api`
+> publishes into the void.** Publishing is best-effort — the API logs a warning and
+> keeps serving — so nothing breaks, but the app shows no live updates.
 
-### Opting an API in
+### How an API publishes: the `espace` example
 
-The hub is deployed and reachable but unused until an API installs the bundle:
+`espace-api` is wired end to end on area proposals. Copy it for another resource, or
+another API.
 
-```bash
-composer require symfony/mercure-bundle
-```
+**API** ([`projects/espace/api`](../projects/espace/api/)):
 
-then points it at that API's own hub — the internal URL for publishing, the
-public one for the `Link` header browsers follow:
+- `symfony/mercure-bundle` and `lcobucci/jwt`, configured in
+  [`config/packages/mercure.php`](../projects/espace/api/config/packages/mercure.php) to
+  publish through the tenant's hub with the tenant's **publisher** key.
+- [`AreaProposalMercureListener`](../projects/espace/api/src/Doctrine/Listener/AreaProposalMercureListener.php)
+  publishes every committed change to an area proposal through
+  [`ResourceUpdatePublisher`](../projects/espace/api/src/Mercure/ResourceUpdatePublisher.php):
+  API writes, but also fixtures, commands and — once they exist — Temporal activities.
+  API Platform's own `mercure: true` cannot do this: its Doctrine listener only publishes
+  entities that are resources themselves, and espace's resources are DTOs mapped from
+  entities.
+- Updates are **private**, and their topic is the resource IRI **path**
+  (`/api/area_proposals/{uuid}`) rather than its absolute URL. A change made outside an
+  HTTP request has no host to build a URL from, and would otherwise land on a topic
+  nobody listens to.
+- `GET /api/mercure_subscription` gives a signed-in user the hub's public URL and a
+  one-hour token signed with the tenant's **subscriber** key, granting the topics listed in
+  [`MercureSubscriptionProvider::TOPICS`](../projects/espace/api/src/Api/Resource/MercureSubscription/Provider/MercureSubscriptionProvider.php).
+  A token handed to a browser can never publish.
+- An unreachable hub is logged, not raised: real-time is a convenience over the API, not
+  part of its contract, and the write it reports is already committed.
 
-```yaml
-# config/packages/mercure.yaml
-mercure:
-    hubs:
-        default:
-            url: '%env(MERCURE_URL)%'
-            public_url: '%env(MERCURE_PUBLIC_URL)%'
-            jwt:
-                secret: '%env(MERCURE_JWT_SECRET)%'
-                publish: ['*']
-```
+**App** ([`projects/espace/app`](../projects/espace/app/)):
 
-```yaml
-# compose.yml, for the tera API
-MERCURE_URL: ${MERCURE_URL:-http://mercure/tera/.well-known/mercure}
-MERCURE_PUBLIC_URL: ${MERCURE_PUBLIC_URL:-http://localhost:8800/tera/.well-known/mercure}
-MERCURE_JWT_SECRET: ${MERCURE_JWT_SECRET:-!ChangeThisDevKey-tera-publisher!}
-```
+- [`useEspaceMercure(topics, onUpdate)`](../libs/vue/espace/composables/use-espace-mercure/useEspaceMercure.ts)
+  fetches a token and opens an `EventSource` on the hub. The token travels as the
+  `authorization` query parameter — `EventSource` cannot set headers — which the hub
+  redacts from its logs. When the hub turns a token down, the composable reconnects with a
+  fresh one and resumes from the last event it received.
+- The proposals list subscribes to the `/api/area_proposals/{uuid}` template and refetches;
+  a proposal's page subscribes to its own IRI and writes the pushed payload straight into
+  its query cache.
 
-`MERCURE_JWT_SECRET` must equal that tenant's **publisher** key. Tokens the API
-mints for browsers must instead be signed with the **subscriber** key, which is
-what keeps a subscriber from publishing.
+**Configuration**, on the API's compose (the dev defaults live in
+[`compose.yml`](../projects/espace/api/compose.yml)):
+
+| Variable | Dev default | Purpose |
+| --- | --- | --- |
+| `MERCURE_URL` | `http://mercure/espace/.well-known/mercure` | Where the API publishes: the internal URL. |
+| `MERCURE_PUBLIC_URL` | `http://localhost:8800/espace/.well-known/mercure` | Where browsers connect. |
+| `MERCURE_JWT_SECRET` | the hub's dev `espace` publisher key | Must equal the hub's `MERCURE_ESPACE_PUBLISHER_JWT_KEY`. |
+| `MERCURE_SUBSCRIBER_JWT_SECRET` | the hub's dev `espace` subscriber key | Must equal the hub's `MERCURE_ESPACE_SUBSCRIBER_JWT_KEY`. |
+
+> **Keys must be at least 32 bytes.** The hub accepts shorter ones, but `lcobucci/jwt`
+> refuses to sign with an HMAC-SHA256 key under 256 bits — so a short key only fails on
+> the API side, at the first publish.
+
+To make another resource live: publish it from a listener like
+`AreaProposalMercureListener`, add its IRI template to `MercureSubscriptionProvider::TOPICS`,
+and subscribe from the app with `useEspaceMercure`. For another API, repeat the bundle
+setup with that API's tenant keys.
 
 ## Prefer a forward fix
 
