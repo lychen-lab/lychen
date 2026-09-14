@@ -2,34 +2,35 @@
 
 namespace App\Api\Resource\AreaRequest\Dto;
 
+use App\Api\Transform\ActivityCodesToActivities;
+use App\Entity\AreaRequest;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[Map(target: AreaRequest::class)]
 final class AreaRequestPost
 {
-    public ?Uuid $uuid;
+    public Uuid $uuid;
 
-    #[NotBlank]
-    public ?string $title;
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
+    public string $title;
 
-    #[NotBlank]
-    public ?string $description;
+    #[Assert\NotBlank]
+    public string $description;
 
-    #[NotBlank]
-    public ?int $minimalSurfaceRequested;
+    #[Assert\NotNull]
+    #[Assert\Positive]
+    public int $minimalSurfaceRequested;
 
-    #[NotBlank]
-    public ?string $city;
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
+    public string $city;
 
     /**
-     * @var string[]
+     * @var list<string>
      */
-    #[Map(if: false)]
-    public ?array $activities;
-
-    public function __construct()
-    {
-        $this->activities = [];
-    }
+    #[Map(transform: ActivityCodesToActivities::class)]
+    public array $activities = [];
 }

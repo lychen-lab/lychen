@@ -31,6 +31,13 @@ final readonly class AreaRequestLinkRequesterListener
             return;
         }
 
+        // The authenticated user is not necessarily managed by this entity manager (the
+        // firewall is stateless, so the token's user is never refreshed): link by reference.
+        $entityManager = $event->getObjectManager();
+        if (!$entityManager->contains($requester) && null !== $requester->getId()) {
+            $requester = $entityManager->getReference(Person::class, $requester->getId());
+        }
+
         $areaRequest->setRequester($requester);
     }
 }
