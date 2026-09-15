@@ -17,6 +17,7 @@
         "doctrine/doctrine-migrations-bundle": "4.0.*",
         "doctrine/orm": "3.6.*",
         "gedmo/doctrine-extensions": "3.22.*",
+        "lcobucci/jwt": "5.6.*",
         "lychen/core": "*",
         "lychen/frankenphp-symfony": "*",
         "lychen/model": "*",
@@ -43,8 +44,10 @@
         "symfony/http-client": "8.1.*",
         "symfony/intl": "8.1.*",
         "symfony/mailer": "8.1.*",
+        "symfony/mercure-bundle": "0.5.*",
         "symfony/messenger": "8.1.*",
         "symfony/monolog-bundle": "4.0.*",
+        "symfony/object-mapper": "8.1.*",
         "symfony/process": "8.1.*",
         "symfony/property-access": "8.1.*",
         "symfony/property-info": "8.1.*",
@@ -57,8 +60,7 @@
         "symfony/uid": "8.1.*",
         "symfony/validator": "8.1.*",
         "symfony/workflow": "8.1.*",
-        "symfony/yaml": "8.1.*",
-        "symfony/object-mapper": "8.1.*"
+        "symfony/yaml": "8.1.*"
     },
     "require-dev": {
         "dama/doctrine-test-bundle": "8.6.*",

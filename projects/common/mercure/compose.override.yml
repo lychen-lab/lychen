@@ -1,0 +1,28 @@
+# Development environment override
+# Pin the compose project name: `docker compose` would otherwise derive it from
+# this directory (`mercure`), while the Moon tasks pass `-p $project`. Pinning it
+# makes both converge on the same stack.
+name: common-mercure
+services:
+  mercure:
+    environment:
+      # Local-dev permissiveness, mirroring the hub image's own dev.Caddyfile:
+      # unauthenticated subscribers, the debugger UI, the subscription API and
+      # any browser origin. None of this may reach staging or production.
+      MERCURE_EXTRA_DIRECTIVES: |
+        anonymous
+        demo
+        subscriptions
+        cors_origins *
+        publish_origins *
+    ports:
+      # The APIs reach the hub over lychen-network; this is for browsers running
+      # on the host, and for the debugger UI at
+      # http://localhost:8800/<tenant>/.well-known/mercure/ui/
+      - '${MERCURE_PORT:-8800}:80'
+    networks:
+      - lychen-network
+
+networks:
+  lychen-network:
+    external: true

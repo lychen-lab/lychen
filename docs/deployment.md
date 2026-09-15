@@ -30,14 +30,17 @@ A deploy is therefore always a specific, reproducible build — never a moving
 `:latest`.
 
 Projects in the automated pipeline (tagged `dokploy`): `website`, `espace-app`,
-`espace-website`, `tera-api`, `espace-api`, `flora-api`, `common-rabbitmq`.
+`espace-website`, `tera-api`, `espace-api`, `flora-api`, `common-rabbitmq`,
+`common-mercure`.
 
-`common-rabbitmq` is the odd one out: it runs an upstream image rather than one
-we build, so it is absent from **Build & push images** (that matrix selects on the
-`docker-buildx` task) and from the release `image-promote` step (tag `version`).
-It is deployed like the rest — the `IMAGE_TAG` a deploy pins is simply ignored by
-its compose, which pins `RABBITMQ_VERSION` instead. See
-[Central RabbitMQ](#central-rabbitmq) below.
+`common-rabbitmq` and `common-mercure` are the odd ones out: they run upstream
+images rather than ones we build, so they are absent from **Build & push images**
+(that matrix selects on the `docker-buildx` task) and from the release
+`image-promote` step (tag `version`). They are deployed like the rest — the
+`IMAGE_TAG` a deploy pins is simply ignored by their composes, which pin
+`RABBITMQ_VERSION` and `MERCURE_VERSION` instead. See
+[Central RabbitMQ](#central-rabbitmq) and [Central Mercure hub](#central-mercure-hub)
+below.
 
 ## Staging (continuous)
 
@@ -190,6 +193,144 @@ user in place, leaving queues and messages untouched.
 > `ghcr.io/lychen-lab/lychen/` (the frontends already hardcode the full path). The
 > same variable also drives prefixed names in dev/CI, so verify local stacks still
 > resolve before rolling it out.
+
+## Central Mercure hub
+
+All three APIs share **one** [Mercure](https://mercure.rocks) hub
+([`projects/common/mercure`](../projects/common/mercure/)), the way they already
+share `common/rabbitmq` and `common/mailpit`. Mercure pushes real-time updates to
+browsers over SSE; the hub is the broker sitting between the APIs (publishers)
+and the apps (subscribers).
+
+Each API gets its **own hub**, under its own path prefix, with its **own JWT
+keys** and its **own Bolt transport**:
+
+```
+http://mercure/tera/.well-known/mercure
+http://mercure/espace/.well-known/mercure
+http://mercure/flora/.well-known/mercure
+```
+
+That is the same isolation the broker gets from per-vhost credentials. It matters
+because Mercure authorises purely by JWT signature: with a single shared key, any
+API could mint a token granting itself `subscribe` on another domain's topics.
+With a key per tenant, a token signed by `espace` is rejected (401) by the `tera`
+hub, and the separate transports mean two APIs publishing the *same* topic URI
+never see each other's updates.
+
+A Caddyfile cannot loop over a list, so the per-tenant blocks are rendered at boot
+by [`entrypoint.sh`](../projects/common/mercure/entrypoint.sh) from these
+variables:
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `MERCURE_TENANTS` | `tera espace flora` | Space-separated hubs to provision. One per API, `[a-z0-9-]`. |
+| `MERCURE_<TENANT>_PUBLISHER_JWT_KEY` | a dev key | HMAC key validating that tenant's *publisher* tokens, e.g. `MERCURE_TERA_PUBLISHER_JWT_KEY`. |
+| `MERCURE_<TENANT>_SUBSCRIBER_JWT_KEY` | a dev key | Same, for *subscriber* tokens. |
+| `MERCURE_EXTRA_DIRECTIVES` | — | Extra `mercure` directives applied to every hub. |
+| `MERCURE_<TENANT>_EXTRA_DIRECTIVES` | — | Extra directives for that hub alone — this is where production `cors_origins` goes. |
+| `MERCURE_JWT_ALG` | `HS256` | Signing algorithm for every key. |
+| `MERCURE_VERSION` | `v0.24.2` | Image tag (`dunglas/mercure:<version>`). |
+
+The rendered Caddyfile holds **no secrets** — it references keys as
+`{env.MERCURE_TERA_PUBLISHER_JWT_KEY}`, which Caddy resolves at runtime. When a
+key is left empty the hub falls back to an in-repo development key and says so
+loudly at boot:
+
+```
+lychen: WARNING using built-in development JWT keys for: tera/publisher …
+```
+
+**Treat that warning as a deploy failure anywhere but local dev** — those keys are
+public, and anyone holding one can publish to, and subscribe to, everything on
+that hub.
+
+Adding a tenant takes two edits: append it to `MERCURE_TENANTS`, and declare its
+two key variables in
+[`compose.yml`](../projects/common/mercure/compose.yml) — Compose only forwards
+the variables it is told about.
+
+### Dev
+
+`moon <api>:dev` starts the hub alongside mailpit and the broker. It is permissive
+there and only there (`anonymous`, `demo`, `subscriptions`, `cors_origins *`), set
+from [`compose.override.yml`](../projects/common/mercure/compose.override.yml).
+The Mercure debugger is at
+<http://localhost:8800/tera/.well-known/mercure/ui/> (`MERCURE_PORT` to move it).
+
+### To deploy it, first (outside this repo)
+
+1. Create the Compose service in Dokploy from `projects/common/mercure`, and set
+   a **fresh random key** for every `MERCURE_<TENANT>_{PUBLISHER,SUBSCRIBER}_JWT_KEY`
+   in its env, plus a `MERCURE_<TENANT>_EXTRA_DIRECTIVES` naming that app's origin,
+   e.g. `cors_origins https://app.tera.lychen.org`.
+2. Add its compose id as the `COMMON_MERCURE_DOKPLOY_ID` secret in the `staging`
+   and `production` GitHub Environments — the deploy workflows derive the secret
+   name from the project id. Without it the deploy job fails.
+3. Attach the API composes to the same Docker network as the hub, and route a
+   domain to the hub container's port `80` so browsers can reach it.
+
+> **Until those steps are done, deploys of `common-mercure` fail, and `espace-api`
+> publishes into the void.** Publishing is best-effort — the API logs a warning and
+> keeps serving — so nothing breaks, but the app shows no live updates.
+
+### How an API publishes: the `espace` example
+
+`espace-api` is wired end to end on area proposals. Copy it for another resource, or
+another API.
+
+**API** ([`projects/espace/api`](../projects/espace/api/)):
+
+- `symfony/mercure-bundle` and `lcobucci/jwt`, configured in
+  [`config/packages/mercure.php`](../projects/espace/api/config/packages/mercure.php) to
+  publish through the tenant's hub with the tenant's **publisher** key.
+- [`AreaProposalMercureListener`](../projects/espace/api/src/Doctrine/Listener/AreaProposalMercureListener.php)
+  publishes every committed change to an area proposal through
+  [`ResourceUpdatePublisher`](../projects/espace/api/src/Mercure/ResourceUpdatePublisher.php):
+  API writes, but also fixtures, commands and — once they exist — Temporal activities.
+  API Platform's own `mercure: true` cannot do this: its Doctrine listener only publishes
+  entities that are resources themselves, and espace's resources are DTOs mapped from
+  entities.
+- Updates are **private**, and their topic is the resource IRI **path**
+  (`/api/area_proposals/{uuid}`) rather than its absolute URL. A change made outside an
+  HTTP request has no host to build a URL from, and would otherwise land on a topic
+  nobody listens to.
+- `GET /api/mercure_subscription` gives a signed-in user the hub's public URL and a
+  one-hour token signed with the tenant's **subscriber** key, granting the topics listed in
+  [`MercureSubscriptionProvider::TOPICS`](../projects/espace/api/src/Api/Resource/MercureSubscription/Provider/MercureSubscriptionProvider.php).
+  A token handed to a browser can never publish.
+- An unreachable hub is logged, not raised: real-time is a convenience over the API, not
+  part of its contract, and the write it reports is already committed.
+
+**App** ([`projects/espace/app`](../projects/espace/app/)):
+
+- [`useEspaceMercure(topics, onUpdate)`](../libs/vue/espace/composables/use-espace-mercure/useEspaceMercure.ts)
+  fetches a token and opens an `EventSource` on the hub. The token travels as the
+  `authorization` query parameter — `EventSource` cannot set headers — which the hub
+  redacts from its logs. When the hub turns a token down, the composable reconnects with a
+  fresh one and resumes from the last event it received.
+- The proposals list subscribes to the `/api/area_proposals/{uuid}` template and refetches;
+  a proposal's page subscribes to its own IRI and writes the pushed payload straight into
+  its query cache.
+
+**Configuration**, on the API's compose (the dev defaults live in
+[`compose.yml`](../projects/espace/api/compose.yml)):
+
+| Variable | Dev default | Purpose |
+| --- | --- | --- |
+| `MERCURE_URL` | `http://mercure/espace/.well-known/mercure` | Where the API publishes: the internal URL. |
+| `MERCURE_PUBLIC_URL` | `http://localhost:8800/espace/.well-known/mercure` | Where browsers connect. |
+| `MERCURE_JWT_SECRET` | the hub's dev `espace` publisher key | Must equal the hub's `MERCURE_ESPACE_PUBLISHER_JWT_KEY`. |
+| `MERCURE_SUBSCRIBER_JWT_SECRET` | the hub's dev `espace` subscriber key | Must equal the hub's `MERCURE_ESPACE_SUBSCRIBER_JWT_KEY`. |
+
+> **Keys must be at least 32 bytes.** The hub accepts shorter ones, but `lcobucci/jwt`
+> refuses to sign with an HMAC-SHA256 key under 256 bits — so a short key only fails on
+> the API side, at the first publish.
+
+To make another resource live: publish it from a listener like
+`AreaProposalMercureListener`, add its IRI template to `MercureSubscriptionProvider::TOPICS`,
+and subscribe from the app with `useEspaceMercure`. For another API, repeat the bundle
+setup with that API's tenant keys.
 
 ## Prefer a forward fix
 

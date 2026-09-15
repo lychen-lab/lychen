@@ -38,7 +38,7 @@ final readonly class AreaProposalPatchProcessor implements ProcessorInterface
         $entity = $this->objectMapper->map($data, $entity);
 
         // Handle activities relation
-        if ($data instanceof AreaProposalPatch && null !== $data->activities) {
+        if ($data instanceof AreaProposalPatch && isset($data->activities)) {
             // Get current activities associated with the entity
             $currentActivities = $entity->getActivities();
 

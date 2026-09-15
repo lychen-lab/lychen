@@ -160,6 +160,26 @@ export interface paths {
         patch: operations["api_area_requests_uuid_patch"];
         trace?: never;
     };
+    "/api/mercure_subscription": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Retrieves a MercureSubscription resource.
+         * @description Retrieves a MercureSubscription resource.
+         */
+        get: operations["api_mercure_subscription_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -490,6 +510,16 @@ export interface components {
             });
             "@id": string;
             "@type": string;
+        };
+        /**
+         * @description What a signed-in user needs to receive the updates this API publishes on the Mercure
+         *     hub: where the hub is, and a short-lived token stating which topics they may hear.
+         */
+        "MercureSubscription.jsonld": components["schemas"]["HydraItemBaseSchema"] & {
+            /** @description Public URL of the hub, to open an EventSource on. */
+            hubUrl?: string;
+            /** @description Subscriber JWT, to send as the hub's `authorization` query parameter. */
+            token?: string;
         };
         "Person.jsonld": {
             areaRequests?: components["schemas"]["AreaRequest.jsonld"][];
@@ -1121,6 +1151,37 @@ export interface operations {
                     "application/ld+json": components["schemas"]["ConstraintViolation.jsonld"];
                     "application/problem+json": components["schemas"]["ConstraintViolation"];
                     "application/json": components["schemas"]["ConstraintViolation"];
+                };
+            };
+        };
+    };
+    api_mercure_subscription_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description MercureSubscription resource */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/ld+json": components["schemas"]["MercureSubscription.jsonld"];
+                };
+            };
+            /** @description Not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/ld+json": components["schemas"]["Error.jsonld"];
+                    "application/problem+json": components["schemas"]["Error"];
+                    "application/json": components["schemas"]["Error"];
                 };
             };
         };
