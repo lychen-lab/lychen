@@ -25,8 +25,9 @@ services:
       # Central broker (projects/common/rabbitmq), reached over lychen-network in
       # dev. Staging and production set MESSENGER_TRANSPORT_DSN on the Dokploy
       # compose so it points at the deployed broker. Add {{ name }} to
-      # RABBITMQ_TENANTS on the broker so its vhost gets provisioned.
-      MESSENGER_TRANSPORT_DSN: ${MESSENGER_TRANSPORT_DSN:-amqp://{{ name }}:{{ name }}@rabbitmq:5672/{{ name }}}
+      # RABBITMQ_SERVICES on the broker so it gets a user, a queue and its
+      # bindings on the shared `lychen` vhost.
+      MESSENGER_TRANSPORT_DSN: ${MESSENGER_TRANSPORT_DSN:-amqp://{{ name }}:{{ name }}@rabbitmq:5672/lychen}
       REDIS_URL: redis://redis:6379
       SERVER_NAME: ${SERVER_NAME:-localhost}, php:80
       TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-example\.com|localhost}|php$$}
