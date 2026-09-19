@@ -2,7 +2,7 @@
   <section class="flex flex-col gap-6">
     <div class="flex flex-col gap-1">
       <h2 class="text-2xl font-bold">Espaces proposés</h2>
-      <p class="text-on-surface/60 text-sm">
+      <p class="text-sm text-on-surface/60">
         {{ proposals.length }} terrain{{ proposals.length !== 1 ? 's' : '' }} disponible{{
           proposals.length !== 1 ? 's' : ''
         }}
@@ -11,7 +11,7 @@
 
     <p
       v-if="isPending"
-      class="text-on-surface/60 text-sm"
+      class="text-sm text-on-surface/60"
     >
       Chargement des terrains…
     </p>
@@ -23,7 +23,7 @@
     </p>
     <p
       v-else-if="proposals.length === 0"
-      class="text-on-surface/60 text-sm"
+      class="text-sm text-on-surface/60"
     >
       Aucun terrain disponible pour le moment.
     </p>
@@ -54,9 +54,10 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { RouterLink } from 'vue-router';
-import { useQuery } from '@tanstack/vue-query';
+import { useQuery, useQueryClient } from '@tanstack/vue-query';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { useEspaceApi } from '@lychen/vue-espace/composables/use-espace-api/useEspaceApi';
+import { useEspaceMercure } from '@lychen/vue-espace/composables/use-espace-mercure/useEspaceMercure';
 import { Card } from '@lychen/vue-components-business/land-proposal/card';
 import type { LandProposal } from '@lychen/vue-components-business/land-proposal/card';
 import { MESSAGES, TRANSLATION_KEY } from './i18n';
@@ -76,6 +77,13 @@ const { data, isPending, isError } = useQuery({
     return response.data;
   },
 });
+
+// Any proposal created, edited or deleted, by anyone. The list is built from the collection
+// representation, not the item one an update carries, so refetch it rather than patch it.
+const queryClient = useQueryClient();
+useEspaceMercure(['/api/area_proposals/{uuid}'], () =>
+  queryClient.invalidateQueries({ queryKey: ['area-proposals'] }),
+);
 
 const proposals = computed<LandProposal[]>(
   () =>

@@ -10,12 +10,12 @@
         <div
           v-for="(img, i) in terrain.gallery"
           :key="i"
-          class="relative h-full w-full shrink-0 snap-center"
+          class="relative size-full shrink-0 snap-center"
         >
           <img
             :src="img"
             :alt="terrain.title"
-            class="h-full w-full object-cover"
+            class="size-full object-cover"
             :loading="i === 0 ? 'eager' : 'lazy'"
             decoding="async"
           />
@@ -28,7 +28,7 @@
       />
 
       <!-- Top controls -->
-      <div class="absolute top-0 right-0 left-0 flex items-center justify-between p-4 pt-6">
+      <div class="absolute inset-x-0 top-0 flex items-center justify-between p-4 pt-6">
         <button
           class="flex size-10 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur-sm transition hover:bg-black/50"
           @click="$router.back()"
@@ -59,7 +59,7 @@
       </div>
 
       <!-- Image counter dots -->
-      <div class="absolute right-0 bottom-3 left-0 flex justify-center gap-1.5">
+      <div class="absolute inset-x-0 bottom-3 flex justify-center gap-1.5">
         <div
           v-for="(_, i) in terrain.gallery"
           :key="i"
@@ -83,7 +83,7 @@
           >
         </div>
         <h1 class="text-2xl leading-tight font-bold">{{ terrain.title }}</h1>
-        <div class="text-on-surface/60 flex items-center gap-1.5 text-sm">
+        <div class="flex items-center gap-1.5 text-sm text-on-surface/60">
           <IconMapPin class="size-4 shrink-0" />
           <span>{{ terrain.city }}{{ terrain.district ? ` — ${terrain.district}` : '' }}</span>
         </div>
@@ -92,19 +92,19 @@
       <!-- Feature chips -->
       <div class="flex flex-row gap-2 overflow-x-auto pb-1">
         <div
-          class="bg-surface-container flex shrink-0 flex-col items-center gap-1.5 rounded-2xl px-4 py-3"
+          class="flex shrink-0 flex-col items-center gap-1.5 rounded-2xl bg-surface-container px-4 py-3"
         >
           <IconBrightness class="size-5 text-amber-500" />
           <span class="text-xs font-medium">{{ terrain.sunExposure }}</span>
         </div>
         <div
-          class="bg-surface-container flex shrink-0 flex-col items-center gap-1.5 rounded-2xl px-4 py-3"
+          class="flex shrink-0 flex-col items-center gap-1.5 rounded-2xl bg-surface-container px-4 py-3"
         >
           <IconSprout class="size-5 text-lime-600" />
           <span class="text-xs font-medium">{{ terrain.waterAccess }}</span>
         </div>
         <div
-          class="bg-surface-container flex shrink-0 flex-col items-center gap-1.5 rounded-2xl px-4 py-3"
+          class="flex shrink-0 flex-col items-center gap-1.5 rounded-2xl bg-surface-container px-4 py-3"
         >
           <IconPickaxe class="size-5 text-stone-500" />
           <span class="text-xs font-medium">{{
@@ -116,37 +116,37 @@
           }}</span>
         </div>
         <div
-          class="bg-surface-container flex shrink-0 flex-col items-center gap-1.5 rounded-2xl px-4 py-3"
+          class="flex shrink-0 flex-col items-center gap-1.5 rounded-2xl bg-surface-container px-4 py-3"
         >
           <IconSquareDashed class="size-5 text-lime-700" />
           <span class="text-xs font-medium">{{ terrain.surface }} m²</span>
         </div>
         <div
-          class="bg-surface-container flex shrink-0 flex-col items-center gap-1.5 rounded-2xl px-4 py-3"
+          class="flex shrink-0 flex-col items-center gap-1.5 rounded-2xl bg-surface-container px-4 py-3"
         >
           <IconMountain class="size-5 text-slate-500" />
           <span class="text-xs font-medium">{{ terrain.altitude }} m alt.</span>
         </div>
       </div>
 
-      <div class="border-on-surface/10 border-t" />
+      <div class="border-t border-on-surface/10" />
 
       <!-- Description -->
       <div class="flex flex-col gap-2">
         <h2 class="font-semibold">À propos du terrain</h2>
-        <p class="text-on-surface/70 text-sm leading-relaxed">{{ terrain.description }}</p>
+        <p class="text-sm leading-relaxed text-on-surface/70">{{ terrain.description }}</p>
       </div>
 
-      <div class="border-on-surface/10 border-t" />
+      <div class="border-t border-on-surface/10" />
 
       <!-- Host card -->
-      <div class="bg-surface-container flex items-center gap-3 rounded-2xl p-4">
+      <div class="flex items-center gap-3 rounded-2xl bg-surface-container p-4">
         <div class="flex size-12 shrink-0 items-center justify-center rounded-full bg-lime-100">
           <IconUser class="size-6 text-lime-700" />
         </div>
         <div class="flex flex-col gap-0.5">
           <span class="text-sm font-semibold">{{ terrain.host.name }}</span>
-          <span class="text-on-surface/60 text-xs"
+          <span class="text-xs text-on-surface/60"
             >Membre depuis {{ terrain.host.memberSince }}</span
           >
           <div class="flex items-center gap-1 text-xs">
@@ -159,30 +159,30 @@
         </button>
       </div>
 
-      <div class="border-on-surface/10 border-t" />
+      <div class="border-t border-on-surface/10" />
 
       <!-- Details grid -->
       <div class="flex flex-col gap-3">
         <h2 class="font-semibold">Détails du terrain</h2>
         <div class="grid grid-cols-2 gap-2">
-          <div class="bg-surface-container flex flex-col gap-1 rounded-xl p-3">
-            <span class="text-on-surface/50 text-xs">Type de lieu</span>
+          <div class="flex flex-col gap-1 rounded-xl bg-surface-container p-3">
+            <span class="text-xs text-on-surface/50">Type de lieu</span>
             <span class="text-sm font-medium">{{ terrain.type }}</span>
           </div>
-          <div class="bg-surface-container flex flex-col gap-1 rounded-xl p-3">
-            <span class="text-on-surface/50 text-xs">État actuel</span>
+          <div class="flex flex-col gap-1 rounded-xl bg-surface-container p-3">
+            <span class="text-xs text-on-surface/50">État actuel</span>
             <span class="text-sm font-medium">{{ terrain.state }}</span>
           </div>
-          <div class="bg-surface-container flex flex-col gap-1 rounded-xl p-3">
-            <span class="text-on-surface/50 text-xs">Accès au terrain</span>
+          <div class="flex flex-col gap-1 rounded-xl bg-surface-container p-3">
+            <span class="text-xs text-on-surface/50">Accès au terrain</span>
             <span class="text-sm font-medium">{{ terrain.accessType }}</span>
           </div>
-          <div class="bg-surface-container flex flex-col gap-1 rounded-xl p-3">
-            <span class="text-on-surface/50 text-xs">Fréquence</span>
+          <div class="flex flex-col gap-1 rounded-xl bg-surface-container p-3">
+            <span class="text-xs text-on-surface/50">Fréquence</span>
             <span class="text-sm font-medium">{{ terrain.frequency }}</span>
           </div>
-          <div class="bg-surface-container flex flex-col gap-1 rounded-xl p-3">
-            <span class="text-on-surface/50 text-xs">Stockage matériel</span>
+          <div class="flex flex-col gap-1 rounded-xl bg-surface-container p-3">
+            <span class="text-xs text-on-surface/50">Stockage matériel</span>
             <span class="text-sm font-medium">{{
               terrain.storageAvailable === true
                 ? 'Possible sur place'
@@ -191,18 +191,18 @@
                   : 'À discuter'
             }}</span>
           </div>
-          <div class="bg-surface-container flex flex-col gap-1 rounded-xl p-3">
-            <span class="text-on-surface/50 text-xs">Culture naturelle</span>
+          <div class="flex flex-col gap-1 rounded-xl bg-surface-container p-3">
+            <span class="text-xs text-on-surface/50">Culture naturelle</span>
             <span class="text-sm font-medium">{{ terrain.naturalCulture }}</span>
           </div>
-          <div class="bg-surface-container col-span-2 flex flex-col gap-1 rounded-xl p-3">
-            <span class="text-on-surface/50 text-xs">Partage des récoltes</span>
+          <div class="col-span-2 flex flex-col gap-1 rounded-xl bg-surface-container p-3">
+            <span class="text-xs text-on-surface/50">Partage des récoltes</span>
             <span class="text-sm font-medium">{{ terrain.harvestShare }}</span>
           </div>
         </div>
       </div>
 
-      <div class="border-on-surface/10 border-t" />
+      <div class="border-t border-on-surface/10" />
 
       <!-- Goals -->
       <div class="flex flex-col gap-3">
@@ -218,7 +218,7 @@
         </div>
       </div>
 
-      <div class="border-on-surface/10 border-t" />
+      <div class="border-t border-on-surface/10" />
 
       <!-- Rules -->
       <div class="flex flex-col gap-3">
@@ -235,22 +235,22 @@
         </ul>
       </div>
 
-      <div class="border-on-surface/10 border-t" />
+      <div class="border-t border-on-surface/10" />
 
       <!-- Map placeholder -->
       <div class="flex flex-col gap-3">
         <h2 class="font-semibold">Localisation</h2>
         <div
-          class="border-on-surface/10 bg-surface-container flex h-44 items-center justify-center rounded-2xl border"
+          class="flex h-44 items-center justify-center rounded-2xl border border-on-surface/10 bg-surface-container"
         >
           <div class="flex flex-col items-center gap-2">
-            <div class="bg-on-surface/10 flex size-10 items-center justify-center rounded-full">
-              <IconMapPin class="text-on-surface/40 size-5" />
+            <div class="flex size-10 items-center justify-center rounded-full bg-on-surface/10">
+              <IconMapPin class="size-5 text-on-surface/40" />
             </div>
             <p class="text-sm font-medium">{{ terrain.city }}</p>
             <p
               v-if="terrain.district"
-              class="text-on-surface/50 text-xs"
+              class="text-xs text-on-surface/50"
             >
               {{ terrain.district }}
             </p>
@@ -262,7 +262,7 @@
 
   <!-- Fixed bottom action bar (above nav) -->
   <div
-    class="border-on-surface/10 bg-surface/95 fixed right-0 bottom-17.5 left-0 flex items-center gap-3 border-t px-4 py-3 backdrop-blur-sm"
+    class="fixed inset-x-0 bottom-17.5 flex items-center gap-3 border-t border-on-surface/10 bg-surface/95 px-4 py-3 backdrop-blur-sm"
   >
     <button
       class="flex-1 rounded-full bg-lime-700 py-3.5 text-sm font-semibold text-white transition hover:bg-lime-800"
@@ -270,9 +270,9 @@
       Demander l'accès
     </button>
     <button
-      class="border-on-surface/10 bg-surface-container flex size-12 shrink-0 items-center justify-center rounded-full border transition"
+      class="flex size-12 shrink-0 items-center justify-center rounded-full border border-on-surface/10 bg-surface-container transition"
     >
-      <IconMessagesSquare class="text-on-surface size-5" />
+      <IconMessagesSquare class="size-5 text-on-surface" />
     </button>
   </div>
 </template>
@@ -280,9 +280,10 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { useQuery } from '@tanstack/vue-query';
+import { useQuery, useQueryClient } from '@tanstack/vue-query';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { useEspaceApi } from '@lychen/vue-espace/composables/use-espace-api/useEspaceApi';
+import { useEspaceMercure } from '@lychen/vue-espace/composables/use-espace-mercure/useEspaceMercure';
 import { MESSAGES, TRANSLATION_KEY } from './i18n';
 import IconArrowLeft from '@lychen/vue-icons/IconArrowLeft.vue';
 import IconShare2 from '@lychen/vue-icons/IconShare2.vue';
@@ -317,6 +318,23 @@ const { data: proposal } = useQuery({
     return response.data;
   },
 });
+
+// Live edits of this proposal. An update carries the proposal exactly as the query above
+// fetches it, so it replaces the cached copy without a round trip; a deletion carries
+// nothing but its @id, so the query refetches and finds out.
+const queryClient = useQueryClient();
+useEspaceMercure(
+  () => [`/api/area_proposals/${uuid.value}`],
+  (update) => {
+    const queryKey = ['area-proposal', uuid.value];
+    if (Object.keys(update).length === 1) {
+      queryClient.invalidateQueries({ queryKey });
+    } else {
+      queryClient.setQueryData(queryKey, update);
+    }
+  },
+);
+
 const galleryRef = ref<HTMLElement | null>(null);
 const activeIndex = ref(0);
 

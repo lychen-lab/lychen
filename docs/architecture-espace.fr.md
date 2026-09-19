@@ -89,6 +89,22 @@ Les ressources API sont des DTO, pas des entités Doctrine : les entités (`src/
 - **La visibilité est appliquée en SQL** par `AreaVisibilityExtension` : les lectures renvoient les éléments publics (propositions publiées, demandes actives) plus ceux de l'utilisateur, les écritures n'atteignent que les siens ; tout le reste répond 404.
 - **Les filtres** se déclarent avec `QueryParameter` et les filtres d'API Platform (`ExactFilter`, `PartialSearchFilter`, `SortFilter`) ; les propriétés imbriquées comme `activities.code` sont résolues sur l'entité.
 
+## Mises à jour en temps réel
+
+L'API pousse les changements de données vers les écrans ouverts via le hub Mercure central
+du monorepo, sur le tenant `espace` — voir [deployment.md](deployment.md#central-mercure-hub).
+
+- **Publiées depuis Doctrine, pas depuis le chemin d'écriture de l'API.** `AreaProposalMercureListener`
+  publie chaque écriture committée d'une `AreaProposal`, quel qu'en soit l'auteur : les
+  changements de statut persistés par les activités Temporal arrivent au front sans code
+  supplémentaire dans les activités.
+- **Updates privées, chemins d'IRI comme topics** (`/api/area_proposals/{uuid}`) : le hub ne
+  délivre que ce que le token de l'utilisateur (`GET /api/mercure_subscription`) autorise, et
+  un worker, qui n'a pas d'hôte de requête, publie sur les mêmes topics que l'API.
+- **Front :** `useEspaceMercure(topics, onUpdate)` dans `libs/vue/espace`.
+- **Pas un canal de notification.** Mercure reflète les données sur les écrans ouverts ;
+  notifier un utilisateur passe toujours par les activités et Novu, comme ci-dessus.
+
 ---
 
 _Document à tenir à jour au fur et à mesure de l'implémentation — notamment ajouter le mapping Workflow ↔ classes PHP réelles une fois codées, et les noms exacts des queues Temporal utilisées._

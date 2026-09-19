@@ -87,6 +87,21 @@ API resources are DTOs, not Doctrine entities: entities (`src/Entity`) only carr
 - **Visibility is enforced in SQL** by `AreaVisibilityExtension`: reads return the public items (published proposals, active requests) plus the user's own, writes only reach the user's own; anything else answers 404.
 - **Filters** are declared with `QueryParameter` and API Platform's filters (`ExactFilter`, `PartialSearchFilter`, `SortFilter`); nested properties such as `activities.code` resolve against the entity.
 
+## Real-time updates
+
+The API pushes data changes to open screens through the monorepo's central Mercure hub,
+on the `espace` tenant — see [deployment.md](deployment.md#central-mercure-hub).
+
+- **Published from Doctrine, not from the API write path.** `AreaProposalMercureListener`
+  publishes every committed write to an `AreaProposal`, whoever makes it: the status
+  changes Temporal activities persist reach the front with no extra code in the activities.
+- **Private updates, IRI paths as topics** (`/api/area_proposals/{uuid}`): the hub only
+  delivers what the user's token (`GET /api/mercure_subscription`) allows, and a worker,
+  which has no request host, publishes to the same topics as the API.
+- **Front:** `useEspaceMercure(topics, onUpdate)` in `libs/vue/espace`.
+- **Not a notification channel.** Mercure mirrors data to screens that are open; notifying
+  a user still happens from activities, through Novu, as above.
+
 ---
 
 _Keep this document up to date as implementation progresses — in particular, add the Workflow ↔ actual PHP class mapping once coded, and the exact names of the Temporal queues used._

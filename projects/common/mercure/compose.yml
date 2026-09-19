@@ -1,0 +1,60 @@
+# Central Mercure hub, shared by every API over the `lychen-network`, the same
+# way `common/rabbitmq` and `common/mailpit` are shared.
+#
+# Each API gets its *own* hub, under its own path prefix, with its own JWT keys
+# and its own Bolt transport, so updates cannot leak between domains and no API
+# can mint a token for another's topics:
+#
+#     http://mercure/<tenant>/.well-known/mercure
+#
+# Hubs, keys and transports are rendered from the environment at boot by
+# `entrypoint.sh` — set `MERCURE_<TENANT>_PUBLISHER_JWT_KEY` and
+# `MERCURE_<TENANT>_SUBSCRIBER_JWT_KEY` per environment, and add a domain to
+# `MERCURE_TENANTS` to provision it. A new tenant also needs its variables listed
+# below: Compose only forwards the ones it is told about.
+#
+# Dev-only bits (published port, `lychen-network`, permissive directives) live in
+# compose.override.yml, so this file stays deployable as-is to staging and
+# production via Dokploy.
+services:
+  mercure:
+    # `entrypoint` resets `command` under the Compose spec, so the image's own
+    # default command has to be restated here — pointed at the rendered config.
+    command: caddy run --config /etc/caddy/lychen.Caddyfile --adapter caddyfile
+    entrypoint: /usr/local/bin/lychen-entrypoint.sh
+    environment:
+      # Extra `mercure` directives, applied to every hub and then per tenant.
+      # Production needs at least a `cors_origins` per tenant, naming that
+      # domain's app origin — the default (no CORS origin) blocks browsers.
+      MERCURE_ESPACE_EXTRA_DIRECTIVES: ${MERCURE_ESPACE_EXTRA_DIRECTIVES:-}
+      # An empty key means "use the development key baked into entrypoint.sh",
+      # which the hub warns about at boot. Every environment but local dev must
+      # set its own.
+      MERCURE_ESPACE_PUBLISHER_JWT_KEY: ${MERCURE_ESPACE_PUBLISHER_JWT_KEY:-}
+      MERCURE_ESPACE_SUBSCRIBER_JWT_KEY: ${MERCURE_ESPACE_SUBSCRIBER_JWT_KEY:-}
+      MERCURE_EXTRA_DIRECTIVES: ${MERCURE_EXTRA_DIRECTIVES:-}
+      MERCURE_FLORA_EXTRA_DIRECTIVES: ${MERCURE_FLORA_EXTRA_DIRECTIVES:-}
+      MERCURE_FLORA_PUBLISHER_JWT_KEY: ${MERCURE_FLORA_PUBLISHER_JWT_KEY:-}
+      MERCURE_FLORA_SUBSCRIBER_JWT_KEY: ${MERCURE_FLORA_SUBSCRIBER_JWT_KEY:-}
+      MERCURE_TENANTS: ${MERCURE_TENANTS:-tera espace flora}
+      MERCURE_TERA_EXTRA_DIRECTIVES: ${MERCURE_TERA_EXTRA_DIRECTIVES:-}
+      MERCURE_TERA_PUBLISHER_JWT_KEY: ${MERCURE_TERA_PUBLISHER_JWT_KEY:-}
+      MERCURE_TERA_SUBSCRIBER_JWT_KEY: ${MERCURE_TERA_SUBSCRIBER_JWT_KEY:-}
+    healthcheck:
+      # Transport-aware, unlike the deprecated `/healthz`. Caddy's admin API
+      # binds to the container's own loopback, so it is never reachable from
+      # outside even though the image declares the port.
+      retries: 5
+      start_period: 10s
+      test: [ 'CMD', 'curl', '-sfo', '/dev/null', 'http://localhost:2019/mercure/health/ready' ]
+      timeout: 10s
+    image: dunglas/mercure:${MERCURE_VERSION:-v0.24.2}
+    restart: unless-stopped
+    volumes:
+      # Bolt keeps one database per tenant here, so a restart does not lose the
+      # updates a reconnecting subscriber asks for with `Last-Event-ID`.
+      - mercure_data:/data
+      - ./entrypoint.sh:/usr/local/bin/lychen-entrypoint.sh:ro
+
+volumes:
+  mercure_data:

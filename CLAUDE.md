@@ -80,7 +80,7 @@ make phpunit c="--group e2e"                         # Run by group
   /storybook       # Component workshop (Storybook 10)
   /website         # Main Lychen website (SSG)
   /zitadel         # Self-hosted Zitadel identity provider (Dokploy-deployed)
-  /common          # Shared infra: central RabbitMQ, mailpit, lychen-network
+  /common          # Shared infra: central RabbitMQ, central Mercure hub, mailpit, lychen-network
 
 /libs              # Reusable libraries
   /css/core        # Tailwind design tokens
@@ -124,9 +124,12 @@ make phpunit c="--group e2e"                         # Run by group
   broker (`projects/common/rabbitmq`) shared by every API: a single durable topic
   exchange (`lychen.events`), one queue per service, routing keys shaped
   `<domain>.<aggregate>.<action>.v<n>`
+- Real-time updates via Mercure (SSE) — one **central** hub
+  (`projects/common/mercure`) shared by every API, each on its own path prefix
+  with its own JWT keys
 - FrankenPHP as PHP runtime in Docker; PostgreSQL for storage; Redis for cache
 - Each API project has its own `compose.yml` (Postgres + Redis) for local
-  development; RabbitMQ and mailpit are shared via the `lychen-network`
+  development; RabbitMQ, Mercure and mailpit are shared via the `lychen-network`
 
 ### Monorepo Wiring
 
