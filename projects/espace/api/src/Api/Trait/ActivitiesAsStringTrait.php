@@ -2,25 +2,14 @@
 
 namespace App\Api\Trait;
 
-use App\Entity\AreaActivity;
+use App\Api\Transform\ActivityCodes;
+use Symfony\Component\ObjectMapper\Attribute\Map;
 
 trait ActivitiesAsStringTrait
 {
     /**
-     * @var string[]
+     * @var list<string>
      */
-    public array $activities;
-
-    /**
-     * @param iterable<AreaActivity> $activities
-     */
-    public function setActivities(iterable $activities): void
-    {
-        $this->activities = [];
-        foreach ($activities as $activity) {
-            if ($code = $activity->getCode()) {
-                $this->activities[] = $code;
-            }
-        }
-    }
+    #[Map(source: 'activities', transform: [ActivityCodes::class, 'fromActivities'])]
+    public array $activities = [];
 }

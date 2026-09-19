@@ -78,12 +78,23 @@ Quand on implémente une feature touchant ce domaine :
 4. **Signals** : `ValidationAreaProposalWorkflow` → `MatchingWorkflow` se fait via signal, pas via nouvelle exécution de workflow ; documenter le nom du signal et son payload (ID de la `AreaProposal`) dans le code.
 5. **Tests** : privilégier le Temporal Test Framework (workflow environment en mémoire) plutôt que de dépendre de l'instance partagée pour les tests unitaires/PHPUnit.
 
+## Exposition API (espace-api)
+
+Les ressources API sont des DTO, pas des entités Doctrine : les entités (`src/Entity`) ne portent que la persistance, et chaque ressource vit dans `src/Api/Resource/<Nom>/`.
+
+- **Une ressource de lecture par entité**, déclarée avec `stateOptions: new Options(entityClass: …)` et `#[Map(source: Entity::class)]`. Ce doit être la seule classe mappée _depuis_ cette entité : Symfony n'enregistre qu'un mapping inverse par classe source, donc les `#[Map]` de propriété d'un second DTO sont ignorés sans erreur.
+- **Les écritures passent par des DTO d'entrée** (`Dto/<Nom>Post`, `Dto/<Nom>Patch`) marqués `#[Map(target: Entity::class)]`. API Platform les mappe sur l'entité, la persiste et remappe le résultat vers la ressource — sans processor maison. Les propriétés du DTO Patch restent non initialisées pour que seuls les champs envoyés par le client soient appliqués (merge-patch).
+- **La validation est portée par les DTO d'entrée** : API Platform valide le DTO désérialisé, pas l'entité, donc les contraintes déclarées sur les entités ne sont pas appliquées par l'API.
+- **Relations et champs calculés via des transforms** : `#[Map(source: 'relation', transform: …)]`. Les chemins pointés (`relation.champ`) donnent `null` avec le mapping inverse. Les transforms qui ont besoin de services (ex. codes d'activité → `AreaActivity`) implémentent `TransformCallableInterface`.
+- **La visibilité est appliquée en SQL** par `AreaVisibilityExtension` : les lectures renvoient les éléments publics (propositions publiées, demandes actives) plus ceux de l'utilisateur, les écritures n'atteignent que les siens ; tout le reste répond 404.
+- **Les filtres** se déclarent avec `QueryParameter` et les filtres d'API Platform (`ExactFilter`, `PartialSearchFilter`, `SortFilter`) ; les propriétés imbriquées comme `activities.code` sont résolues sur l'entité.
+
 ## Mises à jour en temps réel
 
 L'API pousse les changements de données vers les écrans ouverts via le hub Mercure central
 du monorepo, sur le tenant `espace` — voir [deployment.md](deployment.md#central-mercure-hub).
 
-- **Publiées depuis Doctrine, pas depuis les processors de l'API.** `AreaProposalMercureListener`
+- **Publiées depuis Doctrine, pas depuis le chemin d'écriture de l'API.** `AreaProposalMercureListener`
   publie chaque écriture committée d'une `AreaProposal`, quel qu'en soit l'auteur : les
   changements de statut persistés par les activités Temporal arrivent au front sans code
   supplémentaire dans les activités.

@@ -5,6 +5,8 @@ namespace App\Factory;
 use App\Entity\AreaRequest;
 use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
+use function Zenstruck\Foundry\lazy;
+
 /**
  * @extends PersistentObjectFactory<AreaRequest>
  */
@@ -24,8 +26,9 @@ final class AreaRequestFactory extends PersistentObjectFactory
             'title' => self::faker()->text(255),
             'city' => self::faker()->city(),
             'minimalSurfaceRequested' => self::faker()->numberBetween(5, 1000),
-            'requester' => PersonFactory::random(),
-            'activities' => AreaActivityFactory::randomSet(self::faker()->numberBetween(1, 5)),
+            // Lazy so that tests overriding these relations don't need existing rows.
+            'requester' => lazy(static fn () => PersonFactory::randomOrCreate()),
+            'activities' => lazy(static fn () => AreaActivityFactory::randomRangeOrCreate(1, 5)),
         ];
     }
 
