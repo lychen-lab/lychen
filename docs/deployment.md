@@ -142,28 +142,75 @@ production deploy references a pre-migration SHA.
 ## Central RabbitMQ
 
 All three APIs share **one** broker ([`projects/common/rabbitmq`](../projects/common/rabbitmq/)),
-the way they already share `common/mailpit`. Each API gets its **own vhost and
-own credentials**, so the identically-named `async` / `failed` / `sync` queues
-the three Symfony Messenger stacks declare cannot collide, and no API can read
-another's queues.
+the way they already share `common/mailpit`, and they share a single vhost on it.
+The topology is an event bus: one durable **topic exchange** every service
+publishes to, and **one queue per service** bound to the routing keys it cares
+about.
+
+```
+exchange lychen.events (topic, durable)          <- every service publishes here
+  |-- tera.#   --> queue tera.events   (quorum, DLX)
+  |-- espace.# --> queue espace.events (quorum, DLX)
+  |-- flora.#  --> queue flora.events  (quorum, DLX)
+
+exchange lychen.events.dlx (topic, durable)      <- definitive failures
+  |-- tera.events.dlq --> queue tera.events.dlq  (quorum)
+  |-- ...                  one .dlq per service
+
+exchange lychen.events.delays (direct, durable)  <- Symfony Messenger retries
+```
+
+Routing keys read `<domain>.<aggregate>.<action>.v<n>`, e.g.
+`tera.garden.created.v1`. A service listens to its own domain by default
+(`<service>.#`); to have it consume another domain's events, add those routing
+keys to `RABBITMQ_<SERVICE>_BINDING_KEYS`.
+
+There are no per-API vhosts any more. Isolation comes from per-service users
+instead:
+
+- each service reads **only its own** `<service>.events` and `<service>.events.dlq`;
+- a **topic permission** confines it to publishing under its own `<service>.`
+  routing-key namespace, so one service cannot forge another's events;
+- it may declare **nothing durable** — the APIs run with `auto_setup: false` and
+  the only queues they create are the short-lived `<service>.events.delay.*` ones
+  Messenger names on the fly for retry backoff. A side effect worth knowing:
+  `messenger:stats` is refused, because it redeclares the queue to count it. Read
+  queue depths from the management UI instead.
+
+A message that exhausts Messenger's retries is rejected and RabbitMQ dead-letters
+it to `<service>.events.dlq`, carrying an `x-death` trail with the queue and
+routing key it came from. The `failed` transport keeps its own copy in Postgres —
+that is the one `messenger:failed:show` and `messenger:failed:retry` read, and the
+only one holding the exception.
 
 Users, vhosts and permissions cannot be expressed with `RABBITMQ_DEFAULT_USER`
 and friends (those seed a single vhost, and the node skips them entirely once it
-has definitions to import). They are instead rendered into a definitions file at
-boot by [`entrypoint.sh`](../projects/common/rabbitmq/entrypoint.sh), from these
+has definitions to import). The whole topology is instead rendered into a
+definitions file at boot by
+[`entrypoint.sh`](../projects/common/rabbitmq/entrypoint.sh), from these
 variables:
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `RABBITMQ_TENANTS` | `tera espace flora` | Space-separated vhosts to provision. One per API. |
-| `RABBITMQ_<TENANT>_PASSWORD` | the tenant name | Password for that tenant's user, e.g. `RABBITMQ_TERA_PASSWORD`. |
-| `RABBITMQ_ADMIN_USER` / `RABBITMQ_ADMIN_PASSWORD` | `admin` / `admin` | Management-UI account, with access to every vhost. |
+| `RABBITMQ_SERVICES` | `tera espace flora` | Space-separated services to provision. Each gets a user, a queue, a dead-letter queue and its bindings. |
+| `RABBITMQ_<SERVICE>_PASSWORD` | the service name | Password for that service's user, e.g. `RABBITMQ_TERA_PASSWORD`. |
+| `RABBITMQ_<SERVICE>_BINDING_KEYS` | `<service>.#` | Space-separated routing keys its queue subscribes to. Widen it to consume another domain's events. |
+| `RABBITMQ_VHOST` / `RABBITMQ_EXCHANGE` | `lychen` / `lychen.events` | Names of the shared vhost and bus. Changing either means changing `config/packages/messenger.php` in every API. |
+| `RABBITMQ_ADMIN_USER` / `RABBITMQ_ADMIN_PASSWORD` | `admin` / `admin` | Management-UI account, with access to everything. |
 | `RABBITMQ_VERSION` | `4.0.4` | Image tag (`rabbitmq:<version>-management-alpine`). |
 
 The defaults are **local-dev credentials**. Staging and production must override
 every password in the Dokploy compose env. Definitions are re-imported on each
-boot and are idempotent — changing a password there and redeploying updates the
-user in place, leaving queues and messages untouched.
+boot and are idempotent — changing a password or a binding key there and
+redeploying updates it in place, leaving queues and messages untouched. Queue
+*arguments* are the exception: RabbitMQ cannot change them on an existing queue,
+so changing one means deleting that queue before the new definition applies.
+
+Definitions are only ever added to, never subtracted: a broker that already ran
+the previous per-API topology keeps its `tera` / `espace` / `flora` vhosts after
+this change, alongside the new `lychen` one. They hold nothing (no API dispatched
+a message), so delete them from the management UI — or, locally, drop the volume
+with `docker compose -p common-rabbitmq down -v` before `moon common-rabbitmq:up`.
 
 **To deploy it, first (outside this repo):**
 
@@ -182,10 +229,12 @@ user in place, leaving queues and messages untouched.
 > would fail.
 
 > **Runtime config (Dokploy, outside this repo):** each API compose resolves its
-> transport as `${MESSENGER_TRANSPORT_DSN:-amqp://<project>:<project>@rabbitmq:5672/<project>}`.
+> transport as `${MESSENGER_TRANSPORT_DSN:-amqp://<project>:<project>@rabbitmq:5672/lychen}`.
 > That default is the dev topology (service name `rabbitmq` on `lychen-network`);
 > staging and production must set `MESSENGER_TRANSPORT_DSN` explicitly to the
-> deployed broker's host and the environment's real password.
+> deployed broker's host and the environment's real password. The DSN carries the
+> connection and the vhost only — the exchange and queue live in
+> `config/packages/messenger.php`.
 
 > **Runtime config (Dokploy, outside this repo):** the API composes resolve their
 > image as `${IMAGES_PREFIX:-}<project>:${IMAGE_TAG:-latest}`. After this change,

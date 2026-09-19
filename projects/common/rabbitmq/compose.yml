@@ -1,12 +1,12 @@
 # Central message broker, shared by every API over the `lychen-network`, the same
 # way `common/mailpit` is shared.
 #
-# Each API gets its own vhost *and* its own credentials, so the identically-named
-# `async` / `failed` / `sync` queues that the Symfony Messenger stacks declare
-# cannot collide, and no API can read another's queues. Users, vhosts and
-# permissions are rendered from the environment at boot by `entrypoint.sh` — set
-# `RABBITMQ_<TENANT>_PASSWORD` per environment, and add a domain to
-# `RABBITMQ_TENANTS` to provision it.
+# One vhost, one durable topic exchange (`lychen.events`), and one queue per
+# service bound to the routing keys it subscribes to — see `entrypoint.sh` for
+# the whole topology, which it renders into a definitions file at boot. Set
+# `RABBITMQ_<SERVICE>_PASSWORD` per environment, and add a domain to
+# `RABBITMQ_SERVICES` to give it a user, a queue, a dead-letter queue and its
+# bindings.
 #
 # Dev-only bits (published ports, `lychen-network`) live in compose.override.yml,
 # so this file stays deployable as-is to staging and production via Dokploy.
@@ -21,7 +21,7 @@ services:
       RABBITMQ_ADMIN_USER: ${RABBITMQ_ADMIN_USER:-admin}
       RABBITMQ_ESPACE_PASSWORD: ${RABBITMQ_ESPACE_PASSWORD:-espace}
       RABBITMQ_FLORA_PASSWORD: ${RABBITMQ_FLORA_PASSWORD:-flora}
-      RABBITMQ_TENANTS: ${RABBITMQ_TENANTS:-tera espace flora}
+      RABBITMQ_SERVICES: ${RABBITMQ_SERVICES:-tera espace flora}
       RABBITMQ_TERA_PASSWORD: ${RABBITMQ_TERA_PASSWORD:-tera}
     healthcheck:
       retries: 5

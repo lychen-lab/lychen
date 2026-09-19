@@ -121,7 +121,9 @@ make phpunit c="--group e2e"                         # Run by group
 - API Platform auto-generates REST APIs from Doctrine entities
 - OpenAPI spec is used to generate the TypeScript SDK at `libs/typescript/tera/api-sdk`
 - State management via Symfony Workflow; messaging via RabbitMQ — one **central**
-  broker (`projects/common/rabbitmq`) shared by every API, each on its own vhost
+  broker (`projects/common/rabbitmq`) shared by every API: a single durable topic
+  exchange (`lychen.events`), one queue per service, routing keys shaped
+  `<domain>.<aggregate>.<action>.v<n>`
 - Real-time updates via Mercure (SSE) — one **central** hub
   (`projects/common/mercure`) shared by every API, each on its own path prefix
   with its own JWT keys
