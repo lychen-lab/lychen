@@ -25,7 +25,7 @@ services:
       # Central broker (projects/common/rabbitmq), reached over lychen-network in
       # dev. Staging and production set MESSENGER_TRANSPORT_DSN on the Dokploy
       # compose so it points at the deployed broker.
-      MESSENGER_TRANSPORT_DSN: ${MESSENGER_TRANSPORT_DSN:-amqp://tera:tera@rabbitmq:5672/tera}
+      MESSENGER_TRANSPORT_DSN: ${MESSENGER_TRANSPORT_DSN:-amqp://tera:tera@rabbitmq:5672/lychen}
       REDIS_URL: redis://redis:6379
       SERVER_NAME: ${SERVER_NAME:-localhost}, php:80
       TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-example\.com|localhost}|php$$}
