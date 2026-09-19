@@ -76,6 +76,17 @@ When implementing a feature touching this domain:
 4. **Signals**: `ValidationAreaProposalWorkflow` → `MatchingWorkflow` communication happens via a signal, not a new workflow execution; document the signal name and its payload (the `AreaProposal` ID) in the code.
 5. **Testing**: prefer the Temporal Test Framework (in-memory workflow environment) over relying on the shared instance for unit/PHPUnit tests.
 
+## API exposure (espace-api)
+
+API resources are DTOs, not Doctrine entities: entities (`src/Entity`) only carry persistence, and each resource lives in `src/Api/Resource/<Name>/`.
+
+- **One read resource per entity**, declared with `stateOptions: new Options(entityClass: …)` and `#[Map(source: Entity::class)]`. Keep it the only class mapped _from_ that entity: Symfony registers a single reverse mapping per source class, so property-level `#[Map]` attributes on a second DTO are silently ignored.
+- **Writes go through input DTOs** (`Dto/<Name>Post`, `Dto/<Name>Patch`) marked `#[Map(target: Entity::class)]`. API Platform maps them onto the entity, persists it and maps the result back to the resource — no custom processor. Patch DTO properties stay uninitialized so that only the fields sent by the client are applied (merge-patch).
+- **Validation lives on the input DTOs**: API Platform validates the deserialized DTO, not the entity, so constraints declared on entities are not enforced by the API.
+- **Relations and computed fields use transforms**: `#[Map(source: 'relation', transform: …)]`. Dotted source paths (`relation.field`) resolve to `null` under the reverse mapping. Transforms that need services (e.g. activity codes → `AreaActivity`) implement `TransformCallableInterface`.
+- **Visibility is enforced in SQL** by `AreaVisibilityExtension`: reads return the public items (published proposals, active requests) plus the user's own, writes only reach the user's own; anything else answers 404.
+- **Filters** are declared with `QueryParameter` and API Platform's filters (`ExactFilter`, `PartialSearchFilter`, `SortFilter`); nested properties such as `activities.code` resolve against the entity.
+
 ---
 
 _Keep this document up to date as implementation progresses — in particular, add the Workflow ↔ actual PHP class mapping once coded, and the exact names of the Temporal queues used._
