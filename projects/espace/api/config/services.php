@@ -8,8 +8,6 @@ use Symfony\Component\Mercure\Jwt\LcobucciFactory;
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
 
-    $parameters->set('cache_adapter', 'cache.adapter.system');
-
     $parameters->set('locale', 'fr');
 
     $services = $containerConfigurator->services();
