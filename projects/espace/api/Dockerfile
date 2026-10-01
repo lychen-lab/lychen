@@ -132,3 +132,8 @@ RUN composer run-script --no-dev post-install-cmd; \
 
 RUN set -eux; \
     bin/console assets:install
+
+# The commit this image was built from, served as /version.txt: the staging deploy
+# polls it to confirm the new version is the one actually answering.
+ARG GIT_SHA=unknown
+RUN echo "$GIT_SHA" > public/version.txt

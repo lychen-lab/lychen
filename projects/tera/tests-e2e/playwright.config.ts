@@ -25,8 +25,9 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'https://app.tera.lychen.local:8080/',
+    /* Base URL to use in actions like `await page.goto('/')`. Defaults to the local tera-app dev
+     * server; set BASE_URL to run against a deployed app. */
+    baseURL: process.env.BASE_URL ?? 'https://app.tera.lychen.local:5800/',
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     ignoreHTTPSErrors: true,
@@ -74,21 +75,6 @@ export default defineConfig({
     // },
   ],
 
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://127.0.0.1:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
-  webServer: [
-    {
-      command: 'moon tera-api:dev',
-      reuseExistingServer: !process.env.CI,
-    },
-
-    {
-      command: 'moon tera-app:dev',
-      reuseExistingServer: !process.env.CI,
-    },
-  ],
+  /* No webServer: start the stack first (`moon tera-api:dev`, then `moon tera-app:dev`), or point
+   * BASE_URL at a deployed app. */
 });
