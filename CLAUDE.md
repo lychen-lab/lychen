@@ -86,7 +86,7 @@ make phpunit c="--group e2e"                         # Run by group
   /css/core        # Tailwind design tokens
   /typescript/     # 16 TypeScript libraries
   /vue/            # 28 Vue component/composable libraries
-  /php/            # 5 PHP/Symfony bundle libraries
+  /php/            # 6 PHP/Symfony bundle libraries
   /i18n/           # Translation files (per domain, e.g. tera)
   /assets/         # Shared brand/content assets per domain (fonts, logos, icons)
   /drawio/         # Architecture diagrams (.drawio) per domain

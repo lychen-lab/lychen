@@ -1,0 +1,28 @@
+{
+  "name": "lychen/symfony-config",
+  "description": "Shared Symfony configuration of the Lychen APIs",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "Lychen\\ConfigBundle\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Lychen",
+      "email": "bonjour@lychen.org"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": "^8.4",
+    "symfony/config": "^7.4 || ^8.0",
+    "symfony/dependency-injection": "^7.4 || ^8.0",
+    "symfony/http-kernel": "^7.4 || ^8.0"
+  },
+  "archive": {
+    "exclude": [
+      "/moon.yml"
+    ]
+  }
+}
