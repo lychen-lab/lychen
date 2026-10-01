@@ -40,7 +40,7 @@ class LandAreaSettingTest extends AbstractApiTestCase
         // Owner
         $this->browser()->actingAs($context->owner)
             ->patch($this->getIriFromResource($landAreaSetting), ['json' => [
-                'rotationActivated' => true
+                'rotationActivated' => true,
             ]])
             ->assertSuccessful()
             ->assertJsonMatches('ulid', $landAreaSetting->getUlid()->toString())
@@ -52,7 +52,7 @@ class LandAreaSettingTest extends AbstractApiTestCase
 
         $this->browser()->actingAs($context->landMembers[0]->getPerson())
             ->patch($this->getIriFromResource($landAreaSetting), ['json' => [
-                'rotationActivated' => false
+                'rotationActivated' => false,
             ]])
             ->assertSuccessful()
             ->assertJsonMatches('ulid', $landAreaSetting->getUlid()->toString())

@@ -13,6 +13,7 @@ trait PersonApiKeyTrait
         if ($attributes['permissions'] && $excludedPermissions) {
             $attributes['permissions'] = array_diff($attributes['permissions'], $excludedPermissions);
         }
+
         return PersonApiKeyFactory::new()->create(array_merge(['person' => $person], $attributes));
     }
 }

@@ -38,7 +38,7 @@ class LandSettingTest extends AbstractApiTestCase
         // Owner
         $this->browser()->actingAs($context->owner)
             ->patch($this->getIriFromResource($landSetting), ['json' => [
-                'lookingForMember' => true
+                'lookingForMember' => true,
             ]])
             ->assertSuccessful()
             ->assertJsonMatches('ulid', $landSetting->getUlid()->toString())
@@ -50,7 +50,7 @@ class LandSettingTest extends AbstractApiTestCase
 
         $this->browser()->actingAs($context->landMembers[0]->getPerson())
             ->patch($this->getIriFromResource($landSetting), ['json' => [
-                'lookingForMember' => false
+                'lookingForMember' => false,
             ]])
             ->assertSuccessful()
             ->assertJsonMatches('ulid', $landSetting->getUlid()->toString())

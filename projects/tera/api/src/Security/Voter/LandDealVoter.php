@@ -14,8 +14,6 @@ use App\Security\Checker\PersonApiKeyPermissionChecker;
 use App\Security\Checker\PersonPermissionChecker;
 use App\Security\Interface\PermissionHolder;
 use App\Security\Service\PermissionHolderRetriever;
-use Exception;
-use LogicException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -88,7 +86,7 @@ class LandDealVoter extends AbstractPermissionVoter
             self::DELETE => $this->canDelete($subject, $permissionHolder),
             self::COLLECTION => $this->canCollection($permissionHolder),
             self::POST => $this->canPost($permissionHolder),
-            default => throw new LogicException($attribute . ' is not supported.')
+            default => throw new \LogicException($attribute.' is not supported.'),
         };
     }
 
@@ -115,19 +113,19 @@ class LandDealVoter extends AbstractPermissionVoter
 
         $currentRequest = $this->requestStack->getCurrentRequest();
         $landIri = $currentRequest->query->get('land');
-        if ($landIri === null) {
+        if (null === $landIri) {
             throw new HttpException(400, '`land` query parameter is required.');
         }
 
         $land = $this->iriConverter->getResourceFromIri($landIri);
 
         if (!$land instanceof Land) {
-            throw new LogicException('Land not found.');
+            throw new \LogicException('Land not found.');
         }
 
         try {
             $landMember = $this->permissionHolderRetriever->getLandMember($land, $permissionHolder);
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             throw new HttpException(403, $exception->getMessage());
         }
 

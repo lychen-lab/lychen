@@ -16,14 +16,14 @@ class PersonApiKeyFixtures extends Fixture implements DependentFixtureInterface
     {
         $personApiKey1 = PersonApiKeyFactory::new()->create([
             'person' => $this->getReference(PersonFixtures::PERSON_1, Person::class),
-            'permissions' => PersonPermission::ALL
+            'permissions' => PersonPermission::ALL,
         ]);
 
         $this->outputToken($personApiKey1);
 
         $personApiKey2 = PersonApiKeyFactory::new()->create([
             'person' => $this->getReference(PersonFixtures::PERSON_2, Person::class),
-            'permissions' => PersonPermission::ALL
+            'permissions' => PersonPermission::ALL,
         ]);
 
         $this->outputToken($personApiKey2);
@@ -31,7 +31,7 @@ class PersonApiKeyFixtures extends Fixture implements DependentFixtureInterface
 
     private function outputToken(PersonApiKey $apiKey): void
     {
-        echo "-----PERSON API KEY\n" . $apiKey->getToken() . "\n";
+        echo "-----PERSON API KEY\n".$apiKey->getToken()."\n";
     }
 
     public function getDependencies(): array

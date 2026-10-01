@@ -11,7 +11,7 @@ trait LandCultivationPlanTrait
     protected function createLandCultivationPlan(Land $land): LandCultivationPlan
     {
         return LandCultivationPlanFactory::new()->create([
-            'land' => $land
+            'land' => $land,
         ]);
     }
 }

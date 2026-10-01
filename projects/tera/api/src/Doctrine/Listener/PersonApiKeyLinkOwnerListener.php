@@ -13,13 +13,13 @@ use Symfony\Bundle\SecurityBundle\Security;
 #[AsEntityListener(event: Events::prePersist, entity: PersonApiKey::class)]
 final readonly class PersonApiKeyLinkOwnerListener
 {
-    public function __construct(private Security        $security,
-                                private LoggerInterface $logger)
+    public function __construct(private Security $security,
+        private LoggerInterface $logger)
     {
     }
 
-    public function __invoke(PersonApiKey       $personApiKey,
-                             LifecycleEventArgs $event): void
+    public function __invoke(PersonApiKey $personApiKey,
+        LifecycleEventArgs $event): void
     {
         if (!$owner = $personApiKey->getPerson()) {
             $owner = $this->security->getUser();
@@ -31,7 +31,7 @@ final readonly class PersonApiKeyLinkOwnerListener
 
         $personApiKey->setPerson($owner);
 
-        $this->logger->info("User " . $owner->getUserIdentifier() . " has created an API key",
+        $this->logger->info('User '.$owner->getUserIdentifier().' has created an API key',
             ['api_key_id' => $personApiKey->getId()]);
     }
 }

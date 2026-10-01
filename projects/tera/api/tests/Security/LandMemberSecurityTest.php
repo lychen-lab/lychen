@@ -3,7 +3,6 @@
 namespace App\Tests\Security;
 
 use App\Tests\Utils\Abstract\AbstractApiTestCase;
-use Exception;
 
 class LandMemberSecurityTest extends AbstractApiTestCase
 {
@@ -135,7 +134,7 @@ class LandMemberSecurityTest extends AbstractApiTestCase
 
     public function testCantAddRolesFromAnotherLand()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(\Exception::class);
 
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();

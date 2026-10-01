@@ -60,8 +60,8 @@ class LandRoleFixtures extends Fixture implements DependentFixtureInterface
         ]);
     }
 
-    private function createLandRoleAndAddReference(string         $reference,
-                                                   array|callable $attributes = []): void
+    private function createLandRoleAndAddReference(string $reference,
+        array|callable $attributes = []): void
     {
         $landRole = LandRoleFactory::new()->create($attributes);
         $this->addReference($reference, $landRole);
@@ -70,7 +70,7 @@ class LandRoleFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            PersonFixtures::class
+            PersonFixtures::class,
         ];
     }
 }

@@ -82,7 +82,6 @@ class LandGreenhouseSecurityTest extends AbstractApiTestCase
         $this->browser()->actingAs($context1->landMembers[0]->getPerson())
             ->patch($this->getIriFromResource($context1->landGreenhouses[0]), ['json' => []])
             ->assertStatus(403);
-
     }
 
     public function testGet()

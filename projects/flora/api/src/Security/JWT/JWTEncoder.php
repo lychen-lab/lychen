@@ -10,7 +10,7 @@ readonly class JWTEncoder
     public const string ISSUER = 'flora';
 
     public function __construct(private string $secret,
-                                private string $algorithm)
+        private string $algorithm)
     {
     }
 
@@ -20,7 +20,7 @@ readonly class JWTEncoder
 
         return array_merge($subject->getJWTPayload(), [
             'iat' => time(),
-            'iss' => self::ISSUER
+            'iss' => self::ISSUER,
         ]);
     }
 

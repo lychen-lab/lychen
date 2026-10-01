@@ -10,7 +10,6 @@ use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
  */
 final class SpeciesFactory extends PersistentObjectFactory
 {
-
     public function __construct()
     {
     }
@@ -20,7 +19,6 @@ final class SpeciesFactory extends PersistentObjectFactory
         return Species::class;
     }
 
-
     protected function defaults(): array|callable
     {
         return [
@@ -28,7 +26,6 @@ final class SpeciesFactory extends PersistentObjectFactory
             'family' => FamilyFactory::new(),
         ];
     }
-
 
     protected function initialize(): static
     {

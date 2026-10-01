@@ -16,14 +16,14 @@ class LandApiKeyFixtures extends Fixture implements DependentFixtureInterface
     {
         $landApiKey1 = LandApiKeyFactory::new()->create([
             'land' => $this->getReference(LandFixtures::LAND_1, Land::class),
-            'permissions' => LandMemberPermission::ALL
+            'permissions' => LandMemberPermission::ALL,
         ]);
 
         $this->outputToken($landApiKey1);
 
         $landApiKey2 = LandApiKeyFactory::new()->create([
             'land' => $this->getReference(LandFixtures::LAND_2, Land::class),
-            'permissions' => LandMemberPermission::ALL
+            'permissions' => LandMemberPermission::ALL,
         ]);
 
         $this->outputToken($landApiKey2);
@@ -31,7 +31,7 @@ class LandApiKeyFixtures extends Fixture implements DependentFixtureInterface
 
     private function outputToken(LandApiKey $apiKey): void
     {
-        echo "-----LAND API KEY\n" . $apiKey->getToken() . "\n";
+        echo "-----LAND API KEY\n".$apiKey->getToken()."\n";
     }
 
     public function getDependencies(): array

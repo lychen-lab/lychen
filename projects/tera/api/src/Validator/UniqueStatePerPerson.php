@@ -2,24 +2,22 @@
 
 namespace App\Validator;
 
-use Attribute;
 use Symfony\Component\Validator\Constraint;
 
-#[Attribute]
+#[\Attribute]
 class UniqueStatePerPerson extends Constraint
 {
     public string $message = 'You can only have one request in {{ state }} state.';
 
     public function __construct(
         public readonly array $states = [],
-        ?string                $message = null,
-        ?array                 $groups = null,
-        mixed                 $payload = null
-    )
-    {
+        ?string $message = null,
+        ?array $groups = null,
+        mixed $payload = null,
+    ) {
         parent::__construct([], $groups, $payload);
 
-        if ($message !== null) {
+        if (null !== $message) {
             $this->message = $message;
         }
     }

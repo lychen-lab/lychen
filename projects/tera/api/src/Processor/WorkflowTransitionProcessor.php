@@ -9,7 +9,6 @@ use Symfony\Component\Workflow\Registry;
 
 readonly class WorkflowTransitionProcessor implements ProcessorInterface
 {
-
     public function __construct(#[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')] private ProcessorInterface $persistProcessor, private Registry $registry)
     {
     }

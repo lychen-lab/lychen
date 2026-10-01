@@ -9,6 +9,7 @@ use App\Tests\Utils\Abstract\AbstractApiTestCase;
 use App\Workflow\LandMemberInvitation\LandMemberInvitationWorkflowPlace;
 use App\Workflow\LandMemberInvitation\LandMemberInvitationWorkflowTransition;
 use Zenstruck\Browser\Json;
+
 use function Zenstruck\Foundry\faker;
 
 class LandMemberInvitationTest extends AbstractApiTestCase
@@ -24,12 +25,12 @@ class LandMemberInvitationTest extends AbstractApiTestCase
             ->post('/api/land_member_invitations',
                 ['json' => [
                     'email' => $email,
-                    'land' => $this->getIriFromResource($context->land)
+                    'land' => $this->getIriFromResource($context->land),
                 ]])
             ->assertStatus(201)
             ->assertJsonMatches('email', $email)
             ->use(function (Json $json) {
-                $json->assertThat('ulid', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('ulid', fn (Json $json) => $json->isNotNull());
             });
 
         // Member with permissions
@@ -42,12 +43,12 @@ class LandMemberInvitationTest extends AbstractApiTestCase
             ->post('/api/land_member_invitations',
                 ['json' => [
                     'email' => $email,
-                    'land' => $this->getIriFromResource($context->land)
+                    'land' => $this->getIriFromResource($context->land),
                 ]])
             ->assertStatus(201)
             ->assertJsonMatches('email', $email)
             ->use(function (Json $json) {
-                $json->assertThat('ulid', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('ulid', fn (Json $json) => $json->isNotNull());
             });
     }
 
@@ -66,8 +67,8 @@ class LandMemberInvitationTest extends AbstractApiTestCase
             ->assertJsonMatches('email', $landMemberInvitation->getEmail())
             ->assertJsonMatches('state', $landMemberInvitation->getState())
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNull());
             });
 
         // Member with permissions
@@ -81,8 +82,8 @@ class LandMemberInvitationTest extends AbstractApiTestCase
             ->assertJsonMatches('email', $landMemberInvitation->getEmail())
             ->assertJsonMatches('state', $landMemberInvitation->getState())
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNull());
             });
     }
 
@@ -124,7 +125,7 @@ class LandMemberInvitationTest extends AbstractApiTestCase
     public function testCollectionPagination()
     {
         $context = $this->createLandContext();
-        array_map(fn() => $this->addOneLandMemberInvitation($context), range(1, 25));
+        array_map(fn () => $this->addOneLandMemberInvitation($context), range(1, 25));
 
         $this->browser()->actingAs($context->owner)
             ->get('/api/land_member_invitations',
@@ -132,7 +133,7 @@ class LandMemberInvitationTest extends AbstractApiTestCase
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', 25)
             ->use(function (Json $json) {
-                $json->assertThat('member', fn(Json $json) => $json->hasCount(10));
+                $json->assertThat('member', fn (Json $json) => $json->hasCount(10));
             });
     }
 
@@ -165,13 +166,13 @@ class LandMemberInvitationTest extends AbstractApiTestCase
 
         $this->browser()->actingAs($invited)
             ->patch(
-                $this->getIriFromResource($context->landMemberInvitations[0]) . '/' . LandMemberInvitationWorkflowTransition::ACCEPT,
+                $this->getIriFromResource($context->landMemberInvitations[0]).'/'.LandMemberInvitationWorkflowTransition::ACCEPT,
                 ['json' => []])
             ->assertSuccessful();
 
         $landMemberRepository = static::getContainer()->get(LandMemberRepository::class);
         $landMember = $landMemberRepository->findOneBy(['person' => $invited,
-                                                        'land' => $context->land]);
+            'land' => $context->land]);
 
         $this->assertNotNull($landMember);
         $roleUlids = static fn (array $roles): array => array_map(
@@ -185,8 +186,8 @@ class LandMemberInvitationTest extends AbstractApiTestCase
 
         $landMemberInvitationRepository = static::getContainer()->get(LandMemberInvitationRepository::class);
         $landMemberInvitation = $landMemberInvitationRepository->findOneBy(['person' => $invited,
-                                                                            'land' => $context->land,
-                                                                            'state' => LandMemberInvitationWorkflowPlace::ACCEPTED]);
+            'land' => $context->land,
+            'state' => LandMemberInvitationWorkflowPlace::ACCEPTED]);
 
         $this->assertNotNull($landMemberInvitation);
         $this->assertNotNull($landMemberInvitation->getAcceptedAt());
@@ -202,8 +203,8 @@ class LandMemberInvitationTest extends AbstractApiTestCase
 
         $landMemberInvitationRepository = static::getContainer()->get(LandMemberInvitationRepository::class);
         $landMemberInvitation = $landMemberInvitationRepository->findOneBy(['person' => $invited,
-                                                                            'land' => $context->land,
-                                                                            'state' => LandMemberInvitationWorkflowPlace::PENDING]);
+            'land' => $context->land,
+            'state' => LandMemberInvitationWorkflowPlace::PENDING]);
 
         $this->assertNotNull($landMemberInvitation);
 
@@ -211,14 +212,14 @@ class LandMemberInvitationTest extends AbstractApiTestCase
         $this->addOneLandMemberInvitation($context, [$context->landRoles[0]], $email);
 
         $landMemberInvitation = $landMemberInvitationRepository->findOneBy(['land' => $context->land,
-                                                                            'state' => LandMemberInvitationWorkflowPlace::PENDING,
-                                                                            'person' => null]);
+            'state' => LandMemberInvitationWorkflowPlace::PENDING,
+            'person' => null]);
         $this->assertNotNull($landMemberInvitation);
 
         $invited = $this->createPerson(['email' => $email]);
         $landMemberInvitation = $landMemberInvitationRepository->findOneBy(['land' => $context->land,
-                                                                            'state' => LandMemberInvitationWorkflowPlace::PENDING,
-                                                                            'person' => $invited]);
+            'state' => LandMemberInvitationWorkflowPlace::PENDING,
+            'person' => $invited]);
         $this->assertNotNull($landMemberInvitation);
     }
 
@@ -230,20 +231,20 @@ class LandMemberInvitationTest extends AbstractApiTestCase
 
         $this->browser()->actingAs($invited)
             ->patch(
-                $this->getIriFromResource($context->landMemberInvitations[0]) . '/' . LandMemberInvitationWorkflowTransition::REFUSE,
+                $this->getIriFromResource($context->landMemberInvitations[0]).'/'.LandMemberInvitationWorkflowTransition::REFUSE,
                 ['json' => []])
             ->assertSuccessful();
 
         $landMemberRepository = static::getContainer()->get(LandMemberRepository::class);
         $landMember = $landMemberRepository->findOneBy(['person' => $invited,
-                                                        'land' => $context->land]);
+            'land' => $context->land]);
 
         $this->assertNull($landMember);
 
         $landMemberInvitationRepository = static::getContainer()->get(LandMemberInvitationRepository::class);
         $landMemberInvitation = $landMemberInvitationRepository->findOneBy(['id' => $context->landMemberInvitations[0]->getId(),
-                                                                            'land' => $context->land,
-                                                                            'state' => LandMemberInvitationWorkflowPlace::REFUSED]);
+            'land' => $context->land,
+            'state' => LandMemberInvitationWorkflowPlace::REFUSED]);
 
         $this->assertNotNull($landMemberInvitation);
         $this->assertNotNull($landMemberInvitation->getRefusedAt());
@@ -257,11 +258,10 @@ class LandMemberInvitationTest extends AbstractApiTestCase
         $this->addOneLandMemberInvitation($context, null, $email);
         $this->browser()->actingAs($context->owner)
             ->get('/api/land_member_invitations/check_email_unicity',
-                ['query'
-                 => [
-                        'email' => $email,
-                        'land' => $context->land->getUlid()->toString()
-                    ]])
+                ['query' => [
+                    'email' => $email,
+                    'land' => $context->land->getUlid()->toString(),
+                ]])
             ->assertSuccessful()
             ->assertJsonMatches('isUnique', false);
     }
@@ -283,8 +283,8 @@ class LandMemberInvitationTest extends AbstractApiTestCase
             ->assertJsonMatches('member[0].ulid', $context1->landMemberInvitations[0]->getUlid()->toString())
             ->assertJsonMatches('member[0].land.name', $context1->landMemberInvitations[0]->getLand()->getName())
             ->use(function (Json $json) {
-                $json->assertThat('member[0].createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('member[0].landRoles', fn(Json $json) => $json->hasCount(1));
+                $json->assertThat('member[0].createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('member[0].landRoles', fn (Json $json) => $json->hasCount(1));
             })
             ->assertJsonMatches('member[0].landRoles[0].name', $context1->landRoles[0]->getName());
     }

@@ -20,9 +20,8 @@ final class LandFilterValidateRequestListener
 
     public function __construct(
         private readonly ResourceMetadataCollectionFactoryInterface $resourceMetadataFactory,
-        private readonly ?LoggerInterface $logger = null
-    )
-    {
+        private readonly ?LoggerInterface $logger = null,
+    ) {
     }
 
     public function validateRequest(RequestEvent $event): void
@@ -33,10 +32,9 @@ final class LandFilterValidateRequestListener
         $operationName = $request->attributes->get('_api_operation_name');
 
         // If essential attributes aren't present, it's likely not an API Platform request we care about
-        if (!$resourceClass || !$operationName || $resourceClass === Error::class) {
+        if (!$resourceClass || !$operationName || Error::class === $resourceClass) {
             return;
         }
-
 
         // Get the metadata for the specific operation
         $resourceMetadataCollection = $this->resourceMetadataFactory->create($resourceClass);
@@ -54,7 +52,7 @@ final class LandFilterValidateRequestListener
         $parameter = $operation->getParameters()->get('land');
         $operationRequiresLandFilter = false;
         if ($parameter) {
-            if ($parameter->getFilter() === LandFilter::class) {
+            if (LandFilter::class === $parameter->getFilter()) {
                 $operationRequiresLandFilter = true;
             }
         } else {

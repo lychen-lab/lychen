@@ -22,7 +22,7 @@ final class DefaultMaturitiesStory extends Story
         self::STANDARD,
         self::MID_LATE,
         self::LATE,
-        self::VERY_LATE
+        self::VERY_LATE,
     ];
 
     public function build(): void

@@ -23,7 +23,6 @@ use App\Security\Voter\LandMemberInvitationVoter;
 use App\Validator\LandRolesBelongToLand;
 use App\Workflow\LandMemberInvitation\LandMemberInvitationWorkflowPlace;
 use App\Workflow\LandMemberInvitation\LandMemberInvitationWorkflowTransition;
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -39,48 +38,48 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Post(
     normalizationContext   : ['groups' => ['land_member_invitation:post', 'land_member_invitation:post:output']],
     denormalizationContext : ['groups' => ['land_member_invitation:post', 'land_member_invitation:post:input']],
-    securityPostDenormalize: "is_granted('" . LandMemberInvitationVoter::POST . "', object)")]
+    securityPostDenormalize: "is_granted('".LandMemberInvitationVoter::POST."', object)")]
 #[Patch(
     normalizationContext  : ['groups' => ['land_member_invitation:patch', 'land_member_invitation:patch:output']],
     denormalizationContext: ['groups' => ['land_member_invitation:patch', 'land_member_invitation:patch:input']],
-    security              : "is_granted('" . LandMemberInvitationVoter::PATCH . "', previous_object)")]
+    security              : "is_granted('".LandMemberInvitationVoter::PATCH."', previous_object)")]
 #[Patch(
-    uriTemplate           : '/land_member_invitations/{ulid}/' . LandMemberInvitationWorkflowTransition::ACCEPT,
+    uriTemplate           : '/land_member_invitations/{ulid}/'.LandMemberInvitationWorkflowTransition::ACCEPT,
     options               : ['transition' => LandMemberInvitationWorkflowTransition::ACCEPT],
     normalizationContext  : ['groups' => ['land_member_invitation:accept', 'land_member_invitation:accept:output']],
     denormalizationContext: ['groups' => ['land_member_invitation:accept', 'land_member_invitation:accept:input']],
-    security              : "is_granted('" . LandMemberInvitationVoter::ACCEPT . "', object)",
+    security              : "is_granted('".LandMemberInvitationVoter::ACCEPT."', object)",
     name                  : 'land-member-invitation_accept',
     processor             : WorkflowTransitionProcessor::class)]
 #[Patch(
-    uriTemplate           : '/land_member_invitations/{ulid}/' . LandMemberInvitationWorkflowTransition::REFUSE,
+    uriTemplate           : '/land_member_invitations/{ulid}/'.LandMemberInvitationWorkflowTransition::REFUSE,
     options               : ['transition' => LandMemberInvitationWorkflowTransition::REFUSE],
     normalizationContext  : ['groups' => ['land_member_invitation:refuse', 'land_member_invitation:refuse:output']],
     denormalizationContext: ['groups' => ['land_member_invitation:refuse', 'land_member_invitation:refuse:input']],
-    security              : "is_granted('" . LandMemberInvitationVoter::REFUSE . "', object)",
+    security              : "is_granted('".LandMemberInvitationVoter::REFUSE."', object)",
     name                  : 'land-member-invitation_refuse',
     processor             : WorkflowTransitionProcessor::class)]
-#[Delete(security: "is_granted('" . LandMemberInvitationVoter::DELETE . "', object)")]
+#[Delete(security: "is_granted('".LandMemberInvitationVoter::DELETE."', object)")]
 #[Get(
     uriTemplate         : '/land_member_invitations/{ulid}',
     requirements        : ['ulid' => '[0-9A-HJKMNP-TV-Z]{26}'],
     normalizationContext: ['groups' => ['land_member_invitation:get']],
-    security            : "is_granted('" . LandMemberInvitationVoter::GET . "', object)",
+    security            : "is_granted('".LandMemberInvitationVoter::GET."', object)",
     priority            : 10
 )]
 #[GetCollection(
     normalizationContext: ['groups' => ['land_member_invitation:collection']],
-    security            : "is_granted('" . LandMemberInvitationVoter::COLLECTION . "')",
+    security            : "is_granted('".LandMemberInvitationVoter::COLLECTION."')",
     parameters          : [
         new QueryParameter(
             key   : 'land',
             filter: LandFilter::class,
-        )
+        ),
     ])]
 #[GetCollection(
     uriTemplate         : '/land_member_invitations/by_email',
     normalizationContext: ['groups' => ['land_member_invitation:collection-by-email']],
-    security            : "is_granted('" . LandMemberInvitationVoter::COLLECTION_BY_EMAIL . "') and user.getEmail() === request.query.get('email')",
+    security            : "is_granted('".LandMemberInvitationVoter::COLLECTION_BY_EMAIL."') and user.getEmail() === request.query.get('email')",
     parameters          : [
         new QueryParameter(
             key     : 'email',
@@ -100,7 +99,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             schema : [
                 'type' => 'string',
                 'enum' => LandMemberInvitationWorkflowPlace::PLACES,
-                'example' => LandMemberInvitationWorkflowPlace::PENDING
+                'example' => LandMemberInvitationWorkflowPlace::PENDING,
             ],
             openApi: new Parameter(
                 name           : 'state',
@@ -109,7 +108,7 @@ use Symfony\Component\Validator\Constraints as Assert;
                 required       : false,
                 allowEmptyValue: true
             ),
-            filter : 'common.collection_state_filter')
+            filter : 'common.collection_state_filter'),
     ]
 )]
 #[Get(
@@ -153,7 +152,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         requestBody: null,
     ),
     normalizationContext: ['groups' => ['land_member_invitation:check-email-unicity']],
-    security            : "is_granted('" . LandMemberInvitationVoter::CHECK_EMAIL_UNICITY . "')",
+    security            : "is_granted('".LandMemberInvitationVoter::CHECK_EMAIL_UNICITY."')",
     output              : LandMemberInvitationCheckEmailUnicityDto::class,
     priority            : 20,
     name                : 'land-member-invitation_check-email-unicity',
@@ -168,45 +167,45 @@ class LandMemberInvitation extends AbstractIdOrmAndUlidApiIdentified implements 
 
     #[ORM\ManyToOne(inversedBy: 'landMemberInvitations')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["land_member_invitation:get",
-              "land_member_invitation:post",
-              "land_member_invitation:collection-by-email"])]
+    #[Groups(['land_member_invitation:get',
+        'land_member_invitation:post',
+        'land_member_invitation:collection-by-email'])]
     private ?Land $land = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\Email()]
-    #[Groups(["land_member_invitation:collection",
-              "land_member_invitation:get",
-              "land_member_invitation:post"])]
+    #[Groups(['land_member_invitation:collection',
+        'land_member_invitation:get',
+        'land_member_invitation:post'])]
     private ?string $email = null;
 
     /**
      * @var Collection<int, LandRole>
      */
     #[ORM\ManyToMany(targetEntity: LandRole::class)]
-    #[Groups(["land_member_invitation:collection",
-              "land_member_invitation:get",
-              "land_member_invitation:patch",
-              "land_member_invitation:post",
-              "land_member_invitation:collection-by-email"])]
+    #[Groups(['land_member_invitation:collection',
+        'land_member_invitation:get',
+        'land_member_invitation:patch',
+        'land_member_invitation:post',
+        'land_member_invitation:collection-by-email'])]
     #[Assert\Valid(groups: ['land_member_invitation:patch', 'land_member_invitation:post'])]
     private Collection $landRoles;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["land_member_invitation:collection", "land_member_invitation:get"])]
+    #[Groups(['land_member_invitation:collection', 'land_member_invitation:get'])]
     #[Assert\Choice(choices: LandMemberInvitationWorkflowPlace::PLACES)]
     private ?string $state = LandMemberInvitationWorkflowPlace::PENDING;
 
     #[ORM\ManyToOne(inversedBy: 'landMemberInvitations')]
-    #[Groups(["land_member_invitation:collection",
-              "land_member_invitation:get"])] // Has to be present in order to do some checks on front-end
+    #[Groups(['land_member_invitation:collection',
+        'land_member_invitation:get'])] // Has to be present in order to do some checks on front-end
     private ?Person $person = null;
 
     #[ORM\Column(nullable: true)]
-    private ?DateTimeImmutable $acceptedAt = null;
+    private ?\DateTimeImmutable $acceptedAt = null;
 
     #[ORM\Column(nullable: true)]
-    private ?DateTimeImmutable $refusedAt = null;
+    private ?\DateTimeImmutable $refusedAt = null;
 
     public function __construct()
     {
@@ -214,18 +213,18 @@ class LandMemberInvitation extends AbstractIdOrmAndUlidApiIdentified implements 
         $this->landRoles = new ArrayCollection();
     }
 
-    #[Groups(["land_member_invitation:collection",
-              "land_member_invitation:get",
-              "land_member_invitation:post:output",
-              "land_member_invitation:patch:output",
-              "land_member_invitation:collection-by-email"])]
+    #[Groups(['land_member_invitation:collection',
+        'land_member_invitation:get',
+        'land_member_invitation:post:output',
+        'land_member_invitation:patch:output',
+        'land_member_invitation:collection-by-email'])]
     public function getUlid(): Ulid
     {
         return parent::getUlid();
     }
 
-    #[Groups(["land_member_invitation:get", "land_member_invitation:collection-by-email"])]
-    public function getCreatedAt(): DateTimeImmutable
+    #[Groups(['land_member_invitation:get', 'land_member_invitation:collection-by-email'])]
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -302,24 +301,24 @@ class LandMemberInvitation extends AbstractIdOrmAndUlidApiIdentified implements 
         return $this;
     }
 
-    public function getAcceptedAt(): ?DateTimeImmutable
+    public function getAcceptedAt(): ?\DateTimeImmutable
     {
         return $this->acceptedAt;
     }
 
-    public function setAcceptedAt(?DateTimeImmutable $acceptedAt): static
+    public function setAcceptedAt(?\DateTimeImmutable $acceptedAt): static
     {
         $this->acceptedAt = $acceptedAt;
 
         return $this;
     }
 
-    public function getRefusedAt(): ?DateTimeImmutable
+    public function getRefusedAt(): ?\DateTimeImmutable
     {
         return $this->refusedAt;
     }
 
-    public function setRefusedAt(?DateTimeImmutable $refusedAt): static
+    public function setRefusedAt(?\DateTimeImmutable $refusedAt): static
     {
         $this->refusedAt = $refusedAt;
 

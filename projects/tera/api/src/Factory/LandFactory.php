@@ -31,7 +31,7 @@ final class LandFactory extends PersistentObjectFactory
             'name' => self::faker()->text(255),
             'surface' => self::faker()->numberBetween(30, 300),
             'altitude' => self::faker()->numberBetween(200, 1500),
-            'address' => AddressFactory::new()
+            'address' => AddressFactory::new(),
         ];
     }
 
@@ -41,6 +41,6 @@ final class LandFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this// ->afterInstantiate(function(Land $land): void {})
-            ;
+        ;
     }
 }

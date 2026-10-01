@@ -2,7 +2,6 @@
 
 namespace App\Doctrine\Listener;
 
-
 use App\Entity\Land;
 use App\Entity\LandMember;
 use App\Entity\Person;
@@ -31,7 +30,6 @@ final readonly class LandLinkOwnerListener
         }
 
         /** @var UserInterface&Person $owner */
-
         $landMember = (new LandMember())
             ->setPerson($owner)
             ->setOwner(true);
@@ -41,6 +39,6 @@ final readonly class LandLinkOwnerListener
         $em->persist($landMember);
         $em->flush();
 
-        $this->logger->info("User " . $owner->getUserIdentifier() . " has created a land", ['land_id' => $land->getId()]);
+        $this->logger->info('User '.$owner->getUserIdentifier().' has created a land', ['land_id' => $land->getId()]);
     }
 }

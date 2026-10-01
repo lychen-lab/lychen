@@ -6,7 +6,6 @@ use App\Entity\LandGreenhouse;
 
 class LandGreenhouseVoter extends AbstractLandAwareVoterInterface
 {
-
     public const string DELETE = 'land_member:land_greenhouse:delete';
     public const string PATCH = 'land_member:land_greenhouse:patch';
     public const string POST = 'land_member:land_greenhouse:post';
@@ -31,14 +30,13 @@ class LandGreenhouseVoter extends AbstractLandAwareVoterInterface
         self::COLLECTION,
     ];
 
-    function getSupportedClass(): string
+    public function getSupportedClass(): string
     {
         return LandGreenhouse::class;
     }
 
-    function getAvailablePermissions(): array
+    public function getAvailablePermissions(): array
     {
         return self::ALL;
     }
 }
-

@@ -21,6 +21,7 @@ final class LandHarvestEntryFactory extends PersistentObjectFactory
     protected function defaults(): array|callable
     {
         $harvestedAt = self::faker()->dateTimeBetween('-1 years', 'now');
+
         return [
             'notes' => TipTapFaker::randomContent(),
             'weight' => self::faker()->numberBetween(0, 10000),
@@ -36,6 +37,6 @@ final class LandHarvestEntryFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this// ->afterInstantiate(function(LandHarvestEntry $landHarvestEntry): void {})
-            ;
+        ;
     }
 }

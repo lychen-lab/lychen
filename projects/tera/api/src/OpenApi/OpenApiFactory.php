@@ -13,8 +13,7 @@ readonly class OpenApiFactory implements OpenApiFactoryInterface
     public function __construct(
         #[Autowire('@App\OpenApi\OpenApiFactory.inner')]
         private OpenApiFactoryInterface $decorated,
-    )
-    {
+    ) {
     }
 
     public function __invoke(array $context = []): OpenApi

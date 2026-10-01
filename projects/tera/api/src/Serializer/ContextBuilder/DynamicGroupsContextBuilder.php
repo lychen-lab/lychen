@@ -2,7 +2,6 @@
 
 namespace App\Serializer\ContextBuilder;
 
-
 use ApiPlatform\State\SerializerContextBuilderInterface;
 use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
 use Symfony\Component\DependencyInjection\Attribute\AutowireDecorated;

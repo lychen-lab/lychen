@@ -20,8 +20,7 @@ class LandMemberRepository extends ServiceEntityRepository
     /**
      * Finds the IDs of all Lands a specific person is a member of.
      *
-     * @param Person $person
-     * @return array<int> An array of Land IDs.
+     * @return array<int> an array of Land IDs
      */
     public function findPersonLandIds(Person $person): array
     {

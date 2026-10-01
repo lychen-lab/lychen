@@ -5,8 +5,6 @@ namespace App\Workflow\LandProposal\Subscriber;
 use App\Entity\LandProposal;
 use App\Workflow\LandProposal\LandProposalWorkflow;
 use App\Workflow\LandProposal\LandProposalWorkflowTransition;
-use DateTime;
-use DateTimeImmutable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Workflow\Event\Event;
 use Symfony\Component\Workflow\Event\TransitionEvent;
@@ -30,9 +28,9 @@ readonly class LandProposalTransitionPublish implements EventSubscriberInterface
         /** @var LandProposal $landProposal */
         $landProposal = $event->getSubject();
 
-        $landProposal->setPublishedAt(new DateTimeImmutable());
-        $expirationDate = (new DateTime())->modify('+1 month');
+        $landProposal->setPublishedAt(new \DateTimeImmutable());
+        $expirationDate = (new \DateTime())->modify('+1 month');
 
-        $landProposal->setExpirationDate(DateTimeImmutable::createFromMutable($expirationDate));
+        $landProposal->setExpirationDate(\DateTimeImmutable::createFromMutable($expirationDate));
     }
 }

@@ -24,8 +24,8 @@ class LandMemberTest extends AbstractApiTestCase
             ->assertJsonMatches('ulid', $landMember->getUlid()->toString())
             ->assertJsonMatches('owner', $landMember->isOwner())
             ->use(function (Json $json) {
-                $json->assertThat('landMemberSetting', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('landRoles', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('landMemberSetting', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('landRoles', fn (Json $json) => $json->isNotNull());
             });
 
         // Member with permissions
@@ -38,8 +38,8 @@ class LandMemberTest extends AbstractApiTestCase
             ->assertJsonMatches('ulid', $landMember->getUlid()->toString())
             ->assertJsonMatches('owner', $landMember->isOwner())
             ->use(function (Json $json) {
-                $json->assertThat('landMemberSetting', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('landRoles', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('landMemberSetting', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('landRoles', fn (Json $json) => $json->isNotNull());
             });
 
         // Member without permissions but he is the guy of the LandMember
@@ -52,8 +52,8 @@ class LandMemberTest extends AbstractApiTestCase
             ->assertJsonMatches('ulid', $context->landMembers[2]->getUlid()->toString())
             ->assertJsonMatches('owner', $context->landMembers[2]->isOwner())
             ->use(function (Json $json) {
-                $json->assertThat('landMemberSetting', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('landRoles', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('landMemberSetting', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('landRoles', fn (Json $json) => $json->isNotNull());
             });
     }
 
@@ -70,13 +70,13 @@ class LandMemberTest extends AbstractApiTestCase
             ->patch($this->getIriFromResource($landMember),
                 [
                     'json' => [
-                        'landRoles' => $newRoles
-                    ]
+                        'landRoles' => $newRoles,
+                    ],
                 ])
             ->assertStatus(200)
             ->assertJsonMatches('ulid', $landMember->getUlid()->toString())
             ->use(function (Json $json) {
-                $json->assertThat('landRoles', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('landRoles', fn (Json $json) => $json->isNotNull());
             });
 
         // Member with permissions
@@ -89,13 +89,13 @@ class LandMemberTest extends AbstractApiTestCase
             ->patch($this->getIriFromResource($landMember),
                 [
                     'json' => [
-                        'landRoles' => $newRoles
-                    ]
+                        'landRoles' => $newRoles,
+                    ],
                 ])
             ->assertStatus(200)
             ->assertJsonMatches('ulid', $landMember->getUlid()->toString())
             ->use(function (Json $json) {
-                $json->assertThat('landRoles', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('landRoles', fn (Json $json) => $json->isNotNull());
             });
     }
 
@@ -130,17 +130,17 @@ class LandMemberTest extends AbstractApiTestCase
     public function testCollectionPagination()
     {
         $context = $this->createLandContext();
-        array_map(fn() => $this->addLandMember($context), range(1, 25));
+        array_map(fn () => $this->addLandMember($context), range(1, 25));
 
         $this->browser()->actingAs($context->owner)
             ->get('/api/land_members',
                 ['query' => ['land' => $context->land->getUlid()->toString(),
-                             'itemsPerPage' => 10,
-                             'page' => 2]])
+                    'itemsPerPage' => 10,
+                    'page' => 2]])
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', 26)
             ->use(function (Json $json) {
-                $json->assertThat('member', fn(Json $json) => $json->hasCount(10));
+                $json->assertThat('member', fn (Json $json) => $json->hasCount(10));
             });
     }
 
@@ -187,7 +187,7 @@ class LandMemberTest extends AbstractApiTestCase
 
         $landMemberRepository = static::getContainer()->get(LandMemberRepository::class);
         $landMember = $landMemberRepository->findOneBy(['person' => $context->owner,
-                                                        'land' => $context->land]);
+            'land' => $context->land]);
 
         $this->browser()->actingAs($context->owner)
             ->delete($this->getIriFromResource($landMember))
@@ -209,7 +209,7 @@ class LandMemberTest extends AbstractApiTestCase
 
         $landMemberRepository = static::getContainer()->get(LandMemberRepository::class);
         $landMember = $landMemberRepository->findOneBy(['person' => $context->owner,
-                                                        'land' => $context->land]);
+            'land' => $context->land]);
 
         $this->browser()->actingAs($context->owner)
             ->get('/api/land_members/me', ['query' => ['land' => $context->land->getUlid()->toString()]])
@@ -218,7 +218,7 @@ class LandMemberTest extends AbstractApiTestCase
             ->assertJsonMatches('owner', $landMember->isOwner())
             ->assertJsonMatches('land', $this->getIriFromResource($context->land))
             ->use(function (Json $json) {
-                $json->assertThat('landRoles', fn(Json $json) => $json->hasCount(0));
+                $json->assertThat('landRoles', fn (Json $json) => $json->hasCount(0));
             });
 
         $this->addOneLandRole($context, LandMemberPermission::ALL);
@@ -232,8 +232,8 @@ class LandMemberTest extends AbstractApiTestCase
             ->assertJsonMatches('owner', $landMember->isOwner())
             ->assertJsonMatches('land', $this->getIriFromResource($context->land))
             ->use(function (Json $json) {
-                $json->assertThat('landRoles', fn(Json $json) => $json->hasCount(1));
-                $json->assertThat('landRoles[0].permissions', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('landRoles', fn (Json $json) => $json->hasCount(1));
+                $json->assertThat('landRoles[0].permissions', fn (Json $json) => $json->isNotNull());
             })
             ->assertJsonMatches('landRoles[0].name', $context->landRoles[0]->getName());
 

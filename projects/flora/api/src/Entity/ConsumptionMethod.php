@@ -9,8 +9,6 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\ConsumptionMethodRepository;
-use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -40,7 +38,7 @@ class ConsumptionMethod extends AbstractIdOrmAndUlidApiIdentified
     use CreatedAtTrait;
     use UpdatedAtTrait;
 
-    #[Groups(["consumption_method:get"])]
+    #[Groups(['consumption_method:get'])]
     #[ORM\Column(length: 100, unique: true)]
     private ?string $code = null;
 
@@ -68,14 +66,14 @@ class ConsumptionMethod extends AbstractIdOrmAndUlidApiIdentified
         return $this;
     }
 
-    #[Groups(["consumption_method:get"])]
-    public function getCreatedAt(): DateTimeImmutable
+    #[Groups(['consumption_method:get'])]
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    #[Groups(["consumption_method:get"])]
-    public function getUpdatedAt(): DateTimeInterface
+    #[Groups(['consumption_method:get'])]
+    public function getUpdatedAt(): \DateTimeInterface
     {
         return $this->updatedAt;
     }

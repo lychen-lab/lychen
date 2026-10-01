@@ -171,13 +171,13 @@ class LandProposalSecurityTest extends AbstractApiTestCase
 
         // User not authenticated
         $this->browser()
-            ->patch($this->getIriFromResource($landProposal) . '/' . LandProposalWorkflowTransition::PUBLISH,
+            ->patch($this->getIriFromResource($landProposal).'/'.LandProposalWorkflowTransition::PUBLISH,
                 ['json' => []])
             ->assertStatus(401);
 
         // User not the creator
         $this->browser()->actingAs($context2->owner)
-            ->patch($this->getIriFromResource($landProposal) . '/' . LandProposalWorkflowTransition::PUBLISH,
+            ->patch($this->getIriFromResource($landProposal).'/'.LandProposalWorkflowTransition::PUBLISH,
                 ['json' => []])
             ->assertStatus(403);
     }
@@ -190,15 +190,14 @@ class LandProposalSecurityTest extends AbstractApiTestCase
 
         // User not authenticated
         $this->browser()
-            ->patch($this->getIriFromResource($landProposal) . '/' . LandProposalWorkflowTransition::ARCHIVE,
+            ->patch($this->getIriFromResource($landProposal).'/'.LandProposalWorkflowTransition::ARCHIVE,
                 ['json' => []])
             ->assertStatus(401);
 
         // User not the creator
         $this->browser()->actingAs($context2->owner)
-            ->patch($this->getIriFromResource($landProposal) . '/' . LandProposalWorkflowTransition::ARCHIVE,
+            ->patch($this->getIriFromResource($landProposal).'/'.LandProposalWorkflowTransition::ARCHIVE,
                 ['json' => []])
             ->assertStatus(403);
     }
 }
-

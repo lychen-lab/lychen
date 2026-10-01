@@ -18,18 +18,18 @@ use Symfony\Component\Uid\Ulid;
 #[Patch(
     normalizationContext  : ['groups' => ['land_greenhouse_parameter:patch', 'land_greenhouse_parameter:patch:output']],
     denormalizationContext: ['groups' => ['land_greenhouse_parameter:patch', 'land_greenhouse_parameter:patch:input']],
-    security              : "is_granted('" . LandGreenhouseParameterVoter::PATCH . "', previous_object)")]
+    security              : "is_granted('".LandGreenhouseParameterVoter::PATCH."', previous_object)")]
 #[Get(
     normalizationContext: ['groups' => ['land_greenhouse_parameter:get']],
-    security            : "is_granted('" . LandGreenhouseParameterVoter::GET . "', object)")]
+    security            : "is_granted('".LandGreenhouseParameterVoter::GET."', object)")]
 class LandGreenhouseParameter extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInterface
 {
     #[ORM\OneToOne(inversedBy: 'landGreenhouseParameter', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["land_greenhouse_parameter:get"])]
+    #[Groups(['land_greenhouse_parameter:get'])]
     private ?LandGreenhouse $landGreenhouse = null;
 
-    #[Groups(["land_greenhouse_parameter:patch:output", "land_greenhouse_parameter:get"])]
+    #[Groups(['land_greenhouse_parameter:patch:output', 'land_greenhouse_parameter:get'])]
     public function getUlid(): Ulid
     {
         return parent::getUlid();

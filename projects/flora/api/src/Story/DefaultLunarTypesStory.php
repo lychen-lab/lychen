@@ -16,7 +16,7 @@ final class DefaultLunarTypesStory extends Story
         self::ROOT,
         self::LEAF,
         self::FLOWER,
-        self::SEED_AND_FRUIT
+        self::SEED_AND_FRUIT,
     ];
 
     public function build(): void

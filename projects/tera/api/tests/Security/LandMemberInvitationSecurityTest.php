@@ -5,7 +5,7 @@ namespace App\Tests\Security;
 use App\Entity\Land;
 use App\Tests\Utils\Abstract\AbstractApiTestCase;
 use App\Workflow\LandMemberInvitation\LandMemberInvitationWorkflowTransition;
-use Exception;
+
 use function Zenstruck\Foundry\faker;
 
 class LandMemberInvitationSecurityTest extends AbstractApiTestCase
@@ -93,7 +93,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
         $context1 = $this->createLandContext();
         $this->addOneLandMemberInvitation($context1);
 
-        $uri = $this->getIriFromResource($context1->landMemberInvitations[0]) . '/' . LandMemberInvitationWorkflowTransition::ACCEPT;
+        $uri = $this->getIriFromResource($context1->landMemberInvitations[0]).'/'.LandMemberInvitationWorkflowTransition::ACCEPT;
 
         // User cannot accept a LandMemberInvitation if they are not authenticated
         $this->browser()
@@ -117,7 +117,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
     {
         $context1 = $this->createLandContext();
         $this->addOneLandMemberInvitation($context1);
-        $uri = $this->getIriFromResource($context1->landMemberInvitations[0]) . '/' . LandMemberInvitationWorkflowTransition::REFUSE;
+        $uri = $this->getIriFromResource($context1->landMemberInvitations[0]).'/'.LandMemberInvitationWorkflowTransition::REFUSE;
 
         // User cannot refuse a LandMemberInvitation if they are not authenticated
         $this->browser()
@@ -224,11 +224,10 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
         $this->addOneLandMemberInvitation($context1, null, $email);
         $this->browser()->actingAs($context2->owner)
             ->get('/api/land_member_invitations/check_email_unicity',
-                ['query'
-                 => [
-                        'email' => $email,
-                        'land' => $context1->land->getUlid()->toString()
-                    ]])
+                ['query' => [
+                    'email' => $email,
+                    'land' => $context1->land->getUlid()->toString(),
+                ]])
             ->assertStatus(403);
 
         // User cannot check email unicity for a Land for which they do not have permission
@@ -236,11 +235,10 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
         $this->addLandMember($context1, [$landRole]);
         $this->browser()->actingAs($context1->landMembers[0]->getPerson())
             ->get('/api/land_member_invitations/check_email_unicity',
-                ['query'
-                 => [
-                        'email' => $email,
-                        'land' => $context1->land->getUlid()->toString()
-                    ]])
+                ['query' => [
+                    'email' => $email,
+                    'land' => $context1->land->getUlid()->toString(),
+                ]])
             ->assertStatus(403);
     }
 
@@ -258,7 +256,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
 
     public function testCantAddRolesFromAnotherLand()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(\Exception::class);
 
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();

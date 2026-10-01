@@ -5,8 +5,6 @@ namespace App\Workflow\LandRequest\Subscriber;
 use App\Entity\LandRequest;
 use App\Workflow\LandRequest\LandRequestWorkflow;
 use App\Workflow\LandRequest\LandRequestWorkflowTransition;
-use DateTime;
-use DateTimeImmutable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Workflow\Event\Event;
 use Symfony\Component\Workflow\Event\TransitionEvent;
@@ -29,9 +27,9 @@ readonly class LandRequestTransitionPublish implements EventSubscriberInterface
         /** @var LandRequest $landRequest */
         $landRequest = $event->getSubject();
 
-        $landRequest->setPublishedAt(new DateTimeImmutable());
-        $expirationDate = (new DateTime())->modify('+1 month');
+        $landRequest->setPublishedAt(new \DateTimeImmutable());
+        $expirationDate = (new \DateTime())->modify('+1 month');
 
-        $landRequest->setExpirationDate(DateTimeImmutable::createFromMutable($expirationDate));
+        $landRequest->setExpirationDate(\DateTimeImmutable::createFromMutable($expirationDate));
     }
 }

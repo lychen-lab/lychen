@@ -18,9 +18,8 @@ final readonly class LandProposalExtension implements QueryCollectionExtensionIn
 {
     public function __construct(
         private Security $security,
-        private LandMemberRepository $landMemberRepository
-    )
-    {
+        private LandMemberRepository $landMemberRepository,
+    ) {
     }
 
     public function applyToCollection(
@@ -28,15 +27,14 @@ final readonly class LandProposalExtension implements QueryCollectionExtensionIn
         QueryNameGeneratorInterface $queryNameGenerator,
         string $resourceClass,
         ?Operation $operation = null,
-        array $context = []
-    ): void
-    {
+        array $context = [],
+    ): void {
         // Only apply this logic to LandProposal entities
         if (LandProposal::class !== $resourceClass) {
             return;
         }
 
-        if ($operation?->getUriTemplate() === '/land_proposals/public') {
+        if ('/land_proposals/public' === $operation?->getUriTemplate()) {
             $this->addWhereForPublicCollection($queryBuilder);
         }
     }
@@ -89,9 +87,8 @@ final readonly class LandProposalExtension implements QueryCollectionExtensionIn
         string $resourceClass,
         array $identifiers,
         ?Operation $operation = null,
-        array $context = []
-    ): void
-    {
+        array $context = [],
+    ): void {
         // If you needed to restrict item access based on similar criteria,
         // you could add logic here, but usually, Voters are better suited for item operations.
         // Example: Ensure a user can only GET their own DRAFT proposal via the standard GET endpoint.

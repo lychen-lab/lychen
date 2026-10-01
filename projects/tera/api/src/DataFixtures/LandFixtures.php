@@ -45,7 +45,7 @@ class LandFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            PersonFixtures::class
+            PersonFixtures::class,
         ];
     }
 }

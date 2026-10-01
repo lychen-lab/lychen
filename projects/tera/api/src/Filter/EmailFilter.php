@@ -12,7 +12,6 @@ use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 
 class EmailFilter extends AbstractFilter
 {
-
     public function __construct(ManagerRegistry $managerRegistry,
         ?LoggerInterface $logger = null,
         ?array $properties = null,
@@ -34,13 +33,11 @@ class EmailFilter extends AbstractFilter
         ?Operation $operation = null,
         array $context = []): void
     {
-
         if ('email' !== $property) {
             return;
         }
 
         $alias = $queryBuilder->getRootAliases()[0];
-
 
         $queryBuilder
             ->andWhere(sprintf('%s.email = :email', $alias))

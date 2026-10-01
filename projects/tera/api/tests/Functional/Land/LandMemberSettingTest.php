@@ -32,7 +32,7 @@ class LandMemberSettingTest extends AbstractApiTestCase
         // Member without permissions
         $this->browser()->actingAs($context->landMembers[0]->getPerson())
             ->patch($this->getIriFromResource($landMemberSetting), ['json' => [
-                'emailNotificationActivated' => false
+                'emailNotificationActivated' => false,
             ]])
             ->assertSuccessful()
             ->assertJsonMatches('ulid', $landMemberSetting->getUlid()->toString())
