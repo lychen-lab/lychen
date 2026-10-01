@@ -9,10 +9,10 @@ env:
   PHP_CS_FIXER_IGNORE_ENV: '1'
 
 on:
+  # No `paths:` filter: "Symfony | Gate" is a required check, so it must report on
+  # every PR. Without an affected API, define-matrix returns an empty list and the
+  # other jobs are skipped in seconds.
   pull_request:
-    paths:
-      - 'projects/*/api/**'
-      - 'libs/php/**'
   workflow_dispatch: {}
 
 permissions:
@@ -124,9 +124,6 @@ jobs:
       - name: Set IMAGE_NAME for this project
         run: echo "TEST_IMAGE_NAME=${{ needs.build-and-push-test-image.outputs.matrix_test_image_name }}" >> $GITHUB_ENV
 
-      - name: Install tools
-        run: moon ci ${{ matrix.projects }}:ci-install-tools
-
       - name: Lint src folder
         run: moon ci ${{ matrix.projects }}:ci-php-cs-fixer-src
 
@@ -199,7 +196,6 @@ jobs:
 
   phpstan:
     name: '${{ matrix.projects }} | PHPStan'
-    if: false # TEMP: disabled for the Symfony 8.1 migration PR (#146); re-enable after the legacy PHPStan debt is baselined/fixed (separate cleanup PR)
     needs:
       - define-matrix
       - build-and-push-test-image
@@ -227,8 +223,24 @@ jobs:
       - name: Set IMAGE_NAME for this project
         run: echo "TEST_IMAGE_NAME=${{ needs.build-and-push-test-image.outputs.matrix_test_image_name }}" >> $GITHUB_ENV
 
-      - name: Install tools
-        run: moon ci ${{ matrix.projects }}:ci-install-tools
+      # The baseline is frozen debt: it may shrink, never grow. Regenerating it to
+      # absorb new errors would hide them, so a PR that adds entries fails here.
+      - name: Check the PHPStan baseline did not grow
+        if: ${{ github.base_ref != '' }}
+        run: |
+          BASELINE="$(moon project ${{ matrix.projects }} --json | jq -r '.source')/phpstan-baseline.neon"
+          total() { grep -E '^[[:space:]]+count: [0-9]+$' | awk '{ s += $2 } END { print s + 0 }'; }
+          if ! git cat-file -e "origin/${{ github.base_ref }}:$BASELINE" 2> /dev/null; then
+            echo "No baseline on ${{ github.base_ref }} yet, nothing to compare."
+            exit 0
+          fi
+          BEFORE=$(git show "origin/${{ github.base_ref }}:$BASELINE" | total)
+          AFTER=$(total < "$BASELINE")
+          echo "Baselined errors: $BEFORE on ${{ github.base_ref }}, $AFTER on this PR."
+          if (( AFTER > BEFORE )); then
+            echo "::error title=PHPStan baseline grew::$BASELINE went from $BEFORE to $AFTER errors. Fix the new errors instead of baselining them."
+            exit 1
+          fi
 
       - name: Run PHPStan
         run: moon ci ${{ matrix.projects }}:ci-phpstan
@@ -296,3 +308,34 @@ jobs:
 
       - name: Functional tests
         run: moon run ${{ matrix.projects }}:ci-test-phpunit -- tests/Functional
+
+  # The one required check of this workflow (branch ruleset). It fails when a job
+  # failed or was cancelled and, as soon as an API is affected, when a job was
+  # skipped: a check disabled with `if: false` turns the gate red instead of
+  # silently disappearing from the PR.
+  gate:
+    name: 'Symfony | Gate'
+    if: ${{ always() }}
+    needs:
+      - define-matrix
+      - build-and-push-test-image
+      - check-vulnerabilities
+      - validate-db-schema
+      - phpstan
+      - phpunit-security
+      - phpunit-functional
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Check every job passed'
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+          AFFECTED: ${{ needs.define-matrix.outputs.projects }}
+        run: |
+          ok='["success"]'
+          # No affected API: the matrix jobs are skipped on purpose.
+          if [[ -z "$AFFECTED" || "$AFFECTED" == "[]" ]]; then ok='["success","skipped"]'; fi
+          bad=$(jq -r --argjson ok "$ok" 'to_entries[] | select(.value.result | IN($ok[]) | not) | "\(.key)=\(.value.result)"' <<< "$NEEDS")
+          if [[ -n "$bad" ]]; then
+            echo "::error title=Symfony checks not green::$(paste -sd ' ' - <<< "$bad")"
+            exit 1
+          fi
