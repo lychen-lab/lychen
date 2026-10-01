@@ -6,10 +6,6 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Symfony\Component\Mercure\Jwt\LcobucciFactory;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    $parameters = $containerConfigurator->parameters();
-
-    $parameters->set('locale', 'fr');
-
     $services = $containerConfigurator->services();
 
     $services->defaults()

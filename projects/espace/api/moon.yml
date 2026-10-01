@@ -1,6 +1,7 @@
 dependsOn:
   - lychen-php-core
   - lychen-php-model
+  - lychen-php-symfony-config
   - lychen-php-zitadel
 id: espace-api
 language: php

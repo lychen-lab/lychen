@@ -21,6 +21,7 @@
         "lychen/core": "*",
         "lychen/frankenphp-symfony": "*",
         "lychen/model": "*",
+        "lychen/symfony-config": "*",
         "lychen/tiptap": "*",
         "lychen/zitadel": "*",
         "martin-georgiev/postgresql-for-doctrine": "4.6.*",
@@ -92,6 +93,7 @@
                     "lychen/zitadel": "0.0.0",
                     "lychen/tiptap": "0.0.0",
                     "lychen/core": "0.0.0",
+                    "lychen/symfony-config": "0.0.0",
                     "lychen/frankenphp-symfony": "0.0.0"
                 }
             }
