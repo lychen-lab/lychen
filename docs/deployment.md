@@ -12,7 +12,7 @@ environments — never rebuilt.
 
 ## How image tags work
 
-- **Build and push images** builds each affected app and pushes it to GHCR
+- **Deploy | Staging** builds each affected app and pushes it to GHCR
   tagged with both the **commit SHA** and `latest`. Frontends (`tag-docker`) and
   APIs (`tag-symfony`) now share a **single namespace**:
   `ghcr.io/lychen-lab/lychen/<project>:<sha>`. Because the path is uniform across
@@ -34,8 +34,8 @@ Projects in the automated pipeline (tagged `dokploy`): `website`, `espace-app`,
 `common-mercure`.
 
 `common-rabbitmq` and `common-mercure` are the odd ones out: they run upstream
-images rather than ones we build, so they are absent from **Build & push images**
-(that matrix selects on the `docker-buildx` task) and from the release
+images rather than ones we build, so they are absent from the build matrix of
+**Deploy | Staging** (it selects on the `docker-buildx` task) and from the release
 `image-promote` step (tag `version`). They are deployed like the rest — the
 `IMAGE_TAG` a deploy pins is simply ignored by their composes, which pin
 `RABBITMQ_VERSION` and `MERCURE_VERSION` instead. See
@@ -44,10 +44,42 @@ below.
 
 ## Staging (continuous)
 
-Every push to `main` triggers **Deploy | Build & push images** →
-[**Deploy | Staging**](../.github/workflows/deploy.yml), which deploys the
-affected projects to the `staging` environment pinned to the commit SHA. Nothing
-to do — staging always reflects `main`.
+Every push to `main` that touches `libs/**`, `projects/**` or `yarn.lock` runs
+[**Deploy | Staging**](../.github/workflows/deploy.yml), which builds the
+affected images and deploys the affected projects to the `staging` environment,
+pinned to the commit SHA. Building and deploying live in **one** workflow so that
+a failed build turns the run red. They used to be two workflows chained by
+`workflow_run`, and a timed-out build — reported as *cancelled*, neither success
+nor failure — silently deployed nothing.
+
+1. **Gather affected projects** — the projects changed since the last commit this
+   workflow **fully delivered** (its last successful run), not since the previous
+   commit. A run that failed, timed out or was queued behind another one never
+   drops a change: the next run rebuilds and redeploys it.
+2. **Build & push image** — one job per affected project with a `docker-buildx`
+   task. It fails after 45 minutes instead of running into GitHub's 6-hour limit,
+   which cancels a job rather than failing it.
+3. **Deploy to staging** — one job per affected `dokploy` project. It runs even
+   when some builds failed, so the projects that built still ship, but each one
+   first checks that its `:<sha>` image exists: a project whose build failed keeps
+   its current staging version instead of being pinned to a tag that was never
+   pushed.
+
+Runs never cancel each other, since a deploy may be mid-flight: a newer push
+waits, and as it computes its affected projects from the last delivered commit,
+it covers every commit it supersedes. The flip side: while a run stays red, every
+following run rebuilds and redeploys everything changed since the last green one.
+Fix the red run rather than living with it.
+
+**API image build cache.** API images are multi-arch (`linux/amd64` and
+`linux/arm64`, the latter built under QEMU) and compile PHP extensions in their
+base stage. Their layer cache is exported to its own registry tag,
+`ghcr.io/lychen-lab/lychen/<api>:buildcache` (`mode=max`, every stage), so the
+extensions are only recompiled when the base stage changes — about 25 minutes per
+API from a cold cache. Keep heavy extensions out of the base stage until an API
+actually needs them: grpc + protobuf, compiled under QEMU, pushed every API build
+past the 6-hour limit from June to October 2026. They will come back with the
+espace Temporal worker.
 
 ## Releases & production (on demand)
 
@@ -60,6 +92,11 @@ creates the GitHub Release, and runs the `promote-images` job in
 [`release.yml`](../.github/workflows/release.yml): it re-tags **every** dokploy
 project's current `:latest` image as `:vX.Y.Z` (and `:stable`), copying the
 multi-arch manifest registry-side — **no rebuild, no layer transfer**.
+
+`:latest` is the last image that *built*, so it only matches the release when
+`main` was fully delivered. `promote-images` therefore first waits for the last
+**Deploy | Staging** run on `main` and fails if that run did not succeed. Fix the
+delivery, then re-run the job.
 
 All six projects get the version tag, even those unchanged since the last
 release: their `:vX.Y.Z` simply points at the same image (same digest) as the
