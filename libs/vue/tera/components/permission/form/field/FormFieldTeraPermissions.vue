@@ -112,7 +112,7 @@ import {
 } from '@lychen/i18n-tera/land-role';
 import Button from '@lychen/vue-components-core/button/Button.vue';
 
-import { LandRoleLand_rolePatch_land_rolePatchInputPermissions as LandRolePermissions } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import { LandRoleLand_rolePatch_land_rolePatchInputJsonMergePatchPermissions as LandRolePermissions } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import IconCheck from '@lychen/vue-icons/IconCheck.vue';
 import IconShieldCheck from '@lychen/vue-icons/IconShieldCheck.vue';
 

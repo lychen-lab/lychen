@@ -10,9 +10,12 @@ export const landMemberInvitationDeleteSucceededEvent: EventBusKey<null> = Symbo
 export const landMemberInvitationPatchSucceededEvent: EventBusKey<
   components['schemas']['LandMemberInvitation.jsonld-land_member_invitation.patch_land_member_invitation.patch.output']
 > = Symbol('land-member-invitation-patch-succeeded');
+// The accept/refuse transitions expose no invitation field, so their output schemas are generated
+// as `HydraItemBaseSchema & Record<string, never>`, which no response can satisfy. Their payload
+// is the bare JSON-LD item.
 export const landMemberInvitationAcceptSucceededEvent: EventBusKey<
-  components['schemas']['LandMemberInvitation.jsonld-land_member_invitation.accept_land_member_invitation.accept.output']
+  components['schemas']['HydraItemBaseSchema']
 > = Symbol('land-member-invitation-accept-succeeded');
 export const landMemberInvitationRefuseSucceededEvent: EventBusKey<
-  components['schemas']['LandMemberInvitation.jsonld-land_member_invitation.refuse_land_member_invitation.refuse.output']
+  components['schemas']['HydraItemBaseSchema']
 > = Symbol('land-member-invitation-refuse-succeeded');

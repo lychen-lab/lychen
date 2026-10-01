@@ -9,7 +9,7 @@
     >
       <DialogTeraLandRequestView
         v-for="landRequest in landRequests.member"
-        :key="landRequest.ulid"
+        :key="landRequest['@id']"
         :title="landRequest.title"
         :description="landRequest.message"
         :sharing-conditions="

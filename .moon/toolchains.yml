@@ -13,5 +13,4 @@ typescript:
   routeOutDirToCache: true
   syncProjectReferences: true
   syncProjectReferencesToPaths: false
-yarn:
-  version: 4.16.0
+yarn: {}
