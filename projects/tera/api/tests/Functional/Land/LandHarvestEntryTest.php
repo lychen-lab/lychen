@@ -21,9 +21,11 @@ class LandHarvestEntryTest extends AbstractApiTestCase
     {
         $context = $this->createLandContext();
 
-        $weight = faker()->numberBetween(0, 10000);
+        $weight = faker()->numberBetween(1, 10000);
         $notes = TipTapFaker::paragraphs();
-        $harvestedAt = faker()->dateTimeThisMonth()->format('c');
+        // Weight must be > 0 and harvestedAt <= today (midnight): dateTimeThisMonth()
+        // can return a time later today and fail the test at random.
+        $harvestedAt = faker()->dateTimeBetween('-1 month', 'yesterday')->format('c');
         $quality = faker()->randomElement(HarvestQuality::ALL);
         $plantId = new Ulid()->toString();
 
@@ -54,7 +56,7 @@ class LandHarvestEntryTest extends AbstractApiTestCase
         $landRole = $this->createLandRole($context->land, [LandHarvestEntryVoter::POST]);
         $this->addLandMember($context, [$landRole]);
 
-        $weight = faker()->numberBetween(0, 10000);
+        $weight = faker()->numberBetween(1, 10000);
         $notes = TipTapFaker::paragraphs();
         $quality = faker()->randomElement(HarvestQuality::ALL);
         $plantId = new Ulid()->toString();
@@ -129,7 +131,7 @@ class LandHarvestEntryTest extends AbstractApiTestCase
 
         $landHarvestEntry = $context->landHarvestEntries[0];
 
-        $newWeight = faker()->numberBetween(0, 10000);
+        $newWeight = faker()->numberBetween(1, 10000);
         $newNotes = TipTapFaker::paragraphs();
         $newQuality = faker()->randomElement(HarvestQuality::ALL);
         $newPlantId = new Ulid()->toString();
@@ -166,7 +168,7 @@ class LandHarvestEntryTest extends AbstractApiTestCase
         $landRole = $this->createLandRole($context->land, [LandHarvestEntryVoter::PATCH]);
         $this->addLandMember($context, [$landRole]);
 
-        $newWeight = faker()->numberBetween(0, 10000);
+        $newWeight = faker()->numberBetween(1, 10000);
         $newNotes = TipTapFaker::paragraphs();
         $newQuality = faker()->randomElement(HarvestQuality::ALL);
         $newPlantId = new Ulid()->toString();
