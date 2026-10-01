@@ -47,9 +47,15 @@ moon :lint               # Check all projects
 moon :lint-fix           # Auto-fix lint issues
 moon :format             # Check formatting
 moon :format-fix         # Auto-fix formatting
+moon <api>:phpstan       # PHPStan for one API (e.g. moon tera-api:phpstan)
 ```
 
 Pre-commit hooks automatically run `format-fix` and `lint-fix` on affected files.
+
+PHPStan debt is frozen in each API's `phpstan-baseline.neon`: new code must pass
+clean, fixing an error means deleting its baseline entry, and CI rejects a PR whose
+baseline grows. A PR needs the `Symfony | Gate`, `Frontend | Gate` and `Run unit
+tests` checks green; a job skipped while its project is affected fails its gate.
 
 ### Testing
 

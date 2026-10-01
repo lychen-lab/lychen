@@ -1,0 +1,43 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Property App\\Entity\\AreaActivity\:\:\$code type mapping mismatch\: property can contain string\|null but database expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/AreaActivity.php
+
+		-
+			message: '#^Property App\\Entity\\AreaProposal\:\:\$description type mapping mismatch\: property can contain string\|null but database expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/AreaProposal.php
+
+		-
+			message: '#^Property App\\Entity\\AreaProposal\:\:\$proposer type mapping mismatch\: property can contain App\\Entity\\Person\|null but database expects App\\Entity\\Person\.$#'
+			identifier: doctrine.associationType
+			count: 1
+			path: src/Entity/AreaProposal.php
+
+		-
+			message: '#^Property App\\Entity\\AreaProposal\:\:\$title type mapping mismatch\: property can contain string\|null but database expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/AreaProposal.php
+
+		-
+			message: '#^Property App\\Entity\\AreaRequest\:\:\$description type mapping mismatch\: property can contain string\|null but database expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/AreaRequest.php
+
+		-
+			message: '#^Property App\\Entity\\AreaRequest\:\:\$requester type mapping mismatch\: property can contain App\\Entity\\Person\|null but database expects App\\Entity\\Person\.$#'
+			identifier: doctrine.associationType
+			count: 1
+			path: src/Entity/AreaRequest.php
+
+		-
+			message: '#^Property App\\Entity\\AreaRequest\:\:\$title type mapping mismatch\: property can contain string\|null but database expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/AreaRequest.php

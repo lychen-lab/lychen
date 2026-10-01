@@ -21,8 +21,6 @@ tasks:
     command: docker compose -p $project -f compose.yml run --rm api bin/console api:openapi:export --output=openapi_docs.json
     deps:
       - ci-create-db
-  ci-install-tools:
-    command: docker compose -p $project -f compose.yml run --rm api composer install --no-interaction --working-dir=tools/
   ci-php-cs-fixer-src:
     command: docker compose -p $project -f compose.yml run --rm api tools/vendor/bin/php-cs-fixer fix src/ --rules=@Symfony --dry-run --diff
   ci-php-cs-fixer-test:
@@ -65,6 +63,15 @@ tasks:
   export-openapi:
     # Same OpenAPI version as ci-export-openapi (see the note there).
     command: docker compose -p $project run --rm api bin/console api:openapi:export --output=openapi_docs.json
+  install-tools:
+    command: docker compose -p $project run --rm api composer install --no-interaction --working-dir=tools/
+  phpstan:
+    # Errors listed in phpstan-baseline.neon are known debt. Fixing one means
+    # deleting its entry; never regenerate the baseline to absorb new errors (CI
+    # rejects a baseline that grows).
+    command: docker compose -p $project run --rm api tools/vendor/bin/phpstan analyse --memory-limit=-1
+    deps:
+      - install-tools
   load-fixtures:
     command: docker compose -p $project run --rm api bin/console do:fi:lo -n
   test-phpunit:

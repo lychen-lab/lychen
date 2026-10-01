@@ -1,0 +1,223 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Property App\\Entity\\ConsumptionMethod\:\:\$code type mapping mismatch\: property can contain string\|null but database expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/ConsumptionMethod.php
+
+		-
+			message: '#^Property App\\Entity\\Cultivation\:\:\$exposure type mapping mismatch\: property can contain App\\Entity\\Exposure\|null but database expects App\\Entity\\Exposure\.$#'
+			identifier: doctrine.associationType
+			count: 1
+			path: src/Entity/Cultivation.php
+
+		-
+			message: '#^Property App\\Entity\\Cultivation\:\:\$maturity type mapping mismatch\: property can contain App\\Entity\\Maturity\|null but database expects App\\Entity\\Maturity\.$#'
+			identifier: doctrine.associationType
+			count: 1
+			path: src/Entity/Cultivation.php
+
+		-
+			message: '#^Property App\\Entity\\Exposure\:\:\$code type mapping mismatch\: property can contain string\|null but database expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/Exposure.php
+
+		-
+			message: '#^Property App\\Entity\\Family\:\:\$code type mapping mismatch\: property can contain string\|null but database expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/Family.php
+
+		-
+			message: '#^Property App\\Entity\\LunarType\:\:\$code type mapping mismatch\: property can contain string\|null but database expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/LunarType.php
+
+		-
+			message: '#^Property App\\Entity\\Maturity\:\:\$code type mapping mismatch\: property can contain string\|null but database expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/Maturity.php
+
+		-
+			message: '#^Property App\\Entity\\Part\:\:\$code type mapping mismatch\: property can contain string\|null but database expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/Part.php
+
+		-
+			message: '#^Property App\\Entity\\Plant\:\:\$cultivation type mapping mismatch\: property can contain App\\Entity\\Cultivation\|null but database expects App\\Entity\\Cultivation\.$#'
+			identifier: doctrine.associationType
+			count: 1
+			path: src/Entity/Plant.php
+
+		-
+			message: '#^Property App\\Entity\\Plant\:\:\$medicinal type mapping mismatch\: property can contain bool\|null but database expects bool\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/Plant.php
+
+		-
+			message: '#^Property App\\Entity\\Plant\:\:\$melliferous type mapping mismatch\: property can contain bool\|null but database expects bool\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/Plant.php
+
+		-
+			message: '#^Property App\\Entity\\Plant\:\:\$name type mapping mismatch\: property can contain string\|null but database expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/Plant.php
+
+		-
+			message: '#^Property App\\Entity\\Plant\:\:\$perennial type mapping mismatch\: property can contain bool\|null but database expects bool\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/Plant.php
+
+		-
+			message: '#^Property App\\Entity\\Plant\:\:\$species type mapping mismatch\: property can contain App\\Entity\\Species\|null but database expects App\\Entity\\Species\.$#'
+			identifier: doctrine.associationType
+			count: 1
+			path: src/Entity/Plant.php
+
+		-
+			message: '#^Property App\\Entity\\PlantPart\:\:\$consumable type mapping mismatch\: property can contain bool\|null but database expects bool\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/PlantPart.php
+
+		-
+			message: '#^Property App\\Entity\\PlantPart\:\:\$part type mapping mismatch\: property can contain App\\Entity\\Part\|null but database expects App\\Entity\\Part\.$#'
+			identifier: doctrine.associationType
+			count: 1
+			path: src/Entity/PlantPart.php
+
+		-
+			message: '#^Property App\\Entity\\PlantPart\:\:\$plant type mapping mismatch\: property can contain App\\Entity\\Plant\|null but database expects App\\Entity\\Plant\.$#'
+			identifier: doctrine.associationType
+			count: 1
+			path: src/Entity/PlantPart.php
+
+		-
+			message: '#^Property App\\Entity\\SoilType\:\:\$code type mapping mismatch\: property can contain string\|null but database expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/SoilType.php
+
+		-
+			message: '#^Property App\\Entity\\Species\:\:\$code type mapping mismatch\: property can contain string\|null but database expects string\.$#'
+			identifier: doctrine.columnType
+			count: 1
+			path: src/Entity/Species.php
+
+		-
+			message: '#^Property App\\Entity\\Species\:\:\$family type mapping mismatch\: property can contain App\\Entity\\Family\|null but database expects App\\Entity\\Family\.$#'
+			identifier: doctrine.associationType
+			count: 1
+			path: src/Entity/Species.php
+
+		-
+			message: '#^Class App\\Factory\\CultivationFactory extends generic class Zenstruck\\Foundry\\Persistence\\PersistentObjectFactory but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Factory/CultivationFactory.php
+
+		-
+			message: '#^Call to static method decode\(\) on an unknown class Firebase\\JWT\\JWT\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Security/JWT/JWTDecoder.php
+
+		-
+			message: '#^Instantiated class Firebase\\JWT\\Key not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Security/JWT/JWTDecoder.php
+
+		-
+			message: '#^Call to static method encode\(\) on an unknown class Firebase\\JWT\\JWT\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Security/JWT/JWTEncoder.php
+
+		-
+			message: '#^Method App\\Security\\JWT\\JWTEncoder\:\:encode\(\) has parameter \$payload with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/JWT/JWTEncoder.php
+
+		-
+			message: '#^Method App\\Security\\JWT\\JWTEncoder\:\:preparePayload\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/JWT/JWTEncoder.php
+
+		-
+			message: '#^Method App\\Security\\JWT\\JWTPayloadable\:\:getJWTPayload\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Security/JWT/JWTPayloadable.php
+
+		-
+			message: '#^Method App\\Story\\DefaultPlantsStory\:\:createPlant\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Story/DefaultPlantsStory.php
+
+		-
+			message: '#^Method App\\Story\\DefaultPlantsStory\:\:createPlant\(\) has parameter \$cultivationAttributes with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Story/DefaultPlantsStory.php
+
+		-
+			message: '#^Method App\\Story\\DefaultPlantsStory\:\:createPlant\(\) has parameter \$plantPartList with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Story/DefaultPlantsStory.php
+
+		-
+			message: '#^Method App\\Tests\\Functional\\DefaultTest\:\:testOne\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Functional/DefaultTest.php
+
+		-
+			message: '#^Method App\\Tests\\Security\\DefaultSecurityTest\:\:testOne\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: tests/Security/DefaultSecurityTest.php
+
+		-
+			message: '#^Attribute class JetBrains\\PhpStorm\\NoReturn does not exist\.$#'
+			identifier: attribute.notFound
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:browser\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:browser\(\) has parameter \$server with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/Abstract/AbstractApiTestCase.php
+
+		-
+			message: '#^Method App\\Tests\\Utils\\TestBrowser\:\:patch\(\) has parameter \$options with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Utils/TestBrowser.php
+
+		-
+			message: '#^Call to function method_exists\(\) with ''Symfony\\\\Component\\\\Dotenv\\\\Dotenv'' and ''bootEnv'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: tests/bootstrap.php
