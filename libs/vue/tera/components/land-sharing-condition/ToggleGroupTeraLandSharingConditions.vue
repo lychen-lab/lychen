@@ -50,7 +50,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@lychen/vue-components-
 import { messages, TRANSLATION_KEY } from '@lychen/i18n-tera/land-proposal';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 
-const model = defineModel<LandSharingCondition[]>({ default: [] });
+const model = defineModel<LandSharingCondition[]>({ default: () => [] });
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 </script>

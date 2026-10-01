@@ -37,7 +37,7 @@ import FormFieldTeraPermissions from '../../permission/form/field/FormFieldTeraP
 import { landRolePatchSucceededEvent } from '@lychen/vue-tera/events/LandRoleEvents';
 import {
   type components,
-  LandRoleLand_rolePatch_land_rolePatchInputPermissions,
+  LandRoleLand_rolePatch_land_rolePatchInputJsonMergePatchPermissions,
   type paths,
 } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
@@ -77,7 +77,7 @@ const { mutate, isPending } = useMutation({
         ...data,
         // Send the permission list using the generated enum element type (see FormType note above).
         permissions: data.permissions as unknown as
-          | LandRoleLand_rolePatch_land_rolePatchInputPermissions
+          | LandRoleLand_rolePatch_land_rolePatchInputJsonMergePatchPermissions
           | undefined,
       },
     });

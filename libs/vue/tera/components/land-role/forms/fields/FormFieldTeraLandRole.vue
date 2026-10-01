@@ -120,7 +120,7 @@ const props = defineProps<{
   initialValues?: LandRoleOption[];
 }>();
 
-const model = defineModel<LandRoleOption[]>({ default: [] });
+const model = defineModel<LandRoleOption[]>({ default: () => [] });
 
 const fieldSchema = toTypedSchema(
   z.array(z.object({ '@id': z.string() })).min(1, {

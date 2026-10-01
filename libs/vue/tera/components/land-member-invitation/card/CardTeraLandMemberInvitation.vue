@@ -116,7 +116,10 @@ const {
 } = defineProps<{
   variant?: Variant;
   landMemberInvitation: Partial<
-    Pick<components['schemas']['LandMemberInvitation.jsonld'], 'email' | 'state' | 'ulid'>
+    Pick<
+      components['schemas']['LandMemberInvitation.jsonld-land_member_invitation.collection'],
+      'email' | 'state' | 'ulid'
+    >
   >;
   landRoles?: Pick<components['schemas']['LandRole.jsonld'], 'name'>[];
   land?: Pick<components['schemas']['Land.jsonld'], 'name'>;

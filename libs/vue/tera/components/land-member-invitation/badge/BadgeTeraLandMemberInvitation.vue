@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { messages, TRANSLATION_KEY } from '@lychen/i18n-tera/land-member-invitation';
-import { LandMemberInvitationJsonldState as State } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import { LandMemberInvitationJsonldLand_member_invitationCollectionState as State } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 defineProps<{ state: State }>();
