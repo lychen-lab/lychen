@@ -21,14 +21,13 @@ class LandGreenhouseParameterVoter extends AbstractLandAwareVoterInterface
         self::GET,
     ];
 
-    function getSupportedClass(): string
+    public function getSupportedClass(): string
     {
         return LandGreenhouseParameter::class;
     }
 
-    function getAvailablePermissions(): array
+    public function getAvailablePermissions(): array
     {
         return self::ALL;
     }
 }
-

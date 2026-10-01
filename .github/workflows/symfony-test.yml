@@ -6,7 +6,6 @@ env:
   # that build-and-push-test-image pushes to ghcr (vendors are baked in).
   IMAGES_PREFIX: ghcr.io/lychen-lab/lychen/test/
   IMAGE_TAG: ${{ github.sha }}
-  PHP_CS_FIXER_IGNORE_ENV: '1'
 
 on:
   # No `paths:` filter: "Symfony | Gate" is a required check, so it must report on
@@ -96,7 +95,6 @@ jobs:
 
   lint-php:
     name: '${{ matrix.projects }} | Lint PHP files'
-    if: false # TEMP: disabled for the Symfony 8.1 migration PR (#146); re-enable after the php-cs-fixer config is modernized and the code is reformatted (separate cleanup PR)
     needs:
       - define-matrix
       - build-and-push-test-image
@@ -124,11 +122,8 @@ jobs:
       - name: Set IMAGE_NAME for this project
         run: echo "TEST_IMAGE_NAME=${{ needs.build-and-push-test-image.outputs.matrix_test_image_name }}" >> $GITHUB_ENV
 
-      - name: Lint src folder
-        run: moon ci ${{ matrix.projects }}:ci-php-cs-fixer-src
-
-      - name: Lint test folder
-        run: moon ci ${{ matrix.projects }}:ci-php-cs-fixer-test
+      - name: Check the code style
+        run: moon ci ${{ matrix.projects }}:ci-php-cs-fixer
 
   check-vulnerabilities:
     name: '${{ matrix.projects }} | Check packages vulnerabilities'
@@ -319,6 +314,7 @@ jobs:
     needs:
       - define-matrix
       - build-and-push-test-image
+      - lint-php
       - check-vulnerabilities
       - validate-db-schema
       - phpstan

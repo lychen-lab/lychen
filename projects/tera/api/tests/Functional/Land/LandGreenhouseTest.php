@@ -4,8 +4,8 @@ namespace App\Tests\Functional\Land;
 
 use App\Security\Voter\LandGreenhouseVoter;
 use App\Tests\Utils\Abstract\AbstractApiTestCase;
-use DateTime;
 use Zenstruck\Browser\Json;
+
 use function Zenstruck\Foundry\faker;
 
 class LandGreenhouseTest extends AbstractApiTestCase
@@ -15,7 +15,7 @@ class LandGreenhouseTest extends AbstractApiTestCase
         $context = $this->createLandContext();
 
         $name = faker()->name();
-        $constructionDate = (new DateTime())->format('c');
+        $constructionDate = (new \DateTime())->format('c');
 
         // Owner
         $this->browser()->actingAs($context->owner)
@@ -23,13 +23,13 @@ class LandGreenhouseTest extends AbstractApiTestCase
                 ['json' => [
                     'name' => $name,
                     'constructionDate' => $constructionDate,
-                    'land' => $this->getIriFromResource($context->land)
+                    'land' => $this->getIriFromResource($context->land),
                 ]])
             ->assertStatus(201)
             ->assertJsonMatches('name', $name)
             ->assertJsonMatches('constructionDate', $constructionDate)
             ->use(function (Json $json) {
-                $json->assertThat('ulid', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('ulid', fn (Json $json) => $json->isNotNull());
             });
 
         // Member with permissions
@@ -37,20 +37,20 @@ class LandGreenhouseTest extends AbstractApiTestCase
         $this->addLandMember($context, [$landRole]);
 
         $name = faker()->name();
-        $constructionDate = (new DateTime())->format('c');
+        $constructionDate = (new \DateTime())->format('c');
 
         $this->browser()->actingAs($context->landMembers[0]->getPerson())
             ->post('/api/land_greenhouses',
                 ['json' => [
                     'name' => $name,
                     'constructionDate' => $constructionDate,
-                    'land' => $this->getIriFromResource($context->land)
+                    'land' => $this->getIriFromResource($context->land),
                 ]])
             ->assertStatus(201)
             ->assertJsonMatches('name', $name)
             ->assertJsonMatches('constructionDate', $constructionDate)
             ->use(function (Json $json) {
-                $json->assertThat('ulid', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('ulid', fn (Json $json) => $json->isNotNull());
             });
     }
 
@@ -69,10 +69,10 @@ class LandGreenhouseTest extends AbstractApiTestCase
             ->assertJsonMatches('name', $landGreenhouse->getName())
             ->assertJsonMatches('constructionDate', $landGreenhouse->getConstructionDate())
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNull());
-                $json->assertThat('landGreenhouseSetting', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('landGreenhouseParameter', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNull());
+                $json->assertThat('landGreenhouseSetting', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('landGreenhouseParameter', fn (Json $json) => $json->isNotNull());
             });
 
         // Member with permissions
@@ -86,10 +86,10 @@ class LandGreenhouseTest extends AbstractApiTestCase
             ->assertJsonMatches('name', $landGreenhouse->getName())
             ->assertJsonMatches('constructionDate', $landGreenhouse->getConstructionDate())
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNull());
-                $json->assertThat('landGreenhouseSetting', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('landGreenhouseParameter', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNull());
+                $json->assertThat('landGreenhouseSetting', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('landGreenhouseParameter', fn (Json $json) => $json->isNotNull());
             });
     }
 
@@ -101,23 +101,23 @@ class LandGreenhouseTest extends AbstractApiTestCase
         $landGreenhouse = $context->landGreenhouses[0];
 
         $newName = faker()->name();
-        $newConstructionDate = (new DateTime())->format('c');
+        $newConstructionDate = (new \DateTime())->format('c');
 
         $this->browser()->actingAs($context->owner)
             ->patch($this->getIriFromResource($landGreenhouse),
                 [
                     'json' => [
                         'name' => $newName,
-                        'constructionDate' => $newConstructionDate
-                    ]
+                        'constructionDate' => $newConstructionDate,
+                    ],
                 ])
             ->assertStatus(200)
             ->assertJsonMatches('ulid', $landGreenhouse->getUlid()->toString())
             ->assertJsonMatches('name', $newName)
             ->assertJsonMatches('constructionDate', $newConstructionDate)
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNotNull());
             });
 
         // Member with permissions
@@ -125,23 +125,23 @@ class LandGreenhouseTest extends AbstractApiTestCase
         $this->addLandMember($context, [$landRole]);
 
         $newName = faker()->name();
-        $newConstructionDate = (new DateTime())->format('c');
+        $newConstructionDate = (new \DateTime())->format('c');
 
         $this->browser()->actingAs($context->landMembers[0]->getPerson())
             ->patch($this->getIriFromResource($landGreenhouse),
                 [
                     'json' => [
                         'name' => $newName,
-                        'constructionDate' => $newConstructionDate
-                    ]
+                        'constructionDate' => $newConstructionDate,
+                    ],
                 ])
             ->assertStatus(200)
             ->assertJsonMatches('ulid', $landGreenhouse->getUlid()->toString())
             ->assertJsonMatches('name', $newName)
             ->assertJsonMatches('constructionDate', $newConstructionDate)
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNotNull());
             });
     }
 
@@ -182,7 +182,7 @@ class LandGreenhouseTest extends AbstractApiTestCase
     public function testCollectionPagination()
     {
         $context = $this->createLandContext();
-        array_map(fn() => $this->addOneLandGreenhouse($context), range(1, 25));
+        array_map(fn () => $this->addOneLandGreenhouse($context), range(1, 25));
 
         $this->browser()->actingAs($context->owner)
             ->get('/api/land_greenhouses',
@@ -190,7 +190,7 @@ class LandGreenhouseTest extends AbstractApiTestCase
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', 25)
             ->use(function (Json $json) {
-                $json->assertThat('member', fn(Json $json) => $json->hasCount(10));
+                $json->assertThat('member', fn (Json $json) => $json->hasCount(10));
             });
     }
 

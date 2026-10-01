@@ -7,7 +7,7 @@ final class Month
     public const int JANUARY = 1;
     public const int FEBRUARY = 2;
     public const int MARCH = 3;
-    public const int APRIL =4;
+    public const int APRIL = 4;
     public const int MAY = 5;
     public const int JUNE = 6;
     public const int JULY = 7;
@@ -29,7 +29,6 @@ final class Month
         self::SEPTEMBER,
         self::OCTOBER,
         self::NOVEMBER,
-        self::DECEMBER
+        self::DECEMBER,
     ];
 }
-

@@ -38,7 +38,7 @@ class Family extends AbstractIdOrmAndUlidApiIdentified
     use CreatedAtTrait;
     use UpdatedAtTrait;
 
-    #[Groups(["family:get"])]
+    #[Groups(['family:get'])]
     #[ORM\Column(length: 100, unique: true)]
     private ?string $code = null;
 
@@ -66,13 +66,13 @@ class Family extends AbstractIdOrmAndUlidApiIdentified
         return $this;
     }
 
-    #[Groups(["family:get"])]
+    #[Groups(['family:get'])]
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    #[Groups(["family:get"])]
+    #[Groups(['family:get'])]
     public function getUpdatedAt(): \DateTimeInterface
     {
         return $this->updatedAt;

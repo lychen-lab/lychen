@@ -17,9 +17,9 @@ class LandProposalRepository extends ServiceEntityRepository
         parent::__construct($registry, LandProposal::class);
     }
 
-    public function hasExistingStateForLand(Land    $land,
-                                            string  $state,
-                                            ?string $excludeId = null): bool
+    public function hasExistingStateForLand(Land $land,
+        string $state,
+        ?string $excludeId = null): bool
     {
         $qb = $this->createQueryBuilder('e')
             ->andWhere('e.land = :land')
@@ -33,6 +33,7 @@ class LandProposalRepository extends ServiceEntityRepository
         }
 
         $result = $qb->getQuery()->getOneOrNullResult();
-        return $result !== null;
+
+        return null !== $result;
     }
 }

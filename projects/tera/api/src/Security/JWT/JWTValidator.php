@@ -2,17 +2,15 @@
 
 namespace App\Security\JWT;
 
-use stdClass;
-
 readonly class JWTValidator
 {
-    public function isValid(stdClass $decodedJwt): bool
+    public function isValid(\stdClass $decodedJwt): bool
     {
         if (!isset($decodedJwt->iat)) {
             return false;
         }
 
-        if (!isset($decodedJwt->iss) || $decodedJwt->iss !== JWTEncoder::ISSUER) {
+        if (!isset($decodedJwt->iss) || JWTEncoder::ISSUER !== $decodedJwt->iss) {
             return false;
         }
 

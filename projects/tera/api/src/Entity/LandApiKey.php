@@ -15,8 +15,6 @@ use App\Security\Interface\LandAwareInterface;
 use App\Security\Interface\PermissionHolder;
 use App\Security\JWT\JWTPayloadable;
 use App\Security\Voter\LandApiKeyVoter;
-use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Lychen\UtilModel\Abstract\AbstractIdOrmAndUlidApiIdentified;
@@ -31,18 +29,18 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Post(
     normalizationContext   : ['groups' => ['land_api_key:post', 'land_api_key:post:output']],
     denormalizationContext : ['groups' => ['land_api_key:post', 'land_api_key:post:input']],
-    securityPostDenormalize: "is_granted('" . LandApiKeyVoter::POST . "', object)"
+    securityPostDenormalize: "is_granted('".LandApiKeyVoter::POST."', object)"
 )]
 #[Delete(
-    security: "is_granted('" . LandApiKeyVoter::DELETE . "', object)"
+    security: "is_granted('".LandApiKeyVoter::DELETE."', object)"
 )]
 #[Get(
     normalizationContext: ['groups' => ['land_api_key:get']],
-    security            : "is_granted('" . LandApiKeyVoter::GET . "', object)"
+    security            : "is_granted('".LandApiKeyVoter::GET."', object)"
 )]
 #[GetCollection(
     normalizationContext: ['groups' => ['land_api_key:collection']],
-    security            : "is_granted('" . LandApiKeyVoter::COLLECTION . "')",
+    security            : "is_granted('".LandApiKeyVoter::COLLECTION."')",
     parameters          : [
         new QueryParameter(
             key   : 'land',
@@ -64,7 +62,7 @@ class LandApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permission
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Groups(['land_api_key:get'])]
-    private ?DateTimeInterface $lastUsedDate = null;
+    private ?\DateTimeInterface $lastUsedDate = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['land_api_key:post', 'land_api_key:get'])]
@@ -82,7 +80,7 @@ class LandApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permission
 
     #[ORM\Column(nullable: true)]
     #[Groups(['land_api_key:post:output', 'land_api_key:get'])]
-    private ?DateTimeImmutable $expirationDate = null;
+    private ?\DateTimeImmutable $expirationDate = null;
 
     #[Groups(['land_api_key:post:output', 'land_api_key:get'])]
     public function getUlid(): Ulid
@@ -113,16 +111,15 @@ class LandApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permission
 
     public function getUserIdentifier(): string
     {
-
         return $this->ulid;
     }
 
-    public function getLastUsedDate(): ?DateTimeInterface
+    public function getLastUsedDate(): ?\DateTimeInterface
     {
         return $this->lastUsedDate;
     }
 
-    public function setLastUsedDate(?DateTimeInterface $lastUsedDate): static
+    public function setLastUsedDate(?\DateTimeInterface $lastUsedDate): static
     {
         $this->lastUsedDate = $lastUsedDate;
 
@@ -181,12 +178,12 @@ class LandApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permission
         return $this;
     }
 
-    public function getExpirationDate(): ?DateTimeImmutable
+    public function getExpirationDate(): ?\DateTimeImmutable
     {
         return $this->expirationDate;
     }
 
-    public function setExpirationDate(?DateTimeImmutable $expirationDate): static
+    public function setExpirationDate(?\DateTimeImmutable $expirationDate): static
     {
         $this->expirationDate = $expirationDate;
 
@@ -199,7 +196,7 @@ class LandApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permission
         $token = $this->token;
         $this->setToken(null);
 
-        return self::PREFIX . $token;
+        return self::PREFIX.$token;
     }
 
     public function setToken(?string $token): static

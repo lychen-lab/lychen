@@ -10,7 +10,6 @@ use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
  */
 final class PlantPartFactory extends PersistentObjectFactory
 {
-
     public function __construct()
     {
     }
@@ -31,6 +30,6 @@ final class PlantPartFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this// ->afterInstantiate(function(PlantPart $exposure): void {})
-            ;
+        ;
     }
 }

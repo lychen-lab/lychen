@@ -9,7 +9,6 @@ use App\Entity\Person;
 use App\Entity\PersonApiKey;
 use App\Repository\LandMemberRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use LogicException;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -19,9 +18,8 @@ final readonly class LandMembersMeProvider implements ProviderInterface
     public function __construct(
         private LandMemberRepository $landMemberRepository,
         private Security $security,
-        private ManagerRegistry $managerRegistry
-    )
-    {
+        private ManagerRegistry $managerRegistry,
+    ) {
     }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
@@ -39,13 +37,13 @@ final readonly class LandMembersMeProvider implements ProviderInterface
         $land = $this->managerRegistry->getRepository(Land::class)->findOneBy(['ulid' => $context['filters']['land']]);
 
         if (!$land instanceof Land) {
-            throw new LogicException('Land not found.');
+            throw new \LogicException('Land not found.');
         }
 
         $landMember = $this->landMemberRepository->findOneBy(['person' => $user, 'land' => $land]);
 
         if (!$landMember) {
-            throw new HttpException(403, "Access Denied. You are not a member of this land.");
+            throw new HttpException(403, 'Access Denied. You are not a member of this land.');
         }
 
         return $landMember;

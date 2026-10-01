@@ -10,7 +10,6 @@ use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
  */
 final class PartFactory extends PersistentObjectFactory
 {
-
     public function __construct()
     {
     }
@@ -20,14 +19,12 @@ final class PartFactory extends PersistentObjectFactory
         return Part::class;
     }
 
-
     protected function defaults(): array|callable
     {
         return [
             'code' => self::faker()->text(100),
         ];
     }
-
 
     protected function initialize(): static
     {

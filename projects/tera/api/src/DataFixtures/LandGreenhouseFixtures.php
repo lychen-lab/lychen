@@ -20,7 +20,7 @@ class LandGreenhouseFixtures extends Fixture implements DependentFixtureInterfac
     public function getDependencies(): array
     {
         return [
-            LandFixtures::class
+            LandFixtures::class,
         ];
     }
 }

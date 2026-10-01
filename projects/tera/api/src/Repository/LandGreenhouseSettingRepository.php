@@ -15,5 +15,4 @@ class LandGreenhouseSettingRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, LandGreenhouseSetting::class);
     }
-
 }

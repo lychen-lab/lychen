@@ -8,7 +8,6 @@ final class LandProposalWorkflowPlace
     public const string PUBLISHED = 'published';
     public const string ARCHIVED = 'archived';
 
-
     public const array PLACES = [
         self::DRAFT,
         self::PUBLISHED,

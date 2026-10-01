@@ -64,7 +64,8 @@ class AbstractApiTestCase extends ApiTestCase
             );
     }
 
-    #[NoReturn] protected function commitAndDie(): void
+    #[NoReturn]
+    protected function commitAndDie(): void
     {
         StaticDriver::commit();
         exit;

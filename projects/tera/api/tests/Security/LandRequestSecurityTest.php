@@ -37,7 +37,7 @@ class LandRequestSecurityTest extends AbstractApiTestCase
             ->post('/api/land_requests')
             ->assertStatus(401);
 
-        //User cannot create for another user
+        // User cannot create for another user
         $person = $this->createPerson();
         $person2 = $this->createPerson();
 
@@ -229,13 +229,13 @@ class LandRequestSecurityTest extends AbstractApiTestCase
 
         // User not authenticated
         $this->browser()
-            ->patch($this->getIriFromResource($landRequest) . '/' . LandRequestWorkflowTransition::PUBLISH,
+            ->patch($this->getIriFromResource($landRequest).'/'.LandRequestWorkflowTransition::PUBLISH,
                 ['json' => []])
             ->assertStatus(401);
 
         // User not the creator
         $this->browser()->actingAs($person2)
-            ->patch($this->getIriFromResource($landRequest) . '/' . LandRequestWorkflowTransition::PUBLISH,
+            ->patch($this->getIriFromResource($landRequest).'/'.LandRequestWorkflowTransition::PUBLISH,
                 ['json' => []])
             ->assertStatus(403);
     }
@@ -248,13 +248,13 @@ class LandRequestSecurityTest extends AbstractApiTestCase
 
         // User not authenticated
         $this->browser()
-            ->patch($this->getIriFromResource($landRequest) . '/' . LandRequestWorkflowTransition::ARCHIVE,
+            ->patch($this->getIriFromResource($landRequest).'/'.LandRequestWorkflowTransition::ARCHIVE,
                 ['json' => []])
             ->assertStatus(401);
 
         // User not the creator
         $this->browser()->actingAs($person2)
-            ->patch($this->getIriFromResource($landRequest) . '/' . LandRequestWorkflowTransition::ARCHIVE,
+            ->patch($this->getIriFromResource($landRequest).'/'.LandRequestWorkflowTransition::ARCHIVE,
                 ['json' => []])
             ->assertStatus(403);
     }

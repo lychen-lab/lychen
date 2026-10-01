@@ -51,7 +51,7 @@ final class DefaultSpeciesStory extends Story
             $code,
             SpeciesFactory::new([
                 'code' => $code,
-                'family' => DefaultFamiliesStory::get($familyCode)
+                'family' => DefaultFamiliesStory::get($familyCode),
             ])->create()
         );
     }

@@ -21,6 +21,6 @@ final class Orientation
         self::SOUTH,
         self::SOUTH_WEST,
         self::WEST,
-        self::NORTH_WEST
+        self::NORTH_WEST,
     ];
 }

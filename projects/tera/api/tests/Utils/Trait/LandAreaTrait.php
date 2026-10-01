@@ -11,7 +11,7 @@ trait LandAreaTrait
     protected function createLandArea(Land $land): LandArea
     {
         return LandAreaFactory::new()->create([
-            'land' => $land
+            'land' => $land,
         ]);
     }
 }

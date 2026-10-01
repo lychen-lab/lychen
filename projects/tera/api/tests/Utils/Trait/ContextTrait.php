@@ -60,7 +60,7 @@ trait ContextTrait
         return $landTestContext;
     }
 
-    protected function addLandMember(LandTestContext $landTestContext, ?array $roles = null, Person|null $person = null): LandTestContext
+    protected function addLandMember(LandTestContext $landTestContext, ?array $roles = null, ?Person $person = null): LandTestContext
     {
         if (!$person) {
             $person = $this->createPerson();

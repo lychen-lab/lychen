@@ -63,7 +63,7 @@ final class UsdaZone
         self::ZONE_12B,
         self::ZONE_13A,
         self::ZONE_13B,
-        self::ZONE_14A
+        self::ZONE_14A,
     ];
 
     public const array TEMPERATURE_RANGES = [
@@ -95,6 +95,6 @@ final class UsdaZone
         self::ZONE_12B => ['min' => 12.8, 'max' => 15.6],
         self::ZONE_13A => ['min' => 15.6, 'max' => 18.3],
         self::ZONE_13B => ['min' => 18.3, 'max' => 21.1],
-        self::ZONE_14A => ['min' => 21.1, 'max' => null]
+        self::ZONE_14A => ['min' => 21.1, 'max' => null],
     ];
 }

@@ -12,7 +12,6 @@ use App\Processor\WorkflowTransitionProcessor;
 use App\Repository\LandDealRepository;
 use App\Workflow\LandDeal\LandDealWorkflowPlace;
 use App\Workflow\LandDeal\LandDealWorkflowTransition;
-use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Lychen\UtilModel\Abstract\AbstractIdOrmAndUlidApiIdentified;
@@ -38,21 +37,21 @@ use Symfony\Component\Validator\Constraints as Assert;
 )]
 #[Delete()]
 #[Patch(
-    uriTemplate           : '/land_deals/{ulid}/' . LandDealWorkflowTransition::ACCEPT,
+    uriTemplate           : '/land_deals/{ulid}/'.LandDealWorkflowTransition::ACCEPT,
     options               : ['transition' => LandDealWorkflowTransition::ACCEPT],
     normalizationContext  : ['groups' => ['land_deal:accept', 'land_deal:accept:output']],
     denormalizationContext: ['groups' => ['land_deal:accept', 'land_deal:accept:input']],
     processor             : WorkflowTransitionProcessor::class
 )]
 #[Patch(
-    uriTemplate           : '/land_deals/{ulid}/' . LandDealWorkflowTransition::REFUSE,
+    uriTemplate           : '/land_deals/{ulid}/'.LandDealWorkflowTransition::REFUSE,
     options               : ['transition' => LandDealWorkflowTransition::REFUSE],
     normalizationContext  : ['groups' => ['land_deal:refuse', 'land_deal:refuse:output']],
     denormalizationContext: ['groups' => ['land_deal:refuse', 'land_deal:refuse:input']],
     processor             : WorkflowTransitionProcessor::class
 )]
 #[Patch(
-    uriTemplate           : '/land_deals/{ulid}/' . LandDealWorkflowTransition::ARCHIVE,
+    uriTemplate           : '/land_deals/{ulid}/'.LandDealWorkflowTransition::ARCHIVE,
     options               : ['transition' => LandDealWorkflowTransition::ARCHIVE],
     normalizationContext  : ['groups' => ['land_deal_archive', 'land_deal_archive:output']],
     denormalizationContext: ['groups' => ['land_deal_archive', 'land_deal_archive:input']],
@@ -76,12 +75,11 @@ class LandDeal extends AbstractIdOrmAndUlidApiIdentified
     #[ORM\JoinColumn(nullable: false)]
     private ?Person $person = null;
 
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $landAcceptedAt = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?DateTimeImmutable $landAcceptedAt = null;
-
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?DateTimeImmutable $landRefusedAt = null;
+    private ?\DateTimeImmutable $landRefusedAt = null;
 
     #[ORM\Column(type: 'boolean')]
     private bool $isLandAccepted = false;
@@ -90,10 +88,10 @@ class LandDeal extends AbstractIdOrmAndUlidApiIdentified
     private bool $isLandRefused = false;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?DateTimeImmutable $personAcceptedAt = null;
+    private ?\DateTimeImmutable $personAcceptedAt = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?DateTimeImmutable $personRefusedAt = null;
+    private ?\DateTimeImmutable $personRefusedAt = null;
 
     #[ORM\Column(type: 'boolean')]
     private bool $isPersonAccepted = false;
@@ -137,24 +135,24 @@ class LandDeal extends AbstractIdOrmAndUlidApiIdentified
         return $this;
     }
 
-    public function getLandAcceptedAt(): ?DateTimeImmutable
+    public function getLandAcceptedAt(): ?\DateTimeImmutable
     {
         return $this->landAcceptedAt;
     }
 
-    public function setLandAcceptedAt(?DateTimeImmutable $landAcceptedAt): static
+    public function setLandAcceptedAt(?\DateTimeImmutable $landAcceptedAt): static
     {
         $this->landAcceptedAt = $landAcceptedAt;
 
         return $this;
     }
 
-    public function getLandRefusedAt(): ?DateTimeImmutable
+    public function getLandRefusedAt(): ?\DateTimeImmutable
     {
         return $this->landRefusedAt;
     }
 
-    public function setLandRefusedAt(?DateTimeImmutable $landRefusedAt): static
+    public function setLandRefusedAt(?\DateTimeImmutable $landRefusedAt): static
     {
         $this->landRefusedAt = $landRefusedAt;
 
@@ -185,24 +183,24 @@ class LandDeal extends AbstractIdOrmAndUlidApiIdentified
         return $this;
     }
 
-    public function getPersonAcceptedAt(): ?DateTimeImmutable
+    public function getPersonAcceptedAt(): ?\DateTimeImmutable
     {
         return $this->personAcceptedAt;
     }
 
-    public function setPersonAcceptedAt(?DateTimeImmutable $personAcceptedAt): static
+    public function setPersonAcceptedAt(?\DateTimeImmutable $personAcceptedAt): static
     {
         $this->personAcceptedAt = $personAcceptedAt;
 
         return $this;
     }
 
-    public function getPersonRefusedAt(): ?DateTimeImmutable
+    public function getPersonRefusedAt(): ?\DateTimeImmutable
     {
         return $this->personRefusedAt;
     }
 
-    public function setPersonRefusedAt(?DateTimeImmutable $personRefusedAt): static
+    public function setPersonRefusedAt(?\DateTimeImmutable $personRefusedAt): static
     {
         $this->personRefusedAt = $personRefusedAt;
 
@@ -232,6 +230,4 @@ class LandDeal extends AbstractIdOrmAndUlidApiIdentified
 
         return $this;
     }
-
-
 }

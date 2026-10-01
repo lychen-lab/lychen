@@ -21,14 +21,13 @@ class LandSettingVoter extends AbstractLandAwareVoterInterface
         self::GET,
     ];
 
-    function getSupportedClass(): string
+    public function getSupportedClass(): string
     {
         return LandSetting::class;
     }
 
-    function getAvailablePermissions(): array
+    public function getAvailablePermissions(): array
     {
         return self::ALL;
     }
 }
-

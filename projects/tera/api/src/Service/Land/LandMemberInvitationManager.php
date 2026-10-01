@@ -12,14 +12,13 @@ readonly class LandMemberInvitationManager
 {
     public function __construct(private Security $security)
     {
-
     }
 
     public function linkToAuthenticatedPerson(LandMemberInvitation &$landMemberInvitation): LandMemberInvitation
     {
         $person = $this->security->getUser();
 
-        if ($person === null) {
+        if (null === $person) {
             throw new Exception('User should be authenticated to link a LandMemberInvitation to a person');
         }
 
@@ -36,7 +35,7 @@ readonly class LandMemberInvitationManager
 
     public function createLandMember(LandMemberInvitation $landMemberInvitation): LandMember
     {
-        if ($landMemberInvitation->getPerson() === null) {
+        if (null === $landMemberInvitation->getPerson()) {
             throw new Exception('Person should be set to LandMemberInvitation before creating a land member');
         }
 

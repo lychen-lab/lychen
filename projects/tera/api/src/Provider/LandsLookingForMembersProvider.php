@@ -12,9 +12,8 @@ final readonly class LandsLookingForMembersProvider implements ProviderInterface
 {
     public function __construct(
         private LandRepository $landRepository,
-        private Pagination     $pagination
-    )
-    {
+        private Pagination $pagination,
+    ) {
     }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null

@@ -121,6 +121,5 @@ class LandSettingSecurityTest extends AbstractApiTestCase
         $this->browser()->actingAs($context1->landMembers[0]->getPerson())
             ->patch($this->getIriFromResource($context1->land->getLandSetting()), ['json' => []])
             ->assertStatus(403);
-
     }
 }

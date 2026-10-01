@@ -42,6 +42,6 @@ final class LandGreenhouseFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this// ->afterInstantiate(function(LandGreenhouse $landGreenhouse): void {})
-            ;
+        ;
     }
 }

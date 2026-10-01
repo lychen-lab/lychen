@@ -28,7 +28,7 @@ final class DefaultPartsStory extends Story
         self::BULB,
         self::TUBER,
         self::RHIZOME,
-        self::PETAL
+        self::PETAL,
     ];
 
     public function build(): void

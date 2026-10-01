@@ -3,7 +3,6 @@
 namespace App\Validator;
 
 use App\Service\PlantVerifier;
-use Exception;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -22,7 +21,7 @@ class PlantUlidValidator extends ConstraintValidator
 
         try {
             $this->plantVerifier->assertPlantExists($value);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $value)
                 ->addViolation();

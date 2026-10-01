@@ -18,8 +18,7 @@ class LandFilter extends AbstractFilter
         ?LoggerInterface $logger = null,
         ?array $properties = null,
         ?NameConverterInterface $nameConverter = null,
-    )
-    {
+    ) {
         parent::__construct($managerRegistry, $logger, $properties, $nameConverter);
     }
 
@@ -38,7 +37,7 @@ class LandFilter extends AbstractFilter
                 ),
                 'required' => true,
                 'description' => 'Filter by land using its IRI.',
-            ]
+            ],
         ];
     }
 

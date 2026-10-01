@@ -45,6 +45,7 @@ class TestBrowser extends KernelBrowser
     public function addMock(string $id, MockObject $serviceMock): self
     {
         $this->client()->getContainer()->set($id, $serviceMock);
+
         return $this;
     }
 }

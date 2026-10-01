@@ -40,9 +40,9 @@ class LandRequestTest extends AbstractApiTestCase
             ->assertJsonMatches('supportsLocalFoodSecurity', $data['supportsLocalFoodSecurity'])
             ->assertJsonMatches('sharingConditions', $data['sharingConditions'])
             ->use(function (Json $json) {
-                $json->assertThat('ulid', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNull());
+                $json->assertThat('ulid', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNull());
             });
     }
 
@@ -63,7 +63,7 @@ class LandRequestTest extends AbstractApiTestCase
             ->assertJsonMatches('supportsLocalFoodSecurity', $landRequest->getSupportsLocalFoodSecurity())
             ->assertJsonMatches('sharingConditions', $landRequest->getSharingConditions())
             ->use(function (Json $json) {
-                $json->assertThat('ulid', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('ulid', fn (Json $json) => $json->isNotNull());
             });
 
         $person2 = $this->createPerson();
@@ -173,8 +173,8 @@ class LandRequestTest extends AbstractApiTestCase
             ->assertJsonMatches('supportsLocalFoodSecurity', $data['supportsLocalFoodSecurity'])
             ->assertJsonMatches('sharingConditions', $data['sharingConditions'])
             ->use(function (Json $json) {
-                $json->assertThat('ulid', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('ulid', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNotNull());
             });
     }
 
@@ -194,14 +194,13 @@ class LandRequestTest extends AbstractApiTestCase
         $landRequest = $this->createLandRequest($person);
 
         $this->browser()->actingAs($person)
-            ->patch($this->getIriFromResource($landRequest) . '/' . LandRequestWorkflowTransition::PUBLISH)
+            ->patch($this->getIriFromResource($landRequest).'/'.LandRequestWorkflowTransition::PUBLISH)
             ->assertSuccessful()
             ->assertJsonMatches('state', LandRequestWorkflowPlace::PUBLISHED)
             ->use(function (Json $json) {
-                $json->assertThat('expirationDate', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('publishedAt', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('expirationDate', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('publishedAt', fn (Json $json) => $json->isNotNull());
             });
-
     }
 
     public function testArchive(): void
@@ -210,13 +209,12 @@ class LandRequestTest extends AbstractApiTestCase
         $landRequest = $this->createLandRequest($person, ['state' => LandRequestWorkflowPlace::PUBLISHED]);
 
         $this->browser()->actingAs($person)
-            ->patch($this->getIriFromResource($landRequest) . '/' . LandRequestWorkflowTransition::ARCHIVE)
+            ->patch($this->getIriFromResource($landRequest).'/'.LandRequestWorkflowTransition::ARCHIVE)
             ->assertSuccessful()
             ->assertJsonMatches('state', LandRequestWorkflowPlace::ARCHIVED)
             ->use(function (Json $json) {
-                $json->assertThat('archivedAt', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('archivedAt', fn (Json $json) => $json->isNotNull());
             });
-
     }
 
     public function testCannotCreateSecondDraft(): void
@@ -250,7 +248,7 @@ class LandRequestTest extends AbstractApiTestCase
         $secondRequest = $this->createLandRequest($person, ['state' => LandRequestWorkflowPlace::DRAFT]);
 
         $this->browser()->actingAs($person)
-            ->patch($this->getIriFromResource($secondRequest) . '/' . LandRequestWorkflowTransition::PUBLISH)
+            ->patch($this->getIriFromResource($secondRequest).'/'.LandRequestWorkflowTransition::PUBLISH)
             ->assertStatus(422)
             ->assertJsonMatches('violations[0].message', 'You can only have one request in published state.');
     }

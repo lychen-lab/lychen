@@ -14,8 +14,6 @@ use App\Security\Interface\LandAwareInterface;
 use App\Security\Interface\PermissionHolder;
 use App\Security\Service\PermissionHolderRetriever;
 use Doctrine\Persistence\ManagerRegistry;
-use Exception;
-use LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -24,7 +22,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 
 abstract class AbstractLandAwareVoterInterface extends AbstractPermissionVoter implements LandAwareVoterInterface
 {
-    protected Request|null $currentRequest = null;
+    protected ?Request $currentRequest = null;
 
     public function __construct(PermissionHolderRetriever $permissionHolderRetriever,
         PersonApiKeyPermissionChecker $personApiKeyPermissionChecker,
@@ -44,8 +42,7 @@ abstract class AbstractLandAwareVoterInterface extends AbstractPermissionVoter i
 
     protected function supports(string $attribute,
         mixed $subject,
-    ): bool
-    {
+    ): bool {
         $this->currentRequest = $this->requestStack->getCurrentRequest();
         $operation = $this->currentRequest->attributes->get('_api_operation');
         $operationIsPost = $operation instanceof Post;
@@ -78,7 +75,7 @@ abstract class AbstractLandAwareVoterInterface extends AbstractPermissionVoter i
                 $attribute),
             defined('static::COLLECTION') ? static::COLLECTION : 'not-defined-collection' => $this->canCollection($permissionHolder,
                 $attribute),
-            default => $this->voteOnCustomAttribute($attribute, $subject, $permissionHolder)
+            default => $this->voteOnCustomAttribute($attribute, $subject, $permissionHolder),
         };
     }
 
@@ -96,8 +93,10 @@ abstract class AbstractLandAwareVoterInterface extends AbstractPermissionVoter i
         $hasPermission = $this->can($permissionHolder, $permission);
         if ($permissionHolder instanceof LandApiKey) {
             $belongToLand = $permissionHolder->getLand() === $subject->getLand();
+
             return $hasPermission && $belongToLand;
         }
+
         return $hasPermission;
     }
 
@@ -132,12 +131,12 @@ abstract class AbstractLandAwareVoterInterface extends AbstractPermissionVoter i
         $land = $this->managerRegistry->getRepository(Land::class)->findOneBy(['ulid' => $landUlid]);
 
         if (!$land instanceof Land) {
-            throw new LogicException('Land not found.');
+            throw new \LogicException('Land not found.');
         }
 
         try {
             $landMember = $this->permissionHolderRetriever->getLandMember($land, $permissionHolder);
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             throw new HttpException(403, $exception->getMessage());
         }
 
@@ -145,14 +144,14 @@ abstract class AbstractLandAwareVoterInterface extends AbstractPermissionVoter i
     }
 
     /**
-     * Handle custom attributes not covered by standard CRUD operations
+     * Handle custom attributes not covered by standard CRUD operations.
+     *
      * @return bool|null Return bool for handled attributes, null for unhandled ones
      */
     protected function voteOnCustomAttribute(string $attribute,
         mixed $subject,
         PermissionHolder $permissionHolder): bool
     {
-        throw new LogicException($attribute . ' is not supported.');
+        throw new \LogicException($attribute.' is not supported.');
     }
 }
-

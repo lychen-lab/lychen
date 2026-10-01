@@ -2,10 +2,9 @@
 
 namespace App\Validator;
 
-use Attribute;
 use Symfony\Component\Validator\Constraint;
 
-#[Attribute(Attribute::TARGET_PROPERTY)]
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
 class PlantUlid extends Constraint
 {
     /*

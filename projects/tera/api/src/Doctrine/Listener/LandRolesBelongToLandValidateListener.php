@@ -7,7 +7,6 @@ use App\Entity\LandMemberInvitation;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
-use Exception;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[AsEntityListener(event: Events::prePersist, entity: LandMemberInvitation::class)]
@@ -19,11 +18,10 @@ final readonly class LandRolesBelongToLandValidateListener
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function __invoke(LandMemberInvitation|LandMember $object, LifecycleEventArgs $event): void
     {
-
         $errors = $this->validator->validate($object);
 
         if (count($errors) > 0) {
@@ -31,7 +29,7 @@ final readonly class LandRolesBelongToLandValidateListener
             foreach ($errors as $error) {
                 $errorMessages[] = $error->getMessage();
             }
-            throw new Exception('Validation failed: ' . implode(', ', $errorMessages));
+            throw new \Exception('Validation failed: '.implode(', ', $errorMessages));
         }
     }
 }

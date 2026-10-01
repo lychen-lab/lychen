@@ -38,6 +38,6 @@ final class LandAreaSettingFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this// ->afterInstantiate(function(LandAreaSetting $landAreaSetting): void {})
-            ;
+        ;
     }
 }

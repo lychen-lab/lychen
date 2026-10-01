@@ -8,6 +8,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Lychen\UtilZitadelBundle\Services\User;
 use Symfony\Component\HttpClient\Exception\ClientException;
+
 use function Zenstruck\Foundry\faker;
 
 class PersonFixtures extends Fixture
@@ -63,21 +64,22 @@ class PersonFixtures extends Fixture
                 'password' => [
                     'password' => self::DEFAULT_PASSWORD,
                     'changeRequired' => false,
-                ]
+                ],
             ]);
         } catch (ClientException $exception) {
-            if ($exception->getResponse()->getStatusCode() === 409) {
+            if (409 === $exception->getResponse()->getStatusCode()) {
                 $data = $this->user->searchByEmail($userEmail);
             } else {
                 throw $exception;
             }
         }
+
         return $this->createPersonAndAddReference($reference, ['authId' => $data['userId'], ...$createdData]);
     }
 
     public static function buildUserEmail(string $reference): string
     {
-        return $reference . self::DEFAULT_EMAIL_DOMAIN;
+        return $reference.self::DEFAULT_EMAIL_DOMAIN;
     }
 
     private function createPersonAndAddReference(string $reference, array|callable $attributes = []): Person
@@ -94,8 +96,8 @@ class PersonFixtures extends Fixture
         try {
             $this->user->addUserGrants($person->getAuthId(), $this->zitadelProjectId, ['roleKeys' => ['role.tera.admin']]);
         } catch (ClientException $exception) {
-
         }
+
         return $person;
     }
 }

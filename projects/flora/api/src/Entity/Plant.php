@@ -10,8 +10,6 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\PlantRepository;
-use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -48,7 +46,7 @@ class Plant extends AbstractIdOrmAndUlidApiIdentified
     )]
     private ?bool $perennial = false;
 
-    #[Groups(["plant:get"])]
+    #[Groups(['plant:get'])]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -63,14 +61,14 @@ class Plant extends AbstractIdOrmAndUlidApiIdentified
     #[ORM\JoinColumn(nullable: false)]
     private ?Cultivation $cultivation = null;
 
-    #[Groups(["plant:get"])]
+    #[Groups(['plant:get'])]
     #[ORM\Column]
     #[ApiProperty(
         description: 'A boolean indicating if the plant is melliferous (used by bees) or not',
     )]
     private ?bool $melliferous = false;
 
-    #[Groups(["plant:get"])]
+    #[Groups(['plant:get'])]
     #[ORM\Column]
     #[ApiProperty(
         description: 'A boolean indicating if the plant is medicinal or not',
@@ -96,20 +94,20 @@ class Plant extends AbstractIdOrmAndUlidApiIdentified
         $this->soilTypes = new ArrayCollection();
     }
 
-    #[Groups(["plant:get"])]
+    #[Groups(['plant:get'])]
     public function getUlid(): Ulid
     {
         return parent::getUlid();
     }
 
-    #[Groups(["plant:get"])]
-    public function getCreatedAt(): DateTimeImmutable
+    #[Groups(['plant:get'])]
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    #[Groups(["plant:get"])]
-    public function getUpdatedAt(): DateTimeInterface
+    #[Groups(['plant:get'])]
+    public function getUpdatedAt(): \DateTimeInterface
     {
         return $this->updatedAt;
     }

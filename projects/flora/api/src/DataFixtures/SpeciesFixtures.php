@@ -10,8 +10,6 @@ use Doctrine\Persistence\ObjectManager;
 
 class SpeciesFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
 {
-
-
     public function load(ObjectManager $manager): void
     {
         DefaultSpeciesStory::load();
