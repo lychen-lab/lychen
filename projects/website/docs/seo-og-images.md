@@ -40,8 +40,8 @@ existing assets.
 Two complementary options, from lightest to most automated:
 
 1. **Build-time generation (no external image model).** Add a Vite/SSG step that
-   renders each OG card from HTML/SVG using [`satori`](https://github.com/vercel/satori)
-   + [`@resvg/resvg-js`](https://github.com/yisibl/resvg-js): compose
+   renders each OG card from HTML/SVG using [`satori`](https://github.com/vercel/satori) +
+   [`@resvg/resvg-js`](https://github.com/yisibl/resvg-js): compose
    `hero photo → dark overlay → centered logo-lychen.svg → page title`, export
    `1200×630` `.webp`. Fully deterministic, runs in CI, no API cost. This is the
    recommended default because the desired visual (hero + centered logo) is a
@@ -50,8 +50,8 @@ Two complementary options, from lightest to most automated:
 2. **Claude-driven generation via an MCP connector.** When a page needs net-new
    artwork (no suitable hero photo), drive an image-generation connector
    (e.g. a Gemini/OpenAI image MCP server, or a Figma/Cloudinary connector
-   exposed over MCP) from a small script: Claude reads the page title/description
-   + brand kit (`libs/assets/lychen/logos/logo-lychen.svg`, color tokens in
+   exposed over MCP) from a small script: Claude reads the page title/description +
+   brand kit (`libs/assets/lychen/logos/logo-lychen.svg`, color tokens in
    `libs/css/core`), prompts the connector for a 1200×630 background on-brand,
    then composites the centered logo with the option-1 pipeline for pixel-exact
    placement. The connector handles pixels; Claude handles per-page intent and
