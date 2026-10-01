@@ -38,25 +38,42 @@ tasks:
     - --write
     command: *prettier
     inputs: *prettier-inputs
+    # Never cached: the fixes are edits to the inputs, which a cache hit can't
+    # replay. Once those edits are discarded, the files hash as they did before
+    # the last run, and moon would skip the task instead of fixing them again.
+    options:
+      cache: false
   lint:
-    command:
+    command: &eslint
     - eslint
     - --report-unused-disable-directives
     - --no-error-on-unmatched-pattern
     - --exit-on-fatal-error
     - .
-    inputs:
+    # Everything that changes the result, so that CI (which only runs affected
+    # tasks) reruns the check. The Tailwind rules load the design system from
+    # libs/css/core (cssConfigPath in eslint.config.js): one of them reports
+    # errors, and ESLint crashes if the stylesheets don't load.
+    inputs: &eslint-inputs
     - '**/*.{vue,ts,js,yaml,yml,json,md}'
     - '!**/build/'
     - '!**/dist/'
     - '!**/vendor/'
     - '!**/playwright-report/'
     - '!**/.vite-ssg-temp/'
+    - /eslint.config.js
+    - /libs/css/core/**/*.css
   lint-fix:
-    deps:
-    - args:
-      - --fix
-      target: lint
+    # Same ESLint run as lint, with --fix, and never cached, like format-fix.
+    # It must not depend on lint: `moon ci :lint` also runs dependents, so CI
+    # would run the fixer on the checkout too, with nothing ordering it after
+    # the check.
+    args:
+    - --fix
+    command: *eslint
+    inputs: *eslint-inputs
+    options:
+      cache: false
   test:
     command:
     - vitest
