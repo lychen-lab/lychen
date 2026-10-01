@@ -1,22 +1,43 @@
 $schema: https://moonrepo.dev/schemas/tasks.json
 tasks:
   format:
-    command:
+    # Without --check, Prettier prints the formatted files and always exits 0.
+    args:
+    - --check
+    # Prettier runs from the project root and only reads ignore files from
+    # there by default. Passing --ignore-path replaces that default, so list
+    # the project's own files (storybook's .gitignore skips storybook-static/)
+    # next to the root ones (dist/, generated/, ...).
+    command: &prettier
     - prettier
     - --no-error-on-unmatched-pattern
+    - --ignore-path=$workspaceRoot/.gitignore
+    - --ignore-path=$workspaceRoot/.prettierignore
+    - --ignore-path=$projectRoot/.gitignore
+    - --ignore-path=$projectRoot/.prettierignore
     - .
-    inputs:
-    - '**/*.{vue,ts,js,yaml,yml,json,md}'
+    # Everything that changes the result, so that CI (which only runs affected
+    # tasks) reruns the check. The project's ignore files are a glob because
+    # most projects have neither, and a missing file input logs a warning.
+    inputs: &prettier-inputs
+    - '**/*.{vue,ts,js,yaml,yml,json,md,html}'
     - '!**/build/'
     - '!**/dist/'
     - '!**/playwright-report/'
     - '!**/vendor/'
     - '!**/.vite-ssg-temp/'
+    - '.{gitignore,prettierignore}'
+    - /.gitignore
+    - /.prettierignore
+    - /prettier.config.js
   format-fix:
-    deps:
-    - args:
-      - --write
-      target: format
+    # Same Prettier run as format, with --write instead of --check. It must not
+    # depend on format: `moon ci :format` also runs dependents, so a --write
+    # run would race the check.
+    args:
+    - --write
+    command: *prettier
+    inputs: *prettier-inputs
   lint:
     command:
     - eslint
