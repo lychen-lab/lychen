@@ -9,17 +9,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         'cache' => [
             'app' => 'cache.adapter.redis',
             'default_redis_provider' => '%env(resolve:REDIS_URL)%',
-            'pools' => [
-                'cache.flysystem.psr6' => [
-                    'adapter' => 'cache.app',
-                ],
-                'doctrine.query_cache_pool' => [
-                    'adapter' => 'cache.app',
-                ],
-                'doctrine.result_cache_pool' => [
-                    'adapter' => 'cache.app',
-                ],
-            ],
         ],
     ]);
 };
