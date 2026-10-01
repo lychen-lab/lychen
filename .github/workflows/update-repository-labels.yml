@@ -35,8 +35,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Fetch existing labels
-          EXISTING_LABELS=$(gh label list name -q '.[].name')
+          # Fetch existing labels (`gh label list` only returns 30 by default)
+          EXISTING_LABELS=$(gh label list --limit 500 --json name --jq '.[].name')
           
           # Remove quotes and set Internal Field Separator to comma to loop over projects
           PROJECTS_NO_QUOTES=$(echo "${{ steps.get-projects.outputs.projects }}" | tr -d '"')
@@ -44,7 +44,7 @@ jobs:
 
           # Create labels that don't exist
           for project in $PROJECTS_NO_QUOTES; do
-            if ! echo "$EXISTING_LABELS" | grep -q "^$project$"; then
+            if ! echo "$EXISTING_LABELS" | grep -qxF -- "$project"; then
               echo "Creating label: $project"
               gh label create "$project" --description "Issues and PRs related to the $project project."
             fi
