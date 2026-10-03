@@ -61,12 +61,6 @@ jobs:
     environment: production
     steps:
       - uses: 'actions/checkout@v4'
-        with:
-          fetch-depth: 0
-      - name: Set up Moon Toolchain
-        uses: 'moonrepo/setup-toolchain@v0'
-      - name: Enable Corepack
-        run: corepack enable
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Login to GHCR
@@ -112,4 +106,6 @@ jobs:
           # each image `:<version>` from the build that shipped this release, so
           # this resolves to an immutable, reproducible image.
           IMAGE_TAG: ${{ needs.define-matrix.outputs.version }}
-        run: moon run ${{ matrix.projects }}:dokploy-compose-deploy
+        # The script directly, not `moon run <project>:dokploy-compose-deploy`: for
+        # a frontend, moon would first run a full `yarn install` for this curl script.
+        run: bash .moon/scripts/dokploy-compose-deploy.sh

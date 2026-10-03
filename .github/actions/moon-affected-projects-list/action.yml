@@ -3,7 +3,7 @@ description: 'Use moon query to fetch list of affected project id'
 inputs:
   layer:
     description: 'Targeted layer' # e.g. 'application'
-    required: false 
+    required: false
   stack:
     description: 'Targeted stack' # e.g. 'frontend'
     required: false
@@ -17,20 +17,28 @@ inputs:
     description: 'Only affected projects (true, default) or all matching projects (false)'
     required: false
     default: 'true'
+  base:
+    description: 'Revision to compute affected projects against (default: moon decides — the previous commit on the default branch, the default branch elsewhere)'
+    required: false
 outputs:
-  projects: 
+  projects:
     description: "Projects list"
     value: ${{ steps.list.outputs.projects }}
 runs:
   using: "composite"
-  steps:    
+  steps:
     - name: List affected projects
       shell: bash
       id: list
+      env:
+        AFFECTED_BASE: ${{ inputs.base }}
       run: |
         ARGS=""
         if [[ "${{ inputs.affected }}" != "false" ]]; then
           ARGS="--affected --downstream deep"
+          if [[ -n "$AFFECTED_BASE" ]]; then
+            export MOON_BASE="$AFFECTED_BASE" MOON_HEAD=HEAD
+          fi
         fi
         if [[ -n "${{ inputs.layer }}" ]]; then
           ARGS="$ARGS --layer ${{ inputs.layer }}"

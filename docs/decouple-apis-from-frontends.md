@@ -23,14 +23,14 @@ La chaîne de redéploiement qui en découle :
    n'est pas régénéré et committé** (`git diff --exit-code` sur
    `openapi_docs.json` et `libs/typescript/tera/api-sdk/generated/`).
 2. **Le fichier généré du SDK change** dans `libs/**`.
-3. Au merge sur `main`, `.github/workflows/build-and-push-docker-images.yml`
+3. Au merge sur `main`, `.github/workflows/deploy.yml`
    (déclenché sur `libs/**` et `projects/**`) appelle
    `.github/actions/moon-affected-projects-list` avec
    `moon query projects --affected --downstream deep`.
 4. `--downstream deep` remonte **tous** les projets en aval du SDK : comme les
    fronts en `dependsOn`, ils sont marqués **affected** et rebuildés
    (`docker-buildx`).
-5. `.github/workflows/deploy.yml` redéploie alors chaque projet affecté.
+5. Le même workflow redéploie alors chaque projet affecté.
 
 **Conséquence** : toute évolution de l'API — même purement additive, voire un
 simple changement de description dans la spec — régénère le SDK, ce qui marque
@@ -215,8 +215,8 @@ spec/le SDK et, en cas d'écart, émettent un simple `::warning::` rappelant de
 lancer `moon …:generate-api` — sans `exit 1`. La génération reste donc à la main
 du développeur.
 
-Aucune autre modification : l'action `moon-affected-projects-list` et les
-workflows `build-and-push-docker-images.yml` / `deploy.yml` retrouvent leur
+Aucune autre modification : l'action `moon-affected-projects-list` et le
+workflow `deploy.yml` retrouvent leur
 comportement standard (`--affected --downstream deep`), donc le couplage
 SDK → front est préservé.
 
