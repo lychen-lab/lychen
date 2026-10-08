@@ -2,7 +2,7 @@
 
 namespace App\Tests\Functional;
 
-use App\Tests\Utils\Abstract\AbstractApiTestCase;
+use Lychen\Test\AbstractApiTestCase;
 
 class DefaultTest extends AbstractApiTestCase
 {
