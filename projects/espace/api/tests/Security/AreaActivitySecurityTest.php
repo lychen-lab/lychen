@@ -3,7 +3,7 @@
 namespace App\Tests\Security;
 
 use App\Factory\PersonFactory;
-use App\Tests\Utils\Abstract\AbstractApiTestCase;
+use Lychen\Test\AbstractApiTestCase;
 
 class AreaActivitySecurityTest extends AbstractApiTestCase
 {

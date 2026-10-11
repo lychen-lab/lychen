@@ -5,8 +5,8 @@ namespace App\Tests\Functional;
 use App\Factory\AreaActivityFactory;
 use App\Factory\AreaRequestFactory;
 use App\Factory\PersonFactory;
-use App\Tests\Utils\Abstract\AbstractApiTestCase;
 use App\Workflow\AreaRequest\AreaRequestWorkflow;
+use Lychen\Test\AbstractApiTestCase;
 
 class AreaRequestTest extends AbstractApiTestCase
 {

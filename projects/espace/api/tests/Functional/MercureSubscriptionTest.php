@@ -3,13 +3,13 @@
 namespace App\Tests\Functional;
 
 use App\Factory\PersonFactory;
-use App\Tests\Utils\Abstract\AbstractApiTestCase;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\UnencryptedToken;
 use Lcobucci\JWT\Validation\Constraint\LooseValidAt;
 use Lcobucci\JWT\Validation\Constraint\SignedWith;
+use Lychen\Test\AbstractApiTestCase;
 use Symfony\Component\Clock\Clock;
 
 class MercureSubscriptionTest extends AbstractApiTestCase
