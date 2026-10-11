@@ -39,6 +39,11 @@ jobs:
         with:
           layer: application
           tags: symfony
+          # The PR's base branch, which `moon ci` compares against in the jobs
+          # below. Without it this compares against main: a stacked PR then lists
+          # projects that `moon ci` skips as unaffected, and their jobs fail on
+          # work that never ran (e.g. pushing a test image that was never built).
+          base: ${{ github.base_ref }}
 
   build-and-push-test-image:
     if: ${{ needs.define-matrix.outputs.projects != '[]' && needs.define-matrix.outputs.projects != '' }}
