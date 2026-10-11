@@ -1291,12 +1291,6 @@ parameters:
 			path: tests/Functional/Land/LandGreenhouseTest.php
 
 		-
-			message: '#^Call to an undefined method Zenstruck\\Browser\\KernelBrowser\:\:addMock\(\)\.$#'
-			identifier: method.notFound
-			count: 4
-			path: tests/Functional/Land/LandHarvestEntryTest.php
-
-		-
 			message: '#^Method App\\Tests\\Functional\\Land\\LandHarvestEntryTest\:\:testCollection\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -1885,12 +1879,6 @@ parameters:
 			path: tests/Security/LandGreenhouseSettingSecurityTest.php
 
 		-
-			message: '#^Call to an undefined method Zenstruck\\Browser\\KernelBrowser\:\:addMock\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: tests/Security/LandHarvestEntrySecurityTest.php
-
-		-
 			message: '#^Method App\\Tests\\Security\\LandHarvestEntrySecurityTest\:\:testCollection\(\) has no return type specified\.$#'
 			identifier: missingType.return
 			count: 1
@@ -2341,12 +2329,6 @@ parameters:
 			path: tests/Security/SeedStockSecurityTest.php
 
 		-
-			message: '#^Attribute class JetBrains\\PhpStorm\\NoReturn does not exist\.$#'
-			identifier: attribute.notFound
-			count: 1
-			path: tests/Utils/Abstract/AbstractApiTestCase.php
-
-		-
 			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:addLandMember\(\) has parameter \$roles with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -2372,18 +2354,6 @@ parameters:
 
 		-
 			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:addOneLandTask\(\) has parameter \$attributes with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: tests/Utils/Abstract/AbstractApiTestCase.php
-
-		-
-			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:browser\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: tests/Utils/Abstract/AbstractApiTestCase.php
-
-		-
-			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:browser\(\) has parameter \$server with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: tests/Utils/Abstract/AbstractApiTestCase.php
@@ -2471,12 +2441,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: tests/Utils/Abstract/AbstractApiTestCase.php
-
-		-
-			message: '#^Method App\\Tests\\Utils\\TestBrowser\:\:patch\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: tests/Utils/TestBrowser.php
 
 		-
 			message: '#^Call to function method_exists\(\) with ''Symfony\\\\Component\\\\Dotenv\\\\Dotenv'' and ''bootEnv'' will always evaluate to true\.$#'
