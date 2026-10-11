@@ -1,0 +1,79 @@
+<?php
+
+declare(strict_types=1);
+
+use Scienta\DoctrineJsonFunctions\Query\AST\Functions\Postgresql\JsonbContains;
+
+return [
+    'doctrine' => [
+        'dbal' => [
+            'connections' => [
+                'default' => [
+                    'driver' => 'pdo_pgsql',
+                    'url' => '%env(resolve:DATABASE_URL)%',
+                ],
+            ],
+            'default_connection' => 'default',
+        ],
+        'orm' => [
+            'controller_resolver' => [
+                'auto_mapping' => false,
+            ],
+            'default_entity_manager' => 'default',
+            'entity_managers' => [
+                'default' => [
+                    'connection' => 'default',
+                    'mappings' => [
+                        'Default' => [
+                            'alias' => 'Default',
+                            'dir' => '%kernel.project_dir%/src/Entity',
+                            'is_bundle' => false,
+                            'prefix' => 'App\Entity',
+                            'type' => 'attribute',
+                        ],
+                    ],
+                    'naming_strategy' => 'doctrine.orm.naming_strategy.underscore_number_aware',
+                    'dql' => [
+                        'string_functions' => [
+                            'JSON_CONTAINS' => JsonbContains::class,
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'when@prod' => [
+        'doctrine' => [
+            'orm' => [
+                'query_cache_driver' => [
+                    'pool' => 'doctrine.system_cache_pool',
+                    'type' => 'pool',
+                ],
+                'result_cache_driver' => [
+                    'pool' => 'doctrine.result_cache_pool',
+                    'type' => 'pool',
+                ],
+            ],
+        ],
+        'framework' => [
+            'cache' => [
+                'pools' => [
+                    'doctrine.result_cache_pool' => [
+                        'adapter' => 'cache.app',
+                    ],
+                    'doctrine.system_cache_pool' => [
+                        'adapter' => 'cache.system',
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'when@test' => [
+        'doctrine' => [
+            'dbal' => [
+                'dbname_suffix' => '_test%env(default::TEST_TOKEN)%',
+                'schema_filter' => '~^(?!(doctrine_|messenger_))~',
+            ],
+        ],
+    ],
+];

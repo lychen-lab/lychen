@@ -1,0 +1,29 @@
+<?php
+
+declare(strict_types=1);
+
+return [
+    'when@dev' => [
+        'framework' => [
+            'profiler' => [
+                'collect_serializer_data' => true,
+                'only_exceptions' => false,
+            ],
+        ],
+        'web_profiler' => [
+            'intercept_redirects' => false,
+            'toolbar' => true,
+        ],
+    ],
+    'when@test' => [
+        'framework' => [
+            'profiler' => [
+                'collect' => false,
+            ],
+        ],
+        'web_profiler' => [
+            'intercept_redirects' => false,
+            'toolbar' => false,
+        ],
+    ],
+];

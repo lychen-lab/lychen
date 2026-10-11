@@ -1,0 +1,5 @@
+id: lychen-php-symfony-config
+language: php
+layer: library
+tags:
+- composer

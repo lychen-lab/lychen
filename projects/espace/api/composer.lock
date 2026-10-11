@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "554c9bbd8323850f5bf123ca5808c54e",
+    "content-hash": "89ce2f8f8510f8dc6910f095b78e66a7",
     "packages": [
         {
             "name": "api-platform/core",
@@ -1978,6 +1978,43 @@
                     "email": "bonjour@lychen.org"
                 }
             ],
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
+        },
+        {
+            "name": "lychen/symfony-config",
+            "version": "0.0.0",
+            "dist": {
+                "type": "path",
+                "url": "../packages/symfony-config",
+                "reference": "d6d421db2630eef2b749d2a71c9cd59c3f3ba142"
+            },
+            "require": {
+                "php": "^8.4",
+                "symfony/config": "^7.4 || ^8.0",
+                "symfony/dependency-injection": "^7.4 || ^8.0",
+                "symfony/http-kernel": "^7.4 || ^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Lychen\\ConfigBundle\\": "src/"
+                }
+            },
+            "archive": {
+                "exclude": [
+                    "/moon.yml"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Lychen",
+                    "email": "bonjour@lychen.org"
+                }
+            ],
+            "description": "Shared Symfony configuration of the Lychen APIs",
             "transport-options": {
                 "symlink": false,
                 "relative": true
@@ -10544,7 +10581,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/test",
-                "reference": "735148a5d30fffbb1349c5c68533437bec899152"
+                "reference": "9cfe2d07454711bc864d8af87ea7a5044d4544e7"
             },
             "require": {
                 "api-platform/core": "^4.1",
