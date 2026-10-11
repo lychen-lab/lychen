@@ -91,6 +91,14 @@ COPY --link composer.* symfony.* ./
 RUN set -eux; \
 	composer install --no-cache --prefer-dist --no-autoloader --no-scripts --no-progress
 
+# The QA tools (PHPStan, php-cs-fixer, Rector) have their own composer project in
+# tools/. Bake them as well: the CI runs each command in a fresh
+# `docker compose run --rm` container, so tools installed by one were gone for the
+# next.
+COPY --link tools/composer.* tools/
+RUN set -eux; \
+	composer install --no-cache --prefer-dist --no-progress --working-dir=tools
+
 # copy sources (tests, phpunit config and .env.test are required to run the suite)
 COPY --link . ./
 

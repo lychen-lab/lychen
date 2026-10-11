@@ -1,3 +1,9 @@
+# Debt frozen when PHPStan was re-enabled (2026-10). New code must pass clean.
+# Fixing an entry means deleting it from the baseline: a stale entry fails the
+# analysis (reportUnmatchedIgnoredErrors), so the file can only shrink.
+includes:
+    - phpstan-baseline.neon
+
 parameters:
     level: 6
     paths:
