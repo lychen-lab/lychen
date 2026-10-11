@@ -42,7 +42,7 @@
     <div class="dashboard-grid grid grid-cols-[1fr_30%] grid-rows-2 gap-8">
       <div
         id="header"
-        class="border-surface-container/100 flex flex-row items-center justify-between rounded-xl border-1 p-4"
+        class="flex flex-row items-center justify-between rounded-xl border border-surface-container p-4"
       >
         <div class="flex flex-row items-center gap-4">
           <BaseHeading variant="h4">Actions rapide</BaseHeading>
@@ -97,7 +97,7 @@
         </div>
       </div>
       <div id="principal">
-        <div class="bg-surface-container flex h-full flex-col justify-between gap-4 rounded-xl p-8">
+        <div class="flex h-full flex-col justify-between gap-4 rounded-xl bg-surface-container p-8">
           <BaseHeading>Tâches en cours</BaseHeading>
           <div class="flex flex-row gap-4 self-end">
             <Button
@@ -122,7 +122,7 @@
         id="side"
         class="flex flex-col gap-8"
       >
-        <Card class="gap-4 bg-gradient-to-tr from-purple-500 to-pink-500">
+        <Card class="gap-4 bg-linear-to-tr from-purple-500 to-pink-500">
           <div class="flex flex-col gap-0">
             <BaseHeading variant="h3">Un surplus ?</BaseHeading>
             <p>Signalez le on s'occupe de trouver quelqu'un pour que ce ne soit pas perdu.</p>
@@ -135,7 +135,7 @@
           >
           </Button>
         </Card>
-        <Card class="gap-4 bg-gradient-to-tr from-amber-500 to-yellow-500">
+        <Card class="gap-4 bg-linear-to-tr from-amber-500 to-yellow-500">
           <div class="flex flex-col gap-0 text-amber-800">
             <BaseHeading
               variant="h3"
@@ -183,7 +183,7 @@
           <CarouselItem
             v-for="(item, index) in landAreas.member"
             :key="index"
-            class="h-[100px] basis-3/5 md:basis-1/2 lg:basis-1/10"
+            class="h-25 basis-3/5 md:basis-1/2 lg:basis-1/10"
           >
             <CardTeraLandArea
               :land-area="asLandArea(item)"
@@ -221,7 +221,7 @@
           <CarouselItem
             v-for="(item, index) in landGreenhouses.member"
             :key="index"
-            class="h-[200px] basis-3/5 md:basis-1/2 lg:basis-1/8"
+            class="h-50 basis-3/5 md:basis-1/2 lg:basis-1/8"
           >
             <CardTeraLandGreenhouse :land-greenhouse="item" />
           </CarouselItem>
@@ -281,8 +281,7 @@ const { allowed: settingsButtonAllowed } = useLandGuard(landMember, ['land_updat
 const landMemberForDelete = computed(
   () =>
     landMember?.value as unknown as
-      | Omit<components['schemas']['LandMember.jsonld'], 'landRoles'>
-      | undefined,
+      Omit<components['schemas']['LandMember.jsonld'], 'landRoles'> | undefined,
 );
 
 const landUlid = computed(() => land?.value?.ulid);
