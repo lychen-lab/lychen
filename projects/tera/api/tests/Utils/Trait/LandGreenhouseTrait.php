@@ -11,7 +11,7 @@ trait LandGreenhouseTrait
     protected function createLandGreenhouse(Land $land): LandGreenhouse
     {
         return LandGreenhouseFactory::new()->create([
-            'land' => $land
+            'land' => $land,
         ]);
     }
 }

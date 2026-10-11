@@ -9,7 +9,7 @@ interface LandAwareVoterInterface
     /**
      * @return class-string<LandAwareInterface>
      */
-    function getSupportedClass(): string;
+    public function getSupportedClass(): string;
 
-    function getAvailablePermissions(): array;
+    public function getAvailablePermissions(): array;
 }

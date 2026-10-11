@@ -127,6 +127,5 @@ class LandAreaParameterSecurityTest extends AbstractApiTestCase
         $this->browser()->actingAs($context1->landMembers[0]->getPerson())
             ->patch($this->getIriFromResource($context1->landAreas[0]->getLandAreaParameter()), ['json' => []])
             ->assertStatus(403);
-
     }
 }

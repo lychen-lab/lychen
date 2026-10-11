@@ -26,7 +26,7 @@ final class DefaultFamiliesStory extends Story
         self::LILIACEAE,
         self::POACEAE,
         self::APIACEAE,
-        self::LAMIACEAE
+        self::LAMIACEAE,
     ];
 
     public function build(): void

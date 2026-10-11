@@ -31,7 +31,7 @@ class LandMemberInvitationFixtures extends Fixture implements DependentFixtureIn
         return [
             LandFixtures::class,
             PersonFixtures::class,
-            LandRoleFixtures::class
+            LandRoleFixtures::class,
         ];
     }
 }

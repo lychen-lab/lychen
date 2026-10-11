@@ -51,14 +51,13 @@ class LandMemberInvitationVoter extends AbstractLandAwareVoterInterface
 
     protected function supports(string $attribute,
         mixed $subject,
-    ): bool
-    {
+    ): bool {
         $this->currentRequest = $this->requestStack->getCurrentRequest();
         $operation = $this->currentRequest->attributes->get('_api_operation');
         $operationIsPost = $operation instanceof Post;
         $operationIsCollection = $operation instanceof GetCollection;
 
-        $operationIsCheckUnicity = $operation instanceof Get && $operation->getName() === 'land-member-invitation_check-email-unicity';
+        $operationIsCheckUnicity = $operation instanceof Get && 'land-member-invitation_check-email-unicity' === $operation->getName();
 
         $supportsSubject = $subject instanceof ($this->getSupportedClass());
         $supportsAttribute = in_array($attribute, $this->getAvailablePermissions());
@@ -66,12 +65,12 @@ class LandMemberInvitationVoter extends AbstractLandAwareVoterInterface
         return ($supportsSubject || $operationIsPost || $operationIsCollection || $operationIsCheckUnicity) && $supportsAttribute;
     }
 
-    function getSupportedClass(): string
+    public function getSupportedClass(): string
     {
         return LandMemberInvitation::class;
     }
 
-    function getAvailablePermissions(): array
+    public function getAvailablePermissions(): array
     {
         return self::ALL;
     }
@@ -88,7 +87,7 @@ class LandMemberInvitationVoter extends AbstractLandAwareVoterInterface
             self::REFUSE => $this->canRefuse($subject),
             self::COLLECTION_BY_EMAIL => $this->canCollectionByEmail($permissionHolder),
             self::CHECK_EMAIL_UNICITY => $this->canCheckEmailUnicity($permissionHolder),
-            default => parent::voteOnCustomAttribute($attribute, $subject, $permissionHolder)
+            default => parent::voteOnCustomAttribute($attribute, $subject, $permissionHolder),
         };
     }
 
@@ -97,7 +96,7 @@ class LandMemberInvitationVoter extends AbstractLandAwareVoterInterface
         $permissionHolder = $this->getPermissionHolder(null);
 
         return $this->can($permissionHolder, self::ACCEPT) && $this->isEmailMatchingWithCurrentUser($subject,
-                $permissionHolder);
+            $permissionHolder);
     }
 
     private function isEmailMatchingWithCurrentUser(LandMemberInvitation $subject,
@@ -122,8 +121,9 @@ class LandMemberInvitationVoter extends AbstractLandAwareVoterInterface
     private function canRefuse(LandMemberInvitation $subject): bool
     {
         $permissionHolder = $this->getPermissionHolder(null);
+
         return $this->can($permissionHolder, self::REFUSE) && $this->isEmailMatchingWithCurrentUser($subject,
-                $permissionHolder);
+            $permissionHolder);
     }
 
     private function canCollectionByEmail(PermissionHolder $permissionHolder): bool

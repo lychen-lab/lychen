@@ -10,7 +10,6 @@ use App\Repository\LandMemberRepository;
 use App\Security\Constant\PersonPermission;
 use App\Security\Interface\LandAwareInterface;
 use App\Security\Interface\PermissionHolder;
-use Exception;
 use Symfony\Bundle\SecurityBundle\Security;
 
 readonly class PermissionHolderRetriever
@@ -33,8 +32,7 @@ readonly class PermissionHolderRetriever
                 if ($currentUser instanceof Person && null !== $land) {
                     return $this->getLandMember($land, $currentUser);
                 }
-            } catch (Exception $exception) {
-
+            } catch (\Exception $exception) {
             }
         }
 
@@ -43,7 +41,7 @@ readonly class PermissionHolderRetriever
         }
 
         if (!$currentUser instanceof PermissionHolder) {
-            throw new Exception('No permission holder available for this context');
+            throw new \Exception('No permission holder available for this context');
         }
 
         return $currentUser;
@@ -53,12 +51,13 @@ readonly class PermissionHolderRetriever
         PermissionHolder $permissionHolder): LandMember
     {
         if (!$permissionHolder instanceof Person) {
-            throw new Exception('User must be an instance of Person');
+            throw new \Exception('User must be an instance of Person');
         }
         $landMember = $this->landMemberRepository->findOneBy(['land' => $land, 'person' => $permissionHolder]);
         if (null === $landMember) {
-            throw new Exception('Unable to find LandMember related to the authenticated user.');
+            throw new \Exception('Unable to find LandMember related to the authenticated user.');
         }
+
         return $landMember;
     }
 }

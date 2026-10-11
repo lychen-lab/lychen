@@ -7,13 +7,11 @@ use ApiPlatform\Metadata\Post;
 use App\Entity\Person;
 use App\Entity\PersonApiKey;
 use App\Security\Interface\PermissionHolder;
-use LogicException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 
 class PersonApiKeyVoter extends AbstractPermissionVoter
 {
-
     public const string DELETE = 'person:person_api_key:delete';
     public const string POST = 'person:person_api_key:post';
     public const string GET = 'person:person_api_key:get';
@@ -34,11 +32,10 @@ class PersonApiKeyVoter extends AbstractPermissionVoter
     ];
 
     public const array ALL_LAND = [
-
     ];
 
     protected function supports(string $attribute,
-                                mixed  $subject): bool
+        mixed $subject): bool
     {
         $currentRequest = $this->requestStack->getCurrentRequest();
         $operation = $currentRequest->attributes->get('_api_operation');
@@ -51,9 +48,9 @@ class PersonApiKeyVoter extends AbstractPermissionVoter
         return ($supportsSubject || $operationIsPost || $operationIsCollection) && $supportsAttribute;
     }
 
-    protected function voteOnAttribute(string         $attribute,
-                                       mixed          $subject,
-                                       TokenInterface $token, ?Vote $vote = null): bool
+    protected function voteOnAttribute(string $attribute,
+        mixed $subject,
+        TokenInterface $token, ?Vote $vote = null): bool
     {
         $permissionHolder = $this->getPermissionHolder($subject);
 
@@ -62,7 +59,7 @@ class PersonApiKeyVoter extends AbstractPermissionVoter
             self::POST => $this->canPost($permissionHolder),
             self::DELETE => $this->canDelete($subject, $permissionHolder),
             self::COLLECTION => $this->canCollection($permissionHolder),
-            default => throw new LogicException($attribute . ' is not supported.')
+            default => throw new \LogicException($attribute.' is not supported.'),
         };
     }
 
@@ -76,11 +73,12 @@ class PersonApiKeyVoter extends AbstractPermissionVoter
         if (!$permissionHolder instanceof Person) {
             return false;
         }
+
         return $this->can($permissionHolder, self::POST);
     }
 
-    private function canDelete(PersonApiKey     $personApiKey,
-                               PermissionHolder $permissionHolder): bool
+    private function canDelete(PersonApiKey $personApiKey,
+        PermissionHolder $permissionHolder): bool
     {
         $hasPermission = $this->can($permissionHolder, self::DELETE);
 
@@ -91,7 +89,6 @@ class PersonApiKeyVoter extends AbstractPermissionVoter
         $userIsOwner = $personApiKey->getPerson() === $permissionHolder;
 
         return $userIsOwner;
-
     }
 
     private function canCollection(PermissionHolder $permissionHolder): bool
@@ -99,4 +96,3 @@ class PersonApiKeyVoter extends AbstractPermissionVoter
         return $this->can($permissionHolder, self::COLLECTION);
     }
 }
-

@@ -38,7 +38,7 @@ class LunarType extends AbstractIdOrmAndUlidApiIdentified
     use CreatedAtTrait;
     use UpdatedAtTrait;
 
-    #[Groups(["lunar_type:get"])]
+    #[Groups(['lunar_type:get'])]
     #[ORM\Column(length: 100, unique: true)]
     private ?string $code = null;
 
@@ -96,13 +96,13 @@ class LunarType extends AbstractIdOrmAndUlidApiIdentified
         return $this;
     }
 
-    #[Groups(["lunar_type:get"])]
+    #[Groups(['lunar_type:get'])]
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    #[Groups(["lunar_type:get"])]
+    #[Groups(['lunar_type:get'])]
     public function getUpdatedAt(): \DateTimeInterface
     {
         return $this->updatedAt;

@@ -8,7 +8,6 @@ use ApiPlatform\Metadata\Operation;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use JsonException;
 use Psr\Log\LoggerInterface;
 
 // Import DBAL Types for parameter type hinting
@@ -18,9 +17,8 @@ final class JsonbContainsFilter extends AbstractFilter
     public function __construct(
         ManagerRegistry $managerRegistry,
         protected LoggerInterface $logger, // Use promoted properties
-        ?array $properties = null
-    )
-    {
+        ?array $properties = null,
+    ) {
         parent::__construct($managerRegistry, $properties);
     }
 
@@ -35,6 +33,7 @@ final class JsonbContainsFilter extends AbstractFilter
         if (null === $properties) {
             $this->logger->warning(sprintf('JsonbContainsFilter is applied to "%s" but has no properties configured.',
                 $resourceClass));
+
             return [];
         }
 
@@ -79,9 +78,8 @@ final class JsonbContainsFilter extends AbstractFilter
         QueryNameGeneratorInterface $queryNameGenerator,
         string $resourceClass,
         ?Operation $operation = null,
-        array $context = []
-    ): void
-    {
+        array $context = [],
+    ): void {
         if (!$this->isPropertyEnabled($property, $resourceClass)) {
             return;
         }
@@ -94,38 +92,40 @@ final class JsonbContainsFilter extends AbstractFilter
                 return; // Don't filter if the array is empty
             }
             // Ensure all elements are strings or numbers for simple JSON array encoding
-            $filteredValue = array_filter($value, fn($item) => is_string($item) || is_numeric($item));
+            $filteredValue = array_filter($value, fn ($item) => is_string($item) || is_numeric($item));
             if (empty($filteredValue)) {
                 $this->logger->warning(sprintf(
                     'Empty or invalid array values provided for JsonbContainsFilter on property "%s". Only strings/numbers supported in array mode.',
                     $property
                 ),
                     ['value' => $value]);
+
                 return;
             }
             // Encode the PHP array into a JSON array string
             try {
                 // Use JSON_THROW_ON_ERROR for better error handling if encoding fails
                 $finalJsonValue = json_encode(array_values($filteredValue), JSON_THROW_ON_ERROR); // Re-index array
-            } catch (JsonException $e) {
+            } catch (\JsonException $e) {
                 $this->logger->error(sprintf(
                     'Failed to JSON encode array value for JsonbContainsFilter on property "%s". Error: %s',
                     $property,
                     $e->getMessage()
                 ),
                     ['value' => $filteredValue]);
+
                 return; // Don't filter if encoding fails
             }
 
-            // Case 2: Handle single string input (expecting a valid JSON string)
-        } elseif (is_string($value) && trim($value) !== '') {
+        // Case 2: Handle single string input (expecting a valid JSON string)
+        } elseif (is_string($value) && '' !== trim($value)) {
             // Validate that the input string is actually valid JSON
             try {
                 // Attempt to decode just for validation
                 json_decode($value, true, 512, JSON_THROW_ON_ERROR);
                 // If validation passes, use the original string value
                 $finalJsonValue = $value;
-            } catch (JsonException $e) {
+            } catch (\JsonException $e) {
                 // Log a warning if the provided string value isn't valid JSON
                 $this->logger->warning(sprintf(
                     'Invalid JSON string provided for JsonbContainsFilter on property "%s". Error: %s',
@@ -133,6 +133,7 @@ final class JsonbContainsFilter extends AbstractFilter
                     $e->getMessage()
                 ),
                     ['value' => $value]);
+
                 return; // Don't apply filter if JSON string is invalid
             }
         } else {
@@ -144,7 +145,6 @@ final class JsonbContainsFilter extends AbstractFilter
         if (null === $finalJsonValue) {
             return;
         }
-
 
         $alias = $queryBuilder->getRootAliases()[0];
         $parameterName = $queryNameGenerator->generateParameterName($property);

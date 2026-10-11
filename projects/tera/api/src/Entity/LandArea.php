@@ -15,8 +15,6 @@ use App\Repository\LandAreaRepository;
 use App\Security\Interface\LandAwareInterface;
 use App\Security\Voter\LandAreaVoter;
 use App\Workflow\LandArea\LandAreaWorkflowPlace;
-use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -33,21 +31,21 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Post(
     normalizationContext   : ['groups' => ['land_area:post', 'land_area:post:output']],
     denormalizationContext : ['groups' => ['land_area:post', 'land_area:post:input']],
-    securityPostDenormalize: "is_granted('" . LandAreaVoter::POST . "', object)")]
+    securityPostDenormalize: "is_granted('".LandAreaVoter::POST."', object)")]
 #[Patch(
     normalizationContext  : ['groups' => ['land_area:patch', 'land_area:patch:output']],
     denormalizationContext: ['groups' => ['land_area:patch', 'land_area:patch:input']],
-    security              : "is_granted('" . LandAreaVoter::PATCH . "', previous_object)")]
-#[Delete(security: "is_granted('" . LandAreaVoter::DELETE . "', object)")]
-#[Get(normalizationContext: ['groups' => ['land_area:get']], security: "is_granted('" . LandAreaVoter::GET . "', object)")]
+    security              : "is_granted('".LandAreaVoter::PATCH."', previous_object)")]
+#[Delete(security: "is_granted('".LandAreaVoter::DELETE."', object)")]
+#[Get(normalizationContext: ['groups' => ['land_area:get']], security: "is_granted('".LandAreaVoter::GET."', object)")]
 #[GetCollection(
     normalizationContext: ['groups' => ['land_area:collection']],
-    security            : "is_granted('" . LandAreaVoter::COLLECTION . "')",
+    security            : "is_granted('".LandAreaVoter::COLLECTION."')",
     parameters          : [
         new QueryParameter(
             key   : 'land',
             filter: LandFilter::class,
-        )
+        ),
     ]
 )]
 #[ORM\HasLifecycleCallbacks]
@@ -57,41 +55,41 @@ class LandArea extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
     use UpdatedAtTrait;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["land_area:collection", "land_area:get", "land_area:patch", "land_area:post"])]
+    #[Groups(['land_area:collection', 'land_area:get', 'land_area:patch', 'land_area:post'])]
     #[Assert\NotBlank()]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'landAreas')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["land_area:get", "land_area:post"])]
+    #[Groups(['land_area:get', 'land_area:post'])]
     private ?Land $land = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(["land_area:collection", "land_area:get", "land_area:patch", "land_area:post"])]
+    #[Groups(['land_area:collection', 'land_area:get', 'land_area:patch', 'land_area:post'])]
     private ?string $description = null;
 
     #[ORM\OneToOne(mappedBy: 'landArea', cascade: ['persist', 'remove'])]
-    #[Groups(["land_area:collection", "land_area:get", "land_area:patch:output", "land_area:post:output"])]
+    #[Groups(['land_area:collection', 'land_area:get', 'land_area:patch:output', 'land_area:post:output'])]
     private ?LandAreaSetting $landAreaSetting = null;
 
     #[ORM\OneToOne(mappedBy: 'landArea', cascade: ['persist', 'remove'])]
-    #[Groups(["land_area:collection", "land_area:get", "land_area:patch:output", "land_area:post:output"])]
+    #[Groups(['land_area:collection', 'land_area:get', 'land_area:patch:output', 'land_area:post:output'])]
     private ?LandAreaParameter $landAreaParameter = null;
 
     #[ORM\ManyToOne(inversedBy: 'landAreas')]
-    #[Groups(["land_area:collection", "land_area:get", "land_area:patch:output", "land_area:post:output"])]
+    #[Groups(['land_area:collection', 'land_area:get', 'land_area:patch:output', 'land_area:post:output'])]
     private ?LandGreenhouse $landGreenhouse = null;
 
     /**
      * @var Collection<int, LandTask>
      */
     #[ORM\OneToMany(targetEntity: LandTask::class, mappedBy: 'landArea')]
-    #[Groups(["land_area:collection", "land_area:get", "land_area:patch:output", "land_area:post:output"])]
+    #[Groups(['land_area:collection', 'land_area:get', 'land_area:patch:output', 'land_area:post:output'])]
     private Collection $landTasks;
 
     #[Assert\Choice(choices: LandAreaWorkflowPlace::PLACES)]
     #[ORM\Column(length: 255)]
-    #[Groups(["land_area:collection", "land_area:get", "land_area:patch:output", "land_area:post:output"])]
+    #[Groups(['land_area:collection', 'land_area:get', 'land_area:patch:output', 'land_area:post:output'])]
     #[Assert\NotBlank()]
     private ?string $state = LandAreaWorkflowPlace::ACTIVE;
 
@@ -99,12 +97,12 @@ class LandArea extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
      * @var Collection<int, LandCultivationPlan>
      */
     #[ORM\OneToMany(targetEntity: LandCultivationPlan::class, mappedBy: 'landArea')]
-    #[Groups(["land_area:collection", "land_area:get", "land_area:patch:output", "land_area:post:output"])]
+    #[Groups(['land_area:collection', 'land_area:get', 'land_area:patch:output', 'land_area:post:output'])]
     private Collection $landCultivationPlans;
 
     #[ORM\Column(length: 150, options: ['default' => LandAreaKind::OPEN_SOIL])]
     #[Assert\Choice(choices: LandAreaKind::ALL)]
-    #[Groups(["land_area:collection", "land_area:get", "land_area:patch", "land_area:post"])]
+    #[Groups(['land_area:collection', 'land_area:get', 'land_area:patch', 'land_area:post'])]
     private ?string $kind = LandAreaKind::OPEN_SOIL;
 
     public function __construct(?Ulid $ulid = null)
@@ -128,20 +126,20 @@ class LandArea extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
         return $this;
     }
 
-    #[Groups(["land_area:collection", "land_area:get", "land_area:patch:output", "land_area:post:output"])]
+    #[Groups(['land_area:collection', 'land_area:get', 'land_area:patch:output', 'land_area:post:output'])]
     public function getUlid(): Ulid
     {
         return parent::getUlid();
     }
 
-    #[Groups(["land_area:collection", "land_area:get", "land_area:patch:output", "land_area:post:output"])]
-    public function getCreatedAt(): DateTimeImmutable
+    #[Groups(['land_area:collection', 'land_area:get', 'land_area:patch:output', 'land_area:post:output'])]
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    #[Groups(["land_area:collection", "land_area:get", "land_area:patch:output", "land_area:post:output"])]
-    public function getUpdatedAt(): DateTimeInterface
+    #[Groups(['land_area:collection', 'land_area:get', 'land_area:patch:output', 'land_area:post:output'])]
+    public function getUpdatedAt(): \DateTimeInterface
     {
         return $this->updatedAt;
     }

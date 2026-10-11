@@ -20,7 +20,7 @@ trait LandTrait
     protected function createLand(Person $person): Land
     {
         return LandFactory::new()->create([
-            'owner' => $person
+            'owner' => $person,
         ]);
     }
 }

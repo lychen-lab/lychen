@@ -9,8 +9,6 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\SoilTypeRepository;
-use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -40,7 +38,7 @@ class SoilType extends AbstractIdOrmAndUlidApiIdentified
     use CreatedAtTrait;
     use UpdatedAtTrait;
 
-    #[Groups(["soil_type:get"])]
+    #[Groups(['soil_type:get'])]
     #[ORM\Column(length: 100, unique: true)]
     private ?string $code = null;
 
@@ -68,14 +66,14 @@ class SoilType extends AbstractIdOrmAndUlidApiIdentified
         return $this;
     }
 
-    #[Groups(["soil_type:get"])]
-    public function getCreatedAt(): DateTimeImmutable
+    #[Groups(['soil_type:get'])]
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    #[Groups(["soil_type:get"])]
-    public function getUpdatedAt(): DateTimeInterface
+    #[Groups(['soil_type:get'])]
+    public function getUpdatedAt(): \DateTimeInterface
     {
         return $this->updatedAt;
     }

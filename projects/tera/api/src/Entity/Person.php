@@ -63,13 +63,13 @@ class Person extends AbstractZitadelUser implements PermissionHolder
         $this->personApiKeys = new ArrayCollection();
     }
 
-    #[Groups(["land_member:collection"])]
+    #[Groups(['land_member:collection'])]
     public function getGivenName(): ?string
     {
         return parent::getGivenName();
     }
 
-    #[Groups(["land_member:collection"])]
+    #[Groups(['land_member:collection'])]
     public function getFamilyName(): ?string
     {
         return parent::getFamilyName();

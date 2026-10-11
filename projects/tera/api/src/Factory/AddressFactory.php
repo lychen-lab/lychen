@@ -44,6 +44,6 @@ final class AddressFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this// ->afterInstantiate(function(Address $address): void {})
-            ;
+        ;
     }
 }

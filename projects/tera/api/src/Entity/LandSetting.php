@@ -18,24 +18,24 @@ use Symfony\Component\Uid\Ulid;
 #[Patch(
     normalizationContext  : ['groups' => ['land_setting:patch', 'land_setting:patch:output']],
     denormalizationContext: ['groups' => ['land_setting:patch', 'land_setting:patch:input']],
-    security              : "is_granted('" . LandSettingVoter::PATCH . "', previous_object)"
+    security              : "is_granted('".LandSettingVoter::PATCH."', previous_object)"
 )]
 #[Get(
     normalizationContext: ['groups' => ['land_setting:get']],
-    security            : "is_granted('" . LandSettingVoter::GET . "', object)"
+    security            : "is_granted('".LandSettingVoter::GET."', object)"
 )]
 class LandSetting extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInterface
 {
     #[ORM\OneToOne(inversedBy: 'landSetting', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["land_setting:get", "land_setting:patch:output"])]
+    #[Groups(['land_setting:get', 'land_setting:patch:output'])]
     private ?Land $land = null;
 
     #[ORM\Column]
-    #[Groups(["land_setting:get", "land_setting:patch"])]
+    #[Groups(['land_setting:get', 'land_setting:patch'])]
     private ?bool $lookingForMember = false;
 
-    #[Groups(["land_setting:patch:output", "land_setting:get"])]
+    #[Groups(['land_setting:patch:output', 'land_setting:get'])]
     public function getUlid(): Ulid
     {
         return parent::getUlid();

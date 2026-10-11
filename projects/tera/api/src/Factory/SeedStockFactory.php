@@ -3,7 +3,6 @@
 namespace App\Factory;
 
 use App\Entity\SeedStock;
-use DateTimeImmutable;
 use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
 /**
@@ -33,7 +32,7 @@ final class SeedStockFactory extends PersistentObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'createdAt' => DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+            'createdAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'name' => self::faker()->text(255),
         ];
     }
@@ -44,6 +43,6 @@ final class SeedStockFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this// ->afterInstantiate(function(SeedStock $seedStock): void {})
-            ;
+        ;
     }
 }

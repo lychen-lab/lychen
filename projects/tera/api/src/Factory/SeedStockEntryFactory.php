@@ -42,6 +42,6 @@ final class SeedStockEntryFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this// ->afterInstantiate(function(SeedStockEntry $seedStockEntry): void {})
-            ;
+        ;
     }
 }

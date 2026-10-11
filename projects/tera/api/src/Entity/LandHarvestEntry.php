@@ -16,8 +16,6 @@ use App\Repository\LandHarvestEntryRepository;
 use App\Security\Interface\LandAwareInterface;
 use App\Security\Voter\LandHarvestEntryVoter;
 use App\Validator\PlantUlid;
-use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Lychen\UtilModel\Abstract\AbstractIdOrmAndUlidApiIdentified;
@@ -33,23 +31,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Post(
     normalizationContext   : ['groups' => ['land_harvest_entry:post', 'land_harvest_entry:post:output']],
     denormalizationContext : ['groups' => ['land_harvest_entry:post', 'land_harvest_entry:post:input']],
-    securityPostDenormalize: "is_granted('" . LandHarvestEntryVoter::POST . "', object)",
+    securityPostDenormalize: "is_granted('".LandHarvestEntryVoter::POST."', object)",
 )]
 #[Patch(
     normalizationContext  : ['groups' => ['land_harvest_entry:patch', 'land_harvest_entry:patch:output']],
     denormalizationContext: ['groups' => ['land_harvest_entry:patch', 'land_harvest_entry:patch:input']],
-    security              : "is_granted('" . LandHarvestEntryVoter::PATCH . "', object)"
+    security              : "is_granted('".LandHarvestEntryVoter::PATCH."', object)"
 )]
 #[Delete(
-    security: "is_granted('" . LandHarvestEntryVoter::DELETE . "', object)"
+    security: "is_granted('".LandHarvestEntryVoter::DELETE."', object)"
 )]
 #[Get(
     normalizationContext: ['groups' => ['land_harvest_entry:get']],
-    security            : "is_granted('" . LandHarvestEntryVoter::GET . "', object)",
+    security            : "is_granted('".LandHarvestEntryVoter::GET."', object)",
 )]
 #[GetCollection(
     normalizationContext: ['groups' => ['land_harvest_entry:collection']],
-    security            : "is_granted('" . LandHarvestEntryVoter::COLLECTION . "')",
+    security            : "is_granted('".LandHarvestEntryVoter::COLLECTION."')",
     parameters          : [
         new QueryParameter(
             key   : 'land',
@@ -64,17 +62,17 @@ class LandHarvestEntry extends AbstractIdOrmAndUlidApiIdentified implements Land
     use CreatedAtTrait;
     use UpdatedAtTrait;
 
-    #[Groups(["land_harvest_entry:collection",
-              "land_harvest_entry:get",
-              "land_harvest_entry:post"])]
+    #[Groups(['land_harvest_entry:collection',
+        'land_harvest_entry:get',
+        'land_harvest_entry:post'])]
     #[ORM\ManyToOne(inversedBy: 'landHarvestEntries')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Land $land = null;
 
-    #[Groups(["land_harvest_entry:collection",
-              "land_harvest_entry:get",
-              "land_harvest_entry:patch",
-              "land_harvest_entry:post"])]
+    #[Groups(['land_harvest_entry:collection',
+        'land_harvest_entry:get',
+        'land_harvest_entry:patch',
+        'land_harvest_entry:post'])]
     #[ORM\Column]
     #[Assert\NotNull]
     #[Assert\GreaterThan(0)]
@@ -83,65 +81,65 @@ class LandHarvestEntry extends AbstractIdOrmAndUlidApiIdentified implements Land
     /**
      * @var array|null Tiptap JSON Object
      */
-    #[Groups(["land_harvest_entry:collection",
-              "land_harvest_entry:get",
-              "land_harvest_entry:patch",
-              "land_harvest_entry:post"])]
+    #[Groups(['land_harvest_entry:collection',
+        'land_harvest_entry:get',
+        'land_harvest_entry:patch',
+        'land_harvest_entry:post'])]
     #[ORM\Column(type: Types::JSON, nullable: true)]
     private ?array $notes = null;
 
-    #[Groups(["land_harvest_entry:collection",
-              "land_harvest_entry:get",
-              "land_harvest_entry:patch",
-              "land_harvest_entry:post"])]
+    #[Groups(['land_harvest_entry:collection',
+        'land_harvest_entry:get',
+        'land_harvest_entry:patch',
+        'land_harvest_entry:post'])]
     #[ORM\Column]
     #[Assert\LessThanOrEqual('today')]
-    private ?DateTimeImmutable $harvestedAt = null;
+    private ?\DateTimeImmutable $harvestedAt = null;
 
-    #[Groups(["land_harvest_entry:collection",
-              "land_harvest_entry:get",
-              "land_harvest_entry:patch",
-              "land_harvest_entry:post"])]
+    #[Groups(['land_harvest_entry:collection',
+        'land_harvest_entry:get',
+        'land_harvest_entry:patch',
+        'land_harvest_entry:post'])]
     #[ORM\Column(length: 255)]
     #[Assert\Choice(choices: HarvestQuality::ALL)]
     #[ApiProperty(openapiContext: [
         'type' => 'string',
         'enum' => HarvestQuality::ALL,
-        'example' => HarvestQuality::GOOD
+        'example' => HarvestQuality::GOOD,
     ])]
     private ?string $quality = HarvestQuality::STANDARD;
 
-    #[Groups(["land_harvest_entry:collection",
-              "land_harvest_entry:get",
-              "land_harvest_entry:patch",
-              "land_harvest_entry:post"])]
+    #[Groups(['land_harvest_entry:collection',
+        'land_harvest_entry:get',
+        'land_harvest_entry:patch',
+        'land_harvest_entry:post'])]
     #[ORM\Column(type: UlidType::NAME)]
     #[PlantUlid]
     private ?Ulid $plantId = null;
 
-    #[Groups(["land_harvest_entry:collection",
-              "land_harvest_entry:get",
-              "land_harvest_entry:patch:output",
-              "land_harvest_entry:post:output"])]
+    #[Groups(['land_harvest_entry:collection',
+        'land_harvest_entry:get',
+        'land_harvest_entry:patch:output',
+        'land_harvest_entry:post:output'])]
     public function getUlid(): Ulid
     {
         return parent::getUlid();
     }
 
-    #[Groups(["land_harvest_entry:collection",
-              "land_harvest_entry:get",
-              "land_harvest_entry:patch:output",
-              "land_harvest_entry:post:output"])]
-    public function getCreatedAt(): DateTimeImmutable
+    #[Groups(['land_harvest_entry:collection',
+        'land_harvest_entry:get',
+        'land_harvest_entry:patch:output',
+        'land_harvest_entry:post:output'])]
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    #[Groups(["land_harvest_entry:collection",
-              "land_harvest_entry:get",
-              "land_harvest_entry:patch:output",
-              "land_harvest_entry:post:output"])]
-    public function getUpdatedAt(): DateTimeInterface
+    #[Groups(['land_harvest_entry:collection',
+        'land_harvest_entry:get',
+        'land_harvest_entry:patch:output',
+        'land_harvest_entry:post:output'])]
+    public function getUpdatedAt(): \DateTimeInterface
     {
         return $this->updatedAt;
     }
@@ -182,12 +180,12 @@ class LandHarvestEntry extends AbstractIdOrmAndUlidApiIdentified implements Land
         return $this;
     }
 
-    public function getHarvestedAt(): ?DateTimeImmutable
+    public function getHarvestedAt(): ?\DateTimeImmutable
     {
         return $this->harvestedAt;
     }
 
-    public function setHarvestedAt(DateTimeImmutable $harvestedAt): static
+    public function setHarvestedAt(\DateTimeImmutable $harvestedAt): static
     {
         $this->harvestedAt = $harvestedAt;
 
@@ -198,7 +196,7 @@ class LandHarvestEntry extends AbstractIdOrmAndUlidApiIdentified implements Land
     public function setHarvestedAtValue(): void
     {
         if (null === $this->harvestedAt) {
-            $this->harvestedAt = new DateTimeImmutable();
+            $this->harvestedAt = new \DateTimeImmutable();
         }
     }
 

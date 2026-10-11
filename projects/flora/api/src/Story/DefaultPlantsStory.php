@@ -28,8 +28,8 @@ final class DefaultPlantsStory extends Story
                 'medicinal' => false,
                 'melliferous' => false,
                 'soilTypes' => [
-                    DefaultSoilTypesStory::get(DefaultSoilTypesStory::LOAMY)
-                ]
+                    DefaultSoilTypesStory::get(DefaultSoilTypesStory::LOAMY),
+                ],
             ],
             [
                 'sowingMonths' => [3, 4, 5],
@@ -49,8 +49,8 @@ final class DefaultPlantsStory extends Story
                     'part' => DefaultPartsStory::get(DefaultPartsStory::FRUIT),
                     'consumable' => true,
                     'consumptionMethods' => [
-                        DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::RAW)
-                    ]
+                        DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::RAW),
+                    ],
                 ],
             ]
         );
@@ -64,8 +64,8 @@ final class DefaultPlantsStory extends Story
                 'medicinal' => false,
                 'melliferous' => false,
                 'soilTypes' => [
-                    DefaultSoilTypesStory::get(DefaultSoilTypesStory::HUMIFEROUS)
-                ]
+                    DefaultSoilTypesStory::get(DefaultSoilTypesStory::HUMIFEROUS),
+                ],
             ],
             [
                 'sowingMonths' => [2, 3, 4, 5, 6, 7, 8, 9],
@@ -85,8 +85,8 @@ final class DefaultPlantsStory extends Story
                     'part' => DefaultPartsStory::get(DefaultPartsStory::LEAF),
                     'consumable' => true,
                     'consumptionMethods' => [
-                        DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::RAW)
-                    ]
+                        DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::RAW),
+                    ],
                 ],
             ]
         );
@@ -99,8 +99,8 @@ final class DefaultPlantsStory extends Story
                 'medicinal' => false,
                 'melliferous' => false,
                 'soilTypes' => [
-                    DefaultSoilTypesStory::get(DefaultSoilTypesStory::LOAMY)
-                ]
+                    DefaultSoilTypesStory::get(DefaultSoilTypesStory::LOAMY),
+                ],
             ],
             [
                 'sowingMonths' => [2, 3, 4],
@@ -120,8 +120,8 @@ final class DefaultPlantsStory extends Story
                     'part' => DefaultPartsStory::get(DefaultPartsStory::FRUIT),
                     'consumable' => true,
                     'consumptionMethods' => [
-                        DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::COOKED)
-                    ]
+                        DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::COOKED),
+                    ],
                 ],
             ]
         );
@@ -134,8 +134,8 @@ final class DefaultPlantsStory extends Story
                 'medicinal' => false,
                 'melliferous' => false,
                 'soilTypes' => [
-                    DefaultSoilTypesStory::get(DefaultSoilTypesStory::SANDY)
-                ]
+                    DefaultSoilTypesStory::get(DefaultSoilTypesStory::SANDY),
+                ],
             ],
             [
                 'sowingMonths' => [2, 3, 4, 5],
@@ -156,15 +156,15 @@ final class DefaultPlantsStory extends Story
                     'consumable' => true,
                     'consumptionMethods' => [
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::COOKED),
-                        DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::RAW)
-                    ]
+                        DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::RAW),
+                    ],
                 ],
                 [
                     'part' => DefaultPartsStory::get(DefaultPartsStory::LEAF),
                     'consumable' => true,
                     'consumptionMethods' => [
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::COOKED),
-                    ]
+                    ],
                 ],
             ]
         );
@@ -177,8 +177,8 @@ final class DefaultPlantsStory extends Story
                 'medicinal' => false,
                 'melliferous' => false,
                 'soilTypes' => [
-                    DefaultSoilTypesStory::get(DefaultSoilTypesStory::HUMIFEROUS)
-                ]
+                    DefaultSoilTypesStory::get(DefaultSoilTypesStory::HUMIFEROUS),
+                ],
             ],
             [
                 'sowingMonths' => [5, 6],
@@ -199,7 +199,7 @@ final class DefaultPlantsStory extends Story
                     'consumable' => true,
                     'consumptionMethods' => [
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::COOKED),
-                    ]
+                    ],
                 ],
             ]
         );
@@ -212,8 +212,8 @@ final class DefaultPlantsStory extends Story
                 'medicinal' => true,
                 'melliferous' => true,
                 'soilTypes' => [
-                    DefaultSoilTypesStory::get(DefaultSoilTypesStory::LOAMY)
-                ]
+                    DefaultSoilTypesStory::get(DefaultSoilTypesStory::LOAMY),
+                ],
             ],
             [
                 'sowingMonths' => [3, 4, 5],
@@ -236,7 +236,7 @@ final class DefaultPlantsStory extends Story
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::COOKED),
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::DRIED),
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::RAW),
-                    ]
+                    ],
                 ],
                 [
                     'part' => DefaultPartsStory::get(DefaultPartsStory::LEAF),
@@ -245,7 +245,7 @@ final class DefaultPlantsStory extends Story
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::COOKED),
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::DRIED),
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::RAW),
-                    ]
+                    ],
                 ],
                 [
                     'part' => DefaultPartsStory::get(DefaultPartsStory::STEM),
@@ -254,8 +254,8 @@ final class DefaultPlantsStory extends Story
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::COOKED),
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::DRIED),
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::RAW),
-                    ]
-                ]
+                    ],
+                ],
             ]
         );
 
@@ -266,7 +266,7 @@ final class DefaultPlantsStory extends Story
                 'species' => DefaultSpeciesStory::get(DefaultSpeciesStory::CENTAUREA_CYANUS),
                 'medicinal' => true,
                 'melliferous' => true,
-                'soilTypes' => DefaultSoilTypesStory::getPool('all')
+                'soilTypes' => DefaultSoilTypesStory::getPool('all'),
             ],
             [
                 'sowingMonths' => [3, 4, 5, 8, 9, 10],
@@ -291,7 +291,7 @@ final class DefaultPlantsStory extends Story
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::RAW),
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::INFUSED),
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::FERMENTED),
-                    ]
+                    ],
                 ],
                 [
                     'part' => DefaultPartsStory::get(DefaultPartsStory::PETAL),
@@ -302,8 +302,8 @@ final class DefaultPlantsStory extends Story
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::RAW),
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::INFUSED),
                         DefaultConsumptionMethodsStory::get(DefaultConsumptionMethodsStory::FERMENTED),
-                    ]
-                ]
+                    ],
+                ],
             ]
         );
     }
@@ -315,7 +315,7 @@ final class DefaultPlantsStory extends Story
     {
         $plant = PlantFactory::new([
             ...$attributes,
-            'cultivation' => CultivationFactory::new($cultivationAttributes)
+            'cultivation' => CultivationFactory::new($cultivationAttributes),
         ])->create();
         $this->addState(
             $stateId,

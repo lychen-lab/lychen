@@ -71,7 +71,6 @@ class LandSecurityTest extends AbstractApiTestCase
         $this->browser()->actingAs($landApiKey2)
             ->patch($this->getIriFromResource($context1->land), ['json' => []])
             ->assertStatus(403);
-
     }
 
     public function testGet()

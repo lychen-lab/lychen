@@ -42,7 +42,6 @@ final class LandRequestFactory extends PersistentObjectFactory
             'sharingConditions' => self::faker()->randomElements(LandSharingCondition::ALL,
                 self::faker()->numberBetween(0, count(LandSharingCondition::ALL))),
         ];
-
     }
 
     /**
@@ -51,6 +50,6 @@ final class LandRequestFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this// ->afterInstantiate(function(LandRequest $landRequest): void {})
-            ;
+        ;
     }
 }

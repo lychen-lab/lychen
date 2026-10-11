@@ -31,6 +31,7 @@ class LandRequestRepository extends ServiceEntityRepository
         }
 
         $result = $qb->getQuery()->getOneOrNullResult();
-        return $result !== null;
+
+        return null !== $result;
     }
 }

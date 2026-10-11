@@ -6,6 +6,7 @@ use App\Constant\LandAreaKind;
 use App\Security\Voter\LandAreaVoter;
 use App\Tests\Utils\Abstract\AbstractApiTestCase;
 use Zenstruck\Browser\Json;
+
 use function Zenstruck\Foundry\faker;
 
 class LandAreaTest extends AbstractApiTestCase
@@ -25,14 +26,14 @@ class LandAreaTest extends AbstractApiTestCase
                     'name' => $name,
                     'description' => $description,
                     'kind' => $kind,
-                    'land' => $this->getIriFromResource($context->land)
+                    'land' => $this->getIriFromResource($context->land),
                 ]])
             ->assertStatus(201)
             ->assertJsonMatches('name', $name)
             ->assertJsonMatches('description', $description)
             ->assertJsonMatches('kind', $kind)
             ->use(function (Json $json) {
-                $json->assertThat('ulid', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('ulid', fn (Json $json) => $json->isNotNull());
             });
 
         // Member with permissions
@@ -47,13 +48,13 @@ class LandAreaTest extends AbstractApiTestCase
                 ['json' => [
                     'name' => $name,
                     'description' => $description,
-                    'land' => $this->getIriFromResource($context->land)
+                    'land' => $this->getIriFromResource($context->land),
                 ]])
             ->assertStatus(201)
             ->assertJsonMatches('name', $name)
             ->assertJsonMatches('description', $description)
             ->use(function (Json $json) {
-                $json->assertThat('ulid', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('ulid', fn (Json $json) => $json->isNotNull());
             });
     }
 
@@ -73,10 +74,10 @@ class LandAreaTest extends AbstractApiTestCase
             ->assertJsonMatches('description', $landArea->getDescription())
             ->assertJsonMatches('state', $landArea->getState())
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNull());
-                $json->assertThat('landAreaSetting', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('landAreaParameter', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNull());
+                $json->assertThat('landAreaSetting', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('landAreaParameter', fn (Json $json) => $json->isNotNull());
             });
 
         // Member with permissions
@@ -91,10 +92,10 @@ class LandAreaTest extends AbstractApiTestCase
             ->assertJsonMatches('description', $landArea->getDescription())
             ->assertJsonMatches('state', $landArea->getState())
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNull());
-                $json->assertThat('landAreaSetting', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('landAreaParameter', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNull());
+                $json->assertThat('landAreaSetting', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('landAreaParameter', fn (Json $json) => $json->isNotNull());
             });
     }
 
@@ -113,16 +114,16 @@ class LandAreaTest extends AbstractApiTestCase
                 [
                     'json' => [
                         'name' => $newName,
-                        'description' => $newDescription
-                    ]
+                        'description' => $newDescription,
+                    ],
                 ])
             ->assertStatus(200)
             ->assertJsonMatches('ulid', $landArea->getUlid()->toString())
             ->assertJsonMatches('name', $newName)
             ->assertJsonMatches('description', $newDescription)
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNotNull());
             });
 
         // Member with permissions
@@ -134,16 +135,16 @@ class LandAreaTest extends AbstractApiTestCase
                 [
                     'json' => [
                         'name' => $newName,
-                        'description' => $newDescription
-                    ]
+                        'description' => $newDescription,
+                    ],
                 ])
             ->assertStatus(200)
             ->assertJsonMatches('ulid', $landArea->getUlid()->toString())
             ->assertJsonMatches('name', $newName)
             ->assertJsonMatches('description', $newDescription)
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNotNull());
             });
     }
 
@@ -188,7 +189,7 @@ class LandAreaTest extends AbstractApiTestCase
     public function testCollectionPagination()
     {
         $context = $this->createLandContext();
-        array_map(fn() => $this->addOneLandArea($context), range(1, 25));
+        array_map(fn () => $this->addOneLandArea($context), range(1, 25));
 
         $this->browser()->actingAs($context->owner)
             ->get('/api/land_areas',
@@ -196,7 +197,7 @@ class LandAreaTest extends AbstractApiTestCase
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', 25)
             ->use(function (Json $json) {
-                $json->assertThat('member', fn(Json $json) => $json->hasCount(10));
+                $json->assertThat('member', fn (Json $json) => $json->hasCount(10));
             });
     }
 

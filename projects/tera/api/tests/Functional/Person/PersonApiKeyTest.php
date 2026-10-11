@@ -23,9 +23,9 @@ class PersonApiKeyTest extends AbstractApiTestCase
             ->assertJsonMatches('lastUsedDate', null)
             ->assertJsonMatches('expirationDate', null)
             ->use(function (Json $json) {
-                $json->assertThat('ulid', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('token', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('token', fn(Json $json) => str_starts_with($json->decoded(), PersonApiKey::PREFIX));
+                $json->assertThat('ulid', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('token', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('token', fn (Json $json) => str_starts_with($json->decoded(), PersonApiKey::PREFIX));
             });
     }
 }

@@ -10,8 +10,6 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\LandRepository;
 use App\Security\Voter\LandVoter;
-use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,17 +22,17 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: LandRepository::class)]
 #[ApiResource()]
-#[Get(normalizationContext: ['groups' => ['land:get']], security: "is_granted('" . LandVoter::GET . "', object)")]
-#[GetCollection(normalizationContext: ['groups' => ['land:collection']], security: "is_granted('" . LandVoter::COLLECTION . "')")]
+#[Get(normalizationContext: ['groups' => ['land:get']], security: "is_granted('".LandVoter::GET."', object)")]
+#[GetCollection(normalizationContext: ['groups' => ['land:collection']], security: "is_granted('".LandVoter::COLLECTION."')")]
 #[Post(
     normalizationContext  : ['groups' => ['land:post', 'land:post:output']],
     denormalizationContext: ['groups' => ['land:post', 'land:post:input']],
-    security              : "is_granted('" . LandVoter::POST . "')")]
+    security              : "is_granted('".LandVoter::POST."')")]
 #[Patch(
     normalizationContext  : ['groups' => ['land:patch', 'land:patch:output']],
     denormalizationContext: ['groups' => ['land:patch', 'land:patch:input']],
-    security              : "is_granted('" . LandVoter::PATCH . "', previous_object)")]
-#[Delete(security: "is_granted('" . LandVoter::DELETE . "', object)")]
+    security              : "is_granted('".LandVoter::PATCH."', previous_object)")]
+#[Delete(security: "is_granted('".LandVoter::DELETE."', object)")]
 #[ORM\HasLifecycleCallbacks]
 class Land extends AbstractIdOrmAndUlidApiIdentified
 {
@@ -45,30 +43,30 @@ class Land extends AbstractIdOrmAndUlidApiIdentified
     public ?Person $owner = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["land:collection",
-              "land:get",
-              "land:patch",
-              "land:post",
-              "land_member_invitation:collection-by-email",
-              "land_proposal:collection-public"])]
+    #[Groups(['land:collection',
+        'land:get',
+        'land:patch',
+        'land:post',
+        'land_member_invitation:collection-by-email',
+        'land_proposal:collection-public'])]
     private ?string $name = null;
 
     /**
      * @var Collection<int, LandMember>
      */
     #[ORM\OneToMany(targetEntity: LandMember::class, mappedBy: 'land', orphanRemoval: true)]
-    #[Groups(["land:collection", "land:get"])]
+    #[Groups(['land:collection', 'land:get'])]
     private Collection $landMembers;
 
     #[ORM\OneToOne(mappedBy: 'land', cascade: ['persist', 'remove'])]
-    #[Groups(["land:collection", "land:get"])]
+    #[Groups(['land:collection', 'land:get'])]
     private ?LandSetting $landSetting = null;
 
     /**
      * @var Collection<int, LandArea>
      */
     #[ORM\OneToMany(targetEntity: LandArea::class, mappedBy: 'land', orphanRemoval: true)]
-    #[Groups(["land:collection", "land:get", "land:patch:output", "land:post:output"])]
+    #[Groups(['land:collection', 'land:get', 'land:patch:output', 'land:post:output'])]
     private Collection $landAreas;
 
     /**
@@ -85,7 +83,7 @@ class Land extends AbstractIdOrmAndUlidApiIdentified
 
     #[ORM\Column(nullable: true)]
     #[Assert\GreaterThanOrEqual(0)]
-    #[Groups(["land:collection", "land:get", "land:patch", "land:post", "land_proposal:collection-public"])]
+    #[Groups(['land:collection', 'land:get', 'land:patch', 'land:post', 'land_proposal:collection-public'])]
     private ?int $surface = null;
 
     /**
@@ -111,7 +109,7 @@ class Land extends AbstractIdOrmAndUlidApiIdentified
     private Collection $landGreenhouses;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["land:collection", "land:get", "land:patch", "land:post", "land_proposal:collection-public"])]
+    #[Groups(['land:collection', 'land:get', 'land:patch', 'land:post', 'land_proposal:collection-public'])]
     private ?int $altitude = 1;
 
     /**
@@ -128,7 +126,7 @@ class Land extends AbstractIdOrmAndUlidApiIdentified
 
     #[ORM\OneToOne(cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
-    #[Groups(["land_proposal:collection-public"])]
+    #[Groups(['land_proposal:collection-public'])]
     private ?Address $address = null;
 
     /**
@@ -172,20 +170,20 @@ class Land extends AbstractIdOrmAndUlidApiIdentified
         return $this;
     }
 
-    #[Groups(["land:collection", "land:get", "land:patch:output", "land:post:output"])]
+    #[Groups(['land:collection', 'land:get', 'land:patch:output', 'land:post:output'])]
     public function getUlid(): Ulid
     {
         return parent::getUlid();
     }
 
-    #[Groups(["land:collection", "land:get", "land:patch:output", "land:post:output"])]
-    public function getCreatedAt(): DateTimeImmutable
+    #[Groups(['land:collection', 'land:get', 'land:patch:output', 'land:post:output'])]
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    #[Groups(["land:collection", "land:get", "land:patch:output", "land:post:output"])]
-    public function getUpdatedAt(): DateTimeInterface
+    #[Groups(['land:collection', 'land:get', 'land:patch:output', 'land:post:output'])]
+    public function getUpdatedAt(): \DateTimeInterface
     {
         return $this->updatedAt;
     }
