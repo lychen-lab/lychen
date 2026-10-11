@@ -1,41 +1,79 @@
 $schema: https://moonrepo.dev/schemas/tasks.json
 tasks:
   format:
-    command:
+    # Without --check, Prettier prints the formatted files and always exits 0.
+    args:
+    - --check
+    # Prettier runs from the project root and only reads ignore files from
+    # there by default. Passing --ignore-path replaces that default, so list
+    # the project's own files (storybook's .gitignore skips storybook-static/)
+    # next to the root ones (dist/, generated/, ...).
+    command: &prettier
     - prettier
     - --no-error-on-unmatched-pattern
+    - --ignore-path=$workspaceRoot/.gitignore
+    - --ignore-path=$workspaceRoot/.prettierignore
+    - --ignore-path=$projectRoot/.gitignore
+    - --ignore-path=$projectRoot/.prettierignore
     - .
-    inputs:
-    - '**/*.{vue,ts,js,yaml,yml,json,md}'
+    # Everything that changes the result, so that CI (which only runs affected
+    # tasks) reruns the check. The project's ignore files are a glob because
+    # most projects have neither, and a missing file input logs a warning.
+    inputs: &prettier-inputs
+    - '**/*.{vue,ts,js,yaml,yml,json,md,html}'
     - '!**/build/'
     - '!**/dist/'
     - '!**/playwright-report/'
     - '!**/vendor/'
     - '!**/.vite-ssg-temp/'
+    - '.{gitignore,prettierignore}'
+    - /.gitignore
+    - /.prettierignore
+    - /prettier.config.js
   format-fix:
-    deps:
-    - args:
-      - --write
-      target: format
+    # Same Prettier run as format, with --write instead of --check. It must not
+    # depend on format: `moon ci :format` also runs dependents, so a --write
+    # run would race the check.
+    args:
+    - --write
+    command: *prettier
+    inputs: *prettier-inputs
+    # Never cached: the fixes are edits to the inputs, which a cache hit can't
+    # replay. Once those edits are discarded, the files hash as they did before
+    # the last run, and moon would skip the task instead of fixing them again.
+    options:
+      cache: false
   lint:
-    command:
+    command: &eslint
     - eslint
     - --report-unused-disable-directives
     - --no-error-on-unmatched-pattern
     - --exit-on-fatal-error
     - .
-    inputs:
+    # Everything that changes the result, so that CI (which only runs affected
+    # tasks) reruns the check. The Tailwind rules load the design system from
+    # libs/css/core (cssConfigPath in eslint.config.js): one of them reports
+    # errors, and ESLint crashes if the stylesheets don't load.
+    inputs: &eslint-inputs
     - '**/*.{vue,ts,js,yaml,yml,json,md}'
     - '!**/build/'
     - '!**/dist/'
     - '!**/vendor/'
     - '!**/playwright-report/'
     - '!**/.vite-ssg-temp/'
+    - /eslint.config.js
+    - /libs/css/core/**/*.css
   lint-fix:
-    deps:
-    - args:
-      - --fix
-      target: lint
+    # Same ESLint run as lint, with --fix, and never cached, like format-fix.
+    # It must not depend on lint: `moon ci :lint` also runs dependents, so CI
+    # would run the fixer on the checkout too, with nothing ordering it after
+    # the check.
+    args:
+    - --fix
+    command: *eslint
+    inputs: *eslint-inputs
+    options:
+      cache: false
   test:
     command:
     - vitest

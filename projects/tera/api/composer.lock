@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "00abf7ecb3ce9ff39d5ffdb1fa891272",
+    "content-hash": "f67144a205672cd29aece1ec4ea12906",
     "packages": [
         {
             "name": "api-platform/core",
@@ -11001,6 +11001,47 @@
                 "source": "https://github.com/jsonrainbow/json-schema/tree/6.9.0"
             },
             "time": "2026-06-05T14:05:24+00:00"
+        },
+        {
+            "name": "lychen/test",
+            "version": "0.0.0",
+            "dist": {
+                "type": "path",
+                "url": "../packages/test",
+                "reference": "735148a5d30fffbb1349c5c68533437bec899152"
+            },
+            "require": {
+                "api-platform/core": "^4.1",
+                "dama/doctrine-test-bundle": "^8.6",
+                "doctrine/persistence": "^3.3 || ^4.0",
+                "php": "^8.4",
+                "symfony/framework-bundle": "^7.4 || ^8.0",
+                "zenstruck/browser": "^1.10",
+                "zenstruck/foundry": "^2.9",
+                "zenstruck/messenger-test": "^1.14"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Lychen\\Test\\": "src/"
+                }
+            },
+            "archive": {
+                "exclude": [
+                    "/moon.yml"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Lychen",
+                    "email": "bonjour@lychen.org"
+                }
+            ],
+            "description": "Shared PHPUnit base classes of the Lychen APIs' functional and security tests",
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
         },
         {
             "name": "marc-mabe/php-enum",
