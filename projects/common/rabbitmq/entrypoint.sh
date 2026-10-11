@@ -70,12 +70,10 @@ regex_escape() {
   printf '%s' "$1" | sed -e 's/\./[.]/g'
 }
 
-# service_password <service> — $RABBITMQ_<SERVICE>_PASSWORD, falling back to the
-# service name so a fresh checkout boots with no configuration at all.
+# service_password <service> — $RABBITMQ_<SERVICE>_PASSWORD, empty when unset.
 service_password() {
   _var="RABBITMQ_$(printf '%s' "$1" | tr 'a-z-' 'A-Z_')_PASSWORD"
   eval "_value=\${$_var:-}"
-  [ -n "$_value" ] || _value="$1"
   printf '%s' "$_value"
 }
 
@@ -106,10 +104,19 @@ bindings=""
 topic_separator=""
 queue_separator=""
 binding_separator=""
+# Users left on their in-repo default password, reported once all are known.
+defaulted=""
+[ -n "${RABBITMQ_ADMIN_PASSWORD:-}" ] || defaulted=" $ADMIN_USER"
 
 for service in $SERVICES; do
   name="$(json_escape "$service")"
-  password="$(json_escape "$(service_password "$service")")"
+  password="$(service_password "$service")"
+  if [ -z "$password" ]; then
+    # The service name, so a fresh checkout boots with no configuration at all.
+    password="$service"
+    defaulted="$defaulted $service"
+  fi
+  password="$(json_escape "$password")"
   queue="$name.events"
   dlq="$queue.dlq"
   service_re="$(regex_escape "$service")"
@@ -175,5 +182,10 @@ if [ "$(id -u)" = '0' ] && id rabbitmq >/dev/null 2>&1; then
 fi
 
 echo "lychen: provisioning vhost '$VHOST', exchange '$EXCHANGE' and queues for [$SERVICES] (admin user '$ADMIN_USER')"
+if [ -n "$defaulted" ]; then
+  # Loud on purpose: these are public, in-repo values. Anything but local dev
+  # must set RABBITMQ_ADMIN_PASSWORD and RABBITMQ_<SERVICE>_PASSWORD.
+  echo "lychen: WARNING default passwords in use for users:$defaulted" >&2
+fi
 
 exec docker-entrypoint.sh "$@"

@@ -199,8 +199,16 @@ variables:
 | `RABBITMQ_ADMIN_USER` / `RABBITMQ_ADMIN_PASSWORD` | `admin` / `admin` | Management-UI account, with access to everything. |
 | `RABBITMQ_VERSION` | `4.0.4` | Image tag (`rabbitmq:<version>-management-alpine`). |
 
+The compose hands its whole environment to the container (`env_file: .env`,
+which Dokploy writes from the compose env), so any variable above set in Dokploy
+reaches the entrypoint — adding a service to `RABBITMQ_SERVICES` along with its
+`RABBITMQ_<SERVICE>_PASSWORD` needs no change to `compose.yml`. Locally, put
+overrides in `projects/common/rabbitmq/.env`.
+
 The defaults are **local-dev credentials**. Staging and production must override
-every password in the Dokploy compose env. Definitions are re-imported on each
+every password in the Dokploy compose env; the broker logs
+`WARNING default passwords in use for users: …` at boot while any user is still
+on its default. Definitions are re-imported on each
 boot and are idempotent — changing a password or a binding key there and
 redeploying updates it in place, leaving queues and messages untouched. Queue
 *arguments* are the exception: RabbitMQ cannot change them on an existing queue,
