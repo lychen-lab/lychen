@@ -2,9 +2,9 @@
   "name": "@lychen/tera-tests-e2e",
   "devDependencies": {
     "@faker-js/faker": "^10.6.0",
-    "@playwright/test": "^1.62.1",
-    "vue": "^3.5.42",
-    "vue-i18n": "^11.4.10"
+    "@playwright/test": "^1.63.0",
+    "vue": "^3.5.43",
+    "vue-i18n": "^11.4.12"
   },
   "dependencies": {
     "@lychen/tera-app": "workspace:*"
