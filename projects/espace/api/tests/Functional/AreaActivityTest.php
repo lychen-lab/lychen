@@ -4,7 +4,7 @@ namespace App\Tests\Functional;
 
 use App\Factory\AreaActivityFactory;
 use App\Factory\PersonFactory;
-use App\Tests\Utils\Abstract\AbstractApiTestCase;
+use Lychen\Test\AbstractApiTestCase;
 
 class AreaActivityTest extends AbstractApiTestCase
 {
