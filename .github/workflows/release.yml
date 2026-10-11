@@ -56,12 +56,28 @@ jobs:
     permissions:
       contents: read
       packages: write
+      actions: read # Deploy | Staging run history
     steps:
       - uses: 'actions/checkout@v4'
         with:
           fetch-depth: 0
+      # `:latest` is the last image that BUILT for each project: when the delivery
+      # of main failed, it predates the code this release announces. Wait for the
+      # last delivery to finish, and refuse to stamp a version on images it did not
+      # produce.
+      - name: 'Check main was fully delivered'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          RUN_ID=$(gh run list --workflow deploy.yml --branch main --limit 1 --json databaseId --jq '.[0].databaseId // empty')
+          if [[ -z "$RUN_ID" ]] || ! gh run watch "$RUN_ID" --exit-status --interval 30 > /dev/null; then
+            echo "::error title=main not delivered::The last Deploy | Staging run on main (${RUN_ID:-none}) did not succeed, so the :latest images may not contain this release. Fix the delivery, then re-run this job."
+            exit 1
+          fi
       - name: Set up Moon Toolchain
         uses: 'moonrepo/setup-toolchain@v0'
+      - name: Install proto tools
+        run: proto install
       - name: Enable Corepack
         run: corepack enable
       - name: Set up Docker Buildx
