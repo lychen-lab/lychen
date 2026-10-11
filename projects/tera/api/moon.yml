@@ -1,6 +1,7 @@
 dependsOn:
   - lychen-php-core
   - lychen-php-model
+  - lychen-php-test
   - lychen-php-tiptap
   - lychen-php-zitadel
 id: tera-api

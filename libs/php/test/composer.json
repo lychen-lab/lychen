@@ -1,0 +1,32 @@
+{
+  "name": "lychen/test",
+  "description": "Shared PHPUnit base classes of the Lychen APIs' functional and security tests",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "Lychen\\Test\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Lychen",
+      "email": "bonjour@lychen.org"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": "^8.4",
+    "api-platform/core": "^4.1",
+    "dama/doctrine-test-bundle": "^8.6",
+    "doctrine/persistence": "^3.3 || ^4.0",
+    "symfony/framework-bundle": "^7.4 || ^8.0",
+    "zenstruck/browser": "^1.10",
+    "zenstruck/foundry": "^2.9",
+    "zenstruck/messenger-test": "^1.14"
+  },
+  "archive": {
+    "exclude": [
+      "/moon.yml"
+    ]
+  }
+}
