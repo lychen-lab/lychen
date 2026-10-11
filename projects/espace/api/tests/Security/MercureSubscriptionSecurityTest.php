@@ -2,7 +2,7 @@
 
 namespace App\Tests\Security;
 
-use App\Tests\Utils\Abstract\AbstractApiTestCase;
+use Lychen\Test\AbstractApiTestCase;
 
 class MercureSubscriptionSecurityTest extends AbstractApiTestCase
 {

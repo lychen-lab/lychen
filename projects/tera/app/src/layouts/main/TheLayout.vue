@@ -142,7 +142,7 @@ import zitadelAuth from '@lychen/typescript-zitadel/ZitadelAuth';
 const open = ref(false);
 
 const { menus: navigation, landSection } = useMenus();
-const selectedLand = ref<{ ulid?: string }>();
+const selectedLand = ref<{ ulid?: string | null }>();
 
 const { api } = useTeraApi();
 

@@ -10,11 +10,17 @@ Lychen is an environmental and agricultural symbiosis platform connecting food p
 
 Toolchain versions are enforced via [proto](https://moonrepo.dev/proto) (`.prototools`):
 
-- Node 24.16.0, Yarn 4.12.0, Moon 2.3.2
+- Node 24.21.0, Yarn 4.18.0, Moon 2.5.4
+- `.prototools` is the single source of truth: `.moon/toolchains.yml` leaves `node` and `yarn`
+  unpinned so moon inherits them, and `package.json#packageManager` must match the Yarn version.
 
 ```bash
 proto install    # Install all required toolchain versions
 ```
+
+`yarn.lock` must be committed in sync with the `package.json` files: CI installs with Yarn's
+default immutable mode and fails on any lockfile drift. After changing a dependency, run
+`yarn install` (moon also runs `yarn dedupe`) and commit the resulting `yarn.lock`.
 
 ## Key Commands
 

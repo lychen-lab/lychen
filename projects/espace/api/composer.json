@@ -67,6 +67,7 @@
         "dama/doctrine-test-bundle": "8.6.*",
         "doctrine/doctrine-fixtures-bundle": "4.3.*",
         "justinrainbow/json-schema": "6.9.*",
+        "lychen/test": "*",
         "mtdowling/jmespath.php": "2.9.*",
         "phpstan/phpstan-doctrine": "2.0.*",
         "phpunit/phpunit": "12.5.*",
@@ -90,6 +91,7 @@
                 "symlink": false,
                 "versions": {
                     "lychen/model": "0.0.0",
+                    "lychen/test": "0.0.0",
                     "lychen/zitadel": "0.0.0",
                     "lychen/tiptap": "0.0.0",
                     "lychen/core": "0.0.0",

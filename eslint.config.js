@@ -49,7 +49,10 @@ export default defineConfig([
   {
     settings: {
       tailwindcss: {
-        config: path.resolve(import.meta.dirname, 'libs/css/core/all.css'),
+        // Absolute, so every project lints against the shared design system. A relative path
+        // (or the plugin's `src/style.css` default) resolves per project and crashes the projects
+        // that have no stylesheet.
+        cssConfigPath: path.resolve(import.meta.dirname, 'libs/css/core/all.css'),
       },
     },
   },

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ad74cc9c074919c26114fe6bf01f491",
+    "content-hash": "89ce2f8f8510f8dc6910f095b78e66a7",
     "packages": [
         {
             "name": "api-platform/core",
@@ -1989,7 +1989,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/symfony-config",
-                "reference": "8fddff4d44a031870dc289d23953bd28f7c8064d"
+                "reference": "d6d421db2630eef2b749d2a71c9cd59c3f3ba142"
             },
             "require": {
                 "php": "^8.4",
@@ -10574,6 +10574,47 @@
                 "source": "https://github.com/jsonrainbow/json-schema/tree/6.9.0"
             },
             "time": "2026-06-05T14:05:24+00:00"
+        },
+        {
+            "name": "lychen/test",
+            "version": "0.0.0",
+            "dist": {
+                "type": "path",
+                "url": "../packages/test",
+                "reference": "9cfe2d07454711bc864d8af87ea7a5044d4544e7"
+            },
+            "require": {
+                "api-platform/core": "^4.1",
+                "dama/doctrine-test-bundle": "^8.6",
+                "doctrine/persistence": "^3.3 || ^4.0",
+                "php": "^8.4",
+                "symfony/framework-bundle": "^7.4 || ^8.0",
+                "zenstruck/browser": "^1.10",
+                "zenstruck/foundry": "^2.9",
+                "zenstruck/messenger-test": "^1.14"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Lychen\\Test\\": "src/"
+                }
+            },
+            "archive": {
+                "exclude": [
+                    "/moon.yml"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Lychen",
+                    "email": "bonjour@lychen.org"
+                }
+            ],
+            "description": "Shared PHPUnit base classes of the Lychen APIs' functional and security tests",
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
         },
         {
             "name": "marc-mabe/php-enum",

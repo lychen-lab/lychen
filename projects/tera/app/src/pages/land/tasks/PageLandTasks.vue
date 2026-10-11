@@ -58,7 +58,7 @@
             <template v-if="tasksQueries[index]?.data?.member">
               <KanbanItem
                 v-for="landTask in tasksQueries[index].data.member"
-                :key="landTask.ulid"
+                :key="landTask['@id']"
                 :state="state"
               >
                 <CardTeraLandTask
