@@ -14,7 +14,11 @@ tasks:
     # removed compose.ci.yml used to provide.
     command: docker compose -p $project -f compose.yml run --rm --entrypoint php api bin/console doctrine:database:create -n --if-not-exists
   ci-export-openapi:
-    command: docker compose -p $project -f compose.yml run --rm api bin/console api:openapi:export --spec-version=3.0.0 --output=openapi_docs.json
+    # Export the default OpenAPI version (3.1). Do not pass --spec-version=3.0.0:
+    # API Platform's 3.0 compatibility path drops the operations' serializer
+    # groups, so every operation of a resource collapses into a single schema
+    # and the generated TypeScript SDKs lose fields (e.g. a collection's `state`).
+    command: docker compose -p $project -f compose.yml run --rm api bin/console api:openapi:export --output=openapi_docs.json
     deps:
       - ci-create-db
   ci-install-tools:
@@ -54,7 +58,8 @@ tasks:
     options:
       cache: false
   export-openapi:
-    command: docker compose -p $project run --rm api bin/console api:openapi:export --spec-version=3.0.0 --output=openapi_docs.json
+    # Same OpenAPI version as ci-export-openapi (see the note there).
+    command: docker compose -p $project run --rm api bin/console api:openapi:export --output=openapi_docs.json
   load-fixtures:
     command: docker compose -p $project run --rm api bin/console do:fi:lo -n
   test-phpunit:

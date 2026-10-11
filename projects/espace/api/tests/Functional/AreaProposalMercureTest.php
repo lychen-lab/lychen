@@ -5,8 +5,8 @@ namespace App\Tests\Functional;
 use App\Entity\AreaProposal;
 use App\Factory\AreaProposalFactory;
 use App\Factory\PersonFactory;
-use App\Tests\Utils\Abstract\AbstractApiTestCase;
 use Doctrine\ORM\EntityManagerInterface;
+use Lychen\Test\AbstractApiTestCase;
 use Symfony\Component\Mercure\Update;
 
 class AreaProposalMercureTest extends AbstractApiTestCase

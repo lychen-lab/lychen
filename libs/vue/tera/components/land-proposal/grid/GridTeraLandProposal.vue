@@ -5,10 +5,10 @@
   >
     <div
       v-for="landProposal in queryResult.member"
-      :key="landProposal.ulid"
+      :key="landProposal['@id']"
     >
       <DialogTeraLandProposalView
-        :key="landProposal.ulid"
+        :key="landProposal['@id']"
         :title="landProposal.title"
         :description="landProposal.description"
         :sharing-conditions="

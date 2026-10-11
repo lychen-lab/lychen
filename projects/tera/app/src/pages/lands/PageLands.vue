@@ -9,10 +9,10 @@
       >
         <div class="z-10 flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
           <div class="flex flex-col gap-1">
-            <BaseHeading class="text-on-secondary-container z-10">{{ t('title') }} </BaseHeading>
+            <BaseHeading class="z-10 text-on-secondary-container">{{ t('title') }} </BaseHeading>
             <p
               v-if="lands?.totalItems"
-              class="text-on-secondary-container font-medium opacity-80"
+              class="font-medium text-on-secondary-container opacity-80"
             >
               {{ t('sub_title', lands.totalItems) }}
             </p>
@@ -64,13 +64,13 @@
             :land="landMemberInvitation.land"
             :variant="VARIANT.ForUser"
             :hoverable="false"
-            class="outline-secondary-container/40 from-surface-container to-secondary-container border-0 bg-gradient-to-tr outline outline-offset-4"
+            class="border-0 bg-linear-to-tr from-surface-container to-secondary-container outline outline-offset-4 outline-secondary-container/40"
           />
         </template>
         <template v-if="lands?.member">
           <RouterLink
             v-for="land in lands.member"
-            :key="land.ulid"
+            :key="land['@id']"
             :to="{ name: RoutePageLandDashboard.name, params: { landUlid: land.ulid } }"
           >
             <CardTeraLand
@@ -109,7 +109,7 @@ import {
   landMemberInvitationAcceptSucceededEvent,
   landMemberInvitationRefuseSucceededEvent,
 } from '@lychen/vue-tera/events/LandMemberInvitationEvents';
-import { LandMemberInvitationJsonldState as LandMemberInvitationState } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import { LandMemberInvitationJsonldLand_member_invitationCollectionState as LandMemberInvitationState } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import { RoutePageCoGardening } from '../co-gardening/dashboard';
 import IconPlus from '@lychen/vue-icons/IconPlus.vue';
 import IconSearch from '@lychen/vue-icons/IconSearch.vue';

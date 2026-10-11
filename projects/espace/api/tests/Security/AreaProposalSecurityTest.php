@@ -4,8 +4,8 @@ namespace App\Tests\Security;
 
 use App\Factory\AreaProposalFactory;
 use App\Factory\PersonFactory;
-use App\Tests\Utils\Abstract\AbstractApiTestCase;
 use App\Workflow\AreaProposal\AreaProposalWorkflow;
+use Lychen\Test\AbstractApiTestCase;
 
 class AreaProposalSecurityTest extends AbstractApiTestCase
 {

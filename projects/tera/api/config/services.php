@@ -12,8 +12,6 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
 
-    $parameters->set('cache_adapter', 'cache.adapter.system');
-
     $parameters->set('locale', 'fr');
 
     $parameters->set('uploads_base_url', 'https://%env(AWS_S3_BUCKET_NAME)%.s3.amazonaws.com/');
