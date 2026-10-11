@@ -1,6 +1,7 @@
 dependsOn:
   - lychen-php-core
   - lychen-php-model
+  - lychen-php-test
   - lychen-php-zitadel
 id: flora-api
 language: php

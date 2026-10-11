@@ -6,7 +6,7 @@
 # the whole topology, which it renders into a definitions file at boot. Set
 # `RABBITMQ_<SERVICE>_PASSWORD` per environment, and add a domain to
 # `RABBITMQ_SERVICES` to give it a user, a queue, a dead-letter queue and its
-# bindings.
+# bindings — in the environment only, nothing here needs editing.
 #
 # Dev-only bits (published ports, `lychen-network`) live in compose.override.yml,
 # so this file stays deployable as-is to staging and production via Dokploy.
@@ -16,13 +16,16 @@ services:
     # default command has to be restated here.
     command: rabbitmq-server
     entrypoint: /usr/local/bin/lychen-entrypoint.sh
-    environment:
-      RABBITMQ_ADMIN_PASSWORD: ${RABBITMQ_ADMIN_PASSWORD:-admin}
-      RABBITMQ_ADMIN_USER: ${RABBITMQ_ADMIN_USER:-admin}
-      RABBITMQ_ESPACE_PASSWORD: ${RABBITMQ_ESPACE_PASSWORD:-espace}
-      RABBITMQ_FLORA_PASSWORD: ${RABBITMQ_FLORA_PASSWORD:-flora}
-      RABBITMQ_SERVICES: ${RABBITMQ_SERVICES:-tera espace flora}
-      RABBITMQ_TERA_PASSWORD: ${RABBITMQ_TERA_PASSWORD:-tera}
+    # The whole environment, not a list of variables: entrypoint.sh reads a
+    # `RABBITMQ_<SERVICE>_PASSWORD` and `_BINDING_KEYS` for each entry of
+    # `RABBITMQ_SERVICES`, and `environment:` can only forward names it spells
+    # out — any other service silently booted with its dev password. Dokploy
+    # writes the compose's env to a `.env` next to this file (and injects none of
+    # it by itself). Locally there is none, and every variable falls back to its
+    # dev default in entrypoint.sh.
+    env_file:
+      - path: .env
+        required: false
     healthcheck:
       retries: 5
       start_period: 30s

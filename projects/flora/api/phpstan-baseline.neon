@@ -193,30 +193,6 @@ parameters:
 			path: tests/Security/DefaultSecurityTest.php
 
 		-
-			message: '#^Attribute class JetBrains\\PhpStorm\\NoReturn does not exist\.$#'
-			identifier: attribute.notFound
-			count: 1
-			path: tests/Utils/Abstract/AbstractApiTestCase.php
-
-		-
-			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:browser\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: tests/Utils/Abstract/AbstractApiTestCase.php
-
-		-
-			message: '#^Method App\\Tests\\Utils\\Abstract\\AbstractApiTestCase\:\:browser\(\) has parameter \$server with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: tests/Utils/Abstract/AbstractApiTestCase.php
-
-		-
-			message: '#^Method App\\Tests\\Utils\\TestBrowser\:\:patch\(\) has parameter \$options with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: tests/Utils/TestBrowser.php
-
-		-
 			message: '#^Call to function method_exists\(\) with ''Symfony\\\\Component\\\\Dotenv\\\\Dotenv'' and ''bootEnv'' will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1

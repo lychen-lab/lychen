@@ -4,8 +4,8 @@ namespace App\Tests\Security;
 
 use App\Factory\AreaRequestFactory;
 use App\Factory\PersonFactory;
-use App\Tests\Utils\Abstract\AbstractApiTestCase;
 use App\Workflow\AreaRequest\AreaRequestWorkflow;
+use Lychen\Test\AbstractApiTestCase;
 
 class AreaRequestSecurityTest extends AbstractApiTestCase
 {
