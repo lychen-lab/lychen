@@ -86,6 +86,7 @@ API resources are DTOs, not Doctrine entities: entities (`src/Entity`) only carr
 - **Relations and computed fields use transforms**: `#[Map(source: 'relation', transform: …)]`. Dotted source paths (`relation.field`) resolve to `null` under the reverse mapping. Transforms that need services (e.g. activity codes → `AreaActivity`) implement `TransformCallableInterface`.
 - **Visibility is enforced in SQL** by `AreaVisibilityExtension`: reads return the public items (published proposals, active requests) plus the user's own, writes only reach the user's own; anything else answers 404.
 - **Filters** are declared with `QueryParameter` and API Platform's filters (`ExactFilter`, `PartialSearchFilter`, `SortFilter`); nested properties such as `activities.code` resolve against the entity.
+- **Workflow diagrams**: a resource whose entity has a Symfony workflow exposes `GET /api/<resources>/{uuid}/workflow` (`WorkflowDiagramProvider`), the Mermaid flowchart of the profiler's Workflow panel with the item's current place outlined, for any front to render with mermaid.js. The entity is loaded like the resource's own Get, so the visibility rules above apply. Declare the operation after the plain `#[Get]` (IRIs are generated from the first one) with `map: false`.
 
 ## Real-time updates
 
