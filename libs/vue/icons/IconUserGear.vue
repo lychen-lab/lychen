@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { UserRoundCog } from 'lucide-vue-next';
+import { UserRoundCog } from '@lucide/vue';
 </script>

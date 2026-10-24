@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { Minus } from 'lucide-vue-next';
+import { Minus } from '@lucide/vue';
 </script>

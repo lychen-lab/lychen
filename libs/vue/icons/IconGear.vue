@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { Settings } from 'lucide-vue-next';
+import { Settings } from '@lucide/vue';
 </script>

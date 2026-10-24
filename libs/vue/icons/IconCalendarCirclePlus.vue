@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { CalendarPlus } from 'lucide-vue-next';
+import { CalendarPlus } from '@lucide/vue';
 </script>

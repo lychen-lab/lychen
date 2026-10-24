@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { Circle } from 'lucide-vue-next';
+import { Circle } from '@lucide/vue';
 </script>

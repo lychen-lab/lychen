@@ -28,8 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Patch(
     normalizationContext  : ['groups' => ['land_member:patch', 'land_member:patch:output']],
     denormalizationContext: ['groups' => ['land_member:patch', 'land_member:patch:input']],
-    security              : "is_granted('".LandMemberVoter::PATCH."', previous_object)")
-]
+    security              : "is_granted('".LandMemberVoter::PATCH."', previous_object)")]
 #[Delete(security: "is_granted('".LandMemberVoter::DELETE."', object)")]
 #[Get(
     uriTemplate         : '/land_members/{ulid}',

@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { Mic } from 'lucide-vue-next';
+import { Mic } from '@lucide/vue';
 </script>

@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { ListChecks } from 'lucide-vue-next';
+import { ListChecks } from '@lucide/vue';
 </script>
