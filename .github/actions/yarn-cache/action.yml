@@ -1,0 +1,16 @@
+name: 'Yarn cache'
+description: >-
+  Restore Yarn's package cache, keyed on yarn.lock, and save it at the end of the
+  job. Use it right after the checkout, in any job that installs the JS
+  dependencies (directly or through a moon task). The cache saved by the main
+  branch is the fallback of every PR.
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/cache@v4
+      with:
+        # Yarn 4 keeps its cache in the global folder (enableGlobalCache), not in
+        # .yarn/cache: install from here and only the linking step is left.
+        path: ~/.yarn/berry/cache
+        key: yarn-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+        restore-keys: yarn-${{ runner.os }}-
