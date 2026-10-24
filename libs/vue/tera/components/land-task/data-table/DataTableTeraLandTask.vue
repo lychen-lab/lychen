@@ -49,14 +49,13 @@
             :class="
               cn(
                 { 'sticky bg-surface-container/95': header.column.getIsPinned() },
-                header.column.getIsPinned() === 'left' ? 'left-0' : 'right-0',
+                header.column.getIsPinned() === 'start' ? 'start-0' : 'end-0',
               )
             "
           >
             <FlexRender
               v-if="!header.isPlaceholder"
-              :render="header.column.columnDef.header"
-              :props="header.getContext()"
+              :header="header"
             />
           </TableHead>
         </TableRow>
@@ -79,14 +78,11 @@
                 :class="
                   cn(
                     { 'sticky bg-surface-container/95': cell.column.getIsPinned() },
-                    cell.column.getIsPinned() === 'left' ? 'left-0' : 'right-0',
+                    cell.column.getIsPinned() === 'start' ? 'start-0' : 'end-0',
                   )
                 "
               >
-                <FlexRender
-                  :render="cell.column.columnDef.cell"
-                  :props="cell.getContext()"
-                />
+                <FlexRender :cell="cell" />
               </TableCell>
             </TableRow>
             <TableRow v-if="row.getIsExpanded()">
@@ -128,20 +124,32 @@ import {
 } from '@lychen/vue-components-core/table';
 import type {
   ColumnFiltersState,
+  ColumnVisibilityState,
   ExpandedState,
+  RowSelectionState,
   SortingState,
   Updater,
-  VisibilityState,
 } from '@tanstack/vue-table';
 import {
+  columnFilteringFeature,
+  columnPinningFeature,
+  columnVisibilityFeature,
   createColumnHelper,
+  createExpandedRowModel,
+  createFilteredRowModel,
+  createPaginatedRowModel,
+  createSortedRowModel,
+  filterFn_includesString,
   FlexRender,
-  getCoreRowModel,
-  getExpandedRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useVueTable,
+  rowExpandingFeature,
+  rowPaginationFeature,
+  rowSelectionFeature,
+  rowSortingFeature,
+  sortFn_alphanumeric,
+  sortFn_datetime,
+  sortFn_text,
+  tableFeatures,
+  useTable,
 } from '@tanstack/vue-table';
 import { Checkbox } from '@lychen/vue-components-core/checkbox';
 import type { CheckboxCheckedState } from 'reka-ui';
@@ -169,7 +177,27 @@ const {
   state?: components['schemas']['LandTask.jsonld']['state'];
   totalItems?: number;
 }>();
-const columnHelper = createColumnHelper<components['schemas']['LandTask.jsonld']>();
+// Table v9 only exposes the APIs of registered features. The sort and filter functions are the
+// ones `'auto'` picks for this table's string columns.
+const features = tableFeatures({
+  columnFilteringFeature,
+  columnPinningFeature,
+  columnVisibilityFeature,
+  rowExpandingFeature,
+  rowPaginationFeature,
+  rowSelectionFeature,
+  rowSortingFeature,
+  filteredRowModel: createFilteredRowModel(),
+  sortedRowModel: createSortedRowModel(),
+  paginatedRowModel: createPaginatedRowModel(),
+  expandedRowModel: createExpandedRowModel(),
+  filterFns: { includesString: filterFn_includesString },
+  sortFns: { alphanumeric: sortFn_alphanumeric, datetime: sortFn_datetime, text: sortFn_text },
+});
+const columnHelper = createColumnHelper<
+  typeof features,
+  components['schemas']['LandTask.jsonld']
+>();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function valueUpdater<T extends Updater<any>>(updaterOrValue: T, ref: Ref) {
@@ -178,7 +206,7 @@ function valueUpdater<T extends Updater<any>>(updaterOrValue: T, ref: Ref) {
 
 const dataForTable = computed(() => data || []);
 
-const columns = [
+const columns = columnHelper.columns([
   columnHelper.display({
     id: 'select',
     header: ({ table }) =>
@@ -281,22 +309,18 @@ const columns = [
       );
     },
   }),
-];
+]);
 
 const sorting = ref<SortingState>([]);
 const columnFilters = ref<ColumnFiltersState>([]);
-const columnVisibility = ref<VisibilityState>({});
-const rowSelection = ref({});
+const columnVisibility = ref<ColumnVisibilityState>({});
+const rowSelection = ref<RowSelectionState>({});
 const expanded = ref<ExpandedState>({});
 
-const table = useVueTable({
+const table = useTable({
+  features,
   data: dataForTable,
   columns,
-  getCoreRowModel: getCoreRowModel(),
-  getPaginationRowModel: getPaginationRowModel(),
-  getSortedRowModel: getSortedRowModel(),
-  getFilteredRowModel: getFilteredRowModel(),
-  getExpandedRowModel: getExpandedRowModel(),
   onSortingChange: (updaterOrValue) => valueUpdater(updaterOrValue, sorting),
   onColumnFiltersChange: (updaterOrValue) => valueUpdater(updaterOrValue, columnFilters),
   onColumnVisibilityChange: (updaterOrValue) => valueUpdater(updaterOrValue, columnVisibility),
@@ -319,7 +343,8 @@ const table = useVueTable({
       return expanded.value;
     },
     columnPinning: {
-      left: ['state'],
+      start: ['state'],
+      end: [],
     },
   },
 });

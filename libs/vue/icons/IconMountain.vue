@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { Mountain } from 'lucide-vue-next';
+import { Mountain } from '@lucide/vue';
 </script>

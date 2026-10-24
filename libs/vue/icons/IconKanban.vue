@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { Kanban } from 'lucide-vue-next';
+import { Kanban } from '@lucide/vue';
 </script>
