@@ -16,7 +16,7 @@
   "minimum-stability": "stable",
   "require": {
     "php": "^8.4",
-    "api-platform/core": "^4.1",
+    "api-platform/core": "^5.0",
     "dama/doctrine-test-bundle": "^8.6",
     "doctrine/persistence": "^3.3 || ^4.0",
     "symfony/framework-bundle": "^7.4 || ^8.0",
