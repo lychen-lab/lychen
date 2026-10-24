@@ -14,6 +14,10 @@ class AreaProposalSecurityTest extends AbstractApiTestCase
         $this->browser()
             ->get('/api/area_proposals')
             ->assertStatus(401);
+
+        $this->browser()
+            ->get('/api/area_proposals/'.AreaProposalFactory::createOne()->getUuid().'/workflow')
+            ->assertStatus(401);
     }
 
     public function testCollectionListsPublishedProposalsAndOwnOnes(): void
@@ -42,6 +46,7 @@ class AreaProposalSecurityTest extends AbstractApiTestCase
         ])->getUuid();
 
         $this->browser()->actingAs($user)->get($uri)->assertStatus(404);
+        $this->browser()->actingAs($user)->get($uri.'/workflow')->assertStatus(404);
         $this->browser()->actingAs($user)->patch($uri, ['json' => ['title' => 'Piraté']])->assertStatus(404);
         $this->browser()->actingAs($user)->delete($uri)->assertStatus(404);
     }
@@ -55,6 +60,7 @@ class AreaProposalSecurityTest extends AbstractApiTestCase
         ])->getUuid();
 
         $this->browser()->actingAs($user)->get($uri)->assertStatus(200);
+        $this->browser()->actingAs($user)->get($uri.'/workflow')->assertStatus(200);
         $this->browser()->actingAs($user)->patch($uri, ['json' => ['title' => 'Piraté']])->assertStatus(404);
         $this->browser()->actingAs($user)->delete($uri)->assertStatus(404);
     }

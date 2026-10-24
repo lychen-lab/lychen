@@ -13,6 +13,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\QueryParameter;
+use ApiPlatform\OpenApi\Model\Operation as OpenApiOperation;
 use App\Api\Resource\AreaProposal\Dto\AreaProposalPatch;
 use App\Api\Resource\AreaProposal\Dto\AreaProposalPost;
 use App\Api\Trait\ActivitiesAsStringTrait;
@@ -20,6 +21,8 @@ use App\Api\Trait\CreatedAtTrait;
 use App\Api\Trait\PlaceTrait;
 use App\Api\Trait\UuidIdentifierTrait;
 use App\Api\Transform\PersonName;
+use App\Api\Workflow\WorkflowDiagram;
+use App\Api\Workflow\WorkflowDiagramProvider;
 use App\Entity\AreaProposal as AreaProposalEntity;
 use App\Workflow\AreaProposal\AreaProposalWorkflow;
 use Symfony\Component\ObjectMapper\Attribute\Map;
@@ -33,6 +36,14 @@ use Symfony\Component\ObjectMapper\Attribute\Map;
     stateOptions: new Options(entityClass: AreaProposalEntity::class),
 )]
 #[Get]
+// Keep it after the plain Get, which IRIs are generated from.
+#[Get(
+    uriTemplate: '/area_proposals/{uuid}/workflow',
+    openapi: new OpenApiOperation(summary: 'Retrieves the Mermaid diagram of the AreaProposal workflow, current place outlined.'),
+    output: WorkflowDiagram::class,
+    provider: WorkflowDiagramProvider::class,
+    map: false,
+)]
 #[GetCollection(
     parameters: [
         'place' => new QueryParameter(
