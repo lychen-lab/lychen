@@ -66,9 +66,10 @@ jobs:
         run: yarn install
 
       # Same command, flags and relative paths as typescript-tera-api-sdk:generate-api,
-      # using the workspace-pinned openapi-typescript version from yarn.lock.
+      # using the workspace-pinned openapi-typescript version from yarn.lock. The spec
+      # is relabelled 3.1 on the way in, as generate-api does (see the note there).
       - name: Regenerate TypeScript SDK
-        run: yarn workspace @lychen/typescript-tera-api-sdk run openapi-typescript ../../../../projects/tera/api/openapi_docs.json -o ./generated/tera-api.ts --enum-values --enum
+        run: jq '.openapi = "3.1.0"' projects/tera/api/openapi_docs.json | yarn workspace @lychen/typescript-tera-api-sdk run openapi-typescript -o ./generated/tera-api.ts --enum-values --enum
 
       # SDK generation is intentionally MANUAL and decoupled from API changes: an
       # API change must NOT force a SDK regeneration (and the resulting frontend

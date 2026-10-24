@@ -20,7 +20,6 @@ services:
       redis:
         condition: service_started
     environment:
-      APP_RUNTIME: Runtime\FrankenPhpSymfony\Runtime
       DATABASE_URL: postgresql://${POSTGRES_USER:-userlocal}:${POSTGRES_PASSWORD:-PasswordForLocal!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
       # Central broker (projects/common/rabbitmq), reached over lychen-network in
       # dev. Staging and production set MESSENGER_TRANSPORT_DSN on the Dokploy
