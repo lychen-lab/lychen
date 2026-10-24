@@ -38,17 +38,10 @@ RUN set -eux; \
     docker-php-ext-enable amqp; \
     rm -rf /tmp/php-amqp;
 
-# Install the gRPC extension (and its protobuf companion) so the APIs can speak
-# gRPC when needed. grpc and protobuf are very large C/C++ extensions: compiling
-# them with one make job per CPU exhausts memory on multi-core builders, which is
-# the OOM / "memory overflow" failure. Pin install-php-extensions to a single
-# processor so peak memory stays bounded — the build is slower but reliable on
-# any builder.
-RUN set -eux; \
-    IPE_PROCESSOR_COUNT=1 install-php-extensions \
-        grpc \
-        protobuf \
-    ;
+# The Temporal worker (same image, see docs/architecture-espace.md) will need the
+# grpc + protobuf extensions. Add them together with the worker, not before: they
+# are huge C++ builds — compiled under QEMU for arm64 they pushed every API image
+# build past GitHub's 6 h job limit.
 
 ENV PHP_INI_SCAN_DIR=":$PHP_INI_DIR/app.conf.d"
 

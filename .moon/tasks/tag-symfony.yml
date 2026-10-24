@@ -50,7 +50,12 @@ tasks:
       - common-mercure:up
       - common-rabbitmq:up
   docker-buildx:
-    command: docker buildx build $projectRoot --cache-from ${IMAGE_NAME}:latest --platform linux/arm64,linux/amd64 --target frankenphp_prod -t ${IMAGE_NAME}:latest -t ${IMAGE_NAME}:${GITHUB_SHA} --push
+    # The layer cache lives in its own registry tag (:buildcache), exported with
+    # mode=max so the PHP extension builds of every stage are reused — including
+    # the arm64 ones compiled under QEMU, the slow part of this build. Pushing an
+    # image does not export any cache by itself: `--cache-from :latest` alone
+    # never hit.
+    command: docker buildx build $projectRoot --cache-from type=registry,ref=${IMAGE_NAME}:buildcache --cache-to type=registry,ref=${IMAGE_NAME}:buildcache,mode=max --platform linux/arm64,linux/amd64 --target frankenphp_prod -t ${IMAGE_NAME}:latest -t ${IMAGE_NAME}:${GITHUB_SHA} --push
     deps:
       - ci-copy-packages
     env:
