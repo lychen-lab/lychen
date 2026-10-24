@@ -20,7 +20,7 @@
         "lcobucci/jwt": "5.6.*",
         "lychen/core": "*",
         "lychen/model": "*",
-        "lychen/symfony-config": "*",
+        "lychen/config": "*",
         "lychen/tiptap": "*",
         "lychen/zitadel": "*",
         "martin-georgiev/postgresql-for-doctrine": "4.10.*",
@@ -94,7 +94,7 @@
                     "lychen/zitadel": "0.0.0",
                     "lychen/tiptap": "0.0.0",
                     "lychen/core": "0.0.0",
-                    "lychen/symfony-config": "0.0.0"
+                    "lychen/config": "0.0.0"
                 }
             }
         }

@@ -76,7 +76,7 @@
     "lychen/core": {
         "version": "0.0.0"
     },
-    "lychen/symfony-config": {
+    "lychen/config": {
         "version": "0.0.0"
     },
     "lychen/zitadel": {

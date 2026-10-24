@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Lychen\ConfigBundle\Test\MercureHubStub;
+use Lychen\Config\Test\MercureHubStub;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;

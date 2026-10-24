@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
 
-    // The API's domain: lychen/symfony-config names its RabbitMQ queue and routing keys
+    // The API's domain: lychen/config names its RabbitMQ queue and routing keys
     // (`espace.events`, `espace.internal.message.v1`) and its Mercure issuer after it.
     $parameters->set('lychen.service', 'espace');
 

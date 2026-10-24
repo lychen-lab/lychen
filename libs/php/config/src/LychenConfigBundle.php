@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lychen\ConfigBundle;
+namespace Lychen\Config;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

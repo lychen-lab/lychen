@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lychen\ConfigBundle\Test;
+namespace Lychen\Config\Test;
 
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Jwt\TokenFactoryInterface;

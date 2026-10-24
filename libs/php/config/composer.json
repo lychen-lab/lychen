@@ -1,10 +1,10 @@
 {
-  "name": "lychen/symfony-config",
+  "name": "lychen/config",
   "description": "Shared Symfony configuration of the Lychen APIs",
   "type": "library",
   "autoload": {
     "psr-4": {
-      "Lychen\\ConfigBundle\\": "src/"
+      "Lychen\\Config\\": "src/"
     }
   },
   "authors": [

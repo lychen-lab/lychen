@@ -1,4 +1,4 @@
-# lychen/symfony-config
+# lychen/config
 
 The Symfony configuration every Lychen API shares, so the backend services stay aligned.
 
@@ -23,11 +23,11 @@ shared value, and a plain list such as `custom_authenticators` is usually append
 
 ## Wiring an API
 
-1. `composer.json`: require `"lychen/symfony-config": "*"` and add it to the `versions`
+1. `composer.json`: require `"lychen/config": "*"` and add it to the `versions`
    of the `../packages/*` path repository, then
-   `composer update lychen/symfony-config`.
-2. `moon.yml`: add `lychen-php-symfony-config` to `dependsOn`.
-3. `config/bundles.php`: `Lychen\ConfigBundle\LychenConfigBundle::class => ['all' => true]`.
+   `composer update lychen/config`.
+2. `moon.yml`: add `lychen-php-config` to `dependsOn`.
+3. `config/bundles.php`: `Lychen\Config\LychenConfigBundle::class => ['all' => true]`.
    The bundle configures nothing by itself, it only resolves `@LychenConfigBundle/`.
 4. `config/services.php`: set the `lychen.service` parameter to the API's domain
    (`tera`, `espace`, `flora`…). It names the RabbitMQ queue and routing keys
@@ -65,6 +65,6 @@ the default Mercure hub with `Test\MercureHubStub` so tests never reach the netw
 stub publishes nothing, and takes everything else from the hub as configured.
 
 Locally, changes to this library reach an API only after
-`composer reinstall lychen/symfony-config` in it: the path repository mirrors the files
+`composer reinstall lychen/config` in it: the path repository mirrors the files
 rather than symlinking them, and `composer update` skips the package as long as its
 `composer.json` is unchanged.
