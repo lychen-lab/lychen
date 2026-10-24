@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c7d4d501d990c20c1d9791235fd918ae",
+    "content-hash": "2daec6aa3d1c64ad0de23ca100abfcad",
     "packages": [
         {
             "name": "api-platform/core",
@@ -1870,6 +1870,46 @@
                 }
             ],
             "time": "2026-10-10T09:42:14+00:00"
+        },
+        {
+            "name": "lychen/config",
+            "version": "0.0.0",
+            "dist": {
+                "type": "path",
+                "url": "../packages/config",
+                "reference": "d2ad48dd170d6a1667e265b1bfe9d1de22ca3ee4"
+            },
+            "require": {
+                "php": "^8.4",
+                "symfony/dependency-injection": "^7.4 || ^8.0",
+                "symfony/http-kernel": "^7.4 || ^8.0",
+                "symfony/routing": "^7.4 || ^8.0"
+            },
+            "conflict": {
+                "symfony/mercure-bundle": "<0.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Lychen\\Config\\": "src/"
+                }
+            },
+            "archive": {
+                "exclude": [
+                    "/moon.yml"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Lychen",
+                    "email": "bonjour@lychen.org"
+                }
+            ],
+            "description": "Shared Symfony configuration of the Lychen APIs",
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
         },
         {
             "name": "lychen/core",

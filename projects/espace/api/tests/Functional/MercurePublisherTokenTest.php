@@ -15,8 +15,9 @@ use Symfony\Component\Clock\Clock;
 use Symfony\Component\Mercure\Jwt\TokenProviderInterface;
 
 /**
- * Tests never publish to a real hub (see MercureHubStub), so this checks the token the API
- * would publish with against what the hub's `espace` tenant requires.
+ * Tests never publish to a real hub (see lychen/config's MercureHubStub), so this
+ * checks the token the API would publish with against what the hub's `espace` tenant
+ * requires.
  */
 class MercurePublisherTokenTest extends AbstractApiTestCase
 {

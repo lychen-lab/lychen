@@ -6,8 +6,8 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->extension('framework', [
-        'router' => [
-            'strict_requirements' => true,
+        'mailer' => [
+            'dsn' => '%env(MAILER_DSN)%',
         ],
     ]);
 };

@@ -6,10 +6,13 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->extension('framework', [
-        'cache' => [
-            'default_redis_provider' => 'snc_redis.default',
-            'app' => 'cache.adapter.redis',
-            'system' => 'cache.adapter.redis',
-        ],
+        'validation' => null,
     ]);
+    if ($containerConfigurator->env() === 'test') {
+        $containerConfigurator->extension('framework', [
+            'validation' => [
+                'not_compromised_password' => false,
+            ],
+        ]);
+    }
 };

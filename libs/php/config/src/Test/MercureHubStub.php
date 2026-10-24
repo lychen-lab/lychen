@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Tests\Utils;
+declare(strict_types=1);
+
+namespace Lychen\Config\Test;
 
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Jwt\TokenFactoryInterface;

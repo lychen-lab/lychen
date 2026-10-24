@@ -5,6 +5,5 @@ declare(strict_types=1);
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 return static function (RoutingConfigurator $routingConfigurator): void {
-    $routingConfigurator->import('.', 'api_platform')
-        ->prefix('/api');
+    $routingConfigurator->import('@LychenConfig/config/routes/api_platform.php');
 };
