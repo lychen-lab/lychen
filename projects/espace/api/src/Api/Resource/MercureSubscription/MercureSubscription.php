@@ -20,7 +20,7 @@ final class MercureSubscription
     public function __construct(
         /** Public URL of the hub, to open an EventSource on. */
         public string $hubUrl,
-        /** Subscriber JWT, to send as the hub's `authorization` query parameter. */
+        /** Subscriber access token, to send to the hub as an `Authorization: Bearer` header. */
         public string $token,
     ) {
     }

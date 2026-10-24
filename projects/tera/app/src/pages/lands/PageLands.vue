@@ -109,7 +109,7 @@ import {
   landMemberInvitationAcceptSucceededEvent,
   landMemberInvitationRefuseSucceededEvent,
 } from '@lychen/vue-tera/events/LandMemberInvitationEvents';
-import { LandMemberInvitationJsonldLand_member_invitationCollectionState as LandMemberInvitationState } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import { LandMemberInvitationState } from '@lychen/typescript-tera-api-sdk/enums';
 import { RoutePageCoGardening } from '../co-gardening/dashboard';
 import IconPlus from '@lychen/vue-icons/IconPlus.vue';
 import IconSearch from '@lychen/vue-icons/IconSearch.vue';
@@ -127,7 +127,7 @@ const { api } = useTeraApi();
 const { data: lands, refetch } = useQuery({
   queryKey: ['lands'],
   queryFn: async () => {
-    const response = await api.GET('/api/lands');
+    const response = await api.apiLandsGetCollection();
     return response.data;
   },
 });
@@ -140,12 +140,10 @@ const { data: landMemberInvitations, refetch: refetchLandMemberInvitations } = u
     if (!email) {
       throw new Error('missing.email');
     }
-    const response = await api.GET('/api/land_member_invitations/by_email', {
-      params: {
-        query: {
-          email,
-          state: LandMemberInvitationState.pending,
-        },
+    const response = await api.apiLandMemberInvitationsbyEmailGetCollection({
+      query: {
+        email,
+        state: LandMemberInvitationState.pending,
       },
     });
     return response.data;

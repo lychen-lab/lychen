@@ -11,7 +11,6 @@
     "@lychen/vue-i18n": "workspace:*",
     "@lychen/vue-icons": "workspace:*",
     "@vueuse/core": "^15.0.0",
-    "openapi-fetch": "^0.17.0",
     "vue": "^3.5.44"
   }
 }

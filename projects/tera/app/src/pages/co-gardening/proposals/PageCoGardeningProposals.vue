@@ -30,7 +30,7 @@ const { api } = useTeraApi();
 const { data: landProposals, status } = useQuery({
   queryKey: ['landProposalsPublic'],
   queryFn: async () => {
-    const response = await api.GET('/api/land_proposals/public', {});
+    const response = await api.landProposalCollectionPublic();
     return response.data;
   },
 });

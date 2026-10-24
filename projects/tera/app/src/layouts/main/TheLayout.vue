@@ -149,7 +149,7 @@ const { api } = useTeraApi();
 const { data: lands, refetch } = useQuery({
   queryKey: ['lands'],
   queryFn: async () => {
-    const response = await api.GET('/api/lands');
+    const response = await api.apiLandsGetCollection();
     selectedLand.value = response.data?.member[0];
     return response.data;
   },

@@ -97,9 +97,13 @@ on the `espace` tenant — see [deployment.md](deployment.md#central-mercure-hub
   publishes every committed write to an `AreaProposal`, whoever makes it: the status
   changes Temporal activities persist reach the front with no extra code in the activities.
 - **Private updates, IRI paths as topics** (`/api/area_proposals/{uuid}`): the hub only
-  delivers what the user's token (`GET /api/mercure_subscription`) allows, and a worker,
-  which has no request host, publishes to the same topics as the API.
-- **Front:** `useEspaceMercure(topics, onUpdate)` in `libs/vue/espace`.
+  delivers what the user's token (`GET /api/mercure_subscription`) allows — the
+  `/api/area_proposals/:uuid` URL pattern — and a worker, which has no request host,
+  publishes to the same topics as the API.
+- **Mercure 1.0 protocol end to end:** OAuth 2.0 access tokens (`iss`
+  `urn:lychen:espace-api`, `aud` the hub's public URL), `match` / `match_urlpattern`
+  selectors, and the token in an `Authorization` header, never in the URL.
+- **Front:** `useEspaceMercure(matchers, onUpdate)` in `libs/vue/espace`.
 - **Not a notification channel.** Mercure mirrors data to screens that are open; notifying
   a user still happens from activities, through Novu, as above.
 

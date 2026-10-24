@@ -32,7 +32,7 @@ import { toast } from '@lychen/vue-components-core/toast/use-toast';
 import { useEventBus } from '@vueuse/core';
 import { landDeleteSucceededEvent } from '@lychen/vue-tera/events/LandEvents';
 import DialogWithCancelButton from '@lychen/vue-components-app/dialogs/with-cancel-button/DialogWithCancelButton.vue';
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type { LandJsonld } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
 const { t: tLand } = useI18nExtended({
   messages: landMessages,
@@ -48,7 +48,7 @@ const { t: t } = useI18nExtended({
 
 const { emit } = useEventBus(landDeleteSucceededEvent);
 
-const { land } = defineProps<{ land: components['schemas']['Land.jsonld'] }>();
+const { land } = defineProps<{ land: LandJsonld }>();
 
 const { api } = useTeraApi();
 
@@ -57,7 +57,7 @@ const { mutate: deleteLand, isPending } = useMutation({
     if (!land.ulid) {
       throw new Error('error.missing_ulid');
     }
-    return api.DELETE('/api/lands/{ulid}', { params: { path: { ulid: land.ulid } } });
+    return api.apiLandsUlidDelete({ path: { ulid: land.ulid } });
   },
   onSuccess: (data, variables, context) => {
     toast({

@@ -8,10 +8,13 @@
 #     http://mercure/<tenant>/.well-known/mercure
 #
 # Hubs, keys and transports are rendered from the environment at boot by
-# `entrypoint.sh` — set `MERCURE_<TENANT>_PUBLISHER_JWT_KEY` and
-# `MERCURE_<TENANT>_SUBSCRIBER_JWT_KEY` per environment, and add a domain to
+# `entrypoint.sh` — set `MERCURE_PUBLIC_ORIGIN`, `MERCURE_<TENANT>_PUBLISHER_JWT_KEY`
+# and `MERCURE_<TENANT>_SUBSCRIBER_JWT_KEY` per environment, and add a domain to
 # `MERCURE_TENANTS` to provision it. A new tenant also needs its variables listed
 # below: Compose only forwards the ones it is told about.
+#
+# The hub speaks the Mercure 1.0 protocol: its clients must too (see the
+# `espace` API and `useEspaceMercure` for one that does).
 #
 # Dev-only bits (published port, `lychen-network`, permissive directives) live in
 # compose.override.yml, so this file stays deployable as-is to staging and
@@ -36,6 +39,11 @@ services:
       MERCURE_FLORA_EXTRA_DIRECTIVES: ${MERCURE_FLORA_EXTRA_DIRECTIVES:-}
       MERCURE_FLORA_PUBLISHER_JWT_KEY: ${MERCURE_FLORA_PUBLISHER_JWT_KEY:-}
       MERCURE_FLORA_SUBSCRIBER_JWT_KEY: ${MERCURE_FLORA_SUBSCRIBER_JWT_KEY:-}
+      # Where browsers reach the hub, e.g. `https://mercure.lychen.org`: each tenant's
+      # tokens must name `<origin>/<tenant>/.well-known/mercure` as their audience,
+      # which is what the APIs' `MERCURE_PUBLIC_URL` holds. Required — the hub
+      # refuses to boot without it.
+      MERCURE_PUBLIC_ORIGIN: ${MERCURE_PUBLIC_ORIGIN:-}
       MERCURE_TENANTS: ${MERCURE_TENANTS:-tera espace flora}
       MERCURE_TERA_EXTRA_DIRECTIVES: ${MERCURE_TERA_EXTRA_DIRECTIVES:-}
       MERCURE_TERA_PUBLISHER_JWT_KEY: ${MERCURE_TERA_PUBLISHER_JWT_KEY:-}
@@ -48,7 +56,7 @@ services:
       start_period: 10s
       test: [ 'CMD', 'curl', '-sfo', '/dev/null', 'http://localhost:2019/mercure/health/ready' ]
       timeout: 10s
-    image: dunglas/mercure:${MERCURE_VERSION:-v0.24.2}
+    image: dunglas/mercure:${MERCURE_VERSION:-v1.1.4}
     restart: unless-stopped
     volumes:
       # Bolt keeps one database per tenant here, so a restart does not lose the

@@ -32,7 +32,7 @@ import { toast } from '@lychen/vue-components-core/toast/use-toast';
 import { useEventBus } from '@vueuse/core';
 import { landRoleDeleteSucceededEvent } from '@lychen/vue-tera/events/LandRoleEvents';
 import DialogWithCancelButton from '@lychen/vue-components-app/dialogs/with-cancel-button/DialogWithCancelButton.vue';
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type { LandRoleJsonld } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
 const { t: tLandRole } = useI18nExtended({
   messages: landRoleMessages,
@@ -48,7 +48,7 @@ const { t: t } = useI18nExtended({
 
 const { emit } = useEventBus(landRoleDeleteSucceededEvent);
 
-const { landRole } = defineProps<{ landRole: components['schemas']['LandRole.jsonld'] }>();
+const { landRole } = defineProps<{ landRole: LandRoleJsonld }>();
 
 const { api } = useTeraApi();
 
@@ -57,7 +57,7 @@ const { mutate: deleteLandRole, isPending } = useMutation({
     if (!landRole.ulid) {
       throw new Error('missing.ulid');
     }
-    return api.DELETE('/api/land_roles/{ulid}', { params: { path: { ulid: landRole.ulid } } });
+    return api.apiLandRolesUlidDelete({ path: { ulid: landRole.ulid } });
   },
   onSuccess: (data, variables, context) => {
     toast({

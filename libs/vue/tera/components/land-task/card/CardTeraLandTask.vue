@@ -24,7 +24,7 @@
         >
       </span>
     </div>
-    <div v-if="!noState">
+    <div v-if="!noState && landTask.state">
       <BadgeTeraLandTaskState :state="landTask.state" />
     </div>
   </div>
@@ -37,10 +37,10 @@ import { messages, TRANSLATION_KEY } from '@lychen/i18n-tera/land';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import type { Variant } from '.';
 import BadgeTeraLandTaskState from '../badges/state/BadgeTeraLandTaskState.vue';
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type { LandTaskJsonld } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
 const { landTask, noState = false } = defineProps<{
-  landTask: components['schemas']['LandTask.jsonld'];
+  landTask: LandTaskJsonld;
   noState?: boolean;
   variant?: Variant;
 }>();
