@@ -5,5 +5,5 @@ declare(strict_types=1);
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    $containerConfigurator->import('@LychenConfigBundle/config/packages/doctrine.php');
+    $containerConfigurator->import('@LychenConfig/config/packages/doctrine.php');
 };

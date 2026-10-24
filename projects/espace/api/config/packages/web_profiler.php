@@ -5,5 +5,5 @@ declare(strict_types=1);
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    $containerConfigurator->import('@LychenConfigBundle/config/packages/web_profiler.php');
+    $containerConfigurator->import('@LychenConfig/config/packages/web_profiler.php');
 };

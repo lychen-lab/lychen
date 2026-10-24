@@ -10,10 +10,10 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * The Symfony configuration every Lychen API shares, so the backend services stay aligned.
  *
  * The bundle configures nothing by itself: it lets an API's config files import their
- * shared base from this library, as `@LychenConfigBundle/config/packages/<file>.php` and
- * `@LychenConfigBundle/config/routes/<file>.php`, before adding what is their own.
+ * shared base from this library, as `@LychenConfig/config/packages/<file>.php` and
+ * `@LychenConfig/config/routes/<file>.php`, before adding what is their own.
  */
-final class LychenConfigBundle extends Bundle
+final class LychenConfig extends Bundle
 {
     public function getPath(): string
     {

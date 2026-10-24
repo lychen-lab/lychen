@@ -9,7 +9,7 @@ own:
 ```php
 // projects/espace/api/config/packages/api_platform.php
 return static function (ContainerConfigurator $containerConfigurator): void {
-    $containerConfigurator->import('@LychenConfigBundle/config/packages/api_platform.php');
+    $containerConfigurator->import('@LychenConfig/config/packages/api_platform.php');
 
     $containerConfigurator->extension('api_platform', [
         'title' => 'Espace',
@@ -27,8 +27,8 @@ shared value, and a plain list such as `custom_authenticators` is usually append
    of the `../packages/*` path repository, then
    `composer update lychen/config`.
 2. `moon.yml`: add `lychen-php-config` to `dependsOn`.
-3. `config/bundles.php`: `Lychen\Config\LychenConfigBundle::class => ['all' => true]`.
-   The bundle configures nothing by itself, it only resolves `@LychenConfigBundle/`.
+3. `config/bundles.php`: `Lychen\Config\LychenConfig::class => ['all' => true]`.
+   The bundle configures nothing by itself, it only resolves `@LychenConfig/`.
 4. `config/services.php`: set the `lychen.service` parameter to the API's domain
    (`tera`, `espace`, `flora`…). It names the RabbitMQ queue and routing keys
    (`<domain>.events`, `<domain>.internal.message.v1`) and the Mercure issuer

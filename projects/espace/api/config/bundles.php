@@ -21,5 +21,5 @@ return [
     Lychen\UtilZitadelBundle\UtilZitadelBundle::class => ['all' => true],
     Lychen\CoreBundle\CoreBundle::class => ['all' => true],
     Symfony\Bundle\MercureBundle\MercureBundle::class => ['all' => true],
-    Lychen\Config\LychenConfigBundle::class => ['all' => true],
+    Lychen\Config\LychenConfig::class => ['all' => true],
 ];
