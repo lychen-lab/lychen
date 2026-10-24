@@ -51,7 +51,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useVueTable, createColumnHelper, getCoreRowModel } from '@tanstack/vue-table';
+import { createColumnHelper, tableFeatures, useTable } from '@tanstack/vue-table';
 import { useDraggable } from '@vueuse/core';
 
 interface Task {
@@ -78,19 +78,21 @@ const totalDays = computed(() =>
   Math.ceil((endDate.value.getTime() - startDate.value.getTime()) / (1000 * 60 * 60 * 24)),
 );
 
-const columnHelper = createColumnHelper<Task>();
-const columns = [
+// Only the core row model is needed, which v9 always provides
+const features = tableFeatures({});
+const columnHelper = createColumnHelper<typeof features, Task>();
+const columns = columnHelper.columns([
   columnHelper.accessor('name', {
     header: 'Task',
     cell: (info) => info.getValue(),
   }),
-];
+]);
 
 // Create table
-const table = useVueTable({
+const table = useTable({
+  features,
   columns,
-  data: taskList.value,
-  getCoreRowModel: getCoreRowModel<Task>(),
+  data: taskList,
 });
 
 // Compute task bar position

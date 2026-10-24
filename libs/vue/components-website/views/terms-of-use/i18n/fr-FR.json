@@ -8,7 +8,7 @@
   "sections": [
     {
       "title": "Mentions Légales",
-      "content": "Association Lychen\nSIREN : 993 140 904 - SIRET : 993 140 904 00018\nSiège social : 1 ALLEE DU TRELOD 74000 ANNECY\nCatégorie juridique : 9220 - Association déclarée\nActivité Principale Exercée (APE) : 94.99Z - Autres organisations fonctionnant par adhésion volontaire\nDirecteur de la publication : Présidence de l'association\nContact : contact@lychen.org"
+      "content": "Association Lychen\nSIREN : 993 140 904 - SIRET : 993 140 904 00018\nSiège social : 1 ALLEE DU TRELOD 74000 ANNECY\nCatégorie juridique : 9220 - Association déclarée\nActivité Principale Exercée (APE) : 94.99Z - Autres organisations fonctionnant par adhésion volontaire\nDirecteur de la publication : Présidence de l'association\nContact : contact{'@'}lychen.org"
     },
     {
       "title": "Accès au site",
@@ -24,11 +24,11 @@
     },
     {
       "title": "Données personnelles",
-      "content": "L'utilisation de ce site peut entraîner le traitement de données personnelles. Pour plus d'information, veuillez consulter notre Politique de Confidentialité. Le DPO peut être contacté à l'adresse : dpo@lychen.org"
+      "content": "L'utilisation de ce site peut entraîner le traitement de données personnelles. Pour plus d'information, veuillez consulter notre Politique de Confidentialité. Le DPO peut être contacté à l'adresse : dpo{'@'}lychen.org"
     },
     {
       "title": "Contact",
-      "content": "Pour toute question relative aux présentes conditions d'utilisation du site, vous pouvez nous écrire à l'adresse suivante : contact@lychen.org"
+      "content": "Pour toute question relative aux présentes conditions d'utilisation du site, vous pouvez nous écrire à l'adresse suivante : contact{'@'}lychen.org"
     }
   ]
 }

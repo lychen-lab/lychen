@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { SendHorizontal } from 'lucide-vue-next';
+import { SendHorizontal } from '@lucide/vue';
 </script>

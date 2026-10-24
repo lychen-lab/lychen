@@ -12,11 +12,11 @@
     },
     {
       "title": "Éditeur du site et responsable du traitement",
-      "content": "Le présent site est édité par l'association Lychen, association déclarée régie par la loi du 1er juillet 1901.\nSiège social : 1 allée du Trélod, 74000 Annecy, France\nSIREN : 993 140 904 — SIRET : 993 140 904 00018\nDirecteur de la publication : la présidence de l'association\nLe responsable du traitement des données à caractère personnel est l'association Lychen, représentée par sa présidence.\nContact : contact@lychen.org"
+      "content": "Le présent site est édité par l'association Lychen, association déclarée régie par la loi du 1er juillet 1901.\nSiège social : 1 allée du Trélod, 74000 Annecy, France\nSIREN : 993 140 904 — SIRET : 993 140 904 00018\nDirecteur de la publication : la présidence de l'association\nLe responsable du traitement des données à caractère personnel est l'association Lychen, représentée par sa présidence.\nContact : contact{'@'}lychen.org"
     },
     {
       "title": "Délégué à la protection des données (DPO)",
-      "content": "Pour toute question relative au traitement de vos données personnelles ou à l'exercice de vos droits, vous pouvez contacter notre Délégué à la Protection des Données :\nPar courriel : dpo@lychen.org\nPar courrier : Association Lychen — DPO, 1 allée du Trélod, 74000 Annecy, France"
+      "content": "Pour toute question relative au traitement de vos données personnelles ou à l'exercice de vos droits, vous pouvez contacter notre Délégué à la Protection des Données :\nPar courriel : dpo{'@'}lychen.org\nPar courrier : Association Lychen — DPO, 1 allée du Trélod, 74000 Annecy, France"
     },
     {
       "title": "Données collectées",
@@ -52,7 +52,7 @@
     },
     {
       "title": "Vos droits",
-      "content": "Conformément au RGPD et à la loi Informatique et Libertés, vous disposez des droits suivants sur vos données : droit d'accès, de rectification, d'effacement, de limitation du traitement, de portabilité, ainsi que d'opposition au traitement et le droit de définir des directives relatives au sort de vos données après votre décès.\nPour exercer ces droits, adressez votre demande à notre DPO : dpo@lychen.org. Une preuve d'identité pourra vous être demandée. Nous nous engageons à vous répondre dans un délai d'un mois à compter de la réception de votre demande."
+      "content": "Conformément au RGPD et à la loi Informatique et Libertés, vous disposez des droits suivants sur vos données : droit d'accès, de rectification, d'effacement, de limitation du traitement, de portabilité, ainsi que d'opposition au traitement et le droit de définir des directives relatives au sort de vos données après votre décès.\nPour exercer ces droits, adressez votre demande à notre DPO : dpo{'@'}lychen.org. Une preuve d'identité pourra vous être demandée. Nous nous engageons à vous répondre dans un délai d'un mois à compter de la réception de votre demande."
     },
     {
       "title": "Réclamation auprès de la CNIL",
@@ -64,7 +64,7 @@
     },
     {
       "title": "Contact",
-      "content": "Pour toute question relative à la présente politique de confidentialité ou au traitement de vos données personnelles, vous pouvez nous écrire à l'adresse suivante : contact@lychen.org (ou dpo@lychen.org pour les demandes relatives à la protection des données)."
+      "content": "Pour toute question relative à la présente politique de confidentialité ou au traitement de vos données personnelles, vous pouvez nous écrire à l'adresse suivante : contact{'@'}lychen.org (ou dpo{'@'}lychen.org pour les demandes relatives à la protection des données)."
     }
   ]
 }
