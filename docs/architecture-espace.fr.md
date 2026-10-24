@@ -99,9 +99,13 @@ du monorepo, sur le tenant `espace` — voir [deployment.md](deployment.md#centr
   changements de statut persistés par les activités Temporal arrivent au front sans code
   supplémentaire dans les activités.
 - **Updates privées, chemins d'IRI comme topics** (`/api/area_proposals/{uuid}`) : le hub ne
-  délivre que ce que le token de l'utilisateur (`GET /api/mercure_subscription`) autorise, et
-  un worker, qui n'a pas d'hôte de requête, publie sur les mêmes topics que l'API.
-- **Front :** `useEspaceMercure(topics, onUpdate)` dans `libs/vue/espace`.
+  délivre que ce que le token de l'utilisateur (`GET /api/mercure_subscription`) autorise — le
+  motif d'URL `/api/area_proposals/:uuid` — et un worker, qui n'a pas d'hôte de requête,
+  publie sur les mêmes topics que l'API.
+- **Protocole Mercure 1.0 de bout en bout :** tokens d'accès OAuth 2.0 (`iss`
+  `urn:lychen:espace-api`, `aud` l'URL publique du hub), sélecteurs `match` /
+  `match_urlpattern`, et le token dans un en-tête `Authorization`, jamais dans l'URL.
+- **Front :** `useEspaceMercure(matchers, onUpdate)` dans `libs/vue/espace`.
 - **Pas un canal de notification.** Mercure reflète les données sur les écrans ouverts ;
   notifier un utilisateur passe toujours par les activités et Novu, comme ci-dessus.
 

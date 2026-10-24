@@ -65,11 +65,10 @@ jobs:
       - name: Install node dependencies
         run: yarn install
 
-      # Same command, flags and relative paths as typescript-espace-api-sdk:generate-api,
-      # using the workspace-pinned openapi-typescript version from yarn.lock. The spec
-      # is relabelled 3.1 on the way in, as generate-api does (see the note there).
+      # Same generator, version and openapi-ts.config.ts as typescript-espace-api-sdk:generate-api,
+      # using the workspace-pinned @hey-api/openapi-ts version from yarn.lock.
       - name: Regenerate TypeScript SDK
-        run: jq '.openapi = "3.1.0"' projects/espace/api/openapi_docs.json | yarn workspace @lychen/typescript-espace-api-sdk run openapi-typescript -o ./generated/espace-api.ts --enum-values --enum
+        run: yarn workspace @lychen/typescript-espace-api-sdk run openapi-ts
 
       # SDK generation is intentionally MANUAL and decoupled from API changes: an
       # API change must NOT force a SDK regeneration (and the resulting frontend

@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type { LandRoleJsonld } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import Badge from '@lychen/vue-components-core/badge/Badge.vue';
 
-defineProps<{ landRole: Pick<components['schemas']['LandRole.jsonld'], 'name'> }>();
+defineProps<{ landRole: Pick<LandRoleJsonld, 'name'> }>();
 </script>

@@ -15,7 +15,7 @@ import { messages, TRANSLATION_KEY } from './i18n';
 import Badge from '@lychen/vue-components-core/badge/Badge.vue';
 import IconCircleDashed from '@lychen/vue-icons/IconCircleDashed.vue';
 
-import { LandTaskJsonldState as State } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import { LandTaskState as State } from '@lychen/typescript-tera-api-sdk/enums';
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 defineProps<{ state: State }>();

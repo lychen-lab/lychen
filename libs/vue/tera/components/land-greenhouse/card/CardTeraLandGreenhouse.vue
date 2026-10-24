@@ -9,11 +9,11 @@
 </template>
 
 <script lang="ts" setup>
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type { LandGreenhouseJsonld } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import type { Variant } from '.';
 
 const { landGreenhouse } = defineProps<{
-  landGreenhouse: components['schemas']['LandGreenhouse.jsonld'];
+  landGreenhouse: LandGreenhouseJsonld;
   variant?: Variant;
 }>();
 </script>
