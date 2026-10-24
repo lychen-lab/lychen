@@ -32,7 +32,7 @@ import { toast } from '@lychen/vue-components-core/toast/use-toast';
 import { useEventBus } from '@vueuse/core';
 import { landMemberInvitationDeleteSucceededEvent } from '@lychen/vue-tera/events/LandMemberInvitationEvents';
 import DialogWithCancelButton from '@lychen/vue-components-app/dialogs/with-cancel-button/DialogWithCancelButton.vue';
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type { LandMemberInvitationJsonld } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
 const { t: tLandMemberInvitation } = useI18nExtended({
   messages: landMemberInvitationMessages,
@@ -49,7 +49,7 @@ const { t: t } = useI18nExtended({
 const { emit } = useEventBus(landMemberInvitationDeleteSucceededEvent);
 
 const { landMemberInvitation } = defineProps<{
-  landMemberInvitation: Pick<components['schemas']['LandMemberInvitation.jsonld'], 'ulid'>;
+  landMemberInvitation: Pick<LandMemberInvitationJsonld, 'ulid'>;
 }>();
 
 const { api } = useTeraApi();
@@ -59,8 +59,8 @@ const { mutate: deleteLandMemberInvitation, isPending } = useMutation({
     if (!landMemberInvitation.ulid) {
       throw new Error('missing.ulid');
     }
-    return api.DELETE('/api/land_member_invitations/{ulid}', {
-      params: { path: { ulid: landMemberInvitation.ulid } },
+    return api.apiLandMemberInvitationsUlidDelete({
+      path: { ulid: landMemberInvitation.ulid },
     });
   },
   onSuccess: (data, variables, context) => {

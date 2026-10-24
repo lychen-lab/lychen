@@ -17,13 +17,13 @@
 </template>
 
 <script lang="ts" setup>
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type { LandAreaJsonld } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import type { Variant } from '.';
 import BadgeTeraLandAreaKind from '../badges/kind/BadgeTeraLandAreaKind.vue';
 import BaseHeading from '@lychen/vue-components-app/base-heading/BaseHeading.vue';
 
 const { landArea } = defineProps<{
-  landArea: components['schemas']['LandArea.jsonld'];
+  landArea: LandAreaJsonld;
   variant?: Variant;
 }>();
 </script>

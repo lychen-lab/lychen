@@ -44,15 +44,19 @@ import {
 } from '@lychen/vue-tera/events/LandMemberInvitationEvents';
 import { ref } from 'vue';
 import FormTeraLandMemberInvitationUpdate from '../../forms/FormTeraLandMemberInvitationUpdate.vue';
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type {
+  LandJsonld,
+  LandMemberInvitationJsonld,
+  LandRoleJsonld,
+} from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 
 const { landMemberInvitation } = defineProps<{
-  landMemberInvitation: Omit<components['schemas']['LandMemberInvitation.jsonld'], 'landRoles'> & {
-    landRoles?: components['schemas']['LandRole.jsonld'][];
+  landMemberInvitation: Omit<LandMemberInvitationJsonld, 'landRoles'> & {
+    landRoles?: LandRoleJsonld[];
   };
-  land: components['schemas']['Land.jsonld'];
+  land: LandJsonld;
 }>();
 
 const open = ref(false);

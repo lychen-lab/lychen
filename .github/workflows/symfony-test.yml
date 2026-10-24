@@ -90,8 +90,13 @@ jobs:
       # The test image now bakes in the project sources and Composer vendors
       # (dev dependencies included). ci-test-build-docker-image depends on
       # ci-copy-packages, so the lychen/* path packages are copied in beforehand.
+      # `moon run`, not `moon ci`: a project is in the matrix when it is affected
+      # *or* downstream of an affected project (e.g. a changed `common-*` service
+      # its `dev` task starts), where `moon ci` finds none of this task's own
+      # inputs changed and skips the build, so the push below and the
+      # `moon run` PHPUnit jobs would find no image.
       - name: Build docker test image
-        run: moon ci ${{ matrix.projects }}:ci-test-build-docker-image
+        run: moon run ${{ matrix.projects }}:ci-test-build-docker-image
 
       - name: Push docker test image
         run: |

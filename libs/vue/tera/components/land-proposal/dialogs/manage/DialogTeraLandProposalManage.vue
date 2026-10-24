@@ -52,8 +52,8 @@ useQuery({
     if (!landUlid.value) {
       throw new Error('missing.ulid');
     }
-    const response = await api.GET('/api/land_proposals', {
-      params: { query: { land: landUlid.value } },
+    const response = await api.apiLandProposalsGetCollection({
+      query: { land: landUlid.value },
     });
     return response.data;
   },
