@@ -3,7 +3,7 @@ inheritedBy:
   tag: docker
 tasks:
   docker-buildx:
-    command: docker buildx build $projectRoot --platform linux/arm64,linux/amd64 --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${IMAGE_NAME}:latest --tag ${IMAGE_NAME}:${GITHUB_SHA} --tag ${IMAGE_NAME}:latest --push
+    command: docker buildx build $projectRoot --platform linux/arm64,linux/amd64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg GIT_SHA=${GITHUB_SHA} --cache-from ${IMAGE_NAME}:latest --tag ${IMAGE_NAME}:${GITHUB_SHA} --tag ${IMAGE_NAME}:latest --push
     deps:
     - build
     - get-dockerfiles

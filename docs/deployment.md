@@ -64,6 +64,17 @@ nor failure — silently deployed nothing.
    first checks that its `:<sha>` image exists: a project whose build failed keeps
    its current staging version instead of being pinned to a tag that was never
    pushed.
+4. **Verify the new version is live** — Dokploy only *queues* a deploy, so the
+   deploy call succeeding proves nothing: a failed pull or a crashing container
+   leaves the old version running. Every image we build serves the commit it was
+   built from at `/version.txt` (the `GIT_SHA` build arg); the job polls it for up
+   to 10 minutes and fails if the deployed commit never answers.
+
+**Configure the check per project:** add a `<PROJECT>_URL` *variable* (not a
+secret) to the `staging` GitHub Environment, named like the `<PROJECT>_DOKPLOY_ID`
+secrets — e.g. `ESPACE_APP_URL=https://<espace-app staging host>`,
+`TERA_API_URL=https://staging.api.tera.lychen.org`. A project without one is
+deployed but not verified, and the run says so with a warning.
 
 Runs never cancel each other, since a deploy may be mid-flight: a newer push
 waits, and as it computes its affected projects from the last delivered commit,

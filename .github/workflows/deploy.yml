@@ -145,7 +145,7 @@ jobs:
       && needs.define-matrix.outputs.staging == 'true'
       && needs.define-matrix.outputs.deploy != '[]' && needs.define-matrix.outputs.deploy != '' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     environment: staging
     permissions:
       contents: read
@@ -203,3 +203,32 @@ jobs:
           fi
           export DOKPLOY_COMPOSE_ID
           bash .moon/scripts/dokploy-compose-deploy.sh
+
+      # Dokploy only queues the deploy, so a green "Deploy" step proves nothing: a
+      # failed pull or a crashing container would leave the old version running.
+      # Every image serves the commit it was built from at /version.txt; wait for
+      # the new one to answer. The URL comes from the <PROJECT>_URL variable of the
+      # staging environment (e.g. ESPACE_APP_URL=https://staging.espace.lychen.org).
+      - name: 'Verify the new version is live'
+        if: ${{ env.BUILDS_IMAGE == 'true' }}
+        env:
+          VARS: ${{ toJSON(vars) }}
+          PROJECT: ${{ matrix.project }}
+          EXPECTED: ${{ github.sha }}
+        run: |
+          URL_VAR="$(echo "$PROJECT" | tr '[:lower:]-' '[:upper:]_')_URL"
+          URL=$(jq -r --arg key "$URL_VAR" '.[$key] // empty' <<< "$VARS")
+          if [[ -z "$URL" ]]; then
+            echo "::warning title=Deploy not verified::Set the $URL_VAR variable in the staging environment to check that $PROJECT really serves $EXPECTED."
+            exit 0
+          fi
+          for attempt in $(seq 1 40); do
+            SERVED=$(curl -fsS --max-time 10 "${URL%/}/version.txt?attempt=$attempt-$(date +%s)" 2> /dev/null | tr -d '[:space:]' || true)
+            if [[ "$SERVED" == "$EXPECTED" ]]; then
+              echo "$PROJECT serves $EXPECTED at $URL"
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "::error title=Deploy not live::After 10 minutes ${URL%/}/version.txt still serves '${SERVED:-nothing}', expected $EXPECTED. Check the deployment logs of $PROJECT in Dokploy."
+          exit 1
