@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { Moon } from 'lucide-vue-next';
+import { Moon } from '@lucide/vue';
 </script>

@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { SunMedium } from 'lucide-vue-next';
+import { SunMedium } from '@lucide/vue';
 </script>
