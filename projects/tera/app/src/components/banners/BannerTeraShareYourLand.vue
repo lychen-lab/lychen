@@ -1,7 +1,7 @@
 <template>
   <div class="@container">
     <div
-      class="from-surface-container-low to-surface-container text-on-surface-container-highest flex flex-col items-center justify-between gap-4 rounded-3xl bg-gradient-to-tr p-8 @lg:flex-row"
+      class="text-on-surface-container-highest flex flex-col items-center justify-between gap-4 rounded-3xl bg-linear-to-tr from-surface-container-low to-surface-container p-8 @lg:flex-row"
     >
       <div class="flex flex-col gap-2">
         <BaseHeading variant="h3">{{ t('heading') }}</BaseHeading>
@@ -49,7 +49,7 @@ const { api } = useTeraApi();
 const { data: landRequests } = useQuery({
   queryKey: ['landRequestsPublic'],
   queryFn: async () => {
-    const response = await api.GET('/api/land_requests/public', {});
+    const response = await api.apiLandRequestspublicGetCollection();
     return response.data;
   },
 });

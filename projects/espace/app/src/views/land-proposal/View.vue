@@ -312,8 +312,8 @@ const { api } = useEspaceApi();
 const { data: proposal } = useQuery({
   queryKey: ['area-proposal', uuid],
   queryFn: async () => {
-    const response = await api.GET('/api/area_proposals/{uuid}', {
-      params: { path: { uuid: uuid.value } },
+    const response = await api.apiAreaProposalsUuidGet({
+      path: { uuid: uuid.value },
     });
     return response.data;
   },

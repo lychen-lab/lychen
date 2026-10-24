@@ -4,7 +4,6 @@
     "@lychen/typescript-espace": "workspace:*",
     "@lychen/typescript-espace-api-sdk": "workspace:*",
     "@lychen/typescript-zitadel": "workspace:*",
-    "@lychen/vue-i18n": "workspace:*",
-    "openapi-fetch": "^0.17.0"
+    "@lychen/vue-i18n": "workspace:*"
   }
 }

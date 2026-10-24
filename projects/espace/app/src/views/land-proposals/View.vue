@@ -73,7 +73,7 @@ const { api } = useEspaceApi();
 const { data, isPending, isError } = useQuery({
   queryKey: ['area-proposals'],
   queryFn: async () => {
-    const response = await api.GET('/api/area_proposals');
+    const response = await api.apiAreaProposalsGetCollection();
     return response.data;
   },
 });

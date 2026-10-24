@@ -35,19 +35,23 @@ import { useEventBus } from '@vueuse/core';
 
 import { landMemberPatchSucceededEvent } from '@lychen/vue-tera/events/LandMemberEvents';
 import { extractValuesByKey } from '@lychen/typescript-utils/transformers/extractValuesByKey';
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type {
+  LandJsonld,
+  LandMemberJsonld,
+  LandRoleJsonld,
+} from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 
 const { landMember } = defineProps<{
-  landMember: Omit<components['schemas']['LandMember.jsonld'], 'landRoles'> & {
-    landRoles?: Pick<components['schemas']['LandRole.jsonld'], '@id' | 'name'>[];
+  landMember: Omit<LandMemberJsonld, 'landRoles'> & {
+    landRoles?: Pick<LandRoleJsonld, '@id' | 'name'>[];
   };
-  land: components['schemas']['Land.jsonld'];
+  land: LandJsonld;
 }>();
 
 interface FormType {
-  landRoles: Pick<components['schemas']['LandRole.jsonld'], '@id' | 'name'>[];
+  landRoles: Pick<LandRoleJsonld, '@id' | 'name'>[];
 }
 
 const { handleSubmit, meta, setFieldValue, isFieldDirty } = useForm<FormType>({
@@ -64,8 +68,8 @@ const { mutate, isPending } = useMutation({
       throw new Error('missing.ulid');
     }
     const landRoleIds = extractValuesByKey(values.landRoles, '@id');
-    const response = await api.PATCH('/api/land_members/{ulid}', {
-      params: { path: { ulid: landMember.ulid } },
+    const response = await api.apiLandMembersUlidPatch({
+      path: { ulid: landMember.ulid },
       body: {
         landRoles: landRoleIds,
       },

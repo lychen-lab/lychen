@@ -48,12 +48,12 @@ import CardTeraLandProposal from '@lychen/vue-tera/components/land-proposal/card
 import DialogTeraLandProposalView from '@lychen/vue-tera/components/land-proposal/dialogs/view/DialogTeraLandProposalView.vue';
 
 import type { LandSharingCondition } from '@lychen/typescript-tera-core/constants/LandSharingCondition';
-import type { operations } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type { LandProposalCollectionPublicResponses } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import type { QueryStatus } from '@tanstack/vue-query';
 import IconLoaderCircle from '@lychen/vue-icons/IconLoaderCircle.vue';
 
 defineProps<{
-  queryResult?: operations['land-proposal_collection-public']['responses']['200']['content']['application/ld+json'];
+  queryResult?: LandProposalCollectionPublicResponses[200];
   status: QueryStatus;
 }>();
 </script>

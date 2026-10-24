@@ -262,7 +262,11 @@ import IconUserPlus from '@lychen/vue-icons/IconUserPlus.vue';
 import IconCalendarCirclePlus from '@lychen/vue-icons/IconCalendarCirclePlus.vue';
 import IconTasks from '@lychen/vue-icons/IconTasks.vue';
 import IconRightFromBracket from '@lychen/vue-icons/IconRightFromBracket.vue';
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type {
+  LandAreaJsonld,
+  LandAreaJsonldLandAreaCollection,
+  LandMemberJsonld,
+} from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
 const Title = defineAsyncComponent(() => import('@lychen/vue-components-website/title/Title.vue'));
 
@@ -279,9 +283,7 @@ const { allowed: settingsButtonAllowed } = useLandGuard(landMember, ['land_updat
 // differs from the injected `land_member.me` group only by a generated `@context`
 // enum that is never read. Cast for the delete dialog binding.
 const landMemberForDelete = computed(
-  () =>
-    landMember?.value as unknown as
-      Omit<components['schemas']['LandMember.jsonld'], 'landRoles'> | undefined,
+  () => landMember?.value as unknown as Omit<LandMemberJsonld, 'landRoles'> | undefined,
 );
 
 const landUlid = computed(() => land?.value?.ulid);
@@ -291,15 +293,15 @@ const enabled = computed(() => !!landUlid.value);
 // CardTeraLandArea is typed against the base `LandArea.jsonld`. The projection is a runtime
 // subset (it only omits optional base fields such as `@context` and uses nominally distinct
 // but value-identical enums), so it is safe to widen at this prop boundary.
-function asLandArea(landArea: components['schemas']['LandArea.jsonld-land_area.collection']) {
-  return landArea as unknown as components['schemas']['LandArea.jsonld'];
+function asLandArea(landArea: LandAreaJsonldLandAreaCollection) {
+  return landArea as unknown as LandAreaJsonld;
 }
 
 const { data: landAreas } = useQuery({
   queryKey: ['landAreas', landUlid],
   queryFn: async () => {
-    const response = await api.GET('/api/land_areas', {
-      params: { query: { land: landUlid.value! } },
+    const response = await api.apiLandAreasGetCollection({
+      query: { land: landUlid.value! },
     });
 
     return response.data;
@@ -310,8 +312,8 @@ const { data: landAreas } = useQuery({
 const { data: landGreenhouses } = useQuery({
   queryKey: ['landGreenhouses', landUlid],
   queryFn: async () => {
-    const response = await api.GET('/api/land_greenhouses', {
-      params: { query: { land: landUlid.value! } },
+    const response = await api.apiLandGreenhousesGetCollection({
+      query: { land: landUlid.value! },
     });
 
     return response.data;
