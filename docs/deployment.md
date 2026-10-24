@@ -321,7 +321,24 @@ because Mercure authorises purely by JWT signature: with a single shared key, an
 API could mint a token granting itself `subscribe` on another domain's topics.
 With a key per tenant, a token signed by `espace` is rejected (401) by the `tera`
 hub, and the separate transports mean two APIs publishing the *same* topic URI
-never see each other's updates.
+never see each other's updates. (Each hub is also *named* after its tenant: the
+1.x hub shares one transport between hubs of the same name.)
+
+The hub runs **Mercure 1.x** and speaks the **1.0 protocol**, whose tokens are OAuth 2.0
+access tokens ([RFC 9068](https://www.rfc-editor.org/rfc/rfc9068)): an `at+jwt` header, an
+`exp`, and `authorization_details` instead of the old `mercure` claim. On top of the
+signature, each tenant checks two claims, both fixed by `entrypoint.sh`:
+
+| Claim | `espace` value | Why |
+| --- | --- | --- |
+| `iss` | `urn:lychen:espace-api` | The tenant's only trusted issuer, bound to its keys. A fixed name: the keys, not the issuer, keep tenants apart. |
+| `aud` | `$MERCURE_PUBLIC_ORIGIN/espace/.well-known/mercure` | The tenant's pinned *resource identifier*, i.e. its public URL. Unpinned, the hub would expect `<origin>/.well-known/mercure` — without the tenant prefix — and a different one for the internal URL the APIs publish to. |
+
+Clients must speak 1.0 too: subscribers select topics with `match=` (exact) or
+`match_urlpattern=` ([URL Patterns](https://urlpattern.spec.whatwg.org), `:uuid` rather
+than `{uuid}`) and resume with `last_event_id=`; the token goes in an
+`Authorization: Bearer` header or a cookie, **never in the URL** — the `authorization`
+query parameter is gone. The `espace` example below does all of it.
 
 A Caddyfile cannot loop over a list, so the per-tenant blocks are rendered at boot
 by [`entrypoint.sh`](../projects/common/mercure/entrypoint.sh) from these
@@ -329,13 +346,14 @@ variables:
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
+| `MERCURE_PUBLIC_ORIGIN` | — (dev: `http://localhost:8800`) | **Required.** Where browsers reach the hub, e.g. `https://mercure.lychen.org`. Each tenant's resource identifier is built from it, so it must agree with the APIs' `MERCURE_PUBLIC_URL`. |
 | `MERCURE_TENANTS` | `tera espace flora` | Space-separated hubs to provision. One per API, `[a-z0-9-]`. |
 | `MERCURE_<TENANT>_PUBLISHER_JWT_KEY` | a dev key | HMAC key validating that tenant's *publisher* tokens, e.g. `MERCURE_TERA_PUBLISHER_JWT_KEY`. |
 | `MERCURE_<TENANT>_SUBSCRIBER_JWT_KEY` | a dev key | Same, for *subscriber* tokens. |
-| `MERCURE_EXTRA_DIRECTIVES` | — | Extra `mercure` directives applied to every hub. |
+| `MERCURE_EXTRA_DIRECTIVES` | — | Extra `mercure` directives applied to every hub. The 1.x hub refuses unknown directives instead of ignoring them. |
 | `MERCURE_<TENANT>_EXTRA_DIRECTIVES` | — | Extra directives for that hub alone — this is where production `cors_origins` goes. |
 | `MERCURE_JWT_ALG` | `HS256` | Signing algorithm for every key. |
-| `MERCURE_VERSION` | `v0.24.2` | Image tag (`dunglas/mercure:<version>`). |
+| `MERCURE_VERSION` | `v1.1.4` | Image tag (`dunglas/mercure:<version>`). |
 
 The rendered Caddyfile holds **no secrets** — it references keys as
 `{env.MERCURE_TERA_PUBLISHER_JWT_KEY}`, which Caddy resolves at runtime. When a
@@ -358,17 +376,19 @@ the variables it is told about.
 ### Dev
 
 `moon <api>:dev` starts the hub alongside mailpit and the broker. It is permissive
-there and only there (`anonymous`, `demo`, `subscriptions`, `cors_origins *`), set
-from [`compose.override.yml`](../projects/common/mercure/compose.override.yml).
-The Mercure debugger is at
-<http://localhost:8800/tera/.well-known/mercure/ui/> (`MERCURE_PORT` to move it).
+there and only there — the `playground` directive turns on `anonymous`,
+`subscriptions`, the debugger and `cors_origins *` — set from
+[`compose.override.yml`](../projects/common/mercure/compose.override.yml), which also
+sets `MERCURE_PUBLIC_ORIGIN`. The Mercure debugger is at
+<http://localhost:8800/tera/.well-known/mercure/debug/> (`MERCURE_PORT` to move it).
 
 ### To deploy it, first (outside this repo)
 
 1. Create the Compose service in Dokploy from `projects/common/mercure`, and set
-   a **fresh random key** for every `MERCURE_<TENANT>_{PUBLISHER,SUBSCRIBER}_JWT_KEY`
-   in its env, plus a `MERCURE_<TENANT>_EXTRA_DIRECTIVES` naming that app's origin,
-   e.g. `cors_origins https://app.tera.lychen.org`.
+   `MERCURE_PUBLIC_ORIGIN` to the hub's public origin (step 3), a **fresh random key**
+   for every `MERCURE_<TENANT>_{PUBLISHER,SUBSCRIBER}_JWT_KEY` in its env, and a
+   `MERCURE_<TENANT>_EXTRA_DIRECTIVES` naming that app's origin, e.g.
+   `cors_origins https://app.tera.lychen.org`.
 2. Add its compose id as the `COMMON_MERCURE_DOKPLOY_ID` secret in the `staging`
    and `production` GitHub Environments — the deploy workflows derive the secret
    name from the project id. Without it the deploy job fails.
@@ -388,7 +408,11 @@ another API.
 
 - `symfony/mercure-bundle` and `lcobucci/jwt`, configured in
   [`config/packages/mercure.php`](../projects/espace/api/config/packages/mercure.php) to
-  publish through the tenant's hub with the tenant's **publisher** key.
+  publish through the tenant's hub with the tenant's **publisher** key, and to mint
+  subscriber tokens with its **subscriber** key (the bundle's `publisher` / `subscriber`
+  options). Both carry the RFC 9068 claims the hub checks: `iss`, `sub` and `client_id`
+  set there, `aud` left to the bundle — the hub's public URL, which is the tenant's
+  resource identifier.
 - [`AreaProposalMercureListener`](../projects/espace/api/src/Doctrine/Listener/AreaProposalMercureListener.php)
   publishes every committed change to an area proposal through
   [`ResourceUpdatePublisher`](../projects/espace/api/src/Mercure/ResourceUpdatePublisher.php):
@@ -401,20 +425,25 @@ another API.
   HTTP request has no host to build a URL from, and would otherwise land on a topic
   nobody listens to.
 - `GET /api/mercure_subscription` gives a signed-in user the hub's public URL and a
-  one-hour token signed with the tenant's **subscriber** key, granting the topics listed in
-  [`MercureSubscriptionProvider::TOPICS`](../projects/espace/api/src/Api/Resource/MercureSubscription/Provider/MercureSubscriptionProvider.php).
-  A token handed to a browser can never publish.
+  one-hour token signed with the tenant's **subscriber** key, whose subject is that user,
+  granting the URL patterns listed in
+  [`MercureSubscriptionProvider::TOPICS`](../projects/espace/api/src/Api/Resource/MercureSubscription/Provider/MercureSubscriptionProvider.php)
+  (`/api/area_proposals/:uuid`). A token handed to a browser can never publish.
 - An unreachable hub is logged, not raised: real-time is a convenience over the API, not
   part of its contract, and the write it reports is already committed.
 
 **App** ([`projects/espace/app`](../projects/espace/app/)):
 
-- [`useEspaceMercure(topics, onUpdate)`](../libs/vue/espace/composables/use-espace-mercure/useEspaceMercure.ts)
-  fetches a token and opens an `EventSource` on the hub. The token travels as the
-  `authorization` query parameter — `EventSource` cannot set headers — which the hub
-  redacts from its logs. When the hub turns a token down, the composable reconnects with a
-  fresh one and resumes from the last event it received.
-- The proposals list subscribes to the `/api/area_proposals/{uuid}` template and refetches;
+- [`useEspaceMercure(matchers, onUpdate)`](../libs/vue/espace/composables/use-espace-mercure/useEspaceMercure.ts)
+  fetches a token and opens an event stream on the hub. A native `EventSource` cannot set
+  headers and the 1.0 hub accepts no token in the URL, so it uses the
+  [`eventsource`](https://www.npmjs.com/package/eventsource) package, which streams over
+  `fetch` and sends the token as an `Authorization: Bearer` header. (The other 1.0 option, a
+  cookie, only works when the hub shares a parent domain with the API.) Dropped connections
+  resume on their own with a `Last-Event-ID` header; when the hub turns a token down, the
+  composable reconnects with a fresh one and `last_event_id`, so nothing published in between
+  is lost.
+- The proposals list subscribes to the `/api/area_proposals/:uuid` URL pattern and refetches;
   a proposal's page subscribes to its own IRI and writes the pushed payload straight into
   its query cache.
 
@@ -424,7 +453,7 @@ another API.
 | Variable | Dev default | Purpose |
 | --- | --- | --- |
 | `MERCURE_URL` | `http://mercure/espace/.well-known/mercure` | Where the API publishes: the internal URL. |
-| `MERCURE_PUBLIC_URL` | `http://localhost:8800/espace/.well-known/mercure` | Where browsers connect. |
+| `MERCURE_PUBLIC_URL` | `http://localhost:8800/espace/.well-known/mercure` | Where browsers connect, and the `aud` of every token: must be the hub's `MERCURE_PUBLIC_ORIGIN` followed by `/espace/.well-known/mercure`, or the hub answers `401 invalid_token`. |
 | `MERCURE_JWT_SECRET` | the hub's dev `espace` publisher key | Must equal the hub's `MERCURE_ESPACE_PUBLISHER_JWT_KEY`. |
 | `MERCURE_SUBSCRIBER_JWT_SECRET` | the hub's dev `espace` subscriber key | Must equal the hub's `MERCURE_ESPACE_SUBSCRIBER_JWT_KEY`. |
 
@@ -433,9 +462,10 @@ another API.
 > the API side, at the first publish.
 
 To make another resource live: publish it from a listener like
-`AreaProposalMercureListener`, add its IRI template to `MercureSubscriptionProvider::TOPICS`,
-and subscribe from the app with `useEspaceMercure`. For another API, repeat the bundle
-setup with that API's tenant keys.
+`AreaProposalMercureListener`, add its IRI as a URL pattern to
+`MercureSubscriptionProvider::TOPICS`, and subscribe from the app with `useEspaceMercure`.
+For another API, repeat the bundle setup with that API's tenant keys and its issuer,
+`urn:lychen:<tenant>-api`.
 
 ## Prefer a forward fix
 

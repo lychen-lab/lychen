@@ -26,15 +26,17 @@ import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { useEventBus } from '@vueuse/core';
 import FormFieldTeraLandTaskTitle from './fields/FormFieldTeraLandTaskTitle.vue';
-import type { components, paths } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type {
+  ApiLandTasksPostData,
+  LandJsonld,
+} from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import { EVENT_landTaskPostSucceeded } from '@lychen/vue-tera/events/LandTaskEvents';
 
-const { land } = defineProps<{ land: components['schemas']['Land.jsonld'] }>();
+const { land } = defineProps<{ land: LandJsonld }>();
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 
-type LandTaskPostRequest =
-  paths['/api/land_tasks']['post']['requestBody']['content']['application/ld+json'];
+type LandTaskPostRequest = ApiLandTasksPostData['body'];
 
 const { isFieldDirty, handleSubmit, meta } = useForm<LandTaskPostRequest>({
   initialValues: {
@@ -48,7 +50,7 @@ const { api } = useTeraApi();
 
 const { mutate, isPending } = useMutation({
   mutationFn: async (data: LandTaskPostRequest) => {
-    const response = await api.POST('/api/land_tasks', {
+    const response = await api.apiLandTasksPost({
       body: data,
     });
     return response.data;

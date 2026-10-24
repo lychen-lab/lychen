@@ -1,3 +1,4 @@
+import { EventSource } from 'eventsource';
 import { onScopeDispose, toValue, watch, type MaybeRefOrGetter } from 'vue';
 import { useEspaceApi } from '../use-espace-api/useEspaceApi';
 
@@ -7,18 +8,24 @@ import { useEspaceApi } from '../use-espace-api/useEspaceApi';
  */
 export type EspaceMercureUpdate = { '@id': string } & Record<string, unknown>;
 
+/**
+ * Selects the topics to listen to, as the Mercure 1.0 protocol does: a resource IRI
+ * (`/api/area_proposals/0198…`), or, with `matchType: 'urlpattern'`, a URL pattern
+ * matching a family of them (`/api/area_proposals/:uuid`).
+ */
+export type EspaceMercureMatcher = { match: string; matchType?: 'exact' | 'urlpattern' };
+
 const RECONNECT_DELAY_MS = 5000;
 
 /**
  * Listens to the updates the espace API publishes on the central Mercure hub, for as
  * long as the calling component — or effect scope — lives.
  *
- * `topics` are Mercure topic selectors: a resource IRI (`/api/area_proposals/0198…`),
- * or a URI template matching all of them (`/api/area_proposals/{uuid}`). Updates are
- * private, so the hub only delivers those the API's token lets this user receive.
+ * Updates are private, so the hub only delivers those the API's token lets this user
+ * receive, whatever the matchers select.
  */
 export function useEspaceMercure(
-  topics: MaybeRefOrGetter<string[]>,
+  matchers: MaybeRefOrGetter<EspaceMercureMatcher[]>,
   onUpdate: (update: EspaceMercureUpdate) => void,
 ): void {
   const { api } = useEspaceApi();
@@ -27,7 +34,7 @@ export function useEspaceMercure(
   let reconnectTimer: ReturnType<typeof setTimeout> | undefined;
   let lastEventId: string | undefined;
   // Bumped by every connection attempt and by disposal, so a token that arrives after
-  // the topics changed or the component unmounted is dropped instead of used.
+  // the matchers changed or the component unmounted is dropped instead of used.
   let generation = 0;
 
   function disconnect() {
@@ -40,13 +47,13 @@ export function useEspaceMercure(
     const current = ++generation;
     disconnect();
 
-    const selectors = toValue(topics);
-    if (selectors.length === 0) {
+    const selected = toValue(matchers);
+    if (selected.length === 0) {
       return;
     }
 
     // Subscriber tokens are short-lived: fetch a fresh one for every connection.
-    const subscription = await api.GET('/api/mercure_subscription').then(
+    const subscription = await api.apiMercureSubscriptionGet().then(
       ({ data }) => data,
       () => undefined,
     );
@@ -59,26 +66,31 @@ export function useEspaceMercure(
     }
 
     const url = new URL(subscription.hubUrl);
-    for (const topic of selectors) {
-      url.searchParams.append('topic', topic);
+    for (const { match, matchType } of selected) {
+      url.searchParams.append(matchType === 'urlpattern' ? 'match_urlpattern' : 'match', match);
     }
-    // EventSource cannot set an Authorization header: the hub reads the token from this
-    // query parameter instead, and redacts it from its access logs.
-    url.searchParams.set('authorization', subscription.token);
     if (lastEventId) {
       // Replays whatever was published while this client was reconnecting.
-      url.searchParams.set('lastEventID', lastEventId);
+      url.searchParams.set('last_event_id', lastEventId);
     }
 
-    const eventSource = new EventSource(url);
+    // The hub takes the token from the Authorization header only — never from the URL,
+    // where it would leak (RFC 9700) — and a native EventSource cannot set headers. This
+    // one streams over fetch, which can; the alternative, a cookie, cannot reach a hub on
+    // another domain than the API's.
+    const { token } = subscription;
+    const eventSource = new EventSource(url, {
+      fetch: (input, init) =>
+        fetch(input, { ...init, headers: { ...init.headers, Authorization: `Bearer ${token}` } }),
+    });
     eventSource.onmessage = (event: MessageEvent<string>) => {
       lastEventId = event.lastEventId;
       onUpdate(JSON.parse(event.data) as EspaceMercureUpdate);
     };
     eventSource.onerror = () => {
-      // Dropped connections are retried by the browser on its own. A *closed* source
-      // means the hub turned the request down — an expired token, typically — so start
-      // over with a new one.
+      // Dropped connections are retried on their own, resuming from the last event. A
+      // *closed* source means the hub turned the request down — an expired token,
+      // typically — so start over with a new one.
       if (eventSource.readyState === EventSource.CLOSED) {
         reconnectTimer = setTimeout(connect, RECONNECT_DELAY_MS);
       }
@@ -86,7 +98,7 @@ export function useEspaceMercure(
     source = eventSource;
   }
 
-  watch(() => toValue(topics), connect, { immediate: true, deep: true });
+  watch(() => toValue(matchers), connect, { immediate: true, deep: true });
 
   onScopeDispose(() => {
     generation++;
