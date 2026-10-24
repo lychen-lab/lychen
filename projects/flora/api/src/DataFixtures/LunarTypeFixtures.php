@@ -9,7 +9,6 @@ use Doctrine\Persistence\ObjectManager;
 
 class LunarTypeFixtures extends Fixture implements FixtureGroupInterface
 {
-
     public function load(ObjectManager $manager): void
     {
         DefaultLunarTypesStory::load();

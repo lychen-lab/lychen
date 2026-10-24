@@ -6,7 +6,6 @@ use App\Entity\LandMemberInvitation;
 use App\Service\Land\LandMemberInvitationManager;
 use App\Workflow\LandMemberInvitation\LandMemberInvitationWorkflow;
 use App\Workflow\LandMemberInvitation\LandMemberInvitationWorkflowTransition;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Workflow\Event\Event;
@@ -30,7 +29,7 @@ readonly class LandMemberInvitationTransitionAccept implements EventSubscriberIn
         /** @var LandMemberInvitation $landMemberInvitation */
         $landMemberInvitation = $event->getSubject();
 
-        $landMemberInvitation->setAcceptedAt(new DateTimeImmutable());
+        $landMemberInvitation->setAcceptedAt(new \DateTimeImmutable());
     }
 
     public function createLandMember(Event $event): void

@@ -13,7 +13,6 @@ use App\Security\Checker\PersonPermissionChecker;
 use App\Security\Interface\PermissionHolder;
 use App\Security\Service\PermissionHolderRetriever;
 use App\Security\Service\PermissionHolderRetrieverContext;
-use Exception;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -26,16 +25,15 @@ abstract class AbstractPermissionVoter extends Voter
         protected readonly LandApiKeyPermissionChecker $landApiKeyPermissionChecker,
         protected readonly PersonPermissionChecker $personPermissionChecker,
         protected readonly LandMemberPermissionChecker $landMemberPermissionChecker,
-        protected readonly RequestStack $requestStack
-    )
-    {
+        protected readonly RequestStack $requestStack,
+    ) {
     }
 
     protected function getPermissionHolder(mixed $subject): PermissionHolder
     {
         try {
             return $this->permissionHolderRetriever->fromContext(new PermissionHolderRetrieverContext($subject));
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             throw new HttpException(403, $exception->getMessage());
         }
     }

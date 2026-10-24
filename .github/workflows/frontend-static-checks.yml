@@ -120,3 +120,31 @@ jobs:
 
       - name: Build docker images
         run: 'moon ci ${{ matrix.projects }}:docker-test-build'
+
+  # The one required check of this workflow (branch ruleset). It fails when a job
+  # failed or was cancelled and, as soon as an app is affected, when a job was
+  # skipped: a check disabled with `if: false` turns the gate red instead of
+  # silently disappearing from the PR.
+  gate:
+    name: 'Frontend | Gate'
+    if: ${{ always() }}
+    needs:
+      - lint-and-format
+      - typecheck
+      - define-matrix
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Check every job passed'
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+          AFFECTED: ${{ needs.define-matrix.outputs.projects }}
+        run: |
+          ok='["success"]'
+          # No affected app: the image builds are skipped on purpose.
+          if [[ -z "$AFFECTED" || "$AFFECTED" == "[]" ]]; then ok='["success","skipped"]'; fi
+          bad=$(jq -r --argjson ok "$ok" 'to_entries[] | select(.value.result | IN($ok[]) | not) | "\(.key)=\(.value.result)"' <<< "$NEEDS")
+          if [[ -n "$bad" ]]; then
+            echo "::error title=Frontend checks not green::$(paste -sd ' ' - <<< "$bad")"
+            exit 1
+          fi

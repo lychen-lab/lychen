@@ -9,7 +9,6 @@ use Doctrine\Persistence\ObjectManager;
 
 class FamilyFixtures extends Fixture implements FixtureGroupInterface
 {
-
     public function load(ObjectManager $manager): void
     {
         DefaultFamiliesStory::load();

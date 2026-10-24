@@ -10,7 +10,6 @@ use Exception;
 /** Only for dev */
 class DebugProcessor implements ProcessorInterface
 {
-
     public function __construct(private readonly EntityManagerInterface $entityManager)
     {
     }
@@ -20,11 +19,11 @@ class DebugProcessor implements ProcessorInterface
         try {
             $this->entityManager->remove($data);
             $this->entityManager->flush();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             if (method_exists($e, 'getCycle')) {
                 $cycleNodes = $e->getCycle();
                 // Affiche ou traite le cycle
-                //dd($cycleNodes);
+                // dd($cycleNodes);
             }
             throw $e; // ou gère autrement l'exception
         }

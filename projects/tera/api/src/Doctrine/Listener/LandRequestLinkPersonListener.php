@@ -2,7 +2,6 @@
 
 namespace App\Doctrine\Listener;
 
-
 use App\Entity\LandRequest;
 use App\Entity\Person;
 use App\Entity\PersonApiKey;
@@ -33,10 +32,10 @@ final readonly class LandRequestLinkPersonListener
             return;
         }
 
-        /** @var UserInterface&Person $person */
+        /* @var UserInterface&Person $person */
 
         $landRequest->setPerson($person);
 
-        $this->logger->info("User " . $person->getUserIdentifier() . " wants to created a land request");
+        $this->logger->info('User '.$person->getUserIdentifier().' wants to created a land request');
     }
 }

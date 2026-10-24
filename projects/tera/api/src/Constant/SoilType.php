@@ -21,6 +21,6 @@ final class SoilType
         self::LOAMY,
         self::STONY,
         self::PEATY,
-        self::CHALKY
+        self::CHALKY,
     ];
 }

@@ -39,7 +39,6 @@ class LandGreenhouseParameterTest extends AbstractApiTestCase
         // Owner
         $this->browser()->actingAs($context->owner)
             ->patch($this->getIriFromResource($landGreenhouseParameter), ['json' => [
-
             ]])
             ->assertSuccessful()
             ->assertJsonMatches('ulid', $landGreenhouseParameter->getUlid()->toString());

@@ -7,7 +7,6 @@ use App\Security\Interface\PermissionHolder;
 
 class LandTaskVoter extends AbstractLandAwareVoterInterface
 {
-
     public const string DELETE = 'land_member:land_task:delete';
     public const string PATCH = 'land_member:land_task:patch';
     public const string POST = 'land_member:land_task:post';
@@ -38,24 +37,24 @@ class LandTaskVoter extends AbstractLandAwareVoterInterface
         self::MARK_AS_IN_PROGRESS,
     ];
 
-    function getSupportedClass(): string
+    public function getSupportedClass(): string
     {
         return LandTask::class;
     }
 
-    function getAvailablePermissions(): array
+    public function getAvailablePermissions(): array
     {
         return self::ALL;
     }
 
-    protected function voteOnCustomAttribute(string           $attribute,
-                                             mixed            $subject,
-                                             PermissionHolder $permissionHolder): bool
+    protected function voteOnCustomAttribute(string $attribute,
+        mixed $subject,
+        PermissionHolder $permissionHolder): bool
     {
         return match ($attribute) {
             self::MARK_AS_DONE => $this->canMarkAsDone($permissionHolder),
             self::MARK_AS_IN_PROGRESS => $this->canMarkAsInProgress($permissionHolder),
-            default => parent::voteOnCustomAttribute($attribute, $subject, $permissionHolder)
+            default => parent::voteOnCustomAttribute($attribute, $subject, $permissionHolder),
         };
     }
 
@@ -69,4 +68,3 @@ class LandTaskVoter extends AbstractLandAwareVoterInterface
         return $this->can($permissionHolder, self::MARK_AS_IN_PROGRESS);
     }
 }
-

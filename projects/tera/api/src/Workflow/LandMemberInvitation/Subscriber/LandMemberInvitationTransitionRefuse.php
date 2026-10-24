@@ -5,7 +5,6 @@ namespace App\Workflow\LandMemberInvitation\Subscriber;
 use App\Entity\LandMemberInvitation;
 use App\Workflow\LandMemberInvitation\LandMemberInvitationWorkflow;
 use App\Workflow\LandMemberInvitation\LandMemberInvitationWorkflowTransition;
-use DateTimeImmutable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Workflow\Event\Event;
 use Symfony\Component\Workflow\Event\TransitionEvent;
@@ -28,7 +27,7 @@ readonly class LandMemberInvitationTransitionRefuse implements EventSubscriberIn
         /** @var LandMemberInvitation $landMemberInvitation */
         $landMemberInvitation = $event->getSubject();
 
-        $landMemberInvitation->setRefusedAt(new DateTimeImmutable());
+        $landMemberInvitation->setRefusedAt(new \DateTimeImmutable());
     }
 
     public function sendEmailToLandOwner(Event $event): void
@@ -36,6 +35,6 @@ readonly class LandMemberInvitationTransitionRefuse implements EventSubscriberIn
         /** @var LandMemberInvitation $landMemberInvitation */
         $landMemberInvitation = $event->getSubject();
 
-        //TODO Send email to LandOwner
+        // TODO Send email to LandOwner
     }
 }

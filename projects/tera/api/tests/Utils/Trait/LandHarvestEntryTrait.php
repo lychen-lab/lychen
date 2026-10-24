@@ -12,7 +12,7 @@ trait LandHarvestEntryTrait
     {
         return LandHarvestEntryFactory::new()->create([
             'land' => $land,
-            ...$attributes
+            ...$attributes,
         ]);
     }
 }

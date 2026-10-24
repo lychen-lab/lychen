@@ -6,7 +6,6 @@ use App\Entity\LandHarvestEntry;
 
 class LandHarvestEntryVoter extends AbstractLandAwareVoterInterface
 {
-
     public const string DELETE = 'land_member:land_harvest_entry:delete';
     public const string PATCH = 'land_member:land_harvest_entry:patch';
     public const string POST = 'land_member:land_harvest_entry:post';
@@ -31,14 +30,13 @@ class LandHarvestEntryVoter extends AbstractLandAwareVoterInterface
         self::COLLECTION,
     ];
 
-    function getSupportedClass(): string
+    public function getSupportedClass(): string
     {
         return LandHarvestEntry::class;
     }
 
-    function getAvailablePermissions(): array
+    public function getAvailablePermissions(): array
     {
         return self::ALL;
     }
 }
-

@@ -10,6 +10,7 @@ use App\Workflow\LandTask\LandTaskWorkflowPlace;
 use App\Workflow\LandTask\LandTaskWorkflowTransition;
 use Lychen\UtilTiptap\Service\TipTapFaker;
 use Zenstruck\Browser\Json;
+
 use function Zenstruck\Foundry\faker;
 
 class LandTaskTest extends AbstractApiTestCase
@@ -27,13 +28,13 @@ class LandTaskTest extends AbstractApiTestCase
                 ['json' => [
                     'title' => $title,
                     'content' => $content,
-                    'land' => $this->getIriFromResource($context->land)
+                    'land' => $this->getIriFromResource($context->land),
                 ]])
             ->assertStatus(201)
             ->assertJsonMatches('title', $title)
             ->assertJsonMatches('content', $content)
             ->use(function (Json $json) {
-                $json->assertThat('ulid', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('ulid', fn (Json $json) => $json->isNotNull());
             });
 
         // Member with permissions
@@ -48,13 +49,13 @@ class LandTaskTest extends AbstractApiTestCase
                 ['json' => [
                     'title' => $title,
                     'content' => $content,
-                    'land' => $this->getIriFromResource($context->land)
+                    'land' => $this->getIriFromResource($context->land),
                 ]])
             ->assertStatus(201)
             ->assertJsonMatches('title', $title)
             ->assertJsonMatches('content', $content)
             ->use(function (Json $json) {
-                $json->assertThat('ulid', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('ulid', fn (Json $json) => $json->isNotNull());
             });
     }
 
@@ -74,8 +75,8 @@ class LandTaskTest extends AbstractApiTestCase
             ->assertJsonMatches('content', $landTask->getContent())
             ->assertJsonMatches('state', $landTask->getState())
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNull());
             });
 
         // Member with permissions
@@ -90,8 +91,8 @@ class LandTaskTest extends AbstractApiTestCase
             ->assertJsonMatches('content', $landTask->getContent())
             ->assertJsonMatches('state', $landTask->getState())
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNull());
             });
     }
 
@@ -110,16 +111,16 @@ class LandTaskTest extends AbstractApiTestCase
                 [
                     'json' => [
                         'title' => $newTitle,
-                        'content' => $newContent
-                    ]
+                        'content' => $newContent,
+                    ],
                 ])
             ->assertStatus(200)
             ->assertJsonMatches('ulid', $landTask->getUlid()->toString())
             ->assertJsonMatches('title', $newTitle)
             ->assertJsonMatches('content', $newContent)
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNotNull());
             });
 
         // Member with permissions
@@ -134,16 +135,16 @@ class LandTaskTest extends AbstractApiTestCase
                 [
                     'json' => [
                         'title' => $newTitle,
-                        'content' => $newContent
-                    ]
+                        'content' => $newContent,
+                    ],
                 ])
             ->assertStatus(200)
             ->assertJsonMatches('ulid', $landTask->getUlid()->toString())
             ->assertJsonMatches('title', $newTitle)
             ->assertJsonMatches('content', $newContent)
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNotNull());
             });
     }
 
@@ -160,11 +161,11 @@ class LandTaskTest extends AbstractApiTestCase
             ->assertJsonMatches('totalItems', count($context->landTasks))
             ->assertJsonMatches('member[0].ulid', $context->landTasks[0]->getUlid()->toString())
             ->assertJsonMatches('member[0].title', $context->landTasks[0]->getTitle())
-            //->assertJsonMatches('member[0].content', $context->landTasks[0]->getContent())
+            // ->assertJsonMatches('member[0].content', $context->landTasks[0]->getContent())
             ->assertJsonMatches('member[0].state', $context->landTasks[0]->getState())
             ->assertJsonMatches('member[1].ulid', $context->landTasks[1]->getUlid()->toString())
             ->assertJsonMatches('member[1].title', $context->landTasks[1]->getTitle())
-            //->assertJsonMatches('member[1].content', $context->landTasks[1]->getContent())
+            // ->assertJsonMatches('member[1].content', $context->landTasks[1]->getContent())
             ->assertJsonMatches('member[1].state', $context->landTasks[1]->getState());
 
         // Member with permissions
@@ -177,18 +178,18 @@ class LandTaskTest extends AbstractApiTestCase
             ->assertJsonMatches('totalItems', count($context->landTasks))
             ->assertJsonMatches('member[0].ulid', $context->landTasks[0]->getUlid()->toString())
             ->assertJsonMatches('member[0].title', $context->landTasks[0]->getTitle())
-            //->assertJsonMatches('member[0].content', $context->landTasks[0]->getContent())
+            // ->assertJsonMatches('member[0].content', $context->landTasks[0]->getContent())
             ->assertJsonMatches('member[0].state', $context->landTasks[0]->getState())
             ->assertJsonMatches('member[1].ulid', $context->landTasks[1]->getUlid()->toString())
             ->assertJsonMatches('member[1].title', $context->landTasks[1]->getTitle())
-            //->assertJsonMatches('member[1].content', $context->landTasks[1]->getContent())
+            // ->assertJsonMatches('member[1].content', $context->landTasks[1]->getContent())
             ->assertJsonMatches('member[1].state', $context->landTasks[1]->getState());
     }
 
     public function testCollectionPagination()
     {
         $context = $this->createLandContext();
-        array_map(fn() => $this->addOneLandTask($context), range(1, 25));
+        array_map(fn () => $this->addOneLandTask($context), range(1, 25));
 
         $this->browser()->actingAs($context->owner)
             ->get('/api/land_tasks',
@@ -196,7 +197,7 @@ class LandTaskTest extends AbstractApiTestCase
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', 25)
             ->use(function (Json $json) {
-                $json->assertThat('member', fn(Json $json) => $json->hasCount(10));
+                $json->assertThat('member', fn (Json $json) => $json->hasCount(10));
             });
     }
 
@@ -205,35 +206,35 @@ class LandTaskTest extends AbstractApiTestCase
         $context = $this->createLandContext();
         LandTaskFactory::new()->many(3)->create([
             'land' => $context->land,
-            'state' => LandTaskWorkflowPlace::TO_BE_DONE
+            'state' => LandTaskWorkflowPlace::TO_BE_DONE,
         ]);
         LandTaskFactory::new()->many(12)->create([
             'land' => $context->land,
-            'state' => LandTaskWorkflowPlace::IN_PROGRESS
+            'state' => LandTaskWorkflowPlace::IN_PROGRESS,
         ]);
         LandTaskFactory::new()->many(6)->create([
             'land' => $context->land,
-            'state' => LandTaskWorkflowPlace::DONE
+            'state' => LandTaskWorkflowPlace::DONE,
         ]);
 
         $this->browser()->actingAs($context->owner)
             ->get('/api/land_tasks',
                 ['query' => ['land' => $context->land->getUlid()->toString(),
-                             'state' => LandTaskWorkflowPlace::TO_BE_DONE]])
+                    'state' => LandTaskWorkflowPlace::TO_BE_DONE]])
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', 3);
 
         $this->browser()->actingAs($context->owner)
             ->get('/api/land_tasks',
                 ['query' => ['land' => $context->land->getUlid()->toString(),
-                             'state' => LandTaskWorkflowPlace::IN_PROGRESS]])
+                    'state' => LandTaskWorkflowPlace::IN_PROGRESS]])
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', 12);
 
         $this->browser()->actingAs($context->owner)
             ->get('/api/land_tasks',
                 ['query' => ['land' => $context->land->getUlid()->toString(),
-                             'state' => LandTaskWorkflowPlace::DONE]])
+                    'state' => LandTaskWorkflowPlace::DONE]])
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', 6);
     }
@@ -265,14 +266,14 @@ class LandTaskTest extends AbstractApiTestCase
         $landTaskRepository = static::getContainer()->get(LandTaskRepository::class);
 
         $landTask = $context->landTasks[0];
-        $uri = $this->getIriFromResource($landTask) . '/' . LandTaskWorkflowTransition::MARK_AS_DONE;
+        $uri = $this->getIriFromResource($landTask).'/'.LandTaskWorkflowTransition::MARK_AS_DONE;
         $this->browser()->actingAs($context->owner)
             ->patch(
                 $uri,
                 ['json' => []])
             ->assertSuccessful();
         $landTask = $landTaskRepository->findOneBy(['land' => $context->land,
-                                                    'state' => LandTaskWorkflowPlace::DONE]);
+            'state' => LandTaskWorkflowPlace::DONE]);
         $this->assertNotNull($landTask);
     }
 
@@ -283,24 +284,24 @@ class LandTaskTest extends AbstractApiTestCase
         $landTaskRepository = static::getContainer()->get(LandTaskRepository::class);
 
         $landTask = $context->landTasks[0];
-        $uri = $this->getIriFromResource($landTask) . '/' . LandTaskWorkflowTransition::MARK_AS_IN_PROGRESS;
+        $uri = $this->getIriFromResource($landTask).'/'.LandTaskWorkflowTransition::MARK_AS_IN_PROGRESS;
         $this->browser()->actingAs($context->owner)
             ->patch(
                 $uri,
                 ['json' => []])
             ->assertSuccessful();
         $landTask = $landTaskRepository->findOneBy(['land' => $context->land,
-                                                    'state' => LandTaskWorkflowPlace::IN_PROGRESS]);
+            'state' => LandTaskWorkflowPlace::IN_PROGRESS]);
         $this->assertNotNull($landTask);
 
-        $uri = $this->getIriFromResource($landTask) . '/' . LandTaskWorkflowTransition::MARK_AS_DONE;
+        $uri = $this->getIriFromResource($landTask).'/'.LandTaskWorkflowTransition::MARK_AS_DONE;
         $this->browser()->actingAs($context->owner)
             ->patch(
                 $uri,
                 ['json' => []])
             ->assertSuccessful();
         $landTask = $landTaskRepository->findOneBy(['land' => $context->land,
-                                                    'state' => LandTaskWorkflowPlace::DONE]);
+            'state' => LandTaskWorkflowPlace::DONE]);
         $this->assertNotNull($landTask);
     }
 }

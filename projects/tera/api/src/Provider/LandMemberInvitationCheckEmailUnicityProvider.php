@@ -18,9 +18,8 @@ final readonly class LandMemberInvitationCheckEmailUnicityProvider implements Pr
     public function __construct(
         private LandMemberInvitationRepository $landMemberInvitationRepository,
         private ManagerRegistry $managerRegistry,
-        private Security $security
-    )
-    {
+        private Security $security,
+    ) {
     }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null

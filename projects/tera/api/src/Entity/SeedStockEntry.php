@@ -9,7 +9,6 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\SeedStockEntryRepository;
-use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Lychen\UtilModel\Abstract\AbstractIdOrmAndUlidApiIdentified;
@@ -40,7 +39,7 @@ class SeedStockEntry extends AbstractIdOrmAndUlidApiIdentified
     private ?int $quantityInNumberOfSeed = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?DateTimeInterface $purchaseDate = null;
+    private ?\DateTimeInterface $purchaseDate = null;
 
     #[ORM\Column]
     private ?bool $publiclyShared = false;
@@ -81,12 +80,12 @@ class SeedStockEntry extends AbstractIdOrmAndUlidApiIdentified
         return $this;
     }
 
-    public function getPurchaseDate(): ?DateTimeInterface
+    public function getPurchaseDate(): ?\DateTimeInterface
     {
         return $this->purchaseDate;
     }
 
-    public function setPurchaseDate(?DateTimeInterface $purchaseDate): static
+    public function setPurchaseDate(?\DateTimeInterface $purchaseDate): static
     {
         $this->purchaseDate = $purchaseDate;
 

@@ -12,7 +12,7 @@ trait LandTaskTrait
     {
         return LandTaskFactory::new()->create([
             'land' => $land,
-            ...$attributes
+            ...$attributes,
         ]);
     }
 }

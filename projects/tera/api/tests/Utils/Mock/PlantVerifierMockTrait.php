@@ -16,6 +16,7 @@ trait PlantVerifierMockTrait
     {
         $mock->method('assertPlantExists')->willReturnCallback(function () {
         });
+
         return $mock;
     }
 }

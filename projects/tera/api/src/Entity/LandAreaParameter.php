@@ -18,32 +18,32 @@ use Symfony\Component\Uid\Ulid;
 #[Patch(
     normalizationContext  : ['groups' => ['land_area_parameter:patch', 'land_area_parameter:patch:output']],
     denormalizationContext: ['groups' => ['land_area_parameter:patch', 'land_area_parameter:patch:input']],
-    security              : "is_granted('" . LandAreaParameterVoter::PATCH . "', previous_object)"
+    security              : "is_granted('".LandAreaParameterVoter::PATCH."', previous_object)"
 )]
 #[Get(
     normalizationContext: ['groups' => ['land_area_parameter:get']],
-    security            : "is_granted('" . LandAreaParameterVoter::GET . "', object)"
+    security            : "is_granted('".LandAreaParameterVoter::GET."', object)"
 )]
 class LandAreaParameter extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInterface
 {
     #[ORM\OneToOne(inversedBy: 'landAreaParameter', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["land_area_parameter:get"])]
+    #[Groups(['land_area_parameter:get'])]
     private ?LandArea $landArea = null;
 
     #[ORM\Column]
-    #[Groups(["land_area_parameter:patch", "land_area_parameter:get"])]
+    #[Groups(['land_area_parameter:patch', 'land_area_parameter:get'])]
     private ?bool $aboveGround = false;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["land_area_parameter:patch", "land_area_parameter:get"])]
+    #[Groups(['land_area_parameter:patch', 'land_area_parameter:get'])]
     private ?int $width = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["land_area_parameter:patch", "land_area_parameter:get"])]
+    #[Groups(['land_area_parameter:patch', 'land_area_parameter:get'])]
     private ?int $length = null;
 
-    #[Groups(["land_area_parameter:patch:output", "land_area_parameter:get"])]
+    #[Groups(['land_area_parameter:patch:output', 'land_area_parameter:get'])]
     public function getUlid(): Ulid
     {
         return parent::getUlid();

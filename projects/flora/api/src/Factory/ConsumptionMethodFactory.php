@@ -10,7 +10,6 @@ use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
  */
 final class ConsumptionMethodFactory extends PersistentObjectFactory
 {
-
     public function __construct()
     {
     }
@@ -30,6 +29,6 @@ final class ConsumptionMethodFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this// ->afterInstantiate(function(ConsumptionMethod $exposure): void {})
-            ;
+        ;
     }
 }

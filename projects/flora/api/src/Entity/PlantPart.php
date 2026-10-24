@@ -9,8 +9,6 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\PlantPartRepository;
-use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -64,20 +62,20 @@ class PlantPart extends AbstractIdOrmAndUlidApiIdentified
         $this->consumptionMethods = new ArrayCollection();
     }
 
-    #[Groups(["plant_part:get"])]
+    #[Groups(['plant_part:get'])]
     public function getUlid(): Ulid
     {
         return parent::getUlid();
     }
 
-    #[Groups(["plant_part:get"])]
-    public function getCreatedAt(): DateTimeImmutable
+    #[Groups(['plant_part:get'])]
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    #[Groups(["plant_part:get"])]
-    public function getUpdatedAt(): DateTimeInterface
+    #[Groups(['plant_part:get'])]
+    public function getUpdatedAt(): \DateTimeInterface
     {
         return $this->updatedAt;
     }

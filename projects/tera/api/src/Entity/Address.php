@@ -41,7 +41,7 @@ class Address extends AbstractIdOrmAndUlidApiIdentified
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups([
-        "land_proposal:collection-public"
+        'land_proposal:collection-public',
     ])]
     private ?string $city = null;
 

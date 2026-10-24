@@ -23,7 +23,7 @@ class LandRolesBelongToLandValidator extends ConstraintValidator
         $land = $value->getLand();
         $landRoles = $value->getLandRoles();
 
-        if ($land === null || $landRoles->isEmpty()) {
+        if (null === $land || $landRoles->isEmpty()) {
             return;
         }
 
@@ -32,6 +32,7 @@ class LandRolesBelongToLandValidator extends ConstraintValidator
                 $this->context->buildViolation($constraint->message)
                     ->atPath('landRoles')
                     ->addViolation();
+
                 return;
             }
         }

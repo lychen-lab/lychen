@@ -19,6 +19,7 @@ class DefaultController extends AbstractController
     public function test(PlantVerifier $plantVerifier, string $plantUlid): Response
     {
         $plantVerifier->assertPlantExists($plantUlid);
+
         return new Response('cv');
     }
 }

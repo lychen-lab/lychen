@@ -9,8 +9,6 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\ExposureRepository;
-use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -40,7 +38,7 @@ class Exposure extends AbstractIdOrmAndUlidApiIdentified
     use CreatedAtTrait;
     use UpdatedAtTrait;
 
-    #[Groups(["exposure:get"])]
+    #[Groups(['exposure:get'])]
     #[ORM\Column(length: 100, unique: true)]
     private ?string $code = null;
 
@@ -68,14 +66,14 @@ class Exposure extends AbstractIdOrmAndUlidApiIdentified
         return $this;
     }
 
-    #[Groups(["exposure:get"])]
-    public function getCreatedAt(): DateTimeImmutable
+    #[Groups(['exposure:get'])]
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    #[Groups(["exposure:get"])]
-    public function getUpdatedAt(): DateTimeInterface
+    #[Groups(['exposure:get'])]
+    public function getUpdatedAt(): \DateTimeInterface
     {
         return $this->updatedAt;
     }
