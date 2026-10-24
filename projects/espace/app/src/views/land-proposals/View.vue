@@ -81,7 +81,7 @@ const { data, isPending, isError } = useQuery({
 // Any proposal created, edited or deleted, by anyone. The list is built from the collection
 // representation, not the item one an update carries, so refetch it rather than patch it.
 const queryClient = useQueryClient();
-useEspaceMercure(['/api/area_proposals/{uuid}'], () =>
+useEspaceMercure([{ match: '/api/area_proposals/:uuid', matchType: 'urlpattern' }], () =>
   queryClient.invalidateQueries({ queryKey: ['area-proposals'] }),
 );
 

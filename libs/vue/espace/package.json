@@ -4,6 +4,7 @@
     "@lychen/typescript-espace": "workspace:*",
     "@lychen/typescript-espace-api-sdk": "workspace:*",
     "@lychen/typescript-zitadel": "workspace:*",
-    "@lychen/vue-i18n": "workspace:*"
+    "@lychen/vue-i18n": "workspace:*",
+    "eventsource": "^5.1.3"
   }
 }

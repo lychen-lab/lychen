@@ -2858,6 +2858,7 @@ __metadata:
     "@lychen/typescript-espace-api-sdk": "workspace:*"
     "@lychen/typescript-zitadel": "workspace:*"
     "@lychen/vue-i18n": "workspace:*"
+    eventsource: "npm:^5.1.3"
   languageName: unknown
   linkType: soft
 
@@ -7450,6 +7451,22 @@ __metadata:
   version: 4.6.0
   resolution: "eta@npm:4.6.0"
   checksum: 10c0/98c8081f756884bbc22f2bf4a6a38c2322ee97575fb6f0c02dcb1c3040353971c91a96bfba2d6f7cba39bb0ebece5708803a765447d9a81ca1172ccd5e31becf
+  languageName: node
+  linkType: hard
+
+"eventsource-parser@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "eventsource-parser@npm:4.1.2"
+  checksum: 10c0/1ee29bb5e2c9d6018c1542ed3a4e6570eca9109d995f912f86bdf8e61172e29afc143d5c9fbf948a13295186779ca486936c1e768d4501a28bf52614930d8f2d
+  languageName: node
+  linkType: hard
+
+"eventsource@npm:^5.1.3":
+  version: 5.1.3
+  resolution: "eventsource@npm:5.1.3"
+  dependencies:
+    eventsource-parser: "npm:^4.1.2"
+  checksum: 10c0/f0b8109f4af2c54e5243c47f174b9f6ecd5cd3c3b0ea1ed00c5cdd6670ca2b11297d0818848c40e6301829aa66f2675a29b3224657c162b06aea9cb5b2549b00
   languageName: node
   linkType: hard
 
