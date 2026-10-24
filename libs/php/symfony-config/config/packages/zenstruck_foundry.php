@@ -2,15 +2,21 @@
 
 declare(strict_types=1);
 
-$foundry = [
-    'zenstruck_foundry' => [
-        'faker' => [
-            'locale' => 'fr_FR',
-        ],
-    ],
-];
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-return [
-    'when@dev' => $foundry,
-    'when@test' => $foundry,
-];
+return static function (ContainerConfigurator $containerConfigurator): void {
+    if ($containerConfigurator->env() === 'dev') {
+        $containerConfigurator->extension('zenstruck_foundry', [
+            'faker' => [
+                'locale' => 'fr_FR',
+            ],
+        ]);
+    }
+    if ($containerConfigurator->env() === 'test') {
+        $containerConfigurator->extension('zenstruck_foundry', [
+            'faker' => [
+                'locale' => 'fr_FR',
+            ],
+        ]);
+    }
+};

@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-// Firewalls, providers and the decision strategy come from lychen/symfony-config.
 return static function (ContainerConfigurator $containerConfigurator): void {
+    $containerConfigurator->import('@LychenConfigBundle/config/packages/security.php');
+
     $containerConfigurator->extension('security', [
         'access_control' => [
             [

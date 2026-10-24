@@ -16,9 +16,9 @@
   "minimum-stability": "stable",
   "require": {
     "php": "^8.4",
-    "symfony/config": "^7.4 || ^8.0",
     "symfony/dependency-injection": "^7.4 || ^8.0",
-    "symfony/http-kernel": "^7.4 || ^8.0"
+    "symfony/http-kernel": "^7.4 || ^8.0",
+    "symfony/routing": "^7.4 || ^8.0"
   },
   "conflict": {
     "symfony/mercure-bundle": "<0.6"

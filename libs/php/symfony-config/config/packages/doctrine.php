@@ -3,9 +3,10 @@
 declare(strict_types=1);
 
 use Scienta\DoctrineJsonFunctions\Query\AST\Functions\Postgresql\JsonbContains;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-return [
-    'doctrine' => [
+return static function (ContainerConfigurator $containerConfigurator): void {
+    $containerConfigurator->extension('doctrine', [
         'dbal' => [
             'connections' => [
                 'default' => [
@@ -41,9 +42,9 @@ return [
                 ],
             ],
         ],
-    ],
-    'when@prod' => [
-        'doctrine' => [
+    ]);
+    if ($containerConfigurator->env() === 'prod') {
+        $containerConfigurator->extension('doctrine', [
             'orm' => [
                 'query_cache_driver' => [
                     'pool' => 'doctrine.system_cache_pool',
@@ -54,8 +55,8 @@ return [
                     'type' => 'pool',
                 ],
             ],
-        ],
-        'framework' => [
+        ]);
+        $containerConfigurator->extension('framework', [
             'cache' => [
                 'pools' => [
                     'doctrine.result_cache_pool' => [
@@ -66,14 +67,14 @@ return [
                     ],
                 ],
             ],
-        ],
-    ],
-    'when@test' => [
-        'doctrine' => [
+        ]);
+    }
+    if ($containerConfigurator->env() === 'test') {
+        $containerConfigurator->extension('doctrine', [
             'dbal' => [
                 'dbname_suffix' => '_test%env(default::TEST_TOKEN)%',
                 'schema_filter' => '~^(?!(doctrine_|messenger_))~',
             ],
-        ],
-    ],
-];
+        ]);
+    }
+};

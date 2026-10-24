@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-return [
-    'monolog' => [
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+return static function (ContainerConfigurator $containerConfigurator): void {
+    $containerConfigurator->extension('monolog', [
         'channels' => [
             'deprecation',
             'command',
@@ -27,9 +29,9 @@ return [
                 'type' => 'stream',
             ],
         ],
-    ],
-    'when@dev' => [
-        'monolog' => [
+    ]);
+    if ($containerConfigurator->env() === 'dev') {
+        $containerConfigurator->extension('monolog', [
             'handlers' => [
                 'console' => [
                     'channels' => [
@@ -53,10 +55,10 @@ return [
                     'type' => 'stream',
                 ],
             ],
-        ],
-    ],
-    'when@prod' => [
-        'monolog' => [
+        ]);
+    }
+    if ($containerConfigurator->env() === 'prod') {
+        $containerConfigurator->extension('monolog', [
             'handlers' => [
                 'command' => [
                     'channels' => [
@@ -106,10 +108,10 @@ return [
                     'type' => 'rotating_file',
                 ],
             ],
-        ],
-    ],
-    'when@test' => [
-        'monolog' => [
+        ]);
+    }
+    if ($containerConfigurator->env() === 'test') {
+        $containerConfigurator->extension('monolog', [
             'handlers' => [
                 'main' => [
                     'action_level' => 'error',
@@ -131,6 +133,6 @@ return [
                     'type' => 'stream',
                 ],
             ],
-        ],
-    ],
-];
+        ]);
+    }
+};

@@ -1959,9 +1959,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     default_cookie_lifetime?: int|Param, // Default lifetime of the cookie containing the JWT, in seconds. Defaults to the value of "framework.session.cookie_lifetime". // Default: null
  *     enable_profiler?: bool|Param, // Deprecated: The child node "enable_profiler" at path "mercure.enable_profiler" is deprecated. // Enable Symfony Web Profiler integration.
  * }
- * @psalm-type LychenConfigConfig = array{
- *     service?: scalar|Param|null, // The API's domain (tera, espace, flora…): its RabbitMQ queue and routing keys, its OpenAPI title.
- * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1977,7 +1974,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     snc_redis?: SncRedisConfig,
  *     util_zitadel?: UtilZitadelConfig,
  *     mercure?: MercureConfig,
- *     lychen_config?: LychenConfigConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1997,7 +1993,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         snc_redis?: SncRedisConfig,
  *         util_zitadel?: UtilZitadelConfig,
  *         mercure?: MercureConfig,
- *         lychen_config?: LychenConfigConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -2015,7 +2010,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         sentry?: SentryConfig,
  *         util_zitadel?: UtilZitadelConfig,
  *         mercure?: MercureConfig,
- *         lychen_config?: LychenConfigConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -2036,7 +2030,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         dama_doctrine_test?: DamaDoctrineTestConfig,
  *         util_zitadel?: UtilZitadelConfig,
  *         mercure?: MercureConfig,
- *         lychen_config?: LychenConfigConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

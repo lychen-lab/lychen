@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-return [
-    'nelmio_cors' => [
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+return static function (ContainerConfigurator $containerConfigurator): void {
+    $containerConfigurator->extension('nelmio_cors', [
         'defaults' => [
             'allow-credentials' => true,
             'allow_headers' => [
@@ -35,5 +37,5 @@ return [
         'paths' => [
             '^/' => null,
         ],
-    ],
-];
+    ]);
+};

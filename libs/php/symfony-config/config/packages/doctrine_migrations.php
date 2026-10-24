@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-return [
-    'doctrine_migrations' => [
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+return static function (ContainerConfigurator $containerConfigurator): void {
+    $containerConfigurator->extension('doctrine_migrations', [
         'all_or_nothing' => false,
         'custom_template' => null,
         'migrations_paths' => [
@@ -18,5 +20,5 @@ return [
                 'version_column_name' => 'version',
             ],
         ],
-    ],
-];
+    ]);
+};

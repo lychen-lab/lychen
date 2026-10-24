@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-return [
-    'snc_redis' => [
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+return static function (ContainerConfigurator $containerConfigurator): void {
+    $containerConfigurator->extension('snc_redis', [
         'clients' => [
             'default' => [
                 'alias' => 'default',
@@ -12,5 +14,5 @@ return [
                 'type' => 'predis',
             ],
         ],
-    ],
-];
+    ]);
+};

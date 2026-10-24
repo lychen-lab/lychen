@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-return [
-    'api_platform' => [
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+return static function (ContainerConfigurator $containerConfigurator): void {
+    $containerConfigurator->extension('api_platform', [
         'defaults' => [
             'extra_properties' => [
                 'standard_put' => true,
@@ -49,7 +51,6 @@ return [
                 3,
             ],
         ],
-        'title' => '%lychen.api_title%',
         'use_symfony_listeners' => true,
-    ],
-];
+    ]);
+};

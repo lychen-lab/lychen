@@ -1946,13 +1946,13 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/symfony-config",
-                "reference": "124c954d8b01ca2774fd16bef8c77e05bdc84ff3"
+                "reference": "1c2dfb3a7b90c469ab17a8348930560cb5307105"
             },
             "require": {
                 "php": "^8.4",
-                "symfony/config": "^7.4 || ^8.0",
                 "symfony/dependency-injection": "^7.4 || ^8.0",
-                "symfony/http-kernel": "^7.4 || ^8.0"
+                "symfony/http-kernel": "^7.4 || ^8.0",
+                "symfony/routing": "^7.4 || ^8.0"
             },
             "conflict": {
                 "symfony/mercure-bundle": "<0.6"
