@@ -13,7 +13,6 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 final readonly class LandRequestExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
 {
-
     public function __construct(private Security $security)
     {
     }
@@ -25,7 +24,6 @@ final readonly class LandRequestExtension implements QueryCollectionExtensionInt
         } else {
             $this->addWhereForPublic($queryBuilder, $resourceClass);
         }
-
     }
 
     private function addWhere(QueryBuilder $queryBuilder, string $resourceClass): void

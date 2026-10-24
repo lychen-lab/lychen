@@ -5,6 +5,7 @@ namespace App\Factory;
 use App\Entity\Person;
 use Symfony\Component\Uid\Uuid;
 use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
+
 use function Zenstruck\Foundry\faker;
 
 /**
@@ -31,7 +32,7 @@ final class PersonFactory extends PersistentObjectFactory
     {
         return [
             'authId' => Uuid::v4(),
-            'email' => faker()->email()
+            'email' => faker()->email(),
         ];
     }
 
@@ -41,6 +42,6 @@ final class PersonFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this// ->afterInstantiate(function(Person $person): void {})
-            ;
+        ;
     }
 }

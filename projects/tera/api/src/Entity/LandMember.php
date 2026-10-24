@@ -15,7 +15,6 @@ use App\Security\Interface\LandAwareInterface;
 use App\Security\Interface\PermissionHolder;
 use App\Security\Voter\LandMemberVoter;
 use App\Validator\LandRolesBelongToLand;
-use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -29,18 +28,18 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Patch(
     normalizationContext  : ['groups' => ['land_member:patch', 'land_member:patch:output']],
     denormalizationContext: ['groups' => ['land_member:patch', 'land_member:patch:input']],
-    security              : "is_granted('" . LandMemberVoter::PATCH . "', previous_object)")
+    security              : "is_granted('".LandMemberVoter::PATCH."', previous_object)")
 ]
-#[Delete(security: "is_granted('" . LandMemberVoter::DELETE . "', object)")]
+#[Delete(security: "is_granted('".LandMemberVoter::DELETE."', object)")]
 #[Get(
     uriTemplate         : '/land_members/{ulid}',
     requirements        : ['ulid' => '[0-9A-HJKMNP-TV-Z]{26}'],
     normalizationContext: ['groups' => ['land_member:get']],
-    security            : "is_granted('" . LandMemberVoter::GET . "', object)"
+    security            : "is_granted('".LandMemberVoter::GET."', object)"
 )]
 #[GetCollection(
     normalizationContext: ['groups' => ['land_member:collection']],
-    security            : "is_granted('" . LandMemberVoter::COLLECTION . "')",
+    security            : "is_granted('".LandMemberVoter::COLLECTION."')",
     parameters          : [
         new QueryParameter(
             key   : 'land',
@@ -50,7 +49,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Get(
     uriTemplate         : '/land_members/me',
     normalizationContext: ['groups' => ['land_member:me']],
-    security            : "is_granted('" . LandMemberVoter::ME . "')",
+    security            : "is_granted('".LandMemberVoter::ME."')",
     priority            : 10,
     name                : 'land-member_me',
     provider            : LandMembersMeProvider::class,
@@ -65,35 +64,35 @@ use Symfony\Component\Validator\Constraints as Assert;
 class LandMember extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInterface, PermissionHolder
 {
     #[ORM\Column]
-    #[Groups(["land_member:collection", "land_member:get", "land_member:patch:output"])]
-    private ?DateTimeImmutable $joinedAt = null;
+    #[Groups(['land_member:collection', 'land_member:get', 'land_member:patch:output'])]
+    private ?\DateTimeImmutable $joinedAt = null;
 
     #[ORM\Column]
-    #[Groups(["land_member:collection", "land_member:get", "land_member:me", "land_member:patch:output"])]
+    #[Groups(['land_member:collection', 'land_member:get', 'land_member:me', 'land_member:patch:output'])]
     private ?bool $owner = false;
 
     #[ORM\ManyToOne(inversedBy: 'landMembers')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["land_member:me", "land_member:patch:output"])]
+    #[Groups(['land_member:me', 'land_member:patch:output'])]
     private ?Land $land = null;
 
     #[ORM\ManyToOne(inversedBy: 'landMembers')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["land_member:collection", "land_member:get", "land_member:patch:output"])]
+    #[Groups(['land_member:collection', 'land_member:get', 'land_member:patch:output'])]
     private ?Person $person = null;
 
     #[ORM\OneToOne(mappedBy: 'landMember', cascade: ['persist', 'remove'])]
-    #[Groups(["land_member:collection", "land_member:get", "land_member:patch:output"])]
+    #[Groups(['land_member:collection', 'land_member:get', 'land_member:patch:output'])]
     private ?LandMemberSetting $landMemberSetting = null;
 
     /**
      * @var Collection<int, LandRole>
      */
     #[ORM\ManyToMany(targetEntity: LandRole::class, inversedBy: 'landMembers')]
-    #[Groups(["land_member:collection",
-              "land_member:get",
-              "land_member:patch",
-              "land_member:me"])]
+    #[Groups(['land_member:collection',
+        'land_member:get',
+        'land_member:patch',
+        'land_member:me'])]
     #[Assert\Valid()]
     private Collection $landRoles;
 
@@ -104,21 +103,21 @@ class LandMember extends AbstractIdOrmAndUlidApiIdentified implements LandAwareI
         $this->landRoles = new ArrayCollection();
     }
 
-    #[Groups(["land_member:collection",
-              "land_member:get",
-              "land_member:patch:output",
-              "land_member:me"])]
+    #[Groups(['land_member:collection',
+        'land_member:get',
+        'land_member:patch:output',
+        'land_member:me'])]
     public function getUlid(): Ulid
     {
         return parent::getUlid();
     }
 
-    public function getJoinedAt(): ?DateTimeImmutable
+    public function getJoinedAt(): ?\DateTimeImmutable
     {
         return $this->joinedAt;
     }
 
-    public function setJoinedAt(DateTimeImmutable $joinedAt): static
+    public function setJoinedAt(\DateTimeImmutable $joinedAt): static
     {
         $this->joinedAt = $joinedAt;
 
@@ -128,7 +127,7 @@ class LandMember extends AbstractIdOrmAndUlidApiIdentified implements LandAwareI
     #[ORM\PrePersist]
     public function setJoinedAtValue(): void
     {
-        $this->joinedAt = new DateTimeImmutable();
+        $this->joinedAt = new \DateTimeImmutable();
     }
 
     public function isOwner(): ?bool

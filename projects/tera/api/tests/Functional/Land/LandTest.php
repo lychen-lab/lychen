@@ -6,13 +6,14 @@ use App\Security\Voter\LandVoter;
 use App\Tests\Utils\Abstract\AbstractApiTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Zenstruck\Browser\Json;
+
 use function Zenstruck\Foundry\faker;
 
 class LandTest extends AbstractApiTestCase
 {
     #[DataProvider('landDataProvider')]
     public function testPost(int $surface,
-                             int $altitude)
+        int $altitude)
     {
         $person = $this->createPerson();
 
@@ -22,14 +23,14 @@ class LandTest extends AbstractApiTestCase
             ->post('/api/lands', ['json' => [
                 'name' => $name,
                 'surface' => $surface,
-                'altitude' => $altitude
+                'altitude' => $altitude,
             ]])
             ->assertStatus(201)
             ->assertJsonMatches('name', $name)
             ->assertJsonMatches('surface', $surface)
             ->assertJsonMatches('altitude', $altitude)
             ->use(function (Json $json) {
-                $json->assertThat('ulid', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('ulid', fn (Json $json) => $json->isNotNull());
             });
 
         // API Key
@@ -37,8 +38,8 @@ class LandTest extends AbstractApiTestCase
         $personApiKey = $this->createPersonApiKey($person, ['permissions' => [LandVoter::POST]]);
         $this->browser()->actingAs($personApiKey)
             ->post('/api/lands', ['json' => ['name' => faker()->name(),
-                                             'surface' => $surface,
-                                             'altitude' => $altitude]])
+                'surface' => $surface,
+                'altitude' => $altitude]])
             ->assertStatus(201);
     }
 
@@ -54,8 +55,8 @@ class LandTest extends AbstractApiTestCase
             ->assertJsonMatches('surface', $context->land->getSurface())
             ->assertJsonMatches('altitude', $context->land->getAltitude())
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNull());
             });
 
         // Member with permissions
@@ -70,9 +71,9 @@ class LandTest extends AbstractApiTestCase
             ->assertJsonMatches('surface', $context->land->getSurface())
             ->assertJsonMatches('altitude', $context->land->getAltitude())
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNull());
-                $json->assertThat('landSetting', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNull());
+                $json->assertThat('landSetting', fn (Json $json) => $json->isNotNull());
             });
 
         // API Key
@@ -96,7 +97,7 @@ class LandTest extends AbstractApiTestCase
                     'name' => $newName,
                     'surface' => $newSurface,
                     'altitude' => $newAltitude,
-                ]
+                ],
             ])
             ->assertStatus(200)
             ->assertJsonMatches('ulid', $context->land->getUlid()->toString())
@@ -104,8 +105,8 @@ class LandTest extends AbstractApiTestCase
             ->assertJsonMatches('surface', $newSurface)
             ->assertJsonMatches('altitude', $newAltitude)
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNotNull());
             });
 
         // Member with permissions
@@ -122,7 +123,7 @@ class LandTest extends AbstractApiTestCase
                     'name' => $newName,
                     'surface' => $newSurface,
                     'altitude' => $newAltitude,
-                ]
+                ],
             ])
             ->assertStatus(200)
             ->assertJsonMatches('ulid', $context->land->getUlid()->toString())
@@ -130,8 +131,8 @@ class LandTest extends AbstractApiTestCase
             ->assertJsonMatches('surface', $newSurface)
             ->assertJsonMatches('altitude', $newAltitude)
             ->use(function (Json $json) {
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNotNull());
             });
 
         // API Key
@@ -142,7 +143,7 @@ class LandTest extends AbstractApiTestCase
                     'name' => $newName,
                     'surface' => $newSurface,
                     'altitude' => $newAltitude,
-                ]
+                ],
             ])
             ->assertStatus(200);
     }
@@ -154,8 +155,8 @@ class LandTest extends AbstractApiTestCase
         $this->browser()->actingAs($context->owner)
             ->patch($this->getIriFromResource($context->land), [
                 'json' => [
-                    'surface' => -1 // Invalid surface
-                ]
+                    'surface' => -1, // Invalid surface
+                ],
             ])
             ->assertStatus(422);
     }
@@ -212,14 +213,14 @@ class LandTest extends AbstractApiTestCase
     public function testCollectionPagination()
     {
         $owner = $this->createPerson();
-        array_map(fn() => $this->createLand($owner), range(1, 25));
+        array_map(fn () => $this->createLand($owner), range(1, 25));
 
         $this->browser()->actingAs($owner)
             ->get('/api/lands', ['query' => ['itemsPerPage' => 10, 'page' => 2]])
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', 25)
             ->use(function (Json $json) {
-                $json->assertThat('member', fn(Json $json) => $json->hasCount(10));
+                $json->assertThat('member', fn (Json $json) => $json->hasCount(10));
             });
     }
 }

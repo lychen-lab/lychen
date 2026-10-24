@@ -8,7 +8,6 @@ use App\Tests\Utils\Abstract\AbstractApiTestCase;
 
 class PersonApiKeySecurityTest extends AbstractApiTestCase
 {
-
     public function testAuthentication(): void
     {
         $person = $this->createPerson();
@@ -25,8 +24,8 @@ class PersonApiKeySecurityTest extends AbstractApiTestCase
         $this->browser()->setDefaultHttpOptions(
             [
                 'headers' => [
-                    PersonApiKeyAuthenticator::HEADER_ATTRIBUTE => $response["token"]
-                ]
+                    PersonApiKeyAuthenticator::HEADER_ATTRIBUTE => $response['token'],
+                ],
             ]
         )->get('/api/lands')->assertSuccessful();
     }
@@ -36,8 +35,8 @@ class PersonApiKeySecurityTest extends AbstractApiTestCase
         $this->browser()->setDefaultHttpOptions(
             [
                 'headers' => [
-                    PersonApiKeyAuthenticator::HEADER_ATTRIBUTE => 'invalid-token'
-                ]
+                    PersonApiKeyAuthenticator::HEADER_ATTRIBUTE => 'invalid-token',
+                ],
             ]
         )->get('/api/lands')->assertStatus(401);
     }

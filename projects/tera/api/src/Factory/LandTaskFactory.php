@@ -30,12 +30,13 @@ final class LandTaskFactory extends PersistentObjectFactory
     protected function defaults(): array|callable
     {
         $startDate = self::faker()->boolean() ? self::faker()->dateTimeBetween('-1 years', 'now') : null;
+
         return [
             'title' => self::faker()->text(100),
             'content' => TipTapFaker::randomContent(),
             'dueDate' => self::faker()->boolean() ? self::faker()->dateTimeBetween($startDate, '+1 year') : null,
             'startDate' => $startDate,
-            'state' => self::faker()->randomElement(LandTaskWorkflowPlace::PLACES)
+            'state' => self::faker()->randomElement(LandTaskWorkflowPlace::PLACES),
         ];
     }
 
@@ -45,6 +46,6 @@ final class LandTaskFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this// ->afterInstantiate(function(LandTask $landTask): void {})
-            ;
+        ;
     }
 }

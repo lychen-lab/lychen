@@ -5,7 +5,6 @@ namespace App\Workflow\LandProposal\Subscriber;
 use App\Entity\LandProposal;
 use App\Workflow\LandProposal\LandProposalWorkflow;
 use App\Workflow\LandProposal\LandProposalWorkflowTransition;
-use DateTimeImmutable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Workflow\Event\Event;
 use Symfony\Component\Workflow\Event\TransitionEvent;
@@ -29,6 +28,6 @@ readonly class LandProposalTransitionArchive implements EventSubscriberInterface
         /** @var LandProposal $landProposal */
         $landProposal = $event->getSubject();
 
-        $landProposal->setArchivedAt(new DateTimeImmutable());
+        $landProposal->setArchivedAt(new \DateTimeImmutable());
     }
 }

@@ -38,7 +38,7 @@ class Species extends AbstractIdOrmAndUlidApiIdentified
     use CreatedAtTrait;
     use UpdatedAtTrait;
 
-    #[Groups(["species:get"])]
+    #[Groups(['species:get'])]
     #[ORM\Column(length: 100, unique: true)]
     private ?string $code = null;
 
@@ -70,13 +70,13 @@ class Species extends AbstractIdOrmAndUlidApiIdentified
         return $this;
     }
 
-    #[Groups(["species:get"])]
+    #[Groups(['species:get'])]
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    #[Groups(["species:get"])]
+    #[Groups(['species:get'])]
     public function getUpdatedAt(): \DateTimeInterface
     {
         return $this->updatedAt;

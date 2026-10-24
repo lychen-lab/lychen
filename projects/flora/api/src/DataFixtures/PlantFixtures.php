@@ -20,7 +20,7 @@ class PlantFixtures extends Fixture implements DependentFixtureInterface
             LunarTypeFixtures::class,
             SpeciesFixtures::class,
             PartFixtures::class,
-            SoilTypeFixtures::class
+            SoilTypeFixtures::class,
         ];
     }
 }

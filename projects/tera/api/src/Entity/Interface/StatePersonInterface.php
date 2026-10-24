@@ -7,6 +7,6 @@ use App\Entity\Person;
 interface StatePersonInterface
 {
     public function getPerson(): ?Person;
-    
+
     public function getState(): ?string;
 }

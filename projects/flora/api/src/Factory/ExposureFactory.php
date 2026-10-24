@@ -10,7 +10,6 @@ use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
  */
 final class ExposureFactory extends PersistentObjectFactory
 {
-
     public function __construct()
     {
     }

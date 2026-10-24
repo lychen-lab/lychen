@@ -38,7 +38,6 @@ class LandGreenhouseSettingTest extends AbstractApiTestCase
         // Owner
         $this->browser()->actingAs($context->owner)
             ->patch($this->getIriFromResource($landGreenhouseSetting), ['json' => [
-
             ]])
             ->assertSuccessful()
             ->assertJsonMatches('ulid', $landGreenhouseSetting->getUlid()->toString());
@@ -49,7 +48,6 @@ class LandGreenhouseSettingTest extends AbstractApiTestCase
 
         $this->browser()->actingAs($context->landMembers[0]->getPerson())
             ->patch($this->getIriFromResource($landGreenhouseSetting), ['json' => [
-
             ]])
             ->assertSuccessful()
             ->assertJsonMatches('ulid', $landGreenhouseSetting->getUlid()->toString());

@@ -9,7 +9,6 @@ use App\Security\Interface\LandAwareInterface;
 use App\Security\Interface\PermissionHolder;
 use App\Workflow\LandProposal\LandProposalWorkflowPlace;
 
-
 class LandProposalVoter extends AbstractLandAwareVoterInterface
 {
     public const string POST = 'land_member:land_proposal:post';
@@ -47,12 +46,12 @@ class LandProposalVoter extends AbstractLandAwareVoterInterface
         self::COLLECTION,
     ];
 
-    function getSupportedClass(): string
+    public function getSupportedClass(): string
     {
         return LandProposal::class;
     }
 
-    function getAvailablePermissions(): array
+    public function getAvailablePermissions(): array
     {
         return self::ALL;
     }
@@ -68,7 +67,7 @@ class LandProposalVoter extends AbstractLandAwareVoterInterface
             self::COLLECTION_PUBLIC => $this->canCollectionPublic($permissionHolder),
             self::PUBLISH => $this->canPublish($permissionHolder),
             self::ARCHIVE => $this->canArchive($permissionHolder),
-            default => parent::voteOnCustomAttribute($attribute, $subject, $permissionHolder)
+            default => parent::voteOnCustomAttribute($attribute, $subject, $permissionHolder),
         };
     }
 
@@ -101,10 +100,9 @@ class LandProposalVoter extends AbstractLandAwareVoterInterface
         }
 
         if (!$permissionHolder instanceof LandMember && !$permissionHolder instanceof LandApiKey) {
-            return $subject->getState() === LandProposalWorkflowPlace::PUBLISHED;
+            return LandProposalWorkflowPlace::PUBLISHED === $subject->getState();
         }
 
         return parent::canGet($subject, $permissionHolder, $permission);
     }
-
 }

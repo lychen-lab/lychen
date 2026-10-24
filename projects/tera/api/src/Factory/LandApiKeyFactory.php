@@ -29,6 +29,6 @@ final class LandApiKeyFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this// ->afterInstantiate(function(LandApiKey $personApiKey): void {})
-            ;
+        ;
     }
 }

@@ -47,7 +47,7 @@ class LandAreaParameterTest extends AbstractApiTestCase
             ->patch($this->getIriFromResource($landAreaParameter), ['json' => [
                 'aboveGround' => true,
                 'width' => $newWidthAndLength,
-                'length' => $newWidthAndLength
+                'length' => $newWidthAndLength,
             ]])
             ->assertSuccessful()
             ->assertJsonMatches('ulid', $landAreaParameter->getUlid()->toString())
@@ -63,7 +63,7 @@ class LandAreaParameterTest extends AbstractApiTestCase
             ->patch($this->getIriFromResource($landAreaParameter), ['json' => [
                 'aboveGround' => false,
                 'width' => $newWidthAndLength,
-                'length' => $newWidthAndLength
+                'length' => $newWidthAndLength,
             ]])
             ->assertSuccessful()
             ->assertJsonMatches('ulid', $landAreaParameter->getUlid()->toString())

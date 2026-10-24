@@ -12,4 +12,3 @@ final class LandAreaKind
         self::SOIL_LESS,
     ];
 }
-

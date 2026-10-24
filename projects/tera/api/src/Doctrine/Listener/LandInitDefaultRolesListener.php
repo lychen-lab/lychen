@@ -2,7 +2,6 @@
 
 namespace App\Doctrine\Listener;
 
-
 use App\Entity\Land;
 use App\Entity\LandRole;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;

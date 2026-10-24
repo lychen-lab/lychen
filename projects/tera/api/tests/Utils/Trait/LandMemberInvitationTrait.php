@@ -5,6 +5,7 @@ namespace App\Tests\Utils\Trait;
 use App\Entity\Land;
 use App\Entity\LandMemberInvitation;
 use App\Factory\LandMemberInvitationFactory;
+
 use function Zenstruck\Foundry\faker;
 
 trait LandMemberInvitationTrait

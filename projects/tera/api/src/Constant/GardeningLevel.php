@@ -11,6 +11,6 @@ final class GardeningLevel
     public const array ALL = [
         self::BEGINNER,
         self::INTERMEDIATE,
-        self::ADVANCED
+        self::ADVANCED,
     ];
 }

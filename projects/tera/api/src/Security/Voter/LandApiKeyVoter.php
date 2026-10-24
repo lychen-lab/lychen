@@ -29,23 +29,23 @@ class LandApiKeyVoter extends AbstractLandAwareVoterInterface
         self::COLLECTION,
     ];
 
-    function getSupportedClass(): string
+    public function getSupportedClass(): string
     {
         return LandApiKey::class;
     }
 
-    function getAvailablePermissions(): array
+    public function getAvailablePermissions(): array
     {
         return self::ALL;
     }
 
     protected function canPost(PermissionHolder $permissionHolder,
-                               string           $permission): bool
+        string $permission): bool
     {
         if (!$permissionHolder instanceof LandMember) {
             return false;
         }
+
         return parent::canPost($permissionHolder, $permission);
     }
 }
-
