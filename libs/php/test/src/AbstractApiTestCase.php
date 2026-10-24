@@ -2,7 +2,7 @@
 
 namespace Lychen\Test;
 
-use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
+use ApiPlatform\Test\ApiTestCase;
 use DAMA\DoctrineTestBundle\Doctrine\DBAL\StaticDriver;
 use Zenstruck\Browser\HttpOptions;
 use Zenstruck\Browser\Test\HasBrowser;
