@@ -161,7 +161,7 @@ import DropdownMenuContent from '@lychen/vue-components-core/dropdown-menu/Dropd
 import DropdownMenuCheckboxItem from '@lychen/vue-components-core/dropdown-menu/DropdownMenuCheckboxItem.vue';
 
 import BadgeTeraLandTaskState from '../badges/state/BadgeTeraLandTaskState.vue';
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type { LandTaskJsonld } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import DropdownMenuTeraLandTaskMain from '../dropdown-menu/DropdownMenuTeraLandTaskMain.vue';
 import DialogTeraLandTaskUpdate from '../dialogs/update/DialogTeraLandTaskUpdate.vue';
 import { cn } from '@lychen/typescript-utils/tailwind/Cn';
@@ -173,8 +173,8 @@ const {
   state = undefined,
   totalItems = undefined,
 } = defineProps<{
-  data: components['schemas']['LandTask.jsonld'][] | undefined;
-  state?: components['schemas']['LandTask.jsonld']['state'];
+  data: LandTaskJsonld[] | undefined;
+  state?: LandTaskJsonld['state'];
   totalItems?: number;
 }>();
 // Table v9 only exposes the APIs of registered features. The sort and filter functions are the
@@ -194,10 +194,7 @@ const features = tableFeatures({
   filterFns: { includesString: filterFn_includesString },
   sortFns: { alphanumeric: sortFn_alphanumeric, datetime: sortFn_datetime, text: sortFn_text },
 });
-const columnHelper = createColumnHelper<
-  typeof features,
-  components['schemas']['LandTask.jsonld']
->();
+const columnHelper = createColumnHelper<typeof features, LandTaskJsonld>();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function valueUpdater<T extends Updater<any>>(updaterOrValue: T, ref: Ref) {
@@ -288,7 +285,7 @@ const columns = columnHelper.columns([
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => {
-      const landTask: components['schemas']['LandTask.jsonld'] = row.original;
+      const landTask: LandTaskJsonld = row.original;
       return h(
         'div',
         { class: 'relative' },
@@ -350,9 +347,9 @@ const table = useTable({
 });
 
 const isDialogForTaskVisible = ref(false);
-const currentLandTask = ref<components['schemas']['LandTask.jsonld']>();
+const currentLandTask = ref<LandTaskJsonld>();
 
-function openDialog(landTask: components['schemas']['LandTask.jsonld']) {
+function openDialog(landTask: LandTaskJsonld) {
   currentLandTask.value = landTask;
   isDialogForTaskVisible.value = true;
 }

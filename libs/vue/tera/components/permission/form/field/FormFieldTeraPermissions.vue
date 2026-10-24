@@ -112,7 +112,7 @@ import {
 } from '@lychen/i18n-tera/land-role';
 import Button from '@lychen/vue-components-core/button/Button.vue';
 
-import { LandRoleLand_rolePatch_land_rolePatchInputJsonMergePatchPermissions as LandRolePermissions } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import { LandRolePermission } from '@lychen/typescript-tera-api-sdk/enums';
 import IconCheck from '@lychen/vue-icons/IconCheck.vue';
 import IconShieldCheck from '@lychen/vue-icons/IconShieldCheck.vue';
 
@@ -122,7 +122,7 @@ const { t: tLandRole } = useI18nExtended({
   rootKey: LAND_ROLE_TRANSLATION_KEY,
   prefixed: true,
 });
-const allPermissions = Object.values(LandRolePermissions);
+const allPermissions = Object.values(LandRolePermission);
 
 const permissionOptions = ref<{ label: string; value: string }[]>([]);
 const selectedPermissions = ref<string[]>([]);
@@ -159,7 +159,7 @@ onMounted(async () => {
 });
 
 const fieldSchema = toTypedSchema(
-  z.array(z.nativeEnum(LandRolePermissions)).min(1, 'Please select at least one permission.'),
+  z.array(z.nativeEnum(LandRolePermission)).min(1, 'Please select at least one permission.'),
 );
 
 const searchTerm = ref('');

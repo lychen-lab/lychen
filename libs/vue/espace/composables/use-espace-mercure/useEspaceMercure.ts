@@ -53,7 +53,7 @@ export function useEspaceMercure(
     }
 
     // Subscriber tokens are short-lived: fetch a fresh one for every connection.
-    const subscription = await api.GET('/api/mercure_subscription').then(
+    const subscription = await api.apiMercureSubscriptionGet().then(
       ({ data }) => data,
       () => undefined,
     );

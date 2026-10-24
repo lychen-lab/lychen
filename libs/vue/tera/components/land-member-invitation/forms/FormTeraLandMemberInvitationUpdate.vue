@@ -35,18 +35,22 @@ import FormFieldTeraLandRole from '../../land-role/forms/fields/FormFieldTeraLan
 
 import { landMemberInvitationPatchSucceededEvent } from '@lychen/vue-tera/events/LandMemberInvitationEvents';
 import { extractValuesByKey } from '@lychen/typescript-utils/transformers/extractValuesByKey';
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type {
+  LandJsonld,
+  LandMemberInvitationJsonld,
+  LandRoleJsonld,
+} from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 
 const { landMemberInvitation } = defineProps<{
-  landMemberInvitation: Omit<components['schemas']['LandMemberInvitation.jsonld'], 'landRoles'> & {
-    landRoles?: Pick<components['schemas']['LandRole.jsonld'], '@id' | 'name'>[];
+  landMemberInvitation: Omit<LandMemberInvitationJsonld, 'landRoles'> & {
+    landRoles?: Pick<LandRoleJsonld, '@id' | 'name'>[];
   };
-  land: components['schemas']['Land.jsonld'];
+  land: LandJsonld;
 }>();
 
-type FormType = { landRoles: Pick<components['schemas']['LandRole.jsonld'], '@id' | 'name'>[] };
+type FormType = { landRoles: Pick<LandRoleJsonld, '@id' | 'name'>[] };
 
 const { isFieldDirty, handleSubmit, meta, setFieldValue } = useForm<FormType>({});
 
@@ -63,10 +67,8 @@ const { mutate, isPending } = useMutation({
     if (data.landRoles) {
       landRoleIds = extractValuesByKey(data.landRoles, '@id');
     }
-    const response = await api.PATCH('/api/land_member_invitations/{ulid}', {
-      params: {
-        path: { ulid: landMemberInvitation.ulid },
-      },
+    const response = await api.apiLandMemberInvitationsUlidPatch({
+      path: { ulid: landMemberInvitation.ulid },
       body: {
         landRoles: landRoleIds,
       },

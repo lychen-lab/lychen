@@ -41,16 +41,16 @@ import { useEventBus } from '@vueuse/core';
 
 import { EVENT_landTaskPatchSucceeded } from '@lychen/vue-tera/events/LandTaskEvents';
 import FormFieldTeraLandTaskTitle from './fields/FormFieldTeraLandTaskTitle.vue';
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type { LandTaskJsonld } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 
 const { landTask } = defineProps<{
-  landTask: components['schemas']['LandTask.jsonld'];
+  landTask: LandTaskJsonld;
 }>();
 
 interface FormType {
-  title: components['schemas']['LandTask.jsonld']['title'];
+  title: LandTaskJsonld['title'];
 }
 
 const { handleSubmit, meta, isFieldDirty } = useForm<FormType>({
@@ -68,8 +68,8 @@ const { mutate, isPending } = useMutation({
     if (!landTask.ulid) {
       throw new Error('missing.ulid');
     }
-    const response = await api.PATCH('/api/land_tasks/{ulid}', {
-      params: { path: { ulid: landTask.ulid } },
+    const response = await api.apiLandTasksUlidPatch({
+      path: { ulid: landTask.ulid },
       body: values,
     });
     return response.data;
