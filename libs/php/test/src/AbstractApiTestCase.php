@@ -6,20 +6,23 @@ use ApiPlatform\Test\ApiTestCase;
 use DAMA\DoctrineTestBundle\Doctrine\DBAL\StaticDriver;
 use Zenstruck\Browser\HttpOptions;
 use Zenstruck\Browser\Test\HasBrowser;
-use Zenstruck\Foundry\Test\Factories;
-use Zenstruck\Foundry\Test\ResetDatabase;
+use Zenstruck\Foundry\Attribute\ResetDatabase;
 use Zenstruck\Messenger\Test\InteractsWithMessenger;
 
 /**
  * Base class of the APIs' functional and security tests: a database reset per test,
  * Foundry factories, the Messenger test transports and a TestBrowser speaking JSON-LD.
  *
+ * Foundry's PHPUnit extension, which the API's phpunit.xml.dist must register, boots the
+ * factories and resets the database of every class inheriting #[ResetDatabase]; with
+ * DAMA's static connections that is a schema reset before the first test, then a
+ * rollback after each.
+ *
  * An API extends it to add its own test traits (see tera's AbstractApiTestCase).
  */
+#[ResetDatabase]
 abstract class AbstractApiTestCase extends ApiTestCase
 {
-    use ResetDatabase;
-    use Factories;
     use InteractsWithMessenger;
     use HasBrowser {
         browser as baseKernelBrowser;
