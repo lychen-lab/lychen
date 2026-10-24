@@ -40,14 +40,16 @@ import FormFieldTeraLandName from './fields/FormFieldTeraLandName.vue';
 import FormFieldTeraLandAltitude from './fields/FormFieldTeraLandAltitude.vue';
 import FormFieldTeraLandSurface from './fields/FormFieldTeraLandSurface.vue';
 import { landPatchSucceededEvent } from '@lychen/vue-tera/events/LandEvents';
-import type { components, paths } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type {
+  ApiLandsUlidPatchData,
+  LandJsonld,
+} from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 
-const { land } = defineProps<{ land: components['schemas']['Land.jsonld'] }>(); //TODO check if necessary to link to generated code
+const { land } = defineProps<{ land: LandJsonld }>(); //TODO check if necessary to link to generated code
 
-type LandPatchRequest =
-  paths['/api/lands/{ulid}']['patch']['requestBody']['content']['application/merge-patch+json'];
+type LandPatchRequest = ApiLandsUlidPatchData['body'];
 
 const { isFieldDirty, handleSubmit, meta, setFieldValue } = useForm<LandPatchRequest>({
   initialValues: {
@@ -66,8 +68,8 @@ const { mutate, isPending } = useMutation({
     if (!land.ulid) {
       throw new Error('missing.land_ulid');
     }
-    const response = await api.PATCH('/api/lands/{ulid}', {
-      params: { path: { ulid: land.ulid } },
+    const response = await api.apiLandsUlidPatch({
+      path: { ulid: land.ulid },
       body: data,
     });
     return response.data;

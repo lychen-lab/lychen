@@ -35,7 +35,7 @@ import {
   landMemberLeaveSucceededEvent,
 } from '@lychen/vue-tera/events/LandMemberEvents';
 import DialogWithCancelButton from '@lychen/vue-components-app/dialogs/with-cancel-button/DialogWithCancelButton.vue';
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type { LandMemberJsonld } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
 const { t: tLandMember } = useI18nExtended({
   messages: landMemberMessages,
@@ -53,7 +53,7 @@ const { emit } = useEventBus(landMemberDeleteSucceededEvent);
 const { emit: emitLeave } = useEventBus(landMemberLeaveSucceededEvent);
 
 const { landMember, leave = false } = defineProps<{
-  landMember: Omit<components['schemas']['LandMember.jsonld'], 'landRoles'>;
+  landMember: Omit<LandMemberJsonld, 'landRoles'>;
   leave?: boolean;
 }>();
 
@@ -64,8 +64,8 @@ const { mutate: deleteLandMember, isPending } = useMutation({
     if (!landMember.ulid) {
       throw new Error('missing.ulid');
     }
-    return api.DELETE('/api/land_members/{ulid}', {
-      params: { path: { ulid: landMember.ulid } },
+    return api.apiLandMembersUlidDelete({
+      path: { ulid: landMember.ulid },
     });
   },
   onSuccess: (data, variables, context) => {

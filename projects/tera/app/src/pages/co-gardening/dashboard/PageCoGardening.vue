@@ -53,6 +53,7 @@ import ToggleGroupTeraLandInteractionMode from '@lychen/vue-tera/components/land
 import { type LandInteractionMode } from '@lychen/typescript-tera-core/constants/LandInteractionMode';
 import { type LandSharingCondition } from '@lychen/typescript-tera-core/constants/LandSharingCondition';
 import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
+import type { LandProposalCollectionPublicData } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import { useQuery } from '@tanstack/vue-query';
 import { ref } from 'vue';
 
@@ -70,13 +71,13 @@ const sharingConditionFilter = ref<LandSharingCondition[]>([]);
 const { data: landProposals, status } = useQuery({
   queryKey: ['landProposalsPublic', interactionModeFilter, sharingConditionFilter],
   queryFn: async () => {
-    const response = await api.GET('/api/land_proposals/public', {
-      params: {
-        query: {
-          'preferredInteractionMode[]': interactionModeFilter.value,
-          'sharingConditions[]': sharingConditionFilter.value,
-        },
-      },
+    const response = await api.landProposalCollectionPublic({
+      // The spec documents the sharing conditions filter as a single `sharingConditions`
+      // string, but JsonbContainsFilter reads the list PHP builds from `sharingConditions[]`.
+      query: {
+        'preferredInteractionMode[]': interactionModeFilter.value,
+        'sharingConditions[]': sharingConditionFilter.value,
+      } as LandProposalCollectionPublicData['query'],
     });
     return response.data;
   },

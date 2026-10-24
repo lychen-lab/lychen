@@ -37,11 +37,11 @@ import { landPostSucceededEvent } from '@lychen/vue-tera/events/LandEvents';
 import FormFieldTeraLandName from './fields/FormFieldTeraLandName.vue';
 import FormFieldTeraLandAltitude from './fields/FormFieldTeraLandAltitude.vue';
 import FormFieldTeraLandSurface from './fields/FormFieldTeraLandSurface.vue';
-import type { paths } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type { ApiLandsPostData } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 
-type LandPostRequest = paths['/api/lands']['post']['requestBody']['content']['application/ld+json'];
+type LandPostRequest = ApiLandsPostData['body'];
 
 const { isFieldDirty, handleSubmit, meta, setFieldValue } = useForm<LandPostRequest>({
   initialValues: {
@@ -56,7 +56,7 @@ const { api } = useTeraApi();
 
 const { mutate, isPending } = useMutation({
   mutationFn: async (data: LandPostRequest) => {
-    const response = await api.POST('/api/lands', { body: data });
+    const response = await api.apiLandsPost({ body: data });
     return response.data;
   },
   onSuccess: (data, variables, context) => {

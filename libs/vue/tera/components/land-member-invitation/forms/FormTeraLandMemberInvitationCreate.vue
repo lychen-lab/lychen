@@ -39,16 +39,19 @@ import FormFieldTeraLandRole from '../../land-role/forms/fields/FormFieldTeraLan
 import { extractValuesByKey } from '@lychen/typescript-utils/transformers/extractValuesByKey';
 import { z } from 'zod';
 import { toTypedSchema } from '@vee-validate/zod';
-import type { components, paths } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type {
+  ApiLandMemberInvitationsPostData,
+  LandJsonld,
+  LandRoleJsonld,
+} from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 
-const { land } = defineProps<{ land: components['schemas']['Land.jsonld'] }>();
+const { land } = defineProps<{ land: LandJsonld }>();
 
-type FormType = Omit<
-  paths['/api/land_member_invitations']['post']['requestBody']['content']['application/ld+json'],
-  'landRoles'
-> & { landRoles: Pick<components['schemas']['LandRole.jsonld'], '@id' | 'name'>[] };
+type FormType = Omit<ApiLandMemberInvitationsPostData['body'], 'landRoles'> & {
+  landRoles: Pick<LandRoleJsonld, '@id' | 'name'>[];
+};
 
 const emailFieldSchema = toTypedSchema(
   z
@@ -62,8 +65,8 @@ const emailFieldSchema = toTypedSchema(
         if (!email) {
           return true;
         }
-        const response = await api.GET('/api/land_member_invitations/check_email_unicity', {
-          params: { query: { email, land: land.ulid } },
+        const response = await api.landMemberInvitationCheckEmailUnicity({
+          query: { email, land: land.ulid },
         });
         return response.data?.isUnique;
       },
@@ -89,7 +92,7 @@ const { mutate, isPending } = useMutation({
       throw new Error('missing.land_id');
     }
     const landRoleIds = extractValuesByKey(values.landRoles, '@id');
-    const response = await api.POST('/api/land_member_invitations', {
+    const response = await api.apiLandMemberInvitationsPost({
       body: {
         email: values.email,
         landRoles: landRoleIds,

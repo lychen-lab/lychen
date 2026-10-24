@@ -35,20 +35,19 @@ import FormFieldTeraLandRoleName from './fields/FormFieldTeraLandRoleName.vue';
 import FormFieldTeraPermissions from '../../permission/form/field/FormFieldTeraPermissions.vue';
 
 import { landRolePatchSucceededEvent } from '@lychen/vue-tera/events/LandRoleEvents';
-import {
-  type components,
-  LandRoleLand_rolePatch_land_rolePatchInputJsonMergePatchPermissions,
-  type paths,
+import type {
+  ApiLandRolesUlidPatchData,
+  LandRoleJsonld,
 } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type { LandRolePermission } from '@lychen/typescript-tera-api-sdk/enums';
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 
-const { landRole } = defineProps<{ landRole: components['schemas']['LandRole.jsonld'] }>();
+const { landRole } = defineProps<{ landRole: LandRoleJsonld }>();
 
-type PatchInput =
-  paths['/api/land_roles/{ulid}']['patch']['requestBody']['content']['application/merge-patch+json'];
-// The generated SDK types `permissions` as a scalar enum union (openapi-typescript `@enum {array}`
-// quirk), but the API accepts/returns an array of those permission strings. Model it as an array
+type PatchInput = ApiLandRolesUlidPatchData['body'];
+// The generated SDK types `permissions` as a scalar enum union (the spec declares the enum on the
+// array itself, without `items`), but the API accepts/returns an array of those permission strings. Model it as an array
 // here so the form and FormFieldTeraPermissions (which manages a string list) line up.
 type FormType = Omit<PatchInput, 'permissions'> & { permissions?: string[] };
 
@@ -69,16 +68,12 @@ const { mutate, isPending } = useMutation({
     if (!landRole.ulid) {
       throw new Error('missing.ulid');
     }
-    const response = await api.PATCH('/api/land_roles/{ulid}', {
-      params: {
-        path: { ulid: landRole.ulid },
-      },
+    const response = await api.apiLandRolesUlidPatch({
+      path: { ulid: landRole.ulid },
       body: {
         ...data,
         // Send the permission list using the generated enum element type (see FormType note above).
-        permissions: data.permissions as unknown as
-          | LandRoleLand_rolePatch_land_rolePatchInputJsonMergePatchPermissions
-          | undefined,
+        permissions: data.permissions as unknown as LandRolePermission | undefined,
       },
     });
     return response.data;

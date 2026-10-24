@@ -19,7 +19,7 @@ import { useQuery } from '@tanstack/vue-query';
 import { computed, provide, watch, type Ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { INJECTION_KEY_LAND, INJECTION_KEY_LAND_MEMBER } from './index';
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type { LandJsonld } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import { landPatchSucceededEvent } from '@lychen/vue-tera/events/LandEvents';
 import { useEventBus } from '@vueuse/core';
 import { BaseHeading } from '@lychen/vue-components-app/base-heading';
@@ -32,8 +32,8 @@ const { data: land, refetch } = useQuery({
   queryKey: ['land'],
   queryFn: async () => {
     try {
-      const response = await api.GET('/api/lands/{ulid}', {
-        params: { path: { ulid: route.params.landUlid as string } },
+      const response = await api.apiLandsUlidGet({
+        path: { ulid: route.params.landUlid as string },
       });
       return response.data;
     } catch {
@@ -48,10 +48,7 @@ const { data: land, refetch } = useQuery({
 // group, which differs from the base `Land.jsonld` only by a generated `@context`
 // enum that is never read by consumers. Cast at the provide boundary so downstream
 // components receive the broader `Land.jsonld` shape they expect.
-provide(
-  INJECTION_KEY_LAND,
-  land as unknown as Ref<components['schemas']['Land.jsonld'] | undefined>,
-);
+provide(INJECTION_KEY_LAND, land as unknown as Ref<LandJsonld | undefined>);
 
 const { on } = useEventBus(landPatchSucceededEvent);
 
@@ -75,8 +72,8 @@ const { data: landMember } = useQuery({
     if (!landUlid.value) {
       throw new Error('missing.ulid');
     }
-    const response = await api.GET('/api/land_members/me', {
-      params: { query: { land: landUlid.value } },
+    const response = await api.landMemberMe({
+      query: { land: landUlid.value },
     });
     return response.data;
   },

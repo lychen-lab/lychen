@@ -141,26 +141,29 @@ import {
 } from '@lychen/vue-tera/events/LandMemberInvitationEvents';
 import CardTeraLandMemberInvitation from '@lychen/vue-tera/components/land-member-invitation/card/CardTeraLandMemberInvitation.vue';
 import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type {
+  LandMemberInvitationJsonld,
+  LandMemberInvitationJsonldLandMemberInvitationCollection,
+  LandMemberJsonld,
+  LandMemberJsonldLandMemberCollection,
+  LandRoleJsonld,
+  LandRoleJsonldLandRoleCollection,
+} from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
-type LandMemberCollectionItem = components['schemas']['LandMember.jsonld-land_member.collection'];
-type LandMemberInvitationCollectionItem =
-  components['schemas']['LandMemberInvitation.jsonld-land_member_invitation.collection'];
-type LandRoleCollectionItem = components['schemas']['LandRole.jsonld-land_role.collection'];
+type LandMemberCollectionItem = LandMemberJsonldLandMemberCollection;
+type LandMemberInvitationCollectionItem = LandMemberInvitationJsonldLandMemberInvitationCollection;
+type LandRoleCollectionItem = LandRoleJsonldLandRoleCollection;
 
 // The team queries return the leaner `*.collection` projections, while the cards and update
 // dialogs are typed against the base `*.jsonld` shapes. Each projection is a runtime subset
 // (it only omits optional base fields and uses nominally distinct but value-identical enums),
 // and the consuming components read only fields present in the projection, so it is safe to
 // widen at these prop boundaries.
-type LandMemberCardInput = Omit<components['schemas']['LandMember.jsonld'], 'landRoles'> & {
-  landRoles?: components['schemas']['LandRole.jsonld'][];
+type LandMemberCardInput = Omit<LandMemberJsonld, 'landRoles'> & {
+  landRoles?: LandRoleJsonld[];
 };
-type LandMemberInvitationCardInput = Omit<
-  components['schemas']['LandMemberInvitation.jsonld'],
-  'landRoles'
-> & {
-  landRoles?: components['schemas']['LandRole.jsonld'][];
+type LandMemberInvitationCardInput = Omit<LandMemberInvitationJsonld, 'landRoles'> & {
+  landRoles?: LandRoleJsonld[];
 };
 
 function asLandMember(landMember: LandMemberCollectionItem) {
@@ -172,7 +175,7 @@ function asLandMemberInvitation(invitation: LandMemberInvitationCollectionItem) 
 }
 
 function asLandRole(landRole: LandRoleCollectionItem) {
-  return landRole as unknown as components['schemas']['LandRole.jsonld'];
+  return landRole as unknown as LandRoleJsonld;
 }
 
 const land = inject(INJECTION_KEY_LAND);
@@ -206,11 +209,9 @@ const { data: landRoles, refetch: refetchLandRoles } = useQuery({
       throw new Error('missing.land_id');
     }
 
-    const response = await api.GET('/api/land_roles', {
-      params: {
-        query: {
-          land: landUlid.value,
-        },
+    const response = await api.apiLandRolesGetCollection({
+      query: {
+        land: landUlid.value,
       },
     });
 
@@ -242,11 +243,9 @@ const { data: landMemberInvitations, refetch: refetchLandMemberInvitations } = u
       throw new Error('missing.land_id');
     }
 
-    const response = await api.GET('/api/land_member_invitations', {
-      params: {
-        query: {
-          land: landUlid.value,
-        },
+    const response = await api.apiLandMemberInvitationsGetCollection({
+      query: {
+        land: landUlid.value,
       },
     });
 
@@ -278,11 +277,9 @@ const { data: landMembers, refetch: refetchLandMembers } = useQuery({
       throw new Error('missing.land_id');
     }
 
-    const response = await api.GET('/api/land_members', {
-      params: {
-        query: {
-          land: landUlid.value,
-        },
+    const response = await api.apiLandMembersGetCollection({
+      query: {
+        land: landUlid.value,
       },
     });
 

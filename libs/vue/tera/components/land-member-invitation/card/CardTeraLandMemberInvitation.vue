@@ -84,7 +84,11 @@ import DialogTeraLandMemberInvitationDelete from '../dialogs/delete/DialogTeraLa
 import Button from '@lychen/vue-components-core/button/Button.vue';
 import { VARIANT, type Variant } from '.';
 import BadgeTeraLandMemberInvitation from '../badge/BadgeTeraLandMemberInvitation.vue';
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type {
+  LandJsonld,
+  LandMemberInvitationJsonldLandMemberInvitationCollection,
+  LandRoleJsonld,
+} from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import { defineAsyncComponent } from 'vue';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { TRANSLATION_KEY, messages } from './i18n';
@@ -116,13 +120,10 @@ const {
 } = defineProps<{
   variant?: Variant;
   landMemberInvitation: Partial<
-    Pick<
-      components['schemas']['LandMemberInvitation.jsonld-land_member_invitation.collection'],
-      'email' | 'state' | 'ulid'
-    >
+    Pick<LandMemberInvitationJsonldLandMemberInvitationCollection, 'email' | 'state' | 'ulid'>
   >;
-  landRoles?: Pick<components['schemas']['LandRole.jsonld'], 'name'>[];
-  land?: Pick<components['schemas']['Land.jsonld'], 'name'>;
+  landRoles?: Pick<LandRoleJsonld, 'name'>[];
+  land?: Pick<LandJsonld, 'name'>;
 }>();
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
@@ -141,8 +142,8 @@ const { mutate: accept } = useMutation({
     if (!landMemberInvitation.ulid) {
       throw new Error('missing.ulid');
     }
-    const response = await api.PATCH('/api/land_member_invitations/{ulid}/accept', {
-      params: { path: { ulid: landMemberInvitation.ulid } },
+    const response = await api.landMemberInvitationAccept({
+      path: { ulid: landMemberInvitation.ulid },
       body: {},
     });
 
@@ -170,10 +171,8 @@ const { mutate: refuse } = useMutation({
     if (!landMemberInvitation.ulid) {
       throw new Error('missing.ulid');
     }
-    const response = await api.PATCH('/api/land_member_invitations/{ulid}/refuse', {
-      params: {
-        path: { ulid: landMemberInvitation.ulid },
-      },
+    const response = await api.landMemberInvitationRefuse({
+      path: { ulid: landMemberInvitation.ulid },
       body: {},
     });
 
