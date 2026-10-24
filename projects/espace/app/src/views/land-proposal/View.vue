@@ -324,7 +324,7 @@ const { data: proposal } = useQuery({
 // nothing but its @id, so the query refetches and finds out.
 const queryClient = useQueryClient();
 useEspaceMercure(
-  () => [`/api/area_proposals/${uuid.value}`],
+  () => [{ match: `/api/area_proposals/${uuid.value}` }],
   (update) => {
     const queryKey = ['area-proposal', uuid.value];
     if (Object.keys(update).length === 1) {
