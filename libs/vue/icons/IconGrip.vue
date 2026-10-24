@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { Grip } from 'lucide-vue-next';
+import { Grip } from '@lucide/vue';
 </script>

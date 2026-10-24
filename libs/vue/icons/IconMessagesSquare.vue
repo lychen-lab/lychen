@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { MessagesSquare } from 'lucide-vue-next';
+import { MessagesSquare } from '@lucide/vue';
 </script>
