@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { EllipsisVertical } from 'lucide-vue-next';
+import { EllipsisVertical } from '@lucide/vue';
 </script>

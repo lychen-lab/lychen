@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { Users } from 'lucide-vue-next';
+import { Users } from '@lucide/vue';
 </script>

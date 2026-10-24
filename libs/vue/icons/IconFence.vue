@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { Fence } from 'lucide-vue-next';
+import { Fence } from '@lucide/vue';
 </script>

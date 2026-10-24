@@ -8,7 +8,7 @@
   "sections": [
     {
       "title": "Legal Information",
-      "content": "Association Lychen\nSIREN: 993 140 904 - SIRET: 993 140 904 00018\nHeadquarters: 1 ALLEE DU TRELOD 74000 ANNECY, France\nCategory: 9220 - Association déclarée\nActivity: 94.99Z - Other organizations working by voluntary membership\nPublication director: Presidency of the association\nContact: contact@lychen.org"
+      "content": "Association Lychen\nSIREN: 993 140 904 - SIRET: 993 140 904 00018\nHeadquarters: 1 ALLEE DU TRELOD 74000 ANNECY, France\nCategory: 9220 - Association déclarée\nActivity: 94.99Z - Other organizations working by voluntary membership\nPublication director: Presidency of the association\nContact: contact{'@'}lychen.org"
     },
     {
       "title": "Purpose",
@@ -24,7 +24,7 @@
     },
     {
       "title": "User Account",
-      "content": "Some features of the Service require the creation of a user account on app.espace.lychen.org. The user agrees to provide accurate, complete and up-to-date information when registering and to keep it updated. The user is solely responsible for keeping their login credentials confidential and for any action carried out from their account. In the event of unauthorized use of their account, the user agrees to inform the Lychen association as soon as possible at contact@lychen.org."
+      "content": "Some features of the Service require the creation of a user account on app.espace.lychen.org. The user agrees to provide accurate, complete and up-to-date information when registering and to keep it updated. The user is solely responsible for keeping their login credentials confidential and for any action carried out from their account. In the event of unauthorized use of their account, the user agrees to inform the Lychen association as soon as possible at contact{'@'}lychen.org."
     },
     {
       "title": "Use of the Service",
@@ -48,7 +48,7 @@
     },
     {
       "title": "Personal Data",
-      "content": "Use of the Service results in the processing of personal data. For more information on the nature of the data collected, its purpose and how to exercise your rights, please refer to our Privacy Policy. The Data Protection Officer (DPO) can be contacted at: dpo@lychen.org"
+      "content": "Use of the Service results in the processing of personal data. For more information on the nature of the data collected, its purpose and how to exercise your rights, please refer to our Privacy Policy. The Data Protection Officer (DPO) can be contacted at: dpo{'@'}lychen.org"
     },
     {
       "title": "Changes to the Terms",
@@ -60,7 +60,7 @@
     },
     {
       "title": "Contact",
-      "content": "For any questions regarding these Terms of Use, you can contact us at: contact@lychen.org"
+      "content": "For any questions regarding these Terms of Use, you can contact us at: contact{'@'}lychen.org"
     }
   ]
 }

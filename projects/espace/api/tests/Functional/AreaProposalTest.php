@@ -45,6 +45,21 @@ class AreaProposalTest extends AbstractApiTestCase
             ->assertJsonMatches("starts_with(archivedAt, '2026-09-01T10:00:00')", true);
     }
 
+    public function testWorkflowOutlinesTheCurrentPlace(): void
+    {
+        $proposal = AreaProposalFactory::createOne(['place' => AreaProposalWorkflow::PLACE_PUBLISHED]);
+
+        $diagram = $this->browser()
+            ->actingAs(PersonFactory::createOne())
+            ->get('/api/area_proposals/'.$proposal->getUuid().'/workflow')
+            ->assertStatus(200)
+            ->json()->decoded();
+
+        self::assertSame(AreaProposalWorkflow::NAME, $diagram['name']);
+        self::assertStringContainsString("place2((\"published\"))\nstyle place2 stroke-width:4px\n", $diagram['mermaid']);
+        self::assertSame(1, substr_count($diagram['mermaid'], 'stroke-width'));
+    }
+
     public function testCollectionItemsUseTheResourceShape(): void
     {
         AreaProposalFactory::createOne([

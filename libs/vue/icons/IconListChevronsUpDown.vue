@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { ListChevronsUpDown } from 'lucide-vue-next';
+import { ListChevronsUpDown } from '@lucide/vue';
 </script>

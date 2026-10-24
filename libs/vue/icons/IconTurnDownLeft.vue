@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { CornerDownLeft } from 'lucide-vue-next';
+import { CornerDownLeft } from '@lucide/vue';
 </script>
