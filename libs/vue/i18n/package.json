@@ -2,11 +2,11 @@
   "name": "@lychen/vue-i18n",
   "type": "module",
   "dependencies": {
-    "@intlify/core-base": "^11.4.10",
+    "@intlify/core-base": "^11.4.16",
     "@lychen/vue-components-core": "workspace:*",
     "@lychen/vue-icons": "workspace:*",
-    "vue": "^3.5.42",
-    "vue-i18n": "^11.4.10",
-    "vue-router": "^5.3.0"
+    "vue": "^3.5.44",
+    "vue-i18n": "^11.4.16",
+    "vue-router": "^5.4.0"
   }
 }

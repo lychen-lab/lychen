@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { CircleDashed } from 'lucide-vue-next';
+import { CircleDashed } from '@lucide/vue';
 </script>

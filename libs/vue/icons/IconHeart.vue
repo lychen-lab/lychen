@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { Heart } from 'lucide-vue-next';
+import { Heart } from '@lucide/vue';
 </script>
