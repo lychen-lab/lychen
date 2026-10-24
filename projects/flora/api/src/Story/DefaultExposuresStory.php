@@ -18,7 +18,7 @@ final class DefaultExposuresStory extends Story
         self::PARTIAL_SHADE,
         self::SHADE,
         self::BRIGHT_INDIRECT,
-        self::ADAPTABLE
+        self::ADAPTABLE,
     ];
 
     public function build(): void

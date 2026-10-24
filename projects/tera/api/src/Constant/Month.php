@@ -29,7 +29,6 @@ final class Month
         self::SEPTEMBER,
         self::OCTOBER,
         self::NOVEMBER,
-        self::DECEMBER
+        self::DECEMBER,
     ];
 }
-

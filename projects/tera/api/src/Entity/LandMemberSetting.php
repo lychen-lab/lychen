@@ -16,11 +16,11 @@ use Symfony\Component\Uid\Ulid;
 #[Patch(
     normalizationContext  : ['groups' => ['land_member_setting:patch', 'land_member_setting:patch:output']],
     denormalizationContext: ['groups' => ['land_member_setting:patch', 'land_member_setting:patch:input']],
-    security              : "object.getLandMember().getPerson() == user"
+    security              : 'object.getLandMember().getPerson() == user'
 )]
 #[Get(
     normalizationContext: ['groups' => ['land_member_setting:get']],
-    security            : "object.getLandMember().getPerson() == user"
+    security            : 'object.getLandMember().getPerson() == user'
 )]
 class LandMemberSetting extends AbstractIdOrmAndUlidApiIdentified
 {
@@ -29,10 +29,10 @@ class LandMemberSetting extends AbstractIdOrmAndUlidApiIdentified
     private ?LandMember $landMember = null;
 
     #[ORM\Column]
-    #[Groups(["land_member_setting:get", "land_member_setting:patch"])]
+    #[Groups(['land_member_setting:get', 'land_member_setting:patch'])]
     private ?bool $emailNotificationActivated = false;
 
-    #[Groups(["land_member_setting:get", "land_member_setting:patch:output"])]
+    #[Groups(['land_member_setting:get', 'land_member_setting:patch:output'])]
     public function getUlid(): Ulid
     {
         return parent::getUlid();

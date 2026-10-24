@@ -8,7 +8,6 @@ use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Psr\Log\LoggerInterface;
-use Throwable;
 
 #[AsEntityListener(event: Events::postPersist, method: 'onNewPerson', entity: Person::class)]
 #[AsEntityListener(event: Events::postPersist, method: 'onNewMemberInvitation', entity: LandMemberInvitation::class)]
@@ -32,7 +31,7 @@ final readonly class LandMemberInvitationAutoLink
             }
 
             $entityManager->flush();
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             $this->logger->error('An error occurred while linking LandMemberInvitations to Person', [
                 'exception' => $e,
                 'personId' => $person->getId(),
@@ -53,13 +52,11 @@ final readonly class LandMemberInvitationAutoLink
                 $entityManager->persist($landMemberInvitation);
                 $entityManager->flush();
             }
-        } catch (Throwable $e) {
-
+        } catch (\Throwable $e) {
             $this->logger->error('An error occurred while linking Person to LandMemberInvitation', [
                 'exception' => $e,
                 'landMemberInvitationId' => $landMemberInvitation->getId(),
             ]);
-
         }
     }
 }

@@ -106,11 +106,11 @@ import DataTableTeraLandTask from '@lychen/vue-tera/components/land-task/data-ta
 import BadgeTeraLandTaskState from '@lychen/vue-tera/components/land-task/badges/state/BadgeTeraLandTaskState.vue';
 import DialogTeraLandTaskUpdate from '@lychen/vue-tera/components/land-task/dialogs/update/DialogTeraLandTaskUpdate.vue';
 import DialogTeraLandTaskCreate from '@lychen/vue-tera/components/land-task/dialogs/create/DialogTeraLandTaskCreate.vue';
-import {
-  LandTaskJsonldState as LandTaskState,
-  PathsApiLand_tasksGetParametersQueryOrderDueDate,
-  type components,
+import type {
+  LandTaskJsonld,
+  LandTaskJsonldLandTaskCollection,
 } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import { LandTaskState } from '@lychen/typescript-tera-api-sdk/enums';
 import SectionDevelopmentInProgress from '@lychen/vue-components-app/section-development-in-progress/SectionDevelopmentInProgress.vue';
 import { useEventBus } from '@vueuse/core';
 import { EVENT_landTaskDeleteSucceeded } from '@lychen/vue-tera/events/LandTaskEvents';
@@ -135,13 +135,11 @@ const queries = computed(() =>
     return {
       queryKey: ['landTasks', state, landUlid],
       queryFn: async () => {
-        const response = await api.GET('/api/land_tasks', {
-          params: {
-            query: {
-              land: landUlid.value!,
-              'order[dueDate]': PathsApiLand_tasksGetParametersQueryOrderDueDate.asc,
-              state: state,
-            },
+        const response = await api.apiLandTasksGetCollection({
+          query: {
+            land: landUlid.value!,
+            'order[dueDate]': 'asc',
+            state: state,
           },
         });
 
@@ -171,8 +169,8 @@ const { data: taskFromURL } = useQuery({
   queryKey: ['land-task', taskIdFromURL],
   queryFn: async () => {
     if (taskIdFromURL.value) {
-      const response = await api.GET('/api/land_tasks/{ulid}', {
-        params: { path: { ulid: taskIdFromURL.value as string } },
+      const response = await api.apiLandTasksUlidGet({
+        path: { ulid: taskIdFromURL.value as string },
       });
       return response.data;
     }
@@ -190,18 +188,18 @@ const isDialogForTaskVisible = ref(false);
 
 const currentLandTask = ref();
 
-type LandTaskCollectionItem = components['schemas']['LandTask.jsonld-land_task.collection'];
+type LandTaskCollectionItem = LandTaskJsonldLandTaskCollection;
 
 // The list/kanban queries return the leaner `land_task.collection` projection, while
 // the display components and dialog are typed against the base `LandTask.jsonld`. The
 // projection is a runtime subset (it only omits optional base fields and uses a nominally
 // distinct but value-identical `state` enum), so it is safe to widen at these boundaries.
 function asLandTask(landTask: LandTaskCollectionItem) {
-  return landTask as unknown as components['schemas']['LandTask.jsonld'];
+  return landTask as unknown as LandTaskJsonld;
 }
 
 function asLandTaskList(landTasks: LandTaskCollectionItem[]) {
-  return landTasks as unknown as components['schemas']['LandTask.jsonld'][];
+  return landTasks as unknown as LandTaskJsonld[];
 }
 
 function openDialog(landTask: LandTaskCollectionItem) {

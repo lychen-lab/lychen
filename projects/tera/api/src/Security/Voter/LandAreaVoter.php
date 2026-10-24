@@ -6,7 +6,6 @@ use App\Entity\LandArea;
 
 class LandAreaVoter extends AbstractLandAwareVoterInterface
 {
-
     public const string DELETE = 'land_member:land_area:delete';
     public const string PATCH = 'land_member:land_area:patch';
     public const string POST = 'land_member:land_area:post';
@@ -31,14 +30,13 @@ class LandAreaVoter extends AbstractLandAwareVoterInterface
         self::COLLECTION,
     ];
 
-    function getSupportedClass(): string
+    public function getSupportedClass(): string
     {
         return LandArea::class;
     }
 
-    function getAvailablePermissions(): array
+    public function getAvailablePermissions(): array
     {
         return self::ALL;
     }
 }
-

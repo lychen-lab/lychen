@@ -25,6 +25,7 @@ docs/
 public/bundles/
 var/
 vendor/
+tools/vendor/
 .editorconfig
 .env.*.local
 .env.dev

@@ -58,7 +58,11 @@ import {
 import Button from '@lychen/vue-components-core/button/Button.vue';
 import { Separator } from '@lychen/vue-components-core/separator';
 import DialogTeraLandMemberDelete from '../delete/DialogTeraLandMemberDelete.vue';
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type {
+  LandJsonld,
+  LandMemberJsonld,
+  LandRoleJsonld,
+} from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
 const { t } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 const { t: tLandMember } = useI18nExtended({
@@ -68,10 +72,10 @@ const { t: tLandMember } = useI18nExtended({
 });
 
 const { landMember } = defineProps<{
-  landMember: Omit<components['schemas']['LandMember.jsonld'], 'landRoles'> & {
-    landRoles?: components['schemas']['LandRole.jsonld'][];
+  landMember: Omit<LandMemberJsonld, 'landRoles'> & {
+    landRoles?: LandRoleJsonld[];
   };
-  land: components['schemas']['Land.jsonld'];
+  land: LandJsonld;
 }>();
 
 const open = ref(false);

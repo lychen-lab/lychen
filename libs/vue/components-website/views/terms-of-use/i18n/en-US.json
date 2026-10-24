@@ -8,7 +8,7 @@
   "sections": [
     {
       "title": "Legal Information",
-      "content": "Association Lychen\nSIREN: 993 140 904\nHeadquarters: 1 ALLEE DU TRELOD 74000 ANNECY, France\nCategory: 9220 - Association déclarée\nActivity: 94.99Z - Other organizations working by voluntary membership\nContact: contact@lychen.org"
+      "content": "Association Lychen\nSIREN: 993 140 904\nHeadquarters: 1 ALLEE DU TRELOD 74000 ANNECY, France\nCategory: 9220 - Association déclarée\nActivity: 94.99Z - Other organizations working by voluntary membership\nContact: contact{'@'}lychen.org"
     },
     {
       "title": "Access to the Website",
@@ -28,7 +28,7 @@
     },
     {
       "title": "Contact",
-      "content": "For any questions regarding these Terms of Use, you can contact us at: contact@lychen.org"
+      "content": "For any questions regarding these Terms of Use, you can contact us at: contact{'@'}lychen.org"
     }
   ]
 }

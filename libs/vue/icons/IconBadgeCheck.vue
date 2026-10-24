@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { BadgeCheck } from 'lucide-vue-next';
+import { BadgeCheck } from '@lucide/vue';
 </script>

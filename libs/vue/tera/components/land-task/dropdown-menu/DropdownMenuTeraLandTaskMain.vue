@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type { LandTaskJsonld } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import { useClipboard } from '@vueuse/core';
 import {
   DropdownMenu,
@@ -72,7 +72,7 @@ const landTaskURL = computed(() => {
 
 const { copy, isSupported } = useClipboard();
 
-const { landTask } = defineProps<{ landTask: components['schemas']['LandTask.jsonld'] }>();
+const { landTask } = defineProps<{ landTask: LandTaskJsonld }>();
 
 const { t: tLandTask } = useI18nExtended({
   messages: landTaskMessages,

@@ -12,24 +12,26 @@ use Symfony\Component\Mercure\Update;
 /**
  * Stands in for the Mercure hub under test, so nothing goes over the network.
  *
- * The bundle still wraps it in its TraceableHub, which records every update for the
- * assertions. It has to be a stub rather than an unreachable URL: TraceableHub forwards
- * to the hub *before* recording, so a failing hub would lose the update first.
+ * It decorates the hub the bundle builds from the real configuration, so everything but
+ * publishing (public URL, protocol version, cookie name) comes from that configuration.
+ * The bundle's TraceableHub still wraps it and records every update for the assertions.
+ * It has to be a stub rather than an unreachable URL: TraceableHub forwards to the hub
+ * *before* recording, so a failing hub would lose the update first.
  */
 final class MercureHubStub implements HubInterface
 {
-    public function __construct(private readonly string $publicUrl)
+    public function __construct(private readonly HubInterface $hub)
     {
     }
 
     public function getPublicUrl(): string
     {
-        return $this->publicUrl;
+        return $this->hub->getPublicUrl();
     }
 
     public function getFactory(): ?TokenFactoryInterface
     {
-        return null;
+        return $this->hub->getFactory();
     }
 
     public function publish(Update $update): string
@@ -39,11 +41,11 @@ final class MercureHubStub implements HubInterface
 
     public function getProtocolVersion(): ProtocolVersion
     {
-        return ProtocolVersion::Legacy;
+        return $this->hub->getProtocolVersion();
     }
 
     public function getCookieName(): string
     {
-        return ProtocolVersion::Legacy->getDefaultCookieName();
+        return $this->hub->getCookieName();
     }
 }

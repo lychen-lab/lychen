@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:1.12-php8.5 AS frankenphp_upstream
+FROM dunglas/frankenphp:1.13-php8.5 AS frankenphp_upstream
 
 FROM frankenphp_upstream AS frankenphp_base
 
@@ -38,17 +38,10 @@ RUN set -eux; \
     docker-php-ext-enable amqp; \
     rm -rf /tmp/php-amqp;
 
-# Install the gRPC extension (and its protobuf companion) so the APIs can speak
-# gRPC when needed. grpc and protobuf are very large C/C++ extensions: compiling
-# them with one make job per CPU exhausts memory on multi-core builders, which is
-# the OOM / "memory overflow" failure. Pin install-php-extensions to a single
-# processor so peak memory stays bounded — the build is slower but reliable on
-# any builder.
-RUN set -eux; \
-    IPE_PROCESSOR_COUNT=1 install-php-extensions \
-        grpc \
-        protobuf \
-    ;
+# The Temporal worker (same image, see docs/architecture-espace.md) will need the
+# grpc + protobuf extensions. Add them together with the worker, not before: they
+# are huge C++ builds — compiled under QEMU for arm64 they pushed every API image
+# build past GitHub's 6 h job limit.
 
 ENV PHP_INI_SCAN_DIR=":$PHP_INI_DIR/app.conf.d"
 
@@ -98,6 +91,14 @@ COPY --link composer.* symfony.* ./
 RUN set -eux; \
 	composer install --no-cache --prefer-dist --no-autoloader --no-scripts --no-progress
 
+# The QA tools (PHPStan, php-cs-fixer, Rector) have their own composer project in
+# tools/. Bake them as well: the CI runs each command in a fresh
+# `docker compose run --rm` container, so tools installed by one were gone for the
+# next.
+COPY --link tools/composer.* tools/
+RUN set -eux; \
+	composer install --no-cache --prefer-dist --no-progress --working-dir=tools
+
 # copy sources (tests, phpunit config and .env.test are required to run the suite)
 COPY --link . ./
 
@@ -139,3 +140,8 @@ RUN composer run-script --no-dev post-install-cmd; \
 
 RUN set -eux; \
     bin/console assets:install
+
+# The commit this image was built from, served as /version.txt: the staging deploy
+# polls it to confirm the new version is the one actually answering.
+ARG GIT_SHA=unknown
+RUN echo "$GIT_SHA" > public/version.txt

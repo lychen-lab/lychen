@@ -44,8 +44,9 @@ and prod.
 
 ## Test environment
 
-The bundle makes `security` a public alias of `Security`, and stubs the default Mercure
-hub (`Test\MercureHubStub`) so tests never reach the network.
+The bundle makes `security` a public alias of `Security`, and decorates the default
+Mercure hub with `Test\MercureHubStub` so tests never reach the network: the stub
+publishes nothing, and takes everything else from the hub as configured.
 
 Locally, changes to this library reach an API only after
 `composer reinstall lychen/symfony-config` in it: the path repository mirrors the files

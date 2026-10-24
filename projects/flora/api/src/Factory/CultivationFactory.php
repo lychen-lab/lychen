@@ -27,6 +27,6 @@ final class CultivationFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this// ->afterInstantiate(function(Cultivation $cultivation): void {})
-            ;
+        ;
     }
 }

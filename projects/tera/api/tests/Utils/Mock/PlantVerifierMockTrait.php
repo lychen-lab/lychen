@@ -14,8 +14,9 @@ trait PlantVerifierMockTrait
 
     protected function preventAssertPlantExistsException(MockObject $mock): MockObject
     {
-        $mock->expects($this->any())->method('assertPlantExists')->willReturnCallback(function () {
+        $mock->method('assertPlantExists')->willReturnCallback(function () {
         });
+
         return $mock;
     }
 }

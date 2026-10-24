@@ -31,6 +31,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Restore the Yarn cache
+        uses: ./.github/actions/yarn-cache
+
       - name: Set up Moon Toolchain
         uses: 'moonrepo/setup-toolchain@v0'
 
@@ -65,10 +68,10 @@ jobs:
       - name: Install node dependencies
         run: yarn install
 
-      # Same command, flags and relative paths as typescript-tera-api-sdk:generate-api,
-      # using the workspace-pinned openapi-typescript version from yarn.lock.
+      # Same generator, version and openapi-ts.config.ts as typescript-tera-api-sdk:generate-api,
+      # using the workspace-pinned @hey-api/openapi-ts version from yarn.lock.
       - name: Regenerate TypeScript SDK
-        run: yarn workspace @lychen/typescript-tera-api-sdk run openapi-typescript ../../../../projects/tera/api/openapi_docs.json -o ./generated/tera-api.ts --enum-values --enum
+        run: yarn workspace @lychen/typescript-tera-api-sdk run openapi-ts
 
       # SDK generation is intentionally MANUAL and decoupled from API changes: an
       # API change must NOT force a SDK regeneration (and the resulting frontend

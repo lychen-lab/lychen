@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { ChevronLeft } from 'lucide-vue-next';
+import { ChevronLeft } from '@lucide/vue';
 </script>

@@ -2,10 +2,9 @@
 
 namespace App\Validator;
 
-use Attribute;
 use Symfony\Component\Validator\Constraint;
 
-#[Attribute]
+#[\Attribute]
 class LandRolesBelongToLand extends Constraint
 {
     public string $message = 'The land roles must belong to the same land as the land member.';

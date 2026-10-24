@@ -30,13 +30,16 @@ import { messages, TRANSLATION_KEY } from '@lychen/i18n-tera/land-member';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { Badge } from '@lychen/vue-components-core/badge';
 import BadgeTeraLandRole from '../../land-role/badge/BadgeTeraLandRole.vue';
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type {
+  LandMemberJsonld,
+  LandRoleJsonld,
+} from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 
 const { t, d } = useI18nExtended({ messages, rootKey: TRANSLATION_KEY, prefixed: true });
 
 defineProps<{
-  landMember: Omit<components['schemas']['LandMember.jsonld'], 'landRoles'> & {
-    landRoles?: components['schemas']['LandRole.jsonld'][];
+  landMember: Omit<LandMemberJsonld, 'landRoles'> & {
+    landRoles?: LandRoleJsonld[];
   };
 }>();
 </script>

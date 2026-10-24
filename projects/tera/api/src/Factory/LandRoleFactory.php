@@ -23,13 +23,13 @@ final class LandRoleFactory extends PersistentObjectFactory
     {
         return [
             'name' => self::faker()->text(255),
-            //'permissions' => []
+            // 'permissions' => []
         ];
     }
 
     protected function initialize(): static
     {
         return $this// ->afterInstantiate(function(LandRole $landRole): void {})
-            ;
+        ;
     }
 }

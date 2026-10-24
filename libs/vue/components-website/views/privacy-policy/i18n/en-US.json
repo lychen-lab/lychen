@@ -12,11 +12,11 @@
     },
     {
       "title": "Site publisher and data controller",
-      "content": "This website is published by the Lychen association, a non-profit association governed by the French law of 1 July 1901.\nRegistered office: 1 allée du Trélod, 74000 Annecy, France\nSIREN: 993 140 904 — SIRET: 993 140 904 00018\nPublication director: the association's presidency\nThe controller of personal data is the Lychen association, represented by its presidency.\nContact: contact@lychen.org"
+      "content": "This website is published by the Lychen association, a non-profit association governed by the French law of 1 July 1901.\nRegistered office: 1 allée du Trélod, 74000 Annecy, France\nSIREN: 993 140 904 — SIRET: 993 140 904 00018\nPublication director: the association's presidency\nThe controller of personal data is the Lychen association, represented by its presidency.\nContact: contact{'@'}lychen.org"
     },
     {
       "title": "Data Protection Officer (DPO)",
-      "content": "For any question regarding the processing of your personal data or the exercise of your rights, you can contact our Data Protection Officer:\nBy email: dpo@lychen.org\nBy post: Association Lychen — DPO, 1 allée du Trélod, 74000 Annecy, France"
+      "content": "For any question regarding the processing of your personal data or the exercise of your rights, you can contact our Data Protection Officer:\nBy email: dpo{'@'}lychen.org\nBy post: Association Lychen — DPO, 1 allée du Trélod, 74000 Annecy, France"
     },
     {
       "title": "Data collected",
@@ -52,7 +52,7 @@
     },
     {
       "title": "Your rights",
-      "content": "In accordance with the GDPR and the French Data Protection Act, you have the following rights over your data: the right of access, rectification, erasure, restriction of processing, portability, as well as the right to object to processing and the right to set guidelines regarding the fate of your data after your death.\nTo exercise these rights, send your request to our DPO at: dpo@lychen.org. Proof of identity may be requested. We undertake to respond within one month of receiving your request."
+      "content": "In accordance with the GDPR and the French Data Protection Act, you have the following rights over your data: the right of access, rectification, erasure, restriction of processing, portability, as well as the right to object to processing and the right to set guidelines regarding the fate of your data after your death.\nTo exercise these rights, send your request to our DPO at: dpo{'@'}lychen.org. Proof of identity may be requested. We undertake to respond within one month of receiving your request."
     },
     {
       "title": "Right to lodge a complaint with the CNIL",
@@ -64,7 +64,7 @@
     },
     {
       "title": "Contact",
-      "content": "For any question regarding this privacy policy or the processing of your personal data, you can write to us at: contact@lychen.org (or dpo@lychen.org for requests relating to data protection)."
+      "content": "For any question regarding this privacy policy or the processing of your personal data, you can write to us at: contact{'@'}lychen.org (or dpo{'@'}lychen.org for requests relating to data protection)."
     }
   ]
 }

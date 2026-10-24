@@ -86,6 +86,7 @@ API resources are DTOs, not Doctrine entities: entities (`src/Entity`) only carr
 - **Relations and computed fields use transforms**: `#[Map(source: 'relation', transform: …)]`. Dotted source paths (`relation.field`) resolve to `null` under the reverse mapping. Transforms that need services (e.g. activity codes → `AreaActivity`) implement `TransformCallableInterface`.
 - **Visibility is enforced in SQL** by `AreaVisibilityExtension`: reads return the public items (published proposals, active requests) plus the user's own, writes only reach the user's own; anything else answers 404.
 - **Filters** are declared with `QueryParameter` and API Platform's filters (`ExactFilter`, `PartialSearchFilter`, `SortFilter`); nested properties such as `activities.code` resolve against the entity.
+- **Workflow diagrams**: a resource whose entity has a Symfony workflow exposes `GET /api/<resources>/{uuid}/workflow` (`WorkflowDiagramProvider`), the Mermaid flowchart of the profiler's Workflow panel with the item's current place outlined, for any front to render with mermaid.js. The entity is loaded like the resource's own Get, so the visibility rules above apply. Declare the operation after the plain `#[Get]` (IRIs are generated from the first one) with `map: false`.
 
 ## Real-time updates
 
@@ -96,9 +97,13 @@ on the `espace` tenant — see [deployment.md](deployment.md#central-mercure-hub
   publishes every committed write to an `AreaProposal`, whoever makes it: the status
   changes Temporal activities persist reach the front with no extra code in the activities.
 - **Private updates, IRI paths as topics** (`/api/area_proposals/{uuid}`): the hub only
-  delivers what the user's token (`GET /api/mercure_subscription`) allows, and a worker,
-  which has no request host, publishes to the same topics as the API.
-- **Front:** `useEspaceMercure(topics, onUpdate)` in `libs/vue/espace`.
+  delivers what the user's token (`GET /api/mercure_subscription`) allows — the
+  `/api/area_proposals/:uuid` URL pattern — and a worker, which has no request host,
+  publishes to the same topics as the API.
+- **Mercure 1.0 protocol end to end:** OAuth 2.0 access tokens (`iss`
+  `urn:lychen:espace-api`, `aud` the hub's public URL), `match` / `match_urlpattern`
+  selectors, and the token in an `Authorization` header, never in the URL.
+- **Front:** `useEspaceMercure(matchers, onUpdate)` in `libs/vue/espace`.
 - **Not a notification channel.** Mercure mirrors data to screens that are open; notifying
   a user still happens from activities, through Novu, as above.
 

@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { ChevronUp } from 'lucide-vue-next';
+import { ChevronUp } from '@lucide/vue';
 </script>

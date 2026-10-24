@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Lychen\ConfigBundle;
 
-use Lychen\ConfigBundle\DependencyInjection\Compiler\StubMercureHubPass;
+use Lychen\ConfigBundle\Test\MercureHubStub;
 use Monolog\Logger;
 use Sentry\Monolog\Handler;
 use Sentry\State\HubInterface;
@@ -92,6 +92,9 @@ final class LychenConfigBundle extends AbstractBundle
         }
     }
 
+    /**
+     * @param array{service: string} $config
+     */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
         $services = $container->services();
@@ -109,13 +112,15 @@ final class LychenConfigBundle extends AbstractBundle
 
         if ('test' === $container->env()) {
             $services->alias('security', Security::class)->public();
+
+            // Tests never reach a real hub, see MercureHubStub. It sits between the
+            // configured hub and MercureBundle's TraceableHub decorator: a higher priority
+            // is applied first.
+            if (isset($bundles['MercureBundle'])) {
+                $services->set(MercureHubStub::class)
+                    ->decorate('mercure.hub.default', priority: 1)
+                    ->args([service('.inner')]);
+            }
         }
-    }
-
-    public function build(ContainerBuilder $container): void
-    {
-        parent::build($container);
-
-        $container->addCompilerPass(new StubMercureHubPass());
     }
 }

@@ -20,6 +20,9 @@
     "symfony/dependency-injection": "^7.4 || ^8.0",
     "symfony/http-kernel": "^7.4 || ^8.0"
   },
+  "conflict": {
+    "symfony/mercure-bundle": "<0.6"
+  },
   "archive": {
     "exclude": [
       "/moon.yml"

@@ -37,6 +37,6 @@ final class LandDealFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this// ->afterInstantiate(function(LandDeal $landDeal): void {})
-            ;
+        ;
     }
 }

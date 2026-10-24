@@ -1,4 +1,4 @@
-import { LandTaskJsonldState as State } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import { LandTaskState as State } from '@lychen/typescript-tera-api-sdk/enums';
 
 export default {
   [State.to_be_done]: 'to be done',

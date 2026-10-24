@@ -15,8 +15,6 @@ use App\Security\Checker\PersonPermissionChecker;
 use App\Security\Interface\PermissionHolder;
 use App\Security\Service\PermissionHolderRetriever;
 use Doctrine\Persistence\ManagerRegistry;
-use Exception;
-use LogicException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -71,7 +69,7 @@ class LandMemberVoter extends AbstractPermissionVoter
         $operation = $currentRequest->attributes->get('_api_operation');
         $operationIsPost = $operation instanceof Post;
         $operationIsCollection = $operation instanceof GetCollection;
-        $operationIsGetMe = $operation instanceof Get && $operation->getName() === 'land-member_me';
+        $operationIsGetMe = $operation instanceof Get && 'land-member_me' === $operation->getName();
 
         $supportsSubject = $subject instanceof LandMember;
         $supportsAttribute = in_array($attribute, self::ALL);
@@ -89,7 +87,7 @@ class LandMemberVoter extends AbstractPermissionVoter
             self::DELETE => $this->canDelete($subject, $permissionHolder),
             self::COLLECTION => $this->canCollection($permissionHolder),
             self::ME => $this->canMe($permissionHolder),
-            default => throw new LogicException($attribute . ' is not supported.')
+            default => throw new \LogicException($attribute.' is not supported.'),
         };
     }
 
@@ -135,12 +133,12 @@ class LandMemberVoter extends AbstractPermissionVoter
         $land = $this->managerRegistry->getRepository(Land::class)->findOneBy(['ulid' => $landUlid]);
 
         if (!$land instanceof Land) {
-            throw new LogicException('Land not found.');
+            throw new \LogicException('Land not found.');
         }
 
         try {
             $landMember = $this->permissionHolderRetriever->getLandMember($land, $permissionHolder);
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             throw new HttpException(403, $exception->getMessage());
         }
 

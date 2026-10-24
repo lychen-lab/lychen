@@ -9,9 +9,9 @@
 Dans le monorepo, chaque frontend dépend du SDK TypeScript généré à partir de la
 spec OpenAPI de l'API correspondante. Pour `tera` :
 
-- `libs/typescript/tera/api-sdk/generated/tera-api.ts` est **généré** depuis
-  `projects/tera/api/openapi_docs.json`
-  (`moon typescript-tera-api-sdk:generate-api`).
+- `libs/typescript/tera/api-sdk/generated/tera-api/` est **généré** depuis
+  `projects/tera/api/openapi_docs.json` par `@hey-api/openapi-ts`
+  (`moon typescript-tera-api-sdk:generate-api`, configuré dans `openapi-ts.config.ts`).
 - `projects/tera/app/moon.yml` déclare `dependsOn: [… typescript-tera-api-sdk …]`
   et `projects/tera/app/package.json` la consomme via
   `"@lychen/typescript-tera-api-sdk": "workspace:*"`.
@@ -23,14 +23,14 @@ La chaîne de redéploiement qui en découle :
    n'est pas régénéré et committé** (`git diff --exit-code` sur
    `openapi_docs.json` et `libs/typescript/tera/api-sdk/generated/`).
 2. **Le fichier généré du SDK change** dans `libs/**`.
-3. Au merge sur `main`, `.github/workflows/build-and-push-docker-images.yml`
+3. Au merge sur `main`, `.github/workflows/deploy.yml`
    (déclenché sur `libs/**` et `projects/**`) appelle
    `.github/actions/moon-affected-projects-list` avec
    `moon query projects --affected --downstream deep`.
 4. `--downstream deep` remonte **tous** les projets en aval du SDK : comme les
    fronts en `dependsOn`, ils sont marqués **affected** et rebuildés
    (`docker-buildx`).
-5. `.github/workflows/deploy.yml` redéploie alors chaque projet affecté.
+5. Le même workflow redéploie alors chaque projet affecté.
 
 **Conséquence** : toute évolution de l'API — même purement additive, voire un
 simple changement de description dans la spec — régénère le SDK, ce qui marque
@@ -136,7 +136,7 @@ Pour qu'un front ait « le temps de s'adapter », l'API doit pouvoir évoluer
 
 1. **Ne jamais casser en place.** Un champ/endpoint à retirer est d'abord
    **marqué déprécié**, pas supprimé. Côté API Platform, `deprecationReason`
-   produit `deprecated: true` dans la spec OpenAPI ; `openapi-typescript` le
+   produit `deprecated: true` dans la spec OpenAPI ; `@hey-api/openapi-ts` le
    propage en JSDoc `@deprecated`, donc visible dans l'IDE des devs front.
 2. **Signaler au runtime.** Renvoyer les en-têtes HTTP standard
    [`Deprecation`](https://datatracker.ietf.org/doc/html/draft-ietf-httpapi-deprecation-header)
@@ -215,8 +215,8 @@ spec/le SDK et, en cas d'écart, émettent un simple `::warning::` rappelant de
 lancer `moon …:generate-api` — sans `exit 1`. La génération reste donc à la main
 du développeur.
 
-Aucune autre modification : l'action `moon-affected-projects-list` et les
-workflows `build-and-push-docker-images.yml` / `deploy.yml` retrouvent leur
+Aucune autre modification : l'action `moon-affected-projects-list` et le
+workflow `deploy.yml` retrouvent leur
 comportement standard (`--affected --downstream deep`), donc le couplage
 SDK → front est préservé.
 

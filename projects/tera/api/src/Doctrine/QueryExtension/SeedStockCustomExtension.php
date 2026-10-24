@@ -12,7 +12,6 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 final readonly class SeedStockCustomExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
 {
-
     public function __construct(private Security $security)
     {
     }

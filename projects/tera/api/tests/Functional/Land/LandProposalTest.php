@@ -10,7 +10,6 @@ use App\Constant\SoilType;
 use App\Tests\Utils\Abstract\AbstractApiTestCase;
 use App\Workflow\LandProposal\LandProposalWorkflowPlace;
 use App\Workflow\LandProposal\LandProposalWorkflowTransition;
-use DateTimeInterface;
 use Zenstruck\Browser\Json;
 
 class LandProposalTest extends AbstractApiTestCase
@@ -22,9 +21,9 @@ class LandProposalTest extends AbstractApiTestCase
         $data = [
             'title' => 'My Awesome Garden Proposal',
             'description' => ['type' => 'doc',
-                              'content' => [['type' => 'paragraph',
-                                             'content' => [['type' => 'text',
-                                                            'text' => 'Detailed description here.']]]]],
+                'content' => [['type' => 'paragraph',
+                    'content' => [['type' => 'text',
+                        'text' => 'Detailed description here.']]]]],
             // Example Tiptap JSON
             'soilType' => SoilType::LOAMY,
             'orientation' => Orientation::SOUTH,
@@ -65,14 +64,13 @@ class LandProposalTest extends AbstractApiTestCase
             ->assertJsonMatches('sharingConditions', $data['sharingConditions'])
             ->assertJsonMatches('state', LandProposalWorkflowPlace::DRAFT) // Default state
             ->use(function (Json $json) {
-                $json->assertThat('ulid', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('createdAt', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNull());
-                $json->assertThat('publishedAt', fn(Json $json) => $json->isNull());
-                $json->assertThat('archivedAt', fn(Json $json) => $json->isNull());
+                $json->assertThat('ulid', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('createdAt', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNull());
+                $json->assertThat('publishedAt', fn (Json $json) => $json->isNull());
+                $json->assertThat('archivedAt', fn (Json $json) => $json->isNull());
             });
     }
-
 
     public function testPatch(): void
     {
@@ -82,8 +80,8 @@ class LandProposalTest extends AbstractApiTestCase
         $data = [
             'title' => 'Updated Garden Proposal',
             'description' => ['type' => 'doc',
-                              'content' => [['type' => 'paragraph',
-                                             'content' => [['type' => 'text', 'text' => 'Updated description.']]]]],
+                'content' => [['type' => 'paragraph',
+                    'content' => [['type' => 'text', 'text' => 'Updated description.']]]]],
             'soilType' => SoilType::SANDY,
             'orientation' => Orientation::NORTH,
             'hasParking' => false,
@@ -120,7 +118,7 @@ class LandProposalTest extends AbstractApiTestCase
             ->assertJsonMatches('foodSecurityParticipation', $data['foodSecurityParticipation'])
             ->assertJsonMatches('sharingConditions', $data['sharingConditions'])
             ->use(function (Json $json) {
-                $json->assertThat('updatedAt', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('updatedAt', fn (Json $json) => $json->isNotNull());
             });
     }
 
@@ -132,8 +130,8 @@ class LandProposalTest extends AbstractApiTestCase
                 'state' => LandProposalWorkflowPlace::PUBLISHED, // Make it published for public access test
                 'title' => 'Test Get Proposal',
                 'description' => ['type' => 'doc',
-                                  'content' => [['type' => 'paragraph',
-                                                 'content' => [['type' => 'text', 'text' => 'Get description.']]]]],
+                    'content' => [['type' => 'paragraph',
+                        'content' => [['type' => 'text', 'text' => 'Get description.']]]]],
                 'soilType' => SoilType::SANDY,
                 'orientation' => Orientation::NORTH,
                 'hasParking' => false,
@@ -204,23 +202,23 @@ class LandProposalTest extends AbstractApiTestCase
         $landProposal2 = $this->createLandProposal($context->land,
             [
                 'state' => LandProposalWorkflowPlace::ARCHIVED,
-                'title' => 'Archived Proposal 2'
+                'title' => 'Archived Proposal 2',
             ]);
         $landProposal3 = $this->createLandProposal($context->land,
             [
                 'state' => LandProposalWorkflowPlace::DRAFT,
-                'title' => 'Draft Proposal'
+                'title' => 'Draft Proposal',
             ]); // Default state is DRAFT, but explicitly setting for clarity
         $landProposal4 = $this->createLandProposal($context->land,
             [
                 'state' => LandProposalWorkflowPlace::PUBLISHED,
-                'title' => 'Published Proposal'
+                'title' => 'Published Proposal',
             ]);
 
         $landProposal5 = $this->createLandProposal($context2->land,
             [
                 'state' => LandProposalWorkflowPlace::PUBLISHED,
-                'title' => 'Published Proposal'
+                'title' => 'Published Proposal',
             ]);
 
         // --- Test fetching the whole collection (as owner) ---
@@ -252,36 +250,33 @@ class LandProposalTest extends AbstractApiTestCase
             ->assertJsonMatches('member[0].sharingConditions', $landProposal1->getSharingConditions())
             ->assertJsonMatches('member[0].state', $landProposal1->getState()) // Should be ARCHIVED
             ->assertJsonMatches('member[0].expirationDate',
-                $landProposal1->getExpirationDate()?->format(DateTimeInterface::RFC3339_EXTENDED));
-
+                $landProposal1->getExpirationDate()?->format(\DateTimeInterface::RFC3339_EXTENDED));
 
         // --- Test filtering by state: ARCHIVED ---
         $this->browser()->actingAs($context->owner) // Use the owner
         ->get('/api/land_proposals',
             ['query' => ['state' => LandProposalWorkflowPlace::ARCHIVED,
-                         'land' => $context->land->getUlid()->toString()]])
+                'land' => $context->land->getUlid()->toString()]])
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', 2)
             // Check ULIDs to ensure the correct items are returned (order might vary)
             ->assertJsonMatches('member[0].ulid', $landProposal1->getUlid()->toString())
             ->assertJsonMatches('member[1].ulid', $landProposal2->getUlid()->toString());
 
-
         // --- Test filtering by state: DRAFT ---
         $this->browser()->actingAs($context->owner) // Use the owner
         ->get('/api/land_proposals',
             ['query' => ['state' => LandProposalWorkflowPlace::DRAFT,
-                         'land' => $context->land->getUlid()->toString()]])
+                'land' => $context->land->getUlid()->toString()]])
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', 1)
             ->assertJsonMatches('member[0].ulid', $landProposal3->getUlid()->toString());
-
 
         // --- Test filtering by state: PUBLISHED ---
         $this->browser()->actingAs($context->owner) // Use the owner
         ->get('/api/land_proposals',
             ['query' => ['state' => LandProposalWorkflowPlace::PUBLISHED,
-                         'land' => $context->land->getUlid()->toString()]])
+                'land' => $context->land->getUlid()->toString()]])
             ->assertSuccessful()
             ->assertJsonMatches('totalItems', 1)
             ->assertJsonMatches('member[0].ulid', $landProposal4->getUlid()->toString());
@@ -331,14 +326,13 @@ class LandProposalTest extends AbstractApiTestCase
         $landProposal = $this->createLandProposal($context->land);
 
         $this->browser()->actingAs($context->owner)
-            ->patch($this->getIriFromResource($landProposal) . '/' . LandProposalWorkflowTransition::PUBLISH)
+            ->patch($this->getIriFromResource($landProposal).'/'.LandProposalWorkflowTransition::PUBLISH)
             ->assertSuccessful()
             ->assertJsonMatches('state', LandProposalWorkflowPlace::PUBLISHED)
             ->use(function (Json $json) {
-                $json->assertThat('expirationDate', fn(Json $json) => $json->isNotNull());
-                $json->assertThat('publishedAt', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('expirationDate', fn (Json $json) => $json->isNotNull());
+                $json->assertThat('publishedAt', fn (Json $json) => $json->isNotNull());
             });
-
     }
 
     public function testArchive(): void
@@ -347,13 +341,12 @@ class LandProposalTest extends AbstractApiTestCase
         $landProposal = $this->createLandProposal($context->land, ['state' => LandProposalWorkflowPlace::PUBLISHED]);
 
         $this->browser()->actingAs($context->owner)
-            ->patch($this->getIriFromResource($landProposal) . '/' . LandProposalWorkflowTransition::ARCHIVE)
+            ->patch($this->getIriFromResource($landProposal).'/'.LandProposalWorkflowTransition::ARCHIVE)
             ->assertSuccessful()
             ->assertJsonMatches('state', LandProposalWorkflowPlace::ARCHIVED)
             ->use(function (Json $json) {
-                $json->assertThat('archivedAt', fn(Json $json) => $json->isNotNull());
+                $json->assertThat('archivedAt', fn (Json $json) => $json->isNotNull());
             });
-
     }
 
     public function testCannotCreateSecondDraft(): void
@@ -364,9 +357,9 @@ class LandProposalTest extends AbstractApiTestCase
         $data = [
             'title' => 'My Awesome Garden Proposal',
             'description' => ['type' => 'doc',
-                              'content' => [['type' => 'paragraph',
-                                             'content' => [['type' => 'text',
-                                                            'text' => 'Detailed description here.']]]]],
+                'content' => [['type' => 'paragraph',
+                    'content' => [['type' => 'text',
+                        'text' => 'Detailed description here.']]]]],
             // Example Tiptap JSON
             'soilType' => SoilType::LOAMY,
             'orientation' => Orientation::SOUTH,
@@ -400,7 +393,7 @@ class LandProposalTest extends AbstractApiTestCase
         $secondProposal = $this->createLandProposal($context->land, ['state' => LandProposalWorkflowPlace::DRAFT]);
 
         $this->browser()->actingAs($context->owner)
-            ->patch($this->getIriFromResource($secondProposal) . '/' . LandProposalWorkflowTransition::PUBLISH)
+            ->patch($this->getIriFromResource($secondProposal).'/'.LandProposalWorkflowTransition::PUBLISH)
             ->assertStatus(422)
             ->assertJsonMatches('violations[0].message', 'You can only have one proposal in published state.');
     }

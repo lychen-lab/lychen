@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import { FileImage } from 'lucide-vue-next';
+import { FileImage } from '@lucide/vue';
 </script>
