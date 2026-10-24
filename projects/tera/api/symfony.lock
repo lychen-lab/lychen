@@ -334,6 +334,18 @@
     "spatie/temporary-directory": {
         "version": "2.0.0"
     },
+    "stripe/stripe-php": {
+        "version": "20.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "19.0",
+            "ref": "d6829c693e3927a8972c7671d74a1a5c505712b0"
+        },
+        "files": [
+            "config/packages/stripe.yaml"
+        ]
+    },
     "symfony/amqp-messenger": {
         "version": "v5.4.11"
     },

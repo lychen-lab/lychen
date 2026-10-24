@@ -4,7 +4,10 @@ id: typescript-tera-api-sdk
 language: typescript
 tasks:
   generate-api:
-    command: npx openapi-typescript ${OPENAPI_SCHEMA_JSON} -o ./generated/tera-api.ts --enum-values --enum
+    # API Platform exports OpenAPI 3.2, which openapi-typescript (in maintenance mode
+    # since 2026-09, it will never read 3.2) rejects. The spec uses nothing 3.2-only, so
+    # it is fed as 3.1 until the SDK moves to another generator.
+    script: jq '.openapi = "3.1.0"' ${OPENAPI_SCHEMA_JSON} | npx openapi-typescript -o ./generated/tera-api.ts --enum-values --enum
     deps:
     - tera-api:export-openapi
 layer: library

@@ -45,6 +45,37 @@ class AreaRequestTest extends AbstractApiTestCase
             ->assertJsonMatches("starts_with(archivedAt, '2026-09-01T10:00:00')", true);
     }
 
+    public function testWorkflowIsAMermaidDiagramOutliningTheCurrentPlace(): void
+    {
+        $requester = PersonFactory::createOne();
+        $areaRequest = AreaRequestFactory::createOne([
+            'requester' => $requester,
+            'place' => AreaRequestWorkflow::PLACE_PENDING_VALIDATION,
+        ]);
+
+        $diagram = $this->browser()
+            ->actingAs($requester)
+            ->get('/api/area_requests/'.$areaRequest->getUuid().'/workflow')
+            ->assertStatus(200)
+            ->json()->decoded();
+
+        self::assertSame(AreaRequestWorkflow::NAME, $diagram['name']);
+        self::assertSame(<<<'MERMAID'
+            graph LR
+            place0(["draft"])
+            place1(("pending_validation"))
+            style place1 stroke-width:4px
+            place2(("active"))
+            place3(("rejected"))
+            place4(("archived"))
+            place2-->|"archive"|place4
+            place3-->|"archive"|place4
+            place1-->|"approve"|place2
+            place1-->|"reject"|place3
+            place0-->|"submit"|place1
+            MERMAID, $diagram['mermaid']);
+    }
+
     public function testFilterByPlaceAndActivityCode(): void
     {
         $requester = PersonFactory::createOne();
