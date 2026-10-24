@@ -1,13 +1,10 @@
-env:
-  OPENAPI_SCHEMA_JSON: ../../../projects/espace/api/openapi_docs.json
 id: typescript-espace-api-sdk
 language: typescript
 tasks:
   generate-api:
-    # API Platform exports OpenAPI 3.2, which openapi-typescript (in maintenance mode
-    # since 2026-09, it will never read 3.2) rejects. The spec uses nothing 3.2-only, so
-    # it is fed as 3.1 until the SDK moves to another generator.
-    script: jq '.openapi = "3.1.0"' ${OPENAPI_SCHEMA_JSON} | npx openapi-typescript -o ./generated/espace-api.ts --enum-values --enum
+    # @hey-api/openapi-ts reads the spec API Platform exports (OpenAPI 3.2) as is;
+    # input, output and plugins are in openapi-ts.config.ts.
+    command: openapi-ts
     deps:
     - espace-api:export-openapi
 layer: library

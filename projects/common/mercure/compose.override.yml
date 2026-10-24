@@ -6,19 +6,16 @@ name: common-mercure
 services:
   mercure:
     environment:
-      # Local-dev permissiveness, mirroring the hub image's own dev.Caddyfile:
-      # unauthenticated subscribers, the debugger UI, the subscription API and
-      # any browser origin. None of this may reach staging or production.
-      MERCURE_EXTRA_DIRECTIVES: |
-        anonymous
-        demo
-        subscriptions
-        cors_origins *
-        publish_origins *
+      # Local-dev permissiveness, the way the hub image runs in development: the
+      # playground turns on unauthenticated subscribers, the debugger UI, the
+      # subscription API and any browser origin. None of this may reach staging
+      # or production.
+      MERCURE_EXTRA_DIRECTIVES: playground
+      MERCURE_PUBLIC_ORIGIN: http://localhost:${MERCURE_PORT:-8800}
     ports:
       # The APIs reach the hub over lychen-network; this is for browsers running
       # on the host, and for the debugger UI at
-      # http://localhost:8800/<tenant>/.well-known/mercure/ui/
+      # http://localhost:8800/<tenant>/.well-known/mercure/debug/
       - '${MERCURE_PORT:-8800}:80'
     networks:
       - lychen-network

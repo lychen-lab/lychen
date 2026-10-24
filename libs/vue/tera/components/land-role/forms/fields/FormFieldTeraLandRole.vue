@@ -105,17 +105,20 @@ import {
   TagsInput,
   TagsInputInput,
 } from '@lychen/vue-components-core/tags-input';
-import type { components } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import type {
+  LandJsonld,
+  LandRoleJsonld,
+} from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import IconCheck from '@lychen/vue-icons/IconCheck.vue';
 
 // Land roles reach this field from several API projections (land_role / land_member /
 // land_member_invitation collections). The field only needs `@id` (selection key) and `name`
 // (label), so model the minimal shape all projections satisfy. Same convention as
 // CardTeraLandMemberInvitation's `landRoles` prop.
-type LandRoleOption = Pick<components['schemas']['LandRole.jsonld'], '@id' | 'name'>;
+type LandRoleOption = Pick<LandRoleJsonld, '@id' | 'name'>;
 
 const props = defineProps<{
-  land: components['schemas']['Land.jsonld'];
+  land: LandJsonld;
   isFieldDirty: boolean;
   initialValues?: LandRoleOption[];
 }>();
@@ -138,11 +141,9 @@ const { data: landRoles } = useQuery({
     if (!landUlid.value) {
       throw new Error('missing.ulid');
     }
-    const response = await api.GET('/api/land_roles', {
-      params: {
-        query: {
-          land: landUlid.value,
-        },
+    const response = await api.apiLandRolesGetCollection({
+      query: {
+        land: landUlid.value,
       },
     });
     return response.data;

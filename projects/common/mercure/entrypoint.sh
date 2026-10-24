@@ -15,6 +15,19 @@
 #
 #     http://mercure/<tenant>/.well-known/mercure
 #
+# The hub speaks the Mercure 1.0 protocol, where tokens are OAuth 2.0 access
+# tokens (RFC 9068), and each tenant pins the two values its tokens are checked
+# against:
+#
+# - its issuer, `urn:lychen:<tenant>-api`: the `iss` its API signs with, bound to
+#   that tenant's keys. A fixed identifier rather than a URL, since nothing has
+#   to discover it — the keys, not the name, keep tenants apart.
+# - its resource identifier, `$MERCURE_PUBLIC_ORIGIN/<tenant>/.well-known/mercure`:
+#   the `aud` its tokens must carry. Left to itself the hub would derive one per
+#   request as `<origin>/.well-known/mercure`, which drops the tenant prefix
+#   `handle_path` strips — and would differ between the internal URL the APIs
+#   publish to and the public one browsers subscribe to.
+#
 # Secrets never touch the disk: the rendered file refers to the keys as
 # `{env.MERCURE_<TENANT>_PUBLISHER_JWT_KEY}`, which Caddy resolves at runtime.
 set -eu
@@ -22,6 +35,17 @@ set -eu
 TENANTS="${MERCURE_TENANTS:-tera espace flora}"
 CADDYFILE="${MERCURE_CADDYFILE:-/etc/caddy/lychen.Caddyfile}"
 JWT_ALG="${MERCURE_JWT_ALG:-HS256}"
+# Where browsers reach the hub, without any tenant prefix (`https://mercure.example.org`).
+# No default: a wrong one only shows up as every token being turned down.
+PUBLIC_ORIGIN="${MERCURE_PUBLIC_ORIGIN:-}"
+PUBLIC_ORIGIN="${PUBLIC_ORIGIN%/}"
+case "$PUBLIC_ORIGIN" in
+  http://?* | https://?*) ;;
+  *)
+    echo "lychen: MERCURE_PUBLIC_ORIGIN must be the hub's public origin, e.g. https://mercure.example.org (got '$PUBLIC_ORIGIN')" >&2
+    exit 1
+    ;;
+esac
 
 # env_name <tenant> <suffix> -> MERCURE_<TENANT>_<SUFFIX>
 env_name() {
@@ -72,7 +96,9 @@ done
 	log {
 		format filter {
 			fields {
-				# Subscribers may pass their JWT as a query parameter.
+				# The 1.0 protocol never puts a token in the URL, and the hub turns
+				# one down there, but a client still on 0.x (a PWA serving a stale
+				# bundle, say) sends it anyway: keep it out of the logs.
 				request>uri query {
 					replace authorization REDACTED
 				}
@@ -80,7 +106,10 @@ done
 		}
 	}
 
-	encode zstd gzip
+	# No `encode`: Caddy compresses an event stream with one encoder per subscriber,
+	# kept for the whole connection (megabytes each), and a compression context
+	# shared between private updates and content other users wrote is what BREACH
+	# needs. The hub's own Caddyfile leaves it off for the same reasons.
 CADDY
 
   for tenant in $TENANTS; do
@@ -96,11 +125,21 @@ $(read_var "$(env_name "$tenant" EXTRA_DIRECTIVES)")"
 	# --- $tenant -> /$tenant/.well-known/mercure ---
 	handle_path /$tenant/* {
 		mercure {
+			# One Caddy process runs every hub, so each needs a name — a distinct
+			# one: hubs with the same name share a transport.
+			name $tenant
 			transport bolt {
 				path /data/$tenant.db
 			}
-			publisher_jwt {env.$publisher_var} $JWT_ALG
-			subscriber_jwt {env.$subscriber_var} $JWT_ALG
+			issuer urn:lychen:$tenant-api {
+				publisher {
+					jwt {env.$publisher_var} $JWT_ALG
+				}
+				subscriber {
+					jwt {env.$subscriber_var} $JWT_ALG
+				}
+			}
+			resource_identifier $PUBLIC_ORIGIN/$tenant/.well-known/mercure
 $(printf '%s\n' "$extra" | sed -e 's/^[[:space:]]*//' -e '/^$/d' -e 's/^/\t\t\t/')
 		}
 	}
@@ -118,7 +157,7 @@ CADDY
 
 echo "lychen: serving mercure hubs for [$TENANTS]"
 for tenant in $TENANTS; do
-  echo "lychen:   /$tenant/.well-known/mercure"
+  echo "lychen:   $PUBLIC_ORIGIN/$tenant/.well-known/mercure (iss urn:lychen:$tenant-api)"
 done
 if [ -n "$seeded" ]; then
   # Loud on purpose: these are public, in-repo values. Anything but local dev
