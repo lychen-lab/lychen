@@ -1,0 +1,143 @@
+name: 'QG'
+
+# The quality gate of every pull request, whatever the stack: static checks,
+# then tests. Each job runs one task of the common interface with `moon ci`,
+# which runs it in every affected project that defines it. A project with
+# nothing to do for a task simply does not define it, so nothing here knows
+# which stack a project uses.
+#
+# moon ci compares against the PR's base branch, so a stacked PR only checks
+# what it changes on top of the PR below it.
+
+env:
+  REGISTRY: ghcr.io
+  # Compose stacks run from compose.yml alone: the compose.override.yml picked
+  # up by default swaps in the dev build and its bind mounts. The Symfony APIs'
+  # tasks build their test image first (ci-test-image) and run against it.
+  COMPOSE_FILE: compose.yml
+
+on:
+  # No `paths:` filter: "QG | Gate" is a required check, so it must report on
+  # every PR. Without an affected project, `moon ci` runs nothing and succeeds.
+  pull_request:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  # The APIs' test image exports its layer cache to ghcr.
+  packages: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  static:
+    name: 'Static | ${{ matrix.name }}'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Lint
+            tasks: ':lint'
+          - name: Format
+            tasks: ':format'
+          # One job for both: the frontends' docker-build depends on build, so
+          # its output is reused instead of built twice.
+          - name: Build
+            tasks: ':build :docker-build'
+    steps:
+      - uses: 'actions/checkout@v4'
+        with:
+          fetch-depth: 0
+
+      - name: Restore the Yarn cache
+        uses: ./.github/actions/yarn-cache
+
+      - name: Set up Moon Toolchain
+        uses: 'moonrepo/setup-toolchain@v0'
+
+      - name: Install proto tools
+        run: proto install
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run ${{ matrix.tasks }}
+        run: moon ci ${{ matrix.tasks }}
+
+  tests:
+    name: 'Tests | ${{ matrix.task }}'
+    needs: static
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        task:
+          - test
+          - test-functional
+          - test-security
+    steps:
+      - uses: 'actions/checkout@v4'
+        with:
+          fetch-depth: 0
+
+      - name: Restore the Yarn cache
+        uses: ./.github/actions/yarn-cache
+
+      - name: Set up Moon Toolchain
+        uses: 'moonrepo/setup-toolchain@v0'
+
+      - name: Install proto tools
+        run: proto install
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run ${{ matrix.task }}
+        run: moon ci :${{ matrix.task }}
+
+  # The one required check of this workflow (branch ruleset). It fails when a job
+  # failed, was cancelled or was skipped (the tests are skipped when a static
+  # check fails): a job disabled with `if: false` turns the gate red instead of
+  # silently disappearing from the PR.
+  gate:
+    name: 'QG | Gate'
+    if: ${{ always() }}
+    needs:
+      - static
+      - tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Check every job passed'
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          bad=$(jq -r 'to_entries[] | select(.value.result != "success") | "\(.key)=\(.value.result)"' <<< "$NEEDS")
+          if [[ -n "$bad" ]]; then
+            echo "::error title=QG not green::$(paste -sd ' ' - <<< "$bad")"
+            exit 1
+          fi

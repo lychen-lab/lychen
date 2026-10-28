@@ -26,36 +26,44 @@ default immutable mode and fails on any lockfile drift. After changing a depende
 
 All tasks run through Moon. Use `moon <project-id>:<task>` or `moon :<task>` (colon prefix) for workspace-wide tasks.
 
-### Development
+### Common task interface
+
+Every project implements the same task names, whatever its stack, so CI never needs to know
+which stack a project uses. A project only defines the tasks that apply to it (a Symfony API has
+no `build`, a compose service has no `lint`).
+
+| Task | Vue / TypeScript | Symfony API | Compose service |
+| --- | --- | --- | --- |
+| `dev` | `yarn dev` | `up` + mailpit, Mercure, RabbitMQ | `up` |
+| `lint` / `lint-fix` | ESLint, after `typecheck` (vue-tsc) | PHPStan, after `doctrine:schema:validate` | — |
+| `format` / `format-fix` | Prettier | php-cs-fixer | — |
+| `build` | `yarn build` | — | — |
+| `docker-build` | Image for the runner's platform | Production image for the runner's platform | — |
+| `docker-push` | Multi-platform image, pushed to ghcr | Multi-platform image, pushed to ghcr | — |
+| `test` | Vitest | Whole PHPUnit suite (local only) | — |
+| `test-functional` | — | PHPUnit `tests/Functional` | — |
+| `test-security` | — | Composer audit + PHPUnit `tests/Security` | — |
+
+The same tasks run locally and in CI. A Symfony API's tasks run in its dev container locally;
+in CI they first build the test image and the test database (`ci-*` helpers, `runInCI: only`).
 
 ```bash
-moon <project>:dev       # Start dev server for a project (e.g., moon tera-app:dev)
+moon tera-app:dev        # Start dev server for a project
 moon storybook:dev       # Component workshop
-```
-
-### Building
-
-```bash
-moon <project>:build     # Build a specific project
 moon :build              # Build all projects
-```
-
-### Linting & Formatting
-
-```bash
 moon :lint               # Check all projects
-moon :lint-fix           # Auto-fix lint issues
-moon :format             # Check formatting
 moon :format-fix         # Auto-fix formatting
-moon <api>:phpstan       # PHPStan for one API (e.g. moon tera-api:phpstan)
+moon tera-api:lint       # PHPStan (and schema validation) for one API
 ```
 
-Pre-commit hooks automatically run `format-fix` and `lint-fix` on affected files.
+Pre-commit hooks automatically run `format-fix` and `lint-fix` on affected files, except in PHP
+projects (their fixers need the API's container): run `moon <api>:format-fix` by hand.
 
 PHPStan debt is frozen in each API's `phpstan-baseline.neon`: new code must pass
 clean, fixing an error means deleting its baseline entry, and CI rejects a PR whose
-baseline grows. A PR needs the `Symfony | Gate`, `Frontend | Gate` and `Run unit
-tests` checks green; a job skipped while its project is affected fails its gate.
+baseline grows. A PR needs the `QG | Gate` check green: the QG workflow runs the static
+checks (`lint`, `format`, `build` + `docker-build`), then the tests (`test`,
+`test-functional`, `test-security`), each with `moon ci`.
 
 ### Testing
 
