@@ -1,0 +1,18 @@
+$schema: https://moonrepo.dev/schemas/tasks.json
+# The frontends' side of tag-docker.yml: their image serves the app's build
+# (dist/) with Caddy, from a Dockerfile shared by every frontend.
+inheritedBy:
+  stack: frontend
+  tag: docker
+tasks:
+  docker-build:
+    deps: &image-deps
+    - build
+    - get-dockerfiles
+  docker-push:
+    deps: *image-deps
+  get-dockerfiles:
+    options:
+      cache: false
+      internal: true
+    script: cp -R $workspaceRoot/libs/docker/frontend/* .

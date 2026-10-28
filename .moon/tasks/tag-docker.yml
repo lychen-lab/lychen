@@ -1,29 +1,26 @@
 $schema: https://moonrepo.dev/schemas/tasks.json
+# The project's production image, built from the Dockerfile at its root and
+# published as ghcr.io/lychen-lab/lychen/<project>. What a stack's build needs
+# first is added to these tasks, in the same-id tasks of a file inherited by
+# that stack only: frontend-docker.yml, symfony-docker.yml.
 inheritedBy:
   tag: docker
 tasks:
   docker-build:
     # The image for the runner's platform only, to check that it builds.
     # docker-push builds and pushes the multi-platform one.
-    command: docker build $projectRoot --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${IMAGE_NAME}:latest
-    deps:
-    - build
-    - get-dockerfiles
-    env:
+    command: docker buildx build $projectRoot --cache-from type=registry,ref=${IMAGE_NAME}:buildcache --build-arg GIT_SHA=${GITHUB_SHA}
+    env: &image-name
       IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
     options:
       cache: false
   docker-push:
-    command: docker buildx build $projectRoot --platform linux/arm64,linux/amd64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg GIT_SHA=${GITHUB_SHA} --cache-from ${IMAGE_NAME}:latest --tag ${IMAGE_NAME}:${GITHUB_SHA} --tag ${IMAGE_NAME}:latest --push
-    deps:
-    - build
-    - get-dockerfiles
-    env:
-      IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
+    # The layer cache lives in its own registry tag (:buildcache), exported with
+    # mode=max so the layers of every stage are reused — including the arm64
+    # ones built under QEMU, the slow part of an API build. Pushing an image
+    # does not export any cache by itself: `--cache-from :latest` alone never
+    # hit.
+    command: docker buildx build $projectRoot --cache-from type=registry,ref=${IMAGE_NAME}:buildcache --cache-to type=registry,ref=${IMAGE_NAME}:buildcache,mode=max --platform linux/arm64,linux/amd64 --build-arg GIT_SHA=${GITHUB_SHA} -t ${IMAGE_NAME}:latest -t ${IMAGE_NAME}:${GITHUB_SHA} --push
+    env: *image-name
     options:
       cache: false
-  get-dockerfiles:
-    options:
-      cache: false
-      internal: true
-    script: cp -R $workspaceRoot/libs/docker/frontend/* .

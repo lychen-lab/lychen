@@ -1,12 +1,20 @@
 $schema: https://moonrepo.dev/schemas/tasks.json
-# CI-only helpers of the Symfony APIs' tasks (tag-symfony.yml), which depend on
-# them. They are `runInCI: only`: locally those tasks skip them and run in the
-# dev container instead. Their options are set per task: a file-level
-# taskOptions applies to every task of the project, not just these.
+# What the Symfony APIs' tasks (tag-symfony.yml) need on a CI runner, which has
+# no dev container: the test image, and the test database its entrypoint waits
+# for. The QG workflow sets COMPOSE_FILE=compose.yml, so `docker compose run`
+# uses that image instead of the dev build.
+#
+# The tasks of tag-symfony.yml stay as they are; this file only adds deps to
+# them, under the same ids (moon merges a task defined in several inherited
+# files). The ci-* tasks are `runInCI: only`: skipped locally, where those
+# tasks still run, in the dev container. Their options are set per task: a
+# file-level taskOptions applies to every task of the project, not just these.
 inheritedBy:
-  language: php
-  layer: application
-  stack: backend
+  # Merged before tag-symfony.yml (500, the default of a tag condition), so that
+  # these deps come first: lint runs its deps one at a time, in order, and the
+  # image must exist before the others start.
+  order: 400
+  tag: symfony
 tasks:
   ci-create-db:
     # --entrypoint php skips the image entrypoint, which otherwise blocks waiting
@@ -20,11 +28,6 @@ tasks:
     options: &ci-only
       internal: true
       runInCI: only
-  ci-phpstan-baseline:
-    command: bash $workspaceRoot/.moon/scripts/phpstan-baseline-guard.sh $projectSource/phpstan-baseline.neon
-    options:
-      <<: *ci-only
-      cache: false
   ci-test-image:
     # The test image (sources, dev vendors and tools/ baked in), loaded as
     # `<project>:latest`: the image compose.yml resolves the api service to when
@@ -41,3 +44,28 @@ tasks:
     options:
       <<: *ci-only
       cache: false
+
+  # The tasks of tag-symfony.yml that run in the API's container: in CI they
+  # first need the test image, and those that boot Symfony (bin/console,
+  # phpunit) its database too.
+  audit:
+    deps: &image
+      - ci-test-image
+  export-openapi:
+    deps: &image-and-db
+      - ci-test-image
+      - ci-create-db
+  format:
+    deps: *image
+  install-tools:
+    # The test image already has tools/.
+    options:
+      runInCI: skip
+  lint:
+    deps: *image
+  test-functional:
+    deps: *image-and-db
+  test-security:
+    deps: *image-and-db
+  validate-db-schema:
+    deps: *image-and-db

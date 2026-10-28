@@ -49,8 +49,16 @@ The `compose-local` tag marks projects that also run locally as a compose stack 
 | `test-functional` | — | PHPUnit `tests/Functional` | — |
 | `test-security` | — | PHPUnit `tests/Security` | — |
 
-The same tasks run locally and in CI. A Symfony API's tasks run in its dev container locally;
-in CI they first build the test image and the test database (`ci-*` helpers, `runInCI: only`).
+The same tasks run locally and in CI. A Symfony API's tasks (`tag-symfony.yml`) run as they are
+in its dev container locally and know nothing about CI; `symfony-ci.yml` adds the test image
+and the test database under them in CI (`ci-*` helpers, `runInCI: only`).
+
+A tasks file reaches the projects that match all of its `inheritedBy` conditions (tag, stack,
+layer, language…; moon has no condition on a single task). Stack-specific additions to a shared
+task go in their own file under the same task id, e.g. `tag-docker.yml` builds any image and
+`frontend-docker.yml` (`tag: docker` + `stack: frontend`) adds the frontends' `build` and
+shared Dockerfile. Files merge in `inheritedBy.order` (default 500 for a tag condition, +100 for
+a stack, then by file name): set `order` when the merge order matters.
 
 ```bash
 moon tera-app:dev        # Start dev server for a project
@@ -123,7 +131,7 @@ make phpunit c="--group e2e"                         # Run by group
   workspace.yml    # Workspace constraints, VCS hooks
   toolchains.yml   # Node, Yarn, TypeScript settings
   hooks/           # Pre-commit hook scripts
-  tasks/           # Shared task definitions (all.yml, frontend.yml, php-library.yml, symfony-ci.yml, tag-*.yml)
+  tasks/           # Shared task definitions (all.yml, frontend.yml, frontend-docker.yml, php-library.yml, symfony-ci.yml, symfony-docker.yml, tag-*.yml)
 ```
 
 ## Architecture
