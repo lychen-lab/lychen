@@ -1,5 +1,24 @@
 $schema: https://moonrepo.dev/schemas/tasks.json
 tasks:
+  audit:
+    # Known vulnerabilities in the project's locked npm dependencies, including
+    # the workspace libraries it uses (--recursive). A static check: it reads
+    # yarn.lock only. Accepted advisories are listed, with the reason, in
+    # .yarnrc.yml (npmAuditIgnoreAdvisories).
+    command:
+    - yarn
+    - npm
+    - audit
+    - --recursive
+    - --no-deprecations
+    inputs:
+    - package.json
+    - /yarn.lock
+    - /.yarnrc.yml
+    # Never cached: new advisories are published without any input changing,
+    # and a cache hit would replay an old pass.
+    options:
+      cache: false
   format:
     # Without --check, Prettier prints the formatted files and always exits 0.
     args:
