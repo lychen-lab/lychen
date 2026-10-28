@@ -11,7 +11,7 @@ tasks:
     # the release-versioning step is a self-contained concern. Defined once and
     # inherited by every `version`-tagged project, now that fronts and APIs share
     # the single `ghcr.io/lychen-lab/lychen/<project>` namespace instead of being
-    # duplicated per layer in tag-docker.yml / tag-symfony.yml.
+    # duplicated per layer in tag-docker.yml / symfony-ci.yml.
     command: docker buildx imagetools create -t ${IMAGE_NAME}:${VERSION} -t ${IMAGE_NAME}:stable ${IMAGE_NAME}:latest
     env:
       IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project

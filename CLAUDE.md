@@ -110,7 +110,7 @@ make phpunit c="--group e2e"                         # Run by group
   workspace.yml    # Workspace constraints, VCS hooks
   toolchains.yml   # Node, Yarn, TypeScript settings
   hooks/           # Pre-commit hook scripts
-  tasks/           # Shared task definitions (all.yml, frontend.yml, php-library.yml, tag-*.yml)
+  tasks/           # Shared task definitions (all.yml, frontend.yml, php-library.yml, symfony-ci.yml, tag-*.yml)
 ```
 
 ## Architecture
