@@ -30,9 +30,13 @@ All tasks run through Moon. Use `moon <project-id>:<task>` or `moon :<task>` (co
 
 Every project implements the same task names, whatever its stack, so CI never needs to know
 which stack a project uses. A project only defines the tasks that apply to it (a Symfony API has
-no `build`, a compose service has no `lint`).
+no `build`, a local compose service has no `lint`).
 
-| Task | Vue / TypeScript | Symfony API | Compose service |
+The `compose-local` tag marks projects that also run locally as a compose stack (`up`, `down`,
+`dev`): the APIs and the common services. The `dokploy` tag is the deployment one. A frontend's
+`compose.yml` only serves Dokploy, so frontends never get `compose-local`.
+
+| Task | Vue / TypeScript | Symfony API | Local compose service |
 | --- | --- | --- | --- |
 | `dev` | `yarn dev` | `up` + mailpit, Mercure, RabbitMQ | `up` |
 | `lint` / `lint-fix` | ESLint, after `typecheck` (vue-tsc) | PHPStan, after `doctrine:schema:validate` | — |

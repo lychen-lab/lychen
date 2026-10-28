@@ -3,4 +3,4 @@ language: unknown
 layer: automation
 stack: backend
 tags:
-- compose
+- compose-local

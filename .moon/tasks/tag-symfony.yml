@@ -26,7 +26,7 @@ tasks:
       cache: false
       internal: true
   dev:
-    # Extends tag-compose's `dev` (a shortcut to `up`): moon appends these deps
+    # Extends tag-compose-local's `dev` (a shortcut to `up`): moon appends these deps
     # to the inherited ones, so an API's dev also brings up the shared services.
     deps:
       - common-mailpit:up

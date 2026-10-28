@@ -1,0 +1,18 @@
+$schema: https://moonrepo.dev/schemas/tasks.json
+# Projects that also run locally as a docker compose stack (the APIs and the
+# common services). Deploying through a compose file is the `dokploy` tag's
+# business: a project whose compose.yml only serves Dokploy (the frontends,
+# which run locally with `yarn dev`) must not get this tag.
+inheritedBy:
+  tag: compose-local
+tasks:
+  dev:
+    # Shortcut to `up`, so `moon <project>:dev` works for local compose stacks.
+    deps:
+    - up
+  down:
+    command: docker compose -p $project down
+  up:
+    command: docker compose -p $project up -d
+    deps:
+    - common-network:create-network
