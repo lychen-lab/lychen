@@ -5,5 +5,5 @@ language: bash
 layer: application
 stack: backend
 tags:
-  - compose
+  - compose-local
   - dokploy

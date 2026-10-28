@@ -1,7 +1,7 @@
 <?php
 
-// The one PHP code style of this API, read as is by CI (`ci-php-cs-fixer`) and
-// locally (`moon <api>:php-cs-fixer-fix`): never override the rules or paths on
+// The one PHP code style of this API, read as is by CI (`moon <api>:format`) and
+// locally (`moon <api>:format-fix`): never override the rules or paths on
 // the command line. Named .php-cs-fixer.php rather than .dist.php because
 // .dockerignore drops *.dist.php and CI runs inside the test image.
 $finder = (new PhpCsFixer\Finder())

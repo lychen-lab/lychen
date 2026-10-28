@@ -66,7 +66,7 @@ jobs:
         uses: ./.github/actions/moon-affected-projects-list
         with:
           layer: application
-          tasks: docker-buildx
+          tasks: docker-push
           affected: ${{ steps.base.outputs.sha != '' }}
           base: ${{ steps.base.outputs.sha }}
       - id: deploy
@@ -134,7 +134,7 @@ jobs:
       # last delivered commit, and `moon ci` would skip those not touched by the
       # previous commit alone.
       - name: Build and push image
-        run: moon run ${{ matrix.project }}:docker-buildx
+        run: moon run ${{ matrix.project }}:docker-push
 
   deploy-staging:
     name: 'Deploy to staging'

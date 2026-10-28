@@ -13,8 +13,10 @@ while IFS= read -r -d '' file; do
 done < <(git diff --cached --name-only --diff-filter=ACMR -z)
 
 echo '> Run fixers on affected files'
-moon run :format-fix --affected
-moon run :lint-fix --affected
+# PHP projects are left out: their fixers run in the API's container, and a
+# commit must not need Docker. Run `moon <api>:format-fix` by hand instead.
+moon run :format-fix --affected --query 'language!=php'
+moon run :lint-fix --affected --query 'language!=php'
 
 if [ ${#stagedFiles[@]} -eq 0 ]; then
   echo '> No staged files to restage'

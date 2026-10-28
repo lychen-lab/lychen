@@ -29,7 +29,7 @@ La chaîne de redéploiement qui en découle :
    `moon query projects --affected --downstream deep`.
 4. `--downstream deep` remonte **tous** les projets en aval du SDK : comme les
    fronts en `dependsOn`, ils sont marqués **affected** et rebuildés
-   (`docker-buildx`).
+   (`docker-push`).
 5. Le même workflow redéploie alors chaque projet affecté.
 
 **Conséquence** : toute évolution de l'API — même purement additive, voire un
@@ -109,7 +109,7 @@ immédiatement tout le monde ». On remplace ce lien implicite par un lien
 > Variante « moins de plomberie » si l'on veut éviter un registre tout de suite :
 > garder `workspace:*` mais **découpler le déclencheur de déploiement** de la
 > régénération du SDK — p. ex. exclure les fichiers `generated/` de la détection
-> `affected` pour les fronts, ou ne déclencher `docker-buildx` d'un front que
+> `affected` pour les fronts, ou ne déclencher `docker-push` d'un front que
 > lorsque son propre `projectRoot` change. C'est plus rapide à mettre en place
 > mais cela **affaiblit** le garde-fou de compilation (un front pourrait être
 > déployé sans avoir recompilé contre le nouveau contrat). L'axe A versionné est

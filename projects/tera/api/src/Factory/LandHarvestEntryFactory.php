@@ -20,11 +20,13 @@ final class LandHarvestEntryFactory extends PersistentObjectFactory
 
     protected function defaults(): array|callable
     {
-        $harvestedAt = self::faker()->dateTimeBetween('-1 years', 'now');
+        // Valid against the entity's constraints: harvestedAt <= today (midnight),
+        // so not later today, and weight > 0. A PATCH validates the whole entity.
+        $harvestedAt = self::faker()->dateTimeBetween('-1 years', 'yesterday');
 
         return [
             'notes' => TipTapFaker::randomContent(),
-            'weight' => self::faker()->numberBetween(0, 10000),
+            'weight' => self::faker()->numberBetween(1, 10000),
             'harvestedAt' => $harvestedAt,
             'quality' => self::faker()->randomElement(HarvestQuality::ALL),
             'plantId' => new Ulid(),
