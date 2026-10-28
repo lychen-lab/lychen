@@ -1,11 +1,10 @@
 name: 'OpenAPI | SDK sync (espace)'
 
 env:
-  REGISTRY: ghcr.io/lychen-lab/lychen/test
-  # Make the compose-based CI tasks resolve the `api` service to the locally
-  # built test image (sources + vendors are baked in).
-  IMAGES_PREFIX: ghcr.io/lychen-lab/lychen/test/
-  IMAGE_TAG: ${{ github.sha }}
+  REGISTRY: ghcr.io
+  # Same as the QG workflow: compose.yml alone, and export-openapi first builds
+  # the test image it runs against (ci-test-image).
+  COMPOSE_FILE: compose.yml
 
 on:
   pull_request:
@@ -50,20 +49,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Calculate IMAGE_NAME
-        run: echo "TEST_IMAGE_NAME=${{ env.REGISTRY }}/espace-api" >> $GITHUB_ENV
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Pull test image if exists
-        run: docker pull ${{ env.TEST_IMAGE_NAME }}:latest || true
-
-      # Built with the default docker driver (no buildx container builder) so the
-      # image is loaded into the local daemon for the compose-based tasks below.
-      # The image is not pushed; symfony-test.yml owns the ghcr test image.
-      - name: Build docker test image
-        run: moon ci espace-api:ci-test-build-docker-image
-
+      # Read-only token: the test image's cache export fails without stopping
+      # the build (ignore-error), the QG workflow keeps that cache warm.
       - name: Export OpenAPI spec
-        run: moon ci espace-api:ci-export-openapi
+        run: moon ci espace-api:export-openapi
 
       - name: Install node dependencies
         run: yarn install

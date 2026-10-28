@@ -35,7 +35,7 @@ Projects in the automated pipeline (tagged `dokploy`): `website`, `espace-app`,
 
 `common-rabbitmq` and `common-mercure` are the odd ones out: they run upstream
 images rather than ones we build, so they are absent from the build matrix of
-**Deploy | Staging** (it selects on the `docker-buildx` task) and from the release
+**Deploy | Staging** (it selects on the `docker-push` task) and from the release
 `image-promote` step (tag `version`). They are deployed like the rest — the
 `IMAGE_TAG` a deploy pins is simply ignored by their composes, which pin
 `RABBITMQ_VERSION` and `MERCURE_VERSION` instead. See
@@ -56,7 +56,7 @@ nor failure — silently deployed nothing.
    workflow **fully delivered** (its last successful run), not since the previous
    commit. A run that failed, timed out or was queued behind another one never
    drops a change: the next run rebuilds and redeploys it.
-2. **Build & push image** — one job per affected project with a `docker-buildx`
+2. **Build & push image** — one job per affected project with a `docker-push`
    task. It fails after 45 minutes instead of running into GitHub's 6-hour limit,
    which cancels a job rather than failing it.
 3. **Deploy to staging** — one job per affected `dokploy` project. It runs even

@@ -32,7 +32,7 @@ docker-compose.override.yml
 
 .php-cs-fixer.cache
 
-./packages
+/packages
 .cache
 .yarn
 

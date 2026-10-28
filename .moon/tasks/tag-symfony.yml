@@ -1,52 +1,50 @@
 $schema: https://moonrepo.dev/schemas/tasks.json
+# The Symfony APIs' side of the common task interface (lint, format, audit,
+# dev, docker-build, docker-push, test, test-functional, test-security), plus a
+# few API utilities. The same tasks run locally and in the QG workflow:
+# - locally they run in the dev container (compose.yml + compose.override.yml);
+# - in CI, the workflow sets COMPOSE_FILE=compose.yml, and the `runInCI: only`
+#   helpers of symfony-ci.yml (ci-*) build the test image and the test database
+#   first. install-tools is `runInCI: skip`: the test image already has tools/.
 inheritedBy:
   tag: symfony
+# The image bakes in the lychen/* bundles (copy-packages), so a change to a PHP
+# library the API depends on reruns its checks. Like a file-level taskOptions,
+# this applies to every task of the API, not just the ones below.
+implicitInputs:
+  - project://^
 tasks:
-  ci-check-vulnerabilities:
-    command: docker compose -p $project -f compose.yml run --rm api ./local-php-security-checker
-  ci-copy-packages:
-    script: cp -R $workspaceRoot/libs/php $projectRoot/packages && find $projectRoot/packages -name "moon.yml" -type f -delete
-  ci-create-db:
-    # --entrypoint php skips the image entrypoint, which otherwise blocks waiting
-    # for the (not-yet-created) test database. doctrine:database:create connects
-    # to the server's maintenance database and creates app_test (the test env
-    # appends the _test suffix). Replaces the POSTGRES_DB override that the
-    # removed compose.ci.yml used to provide.
-    command: docker compose -p $project -f compose.yml run --rm --entrypoint php api bin/console doctrine:database:create -n --if-not-exists
-  ci-export-openapi:
-    # Export the default OpenAPI version (3.1). Do not pass --spec-version=3.0.0:
-    # API Platform's 3.0 compatibility path drops the operations' serializer
-    # groups, so every operation of a resource collapses into a single schema
-    # and the generated TypeScript SDKs lose fields (e.g. a collection's `state`).
-    command: docker compose -p $project -f compose.yml run --rm api bin/console api:openapi:export --output=openapi_docs.json
+  audit:
+    # Known vulnerabilities in the locked Composer dependencies (Symfony's
+    # local-php-security-checker). A static check: it reads composer.lock only.
+    command: docker compose -p $project run --rm api ./local-php-security-checker
     deps:
-      - ci-create-db
-  ci-php-cs-fixer:
-    # Rules and paths come from .php-cs-fixer.php only, as in php-cs-fixer-fix.
-    command: docker compose -p $project -f compose.yml run --rm api tools/vendor/bin/php-cs-fixer check --diff --show-progress=none
-  ci-phpstan:
-    command: docker compose -p $project -f compose.yml run --rm api tools/vendor/bin/phpstan analyse --memory-limit=-1
-  ci-test-build-docker-image:
-    command: docker build $projectRoot --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${TEST_IMAGE_NAME}:latest --tag ${TEST_IMAGE_NAME}:${GITHUB_SHA} --tag ${TEST_IMAGE_NAME}:latest --target frankenphp_test
-    deps:
-      - ci-copy-packages
-  ci-test-phpunit:
-    command: docker compose -p $project -f compose.yml run --rm api php -d memory_limit=-1 ./vendor/bin/phpunit
-    deps:
-      - ci-create-db
-  ci-update-db:
-    command: docker compose -p $project -f compose.yml run --rm api bin/console doctrine:schema:update --force
-  ci-validate-db-schema:
-    command: docker compose -p $project -f compose.yml run --rm api bin/console doctrine:schema:validate -n
-    deps:
-      - ci-create-db
+      - ci-test-image
+  copy-packages:
+    # The Docker build context needs the lychen/* path packages next to the
+    # sources (composer.json references ../packages/*).
+    script: rm -rf $projectRoot/packages && cp -R $workspaceRoot/libs/php $projectRoot/packages && find $projectRoot/packages -name "moon.yml" -type f -delete
+    options:
+      cache: false
+      internal: true
   dev:
-    command: docker compose -p $project up -d
+    # Extends tag-compose-local's `dev` (a shortcut to `up`): moon appends these deps
+    # to the inherited ones, so an API's dev also brings up the shared services.
     deps:
       - common-mailpit:up
       - common-mercure:up
       - common-rabbitmq:up
-  docker-buildx:
+  docker-build:
+    # The production image for the runner's platform only, to check that it
+    # builds. docker-push builds and pushes the multi-platform one.
+    command: docker buildx build $projectRoot --cache-from type=registry,ref=${IMAGE_NAME}:buildcache --target frankenphp_prod --build-arg GIT_SHA=${GITHUB_SHA}
+    deps:
+      - copy-packages
+    env:
+      IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
+    options:
+      cache: false
+  docker-push:
     # The layer cache lives in its own registry tag (:buildcache), exported with
     # mode=max so the PHP extension builds of every stage are reused — including
     # the arm64 ones compiled under QEMU, the slow part of this build. Pushing an
@@ -54,28 +52,88 @@ tasks:
     # never hit.
     command: docker buildx build $projectRoot --cache-from type=registry,ref=${IMAGE_NAME}:buildcache --cache-to type=registry,ref=${IMAGE_NAME}:buildcache,mode=max --platform linux/arm64,linux/amd64 --target frankenphp_prod --build-arg GIT_SHA=${GITHUB_SHA} -t ${IMAGE_NAME}:latest -t ${IMAGE_NAME}:${GITHUB_SHA} --push
     deps:
-      - ci-copy-packages
+      - copy-packages
     env:
       IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
     options:
       cache: false
   export-openapi:
-    # Same OpenAPI version as ci-export-openapi (see the note there).
+    # Export the default OpenAPI version (3.1). Do not pass --spec-version=3.0.0:
+    # API Platform's 3.0 compatibility path drops the operations' serializer
+    # groups, so every operation of a resource collapses into a single schema
+    # and the generated TypeScript SDKs lose fields (e.g. a collection's `state`).
     command: docker compose -p $project run --rm api bin/console api:openapi:export --output=openapi_docs.json
-  install-tools:
-    command: docker compose -p $project run --rm api composer install --no-interaction --working-dir=tools/
-  php-cs-fixer-fix:
-    command: docker compose -p $project run --rm api tools/vendor/bin/php-cs-fixer fix
+    deps:
+      - ci-test-image
+      - ci-create-db
+  format:
+    # Rules and paths come from .php-cs-fixer.php only, for both format and
+    # format-fix.
+    command: &php-cs-fixer docker compose -p $project run --rm api tools/vendor/bin/php-cs-fixer
+    args:
+      - check
+      - --diff
+      - --show-progress=none
     deps:
       - install-tools
-  phpstan:
-    # Errors listed in phpstan-baseline.neon are known debt. Fixing one means
-    # deleting its entry; never regenerate the baseline to absorb new errors (CI
-    # rejects a baseline that grows).
+      - ci-test-image
+  format-fix:
+    command: *php-cs-fixer
+    args:
+      - fix
+    deps:
+      - install-tools
+    # Never cached, like the frontends' format-fix: its fixes are edits to its
+    # own inputs, which a cache hit can't replay.
+    options:
+      cache: false
+  install-tools:
+    command: docker compose -p $project run --rm api composer install --no-interaction --working-dir=tools/
+    options:
+      runInCI: skip
+  lint:
+    # PHPStan, after checking that the Doctrine mapping is valid and in sync
+    # with the migrations. Errors listed in phpstan-baseline.neon are known debt.
+    # Fixing one means deleting its entry; never regenerate the baseline to
+    # absorb new errors (ci-phpstan-baseline rejects a baseline that grows).
     command: docker compose -p $project run --rm api tools/vendor/bin/phpstan analyse --memory-limit=-1
     deps:
       - install-tools
+      - ci-test-image
+      - ci-phpstan-baseline
+      - validate-db-schema
+    options:
+      # Two `docker compose run` of one compose project would race to start its
+      # database.
+      runDepsInParallel: false
   load-fixtures:
     command: docker compose -p $project run --rm api bin/console do:fi:lo -n
-  test-phpunit:
-    command: docker compose -p $project run --rm api php -d memory_limit=-1 ./vendor/bin/phpunit
+    options:
+      runInCI: false
+  test:
+    # The whole suite in one run: the CI runs test-functional and test-security
+    # as separate jobs instead, and running both at once here would share the
+    # test database.
+    command: &phpunit docker compose -p $project run --rm api php -d memory_limit=-1 ./vendor/bin/phpunit
+    options:
+      runInCI: false
+  test-functional:
+    command: *phpunit
+    args:
+      - tests/Functional
+    deps:
+      - ci-test-image
+      - ci-create-db
+  test-security:
+    # Access-control tests.
+    command: *phpunit
+    args:
+      - tests/Security
+    deps:
+      - ci-test-image
+      - ci-create-db
+  validate-db-schema:
+    command: docker compose -p $project run --rm api bin/console doctrine:schema:validate -n
+    deps:
+      - ci-test-image
+      - ci-create-db

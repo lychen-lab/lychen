@@ -69,12 +69,17 @@ tasks:
     - --no-error-on-unmatched-pattern
     - --exit-on-fatal-error
     - .
+    # The type check is part of lint, as PHPStan is for the APIs.
+    deps:
+    - typecheck
     # Everything that changes the result, so that CI (which only runs affected
     # tasks) reruns the check. The Tailwind rules load the design system from
     # libs/css/core (cssConfigPath in eslint.config.js): one of them reports
-    # errors, and ESLint crashes if the stylesheets don't load.
+    # errors, and ESLint crashes if the stylesheets don't load. typecheck's own
+    # inputs are included (.tsx, /tsconfig.options.json): `moon ci :lint` only
+    # runs typecheck when lint itself is affected.
     inputs: &eslint-inputs
-    - '**/*.{vue,ts,js,yaml,yml,json,md}'
+    - '**/*.{vue,ts,tsx,js,yaml,yml,json,md}'
     - '!**/build/'
     - '!**/dist/'
     - '!**/vendor/'
@@ -82,6 +87,7 @@ tasks:
     - '!**/.vite-ssg-temp/'
     - /eslint.config.js
     - /libs/css/core/**/*.css
+    - /tsconfig.options.json
   lint-fix:
     # Same ESLint run as lint, with --fix, and never cached, like format-fix.
     # It must not depend on lint: `moon ci :lint` also runs dependents, so CI

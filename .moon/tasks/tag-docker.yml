@@ -2,8 +2,10 @@ $schema: https://moonrepo.dev/schemas/tasks.json
 inheritedBy:
   tag: docker
 tasks:
-  docker-buildx:
-    command: docker buildx build $projectRoot --platform linux/arm64,linux/amd64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg GIT_SHA=${GITHUB_SHA} --cache-from ${IMAGE_NAME}:latest --tag ${IMAGE_NAME}:${GITHUB_SHA} --tag ${IMAGE_NAME}:latest --push
+  docker-build:
+    # The image for the runner's platform only, to check that it builds.
+    # docker-push builds and pushes the multi-platform one.
+    command: docker build $projectRoot --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${IMAGE_NAME}:latest
     deps:
     - build
     - get-dockerfiles
@@ -11,8 +13,8 @@ tasks:
       IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
     options:
       cache: false
-  docker-test-build:
-    command: docker build $projectRoot --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from ${IMAGE_NAME}:latest
+  docker-push:
+    command: docker buildx build $projectRoot --platform linux/arm64,linux/amd64 --build-arg BUILDKIT_INLINE_CACHE=1 --build-arg GIT_SHA=${GITHUB_SHA} --cache-from ${IMAGE_NAME}:latest --tag ${IMAGE_NAME}:${GITHUB_SHA} --tag ${IMAGE_NAME}:latest --push
     deps:
     - build
     - get-dockerfiles
@@ -23,4 +25,5 @@ tasks:
   get-dockerfiles:
     options:
       cache: false
+      internal: true
     script: cp -R $workspaceRoot/libs/docker/frontend/* .

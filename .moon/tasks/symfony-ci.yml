@@ -1,0 +1,43 @@
+$schema: https://moonrepo.dev/schemas/tasks.json
+# CI-only helpers of the Symfony APIs' tasks (tag-symfony.yml), which depend on
+# them. They are `runInCI: only`: locally those tasks skip them and run in the
+# dev container instead. Their options are set per task: a file-level
+# taskOptions applies to every task of the project, not just these.
+inheritedBy:
+  language: php
+  layer: application
+  stack: backend
+tasks:
+  ci-create-db:
+    # --entrypoint php skips the image entrypoint, which otherwise blocks waiting
+    # for the (not-yet-created) test database. doctrine:database:create connects
+    # to the server's maintenance database and creates app_test (the test env
+    # appends the _test suffix). Replaces the POSTGRES_DB override that the
+    # removed compose.ci.yml used to provide.
+    command: docker compose -p $project run --rm --entrypoint php api bin/console doctrine:database:create -n --if-not-exists
+    deps:
+      - ci-test-image
+    options: &ci-only
+      internal: true
+      runInCI: only
+  ci-phpstan-baseline:
+    command: bash $workspaceRoot/.moon/scripts/phpstan-baseline-guard.sh $projectSource/phpstan-baseline.neon
+    options:
+      <<: *ci-only
+      cache: false
+  ci-test-image:
+    # The test image (sources, dev vendors and tools/ baked in), loaded as
+    # `<project>:latest`: the image compose.yml resolves the api service to when
+    # IMAGES_PREFIX and IMAGE_TAG are unset. Each CI job builds it from the
+    # registry caches: the test stage's own, and the production one for the
+    # shared base stage. Exporting the cache needs packages:write, so a job
+    # without it still builds.
+    command: docker buildx build $projectRoot --target frankenphp_test --load --tag $project:latest --cache-from type=registry,ref=${TEST_IMAGE_NAME}:buildcache --cache-from type=registry,ref=${IMAGE_NAME}:buildcache --cache-to type=registry,ref=${TEST_IMAGE_NAME}:buildcache,mode=max,ignore-error=true
+    deps:
+      - copy-packages
+    env:
+      IMAGE_NAME: ghcr.io/lychen-lab/lychen/$project
+      TEST_IMAGE_NAME: ghcr.io/lychen-lab/lychen/test/$project
+    options:
+      <<: *ci-only
+      cache: false
