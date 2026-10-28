@@ -44,6 +44,8 @@ jobs:
             tasks: ':lint'
           - name: Format
             tasks: ':format'
+          - name: Audit
+            tasks: ':audit'
           # One job for both: the frontends' docker-build depends on build, so
           # its output is reused instead of built twice.
           - name: Build

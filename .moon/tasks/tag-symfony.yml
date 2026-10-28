@@ -1,7 +1,7 @@
 $schema: https://moonrepo.dev/schemas/tasks.json
-# The Symfony APIs' side of the common task interface (lint, format, dev,
-# docker-build, docker-push, test, test-functional, test-security), plus a few
-# API utilities. The same tasks run locally and in the QG workflow:
+# The Symfony APIs' side of the common task interface (lint, format, audit,
+# dev, docker-build, docker-push, test, test-functional, test-security), plus a
+# few API utilities. The same tasks run locally and in the QG workflow:
 # - locally they run in the dev container (compose.yml + compose.override.yml);
 # - in CI, the workflow sets COMPOSE_FILE=compose.yml, and the `runInCI: only`
 #   helpers of symfony-ci.yml (ci-*) build the test image and the test database
@@ -14,7 +14,9 @@ inheritedBy:
 implicitInputs:
   - project://^
 tasks:
-  check-vulnerabilities:
+  audit:
+    # Known vulnerabilities in the locked Composer dependencies (Symfony's
+    # local-php-security-checker). A static check: it reads composer.lock only.
     command: docker compose -p $project run --rm api ./local-php-security-checker
     deps:
       - ci-test-image
@@ -100,7 +102,7 @@ tasks:
       - ci-test-image
       - ci-phpstan-baseline
       - validate-db-schema
-    options: &serial-deps
+    options:
       # Two `docker compose run` of one compose project would race to start its
       # database.
       runDepsInParallel: false
@@ -123,15 +125,13 @@ tasks:
       - ci-test-image
       - ci-create-db
   test-security:
-    # Access-control tests, after the Composer dependencies' vulnerability audit.
+    # Access-control tests.
     command: *phpunit
     args:
       - tests/Security
     deps:
       - ci-test-image
       - ci-create-db
-      - check-vulnerabilities
-    options: *serial-deps
   validate-db-schema:
     command: docker compose -p $project run --rm api bin/console doctrine:schema:validate -n
     deps:

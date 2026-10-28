@@ -41,12 +41,13 @@ The `compose-local` tag marks projects that also run locally as a compose stack 
 | `dev` | `yarn dev` | `up` + mailpit, Mercure, RabbitMQ | `up` |
 | `lint` / `lint-fix` | ESLint, after `typecheck` (vue-tsc) | PHPStan, after `doctrine:schema:validate` | — |
 | `format` / `format-fix` | Prettier | php-cs-fixer | — |
+| `audit` | — | Known vulnerabilities in `composer.lock` | — |
 | `build` | `yarn build` | — | — |
 | `docker-build` | Image for the runner's platform | Production image for the runner's platform | — |
 | `docker-push` | Multi-platform image, pushed to ghcr | Multi-platform image, pushed to ghcr | — |
 | `test` | Vitest | Whole PHPUnit suite (local only) | — |
 | `test-functional` | — | PHPUnit `tests/Functional` | — |
-| `test-security` | — | Composer audit + PHPUnit `tests/Security` | — |
+| `test-security` | — | PHPUnit `tests/Security` | — |
 
 The same tasks run locally and in CI. A Symfony API's tasks run in its dev container locally;
 in CI they first build the test image and the test database (`ci-*` helpers, `runInCI: only`).
@@ -66,7 +67,7 @@ projects (their fixers need the API's container): run `moon <api>:format-fix` by
 PHPStan debt is frozen in each API's `phpstan-baseline.neon`: new code must pass
 clean, fixing an error means deleting its baseline entry, and CI rejects a PR whose
 baseline grows. A PR needs the `QG | Gate` check green: the QG workflow runs the static
-checks (`lint`, `format`, `build` + `docker-build`), then the tests (`test`,
+checks (`lint`, `format`, `audit`, `build` + `docker-build`), then the tests (`test`,
 `test-functional`, `test-security`), each with `moon ci`.
 
 ### Testing
