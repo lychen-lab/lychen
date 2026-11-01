@@ -1,7 +1,7 @@
 {
   "name": "@lychen/vue-icons",
   "dependencies": {
-    "@lucide/vue": "^1.61.0",
+    "@lucide/vue": "^1.65.0",
     "vue": "^3.5.44"
   }
 }
