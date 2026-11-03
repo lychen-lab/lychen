@@ -1,0 +1,23 @@
+# espace-app on Kubernetes: what differs from the defaults of libs/helm/app/values.yaml, in every
+# environment. An environment adds its own values at deploy time (the ESPACE_APP_HELM_VALUES
+# variable of its GitHub Environment, see docs/kubernetes.md), e.g.:
+#
+#   env:
+#     ESPACE_API_HOST: https://api.espace.lychen.org
+#     ZITADEL_CLIENT_ID: '<client id>'
+#     ZITADEL_ISSUER: https://<zitadel host>
+#     ZITADEL_PROJECT_RESOURCE_ID: '<project id>'
+#   ingress:
+#     enabled: true
+#     hosts:
+#       - app.espace.lychen.org
+
+# Written into config.js when the container starts (libs/docker/frontend/entrypoint.sh), so that
+# one image runs in every environment.
+env:
+  APP_ID: espace-app
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi

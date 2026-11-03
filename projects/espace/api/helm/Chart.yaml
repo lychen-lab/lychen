@@ -1,0 +1,12 @@
+apiVersion: v2
+# appVersion and version are set when the chart is packaged, to the image tag it deploys and to
+# its own version (.moon/scripts/helm-chart.sh). The values below only serve local renders.
+appVersion: latest
+dependencies:
+  - name: lychen-app
+    repository: file://../../../../libs/helm/app
+    version: 0.1.0
+description: The espace.lychen API (Symfony, FrankenPHP).
+name: espace-api
+type: application
+version: 0.0.0

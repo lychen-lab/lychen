@@ -78,6 +78,10 @@ projects/**/public/*
 
 # Env files
 projects/**/*.local
+
+# Helm: the library chart vendored by `helm dependency update`
+**/helm/charts/
+**/helm/Chart.lock
 ###< Project ###
 
 ###> System files ###

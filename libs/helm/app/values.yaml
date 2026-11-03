@@ -1,0 +1,114 @@
+# Defaults of every Lychen application chart. Helm hands them to the project's chart under the
+# `lychen-app` key, and lychen-app.init merges the project's values over them: a project's
+# helm/values.yaml only sets what differs, and an environment's values (the CD's) override both.
+#
+# Maps merge key by key, lists are replaced. Like any sprig merge, an override set to false, 0 or ''
+# does not replace a default that is set: every toggle below therefore defaults to off.
+
+affinity: {}
+
+# Arguments of the web container. Empty runs the image's CMD.
+args: []
+
+autoscaling:
+  # Replaces replicaCount. Needs resources.requests.cpu, which utilization is measured against.
+  enabled: false
+  maxReplicas: 3
+  minReplicas: 1
+  targetCPUUtilizationPercentage: 80
+
+containerPort: 80
+
+# Plain environment variables, as `NAME: value`. A value may also be a valueFrom source
+# (`NAME: { secretKeyRef: { name: …, key: … } }`). Secrets never go here: create them in the
+# cluster and list them in envFrom.
+env: {}
+
+# Secrets and ConfigMaps whose every key becomes an environment variable, e.g.
+# `- secretRef: { name: espace-api }`.
+envFrom: []
+
+image:
+  # Pins the image by digest (sha256:…) instead of by tag. The pods then only roll when the
+  # image really changes: a release re-tags unchanged images, which would restart them for nothing.
+  digest: ''
+  pullPolicy: IfNotPresent
+  # Defaults to ghcr.io/lychen-lab/lychen/<chart name>, where CI pushes every image.
+  repository: ''
+  # Defaults to the chart's appVersion: CI packages a chart for one image (a commit SHA, or a
+  # release vX.Y.Z), so a chart version always deploys the same image.
+  tag: ''
+
+imagePullSecrets: []
+
+ingress:
+  annotations: {}
+  className: ''
+  enabled: false
+  # Host names routed to the Service, e.g. [app.espace.lychen.org].
+  hosts: []
+  tls:
+    enabled: false
+    # Defaults to <release>-tls. Let cert-manager fill it with a cluster-issuer annotation.
+    secretName: ''
+
+# Every image serves the commit it was built from at /version.txt, a static file: the web
+# server answers it as soon as it listens, without touching the application.
+livenessProbe:
+  failureThreshold: 3
+  httpGet:
+    path: /version.txt
+    port: http
+  periodSeconds: 20
+
+# A Job that runs before the web pods of each install and upgrade: a Helm hook, so the new
+# version only rolls out once it succeeded. The Symfony APIs run their Doctrine migrations
+# there, instead of having every new pod race to run them at boot.
+migrations:
+  activeDeadlineSeconds: 600
+  # Arguments of the Job's container. The image's entrypoint still runs first.
+  args: []
+  enabled: false
+
+nodeSelector: {}
+
+podAnnotations: {}
+
+podDisruptionBudget:
+  enabled: false
+  maxUnavailable: 1
+
+podLabels: {}
+
+podSecurityContext: {}
+
+readinessProbe:
+  httpGet:
+    path: /version.txt
+    port: http
+  periodSeconds: 10
+
+replicaCount: 1
+
+resources: {}
+
+securityContext: {}
+
+service:
+  port: 80
+  type: ClusterIP
+
+# Covers what an image does before it listens: the APIs' entrypoint waits for the database,
+# runs the migrations and warms the Symfony cache.
+startupProbe:
+  failureThreshold: 60
+  httpGet:
+    path: /version.txt
+    port: http
+  periodSeconds: 5
+
+terminationGracePeriodSeconds: 30
+
+tolerations: []
+
+topologySpreadConstraints: []

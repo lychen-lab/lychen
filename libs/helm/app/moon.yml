@@ -1,0 +1,7 @@
+# The library chart every project's Helm chart is built on (tag `helm`, see
+# .moon/tasks/tag-helm.yml). A project, so that the charts depending on it are
+# affected, and published again, when it changes.
+id: helm-app
+language: unknown
+layer: library
+stack: infrastructure

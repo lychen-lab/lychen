@@ -1,0 +1,7 @@
+apiVersion: v2
+description: >-
+  Building blocks of every Lychen application chart: a web Deployment and its Service, plus
+  optional Ingress, HorizontalPodAutoscaler, PodDisruptionBudget and migrations Job.
+name: lychen-app
+type: library
+version: 0.1.0
