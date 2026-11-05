@@ -55,8 +55,6 @@ tasks:
     deps: &image-and-db
       - ci-test-image
       - ci-create-db
-  format:
-    deps: *image
   install-tools:
     # The test image already has tools/.
     options:

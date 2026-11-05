@@ -11,6 +11,14 @@
   "eslint.options": {
     "overrideConfigFile": "eslint.config.js"
   },
+  // PHP: php-cs-fixer with the monorepo's config, formatting on save (editor.formatOnSave above).
+  // The script runs it from its official Docker image, as the moon format tasks do: Docker must be
+  // running, no PHP is needed on the host.
+  "[php]": {
+    "editor.defaultFormatter": "junstyle.php-cs-fixer"
+  },
+  "php-cs-fixer.executablePath": "${workspaceFolder}/.moon/scripts/php-cs-fixer.sh",
+  "php-cs-fixer.config": ".php-cs-fixer.php",
   "editor.quickSuggestions": {
     //"strings": "on"
   },
