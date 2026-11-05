@@ -9,7 +9,6 @@ use Lychen\UtilZitadelBundle\Interface\HasRolesInterface;
 use Lychen\UtilZitadelBundle\Interface\NamedEntityInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-
 #[ORM\MappedSuperclass]
 class AbstractZitadelUser implements AuthIdIdentifiedInterface, UserInterface, NamedEntityInterface, HasEmailInterface, HasRolesInterface
 {
@@ -71,7 +70,7 @@ class AbstractZitadelUser implements AuthIdIdentifiedInterface, UserInterface, N
 
     public function getUserIdentifier(): string
     {
-        return (string)$this->authId;
+        return (string) $this->authId;
     }
 
     public function getId(): ?int

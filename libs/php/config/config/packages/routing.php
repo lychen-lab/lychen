@@ -8,14 +8,14 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->extension('framework', [
         'router' => null,
     ]);
-    if ($containerConfigurator->env() === 'dev' || $containerConfigurator->env() === 'test') {
+    if ('dev' === $containerConfigurator->env() || 'test' === $containerConfigurator->env()) {
         $containerConfigurator->extension('framework', [
             'router' => [
                 'strict_requirements' => true,
             ],
         ]);
     }
-    if ($containerConfigurator->env() === 'prod') {
+    if ('prod' === $containerConfigurator->env()) {
         $containerConfigurator->extension('framework', [
             'router' => [
                 'strict_requirements' => null,

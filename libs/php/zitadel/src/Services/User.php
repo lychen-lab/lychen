@@ -26,16 +26,17 @@ readonly class User
     {
         $response = $this->client->request(
             'POST',
-            $this->domain . '/v2/users/human',
+            $this->domain.'/v2/users/human',
             [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
-                    'Authorization' => 'Bearer ' . $this->pat,
+                    'Authorization' => 'Bearer '.$this->pat,
                 ],
-                'json' => $attributes
+                'json' => $attributes,
             ]
         );
+
         return $response->toArray();
     }
 
@@ -50,23 +51,24 @@ readonly class User
     {
         $response = $this->client->request(
             'POST',
-            $this->domain . '/v2/users',
+            $this->domain.'/v2/users',
             [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
-                    'Authorization' => 'Bearer ' . $this->pat,
+                    'Authorization' => 'Bearer '.$this->pat,
                 ],
                 'json' => [
-                    "queries" => [[
+                    'queries' => [[
                         'emailQuery' => [
-                            "emailAddress" => $email,
-                            "method" => "TEXT_QUERY_METHOD_EQUALS"
-                        ]
-                    ]]
-                ]
+                            'emailAddress' => $email,
+                            'method' => 'TEXT_QUERY_METHOD_EQUALS',
+                        ],
+                    ]],
+                ],
             ]
         );
+
         return $response->toArray()['result'][0];
     }
 
@@ -74,16 +76,17 @@ readonly class User
     {
         $response = $this->client->request(
             'POST',
-            $this->domain . '/management/v1/users/'.$userId.'/grants',
+            $this->domain.'/management/v1/users/'.$userId.'/grants',
             [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
-                    'Authorization' => 'Bearer ' . $this->pat,
+                    'Authorization' => 'Bearer '.$this->pat,
                 ],
-                'json' => [...$attributes, 'projectId' => $projectId]
+                'json' => [...$attributes, 'projectId' => $projectId],
             ]
         );
+
         return $response->toArray();
     }
 }

@@ -45,7 +45,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ],
         ],
     ]);
-    if ($containerConfigurator->env() === 'test') {
+    if ('test' === $containerConfigurator->env()) {
         $containerConfigurator->services()
             ->alias('security', Security::class)
             ->public();

@@ -9,7 +9,6 @@ use Doctrine\Migrations\AbstractMigration;
 
 final class Version20250728064925 extends AbstractMigration
 {
-
     public function up(Schema $schema): void
     {
         $this->addSql(<<<'SQL'

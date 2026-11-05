@@ -12,7 +12,7 @@ class UtilZitadelBundle extends AbstractBundle
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
         $container->import('./Config/services.yml');
-        
+
         $container->services()->get('Lychen\UtilZitadelBundle\UserProvider\ZitadelUserProvider')->arg('$userClass', $config['user']['class']);
     }
 

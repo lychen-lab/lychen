@@ -28,7 +28,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             'email_validation_mode' => 'strict',
         ],
     ]);
-    if ($containerConfigurator->env() === 'test') {
+    if ('test' === $containerConfigurator->env()) {
         $containerConfigurator->extension('framework', [
             'test' => true,
         ]);

@@ -16,16 +16,17 @@ readonly class ProjectMember
     {
         $response = $this->client->request(
             'PUT',
-            $this->domain . '/management/v1/projects/'.$projectId.'/members/'.$userId,
+            $this->domain.'/management/v1/projects/'.$projectId.'/members/'.$userId,
             [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
-                    'Authorization' => 'Bearer ' . $this->pat,
+                    'Authorization' => 'Bearer '.$this->pat,
                 ],
-                'json' => $attributes
+                'json' => $attributes,
             ]
         );
+
         return $response->toArray();
     }
 }

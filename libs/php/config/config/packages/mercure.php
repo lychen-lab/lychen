@@ -43,7 +43,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ],
     ]);
 
-    if ($containerConfigurator->env() === 'test') {
+    if ('test' === $containerConfigurator->env()) {
         // Tests never reach a real hub, see MercureHubStub. It sits between the configured
         // hub and the bundle's TraceableHub decorator: a higher priority is applied first.
         $containerConfigurator->services()
