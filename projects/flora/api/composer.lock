@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "704593563565db9f10b437d5cef1fb35",
+    "content-hash": "87e9fe3ca4607c5572f6c100e9e40848",
     "packages": [
         {
             "name": "api-platform/core",
@@ -6254,6 +6254,79 @@
                 }
             ],
             "time": "2026-09-10T19:32:07+00:00"
+        },
+        {
+            "name": "symfony/object-mapper",
+            "version": "v8.1.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/object-mapper.git",
+                "reference": "5e1352b3546749e63250f8c6acd413814abd4fc4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/object-mapper/zipball/5e1352b3546749e63250f8c6acd413814abd4fc4",
+                "reference": "5e1352b3546749e63250f8c6acd413814abd4fc4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4.1",
+                "psr/container": "^2.0"
+            },
+            "conflict": {
+                "symfony/property-access": "<7.2"
+            },
+            "require-dev": {
+                "symfony/property-access": "^7.4|^8.0",
+                "symfony/var-exporter": "^7.4|^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\ObjectMapper\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides a way to map an object to another object",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/object-mapper/tree/v8.1.11"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-11-03T13:11:09+00:00"
         },
         {
             "name": "symfony/options-resolver",
@@ -13770,5 +13843,5 @@
         "ext-xml": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
