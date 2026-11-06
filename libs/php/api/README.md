@@ -20,7 +20,7 @@ are.
 
 | Class | Role |
 | --- | --- |
-| `Transform\RelationToUuid` | Entity -> resource: exposes a relation as a uuid (`one`) or a list of uuids (`many`). |
+| `Transform\RelationToUuid` | Entity -> resource: exposes a relation as a uuid (an entity) or a list of uuids (a collection). |
 | `Transform\UuidToEntity` | Input DTO -> entity: resolves the uuid(s) sent by the client into the entities to link. |
 | `Validator\UuidExists` | Reports every unknown uuid as a 422 on its property (`seedLibrary`, `characteristics[1]`), before any mapping. |
 | `Doctrine\MappedAssociationResolver` | Finds the entity a DTO property refers to, from the `#[Map]` and Doctrine mappings. |
@@ -41,11 +41,11 @@ final class SeedLot
 {
     use UuidIdentifierTrait;
 
-    #[Map(source: 'seedLibrary', transform: [RelationToUuid::class, 'one'])]
+    #[Map(source: 'seedLibrary', transform: RelationToUuid::class)]
     public ?Uuid $seedLibrary = null;
 
     /** @var list<Uuid> */
-    #[Map(source: 'characteristics', transform: [RelationToUuid::class, 'many'])]
+    #[Map(source: 'characteristics', transform: RelationToUuid::class)]
     public array $characteristics = [];
 }
 
@@ -69,6 +69,13 @@ Neither `#[UuidExists]` nor `UuidToEntity` names the entity: both read it from t
 Doctrine association the property is mapped onto (the DTO's `#[Map(target: Entity::class)]`,
 then the property's name, or its `#[Map(target: 'otherName')]`). On a DTO that is not
 mapped onto an entity, name it: `#[UuidExists(entity: SeedLibrary::class)]`.
+
+`RelationToUuid` and `UuidToEntity` are transform services: reference them by class name.
+`RelationToUuid` also has static `one()` and `many()`, usable as
+`[RelationToUuid::class, 'one']`, but the object mapper only calls such an array when
+`is_callable()` accepts it. With a wrong class (a stale `use` after a move) or method name,
+it reads the array as a list of transform services and fails with
+`"...RelationToUuid" is not a valid callable`.
 
 A list replaces the collection through the entity's adder and remover
 (`addCharacteristic()` / `removeCharacteristic()`), so `[]` unlinks them all.

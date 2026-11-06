@@ -57,7 +57,7 @@ final class SeedLot
     /**
      * ManyToOne: the uuid of the library keeping the lot.
      */
-    #[Map(source: 'seedLibrary', transform: [RelationToUuid::class, 'one'])]
+    #[Map(source: 'seedLibrary', transform: RelationToUuid::class)]
     public ?Uuid $seedLibrary = null;
 
     /**
@@ -65,6 +65,6 @@ final class SeedLot
      *
      * @var list<Uuid>
      */
-    #[Map(source: 'characteristics', transform: [RelationToUuid::class, 'many'])]
+    #[Map(source: 'characteristics', transform: RelationToUuid::class)]
     public array $characteristics = [];
 }

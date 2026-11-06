@@ -58,6 +58,6 @@ final class SeedLibrary
      *
      * @var list<Uuid>
      */
-    #[Map(source: 'seedLots', transform: [RelationToUuid::class, 'many'])]
+    #[Map(source: 'seedLots', transform: RelationToUuid::class)]
     public array $seedLots = [];
 }
