@@ -160,7 +160,7 @@ class SeedLotTest extends AbstractApiTestCase
             ->assertJsonMatches('seedLibrary', (string) $to->getUuid());
     }
 
-    public function testPatchNullCharacteristicsUnlinksThemAll(): void
+    public function testPatchNullCharacteristicsLeavesThemAsTheyAre(): void
     {
         $library = SeedLibraryFactory::createOne();
         $lot = SeedLotFactory::createOne([
@@ -168,16 +168,23 @@ class SeedLotTest extends AbstractApiTestCase
             'seedLibrary' => $library,
             'characteristics' => CharacteristicFactory::createMany(2),
         ]);
+        $uri = '/api/seed_lots/'.$lot->getUuid();
 
-        // JSON merge patch (RFC 7396): null removes the member, here every link.
+        // null changes nothing, like an absent property.
         $this->browser()
-            ->patch('/api/seed_lots/'.$lot->getUuid(), ['json' => ['characteristics' => null]])
+            ->patch($uri, ['json' => ['characteristics' => null, 'quantityInGrams' => 10]])
+            ->assertStatus(200)
+            ->assertJsonMatches('length(characteristics)', 2)
+            ->assertJsonMatches('quantityInGrams', 10);
+
+        // [] unlinks them all, without deleting them.
+        $this->browser()
+            ->patch($uri, ['json' => ['characteristics' => []]])
             ->assertStatus(200)
             ->assertJsonMatches('characteristics', [])
             ->assertJsonMatches('seedLibrary', (string) $library->getUuid())
             ->assertJsonMatches('variety', 'Haricot coco');
 
-        // Unlinked, not deleted.
         CharacteristicFactory::assert()->count(2);
     }
 

@@ -6,6 +6,7 @@ use App\Entity\SeedLot;
 use Lychen\Api\Transform\UuidToEntity;
 use Lychen\Api\Validator\UuidExists;
 use Symfony\Component\ObjectMapper\Attribute\Map;
+use Symfony\Component\ObjectMapper\Condition\IsNotNull;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -18,8 +19,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * - absent: left as is;
  * - "seedLibrary": "<uuid>": the lot moves to that library (null is a 422: required);
- * - "characteristics": ["<uuid>", ...]: replaces the whole list, [] or null unlinks them
- *   all.
+ * - "characteristics": ["<uuid>", ...]: replaces the whole list, [] unlinks them all, null
+ *   leaves them as they are.
  */
 #[Map(target: SeedLot::class)]
 final class SeedLotPatch
@@ -39,15 +40,13 @@ final class SeedLotPatch
     public Uuid $seedLibrary;
 
     /**
-     * Nullable for the serializer, never null once set: in a JSON merge patch (RFC 7396)
-     * null removes the member, which for a list of links means unlinking them all. The
-     * hook stores it as [], so the validator and UuidToEntity only ever see a list.
+     * Nullable so that an explicit null is accepted, and IsNotNull maps it like an absent
+     * property: the characteristics are left as they are. [] is mapped, and unlinks them
+     * all. #[UuidExists] skips null too.
      *
      * @var list<Uuid>|null
      */
     #[UuidExists]
-    #[Map(transform: UuidToEntity::class)]
-    public ?array $characteristics {
-        set => $value ?? [];
-    }
+    #[Map(if: new IsNotNull(), transform: UuidToEntity::class)]
+    public ?array $characteristics;
 }
