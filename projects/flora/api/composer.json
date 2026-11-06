@@ -19,6 +19,7 @@
     "doctrine/doctrine-migrations-bundle": "4.0.*",
     "doctrine/orm": "3.7.*",
     "gedmo/doctrine-extensions": "3.22.*",
+    "lychen/api": "*",
     "lychen/core": "*",
     "lychen/model": "*",
     "lychen/tiptap": "*",
@@ -87,6 +88,7 @@
       "options": {
         "symlink": false,
         "versions": {
+          "lychen/api": "0.0.0",
           "lychen/model": "0.0.0",
           "lychen/test": "0.0.0",
           "lychen/zitadel": "0.0.0",

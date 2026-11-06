@@ -2,9 +2,9 @@
 
 namespace App\Api\Resource\SeedLot\Dto;
 
-use App\Api\Transform\UuidToEntity;
 use App\Entity\SeedLot;
-use App\Validator\UuidExists;
+use Lychen\Api\Transform\UuidToEntity;
+use Lychen\Api\Validator\UuidExists;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;

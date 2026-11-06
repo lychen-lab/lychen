@@ -3,7 +3,6 @@
 namespace App\Api\Resource\Characteristic;
 
 use ApiPlatform\Doctrine\Orm\State\Options;
-use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -13,8 +12,11 @@ use ApiPlatform\Metadata\Post;
 use App\Api\Resource\Characteristic\Dto\CharacteristicPatch;
 use App\Api\Resource\Characteristic\Dto\CharacteristicPost;
 use App\Entity\Characteristic as CharacteristicEntity;
+use Lychen\Api\Trait\CodeTrait;
+use Lychen\Api\Trait\CreatedAtTrait;
+use Lychen\Api\Trait\UpdatedAtTrait;
+use Lychen\Api\Trait\UuidIdentifierTrait;
 use Symfony\Component\ObjectMapper\Attribute\Map;
-use Symfony\Component\Uid\Uuid;
 
 /**
  * The API representation of a Characteristic entity (see SeedLibrary for the read/write
@@ -32,14 +34,10 @@ use Symfony\Component\Uid\Uuid;
 #[Map(source: CharacteristicEntity::class)]
 final class Characteristic
 {
-    #[ApiProperty(identifier: true)]
-    public ?Uuid $uuid = null;
-
-    public ?string $code = null;
+    use UuidIdentifierTrait;
+    use CreatedAtTrait;
+    use UpdatedAtTrait;
+    use CodeTrait;
 
     public ?string $label = null;
-
-    public ?\DateTimeImmutable $createdAt = null;
-
-    public ?\DateTimeInterface $updatedAt = null;
 }

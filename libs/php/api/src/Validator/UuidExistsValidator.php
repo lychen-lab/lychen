@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Validator;
+namespace Lychen\Api\Validator;
 
-use App\Doctrine\MappedAssociationResolver;
-use App\Doctrine\UuidEntityFinder;
+use Lychen\Api\Doctrine\MappedAssociationResolver;
+use Lychen\Api\Doctrine\UuidEntityFinder;
 use Lychen\UtilModel\Interface\UuidIdentifiedInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;

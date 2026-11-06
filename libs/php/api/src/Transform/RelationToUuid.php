@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api\Transform;
+namespace Lychen\Api\Transform;
 
 use Lychen\UtilModel\Interface\UuidIdentifiedInterface;
 use Symfony\Component\Uid\Uuid;

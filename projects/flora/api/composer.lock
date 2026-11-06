@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87e9fe3ca4607c5572f6c100e9e40848",
+    "content-hash": "9262df8174be1371ebd49a7f011f7f15",
     "packages": [
         {
             "name": "api-platform/core",
@@ -1968,6 +1968,51 @@
                 "source": "https://github.com/Jean85/pretty-package-versions/tree/2.1.1"
             },
             "time": "2025-03-19T14:43:43+00:00"
+        },
+        {
+            "name": "lychen/api",
+            "version": "0.0.0",
+            "dist": {
+                "type": "path",
+                "url": "../packages/api",
+                "reference": "a6a92899b1b025fe6cd9ca29607d47644356bd6c"
+            },
+            "require": {
+                "api-platform/core": "^5.0",
+                "doctrine/dbal": "^4.0",
+                "doctrine/orm": "^3.0",
+                "doctrine/persistence": "^3.3 || ^4.0",
+                "lychen/model": "*",
+                "php": "^8.4",
+                "symfony/config": "^7.4 || ^8.0",
+                "symfony/dependency-injection": "^7.4 || ^8.0",
+                "symfony/http-kernel": "^7.4 || ^8.0",
+                "symfony/object-mapper": "^8.1.9",
+                "symfony/uid": "^7.4 || ^8.0",
+                "symfony/validator": "^7.4 || ^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Lychen\\Api\\": "src/"
+                }
+            },
+            "archive": {
+                "exclude": [
+                    "/moon.yml"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Lychen",
+                    "email": "bonjour@lychen.org"
+                }
+            ],
+            "description": "Shared API Platform building blocks of the Lychen APIs: resources kept apart from the Doctrine model, relations exposed and written by uuid",
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
         },
         {
             "name": "lychen/core",

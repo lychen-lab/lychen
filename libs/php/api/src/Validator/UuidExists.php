@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Validator;
+namespace Lychen\Api\Validator;
 
 use Lychen\UtilModel\Interface\UuidIdentifiedInterface;
 use Symfony\Component\Validator\Constraint;

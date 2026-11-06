@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Doctrine;
+namespace Lychen\Api\Doctrine;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Lychen\UtilModel\Interface\UuidIdentifiedInterface;

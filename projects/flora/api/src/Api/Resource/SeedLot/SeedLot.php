@@ -3,7 +3,6 @@
 namespace App\Api\Resource\SeedLot;
 
 use ApiPlatform\Doctrine\Orm\State\Options;
-use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -12,8 +11,11 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Api\Resource\SeedLot\Dto\SeedLotPatch;
 use App\Api\Resource\SeedLot\Dto\SeedLotPost;
-use App\Api\Transform\RelationToUuid;
 use App\Entity\SeedLot as SeedLotEntity;
+use Lychen\Api\Trait\CreatedAtTrait;
+use Lychen\Api\Trait\UpdatedAtTrait;
+use Lychen\Api\Trait\UuidIdentifierTrait;
+use Lychen\Api\Transform\RelationToUuid;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;
 
@@ -42,8 +44,9 @@ use Symfony\Component\Uid\Uuid;
 #[Map(source: SeedLotEntity::class)]
 final class SeedLot
 {
-    #[ApiProperty(identifier: true)]
-    public ?Uuid $uuid = null;
+    use UuidIdentifierTrait;
+    use CreatedAtTrait;
+    use UpdatedAtTrait;
 
     public ?string $variety = null;
 
@@ -64,8 +67,4 @@ final class SeedLot
      */
     #[Map(source: 'characteristics', transform: [RelationToUuid::class, 'many'])]
     public array $characteristics = [];
-
-    public ?\DateTimeImmutable $createdAt = null;
-
-    public ?\DateTimeInterface $updatedAt = null;
 }

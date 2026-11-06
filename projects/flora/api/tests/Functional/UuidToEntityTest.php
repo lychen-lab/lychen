@@ -3,16 +3,16 @@
 namespace App\Tests\Functional;
 
 use ApiPlatform\Validator\Exception\ValidationException;
-use App\Api\Transform\UuidToEntity;
-use App\Doctrine\MappedAssociationResolver;
-use App\Doctrine\UuidEntityFinder;
 use App\Entity\Characteristic;
 use App\Entity\SeedLibrary;
 use App\Entity\SeedLot;
 use App\Factory\CharacteristicFactory;
 use App\Factory\SeedLibraryFactory;
-use App\Validator\UuidExists;
 use Doctrine\Persistence\ManagerRegistry;
+use Lychen\Api\Doctrine\MappedAssociationResolver;
+use Lychen\Api\Doctrine\UuidEntityFinder;
+use Lychen\Api\Transform\UuidToEntity;
+use Lychen\Api\Validator\UuidExists;
 use Lychen\Test\AbstractApiTestCase;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 use Symfony\Component\Uid\Uuid;

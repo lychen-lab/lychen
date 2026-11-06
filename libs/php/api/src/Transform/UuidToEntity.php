@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Api\Transform;
+namespace Lychen\Api\Transform;
 
 use ApiPlatform\Validator\Exception\ValidationException;
-use App\Doctrine\MappedAssociationResolver;
-use App\Doctrine\UuidEntityFinder;
-use App\Validator\UuidExists;
+use Lychen\Api\Doctrine\MappedAssociationResolver;
+use Lychen\Api\Doctrine\UuidEntityFinder;
+use Lychen\Api\Validator\UuidExists;
 use Symfony\Component\ObjectMapper\TransformCallableInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
