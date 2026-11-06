@@ -1,5 +1,6 @@
 dependsOn:
   - css-core
+  - helm-app
   - typescript-espace-api-sdk
   - typescript-zitadel
   - vue-color-scheme
@@ -21,6 +22,7 @@ tags:
   - pwa
   - asset
   - docker
+  - helm
   - dokploy
   - version
 tasks:

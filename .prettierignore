@@ -9,3 +9,5 @@
 .moon
 .github
 **/*.css
+**/helm/charts/
+**/helm/templates/

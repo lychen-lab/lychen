@@ -10,6 +10,10 @@ environments — never rebuilt.
   re-tags the images with the version, and a manual workflow pins production to
   that version.
 
+The same images can also run on Kubernetes, through a Helm chart per project
+published alongside them: see [Kubernetes (Helm)](kubernetes.md). It is opt-in
+and leaves everything below unchanged.
+
 ## How image tags work
 
 - **Deploy | Staging** builds each affected app and pushes it to GHCR

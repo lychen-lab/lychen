@@ -47,9 +47,10 @@ jobs:
           - name: Audit
             tasks: ':audit'
           # One job for both: the frontends' docker-build depends on build, so
-          # its output is reused instead of built twice.
+          # its output is reused instead of built twice. The Helm charts are
+          # packaged next to the images they deploy.
           - name: Build
-            tasks: ':build :docker-build'
+            tasks: ':build :docker-build :helm-package'
     steps:
       - uses: 'actions/checkout@v4'
         with:
@@ -76,6 +77,12 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Helm
+        if: ${{ contains(matrix.tasks, ':helm-package') }}
+        uses: ./.github/actions/helm
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run ${{ matrix.tasks }}
         run: moon ci ${{ matrix.tasks }}

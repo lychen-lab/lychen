@@ -1,0 +1,87 @@
+name: 'Helm | Release'
+
+# The Helm side of a release, next to Release's promote-images: package every
+# project's chart at the release commit, pinned to the release image (vX.Y.Z),
+# and push it as version X.Y.Z. Helm | Production then deploys that version.
+#
+# An image is promoted (re-tagged, never rebuilt), but a chart cannot be: its
+# version is written inside the package. It is rebuilt instead, from the release
+# commit: the same sources as the staging chart of that commit, with the release
+# version and image.
+#
+# Every project gets the version, even those unchanged since the last release,
+# as every image does: X.Y.Z is deployable for the whole set.
+
+on:
+  release:
+    types:
+      - published
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release to package, e.g. v0.2.0'
+        required: true
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.release.tag_name || inputs.version }}
+  cancel-in-progress: false
+
+env:
+  VERSION: ${{ github.event.release.tag_name || inputs.version }}
+
+jobs:
+  define-matrix:
+    name: 'Gather charts'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      projects: ${{ steps.charts.outputs.projects }}
+    steps:
+      - uses: 'actions/checkout@v4'
+        with:
+          ref: ${{ env.VERSION }}
+      - name: Set up Moon Toolchain
+        uses: 'moonrepo/setup-toolchain@v0'
+      - id: charts
+        uses: ./.github/actions/moon-affected-projects-list
+        with:
+          tags: helm
+          affected: 'false'
+
+  chart:
+    name: 'Package & push chart'
+    needs: define-matrix
+    if: ${{ needs.define-matrix.outputs.projects != '[]' && needs.define-matrix.outputs.projects != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        project: ${{ fromJSON(needs.define-matrix.outputs.projects) }}
+    steps:
+      - uses: 'actions/checkout@v4'
+        with:
+          ref: ${{ env.VERSION }}
+
+      - name: Set up Moon Toolchain
+        uses: 'moonrepo/setup-toolchain@v0'
+
+      - name: Set up Helm
+        uses: ./.github/actions/helm
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Package and push chart
+        env:
+          IMAGE_TAG: ${{ env.VERSION }}
+        run: |
+          if [[ ! "$IMAGE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error title=Not a release::'$IMAGE_TAG' is not a vX.Y.Z release tag."
+            exit 1
+          fi
+          CHART_VERSION="${IMAGE_TAG#v}" moon run ${{ matrix.project }}:helm-push

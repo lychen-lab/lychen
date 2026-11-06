@@ -29,6 +29,9 @@ export default defineConfig([
       '**/playwright-report/**',
       '**/test-results/**',
       '**/storybook-static/**',
+      // Helm templates are Go templates, not YAML; charts/ holds the vendored library chart.
+      '**/helm/charts/**',
+      '**/helm/templates/**',
     ],
   },
   {
@@ -114,6 +117,13 @@ export default defineConfig([
       'yml/sort-sequence-values': ['error', { order: { type: 'asc' }, pathPattern: '^dependsOn$' }],
       'yml/no-empty-sequence-entry': ['error'],
       'tailwindcss/no-custom-classname': 'off',
+    },
+  },
+  {
+    // Helm only reads a chart from Chart.yaml and values.yaml.
+    files: ['**/helm/*.yaml'],
+    rules: {
+      'yml/file-extension': 'off',
     },
   },
 ]);

@@ -1,0 +1,20 @@
+name: 'Helm'
+description: >-
+  Install the Helm version the charts are built and deployed with, logged in to
+  ghcr.io where they are published. The one place that version is pinned.
+inputs:
+  token:
+    description: 'Token to log in to ghcr.io with (packages:read to pull a chart, packages:write to push one)'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - uses: azure/setup-helm@v5
+      with:
+        version: v4.3.1
+    - name: Log in to GHCR
+      shell: bash
+      env:
+        ACTOR: ${{ github.actor }}
+        TOKEN: ${{ inputs.token }}
+      run: printf '%s' "$TOKEN" | helm registry login ghcr.io --username "$ACTOR" --password-stdin

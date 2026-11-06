@@ -1,5 +1,6 @@
 dependsOn:
   - css-core
+  - helm-app
   - typescript-constants
   - typescript-espace
   - vite-ssg
@@ -20,5 +21,6 @@ tags:
   - ssg
   - asset
   - docker
+  - helm
   - dokploy
   - version

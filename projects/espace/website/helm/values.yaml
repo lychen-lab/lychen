@@ -1,0 +1,20 @@
+# espace-website on Kubernetes: what differs from the defaults of libs/helm/app/values.yaml, in
+# every environment. An environment adds its own values at deploy time (the
+# ESPACE_WEBSITE_HELM_VALUES variable of its GitHub Environment, see docs/kubernetes.md), e.g.:
+#
+#   env:
+#     HOST: https://espace.lychen.org
+#   ingress:
+#     enabled: true
+#     hosts:
+#       - espace.lychen.org
+
+# Written into config.js and the prerendered pages when the container starts
+# (libs/docker/frontend/entrypoint.sh), so that one image runs in every environment.
+env:
+  APP_ID: espace-website
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi

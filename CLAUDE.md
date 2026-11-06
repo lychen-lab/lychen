@@ -34,7 +34,9 @@ no `build`, a local compose service has no `lint`).
 
 The `compose-local` tag marks projects that also run locally as a compose stack (`up`, `down`,
 `dev`): the APIs and the common services. The `dokploy` tag is the deployment one. A frontend's
-`compose.yml` only serves Dokploy, so frontends never get `compose-local`.
+`compose.yml` only serves Dokploy, so frontends never get `compose-local`. The `helm` tag marks the
+projects that also have a Helm chart (`helm/`, built on the library chart `libs/helm/app`) to run on
+Kubernetes, next to Dokploy: see `docs/kubernetes.md`.
 
 | Task | Vue / TypeScript | Symfony API | Local compose service |
 | --- | --- | --- | --- |
@@ -45,6 +47,8 @@ The `compose-local` tag marks projects that also run locally as a compose stack 
 | `build` | `yarn build` | — | — |
 | `docker-build` | Image for the runner's platform | Production image for the runner's platform | — |
 | `docker-push` | Multi-platform image, pushed to ghcr | Multi-platform image, pushed to ghcr | — |
+| `helm-package` | Lint + package the Helm chart (tag `helm`) | Lint + package the Helm chart (tag `helm`) | — |
+| `helm-push` | Chart pinned to `IMAGE_TAG`, pushed to ghcr | Chart pinned to `IMAGE_TAG`, pushed to ghcr | — |
 | `test` | Vitest | Whole PHPUnit suite (local only) | — |
 | `test-functional` | — | PHPUnit `tests/Functional` | — |
 | `test-security` | — | PHPUnit `tests/Security` | — |
@@ -75,7 +79,7 @@ projects (their fixers need the API's container): run `moon <api>:format-fix` by
 PHPStan debt is frozen in each API's `phpstan-baseline.neon`: new code must pass
 clean, fixing an error means deleting its baseline entry, and CI rejects a PR whose
 baseline grows. A PR needs the `QG | Gate` check green: the QG workflow runs the static
-checks (`lint`, `format`, `audit`, `build` + `docker-build`), then the tests (`test`,
+checks (`lint`, `format`, `audit`, `build` + `docker-build` + `helm-package`), then the tests (`test`,
 `test-functional`, `test-security`), each with `moon ci`.
 
 ### Testing
@@ -126,6 +130,7 @@ make phpunit c="--group e2e"                         # Run by group
   /vite/           # Shared Vite plugins/config (e.g. SSG scaffold)
   /caddy/          # Shared Caddy server configs (pwa, ssg)
   /docker/         # Shared Dockerfiles (e.g. frontend image)
+  /helm/           # Library Helm chart every project's chart (projects/**/helm) is built on
 
 /.moon             # Moonrepo configuration
   workspace.yml    # Workspace constraints, VCS hooks
@@ -175,7 +180,7 @@ make phpunit c="--group e2e"                         # Run by group
 
 - **TypeScript strict mode** everywhere; ESLint flat config with Vue + TS rules
 - **No `console.log`** in production code (ESLint error)
-- **YAML files** must use `.yml` extension (enforced)
+- **YAML files** must use `.yml` extension (enforced), except Helm's `Chart.yaml` and `values.yaml`
 - **Prettier**: 100-char line width, single quotes, trailing commas
 - **Vue SFC order**: `<template>` → `<script>` → `<style>`
 - **Props/emits**: `defineProps<T>()` and `defineEmits<E>()` with full TypeScript types

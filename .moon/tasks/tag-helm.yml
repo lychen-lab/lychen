@@ -1,0 +1,28 @@
+$schema: https://moonrepo.dev/schemas/tasks.json
+# The project's Helm chart (helm/ at its root), built on the library chart
+# libs/helm/app and published as oci://ghcr.io/lychen-lab/lychen/charts/<project>:
+# the Kubernetes counterpart of tag-docker.yml. helm-package checks the chart,
+# helm-push publishes it. Deploying it is the CD's business (helm-staging.yml,
+# helm-production.yml), as deploying the compose is Dokploy's.
+#
+# Both need Helm 4 (`brew install helm`). They run on the system toolchain: a
+# frontend's chart needs neither node nor its yarn install.
+inheritedBy:
+  tag: helm
+tasks:
+  helm-package:
+    # Lints the chart, then packages it into build/helm/ at the workspace root.
+    command: bash $workspaceRoot/.moon/scripts/helm-chart.sh package $projectRoot/helm
+    inputs:
+      - helm/**/*
+      - /.moon/scripts/helm-chart.sh
+      - /libs/helm/**/*
+    options:
+      cache: false
+    toolchains: system
+  helm-push:
+    # Pinned to one image: IMAGE_TAG and CHART_VERSION are required, see the script.
+    command: bash $workspaceRoot/.moon/scripts/helm-chart.sh push $projectRoot/helm
+    options:
+      cache: false
+    toolchains: system

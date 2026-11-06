@@ -1,4 +1,5 @@
 dependsOn:
+  - helm-app
   - lychen-php-core
   - lychen-php-model
   - lychen-php-config
@@ -11,6 +12,7 @@ stack: backend
 tags:
   - symfony
   - docker
+  - helm
   - dokploy
   - version
   - compose-local

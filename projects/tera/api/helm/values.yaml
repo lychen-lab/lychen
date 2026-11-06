@@ -1,0 +1,40 @@
+# tera-api on Kubernetes: what differs from the defaults of libs/helm/app/values.yaml, in every
+# environment. An environment adds its own values at deploy time (the TERA_API_HELM_VALUES
+# variable of its GitHub Environment, see docs/kubernetes.md), e.g.:
+#
+#   ingress:
+#     enabled: true
+#     hosts:
+#       - api.tera.lychen.org
+#
+# The chart deploys the API alone: its database, its Redis, and the shared RabbitMQ
+# and Zitadel are reached through its configuration, like any other service.
+
+env:
+  # Caddy serves plain HTTP on port 80 whatever the host, and TLS ends at the ingress controller.
+  # A host name here would have Caddy redirect to HTTPS and request a certificate itself.
+  SERVER_NAME: ':80'
+
+# The variables of the API's .env (APP_SECRET, DATABASE_URL, REDIS_URL, MESSENGER_TRANSPORT_DSN,
+# ZITADEL_*, CORS_ALLOW_ORIGIN…) come from a Secret of the same name, created in the
+# namespace out of band (External Secrets, Sealed Secrets, kubectl…): never from the chart.
+envFrom:
+  - secretRef:
+      name: tera-api
+
+# Each new version migrates the database once, before its pods start. The image's entrypoint
+# applies the migrations itself and this command then confirms it: --allow-no-migration lets
+# it pass when there is nothing to apply.
+migrations:
+  args:
+    - bin/console
+    - doctrine:migrations:migrate
+    - --no-interaction
+    - --all-or-nothing
+    - --allow-no-migration
+  enabled: true
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
