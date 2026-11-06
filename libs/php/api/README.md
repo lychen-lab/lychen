@@ -103,7 +103,10 @@ A transition is a PATCH without body on the resource, handled by
 entity itself to the processor, the subject of the workflow. With the mapping on, the
 processor would get the resource, and the object mapper would first map that resource back
 onto the entity. The processor applies the transition, persists the entity, and maps it
-onto the resource for the response. A transition the current state does not allow is a 409
+onto the resource for the response, whose `@id` is the resource's own IRI
+(`/api/seed_lots/{uuid}`, not the transition's URI: `Serializer\WorkflowTransitionContextBuilder`
+points `item_uri_template` at the resource's item GET, since a `Patch` cannot declare an
+`itemUriTemplate`). A transition the current state does not allow is a 409
 Conflict, with the workflow's reasons. flora-api's `SeedLot` (reserve, release, give) is
 the example.
 

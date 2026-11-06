@@ -4,6 +4,7 @@ namespace Lychen\Api;
 
 use Lychen\Api\Doctrine\MappedAssociationResolver;
 use Lychen\Api\Doctrine\UuidEntityFinder;
+use Lychen\Api\Serializer\WorkflowTransitionContextBuilder;
 use Lychen\Api\State\WorkflowTransitionProcessor;
 use Lychen\Api\Transform\RelationToUuid;
 use Lychen\Api\Transform\UuidToEntity;
@@ -56,5 +57,13 @@ final class LychenApiBundle extends AbstractBundle
                 service('api_platform.object_mapper'),
             ])
             ->tag('api_platform.state_processor', ['key' => WorkflowTransitionProcessor::class]);
+
+        // Gives a transition's answer the canonical IRI of its resource, not the transition's URI.
+        $services->set(WorkflowTransitionContextBuilder::class)
+            ->decorate('api_platform.serializer.context_builder')
+            ->args([
+                service('.inner'),
+                service('api_platform.metadata.resource.metadata_collection_factory'),
+            ]);
     }
 }
