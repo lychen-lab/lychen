@@ -18,7 +18,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * - absent: left as is;
  * - "seedLibrary": "<uuid>": the lot moves to that library (null is a 422: required);
- * - "characteristics": ["<uuid>", ...]: replaces the whole list, [] unlinks them all.
+ * - "characteristics": ["<uuid>", ...]: replaces the whole list, [] or null unlinks them
+ *   all.
  */
 #[Map(target: SeedLot::class)]
 final class SeedLotPatch
@@ -38,9 +39,15 @@ final class SeedLotPatch
     public Uuid $seedLibrary;
 
     /**
-     * @var list<Uuid>
+     * Nullable for the serializer, never null once set: in a JSON merge patch (RFC 7396)
+     * null removes the member, which for a list of links means unlinking them all. The
+     * hook stores it as [], so the validator and UuidToEntity only ever see a list.
+     *
+     * @var list<Uuid>|null
      */
     #[UuidExists]
     #[Map(transform: UuidToEntity::class)]
-    public array $characteristics;
+    public ?array $characteristics {
+        set => $value ?? [];
+    }
 }

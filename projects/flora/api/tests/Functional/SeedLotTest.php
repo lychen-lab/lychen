@@ -160,6 +160,27 @@ class SeedLotTest extends AbstractApiTestCase
             ->assertJsonMatches('seedLibrary', (string) $to->getUuid());
     }
 
+    public function testPatchNullCharacteristicsUnlinksThemAll(): void
+    {
+        $library = SeedLibraryFactory::createOne();
+        $lot = SeedLotFactory::createOne([
+            'variety' => 'Haricot coco',
+            'seedLibrary' => $library,
+            'characteristics' => CharacteristicFactory::createMany(2),
+        ]);
+
+        // JSON merge patch (RFC 7396): null removes the member, here every link.
+        $this->browser()
+            ->patch('/api/seed_lots/'.$lot->getUuid(), ['json' => ['characteristics' => null]])
+            ->assertStatus(200)
+            ->assertJsonMatches('characteristics', [])
+            ->assertJsonMatches('seedLibrary', (string) $library->getUuid())
+            ->assertJsonMatches('variety', 'Haricot coco');
+
+        // Unlinked, not deleted.
+        CharacteristicFactory::assert()->count(2);
+    }
+
     public function testPatchRejectsANullOrUnknownSeedLibrary(): void
     {
         $library = SeedLibraryFactory::createOne();
