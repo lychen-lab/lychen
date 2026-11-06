@@ -3,7 +3,8 @@
 namespace Lychen\Api\Doctrine;
 
 use Doctrine\Persistence\ManagerRegistry;
-use Lychen\UtilModel\Interface\UuidIdentifiedInterface;
+use Lychen\Api\Interface\UuidIdentifiedInterface;
+use Lychen\Api\UuidContract;
 use Symfony\Component\ObjectMapper\Attribute\Map;
 
 /**
@@ -25,7 +26,7 @@ final readonly class MappedAssociationResolver
      * @param class-string      $dtoClass
      * @param class-string|null $entityClass the entity the DTO is mapped onto, read from the DTO when null
      *
-     * @return class-string<UuidIdentifiedInterface>
+     * @return class-string the target entity, which fulfills the uuid contract (UuidContract)
      */
     public function targetEntityClass(string $dtoClass, string $property, ?string $entityClass = null): string
     {
@@ -38,8 +39,13 @@ final readonly class MappedAssociationResolver
         }
 
         $targetClass = $metadata->getAssociationTargetClass($association);
-        if (null === $targetClass || !is_a($targetClass, UuidIdentifiedInterface::class, true)) {
-            throw new \LogicException(\sprintf('"%s::$%s" does not target an entity identified by a uuid (%s).', $entityClass, $association, UuidIdentifiedInterface::class));
+        if (null === $targetClass) {
+            throw new \LogicException(\sprintf('"%s::$%s" has no target entity.', $entityClass, $association));
+        }
+
+        $targetMetadata = $this->registry->getManagerForClass($targetClass)?->getClassMetadata($targetClass);
+        if (!UuidContract::isFulfilledBy($targetClass) || true !== $targetMetadata?->hasField('uuid')) {
+            throw new \LogicException(\sprintf('"%s::$%s" targets "%s", which is not identified by a uuid: it needs a mapped "uuid" field and the contract of %s (lychen/model\'s identical interface fulfills it).', $entityClass, $association, $targetClass, UuidIdentifiedInterface::class));
         }
 
         return $targetClass;

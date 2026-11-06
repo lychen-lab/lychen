@@ -1,5 +1,3 @@
-dependsOn:
-- lychen-php-model
 id: lychen-php-api
 language: php
 layer: library

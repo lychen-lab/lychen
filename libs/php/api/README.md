@@ -4,9 +4,17 @@ API Platform building blocks shared by the Lychen APIs, for resources kept apart
 Doctrine model with Symfony's object mapper (`#[Map]`), whose relations are exposed and
 written by uuid rather than by IRI.
 
-The entities identify themselves by uuid through lychen/model
-(`AbstractIdOrmAndUuidApiIdentified`, `UuidIdentifiedInterface`): an int id for the
-database, a uuid for the API.
+## The uuid contract
+
+An entity linked by uuid needs an int id for the database, a mapped `uuid` field for the
+API, and the contract of `Interface\UuidIdentifiedInterface` (`getUuid(): Uuid`).
+
+lychen/api does not require lychen/model, and lychen/model does not require lychen/api:
+each declares its own, identical `UuidIdentifiedInterface`. `UuidContract` therefore checks
+the contract by its shape: an entity fulfills it when it implements this library's
+interface, or has a `getUuid()` returning a `Uuid`, whichever interface declares it. The
+entities built on lychen/model's `AbstractIdOrmAndUuidApiIdentified` fulfill it as they
+are.
 
 ## What it holds
 
@@ -18,6 +26,8 @@ database, a uuid for the API.
 | `Doctrine\MappedAssociationResolver` | Finds the entity a DTO property refers to, from the `#[Map]` and Doctrine mappings. |
 | `Doctrine\UuidEntityFinder` | Loads entities by uuid, one query per call. |
 | `Trait\*` | Common properties of a resource class: `uuid` (identifier), `createdAt`, `updatedAt`, `code`, `state`. |
+| `Interface\UuidIdentifiedInterface` | The contract of an entity identified by uuid. |
+| `UuidContract` | Checks that contract by its shape (`isFulfilledBy()`), reads an entity's uuid (`uuidOf()`). |
 | `LychenApiBundle` | Registers the services, with the tags the validator factory and the object mapper need. |
 
 ## Usage

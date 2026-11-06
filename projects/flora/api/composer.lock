@@ -1975,14 +1975,13 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/api",
-                "reference": "a6a92899b1b025fe6cd9ca29607d47644356bd6c"
+                "reference": "b9352ee9768be0de1ef55768712cc2088f602ed4"
             },
             "require": {
                 "api-platform/core": "^5.0",
                 "doctrine/dbal": "^4.0",
                 "doctrine/orm": "^3.0",
                 "doctrine/persistence": "^3.3 || ^4.0",
-                "lychen/model": "*",
                 "php": "^8.4",
                 "symfony/config": "^7.4 || ^8.0",
                 "symfony/dependency-injection": "^7.4 || ^8.0",

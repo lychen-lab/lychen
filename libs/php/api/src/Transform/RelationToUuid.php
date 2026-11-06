@@ -2,7 +2,7 @@
 
 namespace Lychen\Api\Transform;
 
-use Lychen\UtilModel\Interface\UuidIdentifiedInterface;
+use Lychen\Api\UuidContract;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -22,15 +22,15 @@ final class RelationToUuid
     /**
      * A ManyToOne / OneToOne: its uuid, or null.
      */
-    public static function one(?UuidIdentifiedInterface $entity): ?Uuid
+    public static function one(?object $entity): ?Uuid
     {
-        return $entity?->getUuid();
+        return null === $entity ? null : UuidContract::uuidOf($entity);
     }
 
     /**
      * A OneToMany / ManyToMany: the uuid of each entity of the collection.
      *
-     * @param iterable<UuidIdentifiedInterface> $entities
+     * @param iterable<object> $entities
      *
      * @return list<Uuid>
      */
@@ -38,7 +38,7 @@ final class RelationToUuid
     {
         $uuids = [];
         foreach ($entities as $entity) {
-            $uuids[] = $entity->getUuid();
+            $uuids[] = UuidContract::uuidOf($entity);
         }
 
         return $uuids;

@@ -5,7 +5,7 @@ namespace Lychen\Api\Doctrine;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Lychen\UtilModel\Interface\UuidIdentifiedInterface;
+use Lychen\Api\UuidContract;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -21,7 +21,7 @@ final readonly class UuidEntityFinder
     }
 
     /**
-     * @template T of UuidIdentifiedInterface
+     * @template T of object
      *
      * @param class-string<T> $class
      * @param list<mixed>     $uuids instances of Uuid or uuid strings; anything else is never found
@@ -57,7 +57,7 @@ final readonly class UuidEntityFinder
 
         $found = [];
         foreach ($entities as $entity) {
-            $found[$entity->getUuid()->toRfc4122()] = $entity;
+            $found[UuidContract::uuidOf($entity)->toRfc4122()] = $entity;
         }
 
         return $found;

@@ -20,7 +20,6 @@
     "doctrine/dbal": "^4.0",
     "doctrine/orm": "^3.0",
     "doctrine/persistence": "^3.3 || ^4.0",
-    "lychen/model": "*",
     "symfony/config": "^7.4 || ^8.0",
     "symfony/dependency-injection": "^7.4 || ^8.0",
     "symfony/http-kernel": "^7.4 || ^8.0",

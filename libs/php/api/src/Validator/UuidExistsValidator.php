@@ -4,7 +4,6 @@ namespace Lychen\Api\Validator;
 
 use Lychen\Api\Doctrine\MappedAssociationResolver;
 use Lychen\Api\Doctrine\UuidEntityFinder;
-use Lychen\UtilModel\Interface\UuidIdentifiedInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -59,7 +58,7 @@ final class UuidExistsValidator extends ConstraintValidator
      * Unlike an object mapper transform, a validator knows the property it validates: the
      * entity follows from the DTO's mapping.
      *
-     * @return class-string<UuidIdentifiedInterface>
+     * @return class-string
      */
     private function mappedEntityClass(): string
     {

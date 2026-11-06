@@ -2,7 +2,6 @@
 
 namespace Lychen\Api\Validator;
 
-use Lychen\UtilModel\Interface\UuidIdentifiedInterface;
 use Symfony\Component\Validator\Constraint;
 
 /**
@@ -30,8 +29,8 @@ final class UuidExists extends Constraint
     public string $message = self::MESSAGE;
 
     /**
-     * @param class-string<UuidIdentifiedInterface>|null $entity the entity the uuids identify, by default the one the property is mapped onto
-     * @param string[]|null                              $groups
+     * @param class-string|null $entity the entity the uuids identify, by default the one the property is mapped onto
+     * @param string[]|null     $groups
      */
     public function __construct(
         public ?string $entity = null,
