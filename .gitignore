@@ -36,6 +36,11 @@ build/
 
 tsconfig.tsbuildinfo
 
+###> PHP ###
+# php-cs-fixer's cache, in each project it runs from (.moon/tasks/php.yml)
+.php-cs-fixer.cache
+###< PHP ###
+
 ###> JetBrain/PHPStorm ###
 # Ignore all of .idea folder by default
 .idea/*

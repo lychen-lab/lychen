@@ -11,7 +11,8 @@
     "vue.volar",
     "jock.svg",
     "oderwat.indent-rainbow",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "junstyle.php-cs-fixer"
   ],
   "unwantedRecommendations": [
     "octref.vetur",

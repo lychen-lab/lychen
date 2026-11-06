@@ -14,16 +14,17 @@ readonly class Role
     {
         $response = $this->client->request(
             'POST',
-            $this->domain . '/management/v1/projects/'.$projectId.'/roles',
+            $this->domain.'/management/v1/projects/'.$projectId.'/roles',
             [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
-                    'Authorization' => 'Bearer ' . $this->pat,
+                    'Authorization' => 'Bearer '.$this->pat,
                 ],
-                'json' => $attributes
+                'json' => $attributes,
             ]
         );
+
         return $response->toArray();
     }
 
@@ -31,23 +32,24 @@ readonly class Role
     {
         $response = $this->client->request(
             'POST',
-            $this->domain . '/management/v1/projects/'.$projectId.'/roles/_search',
+            $this->domain.'/management/v1/projects/'.$projectId.'/roles/_search',
             [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
-                    'Authorization' => 'Bearer ' . $this->pat,
+                    'Authorization' => 'Bearer '.$this->pat,
                 ],
                 'json' => [
-                    "queries" => [[
+                    'queries' => [[
                         'keyQuery' => [
-                            "key" => $roleKey,
-                            "method" => "TEXT_QUERY_METHOD_EQUALS"
-                        ]
-                    ]]
-                ]
+                            'key' => $roleKey,
+                            'method' => 'TEXT_QUERY_METHOD_EQUALS',
+                        ],
+                    ]],
+                ],
             ]
         );
+
         return $response->toArray();
     }
 }

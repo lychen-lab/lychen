@@ -43,7 +43,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ],
         ],
     ]);
-    if ($containerConfigurator->env() === 'prod') {
+    if ('prod' === $containerConfigurator->env()) {
         $containerConfigurator->extension('doctrine', [
             'orm' => [
                 'query_cache_driver' => [
@@ -69,7 +69,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ],
         ]);
     }
-    if ($containerConfigurator->env() === 'test') {
+    if ('test' === $containerConfigurator->env()) {
         $containerConfigurator->extension('doctrine', [
             'dbal' => [
                 'dbname_suffix' => '_test%env(default::TEST_TOKEN)%',

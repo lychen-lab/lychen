@@ -30,7 +30,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ],
         ],
     ]);
-    if ($containerConfigurator->env() === 'dev') {
+    if ('dev' === $containerConfigurator->env()) {
         $containerConfigurator->extension('monolog', [
             'handlers' => [
                 'console' => [
@@ -57,7 +57,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ],
         ]);
     }
-    if ($containerConfigurator->env() === 'prod') {
+    if ('prod' === $containerConfigurator->env()) {
         $containerConfigurator->extension('monolog', [
             'handlers' => [
                 'command' => [
@@ -110,7 +110,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             ],
         ]);
     }
-    if ($containerConfigurator->env() === 'test') {
+    if ('test' === $containerConfigurator->env()) {
         $containerConfigurator->extension('monolog', [
             'handlers' => [
                 'main' => [

@@ -14,7 +14,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         'file_name_pattern' => '*.twig',
         'strict_variables' => '%kernel.debug%',
     ]);
-    if ($containerConfigurator->env() === 'test') {
+    if ('test' === $containerConfigurator->env()) {
         $containerConfigurator->extension('twig', [
             'strict_variables' => true,
         ]);

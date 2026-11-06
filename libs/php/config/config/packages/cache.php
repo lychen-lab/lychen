@@ -11,7 +11,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             'default_redis_provider' => '%env(resolve:REDIS_URL)%',
         ],
     ]);
-    if ($containerConfigurator->env() === 'prod') {
+    if ('prod' === $containerConfigurator->env()) {
         $containerConfigurator->extension('framework', [
             'cache' => [
                 'default_redis_provider' => 'snc_redis.default',

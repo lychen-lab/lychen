@@ -17,28 +17,26 @@ class EmailObfuscator
     public function maskEmail(string $email): string
     {
         $parts = explode('@', $email);
-        if (count($parts) !== 2) {
+        if (2 !== count($parts)) {
             return '[INVALID_EMAIL]'; // Handle invalid email format
         }
 
         $username = $parts[0];
         $domain = $parts[1];
 
-        $maskedUsername = substr($username, 0, 1) . str_repeat('*', max(0, strlen($username) - 2)) . substr($username, -1);
-        $maskedDomain = substr($domain, 0, 1) . str_repeat('*', max(0, strlen($domain) - 2)) . substr($domain, -1);
-        return $maskedUsername . '@' . $maskedDomain;
+        $maskedUsername = substr($username, 0, 1).str_repeat('*', max(0, strlen($username) - 2)).substr($username, -1);
+        $maskedDomain = substr($domain, 0, 1).str_repeat('*', max(0, strlen($domain) - 2)).substr($domain, -1);
+
+        return $maskedUsername.'@'.$maskedDomain;
     }
 
-     /**
-     * Choose your method of obfuscation
-     *
-     * @param string $email
-     * @return string
+    /**
+     * Choose your method of obfuscation.
      */
     public function obfuscate(string $email): string
     {
         return $this->maskEmail($email);
-        //return $this->hashEmail($email);
-        //return $this->redactEmail($email);
+        // return $this->hashEmail($email);
+        // return $this->redactEmail($email);
     }
 }
