@@ -25,6 +25,7 @@ are.
 | `Validator\UuidExists` | Reports every unknown uuid as a 422 on its property (`seedLibrary`, `characteristics[1]`), before any mapping. |
 | `Doctrine\MappedAssociationResolver` | Finds the entity a DTO property refers to, from the `#[Map]` and Doctrine mappings. |
 | `Doctrine\UuidEntityFinder` | Loads entities by uuid, one query per call. |
+| `State\WorkflowTransitionProcessor` | Applies a workflow transition to the entity behind a resource, persists it, answers with the mapped resource (409 when the state does not allow it). |
 | `Trait\*` | Common properties of a resource class: `uuid` (identifier), `createdAt`, `updatedAt`, `code`, `state`. |
 | `Interface\UuidIdentifiedInterface` | The contract of an entity identified by uuid. |
 | `UuidContract` | Checks that contract by its shape (`isFulfilledBy()`), reads an entity's uuid (`uuidOf()`). |
@@ -82,6 +83,29 @@ A list replaces the collection through the entity's adder and remover
 
 flora-api's `SeedLibrary`, `SeedLot` and `Characteristic` resources are the full example,
 with their POST and PATCH DTOs and functional tests.
+
+## Workflow transitions
+
+A transition is a PATCH without body on the resource, handled by
+`WorkflowTransitionProcessor`:
+
+```php
+#[Patch(
+    uriTemplate: '/seed_lots/{uuid}/reserve',
+    options: ['transition' => 'reserve'], // and 'workflow' => '...' if the entity has several
+    input: false,
+    map: false,
+    processor: WorkflowTransitionProcessor::class,
+)]
+```
+
+`map: false` is what makes it work with a mapped resource: the provider then hands the
+entity itself to the processor, the subject of the workflow. With the mapping on, the
+processor would get the resource, and the object mapper would first map that resource back
+onto the entity. The processor applies the transition, persists the entity, and maps it
+onto the resource for the response. A transition the current state does not allow is a 409
+Conflict, with the workflow's reasons. flora-api's `SeedLot` (reserve, release, give) is
+the example.
 
 ## Wiring an API
 

@@ -1975,7 +1975,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/api",
-                "reference": "b9352ee9768be0de1ef55768712cc2088f602ed4"
+                "reference": "7a02ebff2cfa937ae72c95b9dfdce2b2c842812c"
             },
             "require": {
                 "api-platform/core": "^5.0",
@@ -1988,7 +1988,8 @@
                 "symfony/http-kernel": "^7.4 || ^8.0",
                 "symfony/object-mapper": "^8.1.9",
                 "symfony/uid": "^7.4 || ^8.0",
-                "symfony/validator": "^7.4 || ^8.0"
+                "symfony/validator": "^7.4 || ^8.0",
+                "symfony/workflow": "^7.4 || ^8.0"
             },
             "type": "library",
             "autoload": {

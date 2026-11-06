@@ -25,7 +25,8 @@
     "symfony/http-kernel": "^7.4 || ^8.0",
     "symfony/object-mapper": "^8.1.9",
     "symfony/uid": "^7.4 || ^8.0",
-    "symfony/validator": "^7.4 || ^8.0"
+    "symfony/validator": "^7.4 || ^8.0",
+    "symfony/workflow": "^7.4 || ^8.0"
   },
   "archive": {
     "exclude": [

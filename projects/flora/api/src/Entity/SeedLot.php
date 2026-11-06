@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\SeedLotRepository;
+use App\Workflow\SeedLot\SeedLotWorkflow;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,7 +15,8 @@ use Lychen\UtilModel\Trait\UpdatedAtTrait;
  * A lot of seeds of one variety, kept by a seed library.
  *
  * Owning side of both its relations: a lot belongs to one SeedLibrary (ManyToOne) and
- * carries any number of Characteristic (ManyToMany).
+ * carries any number of Characteristic (ManyToMany). Its $state is the marking of the
+ * SeedLotWorkflow state machine (available, reserved, given).
  */
 #[ORM\Entity(repositoryClass: SeedLotRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -31,6 +33,9 @@ class SeedLot extends AbstractIdOrmAndUuidApiIdentified
 
     #[ORM\Column]
     private int $quantityInGrams = 0;
+
+    #[ORM\Column(length: 50)]
+    private string $state = SeedLotWorkflow::PLACE_AVAILABLE;
 
     #[ORM\ManyToOne(inversedBy: 'seedLots')]
     #[ORM\JoinColumn(nullable: false)]
@@ -80,6 +85,22 @@ class SeedLot extends AbstractIdOrmAndUuidApiIdentified
     public function setQuantityInGrams(int $quantityInGrams): static
     {
         $this->quantityInGrams = $quantityInGrams;
+
+        return $this;
+    }
+
+    /**
+     * Read and written by the workflow's marking store (SeedLotWorkflow): change it through
+     * a transition, not directly.
+     */
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    public function setState(string $state): static
+    {
+        $this->state = $state;
 
         return $this;
     }
