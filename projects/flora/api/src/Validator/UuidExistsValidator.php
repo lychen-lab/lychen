@@ -2,17 +2,19 @@
 
 namespace App\Validator;
 
+use App\Doctrine\MappedAssociationResolver;
 use App\Doctrine\UuidEntityFinder;
-use Symfony\Component\Uid\Uuid;
+use Lychen\UtilModel\Interface\UuidIdentifiedInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
-use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 final class UuidExistsValidator extends ConstraintValidator
 {
-    public function __construct(private readonly UuidEntityFinder $finder)
-    {
+    public function __construct(
+        private readonly MappedAssociationResolver $associations,
+        private readonly UuidEntityFinder $finder,
+    ) {
     }
 
     public function validate(mixed $value, Constraint $constraint): void
@@ -26,26 +28,21 @@ final class UuidExistsValidator extends ConstraintValidator
             return;
         }
 
+        $entityClass = $constraint->entity ?? $this->mappedEntityClass();
         $isList = \is_array($value);
-        $values = $isList ? $value : [$value];
-        $uuids = [];
-        foreach ($values as $uuid) {
-            if (!$uuid instanceof Uuid) {
-                throw new UnexpectedValueException($uuid, Uuid::class);
-            }
-            $uuids[] = $uuid;
-        }
+        $uuids = $isList ? array_values($value) : [$value];
 
-        $found = $this->finder->findByUuids($constraint->entity, $uuids);
-        $entity = (new \ReflectionClass($constraint->entity))->getShortName();
+        $found = $this->finder->findByUuids($entityClass, $uuids);
+        $entity = (new \ReflectionClass($entityClass))->getShortName();
 
         foreach ($uuids as $index => $uuid) {
-            if (isset($found[$uuid->toRfc4122()])) {
+            $key = UuidEntityFinder::key($uuid);
+            if (null !== $key && isset($found[$key])) {
                 continue;
             }
 
             $violation = $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ uuid }}', $uuid->toRfc4122())
+                ->setParameter('{{ uuid }}', $key ?? (\is_string($uuid) ? $uuid : get_debug_type($uuid)))
                 ->setParameter('{{ entity }}', $entity)
                 ->setInvalidValue($uuid)
                 ->setCode(UuidExists::NOT_FOUND_ERROR);
@@ -56,5 +53,23 @@ final class UuidExistsValidator extends ConstraintValidator
 
             $violation->addViolation();
         }
+    }
+
+    /**
+     * Unlike an object mapper transform, a validator knows the property it validates: the
+     * entity follows from the DTO's mapping.
+     *
+     * @return class-string<UuidIdentifiedInterface>
+     */
+    private function mappedEntityClass(): string
+    {
+        $dto = $this->context->getObject();
+        $property = $this->context->getPropertyName();
+
+        if (null === $dto || null === $property) {
+            throw new \LogicException('#[UuidExists] without an entity must be put on a property of a DTO mapped onto an entity (#[Map(target: Entity::class)]).');
+        }
+
+        return $this->associations->targetEntityClass($dto::class, $property);
     }
 }

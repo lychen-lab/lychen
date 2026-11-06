@@ -2,10 +2,7 @@
 
 namespace App\Api\Resource\SeedLot\Dto;
 
-use App\Api\Transform\UuidToCharacteristic;
-use App\Api\Transform\UuidToSeedLibrary;
-use App\Entity\Characteristic;
-use App\Entity\SeedLibrary;
+use App\Api\Transform\UuidToEntity;
 use App\Entity\SeedLot;
 use App\Validator\UuidExists;
 use Symfony\Component\ObjectMapper\Attribute\Map;
@@ -36,14 +33,14 @@ final class SeedLotPatch
     #[Assert\PositiveOrZero]
     public int $quantityInGrams;
 
-    #[UuidExists(SeedLibrary::class)]
-    #[Map(transform: UuidToSeedLibrary::class)]
+    #[UuidExists]
+    #[Map(transform: UuidToEntity::class)]
     public Uuid $seedLibrary;
 
     /**
      * @var list<Uuid>
      */
-    #[UuidExists(Characteristic::class)]
-    #[Map(transform: UuidToCharacteristic::class)]
+    #[UuidExists]
+    #[Map(transform: UuidToEntity::class)]
     public array $characteristics;
 }

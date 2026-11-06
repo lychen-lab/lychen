@@ -24,13 +24,20 @@ final readonly class UuidEntityFinder
      * @template T of UuidIdentifiedInterface
      *
      * @param class-string<T> $class
-     * @param list<Uuid>      $uuids
+     * @param list<mixed>     $uuids instances of Uuid or uuid strings; anything else is never found
      *
-     * @return array<string, T> the entities found, indexed by their RFC 4122 uuid
+     * @return array<string, T> the entities found, indexed by their key()
      */
     public function findByUuids(string $class, array $uuids): array
     {
-        if ([] === $uuids) {
+        $keys = [];
+        foreach ($uuids as $uuid) {
+            if (null !== $key = self::key($uuid)) {
+                $keys[$key] = $key;
+            }
+        }
+
+        if ([] === $keys) {
             return [];
         }
 
@@ -44,11 +51,7 @@ final readonly class UuidEntityFinder
             ->select('e')
             ->from($class, 'e')
             ->where('e.uuid IN (:uuids)')
-            ->setParameter(
-                'uuids',
-                array_map(static fn (Uuid $uuid): string => $uuid->toRfc4122(), $uuids),
-                ArrayParameterType::STRING,
-            )
+            ->setParameter('uuids', array_values($keys), ArrayParameterType::STRING)
             ->getQuery()
             ->getResult();
 
@@ -58,5 +61,22 @@ final readonly class UuidEntityFinder
         }
 
         return $found;
+    }
+
+    /**
+     * The RFC 4122 form of a uuid sent by a client, the key of findByUuids()' result; null
+     * when the value is not a uuid.
+     */
+    public static function key(mixed $uuid): ?string
+    {
+        if ($uuid instanceof Uuid) {
+            return $uuid->toRfc4122();
+        }
+
+        if (\is_string($uuid) && Uuid::isValid($uuid)) {
+            return Uuid::fromString($uuid)->toRfc4122();
+        }
+
+        return null;
     }
 }

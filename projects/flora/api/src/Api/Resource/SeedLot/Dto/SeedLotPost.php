@@ -2,10 +2,7 @@
 
 namespace App\Api\Resource\SeedLot\Dto;
 
-use App\Api\Transform\UuidToCharacteristic;
-use App\Api\Transform\UuidToSeedLibrary;
-use App\Entity\Characteristic;
-use App\Entity\SeedLibrary;
+use App\Api\Transform\UuidToEntity;
 use App\Entity\SeedLot;
 use App\Validator\UuidExists;
 use Symfony\Component\ObjectMapper\Attribute\Map;
@@ -24,8 +21,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  *
  * The relations take uuids. The serializer turns each string into a Uuid (a malformed
- * one is a 422), #[UuidExists] checks the entities exist, and the transforms of #[Map]
- * resolve them into the entities to link.
+ * one is a 422), #[UuidExists] checks the entities exist, and UuidToEntity resolves them
+ * into the entities to link. Neither names the entity: both read it from the Doctrine
+ * association the property is mapped onto (SeedLot::$seedLibrary, ::$characteristics).
  */
 #[Map(target: SeedLot::class)]
 final class SeedLotPost
@@ -41,14 +39,14 @@ final class SeedLotPost
     public int $quantityInGrams = 0;
 
     #[Assert\NotNull]
-    #[UuidExists(SeedLibrary::class)]
-    #[Map(transform: UuidToSeedLibrary::class)]
+    #[UuidExists]
+    #[Map(transform: UuidToEntity::class)]
     public Uuid $seedLibrary;
 
     /**
      * @var list<Uuid>
      */
-    #[UuidExists(Characteristic::class)]
-    #[Map(transform: UuidToCharacteristic::class)]
+    #[UuidExists]
+    #[Map(transform: UuidToEntity::class)]
     public array $characteristics = [];
 }
