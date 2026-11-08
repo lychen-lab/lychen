@@ -20,4 +20,5 @@ return [
     DAMA\DoctrineTestBundle\DAMADoctrineTestBundle::class => ['test' => true],
     Lychen\UtilZitadelBundle\UtilZitadelBundle::class => ['all' => true],
     Lychen\CoreBundle\CoreBundle::class => ['all' => true],
+    Lychen\Api\LychenApiBundle::class => ['all' => true],
 ];
