@@ -40,7 +40,7 @@ The `compose-local` tag marks projects that also run locally as a compose stack 
 | --- | --- | --- | --- |
 | `dev` | `yarn dev` | `up` + mailpit, Mercure, RabbitMQ | `up` |
 | `lint` / `lint-fix` | ESLint, after `typecheck` (vue-tsc) | PHPStan, after `doctrine:schema:validate` | — |
-| `format` / `format-fix` | Prettier | php-cs-fixer | — |
+| `format` / `format-fix` | Prettier | php-cs-fixer (root config, Docker image) | — |
 | `audit` | — | Known vulnerabilities in `composer.lock` | — |
 | `build` | `yarn build` | — | — |
 | `docker-build` | Image for the runner's platform | Production image for the runner's platform | — |
@@ -70,7 +70,14 @@ moon tera-api:lint       # PHPStan (and schema validation) for one API
 ```
 
 Pre-commit hooks automatically run `format-fix` and `lint-fix` on affected files, except in PHP
-projects (their fixers need the API's container): run `moon <api>:format-fix` by hand.
+projects (their fixer needs Docker): run `moon <project>:format-fix` by hand.
+
+PHP has one code style for the whole monorepo, as ESLint and Prettier do: `/.php-cs-fixer.php`.
+Every PHP project (APIs and `libs/php/*`) inherits `format` / `format-fix` from
+`.moon/tasks/php.yml`, which runs `.moon/scripts/php-cs-fixer.sh`: php-cs-fixer from its official
+Docker image (version pinned there), so it needs neither PHP on the host nor the API's container.
+VSCode formats PHP on save with the same script and config (`junstyle.php-cs-fixer`). Never set
+rules or paths on the command line, only in the root config.
 
 PHPStan debt is frozen in each API's `phpstan-baseline.neon`: new code must pass
 clean, fixing an error means deleting its baseline entry, and CI rejects a PR whose
@@ -131,7 +138,7 @@ make phpunit c="--group e2e"                         # Run by group
   workspace.yml    # Workspace constraints, VCS hooks
   toolchains.yml   # Node, Yarn, TypeScript settings
   hooks/           # Pre-commit hook scripts
-  tasks/           # Shared task definitions (all.yml, frontend.yml, frontend-docker.yml, php-library.yml, symfony-ci.yml, symfony-docker.yml, tag-*.yml)
+  tasks/           # Shared task definitions (all.yml, frontend.yml, frontend-docker.yml, php.yml, php-library.yml, symfony-ci.yml, symfony-docker.yml, tag-*.yml)
 ```
 
 ## Architecture

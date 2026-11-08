@@ -4,7 +4,6 @@ namespace Lychen\UtilZitadelBundle\UserProvider;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Exception;
 use Lychen\UtilZitadelBundle\Interface\AuthIdIdentifiedInterface;
 use Lychen\UtilZitadelBundle\Interface\HasEmailInterface;
 use Lychen\UtilZitadelBundle\Interface\HasRolesInterface;
@@ -15,12 +14,11 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Throwable;
 
 readonly class ZitadelUserProvider implements UserProviderInterface
 {
-    const ROLES_CLAIM = 'urn:zitadel:iam:org:project:roles';
-    const SCOPES = ['openid', 'profile', 'email', self::ROLES_CLAIM];
+    public const ROLES_CLAIM = 'urn:zitadel:iam:org:project:roles';
+    public const SCOPES = ['openid', 'profile', 'email', self::ROLES_CLAIM];
 
     private EntityRepository $repository;
 
@@ -32,13 +30,14 @@ readonly class ZitadelUserProvider implements UserProviderInterface
     public function refreshUser(UserInterface $user): UserInterface
     {
         if (!$user instanceof AuthIdIdentifiedInterface) {
-            throw new UnsupportedUserException('Invalid user class ' . get_class($user));
+            throw new UnsupportedUserException('Invalid user class '.get_class($user));
         }
 
         $refreshedUser = $this->repository->find($user->getId());
         if (!$refreshedUser) {
-            throw new UserNotFoundException('User with id ' . $user->getId() . ' not found.');
+            throw new UserNotFoundException('User with id '.$user->getId().' not found.');
         }
+
         return $refreshedUser;
     }
 
@@ -56,7 +55,7 @@ readonly class ZitadelUserProvider implements UserProviderInterface
         $user = $this->repository->findOneBy(['authId' => $response['sub']]);
 
         if (null === $user) {
-            throw new UserNotFoundException('User with id ' . $identifier . ' not found.');
+            throw new UserNotFoundException('User with id '.$identifier.' not found.');
         }
 
         return $user;
@@ -64,7 +63,7 @@ readonly class ZitadelUserProvider implements UserProviderInterface
 
     public function ensureUserExists(string $userIdentifier, array $userData): void
     {
-        $this->logger->debug("OIDC User Data", [
+        $this->logger->debug('OIDC User Data', [
             'sub' => $userData['sub'],
             'given_name' => $userData['given_name'],
             'family_name' => $userData['family_name'],
@@ -77,12 +76,12 @@ readonly class ZitadelUserProvider implements UserProviderInterface
             }
             $this->updateUserEntity($user, $userData);
             $this->entityManager->flush();
-        } catch (Throwable $th) {
-            throw new Exception('Cannot create user', previous: $th);
+        } catch (\Throwable $th) {
+            throw new \Exception('Cannot create user', previous: $th);
         }
     }
 
-    private function updateUserEntity(AuthIdIdentifiedInterface & NamedEntityInterface & HasRolesInterface & HasEmailInterface &$user, array $userData): void
+    private function updateUserEntity(AuthIdIdentifiedInterface&NamedEntityInterface&HasRolesInterface&HasEmailInterface &$user, array $userData): void
     {
         $user->setAuthId($userData['sub']);
         $user->setEmail($userData['email']);
@@ -99,6 +98,7 @@ readonly class ZitadelUserProvider implements UserProviderInterface
                 $roles[] = $roleKey;
             }
         }
+
         return $roles;
     }
 }

@@ -13,8 +13,9 @@ while IFS= read -r -d '' file; do
 done < <(git diff --cached --name-only --diff-filter=ACMR -z)
 
 echo '> Run fixers on affected files'
-# PHP projects are left out: their fixers run in the API's container, and a
-# commit must not need Docker. Run `moon <api>:format-fix` by hand instead.
+# PHP projects are left out: their fixer runs in Docker, and a commit must not
+# need Docker. The editor formats PHP on save (.vscode/settings.json); otherwise
+# run `moon <project>:format-fix` by hand.
 moon run :format-fix --affected --query 'language!=php'
 moon run :lint-fix --affected --query 'language!=php'
 

@@ -17,8 +17,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->autoconfigure()
         ->autowire();
 
-    $services->load('App\\', __DIR__ . '/../src/*')
+    $services->load('App\\', __DIR__.'/../src/*')
         ->exclude([
-            __DIR__ . '/../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}',
+            __DIR__.'/../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}',
         ]);
 };

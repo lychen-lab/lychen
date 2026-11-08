@@ -2,7 +2,6 @@
 
 namespace Lychen\UtilModel\Abstract;
 
-use ApiPlatform\Metadata\ApiProperty;
 use Doctrine\ORM\Mapping as ORM;
 use Lychen\UtilModel\Interface\IdIdentifiedInterface;
 use Lychen\UtilModel\Interface\UuidIdentifiedInterface;

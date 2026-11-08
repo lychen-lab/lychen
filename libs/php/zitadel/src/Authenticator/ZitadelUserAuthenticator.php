@@ -35,10 +35,10 @@ class ZitadelUserAuthenticator extends AbstractAuthenticator
 
         $response = $this->openIDConnect->introspectToken($token, 'openid email profile urn:zitadel:iam:org:project:id:zitadel:aud urn:zitadel:iam:org:project:roles');
 
-        if($response['active'] === false){
-            throw new CustomUserMessageAuthenticationException("Token is not active");
+        if (false === $response['active']) {
+            throw new CustomUserMessageAuthenticationException('Token is not active');
         }
-        
+
         return new SelfValidatingPassport(new UserBadge($token));
     }
 
@@ -50,7 +50,7 @@ class ZitadelUserAuthenticator extends AbstractAuthenticator
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
         $data = [
-            'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
+            'message' => strtr($exception->getMessageKey(), $exception->getMessageData()),
         ];
 
         return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);

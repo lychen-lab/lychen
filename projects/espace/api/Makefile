@@ -59,10 +59,6 @@ ci-up:
 ci-install-tools:
 	@$(PHP_CONT_CI) composer install --no-interaction --working-dir=tools/
 
-ci-php-cs-fixer:
-	@$(PHP_CONT_CI) tools/vendor/bin/php-cs-fixer fix src/ --rules=@Symfony
-	@$(PHP_CONT_CI) tools/vendor/bin/php-cs-fixer fix tests/ --rules=@Symfony
-
 ci-validate-db-schema:
 	#@$(PHP_CONT_CI) bin/console doctrine:database:create -n --if-not-exists
 	#@$(PHP_CONT_CI) bin/console doctrine:schema:update --force

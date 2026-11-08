@@ -1,11 +1,12 @@
 $schema: https://moonrepo.dev/schemas/tasks.json
-# The Symfony APIs' side of the common task interface (lint, format, audit,
-# dev, test, test-functional, test-security), plus a few API utilities. Every
-# task here runs locally as is, in the dev container (compose.yml +
+# The Symfony APIs' side of the common task interface (lint, audit, dev, test,
+# test-functional, test-security), plus a few API utilities. Every task here
+# runs locally as is, in the dev container (compose.yml +
 # compose.override.yml), and knows nothing about the CI. The QG workflow runs
 # these same tasks: symfony-ci.yml adds what a CI runner lacks (the test image
-# and its database) under them. docker-build and docker-push come from
-# tag-docker.yml and symfony-docker.yml.
+# and its database) under them. format and format-fix come from php.yml (no
+# container: the whole monorepo's php-cs-fixer), docker-build and docker-push
+# from tag-docker.yml and symfony-docker.yml.
 inheritedBy:
   tag: symfony
 # The image bakes in the lychen/* bundles (copy-packages), so a change to a PHP
@@ -38,26 +39,6 @@ tasks:
     # groups, so every operation of a resource collapses into a single schema
     # and the generated TypeScript SDKs lose fields (e.g. a collection's `state`).
     command: docker compose -p $project run --rm api bin/console api:openapi:export --output=openapi_docs.json
-  format:
-    # Rules and paths come from .php-cs-fixer.php only, for both format and
-    # format-fix.
-    command: &php-cs-fixer docker compose -p $project run --rm api tools/vendor/bin/php-cs-fixer
-    args:
-      - check
-      - --diff
-      - --show-progress=none
-    deps:
-      - install-tools
-  format-fix:
-    command: *php-cs-fixer
-    args:
-      - fix
-    deps:
-      - install-tools
-    # Never cached, like the frontends' format-fix: its fixes are edits to its
-    # own inputs, which a cache hit can't replay.
-    options:
-      cache: false
   install-tools:
     command: docker compose -p $project run --rm api composer install --no-interaction --working-dir=tools/
   lint:

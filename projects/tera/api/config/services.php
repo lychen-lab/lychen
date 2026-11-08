@@ -23,9 +23,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->autowire()
         ->bind('$zitadelProjectId', '%env(ZITADEL_PROJECT_ID)%');
 
-    $services->load('App\\', __DIR__ . '/../src/*')
+    $services->load('App\\', __DIR__.'/../src/*')
         ->exclude([
-            __DIR__ . '/../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}',
+            __DIR__.'/../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}',
         ]);
 
     $services->set(JWTDecoder::class)

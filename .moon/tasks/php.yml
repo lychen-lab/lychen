@@ -1,0 +1,40 @@
+$schema: https://moonrepo.dev/schemas/tasks.json
+# The PHP projects' side of format and format-fix, the APIs' and the libraries'
+# alike: php-cs-fixer with the one config of the monorepo (/.php-cs-fixer.php),
+# as Prettier and ESLint run with the root configs in the frontends. It runs
+# from its official image (.moon/scripts/php-cs-fixer.sh), which needs Docker
+# but not the API's container, so CI checks it without building the test image.
+# The editor formats on save with the same script and config.
+inheritedBy:
+  language: php
+tasks:
+  format:
+    command: &php-cs-fixer $workspaceRoot/.moon/scripts/php-cs-fixer.sh
+    args:
+      - check
+      - --config=$workspaceRoot/.php-cs-fixer.php
+      # The share of the config's files that sits in this project (the task
+      # runs from the project's root). The rules and the excluded paths come
+      # from the config only.
+      - --path-mode=intersection
+      - --diff
+      - --show-progress=none
+      - .
+    # Everything that changes the result, so that CI (which only runs affected
+    # tasks) reruns the check, e.g. on a version bump in the script.
+    inputs: &php-cs-fixer-inputs
+      - '**/*.php'
+      - /.php-cs-fixer.php
+      - /.moon/scripts/php-cs-fixer.sh
+  format-fix:
+    command: *php-cs-fixer
+    args:
+      - fix
+      - --config=$workspaceRoot/.php-cs-fixer.php
+      - --path-mode=intersection
+      - .
+    inputs: *php-cs-fixer-inputs
+    # Never cached, like the frontends' format-fix: its fixes are edits to its
+    # own inputs, which a cache hit can't replay.
+    options:
+      cache: false

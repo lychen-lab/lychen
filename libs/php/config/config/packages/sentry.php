@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
-    if ($containerConfigurator->env() === 'prod') {
+    if ('prod' === $containerConfigurator->env()) {
         // monolog-bundle 4 removed the built-in "sentry" handler type. Register the
         // Sentry handler as a service and wire it through a "service" handler instead.
         // https://docs.sentry.io/platforms/php/guides/symfony/integrations/monolog/
