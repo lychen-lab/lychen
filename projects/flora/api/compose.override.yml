@@ -8,11 +8,9 @@ services:
   database:
     ports:
       - '21432:5432/tcp'
-    networks:
-      - lychen-network
 
   api:
-    build:
+    build: &dev-build
       context: .
       target: frankenphp_dev
     environment:
@@ -36,12 +34,28 @@ services:
       - protocol: udp
         published: ${HTTP3_PORT:-40443}
         target: 443
-    networks:
+    # default reaches this API's own database and redis, lychen-network the
+    # shared services (RabbitMQ, Mercure, mailpit). The database and redis stay
+    # off lychen-network: every API names them alike, and their aliases would
+    # collide there.
+    networks: &dev-networks
+      - default
       - lychen-network
 
-  redis:
-    networks:
-      - lychen-network
+  # The event bus processes run the dev image on the mounted sources: restart
+  # them (`docker compose -p flora-api restart worker outbox-relay`) to pick up
+  # a code change.
+  worker:
+    build: *dev-build
+    networks: *dev-networks
+    volumes: &dev-volumes
+      - ./:/app
+      - ./frankenphp/conf.d/20-app.dev.ini:/usr/local/etc/php/app.conf.d/20-app.dev.ini:ro
+
+  outbox-relay:
+    build: *dev-build
+    networks: *dev-networks
+    volumes: *dev-volumes
 
 networks:
   lychen-network:

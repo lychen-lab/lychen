@@ -5,9 +5,10 @@
 # Topology — one vhost, one topic exchange, one queue per service:
 #
 #   exchange lychen.events (topic, durable)          <- every service publishes here
-#     |-- tera.#   --> queue tera.events   (quorum, DLX)
-#     |-- espace.# --> queue espace.events (quorum, DLX)
-#     |-- flora.#  --> queue flora.events  (quorum, DLX)
+#     |-- tera.internal.#          --> queue tera.events   (quorum, DLX)
+#     |-- flora.seed_lot.given.v1  --> queue tera.events   (a subscription)
+#     |-- espace.internal.#        --> queue espace.events (quorum, DLX)
+#     |-- flora.internal.#         --> queue flora.events  (quorum, DLX)
 #
 #   exchange lychen.events.dlx (topic, durable)      <- definitive failures
 #     |-- tera.events.dlq --> queue tera.events.dlq  (quorum)
@@ -16,9 +17,18 @@
 #   exchange lychen.events.delays (direct, durable)  <- Symfony Messenger retries
 #
 # Routing keys follow `<domain>.<aggregate>.<action>.v<n>`, e.g.
-# `tera.garden.created.v1`. A service listens to its own domain by default
-# (`<service>.#`); subscribing to another domain's events is a matter of adding
-# its routing keys to RABBITMQ_<SERVICE>_BINDING_KEYS.
+# `flora.seed_lot.given.v1`: an event is published under its type, by the
+# outbox relay of lychen/event-bus. A service's queue is bound to its own
+# background work (`<service>.internal.#`, Messenger's default routing key in
+# each API) and to the events it subscribes to, listed in subscriptions.conf
+# (plus RABBITMQ_<SERVICE>_BINDING_KEYS, for a binding specific to one
+# environment). A service does not receive its own events: they are for the
+# others.
+#
+# Until November 2026 the default binding was `<service>.#`, which delivered a
+# service its own events. Definitions only ever add bindings: on a broker that
+# predates the change, delete each `<service>.#` binding once from the
+# management UI (Queues > <service>.events > Bindings).
 #
 # Each queue also gets one binding on its own name (`tera.events` -> queue
 # `tera.events`). That one is not for domain events: it is where Messenger's
@@ -45,6 +55,8 @@
 # cannot change them on an existing queue, so changing one below means deleting
 # the queue (or renaming it) before the new definition takes effect.
 set -eu
+# Binding keys hold `*` and `#`: never expand them as file globs.
+set -f
 
 VHOST="${RABBITMQ_VHOST:-lychen}"
 EXCHANGE="${RABBITMQ_EXCHANGE:-lychen.events}"
@@ -55,6 +67,7 @@ ADMIN_PASSWORD="${RABBITMQ_ADMIN_PASSWORD:-admin}"
 # poison-message loops. Symfony's own retry strategy sits in front of this.
 DELIVERY_LIMIT=5
 DEFINITIONS_FILE="${RABBITMQ_DEFINITIONS_FILE:-/etc/rabbitmq/definitions.json}"
+SUBSCRIPTIONS_FILE="${RABBITMQ_SUBSCRIPTIONS_FILE:-/etc/lychen/subscriptions.conf}"
 
 DLX="$EXCHANGE.dlx"
 DELAY_EXCHANGE="$EXCHANGE.delays"
@@ -78,12 +91,18 @@ service_password() {
 }
 
 # service_binding_keys <service> — space-separated routing keys the service's
-# queue subscribes to. Defaults to its own domain.
+# queue is bound to: its own background work, its subscriptions in
+# $SUBSCRIPTIONS_FILE, and RABBITMQ_<SERVICE>_BINDING_KEYS.
 service_binding_keys() {
   _var="RABBITMQ_$(printf '%s' "$1" | tr 'a-z-' 'A-Z_')_BINDING_KEYS"
-  eval "_value=\${$_var:-}"
-  [ -n "$_value" ] || _value="$1.#"
-  printf '%s' "$_value"
+  eval "_extra=\${$_var:-}"
+  _subscriptions=""
+  if [ -r "$SUBSCRIPTIONS_FILE" ]; then
+    # `<service> <binding key>` lines; comment lines start with `#`, which a
+    # service name never does.
+    _subscriptions="$(awk -v service="$1" '$1 == service && NF >= 2 { print $2 }' "$SUBSCRIPTIONS_FILE" | tr '\n' ' ')"
+  fi
+  printf '%s' "$1.internal.# $_subscriptions $_extra"
 }
 
 vhost="$(json_escape "$VHOST")"

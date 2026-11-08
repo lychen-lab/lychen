@@ -1,0 +1,5 @@
+id: lychen-php-event-bus
+language: php
+layer: library
+tags:
+- composer

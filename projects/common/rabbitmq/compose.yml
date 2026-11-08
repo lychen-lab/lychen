@@ -2,8 +2,9 @@
 # way `common/mailpit` is shared.
 #
 # One vhost, one durable topic exchange (`lychen.events`), and one queue per
-# service bound to the routing keys it subscribes to — see `entrypoint.sh` for
-# the whole topology, which it renders into a definitions file at boot. Set
+# service bound to the routing keys it subscribes to (`subscriptions.conf`) —
+# see `entrypoint.sh` for the whole topology, which it renders into a
+# definitions file at boot. Set
 # `RABBITMQ_<SERVICE>_PASSWORD` per environment, and add a domain to
 # `RABBITMQ_SERVICES` to give it a user, a queue, a dead-letter queue and its
 # bindings — in the environment only, nothing here needs editing.
@@ -36,6 +37,7 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq/
       - ./entrypoint.sh:/usr/local/bin/lychen-entrypoint.sh:ro
+      - ./subscriptions.conf:/etc/lychen/subscriptions.conf:ro
       - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
 
 volumes:

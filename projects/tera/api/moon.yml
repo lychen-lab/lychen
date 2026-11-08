@@ -1,5 +1,6 @@
 dependsOn:
   - lychen-php-core
+  - lychen-php-event-bus
   - lychen-php-model
   - lychen-php-test
   - lychen-php-tiptap
