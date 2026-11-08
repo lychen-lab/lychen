@@ -74,12 +74,16 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         'messenger' => [
             'buses' => [
                 'messenger.bus.default' => [
-                    // A message is handled in one transaction, committed before the
-                    // worker acknowledges it. An event from another service shares it
-                    // with its inbox record (lychen/event-bus's InboxMiddleware), which
-                    // skips an event already handled, and with the events its handlers
-                    // record in the outbox.
+                    // A message from another service must be one of its events, typed
+                    // after its routing key (lychen/event-bus's guard). Then a message is
+                    // handled in one transaction, on a connection checked first (the
+                    // worker's may have gone idle), committed before the worker
+                    // acknowledges it. An event shares that transaction with its inbox
+                    // record (InboxMiddleware), which skips an event already handled,
+                    // and with the events its handlers record in the outbox.
                     'middleware' => [
+                        'lychen_event_bus.middleware.guard',
+                        'doctrine_ping_connection',
                         'doctrine_transaction',
                         'lychen_event_bus.middleware.inbox',
                     ],

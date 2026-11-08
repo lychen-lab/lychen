@@ -171,7 +171,13 @@ processor, or your own `wrapInTransaction()`.
 
 An event that reaches the queue without a class to read it (a broader binding, a version
 the service does not read yet) is acknowledged with a warning instead of failing forever
-(`UnknownEvent`).
+(`UnknownEvent`), and so is an event with a class but no handler (the service's own event,
+routed back by a binding left over from `<service>.#`).
+
+A message that reaches the service under another domain's routing key must be that domain's
+event, its type equal to its routing key: anything else is refused without retry
+(`ForeignMessageGuardMiddleware`). The broker's topic permissions only check the routing key a
+service publishes under, not what the message claims to be.
 
 ## What it holds
 
@@ -182,6 +188,7 @@ the service does not read yet) is acknowledged with a warning instead of failing
 | `Command\RelayCommand` | `lychen:event-bus:relay`, the relay's long-running process: drains the outbox, then polls it every 500 ms. |
 | `Command\PurgeCommand` | `lychen:event-bus:purge`: deletes the events published more than 7 days ago, and the inbox records older than 30 days. |
 | `Serializer\EventSerializer` | The transport serializer: Messenger's JSON serializer, plus the event headers, the outbox payload sent as is, and `UnknownEvent`. |
+| `Middleware\ForeignMessageGuardMiddleware` | Refuses a message received under another domain's routing key unless it is an event typed after that routing key. |
 | `Middleware\InboxMiddleware` | The inbox: records the event in `processed_event` inside the bus's transaction, and skips the handlers when it is already there. |
 | `Stamp\IntegrationEventStamp` | The identity of a received event (id, type, producer, date), read from its headers. |
 | `Retry\FixedDelaysRetryStrategy` | Retries after each of a list of delays (2 s, 10 s, 60 s), which Messenger's multiplier cannot express. |
@@ -208,10 +215,12 @@ flora-api (producer) and tera-api (consumer and producer) are wired this way.
    - `'confirm_timeout' => 5` in the transport's options: without it the sender returns
      before the broker has the message, and the relay could mark a lost event published;
    - `'retry_strategy' => ['service' => 'lychen_event_bus.retry_strategy']`;
-   - the bus middleware `['doctrine_transaction', 'lychen_event_bus.middleware.inbox']`,
-     in that order: the inbox needs the transaction.
+   - the bus middleware `['lychen_event_bus.middleware.guard', 'doctrine_ping_connection',
+     'doctrine_transaction', 'lychen_event_bus.middleware.inbox']`, in that order: the guard
+     refuses before anything runs, the worker's connection is checked before the transaction,
+     and the inbox needs the transaction.
 7. `compose.yml`: the `worker` (`messenger:consume async`) and `outbox-relay`
-   (`lychen:event-bus:relay`) services, on the api's image and environment.
+   (`lychen:event-bus:relay`) services, on the api's image and environment, with `init: true`.
 8. `projects/common/rabbitmq/subscriptions.conf`: one line per event the service consumes.
 
 ## Running it
@@ -223,14 +232,21 @@ flora-api (producer) and tera-api (consumer and producer) are wired this way.
   `messenger:failed:retry`: it keeps its event id, so the inbox still deduplicates it.
 - `lychen:event-bus:purge` keeps the two tables small; nothing schedules it yet.
 - The relay stops between two batches on SIGTERM when PHP has the pcntl extension, which the
-  API images lack: `docker stop` then kills it mid-batch. That is safe: the batch's
+  API images lack: SIGTERM then ends it at once (`init: true` keeps php from being PID 1,
+  which would ignore the signal until the SIGKILL 10 s later). That is safe: the batch's
   transaction rolls back, and at worst an event already confirmed is published again.
+- Deploy the broker before a new subscription's producer: until the binding exists, the
+  broker confirms the producer's events and drops them, as nothing routes them (they are not
+  published as mandatory), and the relay marks them published.
 
 ## Limits
 
 - PostgreSQL only: the inbox uses `INSERT ... ON CONFLICT DO NOTHING`, the relay
   `FOR UPDATE SKIP LOCKED`.
 - One entity manager: the events must be written by the connection of the business change.
+- One event that can never be published (the broker refusing it every time) holds back the
+  ones recorded after it: each batch starts again from the oldest unpublished event. There is
+  no parking of a poison event yet.
 - RabbitMQ also dead-letters into `<service>.events.dlq` one copy of every failed attempt,
   retried ones included: Messenger rejects the message it has just re-published for retry,
   and the queues dead-letter what is rejected. `messenger:failed:*` is the reliable view of

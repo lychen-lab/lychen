@@ -40,8 +40,10 @@ services:
   # environment. Both start once the api is healthy: its entrypoint has migrated
   # the database by then. They skip that entrypoint (docker-php-entrypoint is the
   # PHP image's own), so that only one container ever migrates; and the image's
-  # healthcheck, which probes FrankenPHP, does not apply to them. Each stops after
-  # an hour and is restarted, which bounds its memory.
+  # healthcheck, which probes FrankenPHP, does not apply to them. `init` puts an
+  # init process in front of php, which as PID 1 would ignore the SIGTERM of
+  # `docker stop` and be killed 10 s later. Each stops after an hour and is
+  # restarted, which bounds its memory.
   #
   # worker: consumes flora.events, the events flora subscribes to and its own
   # background work, each in a transaction with its inbox record.
@@ -55,6 +57,7 @@ services:
     healthcheck:
       disable: true
     image: ${IMAGES_PREFIX:-}flora-api:${IMAGE_TAG:-latest}
+    init: true
     restart: unless-stopped
 
   # outbox-relay: publishes the events flora records in its outbox, once committed.
@@ -68,6 +71,7 @@ services:
     healthcheck:
       disable: true
     image: ${IMAGES_PREFIX:-}flora-api:${IMAGE_TAG:-latest}
+    init: true
     restart: unless-stopped
 
   redis:

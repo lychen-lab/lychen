@@ -6,6 +6,7 @@ use App\Entity\SeedStock;
 use App\Entity\SeedStockEntry;
 use App\Event\Incoming\Flora\SeedLotGiven;
 use App\Event\Incoming\Flora\SeedLotGivenHandler;
+use App\Event\Outgoing\SeedStockEntryAdded;
 use App\Factory\PersonFactory;
 use App\Factory\SeedStockFactory;
 use App\Tests\Utils\Abstract\AbstractApiTestCase;
@@ -116,6 +117,33 @@ class SeedLotGivenHandlerTest extends AbstractApiTestCase
 
         $this->transport('async')->acknowledged()->assertContains(UnknownEvent::class, 1);
         self::assertCount(0, $this->entityManager()->getRepository(ProcessedEvent::class)->findAll());
+    }
+
+    public function testAnEventWithAClassButNoHandlerIsAcknowledgedUnhandled(): void
+    {
+        // tera's own event, as a binding left over from `tera.#` would route it back to tera:
+        // tera declares its class (it publishes it) but handles it nowhere.
+        $this->transport('async')->send([
+            'body' => json_encode([
+                'seedStockEntry' => '01M6X60GK6H23GGJAK9HGVB2YH',
+                'seedStock' => '01M6X60GK6H23GGJAK9HGVB2YG',
+                'owner' => 'member-1',
+                'variety' => 'Fève',
+                'quantityInGrams' => 120,
+                'receivedFromSeedLot' => null,
+                'addedAt' => '2026-11-08T10:00:00+00:00',
+            ], \JSON_THROW_ON_ERROR),
+            'headers' => [
+                'type' => 'tera.seed_stock.entry_added.v1',
+                'event_id' => (string) Uuid::v7(),
+                'event_producer' => 'tera',
+                'Content-Type' => 'application/json',
+            ],
+        ]);
+        $this->transport('async')->throwExceptions()->process();
+
+        $this->transport('async')->acknowledged()->assertContains(SeedStockEntryAdded::class, 1);
+        $this->transport('async')->rejected()->assertEmpty();
     }
 
     public function testARetryKeepsTheEventsIdentity(): void

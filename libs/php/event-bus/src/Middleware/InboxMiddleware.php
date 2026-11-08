@@ -11,6 +11,7 @@ use Lychen\EventBus\Stamp\IntegrationEventStamp;
 use Psr\Clock\ClockInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
 use Symfony\Component\Messenger\Stamp\ReceivedStamp;
@@ -38,6 +39,10 @@ use Symfony\Component\Messenger\Stamp\ReceivedStamp;
  * broker deliver the event again, and that second delivery hits the primary key. Two workers
  * receiving the same event at once serialize on that key: the second waits for the first to
  * commit (then skips) or roll back (then handles it).
+ *
+ * An event the service declares a class for but no handler (its own event, routed back to it
+ * by a binding left over from before `<service>.internal.#`) is acknowledged with a warning,
+ * as an UnknownEvent is, rather than failed after every retry.
  *
  * Only messages received from a transport and carrying an IntegrationEventStamp are concerned.
  */
@@ -74,7 +79,13 @@ final readonly class InboxMiddleware implements MiddlewareInterface
             return $envelope;
         }
 
-        return $stack->next()->handle($envelope, $stack);
+        try {
+            return $stack->next()->handle($envelope, $stack);
+        } catch (NoHandlerForMessageException) {
+            $this->logger?->warning('No handler of this service handles the event type {type}: event {id} is acknowledged without being handled. Add a handler, or remove the binding that routes it here.', ['id' => $event->eventId, 'type' => $event->type]);
+
+            return $envelope;
+        }
     }
 
     private function connection(): Connection

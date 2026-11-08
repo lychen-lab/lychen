@@ -5,6 +5,7 @@ namespace Lychen\EventBus;
 use Lychen\EventBus\Command\PurgeCommand;
 use Lychen\EventBus\Command\RelayCommand;
 use Lychen\EventBus\Handler\UnknownEventHandler;
+use Lychen\EventBus\Middleware\ForeignMessageGuardMiddleware;
 use Lychen\EventBus\Middleware\InboxMiddleware;
 use Lychen\EventBus\Outbox\Outbox;
 use Lychen\EventBus\Outbox\OutboxRelay;
@@ -30,6 +31,7 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
  * Service ids the API's config refers to:
  *
  * - `lychen_event_bus.serializer`: the transport serializer (EventSerializer).
+ * - `lychen_event_bus.middleware.guard`: refuses what another domain may not send, first on the bus.
  * - `lychen_event_bus.middleware.inbox`: the inbox middleware, after `doctrine_transaction`.
  * - `lychen_event_bus.retry_strategy`: the transport's retry strategy (retry_delays).
  *
@@ -77,6 +79,9 @@ final class LychenEventBusBundle extends AbstractBundle
 
         $services->set('lychen_event_bus.serializer', EventSerializer::class)
             ->args([service('messenger.transport.symfony_serializer')]);
+
+        $services->set('lychen_event_bus.middleware.guard', ForeignMessageGuardMiddleware::class)
+            ->args([$config['producer']]);
 
         $services->set('lychen_event_bus.middleware.inbox', InboxMiddleware::class)
             ->args([service('doctrine'), service('clock'), $logger])

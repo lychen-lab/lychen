@@ -91,7 +91,11 @@ final readonly class WorkflowTransitionProcessor implements ProcessorInterface
         $connection = $manager->getConnection();
         $connection->beginTransaction();
         try {
-            $manager->refresh($data, LockMode::PESSIMISTIC_WRITE);
+            // lock() locks the entity's own row only (SELECT 1 ... FOR UPDATE), where
+            // refresh($data, PESSIMISTIC_WRITE) would lock the query that also joins its eager
+            // relations, which PostgreSQL refuses on the nullable side of a LEFT JOIN.
+            $manager->lock($data, LockMode::PESSIMISTIC_WRITE);
+            $manager->refresh($data);
 
             if (!$workflow->can($data, $transition)) {
                 $reasons = array_map(
