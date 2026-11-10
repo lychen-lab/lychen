@@ -467,31 +467,44 @@ To make another resource live: publish it from a listener like
 For another API, repeat the bundle setup with that API's tenant keys and its issuer,
 `urn:lychen:<tenant>-api`.
 
-## flora-api's SQL Server connection
+## flora-api's SQL Server database
 
 Besides its Postgres `default` connection, flora-api has a second Doctrine
-connection, `sqlserver`, used through DBAL only: no entity manager maps it. Inject
-it as `#[Target('sqlserver')] Doctrine\DBAL\Connection $connection` (or a
-`Connection $sqlserverConnection` argument), or query it with
-`bin/console dbal:run-sql --connection=sqlserver "…"`. It reads
-`SQLSERVER_DATABASE_URL`, shaped `mssql://<user>:<password>@<host>:1433/<database>`.
+connection and entity manager, both named `sqlserver`, reading
+`SQLSERVER_DATABASE_URL` (shaped `mssql://<user>:<password>@<host>:1433/<database>`).
+An empty URL means there is no SQL Server in that environment.
 
+- **Entities:** `src/SqlServer/Entity` (today `PlantObservation`) belongs to the
+  `sqlserver` entity manager, `src/Entity` to the default one; each only reads its
+  own folder. Their repositories resolve the right manager by themselves; elsewhere,
+  ask for it by name (`$doctrine->getManager('sqlserver')`): a plain
+  `EntityManagerInterface` is the Postgres one. Raw DBAL is
+  `#[Target('sqlserver')] Doctrine\DBAL\Connection $connection`.
+- **Migrations:** in `migrations/SqlServer`, with their own configuration,
+  [`config/migrations/sqlserver.php`](../projects/flora/api/config/migrations/sqlserver.php),
+  which every migrations command for SQL Server takes:
+  `bin/console doctrine:migrations:diff --configuration=config/migrations/sqlserver.php --em=sqlserver`
+  (same for `migrate`, `status`…). The entrypoint migrates SQL Server at boot, after
+  Postgres, whenever `SQLSERVER_DATABASE_URL` is set.
 - **Dev:** `moon flora-api:dev` also starts SQL Server 2025, Developer edition: the
   `sqlserver` service of
   [`compose.override.yml`](../projects/flora/api/compose.override.yml), user `sa`,
-  on host port `21433`. Its healthcheck creates the `app` database, and the URL
-  defaults to it. Microsoft publishes amd64 images only: on Apple silicon, Docker
-  Desktop runs it through Rosetta.
-- **CI:** no SQL Server. Doctrine connects lazily, so nothing reaches for it until
-  code uses the connection.
+  on host port `21433`. Its healthcheck creates the `app` database, the API waits
+  for it and the override points the URL at it. Microsoft publishes amd64 images
+  only: on Apple silicon, Docker Desktop runs it through Rosetta. The entrypoint is
+  baked into the dev image: rebuild it (`docker compose -p flora-api build api`)
+  for the SQL Server migrations to run at boot.
+- **CI:** no SQL Server, an empty URL. Doctrine connects lazily, so the suite only
+  checks the `sqlserver` mapping (`SqlServerMappingTest`), not its database.
 
 > **Runtime config (Dokploy, outside this repo):** `compose.yml` deploys no SQL
-> Server, and the URL it falls back to is the dev one. Before any code uses the
-> connection, staging and production must set `SQLSERVER_DATABASE_URL` on
-> flora-api's Dokploy compose to a server of their own (the Developer edition is
-> not licensed for production). ODBC Driver 18 encrypts and verifies the server
-> certificate by default: append `?driverOptions[TrustServerCertificate]=1` only
-> for a self-signed one, as the dev URL does.
+> Server and leaves the URL empty, so staging and production run without one, and
+> nothing may use the `sqlserver` entities there yet. To give them a server, set
+> `SQLSERVER_DATABASE_URL` on flora-api's Dokploy compose (the Developer edition is
+> not licensed for production): the next boot migrates it. ODBC Driver 18 encrypts
+> and verifies the server certificate by default: append
+> `?driverOptions[TrustServerCertificate]=1` only for a self-signed one, as the dev
+> URL does.
 
 ## Prefer a forward fix
 

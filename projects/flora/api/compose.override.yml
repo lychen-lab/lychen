@@ -15,8 +15,13 @@ services:
     build:
       context: .
       target: frankenphp_dev
+    # The entrypoint migrates SQL Server too once SQLSERVER_DATABASE_URL is set.
+    depends_on:
+      sqlserver:
+        condition: service_healthy
     environment:
       SERVER_NAME: api.flora.lychen.local, api:80
+      SQLSERVER_DATABASE_URL: ${SQLSERVER_DATABASE_URL:-mssql://sa:${MSSQL_SA_PASSWORD:-PasswordForLocal!}@sqlserver:1433/${MSSQL_DB:-app}?driverOptions[TrustServerCertificate]=1}
       XDEBUG_MODE: '${XDEBUG_MODE:-off}'
     extra_hosts:
       - host.docker.internal:host-gateway

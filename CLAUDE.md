@@ -170,8 +170,9 @@ make phpunit c="--group e2e"                         # Run by group
 - FrankenPHP as PHP runtime in Docker; PostgreSQL for storage; Redis for cache
 - Each API project has its own `compose.yml` (Postgres + Redis) for local
   development; RabbitMQ, Mercure and mailpit are shared via the `lychen-network`
-- flora-api also has a second Doctrine connection, `sqlserver` (SQL Server, DBAL
-  only, dev server in its `compose.override.yml`): see `docs/deployment.md`
+- flora-api also has a SQL Server database: a second Doctrine connection and entity
+  manager, `sqlserver`, for the entities of `src/SqlServer/Entity`, with their own
+  migrations configuration (`config/migrations/sqlserver.php`): see `docs/deployment.md`
 
 ### Monorepo Wiring
 

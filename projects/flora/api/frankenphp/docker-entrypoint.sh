@@ -34,6 +34,30 @@ if [ "$1" = 'frankenphp' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 		fi
 	fi
 
+	# SQL Server (the `sqlserver` entity manager), only where it is configured: dev
+	# sets the URL, CI leaves it empty, staging and production once they have a server.
+	if [ -n "${SQLSERVER_DATABASE_URL:-}" ]; then
+		echo 'Waiting for SQL Server to be ready...'
+		ATTEMPTS_LEFT_TO_REACH_SQLSERVER=5
+		until [ $ATTEMPTS_LEFT_TO_REACH_SQLSERVER -eq 0 ] || SQLSERVER_ERROR=$(php bin/console dbal:run-sql -q --connection=sqlserver "SELECT 1" 2>&1); do
+			if [ $? -eq 255 ]; then
+				ATTEMPTS_LEFT_TO_REACH_SQLSERVER=0
+				break
+			fi
+			sleep 1
+			ATTEMPTS_LEFT_TO_REACH_SQLSERVER=$((ATTEMPTS_LEFT_TO_REACH_SQLSERVER - 1))
+			echo "Still waiting for SQL Server to be ready... $ATTEMPTS_LEFT_TO_REACH_SQLSERVER attempts left."
+		done
+
+		if [ $ATTEMPTS_LEFT_TO_REACH_SQLSERVER -eq 0 ]; then
+			echo 'SQL Server is not up or not reachable:'
+			echo "$SQLSERVER_ERROR"
+			exit 1
+		fi
+
+		php bin/console doctrine:migrations:migrate --no-interaction --all-or-nothing --configuration=config/migrations/sqlserver.php --em=sqlserver
+	fi
+
 	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
 	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
 
