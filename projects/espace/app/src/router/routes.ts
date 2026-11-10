@@ -3,10 +3,8 @@ import { ROUTE_HOME } from '@/views/home';
 import { ROUTE_LAND_PROPOSALS } from '@/views/land-proposals';
 import { ROUTE_LAND_REQUESTS } from '@/views/land-requests';
 import { ROUTE_FAVORITES } from '@/views/favorites';
-import { ROUTE_CHATS } from '@/views/chats';
 import { ROUTE_LAND_PROPOSAL } from '@/views/land-proposal';
 import { ROUTE_LAND_REQUEST } from '@/views/land-request';
-import { ROUTE_CHAT } from '@/views/chat';
 import zitadelAuth from '@lychen/typescript-zitadel/ZitadelAuth';
 
 const routes: RouteRecordRaw[] = [
@@ -25,10 +23,8 @@ const routes: RouteRecordRaw[] = [
       ROUTE_LAND_PROPOSALS,
       ROUTE_LAND_REQUESTS,
       ROUTE_FAVORITES,
-      ROUTE_CHATS,
       ROUTE_LAND_PROPOSAL,
       ROUTE_LAND_REQUEST,
-      ROUTE_CHAT,
     ],
   },
   {

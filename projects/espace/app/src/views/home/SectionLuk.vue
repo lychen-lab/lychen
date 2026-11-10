@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row items-center gap-4">
-    <div class="bg-surface-container rounded-full p-2 text-emerald-700">
+    <div class="rounded-full bg-surface-container p-2 text-emerald-700">
       <slot name="icon" />
     </div>
     <div>

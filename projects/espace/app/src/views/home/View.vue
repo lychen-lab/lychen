@@ -1,125 +1,148 @@
 <template>
-  <header class="flex flex-row items-center justify-between">
-    <div class="font-lexend flex flex-row items-center gap-0">
-      <span class="text-on-surface font-medium tracking-normal">espace</span>
-      <span class="text-on-surface/40">.lychen</span>
-    </div>
-    <div class="bg-primary size-8 rounded-full"></div>
+  <header class="flex flex-row items-center font-lexend">
+    <span class="font-medium tracking-normal text-on-surface">espace</span>
+    <span class="text-on-surface/40">.lychen</span>
   </header>
-  <section class="relative flex h-[500px] flex-col gap-4 rounded-4xl">
+  <section class="relative flex h-125 flex-col gap-4 rounded-4xl">
     <img
       src="https://res.cloudinary.com/ddhvfiezg/image/upload/v1768572225/019bc71e-9a9d-7b3c-9478-f855ba60f20c.jpg"
       alt=""
-      class="absolute z-2 h-full w-full rounded-4xl object-cover"
-      loading="lazy"
+      class="absolute z-2 size-full rounded-4xl object-cover"
       decoding="async"
     />
-    <div class="z-3 flex h-full flex-col items-end justify-end gap-2 p-6">
-      <h1 class="text-4xl font-bold text-white">Cultiver quelque chose de beau ensemble.</h1>
-      <p class="text-md text-white opacity-80">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.
-      </p>
+    <div class="z-3 flex h-full flex-col justify-end gap-2 p-6">
+      <h1 class="text-4xl font-bold text-white">{{ t('hero.title') }}</h1>
+      <p class="text-md text-white opacity-80">{{ t('hero.description') }}</p>
     </div>
   </section>
   <section class="flex flex-col gap-4">
-    <h2 class="text-xl font-bold">Comment voulez-vous commencer ?</h2>
-    <div class="flex flex-row gap-2">
-      <div class="flex flex-col gap-10 rounded-2xl bg-amber-700 p-6 text-amber-50">
+    <h2 class="text-xl font-bold">{{ t('start.title') }}</h2>
+    <div class="grid grid-cols-2 gap-2">
+      <RouterLink
+        :to="{ name: ROUTE_LAND_REQUESTS.name }"
+        class="flex flex-col justify-between gap-10 rounded-2xl bg-amber-700 p-6 text-amber-50"
+      >
         <IconFence />
         <div>
-          <p class="text-lg leading-5 font-bold">I have space to share</p>
-          <small class="text-xs opacity-70">Host a grower</small>
+          <p class="text-lg leading-5 font-bold">{{ t('start.share.title') }}</p>
+          <small class="text-xs opacity-70">{{ t('start.share.description') }}</small>
         </div>
-      </div>
-      <div class="flex flex-col gap-10 rounded-2xl bg-emerald-700 p-6 text-emerald-50">
+      </RouterLink>
+      <RouterLink
+        :to="{ name: ROUTE_LAND_PROPOSALS.name }"
+        class="flex flex-col justify-between gap-10 rounded-2xl bg-emerald-700 p-6 text-emerald-50"
+      >
         <IconSearch />
         <div>
-          <p class="text-lg leading-5 font-bold">I'm looking for a space</p>
-          <small class="text-xs opacity-70">Start growing</small>
+          <p class="text-lg leading-5 font-bold">{{ t('start.search.title') }}</p>
+          <small class="text-xs opacity-70">{{ t('start.search.description') }}</small>
         </div>
-      </div>
+      </RouterLink>
     </div>
   </section>
-  <section class="flex flex-col items-center gap-6">
-    <h2 class="text-xl font-bold">Comment ça marche</h2>
+  <section class="flex flex-col gap-6">
+    <h2 class="text-center text-xl font-bold">{{ t('how.title') }}</h2>
     <SectionLuk
-      title="1. Découvre"
-      description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod."
+      :title="t('how.discover.title')"
+      :description="t('how.discover.description')"
     >
       <template #icon>
         <IconCompass />
       </template>
     </SectionLuk>
     <SectionLuk
-      title="2. Connecte"
-      description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod."
+      :title="t('how.connect.title')"
+      :description="t('how.connect.description')"
     >
       <template #icon>
         <IconHeartHandshake />
       </template>
     </SectionLuk>
     <SectionLuk
-      title="3. Cultive"
-      description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod."
+      :title="t('how.grow.title')"
+      :description="t('how.grow.description')"
     >
       <template #icon>
         <IconSprout />
       </template>
     </SectionLuk>
   </section>
-  <section>
-    <div class="flex flex-row items-center justify-between">
-      <h2 class="text-xl font-bold">Derniers terrains</h2>
-      <Button>Voir tout</Button>
-    </div>
-    <div class="flex flex-row gap-4 overflow-x-scroll py-2">
-      <RouterLink
-        v-for="proposal in fakeLandProposals"
-        :key="proposal.uuid"
-        :to="{ name: ROUTE_LAND_PROPOSAL.name, params: { uuid: proposal.uuid } }"
-      >
-        <LandProposalCard v-bind="proposal" />
+  <section class="flex flex-col gap-2">
+    <div class="flex flex-row items-center justify-between gap-2">
+      <h2 class="text-xl font-bold">{{ t('latest.title') }}</h2>
+      <RouterLink :to="{ name: ROUTE_LAND_PROPOSALS.name }">
+        <Button size="sm">{{ t('latest.see_all') }}</Button>
       </RouterLink>
     </div>
+    <QueryState
+      :is-pending="isPending"
+      :is-error="isError"
+      :is-empty="proposals.length === 0"
+      :empty-text="t('latest.empty')"
+      :error-text="t('latest.error')"
+      @retry="refetch()"
+    >
+      <div class="-mx-4 flex flex-row gap-4 overflow-x-auto px-4 py-2">
+        <RouterLink
+          v-for="proposal in proposals"
+          :key="proposal.uuid"
+          :to="{ name: ROUTE_LAND_PROPOSAL.name, params: { uuid: proposal.uuid } }"
+          class="flex"
+        >
+          <Card
+            v-bind="proposal"
+            :clickable="true"
+            :display-city="true"
+          />
+        </RouterLink>
+      </div>
+    </QueryState>
   </section>
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue';
+import { RouterLink } from 'vue-router';
+import { useQuery, useQueryClient } from '@tanstack/vue-query';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { MESSAGES, TRANSLATION_KEY } from './i18n';
-import IconFence from '@lychen/vue-icons/IconFence.vue';
-import IconSearch from '@lychen/vue-icons/IconSearch.vue';
+import { useEspaceApi } from '@lychen/vue-espace/composables/use-espace-api/useEspaceApi';
+import { useEspaceMercure } from '@lychen/vue-espace/composables/use-espace-mercure/useEspaceMercure';
+import { Card } from '@lychen/vue-components-business/land-proposal/card';
+import Button from '@lychen/vue-components-core/button/Button.vue';
 import IconCompass from '@lychen/vue-icons/IconCompass.vue';
-import IconSprout from '@lychen/vue-icons/IconSprout.vue';
+import IconFence from '@lychen/vue-icons/IconFence.vue';
 import IconHeartHandshake from '@lychen/vue-icons/IconHeartHandshake.vue';
+import IconSearch from '@lychen/vue-icons/IconSearch.vue';
+import IconSprout from '@lychen/vue-icons/IconSprout.vue';
+import QueryState from '@/components/QueryState.vue';
+import { PLACE_PUBLISHED, toLandProposalCard } from '@/helpers/cards';
 import SectionLuk from '@/views/home/SectionLuk.vue';
-import { Card as LandProposalCard } from '@lychen/vue-components-business/land-proposal/card';
 import { ROUTE_LAND_PROPOSAL } from '@/views/land-proposal';
+import { ROUTE_LAND_PROPOSALS } from '@/views/land-proposals';
+import { ROUTE_LAND_REQUESTS } from '@/views/land-requests';
+import { MESSAGES, TRANSLATION_KEY } from './i18n';
 
-useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
+const LATEST_COUNT = 6;
 
-const fakeLandProposals = [
-  {
-    uuid: '1',
-    title: 'Terrain de culture',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante feugiat finibus. Nullam nec metus vel ante feugiat finibus.',
-    surface: 130,
-    altitude: 678,
-    city: 'Lille',
-    image: 'https://images.pexels.com/photos/59321/pexels-photo-59321.jpeg',
+const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
+
+const { api } = useEspaceApi();
+
+const { data, isPending, isError, refetch } = useQuery({
+  queryKey: ['area-proposals', 'latest'],
+  queryFn: async () => {
+    const response = await api.apiAreaProposalsGetCollection({
+      query: { place: PLACE_PUBLISHED, 'order[createdAt]': 'desc', itemsPerPage: LATEST_COUNT },
+    });
+    return response.data;
   },
-  {
-    uuid: '2',
-    title: 'Cave à champignons',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante feugiat finibus. Nullam nec metus vel ante feugiat finibus.',
-    surface: 40,
-    altitude: 150,
-    city: 'Toulouse',
-    image: 'https://images.pexels.com/photos/2499862/pexels-photo-2499862.jpeg',
-  },
-];
+});
+
+// A proposal published, edited or deleted while the screen is open.
+const queryClient = useQueryClient();
+useEspaceMercure([{ match: '/api/area_proposals/:uuid', matchType: 'urlpattern' }], () =>
+  queryClient.invalidateQueries({ queryKey: ['area-proposals'] }),
+);
+
+const proposals = computed(() => data.value?.member.map(toLandProposalCard) ?? []);
 </script>
-
-<style lang="css" scoped></style>
