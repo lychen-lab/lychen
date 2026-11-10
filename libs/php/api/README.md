@@ -110,6 +110,13 @@ points `item_uri_template` at the resource's item GET, since a `Patch` cannot de
 Conflict, with the workflow's reasons. flora-api's `SeedLot` (reserve, release, give) is
 the example.
 
+A transition that needs data names an input DTO in place of `input: false`, marked
+`#[Map(target: Entity::class)]` like a Post or Patch DTO. API Platform deserializes and
+validates it (422), then the processor maps it onto the entity before asking the workflow,
+so that a guard can require what was sent. On a 409 nothing is persisted, the input
+included. espace-api's `reject` transitions (`AreaProposalReject`: the rejection reason)
+are the example.
+
 ## Wiring an API
 
 1. `composer.json`: require `"lychen/api": "*"` and add it to the `versions` of the
