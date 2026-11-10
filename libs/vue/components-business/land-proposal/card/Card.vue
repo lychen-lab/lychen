@@ -17,7 +17,7 @@
         class="bg-surface text-on-surface absolute top-2 right-2"
         icon-only
         size="xs"
-        @click.stop="emit('favorite')"
+        @click.stop.prevent="emit('favorite')"
         ><template #icon
           ><IconHeart
             v-if="!isFavorite"
@@ -34,7 +34,7 @@
     </div>
     <div class="flex grow flex-col justify-between gap-4 p-4">
       <div class="flex flex-col gap-1">
-        <h3 class="font-bold">{{ title }}</h3>
+        <h3 class="line-clamp-3 font-bold">{{ title }}</h3>
         <p class="line-clamp-3 text-sm opacity-70">{{ description }}</p>
       </div>
       <div class="flex items-center gap-4 text-xs">
