@@ -7,7 +7,9 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
 
-    $parameters->set('locale', 'fr');
+    // The API's domain: lychen/config names its RabbitMQ queue and routing keys
+    // (`flora.events`, `flora.internal.message.v1`) after it.
+    $parameters->set('lychen.service', 'flora');
 
     $services = $containerConfigurator->services();
 

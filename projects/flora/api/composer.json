@@ -21,6 +21,7 @@
     "doctrine/orm": "3.7.*",
     "gedmo/doctrine-extensions": "3.22.*",
     "lychen/api": "*",
+    "lychen/config": "*",
     "lychen/core": "*",
     "lychen/model": "*",
     "lychen/tiptap": "*",
@@ -90,6 +91,7 @@
         "symlink": false,
         "versions": {
           "lychen/api": "0.0.0",
+          "lychen/config": "0.0.0",
           "lychen/model": "0.0.0",
           "lychen/test": "0.0.0",
           "lychen/zitadel": "0.0.0",

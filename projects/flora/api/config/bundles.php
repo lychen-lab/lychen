@@ -21,4 +21,5 @@ return [
     Lychen\UtilZitadelBundle\UtilZitadelBundle::class => ['all' => true],
     Lychen\CoreBundle\CoreBundle::class => ['all' => true],
     Lychen\Api\LychenApiBundle::class => ['all' => true],
+    Lychen\Config\LychenConfig::class => ['all' => true],
 ];

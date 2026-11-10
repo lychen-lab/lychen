@@ -1,5 +1,6 @@
 dependsOn:
   - lychen-php-api
+  - lychen-php-config
   - lychen-php-core
   - lychen-php-model
   - lychen-php-test
