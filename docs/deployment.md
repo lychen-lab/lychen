@@ -467,6 +467,32 @@ To make another resource live: publish it from a listener like
 For another API, repeat the bundle setup with that API's tenant keys and its issuer,
 `urn:lychen:<tenant>-api`.
 
+## flora-api's SQL Server connection
+
+Besides its Postgres `default` connection, flora-api has a second Doctrine
+connection, `sqlserver`, used through DBAL only: no entity manager maps it. Inject
+it as `#[Target('sqlserver')] Doctrine\DBAL\Connection $connection` (or a
+`Connection $sqlserverConnection` argument), or query it with
+`bin/console dbal:run-sql --connection=sqlserver "…"`. It reads
+`SQLSERVER_DATABASE_URL`, shaped `mssql://<user>:<password>@<host>:1433/<database>`.
+
+- **Dev:** `moon flora-api:dev` also starts SQL Server 2025, Developer edition: the
+  `sqlserver` service of
+  [`compose.override.yml`](../projects/flora/api/compose.override.yml), user `sa`,
+  on host port `21433`. Its healthcheck creates the `app` database, and the URL
+  defaults to it. Microsoft publishes amd64 images only: on Apple silicon, Docker
+  Desktop runs it through Rosetta.
+- **CI:** no SQL Server. Doctrine connects lazily, so nothing reaches for it until
+  code uses the connection.
+
+> **Runtime config (Dokploy, outside this repo):** `compose.yml` deploys no SQL
+> Server, and the URL it falls back to is the dev one. Before any code uses the
+> connection, staging and production must set `SQLSERVER_DATABASE_URL` on
+> flora-api's Dokploy compose to a server of their own (the Developer edition is
+> not licensed for production). ODBC Driver 18 encrypts and verifies the server
+> certificate by default: append `?driverOptions[TrustServerCertificate]=1` only
+> for a self-signed one, as the dev URL does.
+
 ## Prefer a forward fix
 
 A rollback is a stopgap. Once the incident is contained, revert the bad change on

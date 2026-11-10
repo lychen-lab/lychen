@@ -13,6 +13,13 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                     'driver' => 'pdo_pgsql',
                     'url' => '%env(resolve:DATABASE_URL)%',
                 ],
+                // SQL Server, through DBAL only: no entity manager maps it. Inject
+                // it as `#[Target('sqlserver')] Doctrine\DBAL\Connection $connection`
+                // (or a `Connection $sqlserverConnection` argument).
+                'sqlserver' => [
+                    'driver' => 'pdo_sqlsrv',
+                    'url' => '%env(resolve:SQLSERVER_DATABASE_URL)%',
+                ],
             ],
             'default_connection' => 'default',
         ],
@@ -72,8 +79,15 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     if ('test' === $containerConfigurator->env()) {
         $containerConfigurator->extension('doctrine', [
             'dbal' => [
-                'dbname_suffix' => '_test%env(default::TEST_TOKEN)%',
-                'schema_filter' => '~^(?!(doctrine_|messenger_))~',
+                'connections' => [
+                    'default' => [
+                        'dbname_suffix' => '_test%env(default::TEST_TOKEN)%',
+                        'schema_filter' => '~^(?!(doctrine_|messenger_))~',
+                    ],
+                    'sqlserver' => [
+                        'dbname_suffix' => '_test%env(default::TEST_TOKEN)%',
+                    ],
+                ],
             ],
         ]);
     }

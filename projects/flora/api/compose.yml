@@ -27,6 +27,10 @@ services:
       MESSENGER_TRANSPORT_DSN: ${MESSENGER_TRANSPORT_DSN:-amqp://flora:flora@rabbitmq:5672/lychen}
       REDIS_URL: redis://redis:6379
       SERVER_NAME: ${SERVER_NAME:-localhost}, php:80
+      # The `sqlserver` Doctrine connection. The default is the dev-only service
+      # of compose.override.yml (CI never connects: the connection is lazy).
+      # Staging and production set SQLSERVER_DATABASE_URL on the Dokploy compose.
+      SQLSERVER_DATABASE_URL: ${SQLSERVER_DATABASE_URL:-mssql://sa:${MSSQL_SA_PASSWORD:-PasswordForLocal!}@sqlserver:1433/${MSSQL_DB:-app}?driverOptions[TrustServerCertificate]=1}
       TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-example\.com|localhost}|php$$}
       TRUSTED_PROXIES: ${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
     image: ${IMAGES_PREFIX:-}flora-api:${IMAGE_TAG:-latest}

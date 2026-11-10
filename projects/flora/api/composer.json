@@ -11,6 +11,7 @@
     "ext-exif": "*",
     "ext-libxml": "*",
     "ext-openssl": "*",
+    "ext-pdo_sqlsrv": "*",
     "ext-xml": "*",
     "api-platform/core": "5.0.*",
     "doctrine/annotations": "2.0.*",

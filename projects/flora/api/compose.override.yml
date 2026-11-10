@@ -43,6 +43,39 @@ services:
     networks:
       - lychen-network
 
+  # SQL Server behind the `sqlserver` Doctrine connection. Dev only: compose.yml
+  # (CI, staging, production) runs none, so staging and production point
+  # SQLSERVER_DATABASE_URL at their own server from the Dokploy compose.
+  sqlserver:
+    environment:
+      ACCEPT_EULA: 'Y'
+      # Read by the healthcheck only, the image itself has no database setting.
+      MSSQL_DB: ${MSSQL_DB:-app}
+      MSSQL_MEMORY_LIMIT_MB: ${MSSQL_MEMORY_LIMIT_MB:-2048}
+      # Free and complete, but not licensed for production.
+      MSSQL_PID: Developer
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-PasswordForLocal!}
+    healthcheck:
+      # Unlike Postgres' POSTGRES_DB, the image never creates the application
+      # database: the check does, idempotently, so healthy means it exists.
+      retries: 5
+      start_period: 60s
+      test: [ 'CMD-SHELL', '/opt/mssql-tools18/bin/sqlcmd -C -b -S localhost -U sa -P "$${MSSQL_SA_PASSWORD}" -Q "IF DB_ID(N''$${MSSQL_DB}'') IS NULL CREATE DATABASE [$${MSSQL_DB}]"' ]
+      timeout: 10s
+    image: mcr.microsoft.com/mssql/server:${MSSQL_VERSION:-2025}-latest
+    networks:
+      - lychen-network
+    # Microsoft publishes amd64 images only: on Apple silicon, Docker Desktop
+    # runs it through Rosetta.
+    platform: linux/amd64
+    ports:
+      - '21433:1433/tcp'
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
 networks:
   lychen-network:
     external: true
+
+volumes:
+  sqlserver_data:

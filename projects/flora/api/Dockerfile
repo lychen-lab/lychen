@@ -26,6 +26,7 @@ RUN set -eux; \
 		zip \
         curl \
         pdo_pgsql \
+		pdo_sqlsrv \
 	;
 
 RUN set -eux; \
