@@ -59,7 +59,12 @@ final class AreaProposalMercureListener implements ResetInterface
         $this->reset();
 
         foreach ($written as $areaProposal) {
-            $this->publisher->publish($this->objectMapper->map($areaProposal, AreaProposalResource::class));
+            $resource = $this->objectMapper->map($areaProposal, AreaProposalResource::class);
+            // The hub delivers a proposal's updates to every signed-in subscriber, whereas
+            // the rejection reason is for the proposer alone: they read it with a GET.
+            $resource->rejectionReason = null;
+
+            $this->publisher->publish($resource);
         }
 
         foreach ($removed as $uuid) {

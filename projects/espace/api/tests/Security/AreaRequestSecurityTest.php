@@ -28,7 +28,7 @@ class AreaRequestSecurityTest extends AbstractApiTestCase
         AreaRequestFactory::createOne(['requester' => $other, 'place' => AreaRequestWorkflow::PLACE_ACTIVE]);
         AreaRequestFactory::createOne(['requester' => $other, 'place' => AreaRequestWorkflow::PLACE_DRAFT]);
         AreaRequestFactory::createOne(['requester' => $other, 'place' => AreaRequestWorkflow::PLACE_PENDING_VALIDATION]);
-        AreaRequestFactory::createOne(['requester' => $other, 'place' => AreaRequestWorkflow::PLACE_REJECTED]);
+        AreaRequestFactory::createOne(['requester' => $other, 'place' => AreaRequestWorkflow::PLACE_ARCHIVED]);
 
         $this->browser()
             ->actingAs($user)

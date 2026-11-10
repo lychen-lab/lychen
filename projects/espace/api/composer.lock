@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2daec6aa3d1c64ad0de23ca100abfcad",
+    "content-hash": "6bc46826052cdd88e93ff3f1778236d0",
     "packages": [
         {
             "name": "api-platform/core",
@@ -1870,6 +1870,51 @@
                 }
             ],
             "time": "2026-10-10T09:42:14+00:00"
+        },
+        {
+            "name": "lychen/api",
+            "version": "0.0.0",
+            "dist": {
+                "type": "path",
+                "url": "../packages/api",
+                "reference": "54016cee29472a9808904efa084efb8a726c0e1e"
+            },
+            "require": {
+                "api-platform/core": "^5.0",
+                "doctrine/dbal": "^4.0",
+                "doctrine/orm": "^3.0",
+                "doctrine/persistence": "^3.3 || ^4.0",
+                "php": "^8.4",
+                "symfony/config": "^7.4 || ^8.0",
+                "symfony/dependency-injection": "^7.4 || ^8.0",
+                "symfony/http-kernel": "^7.4 || ^8.0",
+                "symfony/object-mapper": "^8.1.9",
+                "symfony/uid": "^7.4 || ^8.0",
+                "symfony/validator": "^7.4 || ^8.0",
+                "symfony/workflow": "^7.4 || ^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Lychen\\Api\\": "src/"
+                }
+            },
+            "archive": {
+                "exclude": [
+                    "/moon.yml"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Lychen",
+                    "email": "bonjour@lychen.org"
+                }
+            ],
+            "description": "Shared API Platform building blocks of the Lychen APIs: resources kept apart from the Doctrine model, relations exposed and written by uuid",
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
         },
         {
             "name": "lychen/config",
@@ -13997,5 +14042,5 @@
         "ext-xml": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }

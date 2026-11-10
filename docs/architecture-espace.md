@@ -81,12 +81,56 @@ When implementing a feature touching this domain:
 API resources are DTOs, not Doctrine entities: entities (`src/Entity`) only carry persistence, and each resource lives in `src/Api/Resource/<Name>/`.
 
 - **One read resource per entity**, declared with `stateOptions: new Options(entityClass: …)` and `#[Map(source: Entity::class)]`. Keep it the only class mapped _from_ that entity: Symfony registers a single reverse mapping per source class, so property-level `#[Map]` attributes on a second DTO are silently ignored.
-- **Writes go through input DTOs** (`Dto/<Name>Post`, `Dto/<Name>Patch`) marked `#[Map(target: Entity::class)]`. API Platform maps them onto the entity, persists it and maps the result back to the resource — no custom processor. Patch DTO properties stay uninitialized so that only the fields sent by the client are applied (merge-patch).
+- **Writes go through input DTOs** (`Dto/<Name>Post`, `Dto/<Name>Patch`) marked `#[Map(target: Entity::class)]`. API Platform maps them onto the entity, persists it and maps the result back to the resource. The only custom processors are the ones of the [listing lifecycle](#listing-lifecycle-and-moderation). Patch DTO properties stay uninitialized so that only the fields sent by the client are applied (merge-patch).
 - **Validation lives on the input DTOs**: API Platform validates the deserialized DTO, not the entity, so constraints declared on entities are not enforced by the API.
 - **Relations and computed fields use transforms**: `#[Map(source: 'relation', transform: …)]`. Dotted source paths (`relation.field`) resolve to `null` under the reverse mapping. Transforms that need services (e.g. activity codes → `AreaActivity`) implement `TransformCallableInterface`.
-- **Visibility is enforced in SQL** by `AreaVisibilityExtension`: reads return the public items (published proposals, active requests) plus the user's own, writes only reach the user's own; anything else answers 404.
-- **Filters** are declared with `QueryParameter` and API Platform's filters (`ExactFilter`, `PartialSearchFilter`, `SortFilter`); nested properties such as `activities.code` resolve against the entity.
+- **Visibility is enforced in SQL** by `AreaVisibilityExtension`: reads return the public items (published proposals, active requests) plus the user's own, writes only reach the user's own; anything else answers 404. Moderators get more, see [Listing lifecycle and moderation](#listing-lifecycle-and-moderation).
+- **Filters** are declared with `QueryParameter` and API Platform's filters (`ExactFilter`, `PartialSearchFilter`, `SortFilter`); nested properties such as `activities.code` resolve against the entity. `?mine=true` (`MineFilter`, the parameter's `property` naming the owner association) keeps the current user's own.
 - **Workflow diagrams**: a resource whose entity has a Symfony workflow exposes `GET /api/<resources>/{uuid}/workflow` (`WorkflowDiagramProvider`), the Mermaid flowchart of the profiler's Workflow panel with the item's current place outlined, for any front to render with mermaid.js. The entity is loaded like the resource's own Get, so the visibility rules above apply. Declare the operation after the plain `#[Get]` (IRIs are generated from the first one) with `map: false`.
+
+## Listing lifecycle and moderation
+
+An `AreaProposal` and an `AreaRequest` are both _listings_ (`AreaListingInterface`): created
+as a draft, submitted by their owner, then published or sent back by moderation. Each has its
+own Symfony workflow, with the same shape:
+
+| Transition            | `AreaProposal` (`area_proposal_publishing`) | `AreaRequest` (`area_request_validation`)   | Who       |
+| --------------------- | ------------------------------------------- | ------------------------------------------- | --------- |
+| `submit`              | `draft` → `verification`                    | `draft` → `pending_validation`              | owner     |
+| `publish` / `approve` | `verification` → `published`                | `pending_validation` → `active`             | moderator |
+| `reject`              | `verification` → `draft`                    | `pending_validation` → `draft`              | moderator |
+| `archive`             | `verification`, `published` → `archived`    | `pending_validation`, `active` → `archived` | owner     |
+
+- **One operation per transition**: `PATCH /api/area_proposals/{uuid}/<transition>` (and
+  `/api/area_requests/…`), handled by lychen/api's `WorkflowTransitionProcessor`. It answers
+  200 with the listing, or **409** when its current place does not allow the transition.
+  `reject` is the only one with a body, `{"rejectionReason": "…"}` (required, 422 otherwise);
+  the others take none.
+- **A rejected listing is a draft again**, with its `rejectionReason`: the owner fixes it and
+  submits it again, which clears the reason. A draft is only readable by its owner, so the
+  reason is too.
+- **Content can only be edited as a draft**: `PATCH /api/area_proposals/{uuid}` on any other
+  place is a 409 (`DraftContentProcessor`).
+- **`archive` sets `archivedAt`.**
+- **Moderators** hold the Zitadel role whose key is `ROLE_ESPACE_MODERATOR`
+  (`App\Security\Role::MODERATOR`; Zitadel role keys are copied as they are onto
+  `Person::$roles`). `AreaVisibilityExtension` lets them read the listings waiting for
+  moderation (`verification`, `pending_validation`) on top of what everyone reads, and apply
+  the moderation transitions to what they can read — nothing else: no edit, no deletion, none
+  of the owner's transitions on someone else's listing. For anyone else, a moderation
+  transition answers 404, their own listings included.
+- **404, 409, never 403**: what the user may not reach is a 404 (the restriction is in the
+  SQL query); what they reach but whose place does not allow the operation is a 409.
+- **The two screens are plain collection queries**: "my listings" is `?mine=true` (optionally
+  with `&place=`), the moderation queue is `?place=verification` (`?place=pending_validation`
+  for requests) as a moderator.
+- **The rules live in the domain, not in the API**: `AreaLifecycleSubscriber` binds them to the
+  workflows' events (a rejection needs a reason, submitting clears it, archiving dates the
+  listing), so they hold whoever applies a transition. `AreaLifecycle`
+  (`submit`, `accept`, `reject`, `archive`, `isEditable`) is the entry point of code that is not
+  an API operation: the activities of `ValidationAreaProposalWorkflow` and
+  `ValidationAreaRequestWorkflow` will call it as it is, then persist. Temporal does not
+  orchestrate the validation yet: until it does, the transitions above are the whole process.
 
 ## Real-time updates
 
@@ -104,6 +148,9 @@ on the `espace` tenant — see [deployment.md](deployment.md#central-mercure-hub
   `urn:lychen:espace-api`, `aud` the hub's public URL), `match` / `match_urlpattern`
   selectors, and the token in an `Authorization` header, never in the URL.
 - **Front:** `useEspaceMercure(matchers, onUpdate)` in `libs/vue/espace`.
+- **The rejection reason is never published**: every signed-in user may subscribe to the
+  proposals' topics, so an update carries the proposal without its `rejectionReason`. A
+  screen that sees its own proposal come back to `draft` reads the reason with a `GET`.
 - **Not a notification channel.** Mercure mirrors data to screens that are open; notifying
   a user still happens from activities, through Novu, as above.
 

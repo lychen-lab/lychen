@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints\Positive;
 
 #[ORM\Entity(repositoryClass: AreaRequestRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class AreaRequest extends AbstractIdOrmAndUuidApiIdentified
+class AreaRequest extends AbstractIdOrmAndUuidApiIdentified implements AreaListingInterface
 {
     use CreatedAtTrait;
 
@@ -42,6 +42,12 @@ class AreaRequest extends AbstractIdOrmAndUuidApiIdentified
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $archivedAt = null;
+
+    /**
+     * Why moderation sent the listing back to its owner; cleared when it is submitted again.
+     */
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $rejectionReason = null;
 
     /**
      * @var Collection<int, AreaActivity>
@@ -135,6 +141,18 @@ class AreaRequest extends AbstractIdOrmAndUuidApiIdentified
     public function setArchivedAt(?\DateTimeImmutable $archivedAt): static
     {
         $this->archivedAt = $archivedAt;
+
+        return $this;
+    }
+
+    public function getRejectionReason(): ?string
+    {
+        return $this->rejectionReason;
+    }
+
+    public function setRejectionReason(?string $rejectionReason): static
+    {
+        $this->rejectionReason = $rejectionReason;
 
         return $this;
     }
