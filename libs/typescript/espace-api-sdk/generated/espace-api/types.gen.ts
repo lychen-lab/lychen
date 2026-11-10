@@ -24,41 +24,58 @@ export type AreaActivityJsonld = HydraItemBaseSchema & {
     createdAt?: string | null;
 };
 
-export type AreaProposalAreaProposalCollectionJsonld = HydraItemBaseSchema & {
-    title?: string | null;
-    description?: string | null;
-    surfaceToShare?: number | null;
-    city?: string | null;
-    altitude?: number | null;
-    uuid?: string | null;
-    place?: string | null;
-    activities?: Array<string>;
-    proposerFirstName?: string | null;
-    proposerLastName?: string | null;
-    proposer?: PersonJsonld;
-};
-
+/**
+ * Keep this the only class mapped from the AreaProposal entity: Symfony registers a
+ * single reverse mapping per source class, so property-level #[Map] attributes of a
+ * second DTO would be ignored. Visibility is enforced by AreaVisibilityExtension.
+ */
 export type AreaProposalAreaProposalPatchJsonMergePatch = {
-    title?: string | null;
-    description?: string | null;
-    surfaceTotal?: number | null;
-    surfaceToShare?: number | null;
-    city?: string | null;
-    altitude?: number | null;
-    activities?: Array<string>;
+    title?: string;
+    description?: string;
+    surfaceTotal?: number;
+    surfaceToShare?: number;
+    city?: string;
+    altitude?: number;
+    activities?: Array<string> | null;
 };
 
+/**
+ * Keep this the only class mapped from the AreaProposal entity: Symfony registers a
+ * single reverse mapping per source class, so property-level #[Map] attributes of a
+ * second DTO would be ignored. Visibility is enforced by AreaVisibilityExtension.
+ */
 export type AreaProposalAreaProposalPost = {
-    uuid?: string | null;
-    title: string | null;
-    description: string | null;
-    surfaceTotal: number | null;
-    surfaceToShare: number | null;
-    city: string | null;
-    altitude: number | null;
+    uuid?: string;
+    title: string;
+    description: string;
+    surfaceTotal: number;
+    surfaceToShare: number;
+    city: string;
+    altitude: number;
     activities?: Array<string>;
 };
 
+/**
+ * Keep this the only class mapped from the AreaProposal entity: Symfony registers a
+ * single reverse mapping per source class, so property-level #[Map] attributes of a
+ * second DTO would be ignored. Visibility is enforced by AreaVisibilityExtension.
+ */
+export type AreaProposalWorkflowDiagramJsonld = HydraItemBaseSchema & {
+    /**
+     * Name of the Symfony workflow, e.g. `area_request_validation`.
+     */
+    name?: string;
+    /**
+     * Mermaid flowchart source: places are nodes, the initial one rounded, the current ones with a 4px border.
+     */
+    mermaid?: string;
+};
+
+/**
+ * Keep this the only class mapped from the AreaProposal entity: Symfony registers a
+ * single reverse mapping per source class, so property-level #[Map] attributes of a
+ * second DTO would be ignored. Visibility is enforced by AreaVisibilityExtension.
+ */
 export type AreaProposalJsonld = HydraItemBaseSchema & {
     title?: string | null;
     description?: string | null;
@@ -67,72 +84,74 @@ export type AreaProposalJsonld = HydraItemBaseSchema & {
     surfaceToShare?: number | null;
     city?: string | null;
     altitude?: number | null;
-    uuid?: string | null;
-    createdAt?: string | null;
-    place?: string | null;
-    activities?: Array<string>;
     proposerFirstName?: string | null;
     proposerLastName?: string | null;
-    proposer?: PersonJsonld;
-};
-
-export type AreaRequestAreaRequestAreaRequestCollectionJsonld = HydraItemBaseSchema & {
-    title?: string | null;
-    description?: string | null;
-    minimalSurfaceRequested?: number | null;
-    city?: string | null;
-    uuid?: string | null;
-    place?: string | null;
-    activities?: Array<string>;
-    requesterFirstName?: string | null;
-    requesterLastName?: string | null;
-    requester?: PersonJsonld;
-};
-
-export type AreaRequestAreaRequestAreaRequestPatchJsonMergePatch = {
-    title?: string | null;
-    description?: string | null;
-    minimalSurfaceRequested?: number | null;
-    city?: string | null;
-    activities?: Array<string>;
-};
-
-export type AreaRequestAreaRequestAreaRequestPost = {
-    uuid?: string | null;
-    title: string | null;
-    description: string | null;
-    minimalSurfaceRequested: number | null;
-    city: string | null;
-    activities?: Array<string>;
-};
-
-export type AreaRequestAreaRequestJsonld = HydraItemBaseSchema & {
-    title?: string | null;
-    description?: string | null;
-    archivedAt?: string | null;
-    minimalSurfaceRequested?: number | null;
-    city?: string | null;
     uuid?: string | null;
     createdAt?: string | null;
     place?: string | null;
     activities?: Array<string>;
-    requesterFirstName?: string | null;
-    requesterLastName?: string | null;
-    requester?: PersonJsonld;
 };
 
-export type AreaRequestJsonld = {
+/**
+ * Keep this the only class mapped from the AreaRequest entity: Symfony registers a
+ * single reverse mapping per source class, so property-level #[Map] attributes of a
+ * second DTO would be ignored. Visibility is enforced by AreaVisibilityExtension.
+ */
+export type AreaRequestAreaRequestPatchJsonMergePatch = {
     title?: string;
     description?: string;
-    place?: 'draft' | 'pending_validation' | 'active' | 'rejected' | 'archived';
-    requester?: PersonJsonld;
+    minimalSurfaceRequested?: number;
+    city?: string;
+    activities?: Array<string> | null;
+};
+
+/**
+ * Keep this the only class mapped from the AreaRequest entity: Symfony registers a
+ * single reverse mapping per source class, so property-level #[Map] attributes of a
+ * second DTO would be ignored. Visibility is enforced by AreaVisibilityExtension.
+ */
+export type AreaRequestAreaRequestPost = {
+    uuid?: string;
+    title: string;
+    description: string;
+    minimalSurfaceRequested: number;
+    city: string;
+    activities?: Array<string>;
+};
+
+/**
+ * Keep this the only class mapped from the AreaRequest entity: Symfony registers a
+ * single reverse mapping per source class, so property-level #[Map] attributes of a
+ * second DTO would be ignored. Visibility is enforced by AreaVisibilityExtension.
+ */
+export type AreaRequestWorkflowDiagramJsonld = HydraItemBaseSchema & {
+    /**
+     * Name of the Symfony workflow, e.g. `area_request_validation`.
+     */
+    name?: string;
+    /**
+     * Mermaid flowchart source: places are nodes, the initial one rounded, the current ones with a 4px border.
+     */
+    mermaid?: string;
+};
+
+/**
+ * Keep this the only class mapped from the AreaRequest entity: Symfony registers a
+ * single reverse mapping per source class, so property-level #[Map] attributes of a
+ * second DTO would be ignored. Visibility is enforced by AreaVisibilityExtension.
+ */
+export type AreaRequestJsonld = HydraItemBaseSchema & {
+    title?: string | null;
+    description?: string | null;
+    archivedAt?: string | null;
     minimalSurfaceRequested?: number | null;
     city?: string | null;
-    archivedAt?: string | null;
-    activities?: Array<EntityAreaActivityJsonld>;
-    createdAt?: string;
-    readonly id?: number;
-    uuid?: string;
+    requesterFirstName?: string | null;
+    requesterLastName?: string | null;
+    uuid?: string | null;
+    createdAt?: string | null;
+    place?: string | null;
+    activities?: Array<string>;
 };
 
 /**
@@ -165,13 +184,9 @@ export type ConstraintViolation = {
         };
     }>;
     readonly detail?: string;
-    readonly id?: string;
-    readonly description?: string;
     readonly type?: string;
     readonly title?: string | null;
     readonly instance?: string | null;
-    readonly statusCode?: number;
-    readonly headers?: Array<string | null>;
 };
 
 /**
@@ -204,43 +219,16 @@ export type ConstraintViolationJsonld = HydraItemBaseSchema & {
         };
     }>;
     readonly detail?: string;
-    readonly id?: string;
     readonly description?: string;
     readonly type?: string;
     readonly title?: string | null;
     readonly instance?: string | null;
-    readonly statusCode?: number;
-    readonly headers?: Array<string | null>;
-};
-
-export type EntityAreaActivityJsonld = {
-    code?: string;
-    createdAt?: string;
-    readonly id?: number;
-    uuid?: string | null;
-};
-
-export type EntityAreaProposalJsonld = {
-    title?: string;
-    description?: string;
-    place?: 'draft' | 'verification' | 'published' | 'archived';
-    proposer?: PersonJsonld;
-    archivedAt?: string | null;
-    surfaceTotal?: number | null;
-    surfaceToShare?: number | null;
-    city?: string | null;
-    altitude?: number | null;
-    activities?: Array<EntityAreaActivityJsonld>;
-    createdAt?: string;
-    readonly id?: number;
-    uuid?: string;
 };
 
 /**
  * A representation of common errors.
  */
 export type Error = {
-    id?: string | null;
     /**
      * A short, human-readable summary of the problem.
      */
@@ -258,20 +246,12 @@ export type Error = {
      * A URI reference that identifies the problem type
      */
     readonly type?: string;
-    source?: {
-        pointer?: string;
-        parameter?: string;
-        header?: string;
-    };
-    readonly description?: string | null;
-    readonly trace?: Array<string | null> | null;
 };
 
 /**
  * A representation of common errors.
  */
 export type ErrorJsonld = HydraItemBaseSchema & {
-    id?: string | null;
     /**
      * A short, human-readable summary of the problem.
      */
@@ -289,13 +269,7 @@ export type ErrorJsonld = HydraItemBaseSchema & {
      * A URI reference that identifies the problem type
      */
     readonly type?: string;
-    source?: {
-        pointer?: string;
-        parameter?: string;
-        header?: string;
-    };
     readonly description?: string | null;
-    readonly trace?: Array<string | null> | null;
 };
 
 export type HydraCollectionBaseSchema = HydraCollectionBaseSchemaNoPagination & {
@@ -344,96 +318,9 @@ export type MercureSubscriptionJsonld = HydraItemBaseSchema & {
      */
     hubUrl?: string;
     /**
-     * Subscriber JWT, to send as the hub's `authorization` query parameter.
+     * Subscriber access token, to send to the hub as an `Authorization: Bearer` header.
      */
     token?: string;
-};
-
-export type PersonJsonld = {
-    areaRequests?: Array<AreaRequestJsonld>;
-    areaProposals?: Array<EntityAreaProposalJsonld>;
-    authId?: string;
-    /**
-     * The user roles
-     */
-    roles?: Array<string>;
-    readonly id?: number;
-    email?: string | null;
-    givenName?: string | null;
-    familyName?: string | null;
-    readonly userIdentifier?: string;
-};
-
-export type AreaProposalAreaProposalCollectionJsonldWritable = HydraItemBaseSchema & {
-    title?: string | null;
-    description?: string | null;
-    surfaceToShare?: number | null;
-    city?: string | null;
-    altitude?: number | null;
-    uuid?: string | null;
-    place?: string | null;
-    activities?: Array<string>;
-    proposerFirstName?: string | null;
-    proposerLastName?: string | null;
-    proposer?: PersonJsonldWritable;
-};
-
-export type AreaProposalJsonldWritable = HydraItemBaseSchema & {
-    title?: string | null;
-    description?: string | null;
-    archivedAt?: string | null;
-    surfaceTotal?: number | null;
-    surfaceToShare?: number | null;
-    city?: string | null;
-    altitude?: number | null;
-    uuid?: string | null;
-    createdAt?: string | null;
-    place?: string | null;
-    activities?: Array<string>;
-    proposerFirstName?: string | null;
-    proposerLastName?: string | null;
-    proposer?: PersonJsonldWritable;
-};
-
-export type AreaRequestAreaRequestAreaRequestCollectionJsonldWritable = HydraItemBaseSchema & {
-    title?: string | null;
-    description?: string | null;
-    minimalSurfaceRequested?: number | null;
-    city?: string | null;
-    uuid?: string | null;
-    place?: string | null;
-    activities?: Array<string>;
-    requesterFirstName?: string | null;
-    requesterLastName?: string | null;
-    requester?: PersonJsonldWritable;
-};
-
-export type AreaRequestAreaRequestJsonldWritable = HydraItemBaseSchema & {
-    title?: string | null;
-    description?: string | null;
-    archivedAt?: string | null;
-    minimalSurfaceRequested?: number | null;
-    city?: string | null;
-    uuid?: string | null;
-    createdAt?: string | null;
-    place?: string | null;
-    activities?: Array<string>;
-    requesterFirstName?: string | null;
-    requesterLastName?: string | null;
-    requester?: PersonJsonldWritable;
-};
-
-export type AreaRequestJsonldWritable = {
-    title?: string;
-    description?: string;
-    place?: 'draft' | 'pending_validation' | 'active' | 'rejected' | 'archived';
-    requester?: PersonJsonldWritable;
-    minimalSurfaceRequested?: number | null;
-    city?: string | null;
-    archivedAt?: string | null;
-    activities?: Array<EntityAreaActivityJsonldWritable>;
-    createdAt?: string;
-    uuid?: string;
 };
 
 /**
@@ -498,64 +385,18 @@ export type ConstraintViolationJsonldWritable = HydraItemBaseSchema & {
     }>;
 };
 
-export type EntityAreaActivityJsonldWritable = {
-    code?: string;
-    createdAt?: string;
-    uuid?: string | null;
-};
-
-export type EntityAreaProposalJsonldWritable = {
-    title?: string;
-    description?: string;
-    place?: 'draft' | 'verification' | 'published' | 'archived';
-    proposer?: PersonJsonldWritable;
-    archivedAt?: string | null;
-    surfaceTotal?: number | null;
-    surfaceToShare?: number | null;
-    city?: string | null;
-    altitude?: number | null;
-    activities?: Array<EntityAreaActivityJsonldWritable>;
-    createdAt?: string;
-    uuid?: string;
-};
-
 /**
  * A representation of common errors.
  */
 export type ErrorWritable = {
-    id?: string | null;
     status?: number | null;
-    source?: {
-        pointer?: string;
-        parameter?: string;
-        header?: string;
-    };
 };
 
 /**
  * A representation of common errors.
  */
 export type ErrorJsonldWritable = HydraItemBaseSchema & {
-    id?: string | null;
     status?: number | null;
-    source?: {
-        pointer?: string;
-        parameter?: string;
-        header?: string;
-    };
-};
-
-export type PersonJsonldWritable = {
-    areaRequests?: Array<AreaRequestJsonldWritable>;
-    areaProposals?: Array<EntityAreaProposalJsonldWritable>;
-    authId?: string;
-    /**
-     * The user roles
-     */
-    roles?: Array<string>;
-    email?: string | null;
-    givenName?: string | null;
-    familyName?: string | null;
 };
 
 export type ApiAreaActivitiesGetCollectionData = {
@@ -739,19 +580,47 @@ export type ApiAreaProposalsGetCollectionData = {
          */
         pagination?: boolean;
         /**
-         * AreaProposal place
+         * Filter by workflow place
          */
-        place?: string;
+        place?: 'draft' | 'verification' | 'published' | 'archived';
+        /**
+         * Filter by workflow place
+         */
+        'place[]'?: Array<'draft' | 'verification' | 'published' | 'archived'>;
+        /**
+         * Filter by activity code
+         */
+        activity?: string;
+        /**
+         * Filter by activity code
+         */
+        'activity[]'?: Array<string>;
+        /**
+         * Filter by city (partial, case-insensitive)
+         */
+        city?: string;
+        /**
+         * Filter by city (partial, case-insensitive)
+         */
+        'city[]'?: Array<string>;
+        /**
+         * AreaProposal order[createdAt]
+         */
+        'order[createdAt]'?: 'asc' | 'desc' | 'ASC' | 'DESC';
+        /**
+         * AreaProposal order[createdAt]
+         */
+        'order[createdAt][]'?: Array<'asc' | 'desc' | 'ASC' | 'DESC'>;
     };
     url: '/api/area_proposals';
 };
 
 export type ApiAreaProposalsGetCollectionResponses = {
     /**
-     * AreaProposal.AreaProposalCollection.jsonld collection.
+     * AreaProposal.jsonld collection.
      */
     200: HydraCollectionBaseSchema & {
-        member: Array<AreaProposalAreaProposalCollectionJsonld>;
+        member: Array<AreaProposalJsonld>;
     };
 };
 
@@ -890,6 +759,36 @@ export type ApiAreaProposalsUuidPatchResponses = {
 
 export type ApiAreaProposalsUuidPatchResponse = ApiAreaProposalsUuidPatchResponses[keyof ApiAreaProposalsUuidPatchResponses];
 
+export type ApiAreaProposalsUuidworkflowGetData = {
+    body?: never;
+    path: {
+        /**
+         * AreaProposal identifier
+         */
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/area_proposals/{uuid}/workflow';
+};
+
+export type ApiAreaProposalsUuidworkflowGetErrors = {
+    /**
+     * Not found
+     */
+    404: ErrorJsonld;
+};
+
+export type ApiAreaProposalsUuidworkflowGetError = ApiAreaProposalsUuidworkflowGetErrors[keyof ApiAreaProposalsUuidworkflowGetErrors];
+
+export type ApiAreaProposalsUuidworkflowGetResponses = {
+    /**
+     * AreaProposal resource
+     */
+    200: AreaProposalWorkflowDiagramJsonld;
+};
+
+export type ApiAreaProposalsUuidworkflowGetResponse = ApiAreaProposalsUuidworkflowGetResponses[keyof ApiAreaProposalsUuidworkflowGetResponses];
+
 export type ApiAreaRequestsGetCollectionData = {
     body?: never;
     path?: never;
@@ -907,19 +806,47 @@ export type ApiAreaRequestsGetCollectionData = {
          */
         pagination?: boolean;
         /**
-         * AreaRequest place
+         * Filter by workflow place
          */
-        place?: string;
+        place?: 'draft' | 'pending_validation' | 'active' | 'rejected' | 'archived';
+        /**
+         * Filter by workflow place
+         */
+        'place[]'?: Array<'draft' | 'pending_validation' | 'active' | 'rejected' | 'archived'>;
+        /**
+         * Filter by activity code
+         */
+        activity?: string;
+        /**
+         * Filter by activity code
+         */
+        'activity[]'?: Array<string>;
+        /**
+         * Filter by city (partial, case-insensitive)
+         */
+        city?: string;
+        /**
+         * Filter by city (partial, case-insensitive)
+         */
+        'city[]'?: Array<string>;
+        /**
+         * AreaRequest order[createdAt]
+         */
+        'order[createdAt]'?: 'asc' | 'desc' | 'ASC' | 'DESC';
+        /**
+         * AreaRequest order[createdAt]
+         */
+        'order[createdAt][]'?: Array<'asc' | 'desc' | 'ASC' | 'DESC'>;
     };
     url: '/api/area_requests';
 };
 
 export type ApiAreaRequestsGetCollectionResponses = {
     /**
-     * AreaRequest.AreaRequest.AreaRequestCollection.jsonld collection.
+     * AreaRequest.jsonld collection.
      */
     200: HydraCollectionBaseSchema & {
-        member: Array<AreaRequestAreaRequestAreaRequestCollectionJsonld>;
+        member: Array<AreaRequestJsonld>;
     };
 };
 
@@ -929,7 +856,7 @@ export type ApiAreaRequestsPostData = {
     /**
      * The new AreaRequest resource
      */
-    body: AreaRequestAreaRequestAreaRequestPost;
+    body: AreaRequestAreaRequestPost;
     path?: never;
     query?: never;
     url: '/api/area_requests';
@@ -952,7 +879,7 @@ export type ApiAreaRequestsPostResponses = {
     /**
      * AreaRequest resource created
      */
-    201: AreaRequestAreaRequestJsonld;
+    201: AreaRequestJsonld;
 };
 
 export type ApiAreaRequestsPostResponse = ApiAreaRequestsPostResponses[keyof ApiAreaRequestsPostResponses];
@@ -1012,7 +939,7 @@ export type ApiAreaRequestsUuidGetResponses = {
     /**
      * AreaRequest resource
      */
-    200: AreaRequestAreaRequestJsonld;
+    200: AreaRequestJsonld;
 };
 
 export type ApiAreaRequestsUuidGetResponse = ApiAreaRequestsUuidGetResponses[keyof ApiAreaRequestsUuidGetResponses];
@@ -1021,7 +948,7 @@ export type ApiAreaRequestsUuidPatchData = {
     /**
      * The updated AreaRequest resource
      */
-    body: AreaRequestAreaRequestAreaRequestPatchJsonMergePatch;
+    body: AreaRequestAreaRequestPatchJsonMergePatch;
     path: {
         /**
          * AreaRequest identifier
@@ -1053,10 +980,40 @@ export type ApiAreaRequestsUuidPatchResponses = {
     /**
      * AreaRequest resource updated
      */
-    200: AreaRequestAreaRequestJsonld;
+    200: AreaRequestJsonld;
 };
 
 export type ApiAreaRequestsUuidPatchResponse = ApiAreaRequestsUuidPatchResponses[keyof ApiAreaRequestsUuidPatchResponses];
+
+export type ApiAreaRequestsUuidworkflowGetData = {
+    body?: never;
+    path: {
+        /**
+         * AreaRequest identifier
+         */
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/area_requests/{uuid}/workflow';
+};
+
+export type ApiAreaRequestsUuidworkflowGetErrors = {
+    /**
+     * Not found
+     */
+    404: ErrorJsonld;
+};
+
+export type ApiAreaRequestsUuidworkflowGetError = ApiAreaRequestsUuidworkflowGetErrors[keyof ApiAreaRequestsUuidworkflowGetErrors];
+
+export type ApiAreaRequestsUuidworkflowGetResponses = {
+    /**
+     * AreaRequest resource
+     */
+    200: AreaRequestWorkflowDiagramJsonld;
+};
+
+export type ApiAreaRequestsUuidworkflowGetResponse = ApiAreaRequestsUuidworkflowGetResponses[keyof ApiAreaRequestsUuidworkflowGetResponses];
 
 export type ApiMercureSubscriptionGetData = {
     body?: never;

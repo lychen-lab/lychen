@@ -2,7 +2,7 @@
 
 import type { Client, ClientMeta, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { ApiAreaActivitiesGetCollectionData, ApiAreaActivitiesGetCollectionResponses, ApiAreaActivitiesPostData, ApiAreaActivitiesPostErrors, ApiAreaActivitiesPostResponses, ApiAreaActivitiesUuidDeleteData, ApiAreaActivitiesUuidDeleteErrors, ApiAreaActivitiesUuidDeleteResponses, ApiAreaActivitiesUuidGetData, ApiAreaActivitiesUuidGetErrors, ApiAreaActivitiesUuidGetResponses, ApiAreaActivitiesUuidPatchData, ApiAreaActivitiesUuidPatchErrors, ApiAreaActivitiesUuidPatchResponses, ApiAreaProposalsGetCollectionData, ApiAreaProposalsGetCollectionResponses, ApiAreaProposalsPostData, ApiAreaProposalsPostErrors, ApiAreaProposalsPostResponses, ApiAreaProposalsUuidDeleteData, ApiAreaProposalsUuidDeleteErrors, ApiAreaProposalsUuidDeleteResponses, ApiAreaProposalsUuidGetData, ApiAreaProposalsUuidGetErrors, ApiAreaProposalsUuidGetResponses, ApiAreaProposalsUuidPatchData, ApiAreaProposalsUuidPatchErrors, ApiAreaProposalsUuidPatchResponses, ApiAreaRequestsGetCollectionData, ApiAreaRequestsGetCollectionResponses, ApiAreaRequestsPostData, ApiAreaRequestsPostErrors, ApiAreaRequestsPostResponses, ApiAreaRequestsUuidDeleteData, ApiAreaRequestsUuidDeleteErrors, ApiAreaRequestsUuidDeleteResponses, ApiAreaRequestsUuidGetData, ApiAreaRequestsUuidGetErrors, ApiAreaRequestsUuidGetResponses, ApiAreaRequestsUuidPatchData, ApiAreaRequestsUuidPatchErrors, ApiAreaRequestsUuidPatchResponses, ApiMercureSubscriptionGetData, ApiMercureSubscriptionGetErrors, ApiMercureSubscriptionGetResponses } from './types.gen';
+import type { ApiAreaActivitiesGetCollectionData, ApiAreaActivitiesGetCollectionResponses, ApiAreaActivitiesPostData, ApiAreaActivitiesPostErrors, ApiAreaActivitiesPostResponses, ApiAreaActivitiesUuidDeleteData, ApiAreaActivitiesUuidDeleteErrors, ApiAreaActivitiesUuidDeleteResponses, ApiAreaActivitiesUuidGetData, ApiAreaActivitiesUuidGetErrors, ApiAreaActivitiesUuidGetResponses, ApiAreaActivitiesUuidPatchData, ApiAreaActivitiesUuidPatchErrors, ApiAreaActivitiesUuidPatchResponses, ApiAreaProposalsGetCollectionData, ApiAreaProposalsGetCollectionResponses, ApiAreaProposalsPostData, ApiAreaProposalsPostErrors, ApiAreaProposalsPostResponses, ApiAreaProposalsUuidDeleteData, ApiAreaProposalsUuidDeleteErrors, ApiAreaProposalsUuidDeleteResponses, ApiAreaProposalsUuidGetData, ApiAreaProposalsUuidGetErrors, ApiAreaProposalsUuidGetResponses, ApiAreaProposalsUuidPatchData, ApiAreaProposalsUuidPatchErrors, ApiAreaProposalsUuidPatchResponses, ApiAreaProposalsUuidworkflowGetData, ApiAreaProposalsUuidworkflowGetErrors, ApiAreaProposalsUuidworkflowGetResponses, ApiAreaRequestsGetCollectionData, ApiAreaRequestsGetCollectionResponses, ApiAreaRequestsPostData, ApiAreaRequestsPostErrors, ApiAreaRequestsPostResponses, ApiAreaRequestsUuidDeleteData, ApiAreaRequestsUuidDeleteErrors, ApiAreaRequestsUuidDeleteResponses, ApiAreaRequestsUuidGetData, ApiAreaRequestsUuidGetErrors, ApiAreaRequestsUuidGetResponses, ApiAreaRequestsUuidPatchData, ApiAreaRequestsUuidPatchErrors, ApiAreaRequestsUuidPatchResponses, ApiAreaRequestsUuidworkflowGetData, ApiAreaRequestsUuidworkflowGetErrors, ApiAreaRequestsUuidworkflowGetResponses, ApiMercureSubscriptionGetData, ApiMercureSubscriptionGetErrors, ApiMercureSubscriptionGetResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -204,6 +204,19 @@ export class EspaceApi extends HeyApiClient {
     }
     
     /**
+     * Retrieves the Mermaid diagram of the AreaProposal workflow, current place outlined.
+     *
+     * Retrieves the Mermaid diagram of the AreaProposal workflow, current place outlined.
+     */
+    public apiAreaProposalsUuidworkflowGet<ThrowOnError extends boolean = false>(options: Options<ApiAreaProposalsUuidworkflowGetData, ThrowOnError>): RequestResult<ApiAreaProposalsUuidworkflowGetResponses, ApiAreaProposalsUuidworkflowGetErrors, ThrowOnError> {
+        return (options.client ?? this.client).get<ApiAreaProposalsUuidworkflowGetResponses, ApiAreaProposalsUuidworkflowGetErrors, ThrowOnError>({
+            security: [{ name: 'Authorization', type: 'apiKey' }],
+            url: '/api/area_proposals/{uuid}/workflow',
+            ...options
+        });
+    }
+    
+    /**
      * Retrieves the collection of AreaRequest resources.
      *
      * Retrieves the collection of AreaRequest resources.
@@ -273,6 +286,19 @@ export class EspaceApi extends HeyApiClient {
                 'Content-Type': 'application/merge-patch+json',
                 ...options.headers
             }
+        });
+    }
+    
+    /**
+     * Retrieves the Mermaid diagram of the AreaRequest workflow, current place outlined.
+     *
+     * Retrieves the Mermaid diagram of the AreaRequest workflow, current place outlined.
+     */
+    public apiAreaRequestsUuidworkflowGet<ThrowOnError extends boolean = false>(options: Options<ApiAreaRequestsUuidworkflowGetData, ThrowOnError>): RequestResult<ApiAreaRequestsUuidworkflowGetResponses, ApiAreaRequestsUuidworkflowGetErrors, ThrowOnError> {
+        return (options.client ?? this.client).get<ApiAreaRequestsUuidworkflowGetResponses, ApiAreaRequestsUuidworkflowGetErrors, ThrowOnError>({
+            security: [{ name: 'Authorization', type: 'apiKey' }],
+            url: '/api/area_requests/{uuid}/workflow',
+            ...options
         });
     }
     
