@@ -1,5 +1,5 @@
 # The front's only access to espace-api: one Tanstack Query composable per endpoint, in
-# endpoint/<resource>/use-<endpoint>/ with its own mapping (mapToModel, mapToRequest)
+# endpoint/<resource>/<endpoint>/ with its own mapping (mapToModel, mapToRequest)
 # between the SDK's types and the front's models (libs/typescript/espace-models).
 dependsOn:
   - typescript-api-client

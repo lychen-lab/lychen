@@ -1,6 +1,6 @@
-// What the mappers of every <api>-api Vue lib (libs/vue/<api>-api/endpoint/*/use-*/mapToModel.ts
-// and mapToRequest.ts) need to turn an API Platform representation into a front model, and a
-// front input into a request body.
+// What the mappers of every <api>-api Vue lib (an endpoint's mapToModel.ts and mapToRequest.ts,
+// in libs/vue/<api>-api/endpoint/<resource>/<endpoint>/) need to turn an API Platform
+// representation into a front model, and a front input into a request body.
 
 import type { Collection, CollectionView } from './Collection';
 
