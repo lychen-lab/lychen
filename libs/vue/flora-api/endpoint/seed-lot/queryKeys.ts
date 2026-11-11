@@ -1,3 +1,7 @@
-import { createQueryKeys } from '@lychen/vue-api-query/queryKeys';
+import type { ApiSeedLotsGetCollectionData } from '@lychen/typescript-flora-api-sdk/generated/flora-api';
+import { createResourceQueryKeys } from '@lychen/vue-api-query/queryKeys';
 
-export const seedLotKeys = createQueryKeys('flora', 'seed-lot');
+export const seedLotKeys = createResourceQueryKeys<ApiSeedLotsGetCollectionData['query']>(
+  'flora',
+  'seed-lot',
+);

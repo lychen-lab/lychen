@@ -20,8 +20,3 @@ export interface SeedLibraryCreateInput {
 
 /** The fields to change; those left out are kept. */
 export type SeedLibraryUpdateInput = Partial<SeedLibraryCreateInput>;
-
-export interface SeedLibraryFilters {
-  page?: number;
-  itemsPerPage?: number;
-}
