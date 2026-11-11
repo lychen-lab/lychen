@@ -5,8 +5,8 @@
     >
       <div class="absolute top-0 left-0 size-full overflow-hidden rounded-2xl">
         <img
-          src="https://images.pexels.com/photos/1573885/pexels-photo-1573885.jpeg"
-          alt=""
+          :src="heroImage"
+          :alt="t('hero.image_alt')"
           class="size-full object-cover"
         />
       </div>
@@ -105,13 +105,14 @@ import IconHeartHandshake from '@lychen/vue-icons/IconHeartHandshake.vue';
 import IconArrowRight from '@lychen/vue-icons/IconArrowRight.vue';
 import { CONFIG } from './i18n';
 import HomeVideo from './HomeVideo.vue';
+import heroImage from './assets/hero-market-garden.webp';
 import videoThumbnail from './assets/video-gardening-differently.webp';
 import { LINK } from '@lychen/typescript-espace/constants/App';
 import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
 
 const { t } = usePrefixedI18n(CONFIG);
 
-useExtendedHead(t);
+useExtendedHead(t, { ogImage: heroImage });
 </script>
 
 <style lang="css" scoped></style>

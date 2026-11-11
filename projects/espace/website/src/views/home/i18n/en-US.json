@@ -6,7 +6,8 @@
   "hero": {
     "description": "We are actively looking for land, gardens, cellars and other places to increase food autonomy and create social links.",
     "cta_share": "Share your space",
-    "email_prefix": "or send us an email at"
+    "email_prefix": "or send us an email at",
+    "image_alt": "Aerial view of market-garden plots bordered by trees"
   },
   "search": {
     "title": "Find a cultivation space",

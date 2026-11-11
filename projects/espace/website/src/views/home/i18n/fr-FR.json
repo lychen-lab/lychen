@@ -6,7 +6,8 @@
   "hero": {
     "description": "Nous recherchons activement des terrains, jardins, caves et autres lieux pour permettre d'augmenter l'autonomie alimentaire et créer des liens sociaux.",
     "cta_share": "Partagez votre espace",
-    "email_prefix": "ou envoyez nous un email sur"
+    "email_prefix": "ou envoyez nous un email sur",
+    "image_alt": "Vue aérienne de parcelles maraîchères bordées d'arbres"
   },
   "search": {
     "title": "Trouvez un espace de culture",
