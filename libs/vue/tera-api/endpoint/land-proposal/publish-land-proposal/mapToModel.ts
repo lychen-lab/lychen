@@ -1,7 +1,7 @@
 import type { ApiLandProposalsUlidpublishPatchResponse } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import { oneOf, required } from '@lychen/typescript-api-mapping/mapping';
 import {
-  LAND_PROPOSAL_STATES,
+  LAND_PROPOSAL_STATE,
   type LandProposal,
 } from '@lychen/typescript-front-model-business/land/LandProposal';
 import type { WithRequired } from '@lychen/typescript-front-model-business/WithRequired';
@@ -16,6 +16,6 @@ export type Model = WithRequired<LandProposal, 'id'>;
 export function mapToModel(data: ApiLandProposalsUlidpublishPatchResponse): Model {
   return {
     id: required(data.ulid, 'land proposal ulid'),
-    state: oneOf(LAND_PROPOSAL_STATES, data.state),
+    state: oneOf(LAND_PROPOSAL_STATE, data.state),
   };
 }
