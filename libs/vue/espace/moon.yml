@@ -1,4 +1,5 @@
 dependsOn:
+- typescript-api-client
 - typescript-espace
 - typescript-espace-api-sdk
 - typescript-zitadel

@@ -1,0 +1,14 @@
+# The TypeScript SDK of {% if url %}the API at {{ url }}{% else %}{{ api }}-api{% endif %}: tasks from .moon/tasks/tag-api-sdk.yml.
+dependsOn:
+  - typescript-api-sdk-config
+id: typescript-{{ api }}-api-sdk
+language: typescript
+layer: library
+tags:
+  - api-sdk
+{%- if not url %}
+tasks:
+  generate-api:
+    deps:
+      - {{ api }}-api:export-openapi
+{%- endif %}

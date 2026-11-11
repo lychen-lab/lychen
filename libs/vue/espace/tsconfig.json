@@ -1,9 +1,10 @@
 {
   "extends": "../../../tsconfig.options.json",
-  "include": [
-    "**/*"
-  ],
+  "include": ["**/*"],
   "references": [
+    {
+      "path": "../../typescript/api-client"
+    },
     {
       "path": "../../typescript/espace"
     },

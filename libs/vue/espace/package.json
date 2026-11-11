@@ -1,6 +1,7 @@
 {
   "name": "@lychen/vue-espace",
   "dependencies": {
+    "@lychen/typescript-api-client": "workspace:*",
     "@lychen/typescript-espace": "workspace:*",
     "@lychen/typescript-espace-api-sdk": "workspace:*",
     "@lychen/typescript-zitadel": "workspace:*",

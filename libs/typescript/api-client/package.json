@@ -1,0 +1,7 @@
+{
+  "name": "@lychen/typescript-api-client",
+  "type": "module",
+  "devDependencies": {
+    "@lychen/typescript-espace-api-sdk": "workspace:*"
+  }
+}

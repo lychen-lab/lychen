@@ -2,7 +2,7 @@
   "name": "@lychen/typescript-tera-api-sdk",
   "type": "module",
   "devDependencies": {
-    "@hey-api/openapi-ts": "0.99.0",
+    "@lychen/typescript-api-sdk-config": "workspace:*",
     "typescript": "^6.0.3"
   }
 }

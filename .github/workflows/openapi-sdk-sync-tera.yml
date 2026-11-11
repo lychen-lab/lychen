@@ -1,0 +1,29 @@
+name: 'OpenAPI | SDK sync (tera)'
+
+# Reports, without failing, the drift between tera-api and its committed spec
+# and SDK (libs/typescript/tera-api-sdk): see openapi-sdk-sync.yml.
+
+on:
+  pull_request:
+    paths:
+      - 'projects/tera/api/**'
+      - 'libs/php/**'
+      # The SDK and the generator's configuration.
+      - 'libs/typescript/tera-api-sdk/**'
+      - 'libs/typescript/api-sdk-config/**'
+      - '.moon/tasks/tag-api-sdk.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  packages: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sdk-sync:
+    uses: ./.github/workflows/openapi-sdk-sync.yml
+    with:
+      api: tera

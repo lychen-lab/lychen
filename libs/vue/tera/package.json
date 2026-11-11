@@ -2,6 +2,7 @@
   "name": "@lychen/vue-tera",
   "dependencies": {
     "@lychen/i18n-tera": "workspace:*",
+    "@lychen/typescript-api-client": "workspace:*",
     "@lychen/typescript-tera-api-sdk": "workspace:*",
     "@lychen/typescript-tera-core": "workspace:*",
     "@lychen/typescript-utils": "workspace:*",
