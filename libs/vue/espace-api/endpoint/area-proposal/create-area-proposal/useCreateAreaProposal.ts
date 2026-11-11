@@ -1,12 +1,9 @@
-import type {
-  AreaProposal,
-  AreaProposalCreateInput,
-} from '@lychen/typescript-espace-models/AreaProposal';
+import type { AreaProposalCreateInput } from '@lychen/typescript-front-model-business/area/AreaProposal';
 import type { ApiMutationOptions } from '@lychen/vue-api-query/options';
 import { useMutation, useQueryClient } from '@tanstack/vue-query';
 import { useEspaceApi } from '../../../client/useEspaceApi';
 import { areaProposalKeys } from '../queryKeys';
-import { mapToModel } from './mapToModel';
+import { mapToModel, type Model } from './mapToModel';
 import { mapToRequest } from './mapToRequest';
 
 /**
@@ -14,7 +11,7 @@ import { mapToRequest } from './mapToRequest';
  * lists.
  */
 export function useCreateAreaProposal(
-  options: ApiMutationOptions<AreaProposal, AreaProposalCreateInput> = {},
+  options: ApiMutationOptions<Model, AreaProposalCreateInput> = {},
 ) {
   const { api } = useEspaceApi();
   const queryClient = useQueryClient();

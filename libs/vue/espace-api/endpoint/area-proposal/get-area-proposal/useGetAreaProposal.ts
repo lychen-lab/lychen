@@ -1,5 +1,4 @@
 import type { ApiAreaProposalsUuidGetResponse } from '@lychen/typescript-espace-api-sdk/generated/espace-api';
-import type { AreaProposal } from '@lychen/typescript-espace-models/AreaProposal';
 import { isDeletion } from '@lychen/vue-api-query/mercure/useMercure';
 import type { ApiQueryOptions } from '@lychen/vue-api-query/options';
 import { useQuery, useQueryClient, type QueryKey } from '@tanstack/vue-query';
@@ -7,32 +6,32 @@ import { computed, toValue, type MaybeRefOrGetter } from 'vue';
 import { useEspaceApi } from '../../../client/useEspaceApi';
 import { useEspaceMercure } from '../../../mercure/useEspaceMercure';
 import { areaProposalKeys } from '../queryKeys';
-import { mapToModel } from './mapToModel';
+import { mapToModel, type Model } from './mapToModel';
 
-export type UseGetAreaProposalOptions = ApiQueryOptions<AreaProposal> & {
+export type UseGetAreaProposalOptions = ApiQueryOptions<Model> & {
   /** Keeps the proposal in step with the changes anyone makes, pushed over Mercure. */
   live?: boolean;
 };
 
 /**
- * One area proposal, `GET /api/area_proposals/{uuid}`. The query waits for a uuid, and fetches again
+ * One area proposal, `GET /api/area_proposals/{uuid}`. The query waits for an id, and fetches again
  * whenever it changes.
  */
 export function useGetAreaProposal(
-  uuid: MaybeRefOrGetter<string | undefined>,
+  id: MaybeRefOrGetter<string | undefined>,
   options: UseGetAreaProposalOptions = {},
 ) {
   const { api } = useEspaceApi();
   const { enabled = true, live = false, ...queryOptions } = options;
 
-  const query = useQuery<AreaProposal, Error, AreaProposal, QueryKey>({
-    queryKey: computed(() => areaProposalKeys.detail(toValue(uuid) ?? '')),
+  const query = useQuery<Model, Error, Model, QueryKey>({
+    queryKey: computed(() => areaProposalKeys.detail(toValue(id) ?? '')),
     ...queryOptions,
-    enabled: computed(() => Boolean(toValue(uuid)) && toValue(enabled)),
+    enabled: computed(() => Boolean(toValue(id)) && toValue(enabled)),
     async queryFn() {
-      const current = toValue(uuid);
+      const current = toValue(id);
       if (!current) {
-        throw new Error('useGetAreaProposal: there is no uuid to fetch yet.');
+        throw new Error('useGetAreaProposal: there is no id to fetch yet.');
       }
       const { data } = await api.apiAreaProposalsUuidGet({
         path: { uuid: current },
@@ -46,20 +45,20 @@ export function useGetAreaProposal(
     const queryClient = useQueryClient();
     useEspaceMercure(
       () => {
-        const current = toValue(uuid);
+        const current = toValue(id);
         return current ? [{ match: `/api/area_proposals/${current}` }] : [];
       },
       (update) => {
         if (isDeletion(update)) {
           // Nothing left to show: the refetch tells the query (a 404).
           void queryClient.invalidateQueries({
-            queryKey: areaProposalKeys.detail(toValue(uuid) ?? ''),
+            queryKey: areaProposalKeys.detail(toValue(id) ?? ''),
           });
           return;
         }
         // An update carries the proposal exactly as this endpoint returns it: no round trip.
         const proposal = mapToModel(update as ApiAreaProposalsUuidGetResponse);
-        queryClient.setQueryData(areaProposalKeys.detail(proposal.uuid), proposal);
+        queryClient.setQueryData(areaProposalKeys.detail(proposal.id), proposal);
       },
     );
   }

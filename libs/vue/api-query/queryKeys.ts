@@ -1,9 +1,9 @@
 /**
  * The cache keys of a resource of an API, from the widest to the narrowest, so that one call
  * reaches a whole family: `invalidateQueries({ queryKey: lists() })` refetches every page,
- * whatever its filters. Every resource identifies its items by one string id (a uuid), so
- * the same keys fit them all; a read of an item's own (its workflow diagram, say) goes under
- * its key: `[...detail(uuid), 'workflow']`, and goes stale with it.
+ * whatever its filters. Every resource identifies its items by one string id (its concept's
+ * `id`, a uuid or a ulid), so the same keys fit them all; a read of an item's own (its workflow diagram, say) goes under
+ * its key: `[...detail(id), 'workflow']`, and goes stale with it.
  *
  *   export const areaProposalKeys = createResourceQueryKeys<
  *     ApiAreaProposalsGetCollectionData['query']

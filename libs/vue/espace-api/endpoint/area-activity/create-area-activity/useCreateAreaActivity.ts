@@ -1,12 +1,9 @@
-import type {
-  AreaActivity,
-  AreaActivityCreateInput,
-} from '@lychen/typescript-espace-models/AreaActivity';
+import type { AreaActivityCreateInput } from '@lychen/typescript-front-model-business/area/AreaActivity';
 import type { ApiMutationOptions } from '@lychen/vue-api-query/options';
 import { useMutation, useQueryClient } from '@tanstack/vue-query';
 import { useEspaceApi } from '../../../client/useEspaceApi';
 import { areaActivityKeys } from '../queryKeys';
-import { mapToModel } from './mapToModel';
+import { mapToModel, type Model } from './mapToModel';
 import { mapToRequest } from './mapToRequest';
 
 /**
@@ -14,7 +11,7 @@ import { mapToRequest } from './mapToRequest';
  * lists.
  */
 export function useCreateAreaActivity(
-  options: ApiMutationOptions<AreaActivity, AreaActivityCreateInput> = {},
+  options: ApiMutationOptions<Model, AreaActivityCreateInput> = {},
 ) {
   const { api } = useEspaceApi();
   const queryClient = useQueryClient();

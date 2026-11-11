@@ -12,7 +12,7 @@
       "path": "../../typescript/espace-api-sdk"
     },
     {
-      "path": "../../typescript/espace-models"
+      "path": "../../typescript/front-model-business"
     },
     {
       "path": "../../typescript/zitadel"

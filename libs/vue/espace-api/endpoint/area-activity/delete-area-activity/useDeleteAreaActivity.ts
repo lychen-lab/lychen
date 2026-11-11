@@ -4,7 +4,7 @@ import { useEspaceApi } from '../../../client/useEspaceApi';
 import { areaActivityKeys } from '../queryKeys';
 
 /**
- * Deletes an area activity, `DELETE /api/area_activities/{uuid}`, given its uuid. By default, it then drops
+ * Deletes an area activity, `DELETE /api/area_activities/{uuid}`, given its id. By default, it then drops
  * it from the cache and refetches the lists.
  */
 export function useDeleteAreaActivity(options: ApiMutationOptions<void, string> = {}) {
@@ -12,14 +12,14 @@ export function useDeleteAreaActivity(options: ApiMutationOptions<void, string> 
   const queryClient = useQueryClient();
 
   return useMutation({
-    onSuccess: (_, uuid) => {
+    onSuccess: (_, id) => {
       // Nothing left to fetch: a refetch would only fail.
-      queryClient.removeQueries({ queryKey: areaActivityKeys.detail(uuid) });
+      queryClient.removeQueries({ queryKey: areaActivityKeys.detail(id) });
       return queryClient.invalidateQueries({ queryKey: areaActivityKeys.lists() });
     },
     ...options,
-    async mutationFn(uuid: string) {
-      await api.apiAreaActivitiesUuidDelete({ path: { uuid }, throwOnError: true });
+    async mutationFn(id: string) {
+      await api.apiAreaActivitiesUuidDelete({ path: { uuid: id }, throwOnError: true });
     },
   });
 }
