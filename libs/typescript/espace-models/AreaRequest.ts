@@ -46,9 +46,3 @@ export interface AreaRequestCreateInput {
 
 /** The fields to change; those left out are kept. */
 export type AreaRequestUpdateInput = Partial<Omit<AreaRequestCreateInput, 'uuid'>>;
-
-export interface AreaRequestFilters {
-  status?: AreaRequestStatus;
-  page?: number;
-  itemsPerPage?: number;
-}

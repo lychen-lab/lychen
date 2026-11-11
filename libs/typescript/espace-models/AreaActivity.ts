@@ -15,8 +15,3 @@ export interface AreaActivityCreateInput {
 
 /** The fields to change; those left out are kept. */
 export type AreaActivityUpdateInput = Partial<Omit<AreaActivityCreateInput, 'uuid'>>;
-
-export interface AreaActivityFilters {
-  page?: number;
-  itemsPerPage?: number;
-}

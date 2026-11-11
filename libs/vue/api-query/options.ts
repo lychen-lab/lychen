@@ -3,8 +3,7 @@ import type { MaybeRefOrGetter } from 'vue';
 
 /**
  * vue-query's options object, without the refs `UseQueryOptions` also accepts for the
- * whole of it. Its properties keep vue-query's own types (each may be a ref), which is
- * what lets a generic helper pass them on to `useQuery` unchanged.
+ * whole of it. Its properties keep vue-query's own types (each may be a ref).
  */
 type QueryOptionsObject<TData> = Extract<
   UseQueryOptions<TData, Error, TData, TData, QueryKey>,
@@ -12,20 +11,24 @@ type QueryOptionsObject<TData> = Extract<
 >;
 
 /**
- * Tanstack Query's options of a query an endpoint composable runs (staleTime, retry,
- * select…), without those it sets itself.
+ * What the caller of an endpoint composable that reads may set: every Tanstack Query option
+ * but `queryFn`, which holds the endpoint's URL and mapper. The composable's `queryKey` is a
+ * default the caller may replace; its `enabled` is combined with what the composable waits
+ * for (a uuid, say).
  */
 export type ApiQueryOptions<TData> = Omit<
   QueryOptionsObject<TData>,
-  'queryKey' | 'queryFn' | 'enabled'
+  'queryFn' | 'queryKey' | 'enabled'
 > & {
-  /** Runs the query only while this is true, on top of what the composable waits for. */
+  queryKey?: QueryOptionsObject<TData>['queryKey'];
   enabled?: MaybeRefOrGetter<boolean>;
 };
 
 /**
- * Tanstack Query's options of a mutation an endpoint composable runs. `onSuccess` runs
- * once the composable has updated the cache, so it already sees the change.
+ * What the caller of an endpoint composable that writes may set: every Tanstack mutation
+ * option but `mutationFn`, which holds the endpoint's URL and mappers. The composable's
+ * callbacks, its cache upkeep in `onSuccess`, are defaults the caller may replace; to react
+ * to a success and keep the upkeep, pass the callback to `mutate(variables, { onSuccess })`.
  */
 export type ApiMutationOptions<TData, TVariables> = Omit<
   MutationObserverOptions<TData, Error, TVariables>,

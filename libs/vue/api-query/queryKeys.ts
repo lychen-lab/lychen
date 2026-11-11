@@ -1,26 +1,28 @@
 /**
- * The cache keys of one resource's queries: `[api, resource, endpoint, params]`, so that a
- * single call reaches a whole family. A change to the resource invalidates `all`; Mercure
- * refetching every page of a list invalidates `endpoint('get-lands')`.
+ * The cache keys of a resource of an API, from the widest to the narrowest, so that one call
+ * reaches a whole family: `invalidateQueries({ queryKey: lists() })` refetches every page,
+ * whatever its filters. Every resource identifies its items by one string id (a uuid), so
+ * the same keys fit them all; a read of an item's own (its workflow diagram, say) goes under
+ * its key: `[...detail(uuid), 'workflow']`, and goes stale with it.
+ *
+ *   export const areaProposalKeys = createResourceQueryKeys<
+ *     ApiAreaProposalsGetCollectionData['query']
+ *   >('espace', 'area-proposal');
+ *
+ * The API's name comes first, so that APIs sharing the app's QueryClient never collide.
  */
-export interface ResourceQueryKeys {
-  /** Every query of the resource, whatever the endpoint. */
-  all: readonly [string, string];
-  /** Every query of one endpoint, whatever its params. */
-  endpoint(endpoint: string): readonly [string, string, string];
-  /** One endpoint's query with these params: its composable's own key. */
-  of<TParams>(endpoint: string, params: TParams): readonly [string, string, string, TParams];
-}
-
-/**
- * The cache keys of a resource of an API, e.g. `createQueryKeys('tera', 'land')`. The API's
- * name comes first, so that APIs sharing the app's QueryClient never collide.
- */
-export function createQueryKeys(api: string, resource: string): ResourceQueryKeys {
+export function createResourceQueryKeys<TFilters>(api: string, resource: string) {
   const all = [api, resource] as const;
   return {
+    /** Every query of the resource. */
     all,
-    endpoint: (endpoint) => [...all, endpoint] as const,
-    of: (endpoint, params) => [...all, endpoint, params] as const,
+    /** Every page of the resource's lists, whatever its filters. */
+    lists: () => [...all, 'list'] as const,
+    /** The page these filters select. */
+    list: (filters: TFilters) => [...all, 'list', filters] as const,
+    /** Every item of the resource. */
+    details: () => [...all, 'detail'] as const,
+    /** The item with this id, and whatever is read of it. */
+    detail: (id: string) => [...all, 'detail', id] as const,
   };
 }
