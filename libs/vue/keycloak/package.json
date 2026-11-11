@@ -1,5 +1,5 @@
 {
-  "name": "@lychen/typescript-keycloak",
+  "name": "@lychen/vue-keycloak",
   "type": "module",
   "dependencies": {
     "@josempgon/vue-keycloak": "^3.3.11",

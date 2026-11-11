@@ -2619,16 +2619,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@lychen/typescript-keycloak@workspace:libs/typescript/keycloak":
-  version: 0.0.0-use.local
-  resolution: "@lychen/typescript-keycloak@workspace:libs/typescript/keycloak"
-  dependencies:
-    "@josempgon/vue-keycloak": "npm:^3.3.11"
-    keycloak-js: "npm:^26.2.5"
-    vue: "npm:^3.5.44"
-  languageName: unknown
-  linkType: soft
-
 "@lychen/typescript-kiro@workspace:*, @lychen/typescript-kiro@workspace:libs/typescript/kiro":
   version: 0.0.0-use.local
   resolution: "@lychen/typescript-kiro@workspace:libs/typescript/kiro"
@@ -2917,6 +2907,16 @@ __metadata:
   resolution: "@lychen/vue-icons@workspace:libs/vue/icons"
   dependencies:
     "@lucide/vue": "npm:^1.61.0"
+    vue: "npm:^3.5.44"
+  languageName: unknown
+  linkType: soft
+
+"@lychen/vue-keycloak@workspace:libs/vue/keycloak":
+  version: 0.0.0-use.local
+  resolution: "@lychen/vue-keycloak@workspace:libs/vue/keycloak"
+  dependencies:
+    "@josempgon/vue-keycloak": "npm:^3.3.11"
+    keycloak-js: "npm:^26.2.5"
     vue: "npm:^3.5.44"
   languageName: unknown
   linkType: soft

@@ -1,0 +1,7 @@
+# The Keycloak sign-in of a Vue frontend (@josempgon/vue-keycloak): the plugin options and
+# the bearer token provider of createApiClient (libs/typescript/api-client).
+id: vue-keycloak
+language: typescript
+layer: library
+# Inherits lint, format, typecheck and test from .moon/tasks/frontend.yml.
+stack: frontend

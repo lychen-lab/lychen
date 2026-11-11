@@ -124,8 +124,8 @@ make phpunit c="--group e2e"                         # Run by group
 
 /libs              # Reusable libraries
   /css/core        # Tailwind design tokens
-  /typescript/     # 19 TypeScript libraries, incl. the API SDKs (<api>-api-sdk) and their client (api-client)
-  /vue/            # 28 Vue component/composable libraries
+  /typescript/     # 18 TypeScript libraries, incl. the API SDKs (<api>-api-sdk) and their client (api-client)
+  /vue/            # 29 Vue component/composable libraries
   /php/            # 6 PHP/Symfony bundle libraries
   /i18n/           # Translation files (per domain, e.g. tera)
   /assets/         # Shared brand/content assets per domain (fonts, logos, icons)
@@ -194,7 +194,7 @@ Every API's TypeScript SDK follows one norm, so that they all expose the same cl
 - The bearer token is opt-in and knows no identity provider: `bearerToken` takes any function
   that gives the token, or undefined to send none, and adds `Authorization: Bearer <token>`
   (`bearerToken.ts`). The apps pass `getAccessToken` from `libs/typescript/zitadel`. A frontend
-  signed in by Keycloak passes the one from `libs/typescript/keycloak` instead
+  signed in by Keycloak passes the one from `libs/vue/keycloak` instead
   (`@josempgon/vue-keycloak`, refreshed before each request): its `main.ts` runs
   `await vueKeycloak.install(app, keycloakOptions)` (`VITE_KEYCLOAK_URL`, `_REALM`, `_CLIENT_ID`).
 - An API changes its own interceptors with

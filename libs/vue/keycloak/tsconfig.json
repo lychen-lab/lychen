@@ -3,6 +3,6 @@
   "include": ["**/*"],
   "references": [],
   "compilerOptions": {
-    "outDir": "../../../.moon/cache/types/libs/typescript/keycloak"
+    "outDir": "../../../.moon/cache/types/libs/vue/keycloak"
   }
 }
