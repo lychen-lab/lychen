@@ -1,9 +1,10 @@
 dependsOn:
 - i18n-tera
+- typescript-api-client
 - typescript-tera-api-sdk
 - typescript-tera-core
 - typescript-utils
-- vue-auth
+- typescript-zitadel
 - vue-components-core
 - vue-composables
 - vue-i18n

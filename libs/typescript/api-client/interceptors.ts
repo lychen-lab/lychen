@@ -1,8 +1,7 @@
-import zitadelAuth from '@lychen/typescript-zitadel/ZitadelAuth';
-
 // The interceptors of the API clients that createApiClient sets up. Their signatures are
 // the part of the @hey-api/client-fetch ones they use, so they fit the client of every
-// API SDK (libs/typescript/<api>-api-sdk).
+// API SDK (libs/typescript/<api>-api-sdk). The bearer token, which not every API wants,
+// is in bearerToken.ts.
 
 export type RequestInterceptor = (request: Request) => Request | Promise<Request>;
 
@@ -26,15 +25,6 @@ export interface ApiClientInterceptors {
   request: RequestInterceptor[];
   response: ResponseInterceptor[];
   error: ErrorInterceptor[];
-}
-
-/** Authenticates the request with the signed-in user's Zitadel access token. */
-export function zitadelBearerToken(request: Request): Request {
-  const { isAuthenticated, accessToken } = zitadelAuth.oidcAuth;
-  if (isAuthenticated) {
-    request.headers.set('Authorization', `Bearer ${accessToken}`);
-  }
-  return request;
 }
 
 const WRITE_CONTENT_TYPES: Partial<Record<string, string>> = {
@@ -74,7 +64,7 @@ export function httpStatusError(error: unknown, response: Response | undefined):
 /** The interceptors every API client starts from: new lists, safe to change. */
 export function defaultInterceptors(): ApiClientInterceptors {
   return {
-    request: [zitadelBearerToken, jsonLdContentType],
+    request: [jsonLdContentType],
     response: [],
     error: [httpStatusError],
   };

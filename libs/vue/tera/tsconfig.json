@@ -6,6 +6,9 @@
       "path": "../../i18n/tera"
     },
     {
+      "path": "../../typescript/api-client"
+    },
+    {
       "path": "../../typescript/tera/core"
     },
     {
@@ -15,7 +18,7 @@
       "path": "../../typescript/utils"
     },
     {
-      "path": "../auth"
+      "path": "../../typescript/zitadel"
     },
     {
       "path": "../components-core"

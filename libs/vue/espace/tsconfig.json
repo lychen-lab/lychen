@@ -3,13 +3,16 @@
   "include": ["**/*"],
   "references": [
     {
+      "path": "../../typescript/api-client"
+    },
+    {
       "path": "../../typescript/espace"
     },
     {
       "path": "../../typescript/espace-api-sdk"
     },
     {
-      "path": "../auth"
+      "path": "../../typescript/zitadel"
     },
     {
       "path": "../i18n"

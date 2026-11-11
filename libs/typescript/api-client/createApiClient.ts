@@ -1,3 +1,4 @@
+import { bearerToken as addBearerToken, type BearerTokenProvider } from './bearerToken';
 import {
   defaultInterceptors,
   type ApiClientInterceptors,
@@ -24,11 +25,17 @@ export interface ApiClientConfig {
 export interface ApiClientOptions<Config extends ApiClientConfig> {
   /** The API's base URL, e.g. `import.meta.env.VITE_API_URL`. */
   baseUrl: string;
+  /**
+   * Sends `Authorization: Bearer <token>` with the token this gives, when it gives one
+   * (the bearerToken interceptor, first of the request list). Without it, no token is sent.
+   */
+  bearerToken?: BearerTokenProvider;
   /** Any other option of the SDK's client, over the defaults (`throwOnError: true`). */
   config?: Omit<Config, 'baseUrl'>;
   /**
-   * The API's own interceptors, from the defaults every API shares (defaultInterceptors).
-   * Return the lists that change, a list left out keeps its defaults:
+   * The API's own interceptors, from the defaults every API shares (defaultInterceptors,
+   * plus bearerToken when it is set). Return the lists that change, a list left out keeps
+   * its defaults:
    * - complete: `(defaults) => ({ request: [...defaults.request, addLocale] })`;
    * - drop or replace one:
    *   `(defaults) => ({ error: defaults.error.filter((fn) => fn !== httpStatusError) })`.
@@ -40,7 +47,10 @@ export interface ApiClientOptions<Config extends ApiClientConfig> {
  * Creates the client an API SDK's class runs on, set up like every other API's:
  *
  *   const api = new TeraApi({
- *     client: createApiClient(createClient, { baseUrl: import.meta.env.VITE_API_URL }),
+ *     client: createApiClient(createClient, {
+ *       baseUrl: import.meta.env.VITE_API_URL,
+ *       bearerToken: getAccessToken,
+ *     }),
  *   });
  *
  * `createClient` is the SDK's own (generated/<api>-api/client). The client rejects on any
@@ -50,12 +60,15 @@ export interface ApiClientOptions<Config extends ApiClientConfig> {
 export function createApiClient<Config extends ApiClientConfig, Client extends ApiClient>(
   // Optional, like the SDK's: Config is then inferred from it alone, not `Config | undefined`.
   createClient: (config?: Config) => Client,
-  { baseUrl, config, interceptors }: ApiClientOptions<NoInfer<Config>>,
+  { baseUrl, bearerToken, config, interceptors }: ApiClientOptions<NoInfer<Config>>,
 ): Client {
   // Config is the SDK's client options, which all are optional: these fit it.
   const client = createClient({ throwOnError: true, ...config, baseUrl } as Config);
 
   const defaults = defaultInterceptors();
+  if (bearerToken) {
+    defaults.request.unshift(addBearerToken(bearerToken));
+  }
   const { request, response, error } = { ...defaults, ...interceptors?.(defaults) };
   for (const fn of request) {
     client.interceptors.request.use(fn);

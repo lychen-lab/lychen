@@ -5,6 +5,9 @@
       "path": "./libs/i18n/tera"
     },
     {
+      "path": "./libs/typescript/api-client"
+    },
+    {
       "path": "./libs/typescript/api-sdk-config"
     },
     {
@@ -60,9 +63,6 @@
     },
     {
       "path": "./libs/vue/applications"
-    },
-    {
-      "path": "./libs/vue/auth"
     },
     {
       "path": "./libs/vue/color-scheme"

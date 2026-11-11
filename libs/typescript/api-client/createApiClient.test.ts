@@ -1,13 +1,10 @@
 import { EspaceApi } from '@lychen/typescript-espace-api-sdk/generated/espace-api';
 import { createClient } from '@lychen/typescript-espace-api-sdk/generated/espace-api/client';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { createApiClient } from './createApiClient';
 import { httpStatusError } from './interceptors';
 
 // A real generated client (the espace SDK's) runs every request through a fake fetch.
-
-const auth = vi.hoisted(() => ({ isAuthenticated: false, accessToken: '' }));
-vi.mock('@lychen/typescript-zitadel/ZitadelAuth', () => ({ default: { oidcAuth: auth } }));
 
 const BASE_URL = 'https://api.example.org';
 
@@ -46,8 +43,6 @@ function lastRequest(): Request {
 beforeEach(() => {
   requests = [];
   nextResponse = () => jsonLd({});
-  auth.isAuthenticated = false;
-  auth.accessToken = '';
 });
 
 describe('createApiClient', () => {
@@ -61,9 +56,7 @@ describe('createApiClient', () => {
     expect(lastRequest().url).toBe(`${BASE_URL}/api/area_proposals/p1`);
   });
 
-  it("sends the signed-in user's Zitadel token", async () => {
-    auth.isAuthenticated = true;
-    auth.accessToken = 'token-1';
+  it('sends no token without bearerToken', async () => {
     const client = createApiClient(createClient, {
       baseUrl: BASE_URL,
       config: { fetch: fakeFetch },
@@ -71,17 +64,27 @@ describe('createApiClient', () => {
 
     await client.get({ url: '/api/area_proposals' });
 
-    expect(lastRequest().headers.get('Authorization')).toBe('Bearer token-1');
+    expect(lastRequest().headers.has('Authorization')).toBe(false);
   });
 
-  it('sends no token when nobody is signed in', async () => {
+  it('sends the bearer token the provider gives at the time of each request', async () => {
+    let token: string | undefined = 'token-1';
     const client = createApiClient(createClient, {
       baseUrl: BASE_URL,
+      bearerToken: async () => token,
       config: { fetch: fakeFetch },
     });
 
     await client.get({ url: '/api/area_proposals' });
+    expect(lastRequest().headers.get('Authorization')).toBe('Bearer token-1');
 
+    token = 'token-2';
+    await client.get({ url: '/api/area_proposals' });
+    expect(lastRequest().headers.get('Authorization')).toBe('Bearer token-2');
+
+    // Signed out.
+    token = undefined;
+    await client.get({ url: '/api/area_proposals' });
     expect(lastRequest().headers.has('Authorization')).toBe(false);
   });
 
@@ -124,10 +127,9 @@ describe('createApiClient', () => {
   });
 
   it("completes the defaults with an API's own interceptors", async () => {
-    auth.isAuthenticated = true;
-    auth.accessToken = 'token-1';
     const client = createApiClient(createClient, {
       baseUrl: BASE_URL,
+      bearerToken: () => 'token-1',
       config: { fetch: fakeFetch },
       interceptors: (defaults) => ({ request: [...defaults.request, addLocale] }),
     });
