@@ -24,6 +24,11 @@ export function useExtendedHead(
     return `https://${host}${route.path.replace(localePattern, `/${locale}$2`)}`;
   }
 
+  const localeParam = route.params.locale;
+  const routeLocale = Array.isArray(localeParam) ? localeParam[0] : localeParam;
+  const pageLocale =
+    routeLocale && AVAILABLE_LOCALES.includes(routeLocale) ? routeLocale : defaultLocale;
+
   const canonicalUrl =
     options?.canonical ??
     `https://${host}${router.resolve(route.name ? { name: route.name } : route).path}`;
@@ -58,6 +63,12 @@ export function useExtendedHead(
     ogDescription: t('meta.description'),
     ogTitle: t('meta.title'),
     ogUrl: canonicalUrl,
+    ogType: 'website',
+    // Open Graph writes locales with an underscore: fr_FR.
+    ogLocale: pageLocale.replace('-', '_'),
+    ogLocaleAlternate: AVAILABLE_LOCALES.filter((locale: string) => locale !== pageLocale).map(
+      (locale: string) => locale.replace('-', '_'),
+    ),
     ogImage: options?.ogImage ? resolveAbsoluteUrl(options.ogImage) : undefined,
     twitterCard: 'summary_large_image',
     twitterTitle: t('meta.title'),
