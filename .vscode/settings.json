@@ -46,18 +46,32 @@
   },
 
   // ─── Search ──────────────────────────────────────────────────────────────────
-  // Adds to .gitignore (search.useIgnoreFiles): committed files that are only noise in results.
+  // On top of .gitignore (search.useIgnoreFiles). Also hidden from Quick Open (Ctrl+P): the
+  // "Use Exclude Settings and Ignore Files" button of the search view brings them back.
   "search.exclude": {
+    // Not committed: listed in case the ignore files are turned off.
     "**/node_modules": true,
     "**/.moon/cache": true,
     "**/.yarn": true,
     "**/dist": true,
     "**/vendor": true,
-    "**/var/cache": true,
-    "yarn.lock": true,
-    "**/composer.lock": true,
-    "**/symfony.lock": true,
-    ".claude/worktrees": true
+    "**/var": true,
+    ".claude/worktrees": true,
+    // Lockfiles: yarn.lock, composer.lock, symfony.lock.
+    "**/*.lock": true,
+    // Generated: the OpenAPI exports, the API SDKs, Symfony's config reference.
+    "**/openapi_docs.json": true,
+    "**/generated": true,
+    "**/config/reference.php": true,
+    // PHPStan debt, every class name many times over: open the file to find an entry.
+    "**/phpstan-baseline.neon": true,
+    // Diagrams: the draw.io sources and the Vue components that embed their XML.
+    "**/*.drawio": true,
+    "libs/vue/drawio/{core,tera}/*.vue": true,
+    // PhpStorm project files, release notes, license.
+    "**/.idea": true,
+    "CHANGELOG.md": true,
+    "LICENSE": true
   },
 
   // ─── Explorer ────────────────────────────────────────────────────────────────
