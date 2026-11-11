@@ -26,6 +26,9 @@
       "path": "./libs/typescript/humu"
     },
     {
+      "path": "./libs/typescript/keycloak"
+    },
+    {
       "path": "./libs/typescript/kiro"
     },
     {

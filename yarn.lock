@@ -2225,6 +2225,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@josempgon/vue-keycloak@npm:^3.3.11":
+  version: 3.3.11
+  resolution: "@josempgon/vue-keycloak@npm:3.3.11"
+  peerDependencies:
+    keycloak-js: 18 - 26
+    vue: ^3.4.0
+  checksum: 10c0/7bcb384741b4915b7b0211cf7e08bf9bcb9a1992e4ee2f3ce3a32ba5397304bc4c6061dbfc3df6f750d89b68c1edfc164ca5fb41857c76ca399b709efb9034c2
+  languageName: node
+  linkType: hard
+
 "@jridgewell/gen-mapping@npm:^0.3.12, @jridgewell/gen-mapping@npm:^0.3.5":
   version: 0.3.13
   resolution: "@jridgewell/gen-mapping@npm:0.3.13"
@@ -2606,6 +2616,16 @@ __metadata:
   resolution: "@lychen/typescript-humu@workspace:libs/typescript/humu"
   dependencies:
     "@lychen/typescript-utils": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@lychen/typescript-keycloak@workspace:libs/typescript/keycloak":
+  version: 0.0.0-use.local
+  resolution: "@lychen/typescript-keycloak@workspace:libs/typescript/keycloak"
+  dependencies:
+    "@josempgon/vue-keycloak": "npm:^3.3.11"
+    keycloak-js: "npm:^26.2.5"
+    vue: "npm:^3.5.44"
   languageName: unknown
   linkType: soft
 
@@ -8496,6 +8516,13 @@ __metadata:
   bin:
     katex: cli.js
   checksum: 10c0/20ceeefe75b852acfb1739aa1fe64322acee332cdd7ccefb6e952285c27201ccfb92c65afb38d555d53a41756fba77b7cd60462f8cfce7323a3902ef2e57ad91
+  languageName: node
+  linkType: hard
+
+"keycloak-js@npm:^26.2.5":
+  version: 26.2.5
+  resolution: "keycloak-js@npm:26.2.5"
+  checksum: 10c0/722834018c362e7df43db42306466b34e97b92a23226b993c511932e388c79c696cee08c899c79ace92b30f9bddb01f864cb18789c73d83bb06270fc4f584a28
   languageName: node
   linkType: hard
 

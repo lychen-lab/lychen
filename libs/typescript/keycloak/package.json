@@ -1,0 +1,9 @@
+{
+  "name": "@lychen/typescript-keycloak",
+  "type": "module",
+  "dependencies": {
+    "@josempgon/vue-keycloak": "^3.3.11",
+    "keycloak-js": "^26.2.5",
+    "vue": "^3.5.44"
+  }
+}

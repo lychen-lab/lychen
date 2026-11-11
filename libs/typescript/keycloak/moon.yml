@@ -1,0 +1,7 @@
+# The Keycloak sign-in of a frontend (@josempgon/vue-keycloak): the plugin options and the
+# bearer token provider of createApiClient, as libs/typescript/zitadel is for Zitadel.
+id: typescript-keycloak
+language: typescript
+layer: library
+# Inherits lint, format, typecheck and test from .moon/tasks/frontend.yml.
+stack: frontend
