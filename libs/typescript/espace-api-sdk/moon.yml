@@ -1,10 +1,12 @@
+# The TypeScript SDK of espace-api: tasks from .moon/tasks/tag-api-sdk.yml.
+dependsOn:
+  - typescript-api-sdk-config
 id: typescript-espace-api-sdk
 language: typescript
+layer: library
+tags:
+  - api-sdk
 tasks:
   generate-api:
-    # @hey-api/openapi-ts reads the spec API Platform exports (OpenAPI 3.2) as is;
-    # input, output and plugins are in openapi-ts.config.ts.
-    command: openapi-ts
     deps:
-    - espace-api:export-openapi
-layer: library
+      - espace-api:export-openapi

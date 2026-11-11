@@ -1,0 +1,36 @@
+$schema: https://moonrepo.dev/schemas/tasks.json
+# The TypeScript SDKs of the APIs: libs/typescript/<api>-api-sdk, package
+# @lychen/typescript-<api>-api-sdk, tag `api-sdk`. @hey-api/openapi-ts generates
+# each of them in generated/<api>-api/ from the one configuration of
+# libs/typescript/api-sdk-config: a SDK's openapi-ts.config.ts only names its
+# API and its spec. `moon generate api-sdk` scaffolds a new one.
+#
+# Generation is manual: an API change does not regenerate its SDK, and
+# committing a regenerated SDK is what makes the frontends adopt the new
+# contract (docs/decouple-apis-from-frontends.md).
+inheritedBy:
+  tag: api-sdk
+tasks:
+  generate-api:
+    # From the input of openapi-ts.config.ts. The SDK of a monorepo API adds
+    # that API's export-openapi to these deps, in its own moon.yml, so that the
+    # spec is exported first. A SDK whose input is a URL has no dep.
+    command: openapi-ts
+    options: &generate
+      # It rewrites generated/ in the repository: a cache hit would replay the
+      # logs and write nothing.
+      cache: false
+  generate-api-from-url:
+    # The same generation from the spec a running API serves, without
+    # exporting it (no deps): staging, a local stack, an API outside the
+    # monorepo...
+    #   moon run typescript-tera-api-sdk:generate-api-from-url -- https://<host>/api/docs.jsonopenapi
+    # openapi-ts replaces the configured input with --input and keeps the rest
+    # of the configuration.
+    command:
+    - openapi-ts
+    - --input
+    options:
+      <<: *generate
+      # Needs a URL on the command line.
+      runInCI: false

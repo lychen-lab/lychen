@@ -1,4 +1,15 @@
-name: 'OpenAPI | SDK sync (tera)'
+name: 'OpenAPI | SDK sync'
+
+# Reports the drift between an API and its committed OpenAPI spec and
+# TypeScript SDK (libs/typescript/<api>-api-sdk), without ever failing: SDK
+# generation is intentionally MANUAL and decoupled from API changes. An API
+# change must NOT force a SDK regeneration (and the resulting frontend
+# redeploy) in the same PR. Regenerate when you decide to: committing the
+# result is what lets the frontends pick up the new contract.
+# See docs/decouple-apis-from-frontends.md.
+#
+# Called by openapi-sdk-sync-<api>.yml, one per API SDK, which hold the paths
+# that trigger the check, the permissions and the concurrency group.
 
 env:
   REGISTRY: ghcr.io
@@ -7,23 +18,16 @@ env:
   COMPOSE_FILE: compose.yml
 
 on:
-  pull_request:
-    paths:
-      - 'projects/tera/api/**'
-      - 'libs/php/**'
-  workflow_dispatch: {}
-
-permissions:
-  contents: read
-  packages: read
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  workflow_call:
+    inputs:
+      api:
+        description: 'The API name (tera): project <api>-api, SDK typescript-<api>-api-sdk.'
+        required: true
+        type: string
 
 jobs:
   check-sdk-sync:
-    name: 'tera-api | Check OpenAPI spec & generated SDK sync'
+    name: '${{ inputs.api }}-api | Check OpenAPI spec & generated SDK sync'
     runs-on: ubuntu-latest
     steps:
       - uses: 'actions/checkout@v4'
@@ -52,35 +56,30 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Read-only token: the test image's cache export fails without stopping
-      # the build (ignore-error), the QG workflow keeps that cache warm.
-      - name: Export OpenAPI spec
-        run: moon ci tera-api:export-openapi
-
       - name: Install node dependencies
         run: yarn install
 
-      # Same generator, version and openapi-ts.config.ts as typescript-tera-api-sdk:generate-api,
-      # using the workspace-pinned @hey-api/openapi-ts version from yarn.lock.
-      - name: Regenerate TypeScript SDK
-        run: yarn workspace @lychen/typescript-tera-api-sdk run openapi-ts
+      # The SDK's generate-api task (.moon/tasks/tag-api-sdk.yml), as a developer
+      # runs it: <api>-api:export-openapi first, then @hey-api/openapi-ts with
+      # the SDK's openapi-ts.config.ts. Under CI, export-openapi first builds
+      # the test image and creates its database (symfony-ci.yml). Read-only
+      # token: the test image's cache export fails without stopping the build
+      # (ignore-error), the QG workflow keeps that cache warm.
+      - name: Export the OpenAPI spec and regenerate the TypeScript SDK
+        run: moon run typescript-${{ inputs.api }}-api-sdk:generate-api
 
-      # SDK generation is intentionally MANUAL and decoupled from API changes: an
-      # API change must NOT force a SDK regeneration (and the resulting frontend
-      # redeploy) in the same PR. This step only *reports* drift as a warning and
-      # never fails the build. Regenerate when you decide to, and committing the
-      # result is what lets the frontends pick up the new contract.
-      # See docs/decouple-apis-from-frontends.md.
       - name: Report committed spec & SDK drift (non-blocking)
+        env:
+          API: ${{ inputs.api }}
         run: |
-          if ! git diff --exit-code -- projects/tera/api/openapi_docs.json libs/typescript/tera/api-sdk/generated/; then
+          if ! git diff --exit-code -- "projects/$API/api/openapi_docs.json" "libs/typescript/$API-api-sdk/generated/"; then
             echo ""
-            echo "The committed OpenAPI spec and/or generated TypeScript SDK are out of sync with the tera API."
+            echo "The committed OpenAPI spec and/or generated TypeScript SDK are out of sync with the $API API."
             echo "This is not a failure — SDK generation is manual. Regenerate when ready and commit the result:"
             echo ""
-            echo "  moon typescript-tera-api-sdk:generate-api"
+            echo "  moon run typescript-$API-api-sdk:generate-api"
             echo ""
-            echo "::warning::tera API spec/SDK drift detected. SDK generation is manual; run 'moon typescript-tera-api-sdk:generate-api' and commit when you want the frontends to adopt the new contract."
+            echo "::warning::$API API spec/SDK drift detected. SDK generation is manual; run 'moon run typescript-$API-api-sdk:generate-api' and commit when you want the frontends to adopt the new contract."
           else
-            echo "Committed spec & SDK are in sync with the tera API."
+            echo "Committed spec & SDK are in sync with the $API API."
           fi

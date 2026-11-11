@@ -1,0 +1,10 @@
+{
+  "name": "@lychen/typescript-api-sdk-config",
+  "type": "module",
+  "dependencies": {
+    "@hey-api/openapi-ts": "0.99.0"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}

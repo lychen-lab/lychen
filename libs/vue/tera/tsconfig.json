@@ -6,7 +6,7 @@
       "path": "../../i18n/tera"
     },
     {
-      "path": "../../typescript/tera/api-sdk"
+      "path": "../../typescript/tera-api-sdk"
     },
     {
       "path": "../../typescript/tera/core"

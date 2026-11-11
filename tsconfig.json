@@ -5,6 +5,9 @@
       "path": "./libs/i18n/tera"
     },
     {
+      "path": "./libs/typescript/api-sdk-config"
+    },
+    {
       "path": "./libs/typescript/applications"
     },
     {
@@ -38,10 +41,10 @@
       "path": "./libs/typescript/robust"
     },
     {
-      "path": "./libs/typescript/tera/api-sdk"
+      "path": "./libs/typescript/tera/core"
     },
     {
-      "path": "./libs/typescript/tera/core"
+      "path": "./libs/typescript/tera-api-sdk"
     },
     {
       "path": "./libs/typescript/utils"

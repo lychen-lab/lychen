@@ -2565,6 +2565,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@lychen/typescript-api-sdk-config@workspace:*, @lychen/typescript-api-sdk-config@workspace:libs/typescript/api-sdk-config":
+  version: 0.0.0-use.local
+  resolution: "@lychen/typescript-api-sdk-config@workspace:libs/typescript/api-sdk-config"
+  dependencies:
+    "@hey-api/openapi-ts": "npm:0.99.0"
+    typescript: "npm:^6.0.3"
+  languageName: unknown
+  linkType: soft
+
 "@lychen/typescript-applications@workspace:*, @lychen/typescript-applications@workspace:libs/typescript/applications":
   version: 0.0.0-use.local
   resolution: "@lychen/typescript-applications@workspace:libs/typescript/applications"
@@ -2585,7 +2594,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@lychen/typescript-espace-api-sdk@workspace:libs/typescript/espace-api-sdk"
   dependencies:
-    "@hey-api/openapi-ts": "npm:0.99.0"
+    "@lychen/typescript-api-sdk-config": "workspace:*"
     typescript: "npm:^6.0.3"
   languageName: unknown
   linkType: soft
@@ -2654,11 +2663,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@lychen/typescript-tera-api-sdk@workspace:*, @lychen/typescript-tera-api-sdk@workspace:libs/typescript/tera/api-sdk":
+"@lychen/typescript-tera-api-sdk@workspace:*, @lychen/typescript-tera-api-sdk@workspace:libs/typescript/tera-api-sdk":
   version: 0.0.0-use.local
-  resolution: "@lychen/typescript-tera-api-sdk@workspace:libs/typescript/tera/api-sdk"
+  resolution: "@lychen/typescript-tera-api-sdk@workspace:libs/typescript/tera-api-sdk"
   dependencies:
-    "@hey-api/openapi-ts": "npm:0.99.0"
+    "@lychen/typescript-api-sdk-config": "workspace:*"
     typescript: "npm:^6.0.3"
   languageName: unknown
   linkType: soft

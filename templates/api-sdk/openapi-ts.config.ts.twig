@@ -1,0 +1,11 @@
+import { defineApiSdkConfig } from '@lychen/typescript-api-sdk-config/defineApiSdkConfig';
+
+export default defineApiSdkConfig({
+  api: '{{ api }}',
+{%- if url %}
+  input: '{{ url }}',
+{%- else %}
+  // The spec {{ api }}-api:export-openapi writes.
+  input: '../../../projects/{{ api }}/api/openapi_docs.json',
+{%- endif %}
+});

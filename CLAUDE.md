@@ -124,7 +124,7 @@ make phpunit c="--group e2e"                         # Run by group
 
 /libs              # Reusable libraries
   /css/core        # Tailwind design tokens
-  /typescript/     # 16 TypeScript libraries
+  /typescript/     # 17 TypeScript libraries, incl. the API SDKs (<api>-api-sdk)
   /vue/            # 28 Vue component/composable libraries
   /php/            # 6 PHP/Symfony bundle libraries
   /i18n/           # Translation files (per domain, e.g. tera)
@@ -133,6 +133,8 @@ make phpunit c="--group e2e"                         # Run by group
   /vite/           # Shared Vite plugins/config (e.g. SSG scaffold)
   /caddy/          # Shared Caddy server configs (pwa, ssg)
   /docker/         # Shared Dockerfiles (e.g. frontend image)
+
+/templates         # `moon generate` templates (api-sdk, typescript-lib, vue-lib, php-api)
 
 /.moon             # Moonrepo configuration
   workspace.yml    # Workspace constraints, VCS hooks
@@ -159,7 +161,8 @@ make phpunit c="--group e2e"                         # Run by group
 ### Backend (Symfony 8.1 + API Platform 4.3 + PHP 8.5)
 
 - API Platform auto-generates REST APIs from Doctrine entities
-- OpenAPI spec is used to generate the TypeScript SDK at `libs/typescript/tera/api-sdk`
+- Each API's OpenAPI spec generates its TypeScript SDK (`libs/typescript/<api>-api-sdk`, see
+  API SDKs below)
 - State management via Symfony Workflow; messaging via RabbitMQ — one **central**
   broker (`projects/common/rabbitmq`) shared by every API: a single durable topic
   exchange (`lychen.events`), one queue per service, routing keys shaped
@@ -170,6 +173,31 @@ make phpunit c="--group e2e"                         # Run by group
 - FrankenPHP as PHP runtime in Docker; PostgreSQL for storage; Redis for cache
 - Each API project has its own `compose.yml` (Postgres + Redis) for local
   development; RabbitMQ, Mercure and mailpit are shared via the `lychen-network`
+
+### API SDKs
+
+Every API's TypeScript SDK follows one norm, so that they all expose the same client:
+
+- `libs/typescript/<api>-api-sdk`, project `typescript-<api>-api-sdk`, package
+  `@lychen/typescript-<api>-api-sdk`, tag `api-sdk` (tasks in `.moon/tasks/tag-api-sdk.yml`).
+- `@hey-api/openapi-ts` generates it in `generated/<api>-api/` (never edit it): the types, one
+  `<Api>Api` class holding every operation, and the bundled fetch client. Hand-written additions
+  sit next to `generated/` (e.g. tera's `enums.ts`).
+- Its `openapi-ts.config.ts` only calls `defineApiSdkConfig({ api, input })` from
+  `libs/typescript/api-sdk-config`: the one configuration of every SDK (plugins, spec patches) and
+  the only place `@hey-api/openapi-ts` is pinned. Change the generator there, never in one SDK.
+
+```bash
+moon run typescript-tera-api-sdk:generate-api                        # From the monorepo API (export-openapi first)
+moon run typescript-tera-api-sdk:generate-api-from-url -- <spec URL> # From a running API, e.g. https://<host>/api/docs.jsonopenapi
+moon generate api-sdk -- --api flora                                 # New SDK of the monorepo project flora-api
+moon generate api-sdk -- --api <name> --url <spec URL>               # New SDK of an API outside the monorepo
+```
+
+After `moon generate api-sdk`, `moon run typescript-<api>-api-sdk:generate-api` installs the new
+workspace and generates the SDK. Add a `.github/workflows/openapi-sdk-sync-<api>.yml` caller for a
+monorepo API. Generation stays manual (`docs/decouple-apis-from-frontends.md`): commit the
+regenerated SDK when the frontends should adopt the new contract.
 
 ### Monorepo Wiring
 
