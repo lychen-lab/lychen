@@ -221,18 +221,18 @@ Every API has two front libs:
   from several endpoints, an endpoint may give a model shaped nothing like its resource.
 - `libs/vue/<api>-api` (`vue-<api>-api`): the client (`client/use<Api>Api.ts`) and one composable
   per endpoint, whatever it does (reads, pages of a list, writes, workflow transitions, custom
-  actions), in `endpoint/<resource>/use-<endpoint>/`, next to the resource's `queryKeys.ts`. Apps
+  actions), in `endpoint/<resource>/<endpoint>/`, next to the resource's `queryKeys.ts`. Apps
   and components import a composable from its folder (`index.ts`), never the SDK or
   `use<Api>Api()`.
 
 An endpoint's folder holds its composable and its own mapping, one file each:
 
 ```
-endpoint/area-activity/use-get-area-activities/   endpoint/area-activity/use-create-area-activity/
-  useGetAreaActivities.ts                           useCreateAreaActivity.ts
-  mapToModel.ts                                     mapToModel.ts
-  index.ts                                          mapToRequest.ts
-                                                    index.ts
+endpoint/area-activity/get-area-activities/   endpoint/area-activity/create-area-activity/
+  useGetAreaActivities.ts                       useCreateAreaActivity.ts
+  mapToModel.ts                                 mapToModel.ts
+  index.ts                                      mapToRequest.ts
+                                                index.ts
 ```
 
 - `mapToModel` takes the SDK's response type (`ApiAreaActivitiesGetCollectionResponse`) and gives
