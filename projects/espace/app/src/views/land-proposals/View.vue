@@ -54,10 +54,8 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { RouterLink } from 'vue-router';
-import { useQuery, useQueryClient } from '@tanstack/vue-query';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { useEspaceApi } from '@lychen/vue-espace/composables/use-espace-api/useEspaceApi';
-import { useEspaceMercure } from '@lychen/vue-espace/composables/use-espace-mercure/useEspaceMercure';
+import { useGetAreaProposals } from '@lychen/vue-espace-api/endpoint/area-proposal/useGetAreaProposals';
 import { Card } from '@lychen/vue-components-business/land-proposal/card';
 import type { LandProposal } from '@lychen/vue-components-business/land-proposal/card';
 import { MESSAGES, TRANSLATION_KEY } from './i18n';
@@ -68,32 +66,18 @@ const PLACEHOLDER_IMAGE = 'https://images.pexels.com/photos/59321/pexels-photo-5
 
 useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 
-const { api } = useEspaceApi();
-
-const { data, isPending, isError } = useQuery({
-  queryKey: ['area-proposals'],
-  queryFn: async () => {
-    const response = await api.apiAreaProposalsGetCollection();
-    return response.data;
-  },
-});
-
-// Any proposal created, edited or deleted, by anyone. The list is built from the collection
-// representation, not the item one an update carries, so refetch it rather than patch it.
-const queryClient = useQueryClient();
-useEspaceMercure([{ match: '/api/area_proposals/:uuid', matchType: 'urlpattern' }], () =>
-  queryClient.invalidateQueries({ queryKey: ['area-proposals'] }),
-);
+// Live: any proposal created, edited or deleted, by anyone, refetches the list.
+const { data, isPending, isError } = useGetAreaProposals({}, { live: true });
 
 const proposals = computed<LandProposal[]>(
   () =>
-    data.value?.member?.map((proposal) => ({
-      uuid: proposal.uuid ?? '',
-      title: proposal.title ?? '',
-      description: proposal.description ?? '',
+    data.value?.items.map((proposal) => ({
+      uuid: proposal.uuid,
+      title: proposal.title,
+      description: proposal.description,
       surface: proposal.surfaceToShare ?? 0,
       altitude: proposal.altitude ?? 0,
-      city: proposal.city ?? undefined,
+      city: proposal.city,
       image: PLACEHOLDER_IMAGE,
     })) ?? [],
 );

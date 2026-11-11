@@ -280,10 +280,8 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { useQuery, useQueryClient } from '@tanstack/vue-query';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { useEspaceApi } from '@lychen/vue-espace/composables/use-espace-api/useEspaceApi';
-import { useEspaceMercure } from '@lychen/vue-espace/composables/use-espace-mercure/useEspaceMercure';
+import { useGetAreaProposal } from '@lychen/vue-espace-api/endpoint/area-proposal/useGetAreaProposal';
 import { MESSAGES, TRANSLATION_KEY } from './i18n';
 import IconArrowLeft from '@lychen/vue-icons/IconArrowLeft.vue';
 import IconShare2 from '@lychen/vue-icons/IconShare2.vue';
@@ -307,33 +305,8 @@ const route = useRoute();
 const uuid = computed(() => String(route.params.uuid));
 const isFavorite = ref(false);
 
-const { api } = useEspaceApi();
-
-const { data: proposal } = useQuery({
-  queryKey: ['area-proposal', uuid],
-  queryFn: async () => {
-    const response = await api.apiAreaProposalsUuidGet({
-      path: { uuid: uuid.value },
-    });
-    return response.data;
-  },
-});
-
-// Live edits of this proposal. An update carries the proposal exactly as the query above
-// fetches it, so it replaces the cached copy without a round trip; a deletion carries
-// nothing but its @id, so the query refetches and finds out.
-const queryClient = useQueryClient();
-useEspaceMercure(
-  () => [{ match: `/api/area_proposals/${uuid.value}` }],
-  (update) => {
-    const queryKey = ['area-proposal', uuid.value];
-    if (Object.keys(update).length === 1) {
-      queryClient.invalidateQueries({ queryKey });
-    } else {
-      queryClient.setQueryData(queryKey, update);
-    }
-  },
-);
+// Live: anyone's edits of this proposal replace it on screen as they are made.
+const { data: proposal } = useGetAreaProposal(uuid, { live: true });
 
 const galleryRef = ref<HTMLElement | null>(null);
 const activeIndex = ref(0);
@@ -562,8 +535,8 @@ const terrain = computed(() => {
   if (!data) return presentationBase;
   return {
     ...presentationBase,
-    title: data.title ?? presentationBase.title,
-    description: data.description ?? presentationBase.description,
+    title: data.title || presentationBase.title,
+    description: data.description || presentationBase.description,
     surface: data.surfaceTotal ?? presentationBase.surface,
     city: data.city ?? presentationBase.city,
     altitude: data.altitude ?? presentationBase.altitude,

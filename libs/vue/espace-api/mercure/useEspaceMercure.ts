@@ -1,12 +1,17 @@
 import { EventSource } from 'eventsource';
 import { onScopeDispose, toValue, watch, type MaybeRefOrGetter } from 'vue';
-import { useEspaceApi } from '../use-espace-api/useEspaceApi';
+import { useEspaceApi } from '../client/useEspaceApi';
 
 /**
  * An update the espace API pushed to the hub. A created or updated resource comes
  * whole, exactly as `GET` on its IRI returns it; a deleted one only as its `@id`.
  */
 export type EspaceMercureUpdate = { '@id': string } & Record<string, unknown>;
+
+/** Whether the update reports a deletion, which carries nothing but the resource's `@id`. */
+export function isDeletion(update: EspaceMercureUpdate): boolean {
+  return Object.keys(update).length === 1;
+}
 
 /**
  * Selects the topics to listen to, as the Mercure 1.0 protocol does: a resource IRI

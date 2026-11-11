@@ -1,11 +1,13 @@
 {
-  "name": "@lychen/vue-espace",
+  "name": "@lychen/vue-espace-api",
+  "type": "module",
   "dependencies": {
     "@lychen/typescript-api-client": "workspace:*",
     "@lychen/typescript-espace": "workspace:*",
     "@lychen/typescript-espace-api-sdk": "workspace:*",
     "@lychen/typescript-zitadel": "workspace:*",
-    "@lychen/vue-i18n": "workspace:*",
-    "eventsource": "^5.1.3"
+    "@tanstack/vue-query": "^5.104.5",
+    "eventsource": "^5.1.3",
+    "vue": "^3.5.44"
   }
 }

@@ -13,12 +13,9 @@
     },
     {
       "path": "../../typescript/zitadel"
-    },
-    {
-      "path": "../i18n"
     }
   ],
   "compilerOptions": {
-    "outDir": "../../../.moon/cache/types/libs/vue/espace"
+    "outDir": "../../../.moon/cache/types/libs/vue/espace-api"
   }
 }

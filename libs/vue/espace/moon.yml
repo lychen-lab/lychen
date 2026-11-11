@@ -1,9 +1,0 @@
-dependsOn:
-- typescript-api-client
-- typescript-espace
-- typescript-espace-api-sdk
-- typescript-zitadel
-- vue-i18n
-id: vue-espace
-language: typescript
-layer: library

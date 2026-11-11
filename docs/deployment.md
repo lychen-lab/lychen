@@ -434,7 +434,7 @@ another API.
 
 **App** ([`projects/espace/app`](../projects/espace/app/)):
 
-- [`useEspaceMercure(matchers, onUpdate)`](../libs/vue/espace/composables/use-espace-mercure/useEspaceMercure.ts)
+- [`useEspaceMercure(matchers, onUpdate)`](../libs/vue/espace-api/mercure/useEspaceMercure.ts)
   fetches a token and opens an event stream on the hub. A native `EventSource` cannot set
   headers and the 1.0 hub accepts no token in the URL, so it uses the
   [`eventsource`](https://www.npmjs.com/package/eventsource) package, which streams over
@@ -443,9 +443,10 @@ another API.
   resume on their own with a `Last-Event-ID` header; when the hub turns a token down, the
   composable reconnects with a fresh one and `last_event_id`, so nothing published in between
   is lost.
-- The proposals list subscribes to the `/api/area_proposals/:uuid` URL pattern and refetches;
-  a proposal's page subscribes to its own IRI and writes the pushed payload straight into
-  its query cache.
+- The endpoint composables subscribe when called with `{ live: true }`:
+  `useGetAreaProposals` to the `/api/area_proposals/:uuid` URL pattern, and refetches;
+  `useGetAreaProposal` to the proposal's own IRI, and writes the pushed payload, mapped to
+  the front model like a `GET` response, straight into its query cache.
 
 **Configuration**, on the API's compose (the dev defaults live in
 [`compose.yml`](../projects/espace/api/compose.yml)):

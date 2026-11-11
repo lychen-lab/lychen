@@ -191,6 +191,13 @@ Every API's TypeScript SDK follows one norm, so that they all expose the same cl
   Every API's client therefore rejects on non-2xx responses and runs the same default
   interceptors (`defaultInterceptors()`): the JSON-LD / Merge Patch `Content-Type` of a write
   without one, and an `Error` naming the URL and status.
+- espace keeps its frontends off the API's contract altogether: `libs/vue/espace-api` has one
+  Tanstack Query composable per endpoint (`endpoint/<resource>/useGet…`, `useCreate…`,
+  `useUpdate…`, `useDelete…`) and, per resource, the `mapper.ts` (`mapToModel`,
+  `mapToCreateBody`…) that alone knows both the API's representations and the front's models
+  (`libs/typescript/espace/models`). Apps and components import the composables, never the SDK
+  or `useEspaceApi()`, so an API change is fixed in a mapper. A mutation updates the cache
+  itself (the item from its response, the lists invalidated) before the caller's `onSuccess`.
 - The bearer token is opt-in and knows no identity provider: `bearerToken` takes any function
   that gives the token, or undefined to send none, and adds `Authorization: Bearer <token>`
   (`bearerToken.ts`). The apps pass `getAccessToken` from `libs/typescript/zitadel`.
