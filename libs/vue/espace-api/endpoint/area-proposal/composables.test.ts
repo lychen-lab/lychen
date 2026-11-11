@@ -2,11 +2,10 @@ import type { ApiAreaProposalsUuidGetResponse } from '@lychen/typescript-espace-
 import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createApp, effectScope, ref, type EffectScope } from 'vue';
-import { mapToModel } from './mapper';
 import { areaProposalKeys } from './queryKeys';
 import { useDeleteAreaProposal } from './useDeleteAreaProposal';
-import { useGetAreaProposal } from './useGetAreaProposal';
-import { useGetAreaProposals } from './useGetAreaProposals';
+import { getAreaProposalQueryKey, mapToModel, useGetAreaProposal } from './useGetAreaProposal';
+import { mapToModel as mapToListModel, useGetAreaProposals } from './useGetAreaProposals';
 import { useUpdateAreaProposal } from './useUpdateAreaProposal';
 
 // The composables run on a real generated client, set up like the app's, whose requests
@@ -141,17 +140,37 @@ describe('useGetAreaProposal', () => {
 });
 
 describe('useGetAreaProposals', () => {
-  it('sends the status as the API place, and gives a collection of front models', async () => {
-    fetchMock.respond = () => jsonLd({ member: [apiProposal()], totalItems: 1 });
+  it('sends the status as the API place, and gives the Hydra collection of front models', async () => {
+    // A collection as API Platform serializes it.
+    fetchMock.respond = () =>
+      jsonLd({
+        '@context': '/api/contexts/AreaProposal',
+        '@id': '/api/area_proposals',
+        '@type': 'Collection',
+        totalItems: 31,
+        member: [apiProposal()],
+        view: {
+          '@id': '/api/area_proposals?place=published&page=1',
+          '@type': 'PartialCollectionView',
+          first: '/api/area_proposals?place=published&page=1',
+          last: '/api/area_proposals?place=published&page=2',
+          next: '/api/area_proposals?place=published&page=2',
+        },
+        search: { '@type': 'IriTemplate', template: '/api/area_proposals{?place}' },
+      });
 
     const { data } = run(() => useGetAreaProposals({ status: 'published' }));
 
     await vi.waitFor(() => expect(data.value).toBeDefined());
     expect(new URL(lastRequest().url).search).toBe('?place=published');
-    expect(data.value).toEqual({
-      items: [expect.objectContaining({ uuid: UUID, status: 'published' })],
-      totalItems: 1,
-      hasNextPage: false,
+    expect(data.value).toStrictEqual({
+      member: [mapToListModel(apiProposal())],
+      totalItems: 31,
+      view: {
+        first: '/api/area_proposals?place=published&page=1',
+        last: '/api/area_proposals?place=published&page=2',
+        next: '/api/area_proposals?place=published&page=2',
+      },
     });
   });
 });
@@ -170,38 +189,34 @@ describe('useUpdateAreaProposal', () => {
     expect(await request.json()).toEqual({ title: 'Nouveau titre', activities: ['bees'] });
   });
 
-  it("caches the proposal it resolves with and refetches the lists, before the caller's onSuccess", async () => {
+  it("refetches the area proposal queries before the caller's onSuccess", async () => {
     fetchMock.respond = () => jsonLd(apiProposal({ title: 'Nouveau titre' }));
     const invalidateQueries = vi.spyOn(queryClient, 'invalidateQueries');
-    const cachedWhenCallerRuns: unknown[] = [];
+    const invalidatedWhenCallerRuns: unknown[] = [];
 
     const { mutateAsync } = run(() =>
       useUpdateAreaProposal({
-        onSuccess: (proposal) => {
-          cachedWhenCallerRuns.push(
-            queryClient.getQueryData(areaProposalKeys.detail(proposal.uuid)),
-          );
+        onSuccess: () => {
+          invalidatedWhenCallerRuns.push(...invalidateQueries.mock.calls);
         },
       }),
     );
     const proposal = await mutateAsync({ uuid: UUID, input: { title: 'Nouveau titre' } });
 
     expect(proposal.title).toBe('Nouveau titre');
-    expect(queryClient.getQueryData(areaProposalKeys.detail(UUID))).toEqual(proposal);
-    expect(invalidateQueries).toHaveBeenCalledWith({ queryKey: areaProposalKeys.lists() });
-    expect(cachedWhenCallerRuns).toEqual([proposal]);
+    expect(invalidatedWhenCallerRuns).toEqual([[{ queryKey: areaProposalKeys.all }]]);
   });
 });
 
 describe('useDeleteAreaProposal', () => {
   it('deletes the proposal and drops it from the cache', async () => {
     fetchMock.respond = () => new Response(null, { status: 204 });
-    queryClient.setQueryData(areaProposalKeys.detail(UUID), mapToModel(apiProposal()));
+    queryClient.setQueryData(getAreaProposalQueryKey(UUID), mapToModel(apiProposal()));
 
     const { mutateAsync } = run(() => useDeleteAreaProposal());
     await mutateAsync(UUID);
 
     expect(lastRequest().method).toBe('DELETE');
-    expect(queryClient.getQueryData(areaProposalKeys.detail(UUID))).toBeUndefined();
+    expect(queryClient.getQueryData(getAreaProposalQueryKey(UUID))).toBeUndefined();
   });
 });

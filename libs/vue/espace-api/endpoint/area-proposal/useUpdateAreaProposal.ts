@@ -1,11 +1,23 @@
 import type {
-  AreaProposal,
-  AreaProposalUpdateInput,
+  ApiAreaProposalsUuidPatchData,
+  ApiAreaProposalsUuidPatchResponse,
+} from '@lychen/typescript-espace-api-sdk/generated/espace-api';
+import {
+  oneOf,
+  optional,
+  required,
+  toDate,
+  withoutUndefined,
+} from '@lychen/typescript-api-mapping/mapping';
+import {
+  AREA_PROPOSAL_STATUSES,
+  type AreaProposal,
+  type AreaProposalUpdateInput,
 } from '@lychen/typescript-espace-models/AreaProposal';
 import type { ApiMutationOptions } from '@lychen/vue-api-query/options';
-import { useSaveMutation } from '@lychen/vue-api-query/useSaveMutation';
+import { useApiMutation } from '@lychen/vue-api-query/useApiMutation';
 import { useEspaceApi } from '../../client/useEspaceApi';
-import { mapToModel, mapToUpdateBody } from './mapper';
+import { toPersonName } from '../person';
 import { areaProposalKeys } from './queryKeys';
 
 export interface UpdateAreaProposalVariables {
@@ -20,19 +32,55 @@ export function useUpdateAreaProposal(
 ) {
   const { api } = useEspaceApi();
 
-  return useSaveMutation(
+  return useApiMutation(
     {
-      queryKeys: areaProposalKeys,
-      async save({ uuid, input }: UpdateAreaProposalVariables) {
+      async send(variables: UpdateAreaProposalVariables) {
         const { data } = await api.apiAreaProposalsUuidPatch({
-          path: { uuid },
-          body: mapToUpdateBody(input),
+          ...mapToRequest(variables),
           throwOnError: true,
         });
         return mapToModel(data);
       },
-      idOf: (saved) => saved.uuid,
+      invalidates: () => [areaProposalKeys.all],
     },
     options,
   );
+}
+
+/** The request, from the front's input: a JSON Merge Patch of the fields set only. */
+export function mapToRequest({
+  uuid,
+  input,
+}: UpdateAreaProposalVariables): Omit<ApiAreaProposalsUuidPatchData, 'url'> {
+  return {
+    path: { uuid },
+    body: withoutUndefined({
+      title: input.title,
+      description: input.description,
+      surfaceTotal: input.surfaceTotal,
+      surfaceToShare: input.surfaceToShare,
+      city: input.city,
+      altitude: input.altitude,
+      activities: input.activityCodes,
+    }),
+  };
+}
+
+/** The changed proposal as the front's model. */
+export function mapToModel(data: ApiAreaProposalsUuidPatchResponse): AreaProposal {
+  return {
+    uuid: required(data.uuid, 'area proposal uuid'),
+    title: data.title ?? '',
+    description: data.description ?? '',
+    surfaceTotal: optional(data.surfaceTotal),
+    surfaceToShare: optional(data.surfaceToShare),
+    city: optional(data.city),
+    altitude: optional(data.altitude),
+    // The API exposes its workflow's marking: the front only knows a status.
+    status: oneOf(AREA_PROPOSAL_STATUSES, data.place),
+    activityCodes: data.activities ?? [],
+    proposer: toPersonName(data.proposerFirstName, data.proposerLastName),
+    createdAt: toDate(data.createdAt),
+    archivedAt: toDate(data.archivedAt),
+  };
 }

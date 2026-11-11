@@ -213,41 +213,45 @@ regenerated SDK when the frontends should adopt the new contract.
 
 ### API front libs
 
-The frontends never call an SDK, so that an API's contract stops at a mapper. Every API has two
-front libs:
+The frontends never call an SDK, so that an API's contract stops at the endpoint composables.
+Every API has two front libs:
 
 - `libs/typescript/<api>-models` (`typescript-<api>-models`): the front's models, inputs and
-  filters, framework-free, under the front's names (a `status`, not the workflow's `place`; no
-  IRI; `undefined`, not `null`; `Date`s). Components type against it.
-- `libs/vue/<api>-api` (`vue-<api>-api`): the client (`client/use<Api>Api.ts`) and, per resource,
-  `endpoint/<resource>/`: `queryKeys.ts`, `mapper.ts` (`mapToModel`, `mapToSummaryModel`,
-  `mapToCreateBody`, `mapToUpdateBody`) and one composable per endpoint: `useGet<Resource>`,
-  `useGet<Resources>`, `useCreate…`, `useUpdate…`, `useDelete…`. Apps and components import these
-  composables, never the SDK or `use<Api>Api()`.
-- A mapper alone knows both the API's representation and the model. It lists the fields one by
-  one (never a spread) and types the API side by operation (`ApiLandsUlidGetResponse`,
-  `ApiLandsPostData['body']`), not by schema name, which follows API Platform's groups.
-- A composable is a request and a mapper on top of `libs/vue/api-query`: `useItemQuery`,
-  `useCollectionQuery` (keys follow the id or the filters), `useSaveMutation` (caches the item it
-  resolves with, invalidates the lists), `useDeleteMutation`, `createQueryKeys` (keys start with the
-  API's name, so APIs never collide in an app's QueryClient), `ApiQueryOptions` /
-  `ApiMutationOptions` (the caller's `onSuccess` runs after the cache upkeep). Mappers build on
-  `libs/typescript/api-mapping` (`optional`, `required`, `toDate`, `oneOf`, `toCollection`,
-  `withoutUndefined`, `Collection`). Change that behaviour there, for every API.
+  filters, framework-free. They are the front's own and follow no API representation: one model
+  may come from several endpoints, an endpoint may give a model shaped nothing like its resource.
+- `libs/vue/<api>-api` (`vue-<api>-api`): the client (`client/use<Api>Api.ts`) and one composable
+  per endpoint, whatever it does: reads, pages of a list, writes, workflow transitions
+  (`PATCH /api/seed_lots/{uuid}/give`), custom actions. They sit in `endpoint/<resource>/`, next to
+  the resource's `queryKeys.ts`. Apps and components import these composables, never the SDK or
+  `use<Api>Api()`.
+- Each composable does its own mapping, in its own file: `mapToRequest` (the front's params or
+  input → path, query and body, under the API's names) and `mapToModel` (the response → the
+  front model it gives, fields listed one by one, never a spread). The API side is typed by
+  operation (`ApiSeedLotsUuidgivePatchData`, `…Response`), whose names follow the path.
+- They stand on `libs/vue/api-query`: `useApiQuery(params, { queryKey, fetch })` waits while the
+  params are undefined and refetches when they change; `useApiMutation({ send, invalidates,
+  update? })` refetches what the change makes stale (its resource's `keys.all`, and every other
+  resource a transition touches) after optional cache writes (dropping a deleted item), before
+  the caller's `onSuccess`. Keys: `createQueryKeys(api, resource)` gives `all`, `endpoint(name)`
+  and `of(name, params)`, with the composable's name as the endpoint. Mappers build on
+  `libs/typescript/api-mapping` (`optional`, `required`, `toDate`, `oneOf`, `withoutUndefined`,
+  and `toCollection`: API Platform's Hydra collection as given, `member` mapped). Change that
+  behaviour there, for every API.
 - Live data: `useMercure(subscribe, matchers, onUpdate)` (`libs/vue/api-query/mercure`), which an
   API's lib wraps with the request for its subscriber token, as `useEspaceMercure` does.
 
 ```bash
-moon generate api-front -- --api flora --resource seed-library --resources seed-libraries   # Both libs, with a first resource
-moon generate api-endpoint -- --api flora --resource seed-lot --resources seed-lots         # Each next resource
-moon generate api-endpoint -- --api tera --resource land --resources lands --id ulid        # Ids other than uuid
+moon generate api-front -- --api flora --model SeedLot                     # Both libs, the client and a first model
+moon generate api-endpoint -- --api flora --resource seed-lot --name give-seed-lot \
+  --operation apiSeedLotsUuidgivePatch --model SeedLot                     # One endpoint composable
 ```
 
 `api-front` needs the API's SDK and takes `--env`, the base URL's variable (default
-`VITE_<API>_API_URL`). After generating: `yarn install`, then complete the TODOs of the model and
-the mapper until the lib's `typecheck` passes (it lists what a POST body misses, not what a PATCH
-does), and delete the composables of the endpoints the API lacks. The commit hook formats the
-generated files.
+`VITE_<API>_API_URL`). `api-endpoint` takes any operation of the SDK: `…Get` makes a query,
+`…GetCollection` a query of a page, `…Delete` a deletion, anything else a mutation giving
+`--model` (from the models file `--file`, when it is not named after the model). Write the model first, then complete the composable's TODOs (its params or input, its
+mapping, what it invalidates) until the lib's typecheck passes; the commit hook formats. Re-running
+it for the same `--name` overwrites that composable.
 
 ### Monorepo Wiring
 
