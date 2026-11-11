@@ -252,8 +252,8 @@ endpoint/area-activity/use-get-area-activities/   endpoint/area-activity/use-cre
   `details()` and `detail(uuid)`: every resource identifies its items by one string id. A read of
   an item's own goes under its key (`[...detail(uuid), 'workflow']`).
 - Mappers build on `libs/typescript/api-mapping`: `optional`, `required`, `toDate`, `oneOf`,
-  `withoutUndefined`, and `toCollection` (API Platform's Hydra collection as given, `member`
-  mapped). Live data: `useMercure(subscribe, matchers, onUpdate)` (`libs/vue/api-query/mercure`),
+  `withoutUndefined`, `toArray` (a list, each item mapped, empty when the API sends none) and
+  `toCollection` (API Platform's Hydra collection as given, `member` mapped). Live data: `useMercure(subscribe, matchers, onUpdate)` (`libs/vue/api-query/mercure`),
   which an API's lib wraps with the request for its subscriber token, as `useEspaceMercure` does.
 
 ### Monorepo Wiring
