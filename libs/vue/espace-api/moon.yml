@@ -1,11 +1,14 @@
 # The front's only access to espace-api: one Tanstack Query composable per endpoint
-# (endpoint/), which maps the API's representations to the front's models
-# (libs/typescript/espace/models) and back, plus the client and the Mercure stream.
+# (endpoint/<resource>/), each a request and a mapper on top of libs/vue/api-query. The
+# mappers turn the API's representations into the front's models
+# (libs/typescript/espace-models) and back. Scaffolded by `moon generate api-front`.
 dependsOn:
   - typescript-api-client
-  - typescript-espace
+  - typescript-api-mapping
   - typescript-espace-api-sdk
+  - typescript-espace-models
   - typescript-zitadel
+  - vue-api-query
 id: vue-espace-api
 language: typescript
 layer: library

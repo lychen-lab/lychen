@@ -1,0 +1,15 @@
+{%- set Api = api | pascal_case -%}
+{%- set Resource = resource | pascal_case -%}
+{%- set Resources = resources | pascal_case -%}
+{%- set Id = id | pascal_case -%}
+{%- set resource_camel = resource | camel_case -%}
+{%- set keys = resource_camel ~ "Keys" -%}
+{%- set label = resource | replace(from="-", to=" ") -%}
+{%- set labels = resources | replace(from="-", to=" ") -%}
+{%- set resources_snake = resources | snake_case -%}
+{%- set path = "/api/" ~ resources_snake -%}
+{%- set item_path = path ~ "/{" ~ id ~ "}" -%}
+import type { {{ Resource }}Filters } from '@lychen/typescript-{{ api }}-models/{{ Resource }}';
+import { createQueryKeys } from '@lychen/vue-api-query/queryKeys';
+
+export const {{ keys }} = createQueryKeys<{{ Resource }}Filters>('{{ api }}', '{{ resources }}');

@@ -1,42 +1,45 @@
-import { useQuery, useQueryClient, type QueryKey } from '@tanstack/vue-query';
-import { computed, toValue, type MaybeRefOrGetter } from 'vue';
-import type { AreaProposalJsonld } from '@lychen/typescript-espace-api-sdk/generated/espace-api';
-import type { AreaProposal } from '@lychen/typescript-espace/models/AreaProposal';
+import type { ApiAreaProposalsUuidGetResponse } from '@lychen/typescript-espace-api-sdk/generated/espace-api';
+import type { AreaProposal } from '@lychen/typescript-espace-models/AreaProposal';
+import { isDeletion } from '@lychen/vue-api-query/mercure/useMercure';
+import type { ApiQueryOptions } from '@lychen/vue-api-query/options';
+import { useItemQuery } from '@lychen/vue-api-query/useItemQuery';
+import { useQueryClient } from '@tanstack/vue-query';
+import { toValue, type MaybeRefOrGetter } from 'vue';
 import { useEspaceApi } from '../../client/useEspaceApi';
-import { isDeletion, useEspaceMercure } from '../../mercure/useEspaceMercure';
-import { required } from '../mapping';
-import type { EspaceQueryOptions } from '../options';
+import { useEspaceMercure } from '../../mercure/useEspaceMercure';
 import { mapToModel } from './mapper';
 import { areaProposalKeys } from './queryKeys';
 
-type Options = EspaceQueryOptions<AreaProposal> & {
+type Options = ApiQueryOptions<AreaProposal> & {
   /** Keeps the proposal in step with the changes anyone makes, pushed over Mercure. */
   live?: boolean;
 };
 
 /**
- * One area proposal, `GET /api/area_proposals/{uuid}`. The query waits for a uuid, and
- * fetches again whenever it changes.
+ * One area proposal, `GET /api/area_proposals/{uuid}`. The query waits for a uuid, and fetches again
+ * whenever it changes.
  */
 export function useGetAreaProposal(
   uuid: MaybeRefOrGetter<string | undefined>,
   options: Options = {},
 ) {
   const { api } = useEspaceApi();
-  const { enabled = true, live = false, ...queryOptions } = options;
+  const { live = false, ...queryOptions } = options;
 
-  const query = useQuery<AreaProposal, Error, AreaProposal, QueryKey>({
-    ...queryOptions,
-    queryKey: computed(() => areaProposalKeys.detail(toValue(uuid) ?? '')),
-    async queryFn() {
-      const { data } = await api.apiAreaProposalsUuidGet({
-        path: { uuid: required(toValue(uuid), 'uuid to fetch the area proposal of') },
-        throwOnError: true,
-      });
-      return mapToModel(data);
+  const query = useItemQuery(
+    uuid,
+    {
+      queryKey: areaProposalKeys.detail,
+      async fetch(id) {
+        const { data } = await api.apiAreaProposalsUuidGet({
+          path: { uuid: id },
+          throwOnError: true,
+        });
+        return mapToModel(data);
+      },
     },
-    enabled: computed(() => Boolean(toValue(uuid)) && toValue(enabled)),
-  });
+    queryOptions,
+  );
 
   if (live) {
     const queryClient = useQueryClient();
@@ -54,7 +57,7 @@ export function useGetAreaProposal(
           return;
         }
         // An update carries the proposal exactly as GET returns it: no round trip.
-        const proposal = mapToModel(update as AreaProposalJsonld);
+        const proposal = mapToModel(update as ApiAreaProposalsUuidGetResponse);
         queryClient.setQueryData(areaProposalKeys.detail(proposal.uuid), proposal);
       },
     );

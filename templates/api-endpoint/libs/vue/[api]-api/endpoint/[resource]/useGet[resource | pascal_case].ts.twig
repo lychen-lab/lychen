@@ -1,0 +1,41 @@
+{%- set Api = api | pascal_case -%}
+{%- set Resource = resource | pascal_case -%}
+{%- set Resources = resources | pascal_case -%}
+{%- set Id = id | pascal_case -%}
+{%- set resource_camel = resource | camel_case -%}
+{%- set keys = resource_camel ~ "Keys" -%}
+{%- set label = resource | replace(from="-", to=" ") -%}
+{%- set labels = resources | replace(from="-", to=" ") -%}
+{%- set resources_snake = resources | snake_case -%}
+{%- set path = "/api/" ~ resources_snake -%}
+{%- set item_path = path ~ "/{" ~ id ~ "}" -%}
+import type { {{ Resource }} } from '@lychen/typescript-{{ api }}-models/{{ Resource }}';
+import type { ApiQueryOptions } from '@lychen/vue-api-query/options';
+import { useItemQuery } from '@lychen/vue-api-query/useItemQuery';
+import type { MaybeRefOrGetter } from 'vue';
+import { use{{ Api }}Api } from '../../client/use{{ Api }}Api';
+import { mapToModel } from './mapper';
+import { {{ keys }} } from './queryKeys';
+
+/**
+ * The {{ label }} of this {{ id }}, `GET {{ item_path }}`. The query waits for the
+ * {{ id }}, and fetches again whenever it changes.
+ */
+export function useGet{{ Resource }}(
+  {{ id }}: MaybeRefOrGetter<string | undefined>,
+  options: ApiQueryOptions<{{ Resource }}> = {},
+) {
+  const { api } = use{{ Api }}Api();
+
+  return useItemQuery(
+    {{ id }},
+    {
+      queryKey: {{ keys }}.detail,
+      async fetch(id) {
+        const { data } = await api.api{{ Resources }}{{ Id }}Get({ path: { {{ id }}: id }, throwOnError: true });
+        return mapToModel(data);
+      },
+    },
+    options,
+  );
+}

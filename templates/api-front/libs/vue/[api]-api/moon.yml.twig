@@ -1,0 +1,16 @@
+# The front's only access to {{ api }}-api: one Tanstack Query composable per endpoint
+# (endpoint/<resource>/), each a request and a mapper on top of libs/vue/api-query. The
+# mappers turn the API's representations into the front's models
+# (libs/typescript/{{ api }}-models) and back. Scaffolded by `moon generate api-front`.
+dependsOn:
+  - typescript-api-client
+  - typescript-api-mapping
+  - typescript-{{ api }}-api-sdk
+  - typescript-{{ api }}-models
+  - typescript-zitadel
+  - vue-api-query
+id: vue-{{ api }}-api
+language: typescript
+layer: library
+# Inherits lint, format, typecheck and test from .moon/tasks/frontend.yml.
+stack: frontend

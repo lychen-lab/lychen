@@ -1,10 +1,12 @@
-import type { AreaProposalJsonld } from '@lychen/typescript-espace-api-sdk/generated/espace-api';
+import type { ApiAreaProposalsUuidGetResponse } from '@lychen/typescript-espace-api-sdk/generated/espace-api';
 import { describe, expect, it } from 'vitest';
 import { mapToCreateBody, mapToModel, mapToSummaryModel, mapToUpdateBody } from './mapper';
 
 const UUID = '0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b';
 
-function apiProposal(overrides: Partial<AreaProposalJsonld> = {}): AreaProposalJsonld {
+function apiProposal(
+  overrides: Partial<ApiAreaProposalsUuidGetResponse> = {},
+): ApiAreaProposalsUuidGetResponse {
   return {
     '@id': `/api/area_proposals/${UUID}`,
     '@type': 'AreaProposal',

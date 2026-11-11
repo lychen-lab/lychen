@@ -1,4 +1,4 @@
-import type { AreaProposalJsonld } from '@lychen/typescript-espace-api-sdk/generated/espace-api';
+import type { ApiAreaProposalsUuidGetResponse } from '@lychen/typescript-espace-api-sdk/generated/espace-api';
 import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createApp, effectScope, ref, type EffectScope } from 'vue';
@@ -44,7 +44,9 @@ vi.mock('../../client/useEspaceApi', async () => {
 
 const UUID = '0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b';
 
-function apiProposal(overrides: Partial<AreaProposalJsonld> = {}): AreaProposalJsonld {
+function apiProposal(
+  overrides: Partial<ApiAreaProposalsUuidGetResponse> = {},
+): ApiAreaProposalsUuidGetResponse {
   const uuid = overrides.uuid ?? UUID;
   return {
     '@id': `/api/area_proposals/${uuid}`,

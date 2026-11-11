@@ -1,0 +1,32 @@
+{%- set Api = api | pascal_case -%}
+{%- set Resource = resource | pascal_case -%}
+{%- set Resources = resources | pascal_case -%}
+{%- set Id = id | pascal_case -%}
+{%- set resource_camel = resource | camel_case -%}
+{%- set keys = resource_camel ~ "Keys" -%}
+{%- set label = resource | replace(from="-", to=" ") -%}
+{%- set labels = resources | replace(from="-", to=" ") -%}
+{%- set resources_snake = resources | snake_case -%}
+{%- set path = "/api/" ~ resources_snake -%}
+{%- set item_path = path ~ "/{" ~ id ~ "}" -%}
+/** {{ label | capitalize }}, as a list shows it. */
+export interface {{ Resource }}Summary {
+  {{ id }}: string;
+  // TODO: the fields the lists show, under the front's names.
+}
+
+/** {{ label | capitalize }}, with everything its own page shows. */
+export interface {{ Resource }} extends {{ Resource }}Summary {
+  // TODO: the fields only its page shows.
+}
+
+/** What the creation form gives. TODO: its own fields, which may differ from the model's. */
+export type {{ Resource }}CreateInput = Omit<{{ Resource }}Summary, '{{ id }}'>;
+
+/** The fields to change; those left out are kept. */
+export type {{ Resource }}UpdateInput = Partial<{{ Resource }}CreateInput>;
+
+export interface {{ Resource }}Filters {
+  page?: number;
+  itemsPerPage?: number;
+}

@@ -1,10 +1,10 @@
-import { useMutation, useQueryClient } from '@tanstack/vue-query';
 import type {
   AreaActivity,
   AreaActivityUpdateInput,
-} from '@lychen/typescript-espace/models/AreaActivity';
+} from '@lychen/typescript-espace-models/AreaActivity';
+import type { ApiMutationOptions } from '@lychen/vue-api-query/options';
+import { useSaveMutation } from '@lychen/vue-api-query/useSaveMutation';
 import { useEspaceApi } from '../../client/useEspaceApi';
-import type { EspaceMutationOptions } from '../options';
 import { mapToModel, mapToUpdateBody } from './mapper';
 import { areaActivityKeys } from './queryKeys';
 
@@ -16,27 +16,23 @@ export interface UpdateAreaActivityVariables {
 
 /** Changes an area activity, `PATCH /api/area_activities/{uuid}`, and resolves with it. */
 export function useUpdateAreaActivity(
-  options: EspaceMutationOptions<AreaActivity, UpdateAreaActivityVariables> = {},
+  options: ApiMutationOptions<AreaActivity, UpdateAreaActivityVariables> = {},
 ) {
   const { api } = useEspaceApi();
-  const queryClient = useQueryClient();
-  const { onSuccess, ...mutationOptions } = options;
 
-  return useMutation({
-    ...mutationOptions,
-    async mutationFn({ uuid, input }: UpdateAreaActivityVariables) {
-      const { data } = await api.apiAreaActivitiesUuidPatch({
-        path: { uuid },
-        body: mapToUpdateBody(input),
-        throwOnError: true,
-      });
-      return mapToModel(data);
+  return useSaveMutation(
+    {
+      queryKeys: areaActivityKeys,
+      async save({ uuid, input }: UpdateAreaActivityVariables) {
+        const { data } = await api.apiAreaActivitiesUuidPatch({
+          path: { uuid },
+          body: mapToUpdateBody(input),
+          throwOnError: true,
+        });
+        return mapToModel(data);
+      },
+      idOf: (saved) => saved.uuid,
     },
-    async onSuccess(activity, variables, onMutateResult, context) {
-      // The response is the activity as GET returns it: its page needs no fetch.
-      queryClient.setQueryData(areaActivityKeys.detail(activity.uuid), activity);
-      await queryClient.invalidateQueries({ queryKey: areaActivityKeys.lists() });
-      await onSuccess?.(activity, variables, onMutateResult, context);
-    },
-  });
+    options,
+  );
 }

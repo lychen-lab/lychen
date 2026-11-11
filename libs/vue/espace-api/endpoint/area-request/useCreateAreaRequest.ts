@@ -1,35 +1,31 @@
-import { useMutation, useQueryClient } from '@tanstack/vue-query';
 import type {
   AreaRequest,
   AreaRequestCreateInput,
-} from '@lychen/typescript-espace/models/AreaRequest';
+} from '@lychen/typescript-espace-models/AreaRequest';
+import type { ApiMutationOptions } from '@lychen/vue-api-query/options';
+import { useSaveMutation } from '@lychen/vue-api-query/useSaveMutation';
 import { useEspaceApi } from '../../client/useEspaceApi';
-import type { EspaceMutationOptions } from '../options';
 import { mapToCreateBody, mapToModel } from './mapper';
 import { areaRequestKeys } from './queryKeys';
 
 /** Creates an area request, `POST /api/area_requests`, and resolves with it. */
 export function useCreateAreaRequest(
-  options: EspaceMutationOptions<AreaRequest, AreaRequestCreateInput> = {},
+  options: ApiMutationOptions<AreaRequest, AreaRequestCreateInput> = {},
 ) {
   const { api } = useEspaceApi();
-  const queryClient = useQueryClient();
-  const { onSuccess, ...mutationOptions } = options;
 
-  return useMutation({
-    ...mutationOptions,
-    async mutationFn(input: AreaRequestCreateInput) {
-      const { data } = await api.apiAreaRequestsPost({
-        body: mapToCreateBody(input),
-        throwOnError: true,
-      });
-      return mapToModel(data);
+  return useSaveMutation(
+    {
+      queryKeys: areaRequestKeys,
+      async save(input: AreaRequestCreateInput) {
+        const { data } = await api.apiAreaRequestsPost({
+          body: mapToCreateBody(input),
+          throwOnError: true,
+        });
+        return mapToModel(data);
+      },
+      idOf: (saved) => saved.uuid,
     },
-    async onSuccess(request, input, onMutateResult, context) {
-      // The response is the request as GET returns it: its page needs no fetch.
-      queryClient.setQueryData(areaRequestKeys.detail(request.uuid), request);
-      await queryClient.invalidateQueries({ queryKey: areaRequestKeys.lists() });
-      await onSuccess?.(request, input, onMutateResult, context);
-    },
-  });
+    options,
+  );
 }

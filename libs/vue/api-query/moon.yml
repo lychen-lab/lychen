@@ -1,0 +1,8 @@
+# The Tanstack Query building blocks of every <api>-api Vue lib: its endpoint composables
+# are a request and a mapper on top of useItemQuery, useCollectionQuery, useSaveMutation
+# and useDeleteMutation, which own the cache upkeep. Also the Mercure stream (useMercure).
+id: vue-api-query
+language: typescript
+layer: library
+# Inherits lint, format, typecheck and test from .moon/tasks/frontend.yml.
+stack: frontend

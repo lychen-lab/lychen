@@ -435,7 +435,9 @@ another API.
 **App** ([`projects/espace/app`](../projects/espace/app/)):
 
 - [`useEspaceMercure(matchers, onUpdate)`](../libs/vue/espace-api/mercure/useEspaceMercure.ts)
-  fetches a token and opens an event stream on the hub. A native `EventSource` cannot set
+  runs the API-agnostic
+  [`useMercure`](../libs/vue/api-query/mercure/useMercure.ts) with
+  `GET /api/mercure_subscription`: it fetches a token and opens an event stream on the hub. A native `EventSource` cannot set
   headers and the 1.0 hub accepts no token in the URL, so it uses the
   [`eventsource`](https://www.npmjs.com/package/eventsource) package, which streams over
   `fetch` and sends the token as an `Authorization: Bearer` header. (The other 1.0 option, a

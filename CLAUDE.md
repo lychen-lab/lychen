@@ -124,8 +124,8 @@ make phpunit c="--group e2e"                         # Run by group
 
 /libs              # Reusable libraries
   /css/core        # Tailwind design tokens
-  /typescript/     # 18 TypeScript libraries, incl. the API SDKs (<api>-api-sdk) and their client (api-client)
-  /vue/            # 28 Vue component/composable libraries
+  /typescript/     # 20 TypeScript libraries, incl. the API SDKs (<api>-api-sdk), their client (api-client), the front models (<api>-models) and api-mapping
+  /vue/            # 29 Vue component/composable libraries, incl. each API's front lib (<api>-api) and api-query
   /php/            # 6 PHP/Symfony bundle libraries
   /i18n/           # Translation files (per domain, e.g. tera)
   /assets/         # Shared brand/content assets per domain (fonts, logos, icons)
@@ -134,7 +134,7 @@ make phpunit c="--group e2e"                         # Run by group
   /caddy/          # Shared Caddy server configs (pwa, ssg)
   /docker/         # Shared Dockerfiles (e.g. frontend image)
 
-/templates         # `moon generate` templates (api-sdk, typescript-lib, vue-lib, php-api)
+/templates         # `moon generate` templates (api-sdk, api-front, api-endpoint, typescript-lib, vue-lib, php-api)
 
 /.moon             # Moonrepo configuration
   workspace.yml    # Workspace constraints, VCS hooks
@@ -186,18 +186,11 @@ Every API's TypeScript SDK follows one norm, so that they all expose the same cl
 - Its `openapi-ts.config.ts` only calls `defineApiSdkConfig({ api, input })` from
   `libs/typescript/api-sdk-config`: the one configuration of every SDK (plugins, spec patches) and
   the only place `@hey-api/openapi-ts` is pinned. Change the generator there, never in one SDK.
-- The frontends call it through its Vue lib's `use<Api>Api()`, whose client comes from
-  `createApiClient(createClient, { baseUrl, bearerToken? })` (`libs/typescript/api-client`).
+- Its front lib's `use<Api>Api()` (`libs/vue/<api>-api`, see API front libs below) sets up its
+  client with `createApiClient(createClient, { baseUrl, bearerToken? })` (`libs/typescript/api-client`).
   Every API's client therefore rejects on non-2xx responses and runs the same default
   interceptors (`defaultInterceptors()`): the JSON-LD / Merge Patch `Content-Type` of a write
   without one, and an `Error` naming the URL and status.
-- espace keeps its frontends off the API's contract altogether: `libs/vue/espace-api` has one
-  Tanstack Query composable per endpoint (`endpoint/<resource>/useGet…`, `useCreate…`,
-  `useUpdate…`, `useDelete…`) and, per resource, the `mapper.ts` (`mapToModel`,
-  `mapToCreateBody`…) that alone knows both the API's representations and the front's models
-  (`libs/typescript/espace/models`). Apps and components import the composables, never the SDK
-  or `useEspaceApi()`, so an API change is fixed in a mapper. A mutation updates the cache
-  itself (the item from its response, the lists invalidated) before the caller's `onSuccess`.
 - The bearer token is opt-in and knows no identity provider: `bearerToken` takes any function
   that gives the token, or undefined to send none, and adds `Authorization: Bearer <token>`
   (`bearerToken.ts`). The apps pass `getAccessToken` from `libs/typescript/zitadel`.
@@ -217,6 +210,44 @@ After `moon generate api-sdk`, `moon run typescript-<api>-api-sdk:generate-api` 
 workspace and generates the SDK. Add a `.github/workflows/openapi-sdk-sync-<api>.yml` caller for a
 monorepo API. Generation stays manual (`docs/decouple-apis-from-frontends.md`): commit the
 regenerated SDK when the frontends should adopt the new contract.
+
+### API front libs
+
+The frontends never call an SDK, so that an API's contract stops at a mapper. Every API has two
+front libs:
+
+- `libs/typescript/<api>-models` (`typescript-<api>-models`): the front's models, inputs and
+  filters, framework-free, under the front's names (a `status`, not the workflow's `place`; no
+  IRI; `undefined`, not `null`; `Date`s). Components type against it.
+- `libs/vue/<api>-api` (`vue-<api>-api`): the client (`client/use<Api>Api.ts`) and, per resource,
+  `endpoint/<resource>/`: `queryKeys.ts`, `mapper.ts` (`mapToModel`, `mapToSummaryModel`,
+  `mapToCreateBody`, `mapToUpdateBody`) and one composable per endpoint: `useGet<Resource>`,
+  `useGet<Resources>`, `useCreate…`, `useUpdate…`, `useDelete…`. Apps and components import these
+  composables, never the SDK or `use<Api>Api()`.
+- A mapper alone knows both the API's representation and the model. It lists the fields one by
+  one (never a spread) and types the API side by operation (`ApiLandsUlidGetResponse`,
+  `ApiLandsPostData['body']`), not by schema name, which follows API Platform's groups.
+- A composable is a request and a mapper on top of `libs/vue/api-query`: `useItemQuery`,
+  `useCollectionQuery` (keys follow the id or the filters), `useSaveMutation` (caches the item it
+  resolves with, invalidates the lists), `useDeleteMutation`, `createQueryKeys` (keys start with the
+  API's name, so APIs never collide in an app's QueryClient), `ApiQueryOptions` /
+  `ApiMutationOptions` (the caller's `onSuccess` runs after the cache upkeep). Mappers build on
+  `libs/typescript/api-mapping` (`optional`, `required`, `toDate`, `oneOf`, `toCollection`,
+  `withoutUndefined`, `Collection`). Change that behaviour there, for every API.
+- Live data: `useMercure(subscribe, matchers, onUpdate)` (`libs/vue/api-query/mercure`), which an
+  API's lib wraps with the request for its subscriber token, as `useEspaceMercure` does.
+
+```bash
+moon generate api-front -- --api flora --resource seed-library --resources seed-libraries   # Both libs, with a first resource
+moon generate api-endpoint -- --api flora --resource seed-lot --resources seed-lots         # Each next resource
+moon generate api-endpoint -- --api tera --resource land --resources lands --id ulid        # Ids other than uuid
+```
+
+`api-front` needs the API's SDK and takes `--env`, the base URL's variable (default
+`VITE_<API>_API_URL`). After generating: `yarn install`, then complete the TODOs of the model and
+the mapper until the lib's `typecheck` passes (it lists what a POST body misses, not what a PATCH
+does), and delete the composables of the endpoints the API lacks. The commit hook formats the
+generated files.
 
 ### Monorepo Wiring
 

@@ -1,13 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  oneOf,
-  optional,
-  required,
-  toCollection,
-  toDate,
-  toPersonName,
-  withoutUndefined,
-} from './mapping';
+import { oneOf, optional, required, toCollection, toDate, withoutUndefined } from './mapping';
 
 describe('mapping', () => {
   it('turns the API null into undefined, and keeps any other value', () => {
@@ -19,7 +11,7 @@ describe('mapping', () => {
   it('rejects a response that lacks a required value', () => {
     expect(required('0198', 'uuid')).toBe('0198');
     expect(() => required(null, 'area proposal uuid')).toThrow(
-      'espace-api: the response has no area proposal uuid.',
+      'The API response has no area proposal uuid.',
     );
   });
 
@@ -33,11 +25,6 @@ describe('mapping', () => {
     expect(oneOf(known, 'published')).toBe('published');
     expect(oneOf(known, 'added_by_the_api_since')).toBeUndefined();
     expect(oneOf(known, null)).toBeUndefined();
-  });
-
-  it('groups a name, or gives none when the API has none', () => {
-    expect(toPersonName('Sophie', null)).toEqual({ firstName: 'Sophie', lastName: undefined });
-    expect(toPersonName(null, null)).toBeUndefined();
   });
 
   it('maps every member of a collection page and tells whether there is another', () => {

@@ -1,0 +1,7 @@
+{
+  "name": "@lychen/typescript-espace-models",
+  "type": "module",
+  "dependencies": {
+    "@lychen/typescript-utils": "workspace:*"
+  }
+}

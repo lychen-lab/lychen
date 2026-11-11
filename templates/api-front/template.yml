@@ -1,0 +1,19 @@
+# https://moonrepo.dev/docs/config/template
+$schema: '../../.moon/cache/schemas/template.json'
+
+description: |
+  Scaffolds how the frontends reach an API whose SDK exists (libs/typescript/<api>-api-sdk,
+  `moon generate api-sdk`): libs/typescript/<api>-models, the front's models, and
+  libs/vue/<api>-api, its client and one Tanstack Query composable per endpoint on top of
+  libs/vue/api-query, starting with a first resource (see api-endpoint, which adds the
+  next ones). Then run `yarn install`, complete the TODOs until
+  `moon run vue-<api>-api:typecheck` passes, and `moon run :format-fix` (the commit hook
+  formats too: line breaks depend on the names).
+destination: '/'
+extends: 'api-endpoint'
+title: 'API front libs'
+variables:
+  env:
+    default: ''
+    prompt: 'Env variable of its base URL? (empty for VITE_<API>_API_URL)'
+    type: 'string'

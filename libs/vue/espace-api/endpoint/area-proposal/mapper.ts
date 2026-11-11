@@ -1,11 +1,13 @@
 // The only place that knows both the API's representation of an area proposal and the
-// front's model: an API change is fixed here, and the front never sees it.
+// front's model: an API change is fixed here, and the front never sees it. List the
+// fields one by one, under the front's names: never spread the API's object into a
+// model or a body.
 
 import type {
-  AreaProposalAreaProposalCollectionJsonld,
-  AreaProposalAreaProposalPatchJsonMergePatch,
-  AreaProposalAreaProposalPost,
-  AreaProposalJsonld,
+  ApiAreaProposalsGetCollectionResponse,
+  ApiAreaProposalsPostData,
+  ApiAreaProposalsUuidGetResponse,
+  ApiAreaProposalsUuidPatchData,
 } from '@lychen/typescript-espace-api-sdk/generated/espace-api';
 import {
   AREA_PROPOSAL_STATUSES,
@@ -13,12 +15,19 @@ import {
   type AreaProposalCreateInput,
   type AreaProposalSummary,
   type AreaProposalUpdateInput,
-} from '@lychen/typescript-espace/models/AreaProposal';
-import { oneOf, optional, required, toDate, toPersonName, withoutUndefined } from '../mapping';
+} from '@lychen/typescript-espace-models/AreaProposal';
+import {
+  oneOf,
+  optional,
+  required,
+  toDate,
+  withoutUndefined,
+} from '@lychen/typescript-api-mapping/mapping';
+import { toPersonName } from '../person';
 
 /** A proposal of a list (`GET /api/area_proposals`). */
 export function mapToSummaryModel(
-  data: AreaProposalAreaProposalCollectionJsonld,
+  data: ApiAreaProposalsGetCollectionResponse['member'][number],
 ): AreaProposalSummary {
   return {
     uuid: required(data.uuid, 'area proposal uuid'),
@@ -38,7 +47,7 @@ export function mapToSummaryModel(
  * A single proposal: what `GET /api/area_proposals/{uuid}` returns, and so do `POST`,
  * `PATCH` and the Mercure updates.
  */
-export function mapToModel(data: AreaProposalJsonld): AreaProposal {
+export function mapToModel(data: ApiAreaProposalsUuidGetResponse): AreaProposal {
   return {
     ...mapToSummaryModel(data),
     surfaceTotal: optional(data.surfaceTotal),
@@ -48,7 +57,7 @@ export function mapToModel(data: AreaProposalJsonld): AreaProposal {
 }
 
 /** The body of `POST /api/area_proposals`. */
-export function mapToCreateBody(input: AreaProposalCreateInput): AreaProposalAreaProposalPost {
+export function mapToCreateBody(input: AreaProposalCreateInput): ApiAreaProposalsPostData['body'] {
   return withoutUndefined({
     uuid: input.uuid,
     title: input.title,
@@ -64,7 +73,7 @@ export function mapToCreateBody(input: AreaProposalCreateInput): AreaProposalAre
 /** The JSON Merge Patch of `PATCH /api/area_proposals/{uuid}`: only the fields set. */
 export function mapToUpdateBody(
   input: AreaProposalUpdateInput,
-): AreaProposalAreaProposalPatchJsonMergePatch {
+): ApiAreaProposalsUuidPatchData['body'] {
   return withoutUndefined({
     title: input.title,
     description: input.description,

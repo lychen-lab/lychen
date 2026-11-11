@@ -1,0 +1,10 @@
+# The front's models of what espace-api serves, with their inputs and filters: what apps
+# and components type against. Owned by the front, framework-free; libs/vue/espace-api's
+# mappers are the only code that knows both them and the API's representations.
+dependsOn:
+  - typescript-utils
+id: typescript-espace-models
+language: typescript
+layer: library
+# Inherits lint, format, typecheck and test from .moon/tasks/frontend.yml.
+stack: frontend

@@ -1,8 +1,8 @@
-// What every endpoint's mapper needs to turn the API's representations into the front's
-// models (libs/typescript/espace/models) and the front's inputs into request bodies.
+// What the mappers of every <api>-api Vue lib (libs/vue/<api>-api/endpoint/*/mapper.ts) need
+// to turn an API Platform representation into a front model, and a front input into a
+// request body.
 
-import type { Collection } from '@lychen/typescript-espace/models/Collection';
-import type { PersonName } from '@lychen/typescript-espace/models/PersonName';
+import type { Collection } from './Collection';
 
 /** A value the API may send as `null`, as the front's `undefined`. */
 export function optional<T>(value: T | null | undefined): T | undefined {
@@ -15,7 +15,7 @@ export function optional<T>(value: T | null | undefined): T | undefined {
  */
 export function required<T>(value: T | null | undefined, field: string): T {
   if (value === null || value === undefined) {
-    throw new Error(`espace-api: the response has no ${field}.`);
+    throw new Error(`The API response has no ${field}.`);
   }
   return value;
 }
@@ -34,17 +34,6 @@ export function oneOf<T extends string>(
   value: string | null | undefined,
 ): T | undefined {
   return known.find((candidate) => candidate === value);
-}
-
-/** A first and a last name, or undefined when the API gives neither. */
-export function toPersonName(
-  firstName: string | null | undefined,
-  lastName: string | null | undefined,
-): PersonName | undefined {
-  if (!firstName && !lastName) {
-    return undefined;
-  }
-  return { firstName: optional(firstName), lastName: optional(lastName) };
 }
 
 /** The part of a Hydra collection page a Collection is built from. */

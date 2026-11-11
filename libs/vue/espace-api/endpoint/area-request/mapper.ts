@@ -1,11 +1,13 @@
 // The only place that knows both the API's representation of an area request and the
-// front's model: an API change is fixed here, and the front never sees it.
+// front's model: an API change is fixed here, and the front never sees it. List the
+// fields one by one, under the front's names: never spread the API's object into a
+// model or a body.
 
 import type {
-  AreaRequestAreaRequestAreaRequestCollectionJsonld,
-  AreaRequestAreaRequestAreaRequestPatchJsonMergePatch,
-  AreaRequestAreaRequestAreaRequestPost,
-  AreaRequestAreaRequestJsonld,
+  ApiAreaRequestsGetCollectionResponse,
+  ApiAreaRequestsPostData,
+  ApiAreaRequestsUuidGetResponse,
+  ApiAreaRequestsUuidPatchData,
 } from '@lychen/typescript-espace-api-sdk/generated/espace-api';
 import {
   AREA_REQUEST_STATUSES,
@@ -13,12 +15,19 @@ import {
   type AreaRequestCreateInput,
   type AreaRequestSummary,
   type AreaRequestUpdateInput,
-} from '@lychen/typescript-espace/models/AreaRequest';
-import { oneOf, optional, required, toDate, toPersonName, withoutUndefined } from '../mapping';
+} from '@lychen/typescript-espace-models/AreaRequest';
+import {
+  oneOf,
+  optional,
+  required,
+  toDate,
+  withoutUndefined,
+} from '@lychen/typescript-api-mapping/mapping';
+import { toPersonName } from '../person';
 
 /** A request of a list (`GET /api/area_requests`). */
 export function mapToSummaryModel(
-  data: AreaRequestAreaRequestAreaRequestCollectionJsonld,
+  data: ApiAreaRequestsGetCollectionResponse['member'][number],
 ): AreaRequestSummary {
   return {
     uuid: required(data.uuid, 'area request uuid'),
@@ -37,7 +46,7 @@ export function mapToSummaryModel(
  * A single request: what `GET /api/area_requests/{uuid}` returns, and so do `POST` and
  * `PATCH`.
  */
-export function mapToModel(data: AreaRequestAreaRequestJsonld): AreaRequest {
+export function mapToModel(data: ApiAreaRequestsUuidGetResponse): AreaRequest {
   return {
     ...mapToSummaryModel(data),
     createdAt: toDate(data.createdAt),
@@ -46,9 +55,7 @@ export function mapToModel(data: AreaRequestAreaRequestJsonld): AreaRequest {
 }
 
 /** The body of `POST /api/area_requests`. */
-export function mapToCreateBody(
-  input: AreaRequestCreateInput,
-): AreaRequestAreaRequestAreaRequestPost {
+export function mapToCreateBody(input: AreaRequestCreateInput): ApiAreaRequestsPostData['body'] {
   return withoutUndefined({
     uuid: input.uuid,
     title: input.title,
@@ -62,7 +69,7 @@ export function mapToCreateBody(
 /** The JSON Merge Patch of `PATCH /api/area_requests/{uuid}`: only the fields set. */
 export function mapToUpdateBody(
   input: AreaRequestUpdateInput,
-): AreaRequestAreaRequestAreaRequestPatchJsonMergePatch {
+): ApiAreaRequestsUuidPatchData['body'] {
   return withoutUndefined({
     title: input.title,
     description: input.description,

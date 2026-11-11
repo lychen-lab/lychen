@@ -1,0 +1,65 @@
+{%- set Api = api | pascal_case -%}
+{%- set Resource = resource | pascal_case -%}
+{%- set Resources = resources | pascal_case -%}
+{%- set Id = id | pascal_case -%}
+{%- set resource_camel = resource | camel_case -%}
+{%- set keys = resource_camel ~ "Keys" -%}
+{%- set label = resource | replace(from="-", to=" ") -%}
+{%- set labels = resources | replace(from="-", to=" ") -%}
+{%- set resources_snake = resources | snake_case -%}
+{%- set path = "/api/" ~ resources_snake -%}
+{%- set item_path = path ~ "/{" ~ id ~ "}" -%}
+// The only place that knows both the API's representation of a {{ label }} and the front's
+// model: an API change is fixed here, and the front never sees it. List the fields one by
+// one, under the front's names: never spread the API's object into a model or a body.
+
+import type {
+  Api{{ Resources }}GetCollectionResponse,
+  Api{{ Resources }}PostData,
+  Api{{ Resources }}{{ Id }}GetResponse,
+  Api{{ Resources }}{{ Id }}PatchData,
+} from '@lychen/typescript-{{ api }}-api-sdk/generated/{{ api }}-api';
+import { required, withoutUndefined } from '@lychen/typescript-api-mapping/mapping';
+import type {
+  {{ Resource }},
+  {{ Resource }}CreateInput,
+  {{ Resource }}Summary,
+  {{ Resource }}UpdateInput,
+} from '@lychen/typescript-{{ api }}-models/{{ Resource }}';
+
+/** One {{ label }} of a list (`GET {{ path }}`). */
+export function mapToSummaryModel(
+  data: Api{{ Resources }}GetCollectionResponse['member'][number],
+): {{ Resource }}Summary {
+  return {
+    {{ id }}: required(data.{{ id }}, '{{ label }} {{ id }}'),
+    // TODO: the fields the lists show (optional, toDate, oneOf… of typescript-api-mapping).
+  };
+}
+
+/**
+ * A single {{ label }}: what `GET {{ item_path }}` returns, and so do `POST`
+ * and `PATCH`.
+ */
+export function mapToModel(data: Api{{ Resources }}{{ Id }}GetResponse): {{ Resource }} {
+  return {
+    ...mapToSummaryModel(data),
+    // TODO: the fields only the {{ label }}'s own page shows.
+  };
+}
+
+/** The body of `POST {{ path }}`. */
+export function mapToCreateBody(input: {{ Resource }}CreateInput): Api{{ Resources }}PostData['body'] {
+  return withoutUndefined({
+    // TODO: every field of the body, from the input's: the type check lists those missing.
+  });
+}
+
+/** The JSON Merge Patch of `PATCH {{ item_path }}`: only the fields set. */
+export function mapToUpdateBody(
+  input: {{ Resource }}UpdateInput,
+): Api{{ Resources }}{{ Id }}PatchData['body'] {
+  return withoutUndefined({
+    // TODO: each field of the input, under the API's name, or the PATCH sends nothing.
+  });
+}
