@@ -281,7 +281,7 @@
 import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { useGetAreaProposal } from '@lychen/vue-espace-api/endpoint/area-proposal/useGetAreaProposal';
+import { useGetAreaProposal } from '@lychen/vue-espace-api/endpoint/area-proposal/use-get-area-proposal';
 import { MESSAGES, TRANSLATION_KEY } from './i18n';
 import IconArrowLeft from '@lychen/vue-icons/IconArrowLeft.vue';
 import IconShare2 from '@lychen/vue-icons/IconShare2.vue';

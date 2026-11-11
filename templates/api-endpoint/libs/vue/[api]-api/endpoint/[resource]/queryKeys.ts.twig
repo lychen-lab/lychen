@@ -1,4 +1,0 @@
-{%- set resource_camel = resource | camel_case -%}
-import { createQueryKeys } from '@lychen/vue-api-query/queryKeys';
-
-export const {{ resource_camel }}Keys = createQueryKeys('{{ api }}', '{{ resource }}');

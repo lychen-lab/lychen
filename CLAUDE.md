@@ -134,7 +134,7 @@ make phpunit c="--group e2e"                         # Run by group
   /caddy/          # Shared Caddy server configs (pwa, ssg)
   /docker/         # Shared Dockerfiles (e.g. frontend image)
 
-/templates         # `moon generate` templates (api-sdk, api-front, api-endpoint, typescript-lib, vue-lib, php-api)
+/templates         # `moon generate` templates (api-sdk, typescript-lib, vue-lib, php-api)
 
 /.moon             # Moonrepo configuration
   workspace.yml    # Workspace constraints, VCS hooks
@@ -216,42 +216,45 @@ regenerated SDK when the frontends should adopt the new contract.
 The frontends never call an SDK, so that an API's contract stops at the endpoint composables.
 Every API has two front libs:
 
-- `libs/typescript/<api>-models` (`typescript-<api>-models`): the front's models, inputs and
-  filters, framework-free. They are the front's own and follow no API representation: one model
-  may come from several endpoints, an endpoint may give a model shaped nothing like its resource.
+- `libs/typescript/<api>-models` (`typescript-<api>-models`): the front's models and inputs,
+  framework-free. They are the front's own and follow no API representation: one model may come
+  from several endpoints, an endpoint may give a model shaped nothing like its resource.
 - `libs/vue/<api>-api` (`vue-<api>-api`): the client (`client/use<Api>Api.ts`) and one composable
-  per endpoint, whatever it does: reads, pages of a list, writes, workflow transitions
-  (`PATCH /api/seed_lots/{uuid}/give`), custom actions. They sit in `endpoint/<resource>/`, next to
-  the resource's `queryKeys.ts`. Apps and components import these composables, never the SDK or
+  per endpoint, whatever it does (reads, pages of a list, writes, workflow transitions, custom
+  actions), in `endpoint/<resource>/use-<endpoint>/`, next to the resource's `queryKeys.ts`. Apps
+  and components import a composable from its folder (`index.ts`), never the SDK or
   `use<Api>Api()`.
-- Each composable does its own mapping, in its own file: `mapToRequest` (the front's params or
-  input → path, query and body, under the API's names) and `mapToModel` (the response → the
-  front model it gives, fields listed one by one, never a spread). The API side is typed by
-  operation (`ApiSeedLotsUuidgivePatchData`, `…Response`), whose names follow the path.
-- They stand on `libs/vue/api-query`: `useApiQuery(params, { queryKey, fetch })` waits while the
-  params are undefined and refetches when they change; `useApiMutation({ send, invalidates,
-  update? })` refetches what the change makes stale (its resource's `keys.all`, and every other
-  resource a transition touches) after optional cache writes (dropping a deleted item), before
-  the caller's `onSuccess`. Keys: `createQueryKeys(api, resource)` gives `all`, `endpoint(name)`
-  and `of(name, params)`, with the composable's name as the endpoint. Mappers build on
-  `libs/typescript/api-mapping` (`optional`, `required`, `toDate`, `oneOf`, `withoutUndefined`,
-  and `toCollection`: API Platform's Hydra collection as given, `member` mapped). Change that
-  behaviour there, for every API.
-- Live data: `useMercure(subscribe, matchers, onUpdate)` (`libs/vue/api-query/mercure`), which an
-  API's lib wraps with the request for its subscriber token, as `useEspaceMercure` does.
 
-```bash
-moon generate api-front -- --api flora --model SeedLot                     # Both libs, the client and a first model
-moon generate api-endpoint -- --api flora --resource seed-lot --name give-seed-lot \
-  --operation apiSeedLotsUuidgivePatch --model SeedLot                     # One endpoint composable
+An endpoint's folder holds its composable and its own mapping, one file each:
+
+```
+endpoint/area-activity/use-get-area-activities/   endpoint/area-activity/use-create-area-activity/
+  useGetAreaActivities.ts                           useCreateAreaActivity.ts
+  mapToModel.ts                                     mapToModel.ts
+  index.ts                                          mapToRequest.ts
+                                                    index.ts
 ```
 
-`api-front` needs the API's SDK and takes `--env`, the base URL's variable (default
-`VITE_<API>_API_URL`). `api-endpoint` takes any operation of the SDK: `…Get` makes a query,
-`…GetCollection` a query of a page, `…Delete` a deletion, anything else a mutation giving
-`--model` (from the models file `--file`, when it is not named after the model). Write the model first, then complete the composable's TODOs (its params or input, its
-mapping, what it invalidates) until the lib's typecheck passes; the commit hook formats. Re-running
-it for the same `--name` overwrites that composable.
+- `mapToModel` takes the SDK's response type (`ApiAreaActivitiesGetCollectionResponse`) and gives
+  the front model, its fields listed one by one, never a spread. `mapToRequest` takes the front's
+  input and gives the SDK's request type (`Omit<ApiAreaActivitiesPostData, 'url'>`); an endpoint
+  whose request is only a path builds it in the composable. A page's filters are the SDK's own
+  (`ApiAreaActivitiesGetCollectionData['query']`).
+- The composable calls `useQuery` or `useMutation` itself. It owns the URL (the SDK operation) and
+  the mappers, in `queryFn` / `mutationFn`; its caller may change everything else. Its options are
+  typed `ApiQueryOptions<Model>` / `ApiMutationOptions<Model, Variables>` (`libs/vue/api-query`):
+  every Tanstack option but `queryFn` / `mutationFn`. The composable's `queryKey` and callbacks are
+  defaults the options replace; its `enabled` is combined with what it waits for (a uuid). A
+  mutation's cache upkeep is its default `onSuccess`, which refetches what the change makes stale
+  (`detail(uuid)`, `lists()`, other resources a transition touches); a caller that only reacts
+  to a success passes its callback to `mutate(variables, { onSuccess })` and keeps the upkeep.
+- Keys: `createResourceQueryKeys<Filters>(api, resource)` gives `all`, `lists()`, `list(filters)`,
+  `details()` and `detail(uuid)`: every resource identifies its items by one string id. A read of
+  an item's own goes under its key (`[...detail(uuid), 'workflow']`).
+- Mappers build on `libs/typescript/api-mapping`: `optional`, `required`, `toDate`, `oneOf`,
+  `withoutUndefined`, and `toCollection` (API Platform's Hydra collection as given, `member`
+  mapped). Live data: `useMercure(subscribe, matchers, onUpdate)` (`libs/vue/api-query/mercure`),
+  which an API's lib wraps with the request for its subscriber token, as `useEspaceMercure` does.
 
 ### Monorepo Wiring
 

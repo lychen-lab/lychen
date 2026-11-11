@@ -1,7 +1,7 @@
-# The Tanstack Query building blocks of every <api>-api Vue lib: each endpoint composable,
-# whatever its endpoint, is its request and its own mapping on top of useApiQuery (reads)
-# or useApiMutation (writes, transitions included), which own the cache upkeep. Also the
-# Mercure stream (useMercure).
+# What every <api>-api Vue lib's endpoint composables share: the types of the Tanstack
+# options their callers may set (ApiQueryOptions, ApiMutationOptions), the cache keys of a
+# resource (createResourceQueryKeys) and the Mercure stream (useMercure). Each composable
+# calls useQuery or useMutation itself.
 id: vue-api-query
 language: typescript
 layer: library

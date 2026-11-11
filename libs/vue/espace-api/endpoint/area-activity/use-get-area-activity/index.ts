@@ -1,0 +1,1 @@
+export { useGetAreaActivity } from './useGetAreaActivity';
