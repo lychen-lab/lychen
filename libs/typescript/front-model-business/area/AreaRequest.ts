@@ -11,7 +11,6 @@ export const AREA_REQUEST_STATUS = {
 } as const;
 
 export type AreaRequestStatus = ObjectValues<typeof AREA_REQUEST_STATUS>;
-export const AREA_REQUEST_STATUSES = Object.values(AREA_REQUEST_STATUS);
 
 /**
  * An area someone is looking for. Every field is optional: an endpoint says which ones it

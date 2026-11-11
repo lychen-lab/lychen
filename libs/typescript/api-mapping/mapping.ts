@@ -26,14 +26,19 @@ export function toDate(value: string | null | undefined): Date | undefined {
 }
 
 /**
- * The value as one of those the front knows, or undefined for any other, such as a
- * workflow place the API added since.
+ * The value as one of the constants the front knows, or undefined for any other, such as a
+ * workflow place the API added since. The constants are an object, as the front model
+ * declares them:
+ *
+ *   export const AREA_PROPOSAL_STATUS = { Draft: 'draft', Published: 'published' } as const;
+ *
+ *   status: oneOf(AREA_PROPOSAL_STATUS, data.place),
  */
 export function oneOf<T extends string>(
-  known: readonly T[],
+  constants: Readonly<Record<string, T>>,
   value: string | null | undefined,
 ): T | undefined {
-  return known.find((candidate) => candidate === value);
+  return Object.values(constants).find((constant) => constant === value);
 }
 
 /**
