@@ -2,32 +2,39 @@
 $schema: '../../.moon/cache/schemas/template.json'
 
 description: |
-  Scaffolds one resource of an API's front libs (`moon generate api-front`): its model in
-  libs/typescript/<api>-models, and in libs/vue/<api>-api/endpoint/<resource>/ its query
-  keys, its mapper and one Tanstack Query composable per endpoint (get one, get a page,
-  create, update, delete). Then complete every TODO, the model's fields and the mapper's:
-  the type check lists what a POST body still misses, not what a PATCH does. Delete the
-  composables of the endpoints the API does not have, and run `moon run :format-fix` (the
-  commit hook formats too: line breaks depend on the names).
+  Scaffolds one endpoint composable of an API's front lib (`moon generate api-front`), for
+  any operation of its SDK: a read (`…Get`), a page of a list (`…GetCollection`), a deletion
+  (`…Delete`), or any other write, workflow transitions and custom actions included. It
+  writes libs/vue/<api>-api/endpoint/<resource>/use<Name>.ts, with its own mapping
+  (mapToRequest, mapToModel) to TODO, and the resource's queryKeys.ts. The front model it
+  gives (--model, in libs/typescript/<api>-models) is the front's: write it first, it need
+  not follow the API's representation. Then complete the TODOs until the lib's typecheck
+  passes; the commit hook formats.
 destination: '/'
-title: 'API endpoint'
+title: 'API endpoint composable'
 variables:
   api:
     default: ''
     prompt: 'API name, in kebab-case? (e.g. flora)'
     required: true
     type: 'string'
-  id:
-    default: 'uuid'
-    prompt: 'Name of its identifier? (uuid, ulid…)'
+  model:
+    default: ''
+    prompt: 'The front model it gives, from libs/typescript/<api>-models? (e.g. SeedLot; ignored for a deletion)'
+    required: true
+    type: 'string'
+  name:
+    default: ''
+    prompt: 'Composable name without "use", in kebab-case? (e.g. give-seed-lot)'
+    required: true
+    type: 'string'
+  operation:
+    default: ''
+    prompt: 'The SDK operation it calls? (e.g. apiSeedLotsUuidgivePatch)'
+    required: true
     type: 'string'
   resource:
     default: ''
-    prompt: 'Resource name, singular, in kebab-case? (e.g. seed-library)'
-    required: true
-    type: 'string'
-  resources:
-    default: ''
-    prompt: 'The same, plural, as in the API paths? (e.g. seed-libraries for /api/seed_libraries)'
+    prompt: 'The resource it belongs to, in kebab-case: its folder and cache keys? (e.g. seed-lot)'
     required: true
     type: 'string'

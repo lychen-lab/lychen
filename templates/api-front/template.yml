@@ -3,17 +3,24 @@ $schema: '../../.moon/cache/schemas/template.json'
 
 description: |
   Scaffolds how the frontends reach an API whose SDK exists (libs/typescript/<api>-api-sdk,
-  `moon generate api-sdk`): libs/typescript/<api>-models, the front's models, and
-  libs/vue/<api>-api, its client and one Tanstack Query composable per endpoint on top of
-  libs/vue/api-query, starting with a first resource (see api-endpoint, which adds the
-  next ones). Then run `yarn install`, complete the TODOs until
-  `moon run vue-<api>-api:typecheck` passes, and `moon run :format-fix` (the commit hook
-  formats too: line breaks depend on the names).
+  `moon generate api-sdk`): libs/vue/<api>-api, its client, where `moon generate
+  api-endpoint` then adds one composable per endpoint; and libs/typescript/<api>-models,
+  the front's models, with a first one (--model) to write: the front's own, which need not
+  follow the API's representation. Then `yarn install`.
 destination: '/'
-extends: 'api-endpoint'
 title: 'API front libs'
 variables:
+  api:
+    default: ''
+    prompt: 'API name, in kebab-case? (e.g. flora)'
+    required: true
+    type: 'string'
   env:
     default: ''
     prompt: 'Env variable of its base URL? (empty for VITE_<API>_API_URL)'
+    type: 'string'
+  model:
+    default: ''
+    prompt: 'A first front model, in PascalCase? (e.g. SeedLibrary)'
+    required: true
     type: 'string'
