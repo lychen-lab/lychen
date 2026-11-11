@@ -4,6 +4,9 @@ import generateSitemap from 'vite-ssg-sitemap';
 import type { RouteRecordRaw } from 'vue-router';
 import { transformHtmlTemplate } from '@unhead/vue/server';
 
+const STALE_SCHEMA_ORG_GRAPH =
+  /<script type="application\/ld\+json" data-hid="schema-org-graph">[\s\S]*?<\/script>/g;
+
 export const ssgOptions: ViteSSGOptions = {
   script: 'async',
   formatting: 'prettify',
@@ -26,7 +29,10 @@ export const ssgOptions: ViteSSGOptions = {
     // vite-ssg types `appCtx.head` as a v2 VueHeadClient, but at runtime the apps
     // create a v3 unhead instance — the exact input `transformHtmlTemplate` expects.
     const head = appCtx.head as unknown as Parameters<typeof transformHtmlTemplate>[0];
-    return transformHtmlTemplate(head, renderedHTML);
+    // The one thing vite-ssg's own pass does write is the schema.org graph, at
+    // the end of the body, where the transformer does not look for existing
+    // tags: drop it, or the page ends up with two JSON-LD scripts.
+    return transformHtmlTemplate(head, renderedHTML.replace(STALE_SCHEMA_ORG_GRAPH, ''));
   },
   onFinished() {
     // Fall back to the literal ${HOST} placeholder so a host-agnostic build can be
