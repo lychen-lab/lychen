@@ -222,7 +222,9 @@ and the components know no API at all:
   the front's own and follows no API representation: it may come from several endpoints, of
   several APIs. Every field of a concept is optional, as no endpoint gives them all, and it is
   identified by `id`, whatever the API calls it (uuid, ulid). An input types its fields from its
-  concept (`title: NonNullable<AreaProposal['title']>`, `name?: Land['name']`).
+  concept (`title: NonNullable<AreaProposal['title']>`, `name?: Land['name']`). A status is an
+  object of constants, `AREA_PROPOSAL_STATUS = { Draft: 'draft', … } as const`, its type
+  `ObjectValues<typeof AREA_PROPOSAL_STATUS>` (`typescript-utils/transformers/ObjectValues`).
 - Components type against these concepts only, and say which fields they need:
   `defineProps<{ proposal: WithRequired<AreaProposal, 'id' | 'title'> }>()`
   (`front-model-business/WithRequired`).
@@ -261,7 +263,8 @@ endpoint/area-activity/get-area-activities/   endpoint/area-activity/create-area
 - Keys: `createResourceQueryKeys<Filters>(api, resource)` gives `all`, `lists()`, `list(filters)`,
   `details()` and `detail(id)`: every resource identifies its items by one string id. A read of
   an item's own goes under its key (`[...detail(id), 'workflow']`).
-- Mappers build on `libs/typescript/api-mapping`: `optional`, `required`, `toDate`, `oneOf`,
+- Mappers build on `libs/typescript/api-mapping`: `optional`, `required`, `toDate`,
+  `oneOf(AREA_PROPOSAL_STATUS, data.place)` (one of the constants, undefined for any other),
   `withoutUndefined`, `toArray` (a list, each item mapped, empty when the API sends none) and
   `toCollection` (API Platform's Hydra collection as given, `member` mapped). Live data:
   `useMercure(subscribe, matchers, onUpdate)` (`libs/vue/api-query/mercure`), which an API's lib

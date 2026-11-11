@@ -1,7 +1,7 @@
 import type { ApiAreaProposalsUuidPatchResponse } from '@lychen/typescript-espace-api-sdk/generated/espace-api';
 import { oneOf, optional, required, toDate } from '@lychen/typescript-api-mapping/mapping';
 import {
-  AREA_PROPOSAL_STATUSES,
+  AREA_PROPOSAL_STATUS,
   type AreaProposal,
 } from '@lychen/typescript-front-model-business/area/AreaProposal';
 import type { WithRequired } from '@lychen/typescript-front-model-business/WithRequired';
@@ -21,7 +21,7 @@ export function mapToModel(data: ApiAreaProposalsUuidPatchResponse): Model {
     city: optional(data.city),
     altitude: optional(data.altitude),
     // The API exposes its workflow's marking: the front only knows a status.
-    status: oneOf(AREA_PROPOSAL_STATUSES, data.place),
+    status: oneOf(AREA_PROPOSAL_STATUS, data.place),
     activityCodes: data.activities ?? [],
     proposer: toPersonName(data.proposerFirstName, data.proposerLastName),
     createdAt: toDate(data.createdAt),

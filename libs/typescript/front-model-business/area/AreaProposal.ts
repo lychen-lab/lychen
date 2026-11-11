@@ -10,7 +10,6 @@ export const AREA_PROPOSAL_STATUS = {
 } as const;
 
 export type AreaProposalStatus = ObjectValues<typeof AREA_PROPOSAL_STATUS>;
-export const AREA_PROPOSAL_STATUSES = Object.values(AREA_PROPOSAL_STATUS);
 
 /**
  * An area someone offers to share. Every field is optional: an endpoint says which ones it
