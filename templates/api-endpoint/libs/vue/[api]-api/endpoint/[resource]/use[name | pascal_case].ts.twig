@@ -5,6 +5,7 @@
 {%- set resource_camel = resource | camel_case -%}
 {%- set keys = resource_camel ~ "Keys" -%}
 {%- set sdk = "'@lychen/typescript-" ~ api ~ "-api-sdk/generated/" ~ api ~ "-api'" -%}
+{%- if file -%}{%- set module = file -%}{%- else -%}{%- set module = model -%}{%- endif -%}
 {%- if operation is ending_with("Get") or operation is ending_with("GetCollection") -%}
 {%- set list = operation is ending_with("GetCollection") -%}
 import type { {{ Op }}Data, {{ Op }}Response } from {{ sdk }};
@@ -12,7 +13,7 @@ import type { {{ Op }}Data, {{ Op }}Response } from {{ sdk }};
 import type { Collection } from '@lychen/typescript-api-mapping/Collection';
 import { toCollection } from '@lychen/typescript-api-mapping/mapping';
 {%- endif %}
-import type { {{ model }} } from '@lychen/typescript-{{ api }}-models/{{ model }}';
+import type { {{ model }} } from '@lychen/typescript-{{ api }}-models/{{ module }}';
 import type { ApiQueryOptions } from '@lychen/vue-api-query/options';
 import { useApiQuery } from '@lychen/vue-api-query/useApiQuery';
 import type { MaybeRefOrGetter } from 'vue';
@@ -102,7 +103,7 @@ export function mapToRequest(variables: {{ Name }}Variables): Omit<{{ Op }}Data,
 }
 {%- else %}
 import type { {{ Op }}Data, {{ Op }}Response } from {{ sdk }};
-import type { {{ model }} } from '@lychen/typescript-{{ api }}-models/{{ model }}';
+import type { {{ model }} } from '@lychen/typescript-{{ api }}-models/{{ module }}';
 import type { ApiMutationOptions } from '@lychen/vue-api-query/options';
 import { useApiMutation } from '@lychen/vue-api-query/useApiMutation';
 import { use{{ Api }}Api } from '../../client/use{{ Api }}Api';
