@@ -55,7 +55,7 @@
 import { computed, ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { useGetAreaProposals } from '@lychen/vue-espace-api/endpoint/area-proposal/useGetAreaProposals';
+import { useGetAreaProposals } from '@lychen/vue-espace-api/endpoint/area-proposal/use-get-area-proposals';
 import { Card } from '@lychen/vue-components-business/land-proposal/card';
 import type { LandProposal } from '@lychen/vue-components-business/land-proposal/card';
 import { MESSAGES, TRANSLATION_KEY } from './i18n';

@@ -53,9 +53,3 @@ export interface AreaProposalCreateInput {
 
 /** The fields to change; those left out are kept. */
 export type AreaProposalUpdateInput = Partial<Omit<AreaProposalCreateInput, 'uuid'>>;
-
-export interface AreaProposalFilters {
-  status?: AreaProposalStatus;
-  page?: number;
-  itemsPerPage?: number;
-}
