@@ -7,6 +7,6 @@
     }
   ],
   "compilerOptions": {
-    "outDir": "../../../.moon/cache/types/libs/typescript/espace-models"
+    "outDir": "../../../.moon/cache/types/libs/typescript/front-model-business"
   }
 }

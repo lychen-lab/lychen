@@ -3,22 +3,22 @@ import type { Collection } from '@lychen/typescript-api-mapping/Collection';
 import { oneOf, optional, required, toCollection } from '@lychen/typescript-api-mapping/mapping';
 import {
   AREA_REQUEST_STATUSES,
-  type AreaRequestSummary,
-} from '@lychen/typescript-espace-models/AreaRequest';
+  type AreaRequest,
+} from '@lychen/typescript-front-model-business/area/AreaRequest';
+import type { WithRequired } from '@lychen/typescript-front-model-business/WithRequired';
 import { toPersonName } from '../../person';
 
+/** The fields of each member of the page this endpoint always gives. */
+export type Member = WithRequired<AreaRequest, 'id' | 'title' | 'description' | 'activityCodes'>;
+
 /** The page this endpoint returns, as API Platform gives it, its members as the front's model. */
-export function mapToModel(
-  data: ApiAreaRequestsGetCollectionResponse,
-): Collection<AreaRequestSummary> {
+export function mapToModel(data: ApiAreaRequestsGetCollectionResponse): Collection<Member> {
   return toCollection(data, mapToMember);
 }
 
-function mapToMember(
-  data: ApiAreaRequestsGetCollectionResponse['member'][number],
-): AreaRequestSummary {
+function mapToMember(data: ApiAreaRequestsGetCollectionResponse['member'][number]): Member {
   return {
-    uuid: required(data.uuid, 'area request uuid'),
+    id: required(data.uuid, 'area request uuid'),
     title: data.title ?? '',
     description: data.description ?? '',
     minimalSurfaceRequested: optional(data.minimalSurfaceRequested),

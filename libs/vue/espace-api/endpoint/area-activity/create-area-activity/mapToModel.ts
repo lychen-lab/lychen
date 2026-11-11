@@ -1,11 +1,15 @@
 import type { ApiAreaActivitiesPostResponse } from '@lychen/typescript-espace-api-sdk/generated/espace-api';
 import { required, toDate } from '@lychen/typescript-api-mapping/mapping';
-import type { AreaActivity } from '@lychen/typescript-espace-models/AreaActivity';
+import type { AreaActivity } from '@lychen/typescript-front-model-business/area/AreaActivity';
+import type { WithRequired } from '@lychen/typescript-front-model-business/WithRequired';
+
+/** The fields of the area activity this endpoint always gives. */
+export type Model = WithRequired<AreaActivity, 'id'>;
 
 /** The created area activity as the front's model. */
-export function mapToModel(data: ApiAreaActivitiesPostResponse): AreaActivity {
+export function mapToModel(data: ApiAreaActivitiesPostResponse): Model {
   return {
-    uuid: required(data.uuid, 'area activity uuid'),
+    id: required(data.uuid, 'area activity uuid'),
     // The API leaves the code out of a single activity.
     createdAt: toDate(data.createdAt),
   };

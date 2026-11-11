@@ -1,5 +1,5 @@
 import { optional } from '@lychen/typescript-api-mapping/mapping';
-import type { PersonName } from '@lychen/typescript-espace-models/PersonName';
+import type { PersonName } from '@lychen/typescript-front-model-business/person/PersonName';
 
 /** A first and a last name, or undefined when the API gives neither. */
 export function toPersonName(

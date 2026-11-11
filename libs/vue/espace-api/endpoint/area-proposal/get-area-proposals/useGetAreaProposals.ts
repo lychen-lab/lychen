@@ -1,15 +1,14 @@
 import type { ApiAreaProposalsGetCollectionData } from '@lychen/typescript-espace-api-sdk/generated/espace-api';
 import type { Collection } from '@lychen/typescript-api-mapping/Collection';
-import type { AreaProposalSummary } from '@lychen/typescript-espace-models/AreaProposal';
 import type { ApiQueryOptions } from '@lychen/vue-api-query/options';
 import { useQuery, useQueryClient, type QueryKey } from '@tanstack/vue-query';
 import { computed, toValue, type MaybeRefOrGetter } from 'vue';
 import { useEspaceApi } from '../../../client/useEspaceApi';
 import { useEspaceMercure } from '../../../mercure/useEspaceMercure';
 import { areaProposalKeys } from '../queryKeys';
-import { mapToModel } from './mapToModel';
+import { mapToModel, type Member } from './mapToModel';
 
-export type UseGetAreaProposalsOptions = ApiQueryOptions<Collection<AreaProposalSummary>> & {
+export type UseGetAreaProposalsOptions = ApiQueryOptions<Collection<Member>> & {
   /** Refetches the pages whenever anyone creates, changes or deletes a proposal. */
   live?: boolean;
 };
@@ -25,12 +24,7 @@ export function useGetAreaProposals(
   const { api } = useEspaceApi();
   const { live = false, ...queryOptions } = options;
 
-  const query = useQuery<
-    Collection<AreaProposalSummary>,
-    Error,
-    Collection<AreaProposalSummary>,
-    QueryKey
-  >({
+  const query = useQuery<Collection<Member>, Error, Collection<Member>, QueryKey>({
     queryKey: computed(() => areaProposalKeys.list(toValue(filters))),
     ...queryOptions,
     async queryFn() {

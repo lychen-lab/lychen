@@ -1,6 +1,6 @@
 import type { ApiAreaActivitiesPostData } from '@lychen/typescript-espace-api-sdk/generated/espace-api';
 import { withoutUndefined } from '@lychen/typescript-api-mapping/mapping';
-import type { AreaActivityCreateInput } from '@lychen/typescript-espace-models/AreaActivity';
+import type { AreaActivityCreateInput } from '@lychen/typescript-front-model-business/area/AreaActivity';
 
 /** The request, from the front's input, under the API's names. */
 export function mapToRequest(
@@ -8,7 +8,7 @@ export function mapToRequest(
 ): Omit<ApiAreaActivitiesPostData, 'url'> {
   return {
     body: withoutUndefined({
-      uuid: input.uuid,
+      uuid: input.id,
       code: input.code,
     }),
   };

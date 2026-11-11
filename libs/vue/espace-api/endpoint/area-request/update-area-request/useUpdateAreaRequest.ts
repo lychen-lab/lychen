@@ -1,9 +1,8 @@
-import type { AreaRequest } from '@lychen/typescript-espace-models/AreaRequest';
 import type { ApiMutationOptions } from '@lychen/vue-api-query/options';
 import { useMutation, useQueryClient } from '@tanstack/vue-query';
 import { useEspaceApi } from '../../../client/useEspaceApi';
 import { areaRequestKeys } from '../queryKeys';
-import { mapToModel } from './mapToModel';
+import { mapToModel, type Model } from './mapToModel';
 import { mapToRequest, type UpdateAreaRequestVariables } from './mapToRequest';
 
 /**
@@ -11,15 +10,15 @@ import { mapToRequest, type UpdateAreaRequestVariables } from './mapToRequest';
  * refetches that area request and the lists.
  */
 export function useUpdateAreaRequest(
-  options: ApiMutationOptions<AreaRequest, UpdateAreaRequestVariables> = {},
+  options: ApiMutationOptions<Model, UpdateAreaRequestVariables> = {},
 ) {
   const { api } = useEspaceApi();
   const queryClient = useQueryClient();
 
   return useMutation({
-    onSuccess: (_, { uuid }) =>
+    onSuccess: (_, { id }) =>
       Promise.all([
-        queryClient.invalidateQueries({ queryKey: areaRequestKeys.detail(uuid) }),
+        queryClient.invalidateQueries({ queryKey: areaRequestKeys.detail(id) }),
         queryClient.invalidateQueries({ queryKey: areaRequestKeys.lists() }),
       ]),
     ...options,
