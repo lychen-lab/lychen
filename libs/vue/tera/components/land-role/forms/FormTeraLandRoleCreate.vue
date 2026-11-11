@@ -26,7 +26,7 @@ import { messages, TRANSLATION_KEY } from '@lychen/i18n-tera/land-role';
 import { useForm } from 'vee-validate';
 
 import { useMutation } from '@tanstack/vue-query';
-import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
+import { useTeraApi } from '@lychen/vue-tera-api/client/useTeraApi';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { useEventBus } from '@vueuse/core';
 import { landRolePostSucceededEvent } from '@lychen/vue-tera/events/LandRoleEvents';

@@ -1,0 +1,16 @@
+# The front's only access to tera-api: one Tanstack Query composable per endpoint
+# (endpoint/<resource>/), each a request and a mapper on top of libs/vue/api-query. The
+# mappers turn the API's representations into the front's models
+# (libs/typescript/tera-models) and back. Scaffolded by `moon generate api-front`.
+dependsOn:
+  - typescript-api-client
+  - typescript-api-mapping
+  - typescript-tera-api-sdk
+  - typescript-tera-models
+  - typescript-zitadel
+  - vue-api-query
+id: vue-tera-api
+language: typescript
+layer: library
+# Inherits lint, format, typecheck and test from .moon/tasks/frontend.yml.
+stack: frontend

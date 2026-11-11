@@ -97,7 +97,7 @@ import {
   messages as messagesLandMemberInvitations,
 } from '@lychen/i18n-tera/land-member-invitation';
 import { useMutation } from '@tanstack/vue-query';
-import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
+import { useTeraApi } from '@lychen/vue-tera-api/client/useTeraApi';
 import { toast } from '@lychen/vue-components-core/toast';
 import {
   landMemberInvitationAcceptSucceededEvent,

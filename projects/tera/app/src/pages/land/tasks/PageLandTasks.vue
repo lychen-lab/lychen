@@ -93,7 +93,7 @@
 <script lang="ts" setup>
 import { INJECTION_KEY_LAND } from '@/layouts/land-layout';
 import CardTeraLandTask from '@lychen/vue-tera/components/land-task/card/CardTeraLandTask.vue';
-import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
+import { useTeraApi } from '@lychen/vue-tera-api/client/useTeraApi';
 import Button from '@lychen/vue-components-core/button/Button.vue';
 import Kanban from '@lychen/vue-components-extra/kanban/Kanban.vue';
 import KanbanColumn from '@lychen/vue-components-extra/kanban/KanbanColumn.vue';

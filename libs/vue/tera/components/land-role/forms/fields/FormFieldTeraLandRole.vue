@@ -96,7 +96,7 @@ import { useFilter } from 'reka-ui';
 import { computed, ref, onMounted } from 'vue';
 
 import { useQuery } from '@tanstack/vue-query';
-import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
+import { useTeraApi } from '@lychen/vue-tera-api/client/useTeraApi';
 import { z } from 'zod';
 import { toTypedSchema } from '@vee-validate/zod';
 import {

@@ -56,6 +56,9 @@
       "path": "./libs/typescript/tera-api-sdk"
     },
     {
+      "path": "./libs/typescript/tera-models"
+    },
+    {
       "path": "./libs/typescript/utils"
     },
     {
@@ -144,6 +147,9 @@
     },
     {
       "path": "./libs/vue/tera"
+    },
+    {
+      "path": "./libs/vue/tera-api"
     },
     {
       "path": "./libs/vue/tiptap"

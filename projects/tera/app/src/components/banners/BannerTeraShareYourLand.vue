@@ -34,7 +34,7 @@ import IconShare2 from '@lychen/vue-icons/IconShare2.vue';
 
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { messages, TRANSLATION_KEY } from './i18n';
-import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
+import { useTeraApi } from '@lychen/vue-tera-api/client/useTeraApi';
 import { useQuery } from '@tanstack/vue-query';
 import DialogTeraLandProposalManage from '@lychen/vue-tera/components/land-proposal/dialogs/manage/DialogTeraLandProposalManage.vue';
 

@@ -140,7 +140,7 @@ import {
   landMemberInvitationPostSucceededEvent,
 } from '@lychen/vue-tera/events/LandMemberInvitationEvents';
 import CardTeraLandMemberInvitation from '@lychen/vue-tera/components/land-member-invitation/card/CardTeraLandMemberInvitation.vue';
-import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
+import { useTeraApi } from '@lychen/vue-tera-api/client/useTeraApi';
 import type {
   LandMemberInvitationJsonld,
   LandMemberInvitationJsonldLandMemberInvitationCollection,

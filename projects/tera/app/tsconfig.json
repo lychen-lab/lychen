@@ -37,6 +37,9 @@
     },
     {
       "path": "../../../libs/vue/tera"
+    },
+    {
+      "path": "../../../libs/vue/tera-api"
     }
   ],
   "compilerOptions": {
