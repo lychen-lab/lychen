@@ -32,9 +32,6 @@
       "path": "./libs/typescript/flora-api-sdk"
     },
     {
-      "path": "./libs/typescript/flora-models"
-    },
-    {
       "path": "./libs/typescript/humu"
     },
     {

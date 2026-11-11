@@ -12,7 +12,7 @@
       "path": "../../typescript/flora-api-sdk"
     },
     {
-      "path": "../../typescript/flora-models"
+      "path": "../../typescript/front-model-business"
     },
     {
       "path": "../../typescript/zitadel"

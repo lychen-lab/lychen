@@ -4,7 +4,7 @@ import { useFloraApi } from '../../../client/useFloraApi';
 import { seedLibraryKeys } from '../queryKeys';
 
 /**
- * Deletes a seed library, `DELETE /api/seed_libraries/{uuid}`, given its uuid. By default,
+ * Deletes a seed library, `DELETE /api/seed_libraries/{uuid}`, given its id. By default,
  * it then drops it from the cache and refetches the lists.
  */
 export function useDeleteSeedLibrary(options: ApiMutationOptions<void, string> = {}) {
@@ -12,14 +12,14 @@ export function useDeleteSeedLibrary(options: ApiMutationOptions<void, string> =
   const queryClient = useQueryClient();
 
   return useMutation({
-    onSuccess: (_, uuid) => {
+    onSuccess: (_, id) => {
       // Nothing left to fetch: a refetch would only fail.
-      queryClient.removeQueries({ queryKey: seedLibraryKeys.detail(uuid) });
+      queryClient.removeQueries({ queryKey: seedLibraryKeys.detail(id) });
       return queryClient.invalidateQueries({ queryKey: seedLibraryKeys.lists() });
     },
     ...options,
-    async mutationFn(uuid: string) {
-      await api.apiSeedLibrariesUuidDelete({ path: { uuid }, throwOnError: true });
+    async mutationFn(id: string) {
+      await api.apiSeedLibrariesUuidDelete({ path: { uuid: id }, throwOnError: true });
     },
   });
 }

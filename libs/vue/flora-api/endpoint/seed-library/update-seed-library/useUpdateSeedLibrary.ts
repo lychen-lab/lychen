@@ -1,9 +1,8 @@
-import type { SeedLibrary } from '@lychen/typescript-flora-models/SeedLibrary';
 import type { ApiMutationOptions } from '@lychen/vue-api-query/options';
 import { useMutation, useQueryClient } from '@tanstack/vue-query';
 import { useFloraApi } from '../../../client/useFloraApi';
 import { seedLibraryKeys } from '../queryKeys';
-import { mapToModel } from './mapToModel';
+import { mapToModel, type Model } from './mapToModel';
 import { mapToRequest, type UpdateSeedLibraryVariables } from './mapToRequest';
 
 /**
@@ -11,15 +10,15 @@ import { mapToRequest, type UpdateSeedLibraryVariables } from './mapToRequest';
  * default, it then refetches that library and the lists.
  */
 export function useUpdateSeedLibrary(
-  options: ApiMutationOptions<SeedLibrary, UpdateSeedLibraryVariables> = {},
+  options: ApiMutationOptions<Model, UpdateSeedLibraryVariables> = {},
 ) {
   const { api } = useFloraApi();
   const queryClient = useQueryClient();
 
   return useMutation({
-    onSuccess: (_, { uuid }) =>
+    onSuccess: (_, { id }) =>
       Promise.all([
-        queryClient.invalidateQueries({ queryKey: seedLibraryKeys.detail(uuid) }),
+        queryClient.invalidateQueries({ queryKey: seedLibraryKeys.detail(id) }),
         queryClient.invalidateQueries({ queryKey: seedLibraryKeys.lists() }),
       ]),
     ...options,

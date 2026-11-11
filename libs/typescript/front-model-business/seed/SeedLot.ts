@@ -3,15 +3,18 @@ export const SEED_LOT_STATUSES = ['available', 'reserved', 'given'] as const;
 
 export type SeedLotStatus = (typeof SEED_LOT_STATUSES)[number];
 
-/** A lot of seeds a library keeps. */
+/**
+ * A lot of seeds a library keeps. Every field is optional: an endpoint says which ones it
+ * gives, a component which ones it needs (`WithRequired`).
+ */
 export interface SeedLot {
-  uuid: string;
-  variety: string;
+  id?: string;
+  variety?: string;
   harvestYear?: number;
   quantityInGrams?: number;
   /** The library keeping it. */
-  seedLibraryUuid?: string;
-  characteristicUuids: string[];
+  seedLibraryId?: string;
+  characteristicIds?: string[];
   /** Undefined for a status this front does not know yet. */
   status?: SeedLotStatus;
   createdAt?: Date;

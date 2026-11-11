@@ -1,12 +1,9 @@
-import type {
-  SeedLibrary,
-  SeedLibraryCreateInput,
-} from '@lychen/typescript-flora-models/SeedLibrary';
+import type { SeedLibraryCreateInput } from '@lychen/typescript-front-model-business/seed/SeedLibrary';
 import type { ApiMutationOptions } from '@lychen/vue-api-query/options';
 import { useMutation, useQueryClient } from '@tanstack/vue-query';
 import { useFloraApi } from '../../../client/useFloraApi';
 import { seedLibraryKeys } from '../queryKeys';
-import { mapToModel } from './mapToModel';
+import { mapToModel, type Model } from './mapToModel';
 import { mapToRequest } from './mapToRequest';
 
 /**
@@ -14,7 +11,7 @@ import { mapToRequest } from './mapToRequest';
  * then refetches the lists.
  */
 export function useCreateSeedLibrary(
-  options: ApiMutationOptions<SeedLibrary, SeedLibraryCreateInput> = {},
+  options: ApiMutationOptions<Model, SeedLibraryCreateInput> = {},
 ) {
   const { api } = useFloraApi();
   const queryClient = useQueryClient();

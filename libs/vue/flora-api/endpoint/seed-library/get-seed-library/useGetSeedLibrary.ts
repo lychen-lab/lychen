@@ -1,30 +1,29 @@
-import type { SeedLibrary } from '@lychen/typescript-flora-models/SeedLibrary';
 import type { ApiQueryOptions } from '@lychen/vue-api-query/options';
 import { useQuery, type QueryKey } from '@tanstack/vue-query';
 import { computed, toValue, type MaybeRefOrGetter } from 'vue';
 import { useFloraApi } from '../../../client/useFloraApi';
 import { seedLibraryKeys } from '../queryKeys';
-import { mapToModel } from './mapToModel';
+import { mapToModel, type Model } from './mapToModel';
 
 /**
- * One seed library, `GET /api/seed_libraries/{uuid}`. The query waits for a uuid, and
+ * One seed library, `GET /api/seed_libraries/{uuid}`. The query waits for an id, and
  * fetches again whenever it changes.
  */
 export function useGetSeedLibrary(
-  uuid: MaybeRefOrGetter<string | undefined>,
-  options: ApiQueryOptions<SeedLibrary> = {},
+  id: MaybeRefOrGetter<string | undefined>,
+  options: ApiQueryOptions<Model> = {},
 ) {
   const { api } = useFloraApi();
   const { enabled = true, ...queryOptions } = options;
 
-  return useQuery<SeedLibrary, Error, SeedLibrary, QueryKey>({
-    queryKey: computed(() => seedLibraryKeys.detail(toValue(uuid) ?? '')),
+  return useQuery<Model, Error, Model, QueryKey>({
+    queryKey: computed(() => seedLibraryKeys.detail(toValue(id) ?? '')),
     ...queryOptions,
-    enabled: computed(() => Boolean(toValue(uuid)) && toValue(enabled)),
+    enabled: computed(() => Boolean(toValue(id)) && toValue(enabled)),
     async queryFn() {
-      const current = toValue(uuid);
+      const current = toValue(id);
       if (!current) {
-        throw new Error('useGetSeedLibrary: there is no uuid to fetch yet.');
+        throw new Error('useGetSeedLibrary: there is no id to fetch yet.');
       }
       const { data } = await api.apiSeedLibrariesUuidGet({
         path: { uuid: current },

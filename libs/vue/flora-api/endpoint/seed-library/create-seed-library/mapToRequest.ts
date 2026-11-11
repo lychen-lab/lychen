@@ -1,6 +1,6 @@
 import type { ApiSeedLibrariesPostData } from '@lychen/typescript-flora-api-sdk/generated/flora-api';
 import { withoutUndefined } from '@lychen/typescript-api-mapping/mapping';
-import type { SeedLibraryCreateInput } from '@lychen/typescript-flora-models/SeedLibrary';
+import type { SeedLibraryCreateInput } from '@lychen/typescript-front-model-business/seed/SeedLibrary';
 
 /** The request, from the front's input, under the API's names. */
 export function mapToRequest(input: SeedLibraryCreateInput): Omit<ApiSeedLibrariesPostData, 'url'> {
