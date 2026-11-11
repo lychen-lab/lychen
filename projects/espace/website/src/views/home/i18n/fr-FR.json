@@ -11,15 +11,7 @@
   "search": {
     "title": "Trouvez un espace de culture",
     "subtitle": "Bientôt les espaces disponibles ici, en attendant indiquez nous votre recherche",
-    "cta_form": "Répondre au questionnaire",
-    "placeholder_city": "Rechercher par ville",
-    "btn_search": "Rechercher",
-    "stats_count": "10 lieux en France",
-    "btn_all": "Voir tous les espaces",
-    "result_1_title": "Terrain de culture",
-    "result_2_title": "Cave à champignons",
-    "result_3_title": "Fleurs et arbres",
-    "result_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante feugiat finibus."
+    "cta_form": "Répondre au questionnaire"
   },
   "cta_bottom": {
     "line_1": "Actuellement,",

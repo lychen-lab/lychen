@@ -11,15 +11,7 @@
   "search": {
     "title": "Find a cultivation space",
     "subtitle": "Available spaces soon here, in the meantime tell us about your search",
-    "cta_form": "Answer the questionnaire",
-    "placeholder_city": "Search by city",
-    "btn_search": "Search",
-    "stats_count": "10 places in France",
-    "btn_all": "See all spaces",
-    "result_1_title": "Cultivation land",
-    "result_2_title": "Mushroom cellar",
-    "result_3_title": "Flowers and trees",
-    "result_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec metus vel ante feugiat finibus."
+    "cta_form": "Answer the questionnaire"
   },
   "cta_bottom": {
     "line_1": "Currently,",
