@@ -2,17 +2,18 @@ import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createApp, effectScope, reactive, ref, type EffectScope } from 'vue';
 import { createQueryKeys } from './queryKeys';
-import { useCollectionQuery } from './useCollectionQuery';
-import { useDeleteMutation } from './useDeleteMutation';
-import { useItemQuery } from './useItemQuery';
-import { useSaveMutation } from './useSaveMutation';
+import { useApiMutation } from './useApiMutation';
+import { useApiQuery } from './useApiQuery';
 
 interface Thing {
   id: string;
   name: string;
 }
 
-const thingKeys = createQueryKeys<{ page?: number }>('test-api', 'things');
+const thingKeys = createQueryKeys('test-api', 'thing');
+function getThingKey(id: string | undefined) {
+  return thingKeys.of('get-thing', id);
+}
 
 let queryClient: QueryClient;
 let scope: EffectScope;
@@ -39,21 +40,24 @@ afterEach(() => {
 });
 
 describe('createQueryKeys', () => {
-  it('nests every key of a resource under the API and the resource', () => {
-    expect(thingKeys.all).toEqual(['test-api', 'things']);
-    expect(thingKeys.lists()).toEqual(['test-api', 'things', 'list']);
-    expect(thingKeys.list({ page: 2 })).toEqual(['test-api', 'things', 'list', { page: 2 }]);
-    expect(thingKeys.details()).toEqual(['test-api', 'things', 'detail']);
-    expect(thingKeys.detail('a')).toEqual(['test-api', 'things', 'detail', 'a']);
+  it('nests every key of a resource under the API and the resource, then the endpoint', () => {
+    expect(thingKeys.all).toEqual(['test-api', 'thing']);
+    expect(thingKeys.endpoint('get-things')).toEqual(['test-api', 'thing', 'get-things']);
+    expect(thingKeys.of('get-things', { page: 2 })).toEqual([
+      'test-api',
+      'thing',
+      'get-things',
+      { page: 2 },
+    ]);
   });
 });
 
-describe('useItemQuery', () => {
-  it('waits for an id, then fetches again whenever it changes', async () => {
+describe('useApiQuery', () => {
+  it('waits for its params, then fetches again whenever they change', async () => {
     const fetch = vi.fn(async (id: string): Promise<Thing> => ({ id, name: `Thing ${id}` }));
     const id = ref<string>();
 
-    const { data } = run(() => useItemQuery(id, { queryKey: thingKeys.detail, fetch }));
+    const { data } = run(() => useApiQuery(id, { queryKey: getThingKey, fetch }));
     await tick();
     expect(fetch).not.toHaveBeenCalled();
 
@@ -63,16 +67,28 @@ describe('useItemQuery', () => {
     await vi.waitFor(() => expect(data.value?.id).toBe('b'));
 
     expect(fetch.mock.calls).toEqual([['a'], ['b']]);
-    expect(queryClient.getQueryData(thingKeys.detail('b'))).toEqual({ id: 'b', name: 'Thing b' });
+    expect(queryClient.getQueryData(getThingKey('b'))).toEqual({ id: 'b', name: 'Thing b' });
+  });
+
+  it('fetches again when a reactive param changes deep down', async () => {
+    const fetch = vi.fn(async ({ page }: { page: number }) => [`page ${page}`]);
+    const filters = reactive({ page: 1 });
+
+    const { data } = run(() =>
+      useApiQuery(filters, { queryKey: (params) => thingKeys.of('get-things', params), fetch }),
+    );
+    await vi.waitFor(() => expect(data.value).toEqual(['page 1']));
+    filters.page = 2;
+    await vi.waitFor(() => expect(data.value).toEqual(['page 2']));
+
+    expect(fetch).toHaveBeenCalledTimes(2);
   });
 
   it('waits for its own enabled option too', async () => {
     const fetch = vi.fn(async (id: string): Promise<Thing> => ({ id, name: '' }));
     const enabled = ref(false);
 
-    const { data } = run(() =>
-      useItemQuery('a', { queryKey: thingKeys.detail, fetch }, { enabled }),
-    );
+    const { data } = run(() => useApiQuery('a', { queryKey: getThingKey, fetch }, { enabled }));
     await tick();
     expect(fetch).not.toHaveBeenCalled();
 
@@ -84,95 +100,71 @@ describe('useItemQuery', () => {
     const fetch = vi.fn(async (id: string): Promise<Thing> => ({ id, name: '' }));
 
     const { data } = run(() =>
-      useItemQuery('a', { queryKey: thingKeys.detail, fetch }, { staleTime: 60_000 }),
+      useApiQuery('a', { queryKey: getThingKey, fetch }, { staleTime: 60_000 }),
     );
     await vi.waitFor(() => expect(data.value?.id).toBe('a'));
     expect(
       queryClient
         .getQueryCache()
-        .find({ queryKey: thingKeys.detail('a') })
+        .find({ queryKey: getThingKey('a') })
         ?.isStale(),
     ).toBe(false);
 
     // @ts-expect-error -- not an option of a query
-    run(() => useItemQuery('b', { queryKey: thingKeys.detail, fetch }, { notAnOption: true }));
+    run(() => useApiQuery('b', { queryKey: getThingKey, fetch }, { notAnOption: true }));
   });
 });
 
-describe('useCollectionQuery', () => {
-  it('fetches again when a reactive filter changes deep down', async () => {
-    const fetch = vi.fn(async ({ page }: { page?: number }) => [`page ${page}`]);
-    const filters = reactive({ page: 1 });
-
-    const { data } = run(() => useCollectionQuery(filters, { queryKey: thingKeys.list, fetch }));
-    await vi.waitFor(() => expect(data.value).toEqual(['page 1']));
-    filters.page = 2;
-    await vi.waitFor(() => expect(data.value).toEqual(['page 2']));
-
-    expect(fetch).toHaveBeenCalledTimes(2);
-  });
-});
-
-describe('useSaveMutation', () => {
-  it("caches the saved item and refetches the lists, before the caller's onSuccess", async () => {
+describe('useApiMutation', () => {
+  it("writes the cache, then refetches what it invalidates, before the caller's onSuccess", async () => {
+    queryClient.setQueryData(getThingKey('a'), { id: 'a', name: 'Before' });
     const invalidateQueries = vi.spyOn(queryClient, 'invalidateQueries');
-    const cachedWhenCallerRuns: unknown[] = [];
+    const seenByCaller: unknown[] = [];
 
     const { mutateAsync } = run(() =>
-      useSaveMutation(
+      useApiMutation(
         {
-          queryKeys: thingKeys,
-          save: async (name: string): Promise<Thing> => ({ id: 'new', name }),
-          idOf: (thing) => thing.id,
+          send: async (name: string): Promise<Thing> => ({ id: 'a', name }),
+          // A transition may change other resources too.
+          invalidates: () => [thingKeys.endpoint('get-things'), ['test-api', 'other']],
+          update: (client, thing) => client.setQueryData(getThingKey(thing.id), thing),
         },
         {
           onSuccess: (thing) => {
-            cachedWhenCallerRuns.push(queryClient.getQueryData(thingKeys.detail(thing.id)));
+            seenByCaller.push(queryClient.getQueryData(getThingKey(thing.id)));
+            seenByCaller.push(invalidateQueries.mock.calls.length);
           },
         },
       ),
     );
-    const thing = await mutateAsync('Created');
+    const thing = await mutateAsync('After');
 
-    expect(thing).toEqual({ id: 'new', name: 'Created' });
-    expect(queryClient.getQueryData(thingKeys.detail('new'))).toEqual(thing);
-    expect(invalidateQueries).toHaveBeenCalledWith({ queryKey: thingKeys.lists() });
-    expect(cachedWhenCallerRuns).toEqual([thing]);
+    expect(thing).toEqual({ id: 'a', name: 'After' });
+    expect(invalidateQueries.mock.calls).toEqual([
+      [{ queryKey: ['test-api', 'thing', 'get-things'] }],
+      [{ queryKey: ['test-api', 'other'] }],
+    ]);
+    expect(seenByCaller).toEqual([{ id: 'a', name: 'After' }, 2]);
   });
 
   it('leaves the cache alone when the request fails', async () => {
     const onSuccess = vi.fn();
+    const invalidates = vi.fn(() => [thingKeys.all]);
 
     const { mutateAsync } = run(() =>
-      useSaveMutation(
+      useApiMutation(
         {
-          queryKeys: thingKeys,
-          save: async (): Promise<Thing> => {
+          send: async (): Promise<Thing> => {
             throw new Error('422 Unprocessable Content');
           },
-          idOf: (thing) => thing.id,
+          invalidates,
         },
         { onSuccess },
       ),
     );
 
     await expect(mutateAsync(undefined)).rejects.toThrow('422');
-    expect(queryClient.getQueryCache().getAll()).toHaveLength(0);
+    expect(invalidates).not.toHaveBeenCalled();
     expect(onSuccess).not.toHaveBeenCalled();
-  });
-});
-
-describe('useDeleteMutation', () => {
-  it('drops the deleted item from the cache and refetches the lists', async () => {
-    const remove = vi.fn(async () => undefined);
-    const invalidateQueries = vi.spyOn(queryClient, 'invalidateQueries');
-    queryClient.setQueryData(thingKeys.detail('a'), { id: 'a', name: 'Thing a' });
-
-    const { mutateAsync } = run(() => useDeleteMutation({ queryKeys: thingKeys, remove }));
-    await mutateAsync('a');
-
-    expect(remove).toHaveBeenCalledWith('a');
-    expect(queryClient.getQueryData(thingKeys.detail('a'))).toBeUndefined();
-    expect(invalidateQueries).toHaveBeenCalledWith({ queryKey: thingKeys.lists() });
   });
 });

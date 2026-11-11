@@ -1,6 +1,12 @@
 import type { ApiAreaProposalsUuidGetResponse } from '@lychen/typescript-espace-api-sdk/generated/espace-api';
-import { describe, expect, it } from 'vitest';
-import { mapToCreateBody, mapToModel, mapToSummaryModel, mapToUpdateBody } from './mapper';
+import { describe, expect, it, vi } from 'vitest';
+import { mapToRequest as mapToCreateRequest } from './useCreateAreaProposal';
+import { mapToModel } from './useGetAreaProposal';
+import {
+  mapToModel as mapToListModel,
+  mapToRequest as mapToListRequest,
+} from './useGetAreaProposals';
+import { mapToRequest as mapToUpdateRequest } from './useUpdateAreaProposal';
 
 const UUID = '0198a1b2-c3d4-7e5f-8a9b-0c1d2e3f4a5b';
 
@@ -27,7 +33,11 @@ function apiProposal(
   };
 }
 
-describe('area proposal mapper', () => {
+// Each endpoint composable maps on its own: these are the area proposal ones. Their mapping
+// functions need no client: stub it, as the real one signs in through Zitadel.
+vi.mock('../../client/useEspaceApi', () => ({ useEspaceApi: () => ({ api: {} }) }));
+
+describe('area proposal endpoints mapping', () => {
   it('maps a proposal to the front model, under the front names', () => {
     expect(mapToModel(apiProposal())).toEqual({
       uuid: UUID,
@@ -53,7 +63,7 @@ describe('area proposal mapper', () => {
   });
 
   it('turns the API nulls into undefined, and a missing text into an empty one', () => {
-    const model = mapToSummaryModel(
+    const model = mapToListModel(
       apiProposal({ title: null, city: null, altitude: null, place: null, activities: undefined }),
     );
     expect(model).toMatchObject({ title: '', activityCodes: [] });
@@ -70,9 +80,15 @@ describe('area proposal mapper', () => {
     expect(() => mapToModel(apiProposal({ uuid: null }))).toThrow('area proposal uuid');
   });
 
+  it('sends the list filters under the API names', () => {
+    expect(mapToListRequest({ status: 'published', page: 2 })).toEqual({
+      query: { place: 'published', page: 2 },
+    });
+  });
+
   it('builds the creation body under the API names', () => {
     expect(
-      mapToCreateBody({
+      mapToCreateRequest({
         title: 'Terrain',
         description: 'Ensoleillé',
         surfaceTotal: 300,
@@ -82,20 +98,21 @@ describe('area proposal mapper', () => {
         activityCodes: ['gardening'],
       }),
     ).toEqual({
-      title: 'Terrain',
-      description: 'Ensoleillé',
-      surfaceTotal: 300,
-      surfaceToShare: 130,
-      city: 'Lille',
-      altitude: 678,
-      activities: ['gardening'],
+      body: {
+        title: 'Terrain',
+        description: 'Ensoleillé',
+        surfaceTotal: 300,
+        surfaceToShare: 130,
+        city: 'Lille',
+        altitude: 678,
+        activities: ['gardening'],
+      },
     });
   });
 
   it('only puts the fields set in the merge patch', () => {
-    expect(mapToUpdateBody({ title: 'Nouveau titre', activityCodes: [] })).toEqual({
-      title: 'Nouveau titre',
-      activities: [],
-    });
+    expect(
+      mapToUpdateRequest({ uuid: UUID, input: { title: 'Nouveau titre', activityCodes: [] } }),
+    ).toEqual({ path: { uuid: UUID }, body: { title: 'Nouveau titre', activities: [] } });
   });
 });

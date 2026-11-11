@@ -71,7 +71,7 @@ const { data, isPending, isError } = useGetAreaProposals({}, { live: true });
 
 const proposals = computed<LandProposal[]>(
   () =>
-    data.value?.items.map((proposal) => ({
+    data.value?.member.map((proposal) => ({
       uuid: proposal.uuid,
       title: proposal.title,
       description: proposal.description,

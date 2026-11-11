@@ -1,7 +1,7 @@
 # The front's only access to {{ api }}-api: one Tanstack Query composable per endpoint
-# (endpoint/<resource>/), each a request and a mapper on top of libs/vue/api-query. The
-# mappers turn the API's representations into the front's models
-# (libs/typescript/{{ api }}-models) and back. Scaffolded by `moon generate api-front`.
+# (endpoint/<resource>/), whatever the endpoint: its request and its own mapping to the
+# front's models, on top of libs/vue/api-query. The models are the front's own
+# (libs/typescript/{{ api }}-models). Scaffolded by `moon generate api-front`.
 dependsOn:
   - typescript-api-client
   - typescript-api-mapping

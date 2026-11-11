@@ -1,11 +1,15 @@
 import type {
+  ApiAreaActivitiesUuidPatchData,
+  ApiAreaActivitiesUuidPatchResponse,
+} from '@lychen/typescript-espace-api-sdk/generated/espace-api';
+import { required, toDate, withoutUndefined } from '@lychen/typescript-api-mapping/mapping';
+import type {
   AreaActivity,
   AreaActivityUpdateInput,
 } from '@lychen/typescript-espace-models/AreaActivity';
 import type { ApiMutationOptions } from '@lychen/vue-api-query/options';
-import { useSaveMutation } from '@lychen/vue-api-query/useSaveMutation';
+import { useApiMutation } from '@lychen/vue-api-query/useApiMutation';
 import { useEspaceApi } from '../../client/useEspaceApi';
-import { mapToModel, mapToUpdateBody } from './mapper';
 import { areaActivityKeys } from './queryKeys';
 
 export interface UpdateAreaActivityVariables {
@@ -20,19 +24,33 @@ export function useUpdateAreaActivity(
 ) {
   const { api } = useEspaceApi();
 
-  return useSaveMutation(
+  return useApiMutation(
     {
-      queryKeys: areaActivityKeys,
-      async save({ uuid, input }: UpdateAreaActivityVariables) {
+      async send(variables: UpdateAreaActivityVariables) {
         const { data } = await api.apiAreaActivitiesUuidPatch({
-          path: { uuid },
-          body: mapToUpdateBody(input),
+          ...mapToRequest(variables),
           throwOnError: true,
         });
         return mapToModel(data);
       },
-      idOf: (saved) => saved.uuid,
+      invalidates: () => [areaActivityKeys.all],
     },
     options,
   );
+}
+
+/** The request, from the front's input. */
+export function mapToRequest({
+  uuid,
+  input,
+}: UpdateAreaActivityVariables): Omit<ApiAreaActivitiesUuidPatchData, 'url'> {
+  return { path: { uuid }, body: withoutUndefined({ code: input.code }) };
+}
+
+/** The changed activity as the front's model: the API leaves its code out. */
+export function mapToModel(data: ApiAreaActivitiesUuidPatchResponse): AreaActivity {
+  return {
+    uuid: required(data.uuid, 'area activity uuid'),
+    createdAt: toDate(data.createdAt),
+  };
 }
