@@ -1,11 +1,11 @@
 # The front's only access to espace-api: one Tanstack Query composable per endpoint, in
 # endpoint/<resource>/<endpoint>/ with its own mapping (mapToModel, mapToRequest)
-# between the SDK's types and the front's models (libs/typescript/espace-models).
+# between the SDK's types and the front's models (libs/typescript/front-model-business).
 dependsOn:
   - typescript-api-client
   - typescript-api-mapping
   - typescript-espace-api-sdk
-  - typescript-espace-models
+  - typescript-front-model-business
   - typescript-zitadel
   - vue-api-query
 id: vue-espace-api

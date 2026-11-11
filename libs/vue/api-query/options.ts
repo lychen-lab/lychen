@@ -14,7 +14,7 @@ type QueryOptionsObject<TData> = Extract<
  * What the caller of an endpoint composable that reads may set: every Tanstack Query option
  * but `queryFn`, which holds the endpoint's URL and mapper. The composable's `queryKey` is a
  * default the caller may replace; its `enabled` is combined with what the composable waits
- * for (a uuid, say).
+ * for (an id, say).
  */
 export type ApiQueryOptions<TData> = Omit<
   QueryOptionsObject<TData>,

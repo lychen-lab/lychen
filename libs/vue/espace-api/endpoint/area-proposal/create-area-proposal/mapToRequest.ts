@@ -1,6 +1,6 @@
 import type { ApiAreaProposalsPostData } from '@lychen/typescript-espace-api-sdk/generated/espace-api';
 import { withoutUndefined } from '@lychen/typescript-api-mapping/mapping';
-import type { AreaProposalCreateInput } from '@lychen/typescript-espace-models/AreaProposal';
+import type { AreaProposalCreateInput } from '@lychen/typescript-front-model-business/area/AreaProposal';
 
 /** The request, from the front's input, under the API's names. */
 export function mapToRequest(
@@ -8,7 +8,7 @@ export function mapToRequest(
 ): Omit<ApiAreaProposalsPostData, 'url'> {
   return {
     body: withoutUndefined({
-      uuid: input.uuid,
+      uuid: input.id,
       title: input.title,
       description: input.description,
       surfaceTotal: input.surfaceTotal,

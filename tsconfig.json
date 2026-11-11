@@ -26,7 +26,7 @@
       "path": "./libs/typescript/espace-api-sdk"
     },
     {
-      "path": "./libs/typescript/espace-models"
+      "path": "./libs/typescript/front-model-business"
     },
     {
       "path": "./libs/typescript/flora-api-sdk"

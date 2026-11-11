@@ -1,5 +1,5 @@
 {
-  "name": "@lychen/typescript-espace-models",
+  "name": "@lychen/typescript-front-model-business",
   "type": "module",
   "dependencies": {
     "@lychen/typescript-utils": "workspace:*"

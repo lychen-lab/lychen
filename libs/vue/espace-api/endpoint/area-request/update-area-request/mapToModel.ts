@@ -3,13 +3,17 @@ import { oneOf, optional, required, toDate } from '@lychen/typescript-api-mappin
 import {
   AREA_REQUEST_STATUSES,
   type AreaRequest,
-} from '@lychen/typescript-espace-models/AreaRequest';
+} from '@lychen/typescript-front-model-business/area/AreaRequest';
+import type { WithRequired } from '@lychen/typescript-front-model-business/WithRequired';
 import { toPersonName } from '../../person';
 
+/** The fields of the area request this endpoint always gives. */
+export type Model = WithRequired<AreaRequest, 'id' | 'title' | 'description' | 'activityCodes'>;
+
 /** The changed area request as the front's model. */
-export function mapToModel(data: ApiAreaRequestsUuidPatchResponse): AreaRequest {
+export function mapToModel(data: ApiAreaRequestsUuidPatchResponse): Model {
   return {
-    uuid: required(data.uuid, 'area request uuid'),
+    id: required(data.uuid, 'area request uuid'),
     title: data.title ?? '',
     description: data.description ?? '',
     minimalSurfaceRequested: optional(data.minimalSurfaceRequested),
