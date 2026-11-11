@@ -18,6 +18,10 @@ variables:
     prompt: 'API name, in kebab-case? (e.g. flora)'
     required: true
     type: 'string'
+  file:
+    default: ''
+    prompt: 'The models file that exports it, when not named after it? (e.g. Land for LandSummary)'
+    type: 'string'
   model:
     default: ''
     prompt: 'The front model it gives, from libs/typescript/<api>-models? (e.g. SeedLot; ignored for a deletion)'

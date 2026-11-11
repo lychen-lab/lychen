@@ -249,7 +249,7 @@ moon generate api-endpoint -- --api flora --resource seed-lot --name give-seed-l
 `api-front` needs the API's SDK and takes `--env`, the base URL's variable (default
 `VITE_<API>_API_URL`). `api-endpoint` takes any operation of the SDK: `…Get` makes a query,
 `…GetCollection` a query of a page, `…Delete` a deletion, anything else a mutation giving
-`--model`. Write the model first, then complete the composable's TODOs (its params or input, its
+`--model` (from the models file `--file`, when it is not named after the model). Write the model first, then complete the composable's TODOs (its params or input, its
 mapping, what it invalidates) until the lib's typecheck passes; the commit hook formats. Re-running
 it for the same `--name` overwrites that composable.
 
