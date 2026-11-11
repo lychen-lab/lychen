@@ -2,7 +2,7 @@
 // to turn an API Platform representation into a front model, and a front input into a
 // request body.
 
-import type { Collection } from './Collection';
+import type { Collection, CollectionView } from './Collection';
 
 /** A value the API may send as `null`, as the front's `undefined`. */
 export function optional<T>(value: T | null | undefined): T | undefined {
@@ -40,19 +40,36 @@ export function oneOf<T extends string>(
 interface HydraPage<Item> {
   member: Item[];
   totalItems?: number;
-  view?: { next?: string | null };
+  view?: {
+    first?: string | null;
+    last?: string | null;
+    previous?: string | null;
+    next?: string | null;
+  };
 }
 
-/** A Hydra collection page, its members mapped to the front's model. */
+/**
+ * A Hydra collection page as the API gives it, its members mapped to the front's model.
+ * What the API leaves out stays out.
+ */
 export function toCollection<Item, Model>(
   page: HydraPage<Item>,
   mapItem: (item: Item) => Model,
 ): Collection<Model> {
-  return {
-    items: page.member.map((item) => mapItem(item)),
-    totalItems: page.totalItems ?? page.member.length,
-    hasNextPage: Boolean(page.view?.next),
-  };
+  return withoutUndefined({
+    member: page.member.map((item) => mapItem(item)),
+    totalItems: page.totalItems,
+    view: page.view && toCollectionView(page.view),
+  });
+}
+
+function toCollectionView(view: NonNullable<HydraPage<unknown>['view']>): CollectionView {
+  return withoutUndefined({
+    first: optional(view.first),
+    last: optional(view.last),
+    previous: optional(view.previous),
+    next: optional(view.next),
+  });
 }
 
 /**

@@ -27,18 +27,34 @@ describe('mapping', () => {
     expect(oneOf(known, null)).toBeUndefined();
   });
 
-  it('maps every member of a collection page and tells whether there is another', () => {
-    const page = { member: [{ n: 1 }, { n: 2 }], totalItems: 40, view: { next: '/api/x?page=2' } };
-    expect(toCollection(page, ({ n }) => n * 10)).toEqual({
-      items: [10, 20],
+  it('keeps the Hydra collection as the API gives it, its members mapped', () => {
+    const page = {
+      member: [{ n: 1 }, { n: 2 }],
       totalItems: 40,
-      hasNextPage: true,
+      view: {
+        '@id': '/api/things?page=1',
+        '@type': 'PartialCollectionView',
+        first: '/api/things?page=1',
+        last: '/api/things?page=20',
+        next: '/api/things?page=2',
+      },
+    };
+    expect(toCollection(page, ({ n }) => n * 10)).toStrictEqual({
+      member: [10, 20],
+      totalItems: 40,
+      view: {
+        first: '/api/things?page=1',
+        last: '/api/things?page=20',
+        next: '/api/things?page=2',
+      },
     });
-    expect(toCollection({ member: [{ n: 1 }] }, ({ n }) => n)).toEqual({
-      items: [1],
-      totalItems: 1,
-      hasNextPage: false,
-    });
+  });
+
+  it('leaves out of a collection what the API leaves out', () => {
+    expect(toCollection({ member: [{ n: 1 }] }, ({ n }) => n)).toStrictEqual({ member: [1] });
+    expect(
+      toCollection({ member: [], view: { first: '/api/things', previous: null } }, () => 0),
+    ).toStrictEqual({ member: [], view: { first: '/api/things' } });
   });
 
   it('drops the undefined properties, and only them', () => {

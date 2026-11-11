@@ -2,7 +2,7 @@ import type { ApiAreaProposalsUuidGetResponse } from '@lychen/typescript-espace-
 import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createApp, effectScope, ref, type EffectScope } from 'vue';
-import { mapToModel } from './mapper';
+import { mapToModel, mapToSummaryModel } from './mapper';
 import { areaProposalKeys } from './queryKeys';
 import { useDeleteAreaProposal } from './useDeleteAreaProposal';
 import { useGetAreaProposal } from './useGetAreaProposal';
@@ -141,17 +141,37 @@ describe('useGetAreaProposal', () => {
 });
 
 describe('useGetAreaProposals', () => {
-  it('sends the status as the API place, and gives a collection of front models', async () => {
-    fetchMock.respond = () => jsonLd({ member: [apiProposal()], totalItems: 1 });
+  it('sends the status as the API place, and gives the Hydra collection of front models', async () => {
+    // A collection as API Platform serializes it.
+    fetchMock.respond = () =>
+      jsonLd({
+        '@context': '/api/contexts/AreaProposal',
+        '@id': '/api/area_proposals',
+        '@type': 'Collection',
+        totalItems: 31,
+        member: [apiProposal()],
+        view: {
+          '@id': '/api/area_proposals?place=published&page=1',
+          '@type': 'PartialCollectionView',
+          first: '/api/area_proposals?place=published&page=1',
+          last: '/api/area_proposals?place=published&page=2',
+          next: '/api/area_proposals?place=published&page=2',
+        },
+        search: { '@type': 'IriTemplate', template: '/api/area_proposals{?place}' },
+      });
 
     const { data } = run(() => useGetAreaProposals({ status: 'published' }));
 
     await vi.waitFor(() => expect(data.value).toBeDefined());
     expect(new URL(lastRequest().url).search).toBe('?place=published');
-    expect(data.value).toEqual({
-      items: [expect.objectContaining({ uuid: UUID, status: 'published' })],
-      totalItems: 1,
-      hasNextPage: false,
+    expect(data.value).toStrictEqual({
+      member: [mapToSummaryModel(apiProposal())],
+      totalItems: 31,
+      view: {
+        first: '/api/area_proposals?place=published&page=1',
+        last: '/api/area_proposals?place=published&page=2',
+        next: '/api/area_proposals?place=published&page=2',
+      },
     });
   });
 });
