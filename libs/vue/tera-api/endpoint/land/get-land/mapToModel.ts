@@ -1,11 +1,15 @@
 import type { ApiLandsUlidGetResponse } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import { optional, required, toDate } from '@lychen/typescript-api-mapping/mapping';
-import type { Land } from '@lychen/typescript-tera-models/Land';
+import type { Land } from '@lychen/typescript-front-model-business/land/Land';
+import type { WithRequired } from '@lychen/typescript-front-model-business/WithRequired';
+
+/** The fields of the land this endpoint always gives. */
+export type Model = WithRequired<Land, 'id' | 'name'>;
 
 /** The land this endpoint returns, as the front's model. */
-export function mapToModel(data: ApiLandsUlidGetResponse): Land {
+export function mapToModel(data: ApiLandsUlidGetResponse): Model {
   return {
-    ulid: required(data.ulid, 'land ulid'),
+    id: required(data.ulid, 'land ulid'),
     name: data.name ?? '',
     surface: optional(data.surface),
     altitude: optional(data.altitude),

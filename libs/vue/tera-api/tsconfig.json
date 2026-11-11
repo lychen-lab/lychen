@@ -12,7 +12,7 @@
       "path": "../../typescript/tera-api-sdk"
     },
     {
-      "path": "../../typescript/tera-models"
+      "path": "../../typescript/front-model-business"
     },
     {
       "path": "../../typescript/zitadel"

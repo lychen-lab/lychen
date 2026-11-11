@@ -4,11 +4,11 @@ export const LAND_PROPOSAL_STATES = ['draft', 'published', 'archived'] as const;
 export type LandProposalState = (typeof LAND_PROPOSAL_STATES)[number];
 
 /**
- * What a land proposal's workflow transitions give the front: which proposal, and where it
- * stands now. The API answers with the whole proposal; a screen that shows it fetches it.
+ * A land its owner offers to share. Every field is optional: an endpoint says which ones it
+ * gives, a component which ones it needs (`WithRequired`).
  */
-export interface LandProposalStateChange {
-  ulid: string;
+export interface LandProposal {
+  id?: string;
   /** Undefined for a state this front does not know yet. */
   state?: LandProposalState;
 }

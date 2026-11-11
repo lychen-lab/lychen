@@ -2687,12 +2687,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@lychen/typescript-tera-models@workspace:*, @lychen/typescript-tera-models@workspace:libs/typescript/tera-models":
-  version: 0.0.0-use.local
-  resolution: "@lychen/typescript-tera-models@workspace:libs/typescript/tera-models"
-  languageName: unknown
-  linkType: soft
-
 "@lychen/typescript-utils@workspace:*, @lychen/typescript-utils@workspace:libs/typescript/utils":
   version: 0.0.0-use.local
   resolution: "@lychen/typescript-utils@workspace:libs/typescript/utils"
@@ -3033,8 +3027,8 @@ __metadata:
   dependencies:
     "@lychen/typescript-api-client": "workspace:*"
     "@lychen/typescript-api-mapping": "workspace:*"
+    "@lychen/typescript-front-model-business": "workspace:*"
     "@lychen/typescript-tera-api-sdk": "workspace:*"
-    "@lychen/typescript-tera-models": "workspace:*"
     "@lychen/typescript-zitadel": "workspace:*"
     "@lychen/vue-api-query": "workspace:*"
     "@tanstack/vue-query": "npm:^5.104.5"

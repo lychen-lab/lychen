@@ -1,13 +1,13 @@
-import type { Land, LandCreateInput } from '@lychen/typescript-tera-models/Land';
+import type { LandCreateInput } from '@lychen/typescript-front-model-business/land/Land';
 import type { ApiMutationOptions } from '@lychen/vue-api-query/options';
 import { useMutation, useQueryClient } from '@tanstack/vue-query';
 import { useTeraApi } from '../../../client/useTeraApi';
 import { landKeys } from '../queryKeys';
-import { mapToModel } from './mapToModel';
+import { mapToModel, type Model } from './mapToModel';
 import { mapToRequest } from './mapToRequest';
 
 /** Creates a land, `POST /api/lands`, and resolves with it. By default, it then refetches the lists. */
-export function useCreateLand(options: ApiMutationOptions<Land, LandCreateInput> = {}) {
+export function useCreateLand(options: ApiMutationOptions<Model, LandCreateInput> = {}) {
   const { api } = useTeraApi();
   const queryClient = useQueryClient();
 

@@ -56,9 +56,6 @@
       "path": "./libs/typescript/tera-api-sdk"
     },
     {
-      "path": "./libs/typescript/tera-models"
-    },
-    {
       "path": "./libs/typescript/utils"
     },
     {

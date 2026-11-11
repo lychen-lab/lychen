@@ -1,6 +1,6 @@
 import type { ApiLandsPostData } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import { withoutUndefined } from '@lychen/typescript-api-mapping/mapping';
-import type { LandCreateInput } from '@lychen/typescript-tera-models/Land';
+import type { LandCreateInput } from '@lychen/typescript-front-model-business/land/Land';
 
 /** The request, from the front's input, under the API's names. */
 export function mapToRequest(input: LandCreateInput): Omit<ApiLandsPostData, 'url'> {

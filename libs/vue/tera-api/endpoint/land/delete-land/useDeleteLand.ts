@@ -4,7 +4,7 @@ import { useTeraApi } from '../../../client/useTeraApi';
 import { landKeys } from '../queryKeys';
 
 /**
- * Deletes a land, `DELETE /api/lands/{ulid}`, given its ulid. By default, it then drops it
+ * Deletes a land, `DELETE /api/lands/{ulid}`, given its id. By default, it then drops it
  * from the cache and refetches the lists.
  */
 export function useDeleteLand(options: ApiMutationOptions<void, string> = {}) {
@@ -12,14 +12,14 @@ export function useDeleteLand(options: ApiMutationOptions<void, string> = {}) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    onSuccess: (_, ulid) => {
+    onSuccess: (_, id) => {
       // Nothing left to fetch: a refetch would only fail.
-      queryClient.removeQueries({ queryKey: landKeys.detail(ulid) });
+      queryClient.removeQueries({ queryKey: landKeys.detail(id) });
       return queryClient.invalidateQueries({ queryKey: landKeys.lists() });
     },
     ...options,
-    async mutationFn(ulid: string) {
-      await api.apiLandsUlidDelete({ path: { ulid }, throwOnError: true });
+    async mutationFn(id: string) {
+      await api.apiLandsUlidDelete({ path: { ulid: id }, throwOnError: true });
     },
   });
 }

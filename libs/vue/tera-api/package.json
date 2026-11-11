@@ -4,8 +4,8 @@
   "dependencies": {
     "@lychen/typescript-api-client": "workspace:*",
     "@lychen/typescript-api-mapping": "workspace:*",
+    "@lychen/typescript-front-model-business": "workspace:*",
     "@lychen/typescript-tera-api-sdk": "workspace:*",
-    "@lychen/typescript-tera-models": "workspace:*",
     "@lychen/typescript-zitadel": "workspace:*",
     "@lychen/vue-api-query": "workspace:*",
     "@tanstack/vue-query": "^5.104.5",
