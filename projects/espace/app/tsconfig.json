@@ -6,9 +6,6 @@
       "path": "../../../libs/typescript/espace-api-sdk"
     },
     {
-      "path": "../../../libs/typescript/zitadel"
-    },
-    {
       "path": "../../../libs/vue/color-scheme"
     },
     {
@@ -34,6 +31,9 @@
     },
     {
       "path": "../../../libs/vue/layouts"
+    },
+    {
+      "path": "../../../libs/vue/zitadel"
     }
   ],
   "compilerOptions": {

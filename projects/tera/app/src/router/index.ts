@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import zitadelAuth from '@lychen/typescript-zitadel/ZitadelAuth';
+import zitadelAuth from '@lychen/vue-zitadel/ZitadelAuth';
 
 import routes from './routes';
 

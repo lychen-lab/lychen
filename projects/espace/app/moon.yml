@@ -1,7 +1,6 @@
 dependsOn:
   - css-core
   - typescript-espace-api-sdk
-  - typescript-zitadel
   - vue-color-scheme
   - vue-components-app
   - vue-components-business
@@ -11,6 +10,7 @@ dependsOn:
   - vue-i18n
   - vue-icons
   - vue-layouts
+  - vue-zitadel
 env:
   HOST: ${ESPACE_APP_HOST}
 id: espace-app

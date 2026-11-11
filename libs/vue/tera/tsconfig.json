@@ -18,9 +18,6 @@
       "path": "../../typescript/utils"
     },
     {
-      "path": "../../typescript/zitadel"
-    },
-    {
       "path": "../components-core"
     },
     {
@@ -31,6 +28,9 @@
     },
     {
       "path": "../icons"
+    },
+    {
+      "path": "../zitadel"
     }
   ],
   "compilerOptions": {

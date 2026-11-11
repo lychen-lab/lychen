@@ -56,9 +56,6 @@
       "path": "./libs/typescript/vara"
     },
     {
-      "path": "./libs/typescript/zitadel"
-    },
-    {
       "path": "./libs/vite/ssg"
     },
     {
@@ -144,6 +141,9 @@
     },
     {
       "path": "./libs/vue/vara"
+    },
+    {
+      "path": "./libs/vue/zitadel"
     },
     {
       "path": "./projects/espace/app"

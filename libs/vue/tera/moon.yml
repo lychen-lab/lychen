@@ -4,11 +4,11 @@ dependsOn:
 - typescript-tera-api-sdk
 - typescript-tera-core
 - typescript-utils
-- typescript-zitadel
 - vue-components-core
 - vue-composables
 - vue-i18n
 - vue-icons
+- vue-zitadel
 id: vue-tera
 language: typescript
 layer: library
