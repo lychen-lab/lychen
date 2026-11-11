@@ -1,0 +1,12 @@
+# The TypeScript SDK of flora-api: tasks from .moon/tasks/tag-api-sdk.yml.
+dependsOn:
+  - typescript-api-sdk-config
+id: typescript-flora-api-sdk
+language: typescript
+layer: library
+tags:
+  - api-sdk
+tasks:
+  generate-api:
+    deps:
+      - flora-api:export-openapi

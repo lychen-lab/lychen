@@ -29,6 +29,12 @@
       "path": "./libs/typescript/espace-models"
     },
     {
+      "path": "./libs/typescript/flora-api-sdk"
+    },
+    {
+      "path": "./libs/typescript/flora-models"
+    },
+    {
       "path": "./libs/typescript/humu"
     },
     {
@@ -105,6 +111,9 @@
     },
     {
       "path": "./libs/vue/espace-api"
+    },
+    {
+      "path": "./libs/vue/flora-api"
     },
     {
       "path": "./libs/vue/humu"

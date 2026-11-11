@@ -1,0 +1,27 @@
+{
+  "extends": "../../../tsconfig.options.json",
+  "include": ["**/*"],
+  "references": [
+    {
+      "path": "../../typescript/api-client"
+    },
+    {
+      "path": "../../typescript/api-mapping"
+    },
+    {
+      "path": "../../typescript/flora-api-sdk"
+    },
+    {
+      "path": "../../typescript/flora-models"
+    },
+    {
+      "path": "../../typescript/zitadel"
+    },
+    {
+      "path": "../api-query"
+    }
+  ],
+  "compilerOptions": {
+    "outDir": "../../../.moon/cache/types/libs/vue/flora-api"
+  }
+}

@@ -1,0 +1,8 @@
+# The front's models of what flora-api serves, with their inputs and filters: what apps
+# and components type against. Owned by the front, framework-free; libs/vue/flora-api's
+# mappers are the only code that knows both them and the API's representations.
+id: typescript-flora-models
+language: typescript
+layer: library
+# Inherits lint, format, typecheck and test from .moon/tasks/frontend.yml.
+stack: frontend
