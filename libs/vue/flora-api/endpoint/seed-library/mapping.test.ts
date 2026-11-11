@@ -1,6 +1,12 @@
 import type { ApiSeedLibrariesUuidGetResponse } from '@lychen/typescript-flora-api-sdk/generated/flora-api';
-import { describe, expect, it } from 'vitest';
-import { mapToCreateBody, mapToModel, mapToUpdateBody } from './mapper';
+import { describe, expect, it, vi } from 'vitest';
+import { mapToRequest as mapToCreateRequest } from './useCreateSeedLibrary';
+import { mapToModel } from './useGetSeedLibrary';
+import { mapToRequest as mapToUpdateRequest } from './useUpdateSeedLibrary';
+
+// Each endpoint composable maps on its own: these are the seed library ones. Their mapping
+// functions need no client: stub it, as the real one signs in through Zitadel.
+vi.mock('../../client/useFloraApi', () => ({ useFloraApi: () => ({ api: {} }) }));
 
 const UUID = '0198b2c3-d4e5-7f60-8a9b-1c2d3e4f5a6b';
 const LOT = '0198b2c3-d4e5-7f60-8a9b-ffffffffffff';
@@ -21,9 +27,9 @@ function apiLibrary(
   };
 }
 
-describe('seed library mapper', () => {
+describe('seed library endpoints mapping', () => {
   it('maps a library to the front model, under the front names', () => {
-    expect(mapToModel(apiLibrary())).toEqual({
+    expect(mapToModel(apiLibrary())).toStrictEqual({
       uuid: UUID,
       name: 'Grainothèque du quartier',
       city: 'Grenoble',
@@ -39,8 +45,13 @@ describe('seed library mapper', () => {
     expect(library.seedLotUuids).toEqual([]);
   });
 
-  it('builds the bodies from the fields set only', () => {
-    expect(mapToCreateBody({ name: 'Grainothèque' })).toEqual({ name: 'Grainothèque' });
-    expect(mapToUpdateBody({ city: 'Lyon' })).toEqual({ city: 'Lyon' });
+  it('builds the writes from the fields set only', () => {
+    expect(mapToCreateRequest({ name: 'Grainothèque' })).toEqual({
+      body: { name: 'Grainothèque' },
+    });
+    expect(mapToUpdateRequest({ uuid: UUID, input: { city: 'Lyon' } })).toEqual({
+      path: { uuid: UUID },
+      body: { city: 'Lyon' },
+    });
   });
 });
