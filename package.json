@@ -14,7 +14,9 @@
     "serialize-javascript": "^7.1.4",
     "sharp": "0.35.5",
     "tar": "^7.5.22",
-    "valibot": "^1.5.0"
+    "valibot": "^1.5.0",
+    "vite-plugin-env-runtime/minimatch": "^11.0.5",
+    "workbox-build/glob": "^14.0.4"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
