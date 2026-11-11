@@ -1,3 +1,4 @@
-import { createQueryKeys } from '@lychen/vue-api-query/queryKeys';
+import type { ApiLandsGetCollectionData } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
+import { createResourceQueryKeys } from '@lychen/vue-api-query/queryKeys';
 
-export const landKeys = createQueryKeys('tera', 'land');
+export const landKeys = createResourceQueryKeys<ApiLandsGetCollectionData['query']>('tera', 'land');

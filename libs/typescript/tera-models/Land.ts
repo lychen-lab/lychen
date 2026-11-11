@@ -28,8 +28,3 @@ export interface LandCreateInput {
 
 /** The fields to change; those left out are kept. */
 export type LandUpdateInput = Partial<LandCreateInput>;
-
-export interface LandFilters {
-  page?: number;
-  itemsPerPage?: number;
-}
