@@ -1,8 +1,6 @@
 {
   "extends": "../../../tsconfig.options.json",
-  "include": [
-    "**/*"
-  ],
+  "include": ["**/*"],
   "references": [
     {
       "path": "../../typescript/espace"
@@ -11,7 +9,7 @@
       "path": "../../typescript/espace-api-sdk"
     },
     {
-      "path": "../../typescript/zitadel"
+      "path": "../auth"
     },
     {
       "path": "../i18n"

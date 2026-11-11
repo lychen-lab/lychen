@@ -62,6 +62,9 @@
       "path": "./libs/vue/applications"
     },
     {
+      "path": "./libs/vue/auth"
+    },
+    {
       "path": "./libs/vue/color-scheme"
     },
     {

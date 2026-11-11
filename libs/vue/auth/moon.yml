@@ -1,0 +1,12 @@
+# The API clients' shared setup: createApiClient and the default interceptors every
+# API SDK's client starts from (Zitadel bearer token, JSON-LD Content-Type, errors).
+dependsOn:
+  - typescript-zitadel
+  # Only for the tests, which run createApiClient on a real generated client.
+  - id: typescript-espace-api-sdk
+    scope: development
+id: vue-auth
+language: typescript
+layer: library
+# Inherits lint, format, typecheck and test from .moon/tasks/frontend.yml.
+stack: frontend

@@ -6,16 +6,16 @@
       "path": "../../i18n/tera"
     },
     {
-      "path": "../../typescript/tera-api-sdk"
+      "path": "../../typescript/tera/core"
     },
     {
-      "path": "../../typescript/tera/core"
+      "path": "../../typescript/tera-api-sdk"
     },
     {
       "path": "../../typescript/utils"
     },
     {
-      "path": "../../typescript/zitadel"
+      "path": "../auth"
     },
     {
       "path": "../components-core"

@@ -1,0 +1,10 @@
+{
+  "name": "@lychen/vue-auth",
+  "type": "module",
+  "dependencies": {
+    "@lychen/typescript-zitadel": "workspace:*"
+  },
+  "devDependencies": {
+    "@lychen/typescript-espace-api-sdk": "workspace:*"
+  }
+}

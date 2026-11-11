@@ -125,7 +125,7 @@ make phpunit c="--group e2e"                         # Run by group
 /libs              # Reusable libraries
   /css/core        # Tailwind design tokens
   /typescript/     # 17 TypeScript libraries, incl. the API SDKs (<api>-api-sdk)
-  /vue/            # 28 Vue component/composable libraries
+  /vue/            # 29 Vue component/composable libraries, incl. auth (API clients' setup)
   /php/            # 6 PHP/Symfony bundle libraries
   /i18n/           # Translation files (per domain, e.g. tera)
   /assets/         # Shared brand/content assets per domain (fonts, logos, icons)
@@ -186,6 +186,14 @@ Every API's TypeScript SDK follows one norm, so that they all expose the same cl
 - Its `openapi-ts.config.ts` only calls `defineApiSdkConfig({ api, input })` from
   `libs/typescript/api-sdk-config`: the one configuration of every SDK (plugins, spec patches) and
   the only place `@hey-api/openapi-ts` is pinned. Change the generator there, never in one SDK.
+- The frontends call it through its Vue lib's `use<Api>Api()`, whose client comes from
+  `createApiClient(createClient, { baseUrl })` (`libs/vue/auth`). Every API's client therefore
+  rejects on non-2xx responses and runs the same default interceptors (`defaultInterceptors()`):
+  the Zitadel bearer token, the JSON-LD / Merge Patch `Content-Type` of a write without one, and
+  an `Error` naming the URL and status. An API changes its own with
+  `interceptors: (defaults) => ({ request: [...defaults.request, mine] })` (complete, filter or
+  replace a list) and passes any other client option in `config`. Change a default there, for
+  every API, never in one `use<Api>Api()`.
 
 ```bash
 moon run typescript-tera-api-sdk:generate-api                        # From the monorepo API (export-openapi first)

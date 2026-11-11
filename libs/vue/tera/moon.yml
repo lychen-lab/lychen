@@ -3,7 +3,7 @@ dependsOn:
 - typescript-tera-api-sdk
 - typescript-tera-core
 - typescript-utils
-- typescript-zitadel
+- vue-auth
 - vue-components-core
 - vue-composables
 - vue-i18n

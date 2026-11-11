@@ -5,7 +5,7 @@
     "@lychen/typescript-tera-api-sdk": "workspace:*",
     "@lychen/typescript-tera-core": "workspace:*",
     "@lychen/typescript-utils": "workspace:*",
-    "@lychen/typescript-zitadel": "workspace:*",
+    "@lychen/vue-auth": "workspace:*",
     "@lychen/vue-components-core": "workspace:*",
     "@lychen/vue-composables": "workspace:*",
     "@lychen/vue-i18n": "workspace:*",
