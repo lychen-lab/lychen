@@ -1,6 +1,6 @@
-// What the mappers of every <api>-api Vue lib (libs/vue/<api>-api/endpoint/*/mapper.ts) need
-// to turn an API Platform representation into a front model, and a front input into a
-// request body.
+// What the mappers of every <api>-api Vue lib (libs/vue/<api>-api/endpoint/*/use-*/mapToModel.ts
+// and mapToRequest.ts) need to turn an API Platform representation into a front model, and a
+// front input into a request body.
 
 import type { Collection, CollectionView } from './Collection';
 
@@ -36,6 +36,17 @@ export function oneOf<T extends string>(
   return known.find((candidate) => candidate === value);
 }
 
+/**
+ * A list the API gives (an array property, or a response that is a plain array), each item
+ * mapped to the front's model. A list the API leaves out or sends as `null` is empty.
+ */
+export function toArray<Item, Model>(
+  items: readonly Item[] | null | undefined,
+  mapItem: (item: Item) => Model,
+): Model[] {
+  return (items ?? []).map((item) => mapItem(item));
+}
+
 /** The part of a Hydra collection page a Collection is built from. */
 interface HydraPage<Item> {
   member: Item[];
@@ -57,7 +68,7 @@ export function toCollection<Item, Model>(
   mapItem: (item: Item) => Model,
 ): Collection<Model> {
   return withoutUndefined({
-    member: page.member.map((item) => mapItem(item)),
+    member: toArray(page.member, mapItem),
     totalItems: page.totalItems,
     view: page.view && toCollectionView(page.view),
   });
