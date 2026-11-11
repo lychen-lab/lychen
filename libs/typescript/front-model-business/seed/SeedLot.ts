@@ -1,7 +1,13 @@
-/** Where a seed lot stands: free to reserve, reserved by someone, or given away. */
-export const SEED_LOT_STATUSES = ['available', 'reserved', 'given'] as const;
+import { type ObjectValues } from '@lychen/typescript-utils/transformers/ObjectValues';
 
-export type SeedLotStatus = (typeof SEED_LOT_STATUSES)[number];
+/** Where a seed lot stands: free to reserve, reserved by someone, or given away. */
+export const SEED_LOT_STATUS = {
+  Available: 'available',
+  Reserved: 'reserved',
+  Given: 'given',
+} as const;
+
+export type SeedLotStatus = ObjectValues<typeof SEED_LOT_STATUS>;
 
 /**
  * A lot of seeds a library keeps. Every field is optional: an endpoint says which ones it
