@@ -84,25 +84,13 @@
       >
     </div>
     <div class="flex items-center justify-center lg:col-span-2">
-      <iframe
-        class="aspect-video rounded-xl"
-        width="100%"
-        height="auto"
-        src="https://www.youtube.com/embed/t43-zErA2V8?si=3WqOKdcuc0Z992Hx&amp;controls=0"
+      <HomeVideo
+        video-id="t43-zErA2V8"
         :title="t('example.video_title')"
-        frameborder="0"
-        allow="
-          accelerometer;
-          autoplay;
-          clipboard-write;
-          encrypted-media;
-          gyroscope;
-          picture-in-picture;
-          web-share;
-        "
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen
-      ></iframe>
+        :thumbnail="videoThumbnail"
+        :play-label="t('example.video_play', { title: t('example.video_title') })"
+        :notice="t('example.video_notice')"
+      />
     </div>
   </Container>
 </template>
@@ -116,6 +104,8 @@ import { Button } from '@lychen/vue-components-core/button';
 import IconHeartHandshake from '@lychen/vue-icons/IconHeartHandshake.vue';
 import IconArrowRight from '@lychen/vue-icons/IconArrowRight.vue';
 import { CONFIG } from './i18n';
+import HomeVideo from './HomeVideo.vue';
+import videoThumbnail from './assets/video-gardening-differently.webp';
 import { LINK } from '@lychen/typescript-espace/constants/App';
 import { useExtendedHead } from '@lychen/vue-unhead-composables/useExtendedHead';
 

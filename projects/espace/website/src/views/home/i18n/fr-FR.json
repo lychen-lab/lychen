@@ -22,6 +22,8 @@
   "example": {
     "title": "Exemple sur Annecy",
     "paragraph": "Jennifer Geoffroy et son conjoint, à Annecy, ont redonné vie au jardin d’Éric, un octogénaire qui ne pouvait plus en assurer l’entretien. De cette belle rencontre est née une collaboration intergénérationnelle, transformant ce jardin en un véritable écosystème durable. Chaque espace a été repensé en tenant compte des contraintes environnementales et des éléments déjà présents. La mare a été réaménagée, les haies et les zones potagères progressivement réhabilitées. Le jardin repose aujourd’hui sur des principes de résilience : couverture permanente du sol, cultures étagées offrant de l’ombrage aux plantes sensibles et gestion écologique des ressources.",
-    "video_title": "Jardiner autrement"
+    "video_title": "Jardiner autrement",
+    "video_play": "Lire la vidéo « {title} »",
+    "video_notice": "La lecture charge la vidéo depuis YouTube (youtube-nocookie.com)."
   }
 }
