@@ -32,9 +32,10 @@ tous les mots de passe sont des valeurs de démo.
 
 - **Par API**, `projects/<domaine>/api/compose.mco.yml` s'ajoute à `compose.yml` et
   `compose.override.yml`. Il étend les gabarits de `compose.instance.yml` :
-  - `database` passe sur l'image MCO (`lychen-local/mco-postgres:16`, Debian + PGDG), avec pgaudit,
-    les extensions PoWA et l'archivage WAL. Elle tourne sur un **nouveau volume**
-    (`database_data_mco`) et rejoint `lychen-mco` sous l'alias `<domaine>-database` ;
+  - `database` passe sur l'image MCO (`lychen-local/mco-postgres:18`, Debian + PGDG, même majeure
+    que les API), avec pgaudit, les extensions PoWA et l'archivage WAL. Elle tourne sur un
+    **nouveau volume** (`database_data_mco_pg18`), qui **remplace** les montages de l'API
+    (`volumes: !override`), et rejoint `lychen-mco` sous l'alias `<domaine>-database` ;
   - `mco-init` est un one-shot idempotent : rôles techniques, extensions, enregistrement dans PoWA
     et rechargement du collecteur ;
   - `mco-pgbackrest` est le sidecar : stanza, backups planifiés, test de restauration.
@@ -51,7 +52,7 @@ tous les mots de passe sont des valeurs de démo.
 |---|---|
 | `compose.yml` | outillage partagé (projet compose `common-mco`) |
 | `compose.instance.yml` | gabarits des trois services ajoutés à chaque instance |
-| `postgres/Dockerfile` | image MCO commune (`postgres:16.15-trixie` + pgBackRest, pgaudit, PoWA, HypoPG…) |
+| `postgres/Dockerfile` | image MCO commune (`postgres:18.6-trixie` + pgBackRest, pgaudit, PoWA, HypoPG…) |
 | `instance/` | scripts montés dans chaque instance : `init.sh`, `init-db.sql`, `register-powa.sql`, `pgbackrest.conf`, `pgbackrest-loop.sh`, `restore-test.sh` |
 | `pgwatch/register-sources.sh` | déclare les trois instances comme sources pgwatch au démarrage |
 | `../../<domaine>/api/compose.mco.yml` | ce qui est propre à chaque instance (stanza, alias, identifiants, volumes) |
@@ -59,7 +60,7 @@ tous les mots de passe sont des valeurs de démo.
 
 ## 2. Lancement
 
-Prérequis : Docker Compose ≥ 2.24 (Docker Desktop récent). Toutes les images existent en arm64.
+Prérequis : Docker Compose ≥ 2.24.4 (`!override`, Docker Desktop récent). Toutes les images existent en arm64.
 PoWA est construit en local depuis PyPI, car les images `powateam/*` ne sont publiées qu'en amd64.
 
 ```bash
@@ -228,19 +229,18 @@ Il tourne tout seul (`docker logs espace-api-mco-pgbackrest-1`). À la demande :
 docker exec espace-api-mco-pgbackrest-1 sh /mco/restore-test.sh
 ```
 
-Rapport réel (après le scénario e) :
+Rapport réel (PostgreSQL 18, après le scénario e) :
 
 ```
-== MCO RESTORE TEST [espace] 2026-11-12 07:04:24 +0000
--- backup restauré : incr backup: 20261112-064333F_20261112-070416I
+== MCO RESTORE TEST [espace] 2026-11-12 08:17:30 +0000
+-- backup restauré : incr backup: 20261112-080611F_20261112-081723I
 -- données restaurées jusqu'à : fin du backup
 -- bases :
    app 23 MB
-   app_restore 23 MB
-   postgres 7519 kB
+   postgres 7678 kB
    powa 14 MB
 -- contrôle métier (app) : 13 migration(s) Doctrine
--- durées : restauration 1 s, rejeu WAL 0 s, contrôle 1 s, total 2 s
+-- durées : restauration 1 s, rejeu WAL 1 s, contrôle 0 s, total 2 s
 MCO RESTORE TEST [espace] : OK
 ```
 
@@ -283,7 +283,11 @@ Le dépôt pgBackRest, PoWA, pgwatch, Databasus et Mailpit restent uniques.
 | `mco-mail` supprimé, `common/mailpit` publie son UI (8025) | réutiliser le mailpit existant |
 | Grafana sur 13000 | la tera-api annonce 3000 |
 | Télémétrie Databasus coupée (`IS_DISABLE_ANONYMOUS_TELEMETRY`) | active par défaut |
-| Versions épinglées : `postgres:16.15-trixie`, `pgwatch-demo:6.1.0`, `databasus:v3.68.0` | pas de `latest` |
+| PostgreSQL 18 (`postgres:18.6-trixie`) au lieu de 16 | même majeure que les API (`pgautoupgrade/pgautoupgrade:18-alpine`) ; toutes les extensions PGDG existent en 18 |
+| L'overlay **remplace** les montages de `database` (`volumes: !override`), `pgbackrest.conf` y est donc listé | avec la couche 18 des API, leur volume passe sur `/var/lib/postgresql` : une fusion par cible l'aurait monté dans le conteneur MCO |
+| `stanza-create \|\| stanza-upgrade` dans le sidecar | après un changement de majeure, la stanza du dépôt partagé ne correspond plus à l'instance |
+| Collecteur et UI PoWA redémarrés avec le dépôt (`depends_on … restart: true`) | un dépôt recréé redonne de nouveaux ids aux serveurs ; le `RELOAD` du collecteur compare les serveurs par hôte et port seulement et garde les anciens ids : les instantanés d'une instance partaient sous l'id d'une autre |
+| Versions épinglées : `postgres:18.6-trixie`, `pgwatch-demo:6.1.0`, `databasus:v3.68.0` | pas de `latest` |
 
 ## 8. Limites connues
 
@@ -292,6 +296,13 @@ Le dépôt pgBackRest, PoWA, pgwatch, Databasus et Mailpit restent uniques.
 - **Dépôt pgBackRest** : si `database_data_mco` est supprimé mais pas le dépôt, `stanza-create`
   refuse la nouvelle instance (system-id différent). Supprimer la stanza
   (`pgbackrest --stanza=<d> stanza-delete --force`, base arrêtée) ou le volume du dépôt.
+- **Changement de majeure** (16 → 18 le 2026-11-12) : de nouveaux volumes de données
+  (`*_database_data_mco_pg18`, `common-mco_powa_repo_data_pg18`), car un serveur 18 n'ouvre pas un
+  répertoire 16, et `pg_upgrade` demanderait aussi les bibliothèques des anciennes extensions. Le
+  sidecar fait `stanza-upgrade` tout seul. L'API n'est pas recréée quand seul le volume de sa base
+  change : `mco <d> restart api` rejoue ses migrations. Les anciens volumes 16 restent en place,
+  à supprimer à la main quand on n'en veut plus :
+  `docker volume rm espace-api_database_data_mco flora-api_database_data_mco tera-api_database_data_mco common-mco_powa_repo_data`.
 - **Fuseau** : conteneurs en UTC. Prendre H avec son décalage (`select now()`).
 - **Fixtures** : non chargées, seules les migrations tournent (`moon <api>:load-fixtures` existe,
   mais n'a pas été testé en mode MCO).

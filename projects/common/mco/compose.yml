@@ -68,6 +68,11 @@ services:
     depends_on:
       mco-powa-repo:
         condition: service_healthy
+        # Restarted when Compose recreates the repository: the collector keeps
+        # its workers' server ids across a RELOAD (it matches servers by host and
+        # port only), so a recreated repository, whose servers get new ids, would
+        # have each instance's snapshots stored under another instance's id.
+        restart: true
     image: lychen-local/mco-powa-collector:1.3.2
     networks:
       - lychen-mco
@@ -86,6 +91,7 @@ services:
     depends_on:
       mco-powa-repo:
         condition: service_healthy
+        restart: true
     image: lychen-local/mco-powa-web:5.3.1
     # Joins lychen-mco for the repository, and for the instances themselves:
     # the index suggestions run HypoPG on the instance.
