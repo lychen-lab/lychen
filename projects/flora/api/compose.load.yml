@@ -101,6 +101,8 @@ services:
       # Live curves on http://localhost:5665 during the run, kept as a report.
       K6_WEB_DASHBOARD: 'true'
       K6_WEB_DASHBOARD_EXPORT: /load/reports/${PROFILE:-ramp}.html
+      # A point of the curves every 2s: k6 writes no report under 3 points.
+      K6_WEB_DASHBOARD_PERIOD: 2s
       # The curve, its highest number of users and its length (load/script.js).
       PROFILE: ${PROFILE:-ramp}
       VUS: ${VUS:-50}
