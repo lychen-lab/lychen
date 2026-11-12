@@ -2,7 +2,7 @@ import { type ObjectValues } from '@lychen/typescript-utils/transformers/ObjectV
 import type { PersonName } from '../person/PersonName';
 
 /** Where a request stands, from its draft to its validation. */
-export const AREA_REQUEST_STATUS = {
+export const AREA_REQUEST_STATE = {
   Draft: 'draft',
   PendingValidation: 'pending_validation',
   Active: 'active',
@@ -10,7 +10,7 @@ export const AREA_REQUEST_STATUS = {
   Archived: 'archived',
 } as const;
 
-export type AreaRequestStatus = ObjectValues<typeof AREA_REQUEST_STATUS>;
+export type AreaRequestState = ObjectValues<typeof AREA_REQUEST_STATE>;
 
 /**
  * An area someone is looking for. Every field is optional: an endpoint says which ones it
@@ -23,8 +23,8 @@ export interface AreaRequest {
   /** In m². */
   minimalSurfaceRequested?: number;
   city?: string;
-  /** Undefined for a status this front does not know yet. */
-  status?: AreaRequestStatus;
+  /** Undefined for a state this front does not know yet. */
+  state?: AreaRequestState;
   activityCodes?: string[];
   requester?: PersonName;
   createdAt?: Date;
