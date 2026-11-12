@@ -1,12 +1,11 @@
 {
   "extends": "../../../tsconfig.options.json",
-  "include": ["**/*"],
+  "include": [
+    "**/*"
+  ],
   "references": [
     {
       "path": "../../i18n/tera"
-    },
-    {
-      "path": "../../typescript/api-client"
     },
     {
       "path": "../../typescript/tera/core"
@@ -30,7 +29,7 @@
       "path": "../icons"
     },
     {
-      "path": "../zitadel"
+      "path": "../tera-api"
     }
   ],
   "compilerOptions": {
