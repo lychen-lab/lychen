@@ -1,5 +1,6 @@
 {
   "extends": "./tsconfig.options.json",
+  "files": [],
   "references": [
     {
       "path": "./libs/i18n/tera"
