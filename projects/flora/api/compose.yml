@@ -9,9 +9,20 @@ services:
       start_period: 60s
       test: [ 'CMD', 'pg_isready', '-d', '${POSTGRES_DB:-app}', '-U', '${POSTGRES_USER:-userlocal}' ]
       timeout: 5s
-    image: postgres:${POSTGRES_VERSION:-16}-alpine
+    # pgautoupgrade = the official postgres image plus the binaries of the older
+    # majors. On a data directory from an older major (16, before PostgreSQL 18) it
+    # runs pg_upgrade in place on its first start, then starts PostgreSQL like the
+    # official image; on an empty or current one it is the official image. Compose
+    # stops the old server before starting this container, as pg_upgrade requires.
+    # Back up before the first deploy on 18: see docs/deployment.md.
+    # The major is fixed, not taken from POSTGRES_VERSION: the mount below
+    # is the 18+ layout, on which an older image would initialise an empty
+    # database next to the existing data.
+    image: pgautoupgrade/pgautoupgrade:18-alpine
     volumes:
-      - database_data:/var/lib/postgresql/data:rw
+      # PostgreSQL 18+ images keep their data in a major-specific directory
+      # (18/docker) under this mount point; the upgrade moves the old one there.
+      - database_data:/var/lib/postgresql:rw
 
   api:
     depends_on:
@@ -20,7 +31,7 @@ services:
       redis:
         condition: service_started
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-userlocal}:${POSTGRES_PASSWORD:-PasswordForLocal!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-userlocal}:${POSTGRES_PASSWORD:-PasswordForLocal!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-18}&charset=${POSTGRES_CHARSET:-utf8}
       # Central broker (projects/common/rabbitmq), reached over lychen-network in
       # dev. Staging and production set MESSENGER_TRANSPORT_DSN on the Dokploy
       # compose so it points at the deployed broker.
