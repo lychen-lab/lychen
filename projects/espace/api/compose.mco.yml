@@ -23,10 +23,16 @@ services:
             lychen-mco:
                 aliases:
                     - espace-database
-        volumes:
-            - database_data_mco:/var/lib/postgresql/data
+        # Replaces the API's own mounts instead of adding to them: its
+        # `database_data` must never be mounted in MCO mode, whatever its target
+        # (/var/lib/postgresql/data on PostgreSQL 16, /var/lib/postgresql on 18).
+        volumes: !override
+            # PostgreSQL 18+ layout: the data lives in 18/docker under this mount.
+            - database_data_mco_pg18:/var/lib/postgresql
             - database_socket_mco:/var/run/postgresql
             - pgbackrest_repo:/var/lib/pgbackrest
+            # The default path: pgBackRest's restore_command names no --config.
+            - ../../common/mco/instance/pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf:ro
 
     mco-init:
         depends_on:
@@ -60,7 +66,7 @@ services:
             - database
 
 volumes:
-    database_data_mco:
+    database_data_mco_pg18:
     database_socket_mco:
     pgbackrest_repo:
         external: true

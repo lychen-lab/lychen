@@ -6,7 +6,9 @@
 set -eu
 
 until pg_isready -h "${PGBACKREST_PG1_SOCKET_PATH:-/var/run/postgresql}" -q; do sleep 2; done
-pgbackrest stanza-create
+# After a PostgreSQL major change the stanza no longer matches the instance:
+# stanza-upgrade records the new version (the older backups stay readable).
+pgbackrest stanza-create || pgbackrest stanza-upgrade
 pgbackrest check
 
 # On a fresh volume the application creates its schema after the database is up

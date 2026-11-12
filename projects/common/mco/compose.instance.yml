@@ -48,7 +48,8 @@ services:
       - -c
       - archive_timeout=60
     environment: &mco-pgbackrest-env
-      PGBACKREST_PG1_PATH: /var/lib/postgresql/data
+      # PostgreSQL 18+ images keep their data in a major-specific directory.
+      PGBACKREST_PG1_PATH: /var/lib/postgresql/18/docker
       PGBACKREST_PG1_SOCKET_PATH: /var/run/postgresql
       PGBACKREST_REPO1_CIPHER_PASS: ${MCO_PGBACKREST_CIPHER_PASS:-demo-only-change-me}
     healthcheck:
@@ -58,14 +59,13 @@ services:
       retries: 10
       test: [ 'CMD-SHELL', 'pg_isready -h 127.0.0.1 -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"' ]
       timeout: 5s
-    image: lychen-local/mco-postgres:16
+    image: lychen-local/mco-postgres:18
     # Built when missing. After a change to postgres/Dockerfile:
     # `moon <api>:mco-up -- --build` (not `pull_policy: build`: a rebuild, even
     # from cache, gives a new image ID, which would recreate the database on
     # every `up`).
-    volumes:
-      # The default path: pgBackRest's restore_command names no --config.
-      - ./instance/pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf:ro
+    # No `volumes` here: each overlay replaces the API's own mounts with its
+    # list (`volumes: !override`), which would drop any listed here.
 
   mco-init:
     entrypoint: [ 'sh', '/mco/init.sh' ]
@@ -74,7 +74,7 @@ services:
       MCO_PGWATCH_PASSWORD: ${MCO_PGWATCH_PASSWORD:-pgwatch}
       MCO_POWA_PASSWORD: ${MCO_POWA_PASSWORD:-powa}
       MCO_POWA_REPO_PASSWORD: ${MCO_POWA_REPO_PASSWORD:-powa}
-    image: postgres:16.15-trixie
+    image: postgres:18.6-trixie
     restart: 'no'
     volumes:
       - ./instance:/mco:ro
@@ -91,7 +91,7 @@ services:
       MCO_RESTORE_CHECK_SQL: ${MCO_RESTORE_CHECK_SQL:-select count(*) || ' migration(s) Doctrine' from doctrine_migration_versions}
       # ...so the first backup waits for the migrations of a fresh volume.
       MCO_FIRST_BACKUP_AFTER_SQL: ${MCO_FIRST_BACKUP_AFTER_SQL:-select to_regclass('public.doctrine_migration_versions') is not null}
-    image: lychen-local/mco-postgres:16
+    image: lychen-local/mco-postgres:18
     # Talks to its instance over the socket only.
     network_mode: none
     restart: unless-stopped

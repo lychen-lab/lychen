@@ -20,7 +20,7 @@ name: common-mco
 x-mco-postgres-image: &mco-postgres-image
   build:
     context: postgres
-  image: lychen-local/mco-postgres:16
+  image: lychen-local/mco-postgres:18
   # Built when missing; `docker compose up -d --build` after a change to
   # postgres/Dockerfile (see compose.instance.yml).
 
@@ -50,7 +50,8 @@ services:
       - lychen-mco
     restart: unless-stopped
     volumes:
-      - powa_repo_data:/var/lib/postgresql/data
+      # PostgreSQL 18+ layout: the data lives in 18/docker under this mount.
+      - powa_repo_data_pg18:/var/lib/postgresql
 
   mco-powa-collector:
     # The powateam images are amd64 only: built here from PyPI, as the
@@ -140,7 +141,7 @@ services:
 
 volumes:
   databasus_data:
-  powa_repo_data:
+  powa_repo_data_pg18:
 
 networks:
   lychen-mco:
