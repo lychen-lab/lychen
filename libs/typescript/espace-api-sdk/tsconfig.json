@@ -1,7 +1,11 @@
 {
   "extends": "../../../tsconfig.options.json",
   "include": ["**/*"],
-  "references": [],
+  "references": [
+    {
+      "path": "../api-sdk-config"
+    }
+  ],
   "compilerOptions": {
     "outDir": "../../../.moon/cache/types/libs/typescript/espace-api-sdk"
   }

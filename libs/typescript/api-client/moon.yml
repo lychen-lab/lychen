@@ -1,0 +1,11 @@
+# The API SDKs' client setup: createApiClient and the interceptors every API's client
+# can run (default ones, and the opt-in bearer token).
+dependsOn:
+  # Only for the tests, which run createApiClient on a real generated client.
+  - id: typescript-espace-api-sdk
+    scope: development
+id: typescript-api-client
+language: typescript
+layer: library
+# Inherits lint, format, typecheck and test from .moon/tasks/frontend.yml.
+stack: frontend

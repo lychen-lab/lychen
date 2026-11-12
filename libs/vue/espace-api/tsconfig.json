@@ -1,0 +1,27 @@
+{
+  "extends": "../../../tsconfig.options.json",
+  "include": ["**/*"],
+  "references": [
+    {
+      "path": "../../typescript/api-client"
+    },
+    {
+      "path": "../../typescript/api-mapping"
+    },
+    {
+      "path": "../../typescript/espace-api-sdk"
+    },
+    {
+      "path": "../../typescript/front-model-business"
+    },
+    {
+      "path": "../../typescript/zitadel"
+    },
+    {
+      "path": "../api-query"
+    }
+  ],
+  "compilerOptions": {
+    "outDir": "../../../.moon/cache/types/libs/vue/espace-api"
+  }
+}

@@ -124,8 +124,8 @@ make phpunit c="--group e2e"                         # Run by group
 
 /libs              # Reusable libraries
   /css/core        # Tailwind design tokens
-  /typescript/     # 16 TypeScript libraries
-  /vue/            # 28 Vue component/composable libraries
+  /typescript/     # 20 TypeScript libraries, incl. the API SDKs (<api>-api-sdk), their client (api-client), the front's business model (front-model-business) and api-mapping
+  /vue/            # 29 Vue component/composable libraries, incl. each API's front lib (<api>-api) and api-query
   /php/            # 8 PHP/Symfony bundle libraries
   /i18n/           # Translation files (per domain, e.g. tera)
   /assets/         # Shared brand/content assets per domain (fonts, logos, icons)
@@ -133,6 +133,8 @@ make phpunit c="--group e2e"                         # Run by group
   /vite/           # Shared Vite plugins/config (e.g. SSG scaffold)
   /caddy/          # Shared Caddy server configs (pwa, ssg)
   /docker/         # Shared Dockerfiles (e.g. frontend image)
+
+/templates         # `moon generate` templates (api-sdk, typescript-lib, vue-lib, php-api)
 
 /.moon             # Moonrepo configuration
   workspace.yml    # Workspace constraints, VCS hooks
@@ -159,7 +161,8 @@ make phpunit c="--group e2e"                         # Run by group
 ### Backend (Symfony 8.1 + API Platform 4.3 + PHP 8.5)
 
 - API Platform auto-generates REST APIs from Doctrine entities
-- OpenAPI spec is used to generate the TypeScript SDK at `libs/typescript/tera/api-sdk`
+- Each API's OpenAPI spec generates its TypeScript SDK (`libs/typescript/<api>-api-sdk`, see
+  API SDKs below)
 - State management via Symfony Workflow; messaging via RabbitMQ — one **central**
   broker (`projects/common/rabbitmq`) shared by every API: a single durable topic
   exchange (`lychen.events`), one queue per service, routing keys shaped
@@ -175,6 +178,102 @@ make phpunit c="--group e2e"                         # Run by group
 - FrankenPHP as PHP runtime in Docker; PostgreSQL for storage; Redis for cache
 - Each API project has its own `compose.yml` (Postgres + Redis) for local
   development; RabbitMQ, Mercure and mailpit are shared via the `lychen-network`
+
+### API SDKs
+
+Every API's TypeScript SDK follows one norm, so that they all expose the same client:
+
+- `libs/typescript/<api>-api-sdk`, project `typescript-<api>-api-sdk`, package
+  `@lychen/typescript-<api>-api-sdk`, tag `api-sdk` (tasks in `.moon/tasks/tag-api-sdk.yml`).
+- `@hey-api/openapi-ts` generates it in `generated/<api>-api/` (never edit it): the types, one
+  `<Api>Api` class holding every operation, and the bundled fetch client. Hand-written additions
+  sit next to `generated/` (e.g. tera's `enums.ts`).
+- Its `openapi-ts.config.ts` only calls `defineApiSdkConfig({ api, input })` from
+  `libs/typescript/api-sdk-config`: the one configuration of every SDK (plugins, spec patches) and
+  the only place `@hey-api/openapi-ts` is pinned. Change the generator there, never in one SDK.
+- Its front lib's `use<Api>Api()` (`libs/vue/<api>-api`, see API front libs below) sets up its
+  client with `createApiClient(createClient, { baseUrl, bearerToken? })` (`libs/typescript/api-client`).
+  Every API's client therefore rejects on non-2xx responses and runs the same default
+  interceptors (`defaultInterceptors()`): the JSON-LD / Merge Patch `Content-Type` of a write
+  without one, and an `Error` naming the URL and status.
+- The bearer token is opt-in and knows no identity provider: `bearerToken` takes any function
+  that gives the token, or undefined to send none, and adds `Authorization: Bearer <token>`
+  (`bearerToken.ts`). The apps pass `getAccessToken` from `libs/typescript/zitadel`.
+- An API changes its own interceptors with
+  `interceptors: (defaults) => ({ request: [...defaults.request, mine] })` (complete, filter or
+  replace a list) and passes any other client option in `config`. Change a default in
+  `libs/typescript/api-client`, for every API, never in one `use<Api>Api()`.
+
+```bash
+moon run typescript-tera-api-sdk:generate-api                        # From the monorepo API (export-openapi first)
+moon run typescript-tera-api-sdk:generate-api-from-url -- <spec URL> # From a running API, e.g. https://<host>/api/docs.jsonopenapi
+moon generate api-sdk -- --api flora                                 # New SDK of the monorepo project flora-api
+moon generate api-sdk -- --api <name> --url <spec URL>               # New SDK of an API outside the monorepo
+```
+
+After `moon generate api-sdk`, `moon run typescript-<api>-api-sdk:generate-api` installs the new
+workspace and generates the SDK. Add a `.github/workflows/openapi-sdk-sync-<api>.yml` caller for a
+monorepo API. Generation stays manual (`docs/decouple-apis-from-frontends.md`): commit the
+regenerated SDK when the frontends should adopt the new contract.
+
+### API front libs
+
+The frontends never call an SDK, so that an API's contract stops at the endpoint composables
+and the components know no API at all:
+
+- `libs/typescript/front-model-business` (`typescript-front-model-business`): the front's
+  business model, one for every API, framework-free: its concepts (`area/AreaProposal`,
+  `land/Land`, `person/PersonName`…), their statuses and the inputs of their forms. A concept is
+  the front's own and follows no API representation: it may come from several endpoints, of
+  several APIs. Every field of a concept is optional, as no endpoint gives them all, and it is
+  identified by `id`, whatever the API calls it (uuid, ulid). An input types its fields from its
+  concept (`title: NonNullable<AreaProposal['title']>`, `name?: Land['name']`). A status is an
+  object of constants, `AREA_PROPOSAL_STATUS = { Draft: 'draft', … } as const`, its type
+  `ObjectValues<typeof AREA_PROPOSAL_STATUS>` (`typescript-utils/transformers/ObjectValues`).
+- Components type against these concepts only, and say which fields they need:
+  `defineProps<{ proposal: WithRequired<AreaProposal, 'id' | 'title'> }>()`
+  (`front-model-business/WithRequired`).
+- `libs/vue/<api>-api` (`vue-<api>-api`), one per API: the client (`client/use<Api>Api.ts`) and
+  one composable per endpoint, whatever it does (reads, pages of a list, writes, workflow
+  transitions, custom actions), in `endpoint/<resource>/<endpoint>/`, next to the resource's
+  `queryKeys.ts`. Apps and components import a composable from its folder (`index.ts`), never
+  the SDK or `use<Api>Api()`.
+
+An endpoint's folder holds its composable and its own mapping, one file each:
+
+```
+endpoint/area-activity/get-area-activities/   endpoint/area-activity/create-area-activity/
+  useGetAreaActivities.ts                       useCreateAreaActivity.ts
+  mapToModel.ts                                 mapToModel.ts
+  index.ts                                      mapToRequest.ts
+                                                index.ts
+```
+
+- `mapToModel` takes the SDK's response type (`ApiAreaActivitiesGetCollectionResponse`) and gives
+  a concept, its fields listed one by one, never a spread. Its type, next to it, says which fields
+  the endpoint always gives: `export type Model = WithRequired<AreaActivity, 'id'>` (a list's
+  `Member`). Where a page passes an endpoint's data to a component, TypeScript checks that
+  the one gives what the other needs. `mapToRequest` takes the concept's input and gives the
+  SDK's request type (`Omit<ApiAreaActivitiesPostData, 'url'>`); an endpoint whose request is
+  only a path builds it in the composable. A page's filters are the SDK's own
+  (`ApiAreaActivitiesGetCollectionData['query']`).
+- The composable calls `useQuery` or `useMutation` itself. It owns the URL (the SDK operation) and
+  the mappers, in `queryFn` / `mutationFn`; its caller may change everything else. Its options are
+  typed `ApiQueryOptions<Model>` / `ApiMutationOptions<Model, Variables>` (`libs/vue/api-query`):
+  every Tanstack option but `queryFn` / `mutationFn`. The composable's `queryKey` and callbacks are
+  defaults the options replace; its `enabled` is combined with what it waits for (an id). A
+  mutation's cache upkeep is its default `onSuccess`, which refetches what the change makes stale
+  (`detail(id)`, `lists()`, other resources a transition touches); a caller that only reacts
+  to a success passes its callback to `mutate(variables, { onSuccess })` and keeps the upkeep.
+- Keys: `createResourceQueryKeys<Filters>(api, resource)` gives `all`, `lists()`, `list(filters)`,
+  `details()` and `detail(id)`: every resource identifies its items by one string id. A read of
+  an item's own goes under its key (`[...detail(id), 'workflow']`).
+- Mappers build on `libs/typescript/api-mapping`: `optional`, `required`, `toDate`,
+  `oneOf(AREA_PROPOSAL_STATUS, data.place)` (one of the constants, undefined for any other),
+  `withoutUndefined`, `toArray` (a list, each item mapped, empty when the API sends none) and
+  `toCollection` (API Platform's Hydra collection as given, `member` mapped). Live data:
+  `useMercure(subscribe, matchers, onUpdate)` (`libs/vue/api-query/mercure`), which an API's lib
+  wraps with the request for its subscriber token, as `useEspaceMercure` does.
 
 ### Monorepo Wiring
 

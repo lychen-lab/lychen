@@ -1,75 +1,151 @@
 {
-  "editor.bracketPairColorization.enabled": true,
-  "editor.guides.bracketPairs": true,
+  // ─── Editor ──────────────────────────────────────────────────────────────────
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
-    //"source.organizeImports": "explicit"
   },
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue", "yaml"],
-  "eslint.options": {
-    "overrideConfigFile": "eslint.config.js"
-  },
-  // PHP: php-cs-fixer with the monorepo's config, formatting on save (editor.formatOnSave above).
-  // The script runs it from its official Docker image, as the moon format tasks do: Docker must be
-  // running, no PHP is needed on the host.
-  "[php]": {
-    "editor.defaultFormatter": "junstyle.php-cs-fixer"
-  },
-  "php-cs-fixer.executablePath": "${workspaceFolder}/.moon/scripts/php-cs-fixer.sh",
-  "php-cs-fixer.config": ".php-cs-fixer.php",
-  "editor.quickSuggestions": {
-    //"strings": "on"
-  },
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.preferences.importModuleSpecifier": "non-relative",
-  "typescript.inlayHints.parameterNames.enabled": "none",
-  "typescript.inlayHints.variableTypes.enabled": false,
-  "typescript.suggest.paths": true,
+  // Prettier's printWidth (prettier.config.js).
+  "editor.rulers": [100],
+  "editor.guides.bracketPairs": true,
+  // Auto rename the closing tag (Vue templates, HTML).
+  "editor.linkedEditing": true,
+
+  // ─── Files ───────────────────────────────────────────────────────────────────
   "files.autoSave": "onFocusChange",
-  "prettier.configPath": "prettier.config.js",
-  "prettier.vueIndentScriptAndStyle": false,
-  "prettier.singleAttributePerLine": true,
-  "path-intellisense.autoSlashAfterDirectory": true,
-  "vue.inlayHints.missingProps": true,
-  "vue.codeActions.enabled": true,
+  // Prettier already does this for the files it formats; these cover the others
+  // (Dockerfile, Makefile, .env, neon, shell scripts…).
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  // Written by tools only: `yarn install`, `composer` (in the API's container).
+  "files.readonlyInclude": {
+    "**/yarn.lock": true,
+    "**/composer.lock": true,
+    "**/symfony.lock": true
+  },
+  // Relative patterns are resolved from the workspace root. Never `**/.claude/worktrees/**`: that
+  // would match the absolute path of a worktree opened on its own and stop watching all of it.
   "files.watcherExclude": {
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
     "**/node_modules/**": true,
     "**/.moon/cache/**": true,
+    "**/.yarn/**": true,
     "**/dist/**": true,
     "**/vendor/**": true,
-    "**/.yarn/**": true
+    "**/var/cache/**": true,
+    "**/coverage/**": true,
+    "**/playwright-report/**": true,
+    "**/test-results/**": true,
+    "**/storybook-static/**": true,
+    "**/.vite-ssg-temp/**": true,
+    // Claude Code worktrees: full copies of the monorepo inside the main checkout.
+    ".claude/worktrees/**": true
   },
+
+  // ─── Search ──────────────────────────────────────────────────────────────────
+  // On top of .gitignore (search.useIgnoreFiles). Also hidden from Quick Open (Ctrl+P): the
+  // "Use Exclude Settings and Ignore Files" button of the search view brings them back.
   "search.exclude": {
+    // Not committed: listed in case the ignore files are turned off.
     "**/node_modules": true,
-    "**/.turbo": true,
     "**/.moon/cache": true,
+    "**/.yarn": true,
     "**/dist": true,
-    "**/vendor/**": true,
-    "**/.yarn/**": true,
-    "yarn.lock": true
+    "**/vendor": true,
+    "**/var": true,
+    ".claude/worktrees": true,
+    // Lockfiles: yarn.lock, composer.lock, symfony.lock.
+    "**/*.lock": true,
+    // Generated: the OpenAPI exports, the API SDKs, Symfony's config reference.
+    "**/openapi_docs.json": true,
+    "**/generated": true,
+    "**/config/reference.php": true,
+    // PHPStan debt, every class name many times over: open the file to find an entry.
+    "**/phpstan-baseline.neon": true,
+    // Diagrams: the draw.io sources and the Vue components that embed their XML.
+    "**/*.drawio": true,
+    "libs/vue/drawio/{core,tera}/*.vue": true,
+    // PhpStorm project files, release notes, license.
+    "**/.idea": true,
+    "CHANGELOG.md": true,
+    "LICENSE": true
   },
-  "typescript.tsserver.maxTsServerMemory": 8192,
+
+  // ─── Explorer ────────────────────────────────────────────────────────────────
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+  "explorer.fileNesting.patterns": {
+    "package.json": "yarn.lock, .yarnrc.yml",
+    "composer.json": "composer.lock, symfony.lock",
+    "compose.yml": "compose.*.yml",
+    "Dockerfile": ".dockerignore",
+    ".env": ".env.*",
+    "tsconfig.json": "tsconfig.*.json",
+    "phpstan.dist.neon": "phpstan-baseline.neon, phpstan.neon",
+    "phpunit.xml.dist": "phpunit.xml",
+    ".php-cs-fixer.php": ".php-cs-fixer.cache",
+    ".gitignore": ".gitattributes",
+    "release-please-config.json": ".release-please-manifest.json, version.txt",
+    "README.md": "CHANGELOG.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, LICENSE",
+    "*.ts": "${capture}.test.ts, ${capture}.spec.ts"
+  },
+  // Every component folder has its index.ts: "button/index.ts" instead of a row of "index.ts" tabs.
+  "workbench.editor.customLabels.patterns": {
+    "**/index.{ts,js}": "${dirname}/${filename}.${extname}"
+  },
+
+  // ─── TypeScript ──────────────────────────────────────────────────────────────
+  // The workspace TypeScript (the one vue-tsc and the moon tasks use), run by the proto Node
+  // rather than the editor's bundled one.
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+  "js/ts.tsserver.node.path": "node",
+  "js/ts.tsserver.maxMemory": 8192,
+  "js/ts.preferences.importModuleSpecifier": "non-relative",
+  // Tasks run through moon: no auto-detected tsc build/watch task per tsconfig.json.
+  "js/ts.tsc.autoDetect": "off",
+
+  // ─── Vue ─────────────────────────────────────────────────────────────────────
+  "vue.inlayHints.missingProps": true,
+
+  // ─── Tailwind CSS ────────────────────────────────────────────────────────────
+  // Class completion and hover inside cn('…') and the cva() variants.
+  "tailwindCSS.classFunctions": ["cn", "cva"],
+  // @theme, @utility, @custom-variant, @reference…
   "css.lint.unknownAtRules": "ignore",
-  "typescript.tsserver.nodePath": "node",
-  "vue.autoInsert.dotValue": false,
-  "vue.inlayHints.optionsWrapper": false,
-  "vue.splitEditors.icon": true,
-  "editor.stickyScroll.enabled": true,
-  //Auto rename tags
-  "editor.linkedEditing": true,
-  "javascript.preferences.renameMatchingJsxTags": true,
-  "typescript.preferences.renameMatchingJsxTags": true,
+
+  // ─── ESLint / Prettier ───────────────────────────────────────────────────────
+  // Same languages as `moon :lint` (eslint.config.js): markdown is linted through its code blocks.
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue", "yaml", "markdown"],
+  "eslint.options": {
+    "overrideConfigFile": "eslint.config.js"
+  },
+  "prettier.configPath": "prettier.config.js",
+
+  // ─── PHP ─────────────────────────────────────────────────────────────────────
+  // php-cs-fixer with the monorepo's config, formatting on save (editor.formatOnSave above).
+  // The script runs it from its official Docker image, as the moon format tasks do: Docker must be
+  // running, no PHP is needed on the host.
+  "[php]": {
+    "editor.defaultFormatter": "junstyle.php-cs-fixer",
+    "editor.tabSize": 4
+  },
+  "php-cs-fixer.executablePath": "${workspaceFolder}/.moon/scripts/php-cs-fixer.sh",
+  "php-cs-fixer.config": ".php-cs-fixer.php",
+  // The built-in validation needs a PHP binary on the host; PHPStan runs in the API's container.
+  "php.validate.enable": false,
+
+  // ─── Markdown ────────────────────────────────────────────────────────────────
+  "[markdown]": {
+    // Two trailing spaces are a line break.
+    "files.trimTrailingWhitespace": false
+  },
+
+  // ─── Other extensions ────────────────────────────────────────────────────────
+  // moon.yml, .moon/*.yml and their schemas come from moonrepo.moon-console (moon v2 schemas).
   "svg.preview.background": "dark-transparent",
-  "colorize.decoration_type": "background",
-  "yaml.schemas": {
-    "./.moon/cache/schemas/project.json": ["**/moon.yml"],
-    "./.moon/cache/schemas/tasks.json": [".moon/tasks.yml", ".moon/tasks/**/*.yml"],
-    "./.moon/cache/schemas/template.json": ["**/template.yml"],
-    "./.moon/cache/schemas/toolchain.json": [".moon/toolchain.yml"],
-    "./.moon/cache/schemas/workspace.json": [".moon/workspace.yml"]
-  }
+  "colorize.decoration_type": "background"
 }

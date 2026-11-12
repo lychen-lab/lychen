@@ -1,0 +1,8 @@
+# What every <api>-api Vue lib's mappers share to turn an API Platform representation
+# into a front model (null as undefined, date-times, Hydra collections, known values)
+# and a front input into a request body. Framework-free: no Vue, no Tanstack.
+id: typescript-api-mapping
+language: typescript
+layer: library
+# Inherits lint, format, typecheck and test from .moon/tasks/frontend.yml.
+stack: frontend

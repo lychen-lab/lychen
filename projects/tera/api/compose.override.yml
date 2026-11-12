@@ -34,11 +34,12 @@ services:
       - protocol: udp
         published: ${HTTP3_PORT:-41443}
         target: 443
-    # default reaches this API's own database and redis, lychen-network the
-    # shared services (RabbitMQ, Mercure, mailpit). The database and redis stay
-    # off lychen-network: every API names them alike, and their aliases would
-    # collide there.
     networks: &dev-networks
+      # `default` is kept explicitly: naming any network opts a service out
+      # of the implicit one, which would cut the API off from its own
+      # database and redis. Only the PHP processes (`api`, and the `worker`
+      # and `outbox-relay` below) join the shared network — database and
+      # redis keep private, non-colliding names on the stack's own.
       - default
       - lychen-network
 

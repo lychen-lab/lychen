@@ -1,0 +1,1 @@
+export { useDeleteAreaRequest } from './useDeleteAreaRequest';

@@ -5,6 +5,15 @@
       "path": "./libs/i18n/tera"
     },
     {
+      "path": "./libs/typescript/api-client"
+    },
+    {
+      "path": "./libs/typescript/api-mapping"
+    },
+    {
+      "path": "./libs/typescript/api-sdk-config"
+    },
+    {
       "path": "./libs/typescript/applications"
     },
     {
@@ -15,6 +24,9 @@
     },
     {
       "path": "./libs/typescript/espace-api-sdk"
+    },
+    {
+      "path": "./libs/typescript/front-model-business"
     },
     {
       "path": "./libs/typescript/humu"
@@ -38,10 +50,10 @@
       "path": "./libs/typescript/robust"
     },
     {
-      "path": "./libs/typescript/tera/api-sdk"
+      "path": "./libs/typescript/tera/core"
     },
     {
-      "path": "./libs/typescript/tera/core"
+      "path": "./libs/typescript/tera-api-sdk"
     },
     {
       "path": "./libs/typescript/utils"
@@ -54,6 +66,9 @@
     },
     {
       "path": "./libs/vite/ssg"
+    },
+    {
+      "path": "./libs/vue/api-query"
     },
     {
       "path": "./libs/vue/applications"
@@ -89,7 +104,7 @@
       "path": "./libs/vue/drawio/tera"
     },
     {
-      "path": "./libs/vue/espace"
+      "path": "./libs/vue/espace-api"
     },
     {
       "path": "./libs/vue/humu"

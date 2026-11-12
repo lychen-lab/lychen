@@ -6,10 +6,13 @@
       "path": "../../i18n/tera"
     },
     {
-      "path": "../../typescript/tera/api-sdk"
+      "path": "../../typescript/api-client"
     },
     {
       "path": "../../typescript/tera/core"
+    },
+    {
+      "path": "../../typescript/tera-api-sdk"
     },
     {
       "path": "../../typescript/utils"
