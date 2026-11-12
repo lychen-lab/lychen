@@ -105,7 +105,9 @@ du monorepo, sur le tenant `espace` — voir [deployment.md](deployment.md#centr
 - **Protocole Mercure 1.0 de bout en bout :** tokens d'accès OAuth 2.0 (`iss`
   `urn:lychen:espace-api`, `aud` l'URL publique du hub), sélecteurs `match` /
   `match_urlpattern`, et le token dans un en-tête `Authorization`, jamais dans l'URL.
-- **Front :** `useEspaceMercure(matchers, onUpdate)` dans `libs/vue/espace`.
+- **Front :** `useEspaceMercure(matchers, onUpdate)` dans `libs/vue/espace-api`, derrière les
+  composables d'endpoint : `useGetAreaProposal(uuid, { live: true })` et
+  `useGetAreaProposals(filters, { live: true })` tiennent leur cache à jour avec lui.
 - **Pas un canal de notification.** Mercure reflète les données sur les écrans ouverts ;
   notifier un utilisateur passe toujours par les activités et Novu, comme ci-dessus.
 

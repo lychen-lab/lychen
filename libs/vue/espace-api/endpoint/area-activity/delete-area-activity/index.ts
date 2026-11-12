@@ -1,0 +1,1 @@
+export { useDeleteAreaActivity } from './useDeleteAreaActivity';

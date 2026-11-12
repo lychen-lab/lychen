@@ -103,7 +103,9 @@ on the `espace` tenant — see [deployment.md](deployment.md#central-mercure-hub
 - **Mercure 1.0 protocol end to end:** OAuth 2.0 access tokens (`iss`
   `urn:lychen:espace-api`, `aud` the hub's public URL), `match` / `match_urlpattern`
   selectors, and the token in an `Authorization` header, never in the URL.
-- **Front:** `useEspaceMercure(matchers, onUpdate)` in `libs/vue/espace`.
+- **Front:** `useEspaceMercure(matchers, onUpdate)` in `libs/vue/espace-api`, behind the
+  endpoint composables: `useGetAreaProposal(uuid, { live: true })` and
+  `useGetAreaProposals(filters, { live: true })` keep their cache in step with it.
 - **Not a notification channel.** Mercure mirrors data to screens that are open; notifying
   a user still happens from activities, through Novu, as above.
 

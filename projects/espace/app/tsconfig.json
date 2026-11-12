@@ -3,9 +3,6 @@
   "include": ["**/*"],
   "references": [
     {
-      "path": "../../../libs/typescript/espace-api-sdk"
-    },
-    {
       "path": "../../../libs/vue/color-scheme"
     },
     {
@@ -21,7 +18,7 @@
       "path": "../../../libs/vue/components-extra"
     },
     {
-      "path": "../../../libs/vue/espace"
+      "path": "../../../libs/vue/espace-api"
     },
     {
       "path": "../../../libs/vue/i18n"
