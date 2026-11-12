@@ -12,6 +12,13 @@ const api = new TeraApi({
   }),
 });
 
+/**
+ * The tera-api SDK, for this lib's endpoint composables only: the front calls those,
+ * which speak its models, never the SDK and the API's representations directly.
+ *
+ * The components and pages that still call it directly (libs/vue/tera, tera-app) move to
+ * endpoint composables one resource at a time, as endpoint/land/ shows.
+ */
 export function useTeraApi() {
   return { api };
 }

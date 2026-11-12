@@ -12,6 +12,7 @@ dependsOn:
   - vue-icons
   - vue-layouts
   - vue-tera
+  - vue-tera-api
 env:
   PRODUCTION_DOKPLOY_COMPOSE_ID: 1yP_nHkip2nMiN-xuHAiR
   STAGING_DOKPLOY_COMPOSE_ID: f0fzklLF69wpejz9f89ir

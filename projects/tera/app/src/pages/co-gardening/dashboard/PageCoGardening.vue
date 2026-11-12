@@ -52,7 +52,7 @@ import ToggleGroupTeraLandSharingConditions from '@lychen/vue-tera/components/la
 import ToggleGroupTeraLandInteractionMode from '@lychen/vue-tera/components/land-interaction-mode/ToggleGroupTeraLandInteractionMode.vue';
 import { type LandInteractionMode } from '@lychen/typescript-tera-core/constants/LandInteractionMode';
 import { type LandSharingCondition } from '@lychen/typescript-tera-core/constants/LandSharingCondition';
-import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
+import { useTeraApi } from '@lychen/vue-tera-api/client/useTeraApi';
 import type { LandProposalCollectionPublicData } from '@lychen/typescript-tera-api-sdk/generated/tera-api';
 import { useQuery } from '@tanstack/vue-query';
 import { ref } from 'vue';

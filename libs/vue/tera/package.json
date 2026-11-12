@@ -2,15 +2,14 @@
   "name": "@lychen/vue-tera",
   "dependencies": {
     "@lychen/i18n-tera": "workspace:*",
-    "@lychen/typescript-api-client": "workspace:*",
     "@lychen/typescript-tera-api-sdk": "workspace:*",
     "@lychen/typescript-tera-core": "workspace:*",
     "@lychen/typescript-utils": "workspace:*",
-    "@lychen/typescript-zitadel": "workspace:*",
     "@lychen/vue-components-core": "workspace:*",
     "@lychen/vue-composables": "workspace:*",
     "@lychen/vue-i18n": "workspace:*",
     "@lychen/vue-icons": "workspace:*",
+    "@lychen/vue-tera-api": "workspace:*",
     "@vueuse/core": "^15.0.0",
     "vue": "^3.5.44"
   }

@@ -146,6 +146,9 @@
       "path": "./libs/vue/tera"
     },
     {
+      "path": "./libs/vue/tera-api"
+    },
+    {
       "path": "./libs/vue/tiptap"
     },
     {
