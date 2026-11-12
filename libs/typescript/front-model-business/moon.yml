@@ -1,0 +1,11 @@
+# The front's business model, one for every API: the concepts apps and components type
+# against (a land, an area proposal, a person's name…), with their inputs. Owned by the front,
+# framework-free and API-agnostic: each libs/vue/<api>-api endpoint maps its API's
+# representation to these concepts, and nothing here knows an API.
+dependsOn:
+  - typescript-utils
+id: typescript-front-model-business
+language: typescript
+layer: library
+# Inherits lint, format, typecheck and test from .moon/tasks/frontend.yml.
+stack: frontend

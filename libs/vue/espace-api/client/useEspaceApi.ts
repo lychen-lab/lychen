@@ -12,6 +12,10 @@ const api = new EspaceApi({
   }),
 });
 
+/**
+ * The espace-api SDK, for this lib's endpoint composables only: the front calls those,
+ * which speak its models, never the SDK and the API's representations directly.
+ */
 export function useEspaceApi() {
   return { api };
 }

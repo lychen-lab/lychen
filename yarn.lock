@@ -2346,14 +2346,13 @@ __metadata:
   resolution: "@lychen/espace-app@workspace:projects/espace/app"
   dependencies:
     "@lychen/css-core": "workspace:*"
-    "@lychen/typescript-espace-api-sdk": "workspace:*"
     "@lychen/typescript-zitadel": "workspace:*"
     "@lychen/vue-color-scheme": "workspace:*"
     "@lychen/vue-components-app": "workspace:*"
     "@lychen/vue-components-business": "workspace:*"
     "@lychen/vue-components-core": "workspace:*"
     "@lychen/vue-components-extra": "workspace:*"
-    "@lychen/vue-espace": "workspace:*"
+    "@lychen/vue-espace-api": "workspace:*"
     "@lychen/vue-i18n": "workspace:*"
     "@lychen/vue-icons": "workspace:*"
     "@lychen/vue-layouts": "workspace:*"
@@ -2383,7 +2382,6 @@ __metadata:
     "@lychen/vue-components-business": "workspace:*"
     "@lychen/vue-components-core": "workspace:*"
     "@lychen/vue-components-website": "workspace:*"
-    "@lychen/vue-espace": "workspace:*"
     "@lychen/vue-i18n": "workspace:*"
     "@lychen/vue-layouts": "workspace:*"
     "@lychen/vue-router-configs": "workspace:*"
@@ -2559,6 +2557,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@lychen/typescript-api-mapping@workspace:*, @lychen/typescript-api-mapping@workspace:libs/typescript/api-mapping":
+  version: 0.0.0-use.local
+  resolution: "@lychen/typescript-api-mapping@workspace:libs/typescript/api-mapping"
+  languageName: unknown
+  linkType: soft
+
 "@lychen/typescript-api-sdk-config@workspace:*, @lychen/typescript-api-sdk-config@workspace:libs/typescript/api-sdk-config":
   version: 0.0.0-use.local
   resolution: "@lychen/typescript-api-sdk-config@workspace:libs/typescript/api-sdk-config"
@@ -2596,6 +2600,14 @@ __metadata:
 "@lychen/typescript-espace@workspace:*, @lychen/typescript-espace@workspace:libs/typescript/espace":
   version: 0.0.0-use.local
   resolution: "@lychen/typescript-espace@workspace:libs/typescript/espace"
+  dependencies:
+    "@lychen/typescript-utils": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@lychen/typescript-front-model-business@workspace:*, @lychen/typescript-front-model-business@workspace:libs/typescript/front-model-business":
+  version: 0.0.0-use.local
+  resolution: "@lychen/typescript-front-model-business@workspace:libs/typescript/front-model-business"
   dependencies:
     "@lychen/typescript-utils": "workspace:*"
   languageName: unknown
@@ -2714,6 +2726,16 @@ __metadata:
     vite-ssg-sitemap: "npm:^0.10.0"
     vue: "npm:^3.5.44"
     vue-router: "npm:^5.4.0"
+  languageName: unknown
+  linkType: soft
+
+"@lychen/vue-api-query@workspace:*, @lychen/vue-api-query@workspace:libs/vue/api-query":
+  version: 0.0.0-use.local
+  resolution: "@lychen/vue-api-query@workspace:libs/vue/api-query"
+  dependencies:
+    "@tanstack/vue-query": "npm:^5.104.5"
+    eventsource: "npm:^5.1.3"
+    vue: "npm:^3.5.44"
   languageName: unknown
   linkType: soft
 
@@ -2856,16 +2878,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@lychen/vue-espace@workspace:*, @lychen/vue-espace@workspace:libs/vue/espace":
+"@lychen/vue-espace-api@workspace:*, @lychen/vue-espace-api@workspace:libs/vue/espace-api":
   version: 0.0.0-use.local
-  resolution: "@lychen/vue-espace@workspace:libs/vue/espace"
+  resolution: "@lychen/vue-espace-api@workspace:libs/vue/espace-api"
   dependencies:
     "@lychen/typescript-api-client": "workspace:*"
-    "@lychen/typescript-espace": "workspace:*"
+    "@lychen/typescript-api-mapping": "workspace:*"
     "@lychen/typescript-espace-api-sdk": "workspace:*"
+    "@lychen/typescript-front-model-business": "workspace:*"
     "@lychen/typescript-zitadel": "workspace:*"
-    "@lychen/vue-i18n": "workspace:*"
-    eventsource: "npm:^5.1.3"
+    "@lychen/vue-api-query": "workspace:*"
+    "@tanstack/vue-query": "npm:^5.104.5"
+    vue: "npm:^3.5.44"
   languageName: unknown
   linkType: soft
 

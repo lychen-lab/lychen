@@ -1,0 +1,1 @@
+export { useGetAreaRequest } from './useGetAreaRequest';

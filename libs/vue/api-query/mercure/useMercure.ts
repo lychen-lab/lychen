@@ -1,35 +1,49 @@
 import { EventSource } from 'eventsource';
 import { onScopeDispose, toValue, watch, type MaybeRefOrGetter } from 'vue';
-import { useEspaceApi } from '../use-espace-api/useEspaceApi';
 
 /**
- * An update the espace API pushed to the hub. A created or updated resource comes
- * whole, exactly as `GET` on its IRI returns it; a deleted one only as its `@id`.
+ * What a signed-in user needs to receive an API's updates: where the hub is, and a
+ * short-lived subscriber token stating which topics they may hear. espace-api serves it
+ * at `GET /api/mercure_subscription`.
  */
-export type EspaceMercureUpdate = { '@id': string } & Record<string, unknown>;
+export interface MercureSubscription {
+  hubUrl?: string;
+  token?: string;
+}
+
+/**
+ * An update an API pushed to the hub. A created or updated resource comes whole, exactly
+ * as `GET` on its IRI returns it; a deleted one only as its `@id`.
+ */
+export type MercureUpdate = { '@id': string } & Record<string, unknown>;
+
+/** Whether the update reports a deletion, which carries nothing but the resource's `@id`. */
+export function isDeletion(update: MercureUpdate): boolean {
+  return Object.keys(update).length === 1;
+}
 
 /**
  * Selects the topics to listen to, as the Mercure 1.0 protocol does: a resource IRI
  * (`/api/area_proposals/0198…`), or, with `matchType: 'urlpattern'`, a URL pattern
  * matching a family of them (`/api/area_proposals/:uuid`).
  */
-export type EspaceMercureMatcher = { match: string; matchType?: 'exact' | 'urlpattern' };
+export type MercureMatcher = { match: string; matchType?: 'exact' | 'urlpattern' };
 
 const RECONNECT_DELAY_MS = 5000;
 
 /**
- * Listens to the updates the espace API publishes on the central Mercure hub, for as
- * long as the calling component — or effect scope — lives.
+ * Listens to the updates an API publishes on the central Mercure hub, for as long as the
+ * calling component — or effect scope — lives. An API's lib wraps it with the request
+ * that gets its subscription, as `useEspaceMercure` does.
  *
  * Updates are private, so the hub only delivers those the API's token lets this user
  * receive, whatever the matchers select.
  */
-export function useEspaceMercure(
-  matchers: MaybeRefOrGetter<EspaceMercureMatcher[]>,
-  onUpdate: (update: EspaceMercureUpdate) => void,
+export function useMercure(
+  subscribe: () => Promise<MercureSubscription | undefined>,
+  matchers: MaybeRefOrGetter<MercureMatcher[]>,
+  onUpdate: (update: MercureUpdate) => void,
 ): void {
-  const { api } = useEspaceApi();
-
   let source: EventSource | undefined;
   let reconnectTimer: ReturnType<typeof setTimeout> | undefined;
   let lastEventId: string | undefined;
@@ -53,10 +67,7 @@ export function useEspaceMercure(
     }
 
     // Subscriber tokens are short-lived: fetch a fresh one for every connection.
-    const subscription = await api.apiMercureSubscriptionGet().then(
-      ({ data }) => data,
-      () => undefined,
-    );
+    const subscription = await subscribe().catch(() => undefined);
     if (current !== generation) {
       return;
     }
@@ -85,7 +96,7 @@ export function useEspaceMercure(
     });
     eventSource.onmessage = (event: MessageEvent<string>) => {
       lastEventId = event.lastEventId;
-      onUpdate(JSON.parse(event.data) as EspaceMercureUpdate);
+      onUpdate(JSON.parse(event.data) as MercureUpdate);
     };
     eventSource.onerror = () => {
       // Dropped connections are retried on their own, resuming from the last event. A

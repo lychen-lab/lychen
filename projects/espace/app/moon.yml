@@ -1,13 +1,12 @@
 dependsOn:
   - css-core
-  - typescript-espace-api-sdk
   - typescript-zitadel
   - vue-color-scheme
   - vue-components-app
   - vue-components-business
   - vue-components-core
   - vue-components-extra
-  - vue-espace
+  - vue-espace-api
   - vue-i18n
   - vue-icons
   - vue-layouts

@@ -6,19 +6,22 @@
       "path": "../../typescript/api-client"
     },
     {
-      "path": "../../typescript/espace"
+      "path": "../../typescript/api-mapping"
     },
     {
       "path": "../../typescript/espace-api-sdk"
     },
     {
+      "path": "../../typescript/front-model-business"
+    },
+    {
       "path": "../../typescript/zitadel"
     },
     {
-      "path": "../i18n"
+      "path": "../api-query"
     }
   ],
   "compilerOptions": {
-    "outDir": "../../../.moon/cache/types/libs/vue/espace"
+    "outDir": "../../../.moon/cache/types/libs/vue/espace-api"
   }
 }
