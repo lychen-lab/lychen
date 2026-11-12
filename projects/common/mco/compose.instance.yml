@@ -1,0 +1,100 @@
+# What the MCO mode adds to one PostgreSQL instance: service templates that
+# each API's compose.mco.yml extends (`extends: file:`), adding only what is its
+# own (stanza, alias on lychen-mco, credentials, volumes). Relative paths
+# resolve from this file. Never run on its own.
+#
+#   database        the API's PostgreSQL, on the MCO image: pgaudit, PoWA
+#                   extensions, continuous WAL archiving to pgBackRest
+#   mco-init        one-shot: technical roles, extensions, PoWA registration
+#   mco-pgbackrest  sidecar: scheduled backups and automatic restore test
+#
+# Every pgBackRest option of an instance comes from the environment (see
+# instance/pgbackrest.conf), so the three containers of an instance agree on it.
+services:
+  database:
+    build:
+      context: postgres
+    # Replaces any `command` of the API's own compose file.
+    command:
+      - postgres
+      - -c
+      - shared_preload_libraries=pg_stat_statements,pg_stat_kcache,pg_qualstats,pg_wait_sampling,pgaudit
+      # query analysis (pgwatch + PoWA)
+      - -c
+      - pg_stat_statements.track=all
+      - -c
+      - track_io_timing=on
+      - -c
+      - pg_qualstats.sample_rate=1 # demo: every predicate. Production: the default
+      # audit trail (pgaudit): DDL + roles and privileges; writes on the tables
+      # granted to mco_auditor
+      - -c
+      - pgaudit.log=ddl,role
+      - -c
+      - pgaudit.log_catalog=off
+      - -c
+      - pgaudit.role=mco_auditor
+      - -c
+      - log_connections=on
+      - -c
+      - log_disconnections=on
+      - -c
+      - 'log_line_prefix=%m [%p] %q%u@%d app=%a client=%h '
+      # continuous WAL archiving to pgBackRest (stanza from PGBACKREST_STANZA)
+      - -c
+      - archive_mode=on
+      - -c
+      - archive_command=pgbackrest archive-push %p
+      - -c
+      - archive_timeout=60
+    environment: &mco-pgbackrest-env
+      PGBACKREST_PG1_PATH: /var/lib/postgresql/data
+      PGBACKREST_PG1_SOCKET_PATH: /var/run/postgresql
+      PGBACKREST_REPO1_CIPHER_PASS: ${MCO_PGBACKREST_CIPHER_PASS:-demo-only-change-me}
+    healthcheck:
+      # Over TCP: the temporary server of the first initialisation only listens
+      # on the socket, and must not pass for the real one.
+      interval: 5s
+      retries: 10
+      test: [ 'CMD-SHELL', 'pg_isready -h 127.0.0.1 -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"' ]
+      timeout: 5s
+    image: lychen-local/mco-postgres:16
+    # Built when missing. After a change to postgres/Dockerfile:
+    # `moon <api>:mco-up -- --build` (not `pull_policy: build`: a rebuild, even
+    # from cache, gives a new image ID, which would recreate the database on
+    # every `up`).
+    volumes:
+      # The default path: pgBackRest's restore_command names no --config.
+      - ./instance/pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf:ro
+
+  mco-init:
+    entrypoint: [ 'sh', '/mco/init.sh' ]
+    environment:
+      MCO_DATABASUS_PASSWORD: ${MCO_DATABASUS_PASSWORD:-databasus}
+      MCO_PGWATCH_PASSWORD: ${MCO_PGWATCH_PASSWORD:-pgwatch}
+      MCO_POWA_PASSWORD: ${MCO_POWA_PASSWORD:-powa}
+      MCO_POWA_REPO_PASSWORD: ${MCO_POWA_REPO_PASSWORD:-powa}
+    image: postgres:16.15-trixie
+    restart: 'no'
+    volumes:
+      - ./instance:/mco:ro
+
+  mco-pgbackrest:
+    build:
+      context: postgres
+    entrypoint: [ 'sh', '/mco/pgbackrest-loop.sh' ]
+    environment:
+      <<: *mco-pgbackrest-env
+      MCO_BACKUP_INTERVAL: ${MCO_BACKUP_INTERVAL:-3600} # seconds between two incremental backups
+      MCO_RESTORE_TEST_EVERY: ${MCO_RESTORE_TEST_EVERY:-24} # restore test every N backups (and after the first)
+      # Business check of the restore test: the Doctrine schema came back.
+      MCO_RESTORE_CHECK_SQL: ${MCO_RESTORE_CHECK_SQL:-select count(*) || ' migration(s) Doctrine' from doctrine_migration_versions}
+      # ...so the first backup waits for the migrations of a fresh volume.
+      MCO_FIRST_BACKUP_AFTER_SQL: ${MCO_FIRST_BACKUP_AFTER_SQL:-select to_regclass('public.doctrine_migration_versions') is not null}
+    image: lychen-local/mco-postgres:16
+    # Talks to its instance over the socket only.
+    network_mode: none
+    restart: unless-stopped
+    user: postgres
+    volumes:
+      - ./instance:/mco:ro

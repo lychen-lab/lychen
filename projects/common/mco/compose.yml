@@ -1,0 +1,183 @@
+# PostgreSQL MCO stack (POC): the tooling shared by every API instance that runs
+# in MCO mode (`moon <api>:mco-up`, see README.md).
+#
+#   Supervision           pgwatch + Grafana   metrics, dashboards
+#   Query analysis        PoWA                load per query, waits, missing indexes (pg_qualstats + HypoPG)
+#   Logical backups       Databasus           scheduled dumps, one-click restore, "DB down" alert
+#   Alerting (demo)       common/mailpit      local mailbox (host `mailpit`, SMTP 1025)
+#
+# What runs next to each instance (pgaudit, pgBackRest sidecar, restore test)
+# lives in the API's compose.mco.yml and in ./instance.
+#
+# Every tool reaches the instances over the external `lychen-mco` network, under
+# their `<domain>-database` alias, never as `database`: each stack has one, so
+# that name is ambiguous across stacks. Only Databasus also joins
+# `lychen-network`, to reach mailpit. The APIs never join `lychen-mco`.
+#
+# Local only: no Dokploy deployment, demo credentials as defaults.
+name: common-mco
+
+x-mco-postgres-image: &mco-postgres-image
+  build:
+    context: postgres
+  image: lychen-local/mco-postgres:16
+  # Built when missing; `docker compose up -d --build` after a change to
+  # postgres/Dockerfile (see compose.instance.yml).
+
+services:
+  # --- Query analysis: PoWA (repository + collector + UI) -------------------
+  mco-powa-repo:
+    <<: *mco-postgres-image
+    command:
+      - postgres
+      - -c
+      - shared_preload_libraries=pg_stat_statements,pg_stat_kcache,pg_qualstats,pg_wait_sampling
+    configs:
+      - source: powa-repo-sql
+        target: /docker-entrypoint-initdb.d/10-powa.sql
+    environment:
+      POSTGRES_DB: powa
+      POSTGRES_PASSWORD: ${MCO_POWA_REPO_PASSWORD:-powa}
+      POSTGRES_USER: powa
+    healthcheck:
+      # Over TCP and on the extension: the temporary server of the first
+      # initialisation only listens on the socket, before 10-powa.sql has run.
+      interval: 5s
+      retries: 20
+      test: [ 'CMD-SHELL', "psql -h 127.0.0.1 -U powa -d powa -Atc \"select 1 from pg_extension where extname = 'powa'\" | grep -q 1" ]
+      timeout: 5s
+    networks:
+      - lychen-mco
+    restart: unless-stopped
+    volumes:
+      - powa_repo_data:/var/lib/postgresql/data
+
+  mco-powa-collector:
+    # The powateam images are amd64 only: built here from PyPI, as the
+    # powa-team/powa-podman images are.
+    build:
+      dockerfile_inline: |
+        FROM python:3.11-slim
+        RUN pip install --no-cache-dir psycopg2-binary==2.9.13 \
+         && pip install --no-cache-dir --no-deps powa-collector==1.3.2
+        CMD ["powa-collector.py"]
+    configs:
+      - source: powa-collector-conf
+        target: /etc/powa-collector.conf
+    depends_on:
+      mco-powa-repo:
+        condition: service_healthy
+    image: lychen-local/mco-powa-collector:1.3.2
+    networks:
+      - lychen-mco
+    restart: unless-stopped
+
+  mco-powa-web:
+    build:
+      dockerfile_inline: |
+        FROM python:3.11-slim
+        RUN pip install --no-cache-dir psycopg2-binary==2.9.13 tornado==6.6.1 \
+         && pip install --no-cache-dir --no-deps powa-web==5.3.1
+        CMD ["powa-web"]
+    configs:
+      - source: powa-web-conf
+        target: /etc/powa-web.conf
+    depends_on:
+      mco-powa-repo:
+        condition: service_healthy
+    image: lychen-local/mco-powa-web:5.3.1
+    # Joins lychen-mco for the repository, and for the instances themselves:
+    # the index suggestions run HypoPG on the instance.
+    networks:
+      - lychen-mco
+    ports:
+      - '${MCO_POWA_PORT:-8888}:8888'
+    restart: unless-stopped
+
+  # --- Supervision: pgwatch + Grafana (all-in-one demo image) ----------------
+  mco-pgwatch:
+    environment:
+      MCO_PGWATCH_PASSWORD: ${MCO_PGWATCH_PASSWORD:-pgwatch}
+      MCO_PGWATCH_SOURCES: ${MCO_PGWATCH_SOURCES:-espace flora tera}
+      # The image's base moved to PostgreSQL 19 beta, but timescaledb,
+      # plpython3u and pg_qualstats (which its config preloads and its init
+      # creates) are only installed for 18: on 19 its PostgreSQL never starts.
+      # Run the PostgreSQL 18 it also ships. Drop these three once the image
+      # fixes it (checked on 6.1.0 and v6.0.0).
+      PATH: /usr/lib/postgresql/18/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      PG_MAJOR: '18'
+      PGDATA: /var/lib/postgresql/18/docker
+    # Its metrics, sources and Grafana live inside the container (no volume):
+    # a recreated container starts from an empty history, and the sources below
+    # are registered again.
+    image: cybertecpostgresql/pgwatch-demo:6.1.0
+    networks:
+      - lychen-mco
+    ports:
+      # Grafana: the tera API announces 3000, hence 13000.
+      - '${MCO_GRAFANA_PORT:-13000}:3000'
+      - '${MCO_PGWATCH_PORT:-8090}:8080'
+    restart: unless-stopped
+    volumes:
+      # Registers the three instances as pgwatch sources at startup.
+      - ./pgwatch/register-sources.sh:/pgwatch/bootstrap/init_test_monitored_db.sh:ro
+
+  # --- Logical backups and availability: Databasus ---------------------------
+  mco-databasus:
+    environment:
+      # On by default (version, OS/arch); nothing for a local demo to report.
+      IS_DISABLE_ANONYMOUS_TELEMETRY: 'true'
+    image: databasus/databasus:v3.68.0
+    networks:
+      - lychen-mco
+      # mailpit, for the alerts
+      - lychen-network
+    ports:
+      - '${MCO_DATABASUS_PORT:-4005}:4005'
+    restart: unless-stopped
+    volumes:
+      - databasus_data:/databasus-data
+
+volumes:
+  databasus_data:
+  powa_repo_data:
+
+networks:
+  lychen-mco:
+    external: true
+  lychen-network:
+    external: true
+
+configs:
+  powa-repo-sql:
+    content: |
+      CREATE EXTENSION IF NOT EXISTS btree_gist;
+      CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+      CREATE EXTENSION IF NOT EXISTS pg_qualstats;
+      CREATE EXTENSION IF NOT EXISTS pg_stat_kcache;
+      CREATE EXTENSION IF NOT EXISTS pg_wait_sampling;
+      CREATE EXTENSION IF NOT EXISTS pg_track_settings;
+      CREATE EXTENSION IF NOT EXISTS hypopg;
+      CREATE EXTENSION IF NOT EXISTS powa;
+
+  powa-collector-conf:
+    content: |
+      {
+        "repository": {
+          "dsn": "postgresql://powa:${MCO_POWA_REPO_PASSWORD:-powa}@mco-powa-repo:5432/powa"
+        },
+        "debug": false
+      }
+
+  powa-web-conf:
+    content: |
+      servers={
+        'mco': {
+          'host': 'mco-powa-repo',
+          'port': '5432',
+          'database': 'powa',
+        }
+      }
+      cookie_secret="${MCO_POWA_COOKIE_SECRET:-demo-only-change-me}"
+      address="0.0.0.0"
+      port=8888

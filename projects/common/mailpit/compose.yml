@@ -8,6 +8,9 @@ services:
       MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
     image: axllent/mailpit
+    ports:
+      # Web UI, e.g. for the alerts of the MCO stack (projects/common/mco).
+      - '${MAILPIT_UI_PORT:-8025}:8025'
     restart: unless-stopped
     volumes:
       - mailpit_data:/data

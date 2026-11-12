@@ -1,0 +1,24 @@
+id: common-mco
+language: bash
+layer: automation
+stack: backend
+tags:
+  - compose-local
+# PostgreSQL MCO stack (POC), local only: pgwatch + Grafana, PoWA and Databasus,
+# shared by the API instances that run in MCO mode (`moon <api>:mco-up`, tasks in
+# .moon/tasks/tag-mco.yml). See README.md.
+tasks:
+  create-network:
+    # The network the instances and the tools meet on, and the pgBackRest
+    # repository every instance archives to (one stanza per domain). External,
+    # so that no compose project owns them and `down -v` never takes the backups.
+    script: >-
+      (docker network create lychen-mco >/dev/null 2>&1 || docker network inspect lychen-mco >/dev/null)
+      && docker volume create lychen-mco-pgbackrest-repo >/dev/null
+    options:
+      cache: false
+  up:
+    # Extends tag-compose-local's `up`: Databasus sends its alerts to mailpit.
+    deps:
+      - ~:create-network
+      - common-mailpit:up

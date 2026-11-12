@@ -1,0 +1,68 @@
+# MCO mode of the tera API (PostgreSQL MCO POC, local only), on top of
+# compose.yml + compose.override.yml: `moon tera-api:mco-up` / `mco-down`.
+# The services come from projects/common/mco/compose.instance.yml; this file only
+# adds what is tera's own. See projects/common/mco/README.md.
+#
+# The MCO image is Debian, the usual database Alpine: they never share a volume
+# (musl and glibc sort text differently). `database_data` is left untouched, and
+# the API's entrypoint runs the Doctrine migrations on the fresh one.
+services:
+  database:
+    extends:
+      file: ../../common/mco/compose.instance.yml
+      service: database
+    environment:
+      PGBACKREST_PG1_USER: ${POSTGRES_USER:-userlocal}
+      PGBACKREST_STANZA: tera
+    networks:
+      # Added to its own networks. The MCO tools reach it there under its alias,
+      # never as `database` (every stack has one). The API stays off this network.
+      lychen-mco:
+        aliases:
+          - tera-database
+    volumes:
+      - database_data_mco:/var/lib/postgresql/data
+      - database_socket_mco:/var/run/postgresql
+      - pgbackrest_repo:/var/lib/pgbackrest
+
+  mco-init:
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      MCO_SERVER_ALIAS: tera
+      PGDATABASE: ${POSTGRES_DB:-app}
+      PGHOST: tera-database
+      PGPASSWORD: ${POSTGRES_PASSWORD:-PasswordForLocal!}
+      PGUSER: ${POSTGRES_USER:-userlocal}
+    extends:
+      file: ../../common/mco/compose.instance.yml
+      service: mco-init
+    networks:
+      - lychen-mco
+
+  mco-pgbackrest:
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      MCO_RESTORE_CHECK_DB: ${POSTGRES_DB:-app}
+      PGBACKREST_PG1_USER: ${POSTGRES_USER:-userlocal}
+      PGBACKREST_STANZA: tera
+    extends:
+      file: ../../common/mco/compose.instance.yml
+      service: mco-pgbackrest
+    # The data directory, the socket, the repository and pgbackrest.conf.
+    volumes_from:
+      - database
+
+volumes:
+  database_data_mco:
+  database_socket_mco:
+  pgbackrest_repo:
+    external: true
+    name: lychen-mco-pgbackrest-repo
+
+networks:
+  lychen-mco:
+    external: true
