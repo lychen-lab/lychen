@@ -254,8 +254,8 @@ de reprise. Le contrôle métier par défaut compte les migrations Doctrine. On 
 Pour une nouvelle API `<d>` (même forme : service `database`, user `userlocal`, base `app`) :
 
 1. Copier `projects/flora/api/compose.mco.yml` dans `projects/<d>/api/` et remplacer `flora`
-   (stanza, alias `<d>-database`, `MCO_SERVER_ALIAS`, `PGHOST`). Si la `database` de l'API n'a
-   pas de `networks:` dans ses composes, ajouter `default: {}` comme dans l'overlay d'espace.
+   (stanza, alias `<d>-database`, `MCO_SERVER_ALIAS`, `PGHOST`). Garder `default: {}` sous
+   `database.networks` : l'API y joint sa base.
 2. Ajouter le tag `mco` dans `projects/<d>/api/moon.yml`.
 3. Ajouter `<d>` à `MCO_PGWATCH_SOURCES` (`compose.yml`, service `mco-pgwatch`).
 4. `moon run <d>-api:mco-up`. PoWA et pgBackRest se configurent seuls. Dans Databasus, déclarer

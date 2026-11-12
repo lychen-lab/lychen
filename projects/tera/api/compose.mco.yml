@@ -15,8 +15,12 @@ services:
       PGBACKREST_PG1_USER: ${POSTGRES_USER:-userlocal}
       PGBACKREST_STANZA: tera
     networks:
-      # Added to its own networks. The MCO tools reach it there under its alias,
-      # never as `database` (every stack has one). The API stays off this network.
+      # Naming a network opts out of the implicit `default`, which the API
+      # reaches its database on once compose.override.yml keeps `database` off
+      # lychen-network (as espace's does). Harmless while it is still on it.
+      default: {}
+      # The MCO tools reach it on lychen-mco under its alias, never as
+      # `database` (every stack has one). The API stays off this network.
       lychen-mco:
         aliases:
           - tera-database
