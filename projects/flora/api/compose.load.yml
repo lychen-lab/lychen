@@ -1,0 +1,119 @@
+# Load-test stack (see load/README.md): N instances of the production image
+# behind a load balancer, on one database, and k6 to send the requests.
+# Stands alone, beside the dev stack: its own project, volumes and ports.
+name: flora-api-load
+
+x-env: &env
+  APP_SECRET: load-test-secret
+  CORS_ALLOW_ORIGIN: '^https?://localhost(:[0-9]+)?$$'
+  DATABASE_URL: postgresql://load:load@database:5432/app?serverVersion=${POSTGRES_VERSION:-16}&charset=utf8
+  JWT_ALGORITHM: HS256
+  JWT_SECRET: load-test-secret
+  MAILER_DSN: null://null
+  # No broker in this stack: nothing the scenario calls publishes a message.
+  MESSENGER_TRANSPORT_DSN: amqp://guest:guest@localhost:5672/%2f
+  REDIS_URL: redis://redis:6379
+  SENTRY_DSN: ''
+  ZITADEL_CLIENT_ID: load
+  ZITADEL_CLIENT_SECRET: load
+  ZITADEL_DOMAIN: localhost
+  ZITADEL_MTOM_PAT: load
+  ZITADEL_PROJECT_ID: load
+
+services:
+  database:
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_PASSWORD: load
+      POSTGRES_USER: load
+    healthcheck:
+      interval: 2s
+      retries: 30
+      test: [ 'CMD', 'pg_isready', '-d', 'app', '-U', 'load' ]
+    image: postgres:${POSTGRES_VERSION:-16}-alpine
+    volumes:
+      - database_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+
+  # One shot, before any instance starts: the entrypoint migrates the database,
+  # then the command fills it (src/Story/LoadTestStory.php). It is the dev image
+  # on the sources, as the fixtures need the dev dependencies the production
+  # image leaves out.
+  seed:
+    build:
+      context: .
+      target: frankenphp_dev
+    command: php -d memory_limit=-1 bin/console foundry:load-fixtures load --append --no-debug
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      <<: *env
+      APP_ENV: dev
+    restart: 'no'
+    volumes:
+      - ./:/app
+      - ../../../libs/php:/packages
+
+  api:
+    build:
+      context: .
+      target: frankenphp_prod
+    depends_on:
+      redis:
+        condition: service_started
+      seed:
+        condition: service_completed_successfully
+    deploy:
+      replicas: ${API_REPLICAS:-3}
+      # Each instance gets the same share of the machine, so that adding one
+      # adds capacity instead of sharing the same cores.
+      resources:
+        limits:
+          cpus: '${API_CPUS:-1}'
+          memory: ${API_MEMORY:-1G}
+    environment:
+      <<: *env
+      SERVER_NAME: ':80'
+    healthcheck:
+      interval: 3s
+      retries: 40
+      test: [ 'CMD', 'curl', '-f', 'http://localhost:2019/metrics' ]
+
+  # Round robin over every instance of `api`, found through Docker's DNS.
+  lb:
+    depends_on:
+      api:
+        condition: service_healthy
+    image: caddy:2-alpine
+    ports:
+      - '${LOAD_PORT:-8480}:80'
+    volumes:
+      - ./load/Caddyfile:/etc/caddy/Caddyfile:ro
+
+  # Only started by `docker compose run k6` (moon run flora-api:load-test).
+  k6:
+    entrypoint: [ 'k6', 'run', '/load/script.js' ]
+    environment:
+      BASE_URL: http://lb
+      # Live curves on http://localhost:5665 during the run, kept as a report.
+      K6_WEB_DASHBOARD: 'true'
+      K6_WEB_DASHBOARD_EXPORT: /load/reports/${PROFILE:-ramp}.html
+      # The curve, its highest number of users and its length (load/script.js).
+      PROFILE: ${PROFILE:-ramp}
+      VUS: ${VUS:-50}
+      DURATION: ${DURATION:-120}
+    image: grafana/k6:2.3.0
+    ports:
+      - '5665:5665'
+    profiles:
+      - test
+    # The image's own user cannot write the report in the mounted folder.
+    user: root
+    volumes:
+      - ./load:/load
+
+volumes:
+  database_data:
