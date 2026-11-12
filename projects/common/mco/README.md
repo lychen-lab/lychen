@@ -283,7 +283,7 @@ Le dépôt pgBackRest, PoWA, pgwatch, Databasus et Mailpit restent uniques.
 | `mco-mail` supprimé, `common/mailpit` publie son UI (8025) | réutiliser le mailpit existant |
 | Grafana sur 13000 | la tera-api annonce 3000 |
 | Télémétrie Databasus coupée (`IS_DISABLE_ANONYMOUS_TELEMETRY`) | active par défaut |
-| PostgreSQL 18 (`postgres:18.6-trixie`) au lieu de 16 | même majeure que les API (`pgautoupgrade/pgautoupgrade:18-alpine`) ; toutes les extensions PGDG existent en 18 |
+| PostgreSQL 18 (`postgres:18.6-trixie`) au lieu de 16 | même majeure que les API (`postgres:18-alpine`, #269) ; toutes les extensions PGDG existent en 18 |
 | L'overlay **remplace** les montages de `database` (`volumes: !override`), `pgbackrest.conf` y est donc listé | avec la couche 18 des API, leur volume passe sur `/var/lib/postgresql` : une fusion par cible l'aurait monté dans le conteneur MCO |
 | `stanza-create \|\| stanza-upgrade` dans le sidecar | après un changement de majeure, la stanza du dépôt partagé ne correspond plus à l'instance |
 | Collecteur et UI PoWA redémarrés avec le dépôt (`depends_on … restart: true`) | un dépôt recréé redonne de nouveaux ids aux serveurs ; le `RELOAD` du collecteur compare les serveurs par hôte et port seulement et garde les anciens ids : les instantanés d'une instance partaient sous l'id d'une autre |
