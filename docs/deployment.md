@@ -187,67 +187,50 @@ that one deploy, or rebuild from the target commit on `main` so a new image is
 published under the unified path. Keep the old GHCR packages readable until no
 production deploy references a pre-migration SHA.
 
-## PostgreSQL 18: in-place upgrade of the API databases
+## PostgreSQL 18
 
-The APIs' `database` service runs
-[`pgautoupgrade/pgautoupgrade:18-alpine`](https://github.com/pgautoupgrade/docker-pgautoupgrade):
-the official `postgres:18-alpine` image plus the binaries of the older majors.
-Its volume is mounted at `/var/lib/postgresql`, the layout of the 18+ images
-(the data lives in `18/docker` under it).
+The APIs' `database` service runs the official `postgres:18-alpine`. Its volume
+is mounted at `/var/lib/postgresql`, the layout of the 18+ images: the data lives
+in `18/docker` under it.
 
-- **On a PostgreSQL 16 volume** (every environment before this change), the
-  first start runs `pg_upgrade --link` in place, moves the data to `18/docker`,
-  reindexes, then starts PostgreSQL 18. A local test on a copy of a dev volume
-  took 7 s, and the row counts matched table by table.
-- **On an empty or an 18 volume**, it behaves exactly like the official image.
-- **Order of operations:** Compose stops the old 16 container before it starts the
-  new one, and `pg_upgrade` needs that: it refuses a cluster that was not shut
-  down cleanly.
-- **One way only:** `--link` reuses the old files, so once upgraded there is no
-  16 cluster left on the volume. Going back means restoring a backup.
-- **Zitadel:** its own database (`projects/zitadel`) stays on 16, and will be
+- **Staging and production** had not been deployed with the databases when this
+  changed (2026-11-12), so they start on 18 directly.
+- **Fixed image major:** it is not taken from `POSTGRES_VERSION`. An older image
+  on this mount point would initialise an empty database next to the existing
+  data. `POSTGRES_VERSION` now only feeds Doctrine's `serverVersion`.
+- **Zitadel:** its own database (`projects/zitadel`) is still on 16, and will be
   upgraded separately.
 
-**Before merging**, because staging redeploys the affected APIs as soon as the
-change reaches `main`:
+### A local volume created on 16
 
-1. Back up each staging API database from the VPS, while it still runs 16:
-
-   ```bash
-   docker exec <database container> pg_dumpall -U <POSTGRES_USER> > <api>-staging-pg16.sql
-   ```
-
-2. Check the Dokploy environment of each API compose. `POSTGRES_VERSION`, if it
-   is set at all, must be `18`: it now only feeds Doctrine's `serverVersion`. The
-   image major is fixed in `compose.yml` on purpose, because a 16 image on the new
-   mount point would initialise an empty database next to the existing data.
-
-**After the staging deploy**, the database logs must show
-`Upgrade to PostgreSQL 18.6 complete.` and the API must turn healthy. Check with
-`select version()`.
-
-**Production:** take the same backup right before running **Deploy | Production**
-with the first release that contains the change.
-
-**Rollback:** redeploying an earlier `IMAGE_TAG` rolls the API back, not the
-database. It stays on 18, which the earlier images run on unchanged. To really go
-back to 16:
-
-1. Revert the `compose.yml` change: `postgres:16-alpine`, mounted at
-   `/var/lib/postgresql/data`.
-2. Point it at a new, empty volume.
-3. Restore the dump: `psql -U <POSTGRES_USER> -d postgres -f <dump>`.
-
-**Local dev:** nothing to do, the next `moon <api>:up` upgrades the volume. To keep
-a copy first, while still on 16:
+The 18 image refuses it and the database exits, without touching the data
+(`Error: in 18+, these Docker images are configured to store database data in a
+format which is compatible with "pg_ctlcluster"…`). Upgrade it once:
 
 ```bash
-docker exec <api>-database-1 pg_dumpall -U userlocal > ~/<api>-pg16.sql   # e.g. espace-api-database-1
+docker exec <api>-database-1 pg_dumpall -U userlocal > ~/<api>-pg16.sql   # optional, while still on 16
+moon run espace-api:db-upgrade                                           # or flora-api, tera-api
+moon run espace-api:up
 ```
 
-Once every environment, dev machines included, runs 18, `pgautoupgrade` can give
-way to `postgres:18-alpine`: same layout, no migration. The next major works the
-same way, by bumping the image tag and the `serverVersion` default.
+`db-upgrade` ([`.moon/scripts/postgres-upgrade.sh`](../.moon/scripts/postgres-upgrade.sh))
+stops the database, because `pg_upgrade` needs a cleanly shut down server. It
+then runs [`pgautoupgrade`](https://github.com/pgautoupgrade/docker-pgautoupgrade)
+once (`PGAUTO_ONESHOT`): `pg_upgrade --link`, a move to `18/docker`, a reindex.
+On an empty or an already upgraded volume it does nothing.
+
+The upgrade is one way: `--link` reuses the old files, so the dump above is the
+only way back. A local test on a copy of a dev volume took 4 s, and the row counts
+matched table by table.
+
+### Next major
+
+Bump the image tag, the `serverVersion` default and the script's `PGAUTO_TAG`
+default. If an environment then holds data, run its upgrade **inside the
+`database` service**, by giving it the `pgautoupgrade` image for one deploy:
+Compose stops the old server before it starts the new container. Never use a
+separate one-shot service. Compose would start it first, next to the running old
+server on the same volume.
 
 ## Central RabbitMQ
 

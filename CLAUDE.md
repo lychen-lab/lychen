@@ -170,8 +170,8 @@ make phpunit c="--group e2e"                         # Run by group
 - Real-time updates via Mercure (SSE) — one **central** hub
   (`projects/common/mercure`) shared by every API, each on its own path prefix
   with its own JWT keys
-- FrankenPHP as PHP runtime in Docker; PostgreSQL 18 for storage (pgautoupgrade image, in-place
-  upgrade from older majors, see `docs/deployment.md`); Redis for cache
+- FrankenPHP as PHP runtime in Docker; PostgreSQL 18 for storage (a local volume from an older
+  major: `moon <api>:db-upgrade`, see `docs/deployment.md`); Redis for cache
 - Each API project has its own `compose.yml` (Postgres + Redis) for local
   development; RabbitMQ, Mercure and mailpit are shared via the `lychen-network`
 

@@ -26,6 +26,14 @@ tasks:
     options:
       cache: false
       internal: true
+  db-upgrade:
+    # Local, one-shot: upgrades the API's PostgreSQL volume in place to the major
+    # of compose.yml's image (16 -> 18), which the official image refuses to
+    # open. A no-op on an empty or current volume. See docs/deployment.md.
+    command: bash $workspaceRoot/.moon/scripts/postgres-upgrade.sh $project
+    options:
+      cache: false
+      runInCI: false
   dev:
     # Extends tag-compose-local's `dev` (a shortcut to `up`): moon appends these deps
     # to the inherited ones, so an API's dev also brings up the shared services.

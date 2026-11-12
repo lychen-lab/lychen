@@ -9,19 +9,15 @@ services:
       start_period: 60s
       test: [ 'CMD', 'pg_isready', '-d', '${POSTGRES_DB:-app}', '-U', '${POSTGRES_USER:-userlocal}' ]
       timeout: 5s
-    # pgautoupgrade = the official postgres image plus the binaries of the older
-    # majors. On a data directory from an older major (16, before PostgreSQL 18) it
-    # runs pg_upgrade in place on its first start, then starts PostgreSQL like the
-    # official image; on an empty or current one it is the official image. Compose
-    # stops the old server before starting this container, as pg_upgrade requires.
-    # Back up before the first deploy on 18: see docs/deployment.md.
-    # The major is fixed, not taken from POSTGRES_VERSION: the mount below
-    # is the 18+ layout, on which an older image would initialise an empty
-    # database next to the existing data.
-    image: pgautoupgrade/pgautoupgrade:18-alpine
+    # The major is fixed, not taken from POSTGRES_VERSION: the mount below is
+    # the 18+ layout, on which an older image would initialise an empty
+    # database next to the existing data. PostgreSQL 18 refuses a data
+    # directory from an older major: upgrade it once with
+    # `moon <api>:db-upgrade` (see docs/deployment.md).
+    image: postgres:18-alpine
     volumes:
       # PostgreSQL 18+ images keep their data in a major-specific directory
-      # (18/docker) under this mount point; the upgrade moves the old one there.
+      # (18/docker) under this mount point.
       - database_data:/var/lib/postgresql:rw
 
   api:
