@@ -33,7 +33,7 @@
 import { BaseHeading } from '@lychen/vue-components-app/base-heading';
 
 import { useQuery } from '@tanstack/vue-query';
-import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
+import { useTeraApi } from '@lychen/vue-tera-api/client/useTeraApi';
 import CardTeraLandRequest from '@lychen/vue-tera/components/land-request/card/CardTeraLandRequest.vue';
 import DialogTeraLandRequestView from '@lychen/vue-tera/components/land-request/dialogs/view/DialogTeraLandRequestView.vue';
 import type { LandSharingCondition } from '@lychen/typescript-tera-core/constants/LandSharingCondition';
