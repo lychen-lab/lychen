@@ -2,13 +2,17 @@ id: caddy-configs
 language: unknown
 layer: library
 tasks:
+  # Each task copies the content of a config folder (the trailing /.) into the
+  # folder given as argument. Copying the folder itself only works the first
+  # time: once the destination exists, cp nests it there (.caddy-build/ssg/)
+  # and the image keeps the Caddyfile of the first build.
   sync-pwa:
     command:
     - yes
     - '|'
     - cp
     - -rf
-    - $projectRoot/pwa
+    - $projectRoot/pwa/.
     inputs:
     - $projectRoot/pwa/
     options:
@@ -19,7 +23,7 @@ tasks:
     - '|'
     - cp
     - -rf
-    - $projectRoot/ssg
+    - $projectRoot/ssg/.
     inputs:
     - $projectRoot/ssg/
     options:
