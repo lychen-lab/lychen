@@ -8,8 +8,6 @@ services:
   database:
     ports:
       - '21432:5432/tcp'
-    networks:
-      - lychen-network
 
   api:
     build:
@@ -37,10 +35,11 @@ services:
         published: ${HTTP3_PORT:-40443}
         target: 443
     networks:
-      - lychen-network
-
-  redis:
-    networks:
+      # `default` is kept explicitly: naming any network opts a service out
+      # of the implicit one, which would cut the API off from its own
+      # database and redis. Only `api` joins the shared network — database
+      # and redis keep private, non-colliding names on the stack's own.
+      - default
       - lychen-network
 
 networks:
