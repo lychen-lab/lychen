@@ -30,9 +30,9 @@ export function toDate(value: string | null | undefined): Date | undefined {
  * workflow place the API added since. The constants are an object, as the front model
  * declares them:
  *
- *   export const AREA_PROPOSAL_STATUS = { Draft: 'draft', Published: 'published' } as const;
+ *   export const AREA_PROPOSAL_STATE = { Draft: 'draft', Published: 'published' } as const;
  *
- *   status: oneOf(AREA_PROPOSAL_STATUS, data.place),
+ *   state: oneOf(AREA_PROPOSAL_STATE, data.place),
  */
 export function oneOf<T extends string>(
   constants: Readonly<Record<string, T>>,

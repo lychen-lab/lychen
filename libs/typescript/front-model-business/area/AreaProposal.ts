@@ -2,14 +2,14 @@ import { type ObjectValues } from '@lychen/typescript-utils/transformers/ObjectV
 import type { PersonName } from '../person/PersonName';
 
 /** Where a proposal stands, from its draft to its publication. */
-export const AREA_PROPOSAL_STATUS = {
+export const AREA_PROPOSAL_STATE = {
   Draft: 'draft',
   Verification: 'verification',
   Published: 'published',
   Archived: 'archived',
 } as const;
 
-export type AreaProposalStatus = ObjectValues<typeof AREA_PROPOSAL_STATUS>;
+export type AreaProposalState = ObjectValues<typeof AREA_PROPOSAL_STATE>;
 
 /**
  * An area someone offers to share. Every field is optional: an endpoint says which ones it
@@ -26,8 +26,8 @@ export interface AreaProposal {
   city?: string;
   /** In metres. */
   altitude?: number;
-  /** Undefined for a status this front does not know yet. */
-  status?: AreaProposalStatus;
+  /** Undefined for a state this front does not know yet. */
+  state?: AreaProposalState;
   activityCodes?: string[];
   proposer?: PersonName;
   createdAt?: Date;
