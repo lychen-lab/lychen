@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts" setup>
-import zitadelAuth from '@lychen/typescript-zitadel/ZitadelAuth';
+import zitadelAuth from '@lychen/vue-zitadel/ZitadelAuth';
 import { defineAsyncComponent } from 'vue';
 import headerImg from './assets/header.webp';
 import IconKeyboard from '@lychen/vue-icons/IconKeyboard.vue';

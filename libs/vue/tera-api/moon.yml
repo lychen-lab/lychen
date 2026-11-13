@@ -6,8 +6,8 @@ dependsOn:
   - typescript-api-mapping
   - typescript-front-model-business
   - typescript-tera-api-sdk
-  - typescript-zitadel
   - vue-api-query
+  - vue-zitadel
 id: vue-tera-api
 language: typescript
 layer: library

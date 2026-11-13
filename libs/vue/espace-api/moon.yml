@@ -6,8 +6,8 @@ dependsOn:
   - typescript-api-mapping
   - typescript-espace-api-sdk
   - typescript-front-model-business
-  - typescript-zitadel
   - vue-api-query
+  - vue-zitadel
 id: vue-espace-api
 language: typescript
 layer: library

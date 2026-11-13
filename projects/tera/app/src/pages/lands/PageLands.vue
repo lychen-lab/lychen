@@ -103,7 +103,7 @@ import { messages, TRANSLATION_KEY } from './i18n';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { useTeraApi } from '@lychen/vue-tera-api/client/useTeraApi';
 import CardTeraLandMemberInvitation from '@lychen/vue-tera/components/land-member-invitation/card/CardTeraLandMemberInvitation.vue';
-import zitadelAuth from '@lychen/typescript-zitadel/ZitadelAuth';
+import zitadelAuth from '@lychen/vue-zitadel/ZitadelAuth';
 import { VARIANT } from '@lychen/vue-tera/components/land-member-invitation/card';
 import {
   landMemberInvitationAcceptSucceededEvent,
