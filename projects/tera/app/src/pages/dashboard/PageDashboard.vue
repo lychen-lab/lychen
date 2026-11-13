@@ -11,11 +11,11 @@
     </div>
     <div
       :style="{ backgroundImage: `url(${headerImg})` }"
-      class="flex min-h-[200px] flex-col justify-end rounded-3xl bg-cover bg-center bg-no-repeat p-8"
+      class="flex min-h-50 flex-col justify-end rounded-3xl bg-cover bg-center bg-no-repeat p-8"
     ></div>
 
     <div
-      class="bg-surface-container-low -mt-16 flex flex-row items-center justify-between rounded-3xl p-4 shadow-md"
+      class="-mt-16 flex flex-row items-center justify-between rounded-3xl bg-surface-container-low p-4 shadow-md"
     >
       <div class="flex flex-col gap-0">
         <Title variant="h5">Note rapide</Title>
