@@ -66,12 +66,11 @@ class AreaRequestTest extends AbstractApiTestCase
             place1(("pending_validation"))
             style place1 stroke-width:4px
             place2(("active"))
-            place3(("rejected"))
-            place4(("archived"))
-            place2-->|"archive"|place4
-            place3-->|"archive"|place4
+            place3(("archived"))
+            place1-->|"archive"|place3
+            place2-->|"archive"|place3
             place1-->|"approve"|place2
-            place1-->|"reject"|place3
+            place1-->|"reject"|place0
             place0-->|"submit"|place1
             MERMAID, $diagram['mermaid']);
     }

@@ -5,6 +5,8 @@ namespace App\Tests\Functional;
 use App\Entity\AreaProposal;
 use App\Factory\AreaProposalFactory;
 use App\Factory\PersonFactory;
+use App\Security\Role;
+use App\Workflow\AreaProposal\AreaProposalWorkflow;
 use Doctrine\ORM\EntityManagerInterface;
 use Lychen\Test\AbstractApiTestCase;
 use Symfony\Component\Mercure\Update;
@@ -50,6 +52,39 @@ class AreaProposalMercureTest extends AbstractApiTestCase
 
         $update = self::assertPublishedOnce($iri);
         self::assertSame('Verger familial', json_decode($update->getData(), true, flags: \JSON_THROW_ON_ERROR)['title']);
+    }
+
+    public function testTransitionIsPublishedWithTheNewPlace(): void
+    {
+        $proposal = AreaProposalFactory::createOne(['place' => AreaProposalWorkflow::PLACE_DRAFT]);
+        $iri = '/api/area_proposals/'.$proposal->getUuid();
+        self::getMercureHub()->reset();
+
+        $this->browser()->actingAs($proposal->getProposer())->patch($iri.'/submit')->assertStatus(200);
+
+        $update = self::assertPublishedOnce($iri);
+        self::assertSame(AreaProposalWorkflow::PLACE_VERIFICATION, json_decode($update->getData(), true, flags: \JSON_THROW_ON_ERROR)['place']);
+    }
+
+    public function testRejectionIsPublishedWithoutItsReason(): void
+    {
+        $proposal = AreaProposalFactory::createOne(['place' => AreaProposalWorkflow::PLACE_VERIFICATION]);
+        $iri = '/api/area_proposals/'.$proposal->getUuid();
+        self::getMercureHub()->reset();
+
+        $this->browser()
+            ->actingAs(PersonFactory::createOne(['roles' => [Role::MODERATOR]]))
+            ->patch($iri.'/reject', ['json' => ['rejectionReason' => 'Annonce incomplète.']])
+            ->assertStatus(200)
+            ->assertJsonMatches('rejectionReason', 'Annonce incomplète.');
+
+        // Every signed-in user may subscribe to the proposals' topics, and the reason is
+        // for the proposer alone.
+        $update = self::assertPublishedOnce($iri);
+        $published = json_decode($update->getData(), true, flags: \JSON_THROW_ON_ERROR);
+        self::assertSame(AreaProposalWorkflow::PLACE_DRAFT, $published['place']);
+        self::assertArrayNotHasKey('rejectionReason', $published);
+        self::assertStringNotContainsString('Annonce incomplète.', $update->getData());
     }
 
     public function testRemovedProposalIsPublishedAsItsIriAlone(): void

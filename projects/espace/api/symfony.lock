@@ -73,10 +73,13 @@
             "migrations/.gitignore"
         ]
     },
-    "lychen/core": {
+    "lychen/api": {
         "version": "0.0.0"
     },
     "lychen/config": {
+        "version": "0.0.0"
+    },
+    "lychen/core": {
         "version": "0.0.0"
     },
     "lychen/zitadel": {

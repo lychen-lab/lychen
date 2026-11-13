@@ -83,11 +83,58 @@ Quand on implémente une feature touchant ce domaine :
 Les ressources API sont des DTO, pas des entités Doctrine : les entités (`src/Entity`) ne portent que la persistance, et chaque ressource vit dans `src/Api/Resource/<Nom>/`.
 
 - **Une ressource de lecture par entité**, déclarée avec `stateOptions: new Options(entityClass: …)` et `#[Map(source: Entity::class)]`. Ce doit être la seule classe mappée _depuis_ cette entité : Symfony n'enregistre qu'un mapping inverse par classe source, donc les `#[Map]` de propriété d'un second DTO sont ignorés sans erreur.
-- **Les écritures passent par des DTO d'entrée** (`Dto/<Nom>Post`, `Dto/<Nom>Patch`) marqués `#[Map(target: Entity::class)]`. API Platform les mappe sur l'entité, la persiste et remappe le résultat vers la ressource — sans processor maison. Les propriétés du DTO Patch restent non initialisées pour que seuls les champs envoyés par le client soient appliqués (merge-patch).
+- **Les écritures passent par des DTO d'entrée** (`Dto/<Nom>Post`, `Dto/<Nom>Patch`) marqués `#[Map(target: Entity::class)]`. API Platform les mappe sur l'entité, la persiste et remappe le résultat vers la ressource. Les seuls processors maison sont ceux du [cycle de vie des annonces](#cycle-de-vie-des-annonces-et-modération). Les propriétés du DTO Patch restent non initialisées pour que seuls les champs envoyés par le client soient appliqués (merge-patch).
 - **La validation est portée par les DTO d'entrée** : API Platform valide le DTO désérialisé, pas l'entité, donc les contraintes déclarées sur les entités ne sont pas appliquées par l'API.
 - **Relations et champs calculés via des transforms** : `#[Map(source: 'relation', transform: …)]`. Les chemins pointés (`relation.champ`) donnent `null` avec le mapping inverse. Les transforms qui ont besoin de services (ex. codes d'activité → `AreaActivity`) implémentent `TransformCallableInterface`.
-- **La visibilité est appliquée en SQL** par `AreaVisibilityExtension` : les lectures renvoient les éléments publics (propositions publiées, demandes actives) plus ceux de l'utilisateur, les écritures n'atteignent que les siens ; tout le reste répond 404.
-- **Les filtres** se déclarent avec `QueryParameter` et les filtres d'API Platform (`ExactFilter`, `PartialSearchFilter`, `SortFilter`) ; les propriétés imbriquées comme `activities.code` sont résolues sur l'entité.
+- **La visibilité est appliquée en SQL** par `AreaVisibilityExtension` : les lectures renvoient les éléments publics (propositions publiées, demandes actives) plus ceux de l'utilisateur, les écritures n'atteignent que les siens ; tout le reste répond 404. Les modérateurs voient davantage, voir [Cycle de vie des annonces et modération](#cycle-de-vie-des-annonces-et-modération).
+- **Les filtres** se déclarent avec `QueryParameter` et les filtres d'API Platform (`ExactFilter`, `PartialSearchFilter`, `SortFilter`) ; les propriétés imbriquées comme `activities.code` sont résolues sur l'entité. `?mine=true` (`MineFilter`, la `property` du paramètre nommant l'association vers le propriétaire) ne garde que les éléments de l'utilisateur courant.
+
+## Cycle de vie des annonces et modération
+
+Une `AreaProposal` et une `AreaRequest` sont toutes deux des _annonces_
+(`AreaListingInterface`) : créées en brouillon, soumises par leur propriétaire, puis publiées
+ou renvoyées par la modération. Chacune a son workflow Symfony, de même forme :
+
+| Transition            | `AreaProposal` (`area_proposal_publishing`) | `AreaRequest` (`area_request_validation`)   | Qui          |
+| --------------------- | ------------------------------------------- | ------------------------------------------- | ------------ |
+| `submit`              | `draft` → `verification`                    | `draft` → `pending_validation`              | propriétaire |
+| `publish` / `approve` | `verification` → `published`                | `pending_validation` → `active`             | modérateur   |
+| `reject`              | `verification` → `draft`                    | `pending_validation` → `draft`              | modérateur   |
+| `archive`             | `verification`, `published` → `archived`    | `pending_validation`, `active` → `archived` | propriétaire |
+
+- **Une opération par transition** : `PATCH /api/area_proposals/{uuid}/<transition>` (et
+  `/api/area_requests/…`), traitée par le `WorkflowTransitionProcessor` de lychen/api. Elle
+  répond 200 avec l'annonce, ou **409** si son état courant n'autorise pas la transition.
+  `reject` est la seule à prendre un corps, `{"rejectionReason": "…"}` (obligatoire, 422
+  sinon) ; les autres n'en prennent pas.
+- **Une annonce refusée redevient un brouillon**, avec son `rejectionReason` : le propriétaire
+  la corrige et la soumet de nouveau, ce qui efface le motif. Un brouillon n'est lisible que
+  par son propriétaire, donc le motif aussi.
+- **Le contenu ne se modifie qu'en brouillon** : `PATCH /api/area_proposals/{uuid}` dans tout
+  autre état répond 409 (`DraftContentProcessor`).
+- **`archive` renseigne `archivedAt`.**
+- **Les modérateurs** portent le rôle Zitadel dont la clé est `ROLE_ESPACE_MODERATOR`
+  (`App\Security\Role::MODERATOR` ; les clés de rôle Zitadel sont copiées telles quelles
+  dans `Person::$roles`). `AreaVisibilityExtension` leur laisse lire les annonces en attente
+  de modération (`verification`, `pending_validation`) en plus de ce que tout le monde lit,
+  et appliquer les transitions de modération à ce qu'ils peuvent lire — rien d'autre : ni
+  modification, ni suppression, ni transition du propriétaire sur l'annonce d'un autre. Pour
+  tous les autres, une transition de modération répond 404, y compris sur leurs propres
+  annonces.
+- **404, 409, jamais 403** : ce que l'utilisateur ne peut pas atteindre répond 404 (la
+  restriction est dans la requête SQL) ; ce qu'il atteint mais dont l'état n'autorise pas
+  l'opération répond 409.
+- **Les deux écrans sont de simples requêtes de collection** : « mes annonces » est
+  `?mine=true` (avec `&place=` au besoin), la file de modération est `?place=verification`
+  (`?place=pending_validation` pour les demandes) en tant que modérateur.
+- **Les règles vivent dans le domaine, pas dans l'API** : `AreaLifecycleSubscriber` les
+  attache aux événements des workflows (un refus exige un motif, soumettre l'efface, archiver
+  date l'annonce), elles valent donc quel que soit l'appelant. `AreaLifecycle`
+  (`submit`, `accept`, `reject`, `archive`, `isEditable`) est le point d'entrée du code qui
+  n'est pas une opération d'API : les activities de `ValidationAreaProposalWorkflow` et
+  `ValidationAreaRequestWorkflow` l'appelleront tel quel, puis persisteront. Temporal
+  n'orchestre pas encore la validation : d'ici là, les transitions ci-dessus sont tout le
+  processus.
 
 ## Mises à jour en temps réel
 
@@ -108,6 +155,10 @@ du monorepo, sur le tenant `espace` — voir [deployment.md](deployment.md#centr
 - **Front :** `useEspaceMercure(matchers, onUpdate)` dans `libs/vue/espace-api`, derrière les
   composables d'endpoint : `useGetAreaProposal(uuid, { live: true })` et
   `useGetAreaProposals(filters, { live: true })` tiennent leur cache à jour avec lui.
+- **Le motif de refus n'est jamais publié** : tout utilisateur connecté peut s'abonner aux
+  topics des propositions, donc une mise à jour porte la proposition sans son
+  `rejectionReason`. Un écran qui voit sa propre proposition revenir en `draft` lit le motif
+  par un `GET`.
 - **Pas un canal de notification.** Mercure reflète les données sur les écrans ouverts ;
   notifier un utilisateur passe toujours par les activités et Novu, comme ci-dessus.
 
