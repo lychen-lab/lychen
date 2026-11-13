@@ -32,6 +32,14 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                             'prefix' => 'App\Entity',
                             'type' => 'attribute',
                         ],
+                        // lychen/event-bus's outbox_event and processed_event tables.
+                        'LychenEventBus' => [
+                            'alias' => 'LychenEventBus',
+                            'dir' => '%kernel.project_dir%/vendor/lychen/event-bus/src/Entity',
+                            'is_bundle' => false,
+                            'prefix' => 'Lychen\EventBus\Entity',
+                            'type' => 'attribute',
+                        ],
                     ],
                     'naming_strategy' => 'doctrine.orm.naming_strategy.underscore_number_aware',
                     'dql' => [

@@ -25,7 +25,7 @@ are.
 | `Validator\UuidExists` | Reports every unknown uuid as a 422 on its property (`seedLibrary`, `characteristics[1]`), before any mapping. |
 | `Doctrine\MappedAssociationResolver` | Finds the entity a DTO property refers to, from the `#[Map]` and Doctrine mappings. |
 | `Doctrine\UuidEntityFinder` | Loads entities by uuid, one query per call. |
-| `State\WorkflowTransitionProcessor` | Applies a workflow transition to the entity behind a resource, persists it, answers with the mapped resource (409 when the state does not allow it). |
+| `State\WorkflowTransitionProcessor` | Applies a workflow transition to the entity behind a resource, in one transaction on the entity locked with `SELECT ... FOR UPDATE`, persists it, answers with the mapped resource (409 when the state does not allow it). |
 | `Trait\*` | Common properties of a resource class: `uuid` (identifier), `createdAt`, `updatedAt`, `code`, `state`. |
 | `Interface\UuidIdentifiedInterface` | The contract of an entity identified by uuid. |
 | `UuidContract` | Checks that contract by its shape (`isFulfilledBy()`), reads an entity's uuid (`uuidOf()`). |
@@ -116,6 +116,14 @@ validates it (422), then the processor maps it onto the entity before asking the
 so that a guard can require what was sent. On a 409 nothing is persisted, the input
 included. espace-api's `reject` transitions (`AreaProposalReject`: the rejection reason)
 are the example.
+
+The transition runs in one transaction: the processor locks the entity's row and reads it
+again (`SELECT ... FOR UPDATE`), maps the input onto it, checks the guards and applies the
+transition, then flushes and commits. A concurrent transition on the same entity waits for
+the lock, and then sees the outcome of the first: two requests cannot both pass the guard. And whatever the
+workflow's listeners persist commits with the new state or not at all, which is how an
+event recorded in lychen/event-bus's outbox from a `completed` listener is published if,
+and only if, the transition happened (see flora-api's `SeedLotWorkflowSubscriber`).
 
 ## Wiring an API
 

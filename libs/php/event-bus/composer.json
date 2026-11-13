@@ -1,0 +1,40 @@
+{
+  "name": "lychen/event-bus",
+  "description": "Events between the Lychen APIs over the central RabbitMQ: a transactional outbox on the producing side, an idempotent inbox on the consuming side",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "Lychen\\EventBus\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Lychen",
+      "email": "bonjour@lychen.org"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": "^8.4",
+    "doctrine/dbal": "^4.1",
+    "doctrine/doctrine-bundle": "^2.13 || ^3.0",
+    "doctrine/orm": "^3.0",
+    "doctrine/persistence": "^3.3 || ^4.0",
+    "psr/clock": "^1.0",
+    "psr/log": "^3.0",
+    "symfony/amqp-messenger": "^8.1",
+    "symfony/config": "^7.4 || ^8.0",
+    "symfony/console": "^7.4 || ^8.0",
+    "symfony/dependency-injection": "^7.4 || ^8.0",
+    "symfony/doctrine-bridge": "^7.4 || ^8.0",
+    "symfony/http-kernel": "^7.4 || ^8.0",
+    "symfony/messenger": "^8.1",
+    "symfony/serializer": "^7.4 || ^8.0",
+    "symfony/uid": "^7.4 || ^8.0"
+  },
+  "archive": {
+    "exclude": [
+      "/moon.yml"
+    ]
+  }
+}

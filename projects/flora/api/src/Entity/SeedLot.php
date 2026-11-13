@@ -16,7 +16,8 @@ use Lychen\UtilModel\Trait\UpdatedAtTrait;
  *
  * Owning side of both its relations: a lot belongs to one SeedLibrary (ManyToOne) and
  * carries any number of Characteristic (ManyToMany). Its $state is the marking of the
- * SeedLotWorkflow state machine (available, reserved, given).
+ * SeedLotWorkflow state machine (available, reserved, given), and $reservedBy the member who
+ * reserved it, so who received it once given (see SeedLotWorkflowSubscriber).
  */
 #[ORM\Entity(repositoryClass: SeedLotRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -36,6 +37,13 @@ class SeedLot extends AbstractIdOrmAndUuidApiIdentified
 
     #[ORM\Column(length: 50)]
     private string $state = SeedLotWorkflow::PLACE_AVAILABLE;
+
+    /**
+     * The Zitadel user id of the member who reserved the lot, the identity every Lychen service
+     * knows its members by. Null when available, or reserved without being signed in.
+     */
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $reservedBy = null;
 
     #[ORM\ManyToOne(inversedBy: 'seedLots')]
     #[ORM\JoinColumn(nullable: false)]
@@ -101,6 +109,21 @@ class SeedLot extends AbstractIdOrmAndUuidApiIdentified
     public function setState(string $state): static
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Written by SeedLotWorkflowSubscriber on the reserve and release transitions.
+     */
+    public function getReservedBy(): ?string
+    {
+        return $this->reservedBy;
+    }
+
+    public function setReservedBy(?string $reservedBy): static
+    {
+        $this->reservedBy = $reservedBy;
 
         return $this;
     }
