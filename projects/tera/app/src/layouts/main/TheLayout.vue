@@ -102,7 +102,7 @@
 import Button from '@lychen/vue-components-core/button/Button.vue';
 import IconPlus from '@lychen/vue-icons/IconPlus.vue';
 import IconList from '@lychen/vue-icons/IconList.vue';
-import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
+import { useTeraApi } from '@lychen/vue-tera-api/client/useTeraApi';
 import { useQuery } from '@tanstack/vue-query';
 import { useEventBus } from '@vueuse/core';
 import {
@@ -137,7 +137,7 @@ import {
 } from '@lychen/vue-components-core/select';
 import AppMenu from '@lychen/vue-components-app/app-menu/AppMenu.vue';
 import UserAvatar from '@lychen/vue-components-app/user-avatar/UserAvatar.vue';
-import zitadelAuth from '@lychen/typescript-zitadel/ZitadelAuth';
+import zitadelAuth from '@lychen/vue-zitadel/ZitadelAuth';
 
 const open = ref(false);
 

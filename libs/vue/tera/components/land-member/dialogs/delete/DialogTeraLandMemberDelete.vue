@@ -26,7 +26,7 @@ import {
   TRANSLATION_KEY as LAND_MEMBER_TRANSLATION_KEY,
 } from '@lychen/i18n-tera/land-member';
 import { messages, TRANSLATION_KEY } from './i18n';
-import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
+import { useTeraApi } from '@lychen/vue-tera-api/client/useTeraApi';
 import { useMutation } from '@tanstack/vue-query';
 import { toast } from '@lychen/vue-components-core/toast/use-toast';
 import { useEventBus } from '@vueuse/core';

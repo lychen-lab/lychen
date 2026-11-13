@@ -1,1 +1,0 @@
-export { useTeraApi } from './useTeraApi';

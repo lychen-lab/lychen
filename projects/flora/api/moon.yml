@@ -15,3 +15,24 @@ tags:
   - dokploy
   - version
   - compose-local
+tasks:
+  # Load test (load/README.md): N instances of the production image behind a
+  # load balancer, one filled database, and k6 to send the requests.
+  load-up:
+    command: docker compose -f compose.load.yml up -d --build --wait
+    deps:
+      - copy-packages
+    options:
+      cache: false
+      runInCI: false
+  load-test:
+    # PROFILE=spike VUS=200 DURATION=180 moon run flora-api:load-test
+    command: docker compose -f compose.load.yml run --rm --service-ports k6
+    options:
+      cache: false
+      runInCI: false
+  load-down:
+    command: docker compose -f compose.load.yml down -v
+    options:
+      cache: false
+      runInCI: false

@@ -1,0 +1,27 @@
+{
+  "extends": "../../../tsconfig.options.json",
+  "include": ["**/*"],
+  "references": [
+    {
+      "path": "../../typescript/api-client"
+    },
+    {
+      "path": "../../typescript/api-mapping"
+    },
+    {
+      "path": "../../typescript/tera-api-sdk"
+    },
+    {
+      "path": "../../typescript/front-model-business"
+    },
+    {
+      "path": "../api-query"
+    },
+    {
+      "path": "../zitadel"
+    }
+  ],
+  "compilerOptions": {
+    "outDir": "../../../.moon/cache/types/libs/vue/tera-api"
+  }
+}

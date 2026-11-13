@@ -1,0 +1,1 @@
+export { useDeleteLand } from './useDeleteLand';
