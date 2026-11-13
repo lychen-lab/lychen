@@ -2,7 +2,7 @@ import '@lychen/css-core/all.css';
 
 import { createApp } from 'vue';
 
-import zitadelAuth from '@lychen/typescript-zitadel/ZitadelAuth';
+import zitadelAuth from '@lychen/vue-zitadel/ZitadelAuth';
 import { createI18n } from '@lychen/vue-i18n/configs/createI18n';
 
 import { VueQueryPlugin } from '@tanstack/vue-query';

@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@lychen/css-core": "workspace:*",
-    "@lychen/typescript-zitadel": "workspace:*",
     "@lychen/vue-color-scheme": "workspace:*",
     "@lychen/vue-components-app": "workspace:*",
     "@lychen/vue-components-business": "workspace:*",
@@ -21,6 +20,7 @@
     "@lychen/vue-i18n": "workspace:*",
     "@lychen/vue-icons": "workspace:*",
     "@lychen/vue-layouts": "workspace:*",
+    "@lychen/vue-zitadel": "workspace:*",
     "@tanstack/vue-query": "^5.104.5",
     "vue": "^3.5.44",
     "vue-router": "^5.4.0"
