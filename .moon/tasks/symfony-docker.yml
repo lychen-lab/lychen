@@ -1,6 +1,7 @@
 $schema: https://moonrepo.dev/schemas/tasks.json
-# The Symfony APIs' side of tag-docker.yml: their image is the Dockerfile's
-# production stage, and its build context needs the lychen/* bundles
+# The Symfony APIs' side of tag-docker.yml: their image is the production stage
+# of their Dockerfile (libs/docker/symfony/Dockerfile, unless the API has its
+# own), and its build context needs the lychen/* bundles
 # (copy-packages, from tag-symfony.yml).
 inheritedBy:
   # Merged after tag-docker.yml (500, the default of a tag condition, then by
