@@ -59,7 +59,7 @@
         <header class="flex flex-col gap-2">
           <!-- Only its proposer reads a proposal that is not published. -->
           <p
-            v-if="proposal.place !== PLACE_PUBLISHED"
+            v-if="proposal.state !== AREA_PROPOSAL_STATE.Published"
             class="self-start rounded-full bg-warning px-3 py-1 text-xs font-medium text-on-warning"
           >
             {{ t('not_published') }}
@@ -109,13 +109,13 @@
         </section>
 
         <section
-          v-if="proposal.activities?.length"
+          v-if="proposal.activityCodes.length"
           class="flex flex-col gap-3"
         >
           <h2 class="font-semibold">{{ t('activities') }}</h2>
           <ul class="flex flex-wrap gap-2">
             <li
-              v-for="code in proposal.activities"
+              v-for="code in proposal.activityCodes"
               :key="code"
               class="rounded-full bg-lime-50 px-3 py-1 text-xs font-medium text-lime-800"
             >
@@ -151,10 +151,9 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useQuery, useQueryClient } from '@tanstack/vue-query';
+import { AREA_PROPOSAL_STATE } from '@lychen/typescript-front-model-business/area/AreaProposal';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { useEspaceApi } from '@lychen/vue-espace/composables/use-espace-api/useEspaceApi';
-import { useEspaceMercure } from '@lychen/vue-espace/composables/use-espace-mercure/useEspaceMercure';
+import { useGetAreaProposal } from '@lychen/vue-espace-api/endpoint/area-proposal/get-area-proposal';
 import IconArrowLeft from '@lychen/vue-icons/IconArrowLeft.vue';
 import IconFence from '@lychen/vue-icons/IconFence.vue';
 import IconHeart from '@lychen/vue-icons/IconHeart.vue';
@@ -168,7 +167,7 @@ import QueryState from '@/components/QueryState.vue';
 import { useActivities } from '@/composables/useActivities';
 import { useFavorites } from '@/composables/useFavorites';
 import { useShare } from '@/composables/useShare';
-import { AREA_PLACEHOLDER_IMAGE, PLACE_PUBLISHED, fullName } from '@/helpers/cards';
+import { AREA_PLACEHOLDER_IMAGE, fullName } from '@/helpers/cards';
 import { isNotFoundError } from '@/helpers/errors';
 import { useAppI18n } from '@/i18n';
 import { ROUTE_LAND_PROPOSALS } from '@/views/land-proposals';
@@ -189,7 +188,6 @@ const route = useRoute();
 const router = useRouter();
 const uuid = computed(() => String(route.params.uuid));
 
-const { api } = useEspaceApi();
 const { activityLabel } = useActivities();
 const { share } = useShare();
 const { isFavorite, toggleFavorite } = useFavorites();
@@ -201,38 +199,16 @@ const {
   isError,
   error,
   refetch,
-} = useQuery({
-  queryKey: ['area-proposal', uuid],
-  queryFn: async () => {
-    const response = await api.apiAreaProposalsUuidGet({
-      path: { uuid: uuid.value },
-    });
-    return response.data;
-  },
+} = useGetAreaProposal(uuid, {
+  // Live: anyone's edits of this proposal replace it on screen as they are made; a deletion
+  // refetches it, and the query finds out.
+  live: true,
   // A proposal that does not exist, or is not visible, will not appear by asking again.
   retry: (failureCount, failure) => !isNotFoundError(failure) && failureCount < 3,
 });
 
 const isNotFound = computed(() => isNotFoundError(error.value));
-const proposerName = computed(() =>
-  fullName(proposal.value?.proposerFirstName, proposal.value?.proposerLastName),
-);
-
-// Live edits of this proposal. An update carries the proposal exactly as the query above
-// fetches it, so it replaces the cached copy without a round trip; a deletion carries
-// nothing but its @id, so the query refetches and finds out.
-const queryClient = useQueryClient();
-useEspaceMercure(
-  () => [{ match: `/api/area_proposals/${uuid.value}` }],
-  (update) => {
-    const queryKey = ['area-proposal', uuid.value];
-    if (Object.keys(update).length === 1) {
-      queryClient.invalidateQueries({ queryKey });
-    } else {
-      queryClient.setQueryData(queryKey, update);
-    }
-  },
-);
+const proposerName = computed(() => fullName(proposal.value?.proposer));
 
 // Opened from a shared link, there is no previous screen to go back to.
 function goBack() {

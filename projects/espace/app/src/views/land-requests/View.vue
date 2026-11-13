@@ -52,36 +52,30 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
-import { keepPreviousData, useQuery } from '@tanstack/vue-query';
+import { keepPreviousData } from '@tanstack/vue-query';
+import { AREA_REQUEST_STATE } from '@lychen/typescript-front-model-business/area/AreaRequest';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { useEspaceApi } from '@lychen/vue-espace/composables/use-espace-api/useEspaceApi';
+import { useGetAreaRequests } from '@lychen/vue-espace-api/endpoint/area-request/get-area-requests';
 import { Card } from '@lychen/vue-components-business/land-request/card';
 import CollectionFilters from '@/components/CollectionFilters.vue';
 import CollectionPagination from '@/components/CollectionPagination.vue';
 import QueryState from '@/components/QueryState.vue';
 import { useCollectionFilters } from '@/composables/useCollectionFilters';
-import { PLACE_ACTIVE, toLandRequestCard } from '@/helpers/cards';
+import { toLandRequestCard } from '@/helpers/cards';
 import { ROUTE_LAND_REQUEST } from '@/views/land-request';
 import { MESSAGES, TRANSLATION_KEY } from './i18n';
 
 const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 
-const { api } = useEspaceApi();
 const { filters, hasActiveFilters, apiQuery, update, reset } = useCollectionFilters();
 
+// The collection also returns the user's own drafts: this screen is the public listing.
 // No live updates here: the API only publishes area proposals on Mercure.
-const { data, isPending, isError, isPlaceholderData, refetch } = useQuery({
-  queryKey: ['area-requests', 'list', apiQuery],
-  queryFn: async () => {
-    // The collection also returns the user's own drafts: this screen is the public listing.
-    const response = await api.apiAreaRequestsGetCollection({
-      query: { ...apiQuery.value, place: PLACE_ACTIVE },
-    });
-    return response.data;
-  },
+const { data, isPending, isError, isPlaceholderData, refetch } = useGetAreaRequests(
+  () => ({ ...apiQuery.value, place: AREA_REQUEST_STATE.Active }),
   // Keep the current page on screen while the next one, or a new search, loads.
-  placeholderData: keepPreviousData,
-});
+  { placeholderData: keepPreviousData },
+);
 
 const requests = computed(() => data.value?.member.map(toLandRequestCard) ?? []);
 const totalItems = computed(() => data.value?.totalItems ?? 0);

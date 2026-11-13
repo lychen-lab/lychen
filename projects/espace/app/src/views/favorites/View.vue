@@ -69,10 +69,8 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
-import { useQueries, useQueryClient } from '@tanstack/vue-query';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { useEspaceApi } from '@lychen/vue-espace/composables/use-espace-api/useEspaceApi';
-import { useEspaceMercure } from '@lychen/vue-espace/composables/use-espace-mercure/useEspaceMercure';
+import { useGetEachAreaProposal } from '@lychen/vue-espace-api/endpoint/area-proposal/get-area-proposal';
 import { Card } from '@lychen/vue-components-business/land-proposal/card';
 import Button from '@lychen/vue-components-core/button/Button.vue';
 import IconHeart from '@lychen/vue-icons/IconHeart.vue';
@@ -86,23 +84,14 @@ import { MESSAGES, TRANSLATION_KEY } from './i18n';
 
 const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 
-const { api } = useEspaceApi();
 const { favorites, removeFavorite } = useFavorites();
 
-// The API cannot filter the collection by UUID: each favorite is fetched on its own, under
-// the query key of the detail screen, which shares its cache.
-const queries = useQueries({
-  queries: computed(() =>
-    favorites.value.map((uuid) => ({
-      queryKey: ['area-proposal', uuid],
-      queryFn: async () => {
-        const response = await api.apiAreaProposalsUuidGet({ path: { uuid } });
-        return response.data;
-      },
-      retry: (failureCount: number, failure: unknown) =>
-        !isNotFoundError(failure) && failureCount < 3,
-    })),
-  ),
+// The API cannot filter the collection by UUID: each favorite is fetched on its own, in the
+// cache of the detail screen. Live: a favorite edited, unpublished or deleted while the
+// screen is open.
+const queries = useGetEachAreaProposal(favorites, {
+  live: true,
+  retry: (failureCount, failure) => !isNotFoundError(failure) && failureCount < 3,
 });
 
 const proposals = computed(() =>
@@ -125,13 +114,4 @@ const isError = computed(() => proposals.value.length === 0 && failed.value.leng
 function refetchFailed() {
   failed.value.forEach((query) => query.refetch());
 }
-
-// A favorite edited, unpublished or deleted while the screen is open.
-const queryClient = useQueryClient();
-useEspaceMercure([{ match: '/api/area_proposals/:uuid', matchType: 'urlpattern' }], (update) => {
-  const uuid = update['@id'].split('/').pop() ?? '';
-  if (favorites.value.includes(uuid)) {
-    queryClient.invalidateQueries({ queryKey: ['area-proposal', uuid] });
-  }
-});
 </script>

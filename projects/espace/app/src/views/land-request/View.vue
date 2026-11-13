@@ -39,7 +39,7 @@
         <header class="flex flex-col gap-2">
           <!-- Only its requester reads a request that is not active. -->
           <p
-            v-if="request.place !== PLACE_ACTIVE"
+            v-if="request.state !== AREA_REQUEST_STATE.Active"
             class="self-start rounded-full bg-warning px-3 py-1 text-xs font-medium text-on-warning"
           >
             {{ t('not_published') }}
@@ -72,13 +72,13 @@
         </section>
 
         <section
-          v-if="request.activities?.length"
+          v-if="request.activityCodes.length"
           class="flex flex-col gap-3"
         >
           <h2 class="font-semibold">{{ t('activities') }}</h2>
           <ul class="flex flex-wrap gap-2">
             <li
-              v-for="code in request.activities"
+              v-for="code in request.activityCodes"
               :key="code"
               class="rounded-full bg-lime-50 px-3 py-1 text-xs font-medium text-lime-800"
             >
@@ -114,9 +114,9 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useQuery } from '@tanstack/vue-query';
+import { AREA_REQUEST_STATE } from '@lychen/typescript-front-model-business/area/AreaRequest';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { useEspaceApi } from '@lychen/vue-espace/composables/use-espace-api/useEspaceApi';
+import { useGetAreaRequest } from '@lychen/vue-espace-api/endpoint/area-request/get-area-request';
 import Button from '@lychen/vue-components-core/button/Button.vue';
 import IconArrowLeft from '@lychen/vue-icons/IconArrowLeft.vue';
 import IconMapPin from '@lychen/vue-icons/IconMapPin.vue';
@@ -126,7 +126,7 @@ import IconUser from '@lychen/vue-icons/IconUser.vue';
 import QueryState from '@/components/QueryState.vue';
 import { useActivities } from '@/composables/useActivities';
 import { useShare } from '@/composables/useShare';
-import { PLACE_ACTIVE, fullName } from '@/helpers/cards';
+import { fullName } from '@/helpers/cards';
 import { isNotFoundError } from '@/helpers/errors';
 import { useAppI18n } from '@/i18n';
 import { ROUTE_LAND_REQUESTS } from '@/views/land-requests';
@@ -143,7 +143,6 @@ const route = useRoute();
 const router = useRouter();
 const uuid = computed(() => String(route.params.uuid));
 
-const { api } = useEspaceApi();
 const { activityLabel } = useActivities();
 const { share } = useShare();
 
@@ -154,22 +153,13 @@ const {
   isError,
   error,
   refetch,
-} = useQuery({
-  queryKey: ['area-request', uuid],
-  queryFn: async () => {
-    const response = await api.apiAreaRequestsUuidGet({
-      path: { uuid: uuid.value },
-    });
-    return response.data;
-  },
+} = useGetAreaRequest(uuid, {
   // A request that does not exist, or is not visible, will not appear by asking again.
   retry: (failureCount, failure) => !isNotFoundError(failure) && failureCount < 3,
 });
 
 const isNotFound = computed(() => isNotFoundError(error.value));
-const requesterName = computed(() =>
-  fullName(request.value?.requesterFirstName, request.value?.requesterLastName),
-);
+const requesterName = computed(() => fullName(request.value?.requester));
 
 // Opened from a shared link, there is no previous screen to go back to.
 function goBack() {

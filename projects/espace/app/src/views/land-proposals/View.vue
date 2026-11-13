@@ -58,44 +58,34 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
-import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/vue-query';
+import { keepPreviousData } from '@tanstack/vue-query';
+import { AREA_PROPOSAL_STATE } from '@lychen/typescript-front-model-business/area/AreaProposal';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { useEspaceApi } from '@lychen/vue-espace/composables/use-espace-api/useEspaceApi';
-import { useEspaceMercure } from '@lychen/vue-espace/composables/use-espace-mercure/useEspaceMercure';
+import { useGetAreaProposals } from '@lychen/vue-espace-api/endpoint/area-proposal/get-area-proposals';
 import { Card } from '@lychen/vue-components-business/land-proposal/card';
 import CollectionFilters from '@/components/CollectionFilters.vue';
 import CollectionPagination from '@/components/CollectionPagination.vue';
 import QueryState from '@/components/QueryState.vue';
 import { useCollectionFilters } from '@/composables/useCollectionFilters';
 import { useFavorites } from '@/composables/useFavorites';
-import { PLACE_PUBLISHED, toLandProposalCard } from '@/helpers/cards';
+import { toLandProposalCard } from '@/helpers/cards';
 import { ROUTE_LAND_PROPOSAL } from '@/views/land-proposal';
 import { MESSAGES, TRANSLATION_KEY } from './i18n';
 
 const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 
-const { api } = useEspaceApi();
 const { filters, hasActiveFilters, apiQuery, update, reset } = useCollectionFilters();
 const { isFavorite, toggleFavorite } = useFavorites();
 
-const { data, isPending, isError, isPlaceholderData, refetch } = useQuery({
-  queryKey: ['area-proposals', 'list', apiQuery],
-  queryFn: async () => {
-    // The collection also returns the user's own drafts: this screen is the public listing.
-    const response = await api.apiAreaProposalsGetCollection({
-      query: { ...apiQuery.value, place: PLACE_PUBLISHED },
-    });
-    return response.data;
+// The collection also returns the user's own drafts: this screen is the public listing.
+// Live: any proposal created, edited or deleted, by anyone, refetches the list.
+const { data, isPending, isError, isPlaceholderData, refetch } = useGetAreaProposals(
+  () => ({ ...apiQuery.value, place: AREA_PROPOSAL_STATE.Published }),
+  {
+    live: true,
+    // Keep the current page on screen while the next one, or a new search, loads.
+    placeholderData: keepPreviousData,
   },
-  // Keep the current page on screen while the next one, or a new search, loads.
-  placeholderData: keepPreviousData,
-});
-
-// Any proposal created, edited or deleted, by anyone. The list depends on filters and
-// pagination the update knows nothing about, so refetch it rather than patch it.
-const queryClient = useQueryClient();
-useEspaceMercure([{ match: '/api/area_proposals/:uuid', matchType: 'urlpattern' }], () =>
-  queryClient.invalidateQueries({ queryKey: ['area-proposals'] }),
 );
 
 const proposals = computed(() => data.value?.member.map(toLandProposalCard) ?? []);

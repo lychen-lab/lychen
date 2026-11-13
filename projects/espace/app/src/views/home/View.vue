@@ -103,10 +103,9 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
-import { useQuery, useQueryClient } from '@tanstack/vue-query';
+import { AREA_PROPOSAL_STATE } from '@lychen/typescript-front-model-business/area/AreaProposal';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
-import { useEspaceApi } from '@lychen/vue-espace/composables/use-espace-api/useEspaceApi';
-import { useEspaceMercure } from '@lychen/vue-espace/composables/use-espace-mercure/useEspaceMercure';
+import { useGetAreaProposals } from '@lychen/vue-espace-api/endpoint/area-proposal/get-area-proposals';
 import { Card } from '@lychen/vue-components-business/land-proposal/card';
 import Button from '@lychen/vue-components-core/button/Button.vue';
 import IconCompass from '@lychen/vue-icons/IconCompass.vue';
@@ -115,7 +114,7 @@ import IconHeartHandshake from '@lychen/vue-icons/IconHeartHandshake.vue';
 import IconSearch from '@lychen/vue-icons/IconSearch.vue';
 import IconSprout from '@lychen/vue-icons/IconSprout.vue';
 import QueryState from '@/components/QueryState.vue';
-import { PLACE_PUBLISHED, toLandProposalCard } from '@/helpers/cards';
+import { toLandProposalCard } from '@/helpers/cards';
 import SectionLuk from '@/views/home/SectionLuk.vue';
 import { ROUTE_LAND_PROPOSAL } from '@/views/land-proposal';
 import { ROUTE_LAND_PROPOSALS } from '@/views/land-proposals';
@@ -126,22 +125,14 @@ const LATEST_COUNT = 6;
 
 const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 
-const { api } = useEspaceApi();
-
-const { data, isPending, isError, refetch } = useQuery({
-  queryKey: ['area-proposals', 'latest'],
-  queryFn: async () => {
-    const response = await api.apiAreaProposalsGetCollection({
-      query: { place: PLACE_PUBLISHED, 'order[createdAt]': 'desc', itemsPerPage: LATEST_COUNT },
-    });
-    return response.data;
+// Live: a proposal published, edited or deleted while the screen is open refetches them.
+const { data, isPending, isError, refetch } = useGetAreaProposals(
+  {
+    place: AREA_PROPOSAL_STATE.Published,
+    'order[createdAt]': 'desc',
+    itemsPerPage: LATEST_COUNT,
   },
-});
-
-// A proposal published, edited or deleted while the screen is open.
-const queryClient = useQueryClient();
-useEspaceMercure([{ match: '/api/area_proposals/:uuid', matchType: 'urlpattern' }], () =>
-  queryClient.invalidateQueries({ queryKey: ['area-proposals'] }),
+  { live: true },
 );
 
 const proposals = computed(() => data.value?.member.map(toLandProposalCard) ?? []);

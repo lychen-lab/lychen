@@ -1,6 +1,5 @@
 import { computed } from 'vue';
-import { useQuery } from '@tanstack/vue-query';
-import { useEspaceApi } from '@lychen/vue-espace/composables/use-espace-api/useEspaceApi';
+import { useGetAreaActivities } from '@lychen/vue-espace-api/endpoint/area-activity/get-area-activities';
 import { TRANSLATION_KEY, useAppI18n } from '@/i18n';
 
 /**
@@ -8,17 +7,9 @@ import { TRANSLATION_KEY, useAppI18n } from '@/i18n';
  * labels are translations of the known codes, and an unknown code is shown as it is.
  */
 export function useActivities() {
-  const { api } = useEspaceApi();
   const { t, te } = useAppI18n();
 
-  const { data } = useQuery({
-    queryKey: ['area-activities'],
-    queryFn: async () => {
-      const response = await api.apiAreaActivitiesGetCollection({ query: { pagination: false } });
-      return response.data;
-    },
-    staleTime: Infinity,
-  });
+  const { data } = useGetAreaActivities({ pagination: false }, { staleTime: Infinity });
 
   function activityLabel(code: string): string {
     return te(`${TRANSLATION_KEY}.activities.${code}`) ? t(`activities.${code}`) : code;
