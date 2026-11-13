@@ -1,0 +1,3 @@
+# Keeps the folder, which k6 does not create, and ignores its reports.
+*
+!.gitignore
