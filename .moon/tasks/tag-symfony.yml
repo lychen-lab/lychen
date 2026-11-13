@@ -9,9 +9,16 @@ $schema: https://moonrepo.dev/schemas/tasks.json
 # from tag-docker.yml and symfony-docker.yml.
 inheritedBy:
   tag: symfony
+# The Dockerfile of an API without one of its own (.moon/scripts/docker-buildx.sh):
+# its dev, test (symfony-ci.yml) and production (symfony-docker.yml) images. Like
+# implicitInputs below, a file-level env reaches every task of the API.
+env:
+  SHARED_DOCKERFILE: $workspaceRoot/libs/docker/symfony/Dockerfile
 # The image bakes in the lychen/* bundles (copy-packages), so a change to a PHP
-# library the API depends on reruns its checks. Like a file-level taskOptions,
-# this applies to every task of the API, not just the ones below.
+# library the API depends on reruns its checks, and so does a change to the
+# shared Dockerfile (the docker-symfony project, in every API's dependsOn). Like
+# a file-level taskOptions, this applies to every task of the API, not just the
+# ones below.
 implicitInputs:
   - project://^
 tasks:

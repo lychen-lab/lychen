@@ -35,7 +35,7 @@ tasks:
     # registry caches: the test stage's own, and the production one for the
     # shared base stage. Exporting the cache needs packages:write, so a job
     # without it still builds.
-    command: docker buildx build $projectRoot --target frankenphp_test --load --tag $project:latest --cache-from type=registry,ref=${TEST_IMAGE_NAME}:buildcache --cache-from type=registry,ref=${IMAGE_NAME}:buildcache --cache-to type=registry,ref=${TEST_IMAGE_NAME}:buildcache,mode=max,ignore-error=true
+    command: bash $workspaceRoot/.moon/scripts/docker-buildx.sh $projectRoot --target frankenphp_test --load --tag $project:latest --cache-from type=registry,ref=${TEST_IMAGE_NAME}:buildcache --cache-from type=registry,ref=${IMAGE_NAME}:buildcache --cache-to type=registry,ref=${TEST_IMAGE_NAME}:buildcache,mode=max,ignore-error=true
     deps:
       - copy-packages
     env:

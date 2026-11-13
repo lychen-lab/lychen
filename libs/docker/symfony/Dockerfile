@@ -1,3 +1,12 @@
+# The Dockerfile of every Symfony API (FrankenPHP): its dev, test and production
+# images. An API without a Dockerfile of its own is built from this one, with its
+# own directory as the build context: what differs from one API to another
+# (frankenphp/: Caddyfile, conf.d, entrypoint) is copied from there. An API that
+# needs something else puts its own Dockerfile at its root, which then replaces
+# this one everywhere: .moon/scripts/docker-buildx.sh for the moon tasks, and its
+# compose.override.yml (drop `dockerfile` and `additional_contexts`) for the dev
+# container.
+
 FROM dunglas/frankenphp:1.13-php8.5 AS frankenphp_upstream
 
 FROM frankenphp_upstream AS frankenphp_base
@@ -37,6 +46,11 @@ RUN set -eux; \
     make install; \
     docker-php-ext-enable amqp; \
     rm -rf /tmp/php-amqp;
+
+# The espace Temporal worker (same image, see docs/architecture-espace.md) will need
+# the grpc + protobuf extensions. Add them together with the worker, not before, and
+# to espace's image only: they are huge C++ builds — compiled under QEMU for arm64
+# they pushed every API image build past GitHub's 6 h job limit.
 
 ENV PHP_INI_SCAN_DIR=":$PHP_INI_DIR/app.conf.d"
 

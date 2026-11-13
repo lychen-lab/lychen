@@ -44,6 +44,13 @@ services:
   seed:
     build:
       context: .
+      # The Dockerfile of every API (libs/docker/symfony): drop dockerfile and
+      # additional_contexts for a Dockerfile of the API's own, at its root. The
+      # additional context is never used: it only lets compose (bake) read a
+      # Dockerfile from outside the build context.
+      dockerfile: ../../../libs/docker/symfony/Dockerfile
+      additional_contexts:
+        docker-symfony: ../../../libs/docker/symfony
       target: frankenphp_dev
     command: php -d memory_limit=-1 bin/console foundry:load-fixtures load --append --no-debug
     depends_on:
@@ -60,6 +67,13 @@ services:
   api:
     build:
       context: .
+      # The Dockerfile of every API (libs/docker/symfony): drop dockerfile and
+      # additional_contexts for a Dockerfile of the API's own, at its root. The
+      # additional context is never used: it only lets compose (bake) read a
+      # Dockerfile from outside the build context.
+      dockerfile: ../../../libs/docker/symfony/Dockerfile
+      additional_contexts:
+        docker-symfony: ../../../libs/docker/symfony
       target: frankenphp_prod
     depends_on:
       redis:
