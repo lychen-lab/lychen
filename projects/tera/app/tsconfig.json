@@ -6,13 +6,10 @@
       "path": "../../../libs/i18n/tera"
     },
     {
-      "path": "../../../libs/typescript/tera/api-sdk"
+      "path": "../../../libs/typescript/tera-api-sdk"
     },
     {
       "path": "../../../libs/typescript/tera/core"
-    },
-    {
-      "path": "../../../libs/typescript/zitadel"
     },
     {
       "path": "../../../libs/vue/color-scheme"
@@ -37,6 +34,12 @@
     },
     {
       "path": "../../../libs/vue/tera"
+    },
+    {
+      "path": "../../../libs/vue/tera-api"
+    },
+    {
+      "path": "../../../libs/vue/zitadel"
     }
   ],
   "compilerOptions": {

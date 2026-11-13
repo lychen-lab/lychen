@@ -13,7 +13,8 @@ import {
   defineWebSite,
   useSchemaOrg,
 } from '@unhead/schema-org/vue';
-import { useHead } from '@unhead/vue';
+import { useHead, useSeoMeta } from '@unhead/vue';
+import ogImageDefault from '@/views/home/assets/hero-market-garden.webp';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 
 usePreferredColorScheme();
@@ -29,6 +30,14 @@ useHead({
       host: `https://${import.meta.env.VITE_UNHEAD_HOST}`,
     },
   },
+});
+
+// Site-wide Open Graph / Twitter image: the pages that pass their own `ogImage`
+// to `useExtendedHead` override it, the others (legal pages) still get one, as
+// their `summary_large_image` card requires.
+useSeoMeta({
+  ogSiteName: title,
+  ogImage: `https://${import.meta.env.VITE_UNHEAD_HOST}${ogImageDefault}`,
 });
 
 useSchemaOrg([

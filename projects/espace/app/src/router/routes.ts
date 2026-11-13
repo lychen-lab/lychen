@@ -7,7 +7,7 @@ import { ROUTE_CHATS } from '@/views/chats';
 import { ROUTE_LAND_PROPOSAL } from '@/views/land-proposal';
 import { ROUTE_LAND_REQUEST } from '@/views/land-request';
 import { ROUTE_CHAT } from '@/views/chat';
-import zitadelAuth from '@lychen/typescript-zitadel/ZitadelAuth';
+import zitadelAuth from '@lychen/vue-zitadel/ZitadelAuth';
 
 const routes: RouteRecordRaw[] = [
   {

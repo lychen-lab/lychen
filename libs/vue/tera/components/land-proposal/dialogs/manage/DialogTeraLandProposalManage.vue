@@ -36,7 +36,7 @@ import DialogDescription from '@lychen/vue-components-core/dialog/DialogDescript
 import DialogClose from '@lychen/vue-components-core/dialog/DialogClose.vue';
 import { ref, computed } from 'vue';
 import Button from '@lychen/vue-components-core/button/Button.vue';
-import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
+import { useTeraApi } from '@lychen/vue-tera-api/client/useTeraApi';
 import { useQuery } from '@tanstack/vue-query';
 
 const open = ref(false);

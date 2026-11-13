@@ -1,16 +1,17 @@
 name: 'OpenAPI | SDK sync (espace)'
 
-env:
-  REGISTRY: ghcr.io
-  # Same as the QG workflow: compose.yml alone, and export-openapi first builds
-  # the test image it runs against (ci-test-image).
-  COMPOSE_FILE: compose.yml
+# Reports, without failing, the drift between espace-api and its committed spec
+# and SDK (libs/typescript/espace-api-sdk): see openapi-sdk-sync.yml.
 
 on:
   pull_request:
     paths:
       - 'projects/espace/api/**'
       - 'libs/php/**'
+      # The SDK and the generator's configuration.
+      - 'libs/typescript/espace-api-sdk/**'
+      - 'libs/typescript/api-sdk-config/**'
+      - '.moon/tasks/tag-api-sdk.yml'
   workflow_dispatch: {}
 
 permissions:
@@ -22,65 +23,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check-sdk-sync:
-    name: 'espace-api | Check OpenAPI spec & generated SDK sync'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: 'actions/checkout@v4'
-        with:
-          fetch-depth: 0
-
-      - name: Restore the Yarn cache
-        uses: ./.github/actions/yarn-cache
-
-      - name: Set up Moon Toolchain
-        uses: 'moonrepo/setup-toolchain@v0'
-
-      - name: Install proto tools
-        run: proto install
-
-      - name: Enable Corepack
-        run: corepack enable
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      # Read-only token: the test image's cache export fails without stopping
-      # the build (ignore-error), the QG workflow keeps that cache warm.
-      - name: Export OpenAPI spec
-        run: moon ci espace-api:export-openapi
-
-      - name: Install node dependencies
-        run: yarn install
-
-      # Same generator, version and openapi-ts.config.ts as typescript-espace-api-sdk:generate-api,
-      # using the workspace-pinned @hey-api/openapi-ts version from yarn.lock.
-      - name: Regenerate TypeScript SDK
-        run: yarn workspace @lychen/typescript-espace-api-sdk run openapi-ts
-
-      # SDK generation is intentionally MANUAL and decoupled from API changes: an
-      # API change must NOT force a SDK regeneration (and the resulting frontend
-      # redeploy) in the same PR. This step only *reports* drift as a warning and
-      # never fails the build. Regenerate when you decide to, and committing the
-      # result is what lets the frontends pick up the new contract.
-      # See docs/decouple-apis-from-frontends.md.
-      - name: Report committed spec & SDK drift (non-blocking)
-        run: |
-          if ! git diff --exit-code -- projects/espace/api/openapi_docs.json libs/typescript/espace-api-sdk/generated/; then
-            echo ""
-            echo "The committed OpenAPI spec and/or generated TypeScript SDK are out of sync with the espace API."
-            echo "This is not a failure — SDK generation is manual. Regenerate when ready and commit the result:"
-            echo ""
-            echo "  moon run typescript-espace-api-sdk:generate-api"
-            echo ""
-            echo "::warning::espace API spec/SDK drift detected. SDK generation is manual; run 'moon run typescript-espace-api-sdk:generate-api' and commit when you want the frontends to adopt the new contract."
-          else
-            echo "Committed spec & SDK are in sync with the espace API."
-          fi
+  sdk-sync:
+    uses: ./.github/workflows/openapi-sdk-sync.yml
+    with:
+      api: espace

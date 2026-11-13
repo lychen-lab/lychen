@@ -187,6 +187,51 @@ that one deploy, or rebuild from the target commit on `main` so a new image is
 published under the unified path. Keep the old GHCR packages readable until no
 production deploy references a pre-migration SHA.
 
+## PostgreSQL 18
+
+The APIs' `database` service runs the official `postgres:18-alpine`. Its volume
+is mounted at `/var/lib/postgresql`, the layout of the 18+ images: the data lives
+in `18/docker` under it.
+
+- **Staging and production** had not been deployed with the databases when this
+  changed (2026-11-12), so they start on 18 directly.
+- **Fixed image major:** it is not taken from `POSTGRES_VERSION`. An older image
+  on this mount point would initialise an empty database next to the existing
+  data. `POSTGRES_VERSION` now only feeds Doctrine's `serverVersion`.
+- **Zitadel:** its own database (`projects/zitadel`) is still on 16, and will be
+  upgraded separately.
+
+### A local volume created on 16
+
+The 18 image refuses it and the database exits, without touching the data
+(`Error: in 18+, these Docker images are configured to store database data in a
+format which is compatible with "pg_ctlcluster"…`). Upgrade it once:
+
+```bash
+docker exec <api>-database-1 pg_dumpall -U userlocal > ~/<api>-pg16.sql   # optional, while still on 16
+moon run espace-api:db-upgrade                                           # or flora-api, tera-api
+moon run espace-api:up
+```
+
+`db-upgrade` ([`.moon/scripts/postgres-upgrade.sh`](../.moon/scripts/postgres-upgrade.sh))
+stops the database, because `pg_upgrade` needs a cleanly shut down server. It
+then runs [`pgautoupgrade`](https://github.com/pgautoupgrade/docker-pgautoupgrade)
+once (`PGAUTO_ONESHOT`): `pg_upgrade --link`, a move to `18/docker`, a reindex.
+On an empty or an already upgraded volume it does nothing.
+
+The upgrade is one way: `--link` reuses the old files, so the dump above is the
+only way back. A local test on a copy of a dev volume took 4 s, and the row counts
+matched table by table.
+
+### Next major
+
+Bump the image tag, the `serverVersion` default and the script's `PGAUTO_TAG`
+default. If an environment then holds data, run its upgrade **inside the
+`database` service**, by giving it the `pgautoupgrade` image for one deploy:
+Compose stops the old server before it starts the new container. Never use a
+separate one-shot service. Compose would start it first, next to the running old
+server on the same volume.
+
 ## Central RabbitMQ
 
 All three APIs share **one** broker ([`projects/common/rabbitmq`](../projects/common/rabbitmq/)),
@@ -434,8 +479,10 @@ another API.
 
 **App** ([`projects/espace/app`](../projects/espace/app/)):
 
-- [`useEspaceMercure(matchers, onUpdate)`](../libs/vue/espace/composables/use-espace-mercure/useEspaceMercure.ts)
-  fetches a token and opens an event stream on the hub. A native `EventSource` cannot set
+- [`useEspaceMercure(matchers, onUpdate)`](../libs/vue/espace-api/mercure/useEspaceMercure.ts)
+  runs the API-agnostic
+  [`useMercure`](../libs/vue/api-query/mercure/useMercure.ts) with
+  `GET /api/mercure_subscription`: it fetches a token and opens an event stream on the hub. A native `EventSource` cannot set
   headers and the 1.0 hub accepts no token in the URL, so it uses the
   [`eventsource`](https://www.npmjs.com/package/eventsource) package, which streams over
   `fetch` and sends the token as an `Authorization: Bearer` header. (The other 1.0 option, a
@@ -443,9 +490,10 @@ another API.
   resume on their own with a `Last-Event-ID` header; when the hub turns a token down, the
   composable reconnects with a fresh one and `last_event_id`, so nothing published in between
   is lost.
-- The proposals list subscribes to the `/api/area_proposals/:uuid` URL pattern and refetches;
-  a proposal's page subscribes to its own IRI and writes the pushed payload straight into
-  its query cache.
+- The endpoint composables subscribe when called with `{ live: true }`:
+  `useGetAreaProposals` to the `/api/area_proposals/:uuid` URL pattern, and refetches;
+  `useGetAreaProposal` to the proposal's own IRI, and writes the pushed payload, mapped to
+  the front model like a `GET` response, straight into its query cache.
 
 **Configuration**, on the API's compose (the dev defaults live in
 [`compose.yml`](../projects/espace/api/compose.yml)):

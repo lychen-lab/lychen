@@ -147,7 +147,9 @@ on the `espace` tenant — see [deployment.md](deployment.md#central-mercure-hub
 - **Mercure 1.0 protocol end to end:** OAuth 2.0 access tokens (`iss`
   `urn:lychen:espace-api`, `aud` the hub's public URL), `match` / `match_urlpattern`
   selectors, and the token in an `Authorization` header, never in the URL.
-- **Front:** `useEspaceMercure(matchers, onUpdate)` in `libs/vue/espace`.
+- **Front:** `useEspaceMercure(matchers, onUpdate)` in `libs/vue/espace-api`, behind the
+  endpoint composables: `useGetAreaProposal(uuid, { live: true })` and
+  `useGetAreaProposals(filters, { live: true })` keep their cache in step with it.
 - **The rejection reason is never published**: every signed-in user may subscribe to the
   proposals' topics, so an update carries the proposal without its `rejectionReason`. A
   screen that sees its own proposal come back to `draft` reads the reason with a `GET`.
