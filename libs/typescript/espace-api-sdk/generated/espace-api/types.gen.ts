@@ -60,6 +60,15 @@ export type AreaProposalAreaProposalPost = {
  * single reverse mapping per source class, so property-level #[Map] attributes of a
  * second DTO would be ignored. Visibility is enforced by AreaVisibilityExtension.
  */
+export type AreaProposalAreaProposalRejectJsonMergePatch = {
+    rejectionReason?: string;
+};
+
+/**
+ * Keep this the only class mapped from the AreaProposal entity: Symfony registers a
+ * single reverse mapping per source class, so property-level #[Map] attributes of a
+ * second DTO would be ignored. Visibility is enforced by AreaVisibilityExtension.
+ */
 export type AreaProposalWorkflowDiagramJsonld = HydraItemBaseSchema & {
     /**
      * Name of the Symfony workflow, e.g. `area_request_validation`.
@@ -80,6 +89,11 @@ export type AreaProposalJsonld = HydraItemBaseSchema & {
     title?: string | null;
     description?: string | null;
     archivedAt?: string | null;
+    /**
+     * Why moderation sent the listing back. Only ever set on a draft, which nobody but
+     * its owner can read (AreaVisibilityExtension), and cleared when it is submitted again.
+     */
+    rejectionReason?: string | null;
     surfaceTotal?: number | null;
     surfaceToShare?: number | null;
     city?: string | null;
@@ -124,6 +138,15 @@ export type AreaRequestAreaRequestPost = {
  * single reverse mapping per source class, so property-level #[Map] attributes of a
  * second DTO would be ignored. Visibility is enforced by AreaVisibilityExtension.
  */
+export type AreaRequestAreaRequestRejectJsonMergePatch = {
+    rejectionReason?: string;
+};
+
+/**
+ * Keep this the only class mapped from the AreaRequest entity: Symfony registers a
+ * single reverse mapping per source class, so property-level #[Map] attributes of a
+ * second DTO would be ignored. Visibility is enforced by AreaVisibilityExtension.
+ */
 export type AreaRequestWorkflowDiagramJsonld = HydraItemBaseSchema & {
     /**
      * Name of the Symfony workflow, e.g. `area_request_validation`.
@@ -144,6 +167,11 @@ export type AreaRequestJsonld = HydraItemBaseSchema & {
     title?: string | null;
     description?: string | null;
     archivedAt?: string | null;
+    /**
+     * Why moderation sent the listing back. Only ever set on a draft, which nobody but
+     * its owner can read (AreaVisibilityExtension), and cleared when it is submitted again.
+     */
+    rejectionReason?: string | null;
     minimalSurfaceRequested?: number | null;
     city?: string | null;
     requesterFirstName?: string | null;
@@ -588,6 +616,10 @@ export type ApiAreaProposalsGetCollectionData = {
          */
         'place[]'?: Array<'draft' | 'verification' | 'published' | 'archived'>;
         /**
+         * true: only the current user's own, whatever their place
+         */
+        mine?: boolean;
+        /**
          * Filter by activity code
          */
         activity?: string;
@@ -759,6 +791,161 @@ export type ApiAreaProposalsUuidPatchResponses = {
 
 export type ApiAreaProposalsUuidPatchResponse = ApiAreaProposalsUuidPatchResponses[keyof ApiAreaProposalsUuidPatchResponses];
 
+export type ApiAreaProposalsUuidarchivePatchData = {
+    body?: never;
+    path: {
+        /**
+         * AreaProposal identifier
+         */
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/area_proposals/{uuid}/archive';
+};
+
+export type ApiAreaProposalsUuidarchivePatchErrors = {
+    /**
+     * Invalid input
+     */
+    400: ErrorJsonld;
+    /**
+     * Not found
+     */
+    404: ErrorJsonld;
+    /**
+     * An error occurred
+     */
+    422: ConstraintViolationJsonld;
+};
+
+export type ApiAreaProposalsUuidarchivePatchError = ApiAreaProposalsUuidarchivePatchErrors[keyof ApiAreaProposalsUuidarchivePatchErrors];
+
+export type ApiAreaProposalsUuidarchivePatchResponses = {
+    /**
+     * AreaProposal resource updated
+     */
+    200: AreaProposalJsonld;
+};
+
+export type ApiAreaProposalsUuidarchivePatchResponse = ApiAreaProposalsUuidarchivePatchResponses[keyof ApiAreaProposalsUuidarchivePatchResponses];
+
+export type ApiAreaProposalsUuidpublishPatchData = {
+    body?: never;
+    path: {
+        /**
+         * AreaProposal identifier
+         */
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/area_proposals/{uuid}/publish';
+};
+
+export type ApiAreaProposalsUuidpublishPatchErrors = {
+    /**
+     * Invalid input
+     */
+    400: ErrorJsonld;
+    /**
+     * Not found
+     */
+    404: ErrorJsonld;
+    /**
+     * An error occurred
+     */
+    422: ConstraintViolationJsonld;
+};
+
+export type ApiAreaProposalsUuidpublishPatchError = ApiAreaProposalsUuidpublishPatchErrors[keyof ApiAreaProposalsUuidpublishPatchErrors];
+
+export type ApiAreaProposalsUuidpublishPatchResponses = {
+    /**
+     * AreaProposal resource updated
+     */
+    200: AreaProposalJsonld;
+};
+
+export type ApiAreaProposalsUuidpublishPatchResponse = ApiAreaProposalsUuidpublishPatchResponses[keyof ApiAreaProposalsUuidpublishPatchResponses];
+
+export type ApiAreaProposalsUuidrejectPatchData = {
+    /**
+     * The updated AreaProposal resource
+     */
+    body: AreaProposalAreaProposalRejectJsonMergePatch;
+    path: {
+        /**
+         * AreaProposal identifier
+         */
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/area_proposals/{uuid}/reject';
+};
+
+export type ApiAreaProposalsUuidrejectPatchErrors = {
+    /**
+     * Invalid input
+     */
+    400: ErrorJsonld;
+    /**
+     * Not found
+     */
+    404: ErrorJsonld;
+    /**
+     * An error occurred
+     */
+    422: ConstraintViolationJsonld;
+};
+
+export type ApiAreaProposalsUuidrejectPatchError = ApiAreaProposalsUuidrejectPatchErrors[keyof ApiAreaProposalsUuidrejectPatchErrors];
+
+export type ApiAreaProposalsUuidrejectPatchResponses = {
+    /**
+     * AreaProposal resource updated
+     */
+    200: AreaProposalJsonld;
+};
+
+export type ApiAreaProposalsUuidrejectPatchResponse = ApiAreaProposalsUuidrejectPatchResponses[keyof ApiAreaProposalsUuidrejectPatchResponses];
+
+export type ApiAreaProposalsUuidsubmitPatchData = {
+    body?: never;
+    path: {
+        /**
+         * AreaProposal identifier
+         */
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/area_proposals/{uuid}/submit';
+};
+
+export type ApiAreaProposalsUuidsubmitPatchErrors = {
+    /**
+     * Invalid input
+     */
+    400: ErrorJsonld;
+    /**
+     * Not found
+     */
+    404: ErrorJsonld;
+    /**
+     * An error occurred
+     */
+    422: ConstraintViolationJsonld;
+};
+
+export type ApiAreaProposalsUuidsubmitPatchError = ApiAreaProposalsUuidsubmitPatchErrors[keyof ApiAreaProposalsUuidsubmitPatchErrors];
+
+export type ApiAreaProposalsUuidsubmitPatchResponses = {
+    /**
+     * AreaProposal resource updated
+     */
+    200: AreaProposalJsonld;
+};
+
+export type ApiAreaProposalsUuidsubmitPatchResponse = ApiAreaProposalsUuidsubmitPatchResponses[keyof ApiAreaProposalsUuidsubmitPatchResponses];
+
 export type ApiAreaProposalsUuidworkflowGetData = {
     body?: never;
     path: {
@@ -808,11 +995,15 @@ export type ApiAreaRequestsGetCollectionData = {
         /**
          * Filter by workflow place
          */
-        place?: 'draft' | 'pending_validation' | 'active' | 'rejected' | 'archived';
+        place?: 'draft' | 'pending_validation' | 'active' | 'archived';
         /**
          * Filter by workflow place
          */
-        'place[]'?: Array<'draft' | 'pending_validation' | 'active' | 'rejected' | 'archived'>;
+        'place[]'?: Array<'draft' | 'pending_validation' | 'active' | 'archived'>;
+        /**
+         * true: only the current user's own, whatever their place
+         */
+        mine?: boolean;
         /**
          * Filter by activity code
          */
@@ -984,6 +1175,161 @@ export type ApiAreaRequestsUuidPatchResponses = {
 };
 
 export type ApiAreaRequestsUuidPatchResponse = ApiAreaRequestsUuidPatchResponses[keyof ApiAreaRequestsUuidPatchResponses];
+
+export type ApiAreaRequestsUuidapprovePatchData = {
+    body?: never;
+    path: {
+        /**
+         * AreaRequest identifier
+         */
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/area_requests/{uuid}/approve';
+};
+
+export type ApiAreaRequestsUuidapprovePatchErrors = {
+    /**
+     * Invalid input
+     */
+    400: ErrorJsonld;
+    /**
+     * Not found
+     */
+    404: ErrorJsonld;
+    /**
+     * An error occurred
+     */
+    422: ConstraintViolationJsonld;
+};
+
+export type ApiAreaRequestsUuidapprovePatchError = ApiAreaRequestsUuidapprovePatchErrors[keyof ApiAreaRequestsUuidapprovePatchErrors];
+
+export type ApiAreaRequestsUuidapprovePatchResponses = {
+    /**
+     * AreaRequest resource updated
+     */
+    200: AreaRequestJsonld;
+};
+
+export type ApiAreaRequestsUuidapprovePatchResponse = ApiAreaRequestsUuidapprovePatchResponses[keyof ApiAreaRequestsUuidapprovePatchResponses];
+
+export type ApiAreaRequestsUuidarchivePatchData = {
+    body?: never;
+    path: {
+        /**
+         * AreaRequest identifier
+         */
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/area_requests/{uuid}/archive';
+};
+
+export type ApiAreaRequestsUuidarchivePatchErrors = {
+    /**
+     * Invalid input
+     */
+    400: ErrorJsonld;
+    /**
+     * Not found
+     */
+    404: ErrorJsonld;
+    /**
+     * An error occurred
+     */
+    422: ConstraintViolationJsonld;
+};
+
+export type ApiAreaRequestsUuidarchivePatchError = ApiAreaRequestsUuidarchivePatchErrors[keyof ApiAreaRequestsUuidarchivePatchErrors];
+
+export type ApiAreaRequestsUuidarchivePatchResponses = {
+    /**
+     * AreaRequest resource updated
+     */
+    200: AreaRequestJsonld;
+};
+
+export type ApiAreaRequestsUuidarchivePatchResponse = ApiAreaRequestsUuidarchivePatchResponses[keyof ApiAreaRequestsUuidarchivePatchResponses];
+
+export type ApiAreaRequestsUuidrejectPatchData = {
+    /**
+     * The updated AreaRequest resource
+     */
+    body: AreaRequestAreaRequestRejectJsonMergePatch;
+    path: {
+        /**
+         * AreaRequest identifier
+         */
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/area_requests/{uuid}/reject';
+};
+
+export type ApiAreaRequestsUuidrejectPatchErrors = {
+    /**
+     * Invalid input
+     */
+    400: ErrorJsonld;
+    /**
+     * Not found
+     */
+    404: ErrorJsonld;
+    /**
+     * An error occurred
+     */
+    422: ConstraintViolationJsonld;
+};
+
+export type ApiAreaRequestsUuidrejectPatchError = ApiAreaRequestsUuidrejectPatchErrors[keyof ApiAreaRequestsUuidrejectPatchErrors];
+
+export type ApiAreaRequestsUuidrejectPatchResponses = {
+    /**
+     * AreaRequest resource updated
+     */
+    200: AreaRequestJsonld;
+};
+
+export type ApiAreaRequestsUuidrejectPatchResponse = ApiAreaRequestsUuidrejectPatchResponses[keyof ApiAreaRequestsUuidrejectPatchResponses];
+
+export type ApiAreaRequestsUuidsubmitPatchData = {
+    body?: never;
+    path: {
+        /**
+         * AreaRequest identifier
+         */
+        uuid: string;
+    };
+    query?: never;
+    url: '/api/area_requests/{uuid}/submit';
+};
+
+export type ApiAreaRequestsUuidsubmitPatchErrors = {
+    /**
+     * Invalid input
+     */
+    400: ErrorJsonld;
+    /**
+     * Not found
+     */
+    404: ErrorJsonld;
+    /**
+     * An error occurred
+     */
+    422: ConstraintViolationJsonld;
+};
+
+export type ApiAreaRequestsUuidsubmitPatchError = ApiAreaRequestsUuidsubmitPatchErrors[keyof ApiAreaRequestsUuidsubmitPatchErrors];
+
+export type ApiAreaRequestsUuidsubmitPatchResponses = {
+    /**
+     * AreaRequest resource updated
+     */
+    200: AreaRequestJsonld;
+};
+
+export type ApiAreaRequestsUuidsubmitPatchResponse = ApiAreaRequestsUuidsubmitPatchResponses[keyof ApiAreaRequestsUuidsubmitPatchResponses];
 
 export type ApiAreaRequestsUuidworkflowGetData = {
     body?: never;

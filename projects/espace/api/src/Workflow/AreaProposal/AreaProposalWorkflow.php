@@ -28,4 +28,10 @@ final class AreaProposalWorkflow
         self::TRANSITION_REJECT,
         self::TRANSITION_ARCHIVE,
     ];
+
+    /** The transitions moderation decides; the others are the proposer's. */
+    public const array MODERATION_TRANSITIONS = [
+        self::TRANSITION_PUBLISH,
+        self::TRANSITION_REJECT,
+    ];
 }

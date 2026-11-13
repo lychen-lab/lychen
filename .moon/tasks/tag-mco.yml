@@ -1,0 +1,30 @@
+$schema: https://moonrepo.dev/schemas/tasks.json
+# MCO mode of an API (POC, local only, see projects/common/mco/README.md): its
+# usual stack plus compose.mco.yml, which swaps its PostgreSQL for the MCO image
+# (pgaudit, PoWA extensions, WAL archiving) on a volume of its own and adds a
+# one-shot init and a pgBackRest sidecar. `up` and `down` are left untouched:
+# the MCO mode is opt-in, and stopping it with mco-down then starting with `up`
+# brings the usual database back on its own volume.
+inheritedBy:
+  tag: mco
+tasks:
+  mco-down:
+    command: &mco-compose docker compose -p $project -f compose.yml -f compose.override.yml -f compose.mco.yml
+    args:
+      - down
+    options: &mco-options
+      cache: false
+      runInCI: false
+  mco-up:
+    command: *mco-compose
+    args:
+      - up
+      - -d
+    deps:
+      # Another compose project: depends_on cannot order it. The instance's
+      # init registers it in PoWA, so the shared tools must be up first.
+      - common-mco:up
+      - common-mailpit:up
+      - common-mercure:up
+      - common-rabbitmq:up
+    options: *mco-options

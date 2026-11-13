@@ -1,0 +1,15 @@
+# The front's only access to flora-api: one Tanstack Query composable per endpoint, in
+# endpoint/<resource>/<endpoint>/ with its own mapping (mapToModel, mapToRequest)
+# between the SDK's types and the front's business model (libs/typescript/front-model-business).
+dependsOn:
+  - typescript-api-client
+  - typescript-api-mapping
+  - typescript-flora-api-sdk
+  - typescript-front-model-business
+  - vue-api-query
+  - vue-zitadel
+id: vue-flora-api
+language: typescript
+layer: library
+# Inherits lint, format, typecheck and test from .moon/tasks/frontend.yml.
+stack: frontend

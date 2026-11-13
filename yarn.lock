@@ -2607,6 +2607,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@lychen/typescript-flora-api-sdk@workspace:*, @lychen/typescript-flora-api-sdk@workspace:libs/typescript/flora-api-sdk":
+  version: 0.0.0-use.local
+  resolution: "@lychen/typescript-flora-api-sdk@workspace:libs/typescript/flora-api-sdk"
+  dependencies:
+    "@lychen/typescript-api-sdk-config": "workspace:*"
+    typescript: "npm:^6.0.3"
+  languageName: unknown
+  linkType: soft
+
 "@lychen/typescript-front-model-business@workspace:*, @lychen/typescript-front-model-business@workspace:libs/typescript/front-model-business":
   version: 0.0.0-use.local
   resolution: "@lychen/typescript-front-model-business@workspace:libs/typescript/front-model-business"
@@ -2877,6 +2886,21 @@ __metadata:
     "@lychen/typescript-api-client": "workspace:*"
     "@lychen/typescript-api-mapping": "workspace:*"
     "@lychen/typescript-espace-api-sdk": "workspace:*"
+    "@lychen/typescript-front-model-business": "workspace:*"
+    "@lychen/vue-api-query": "workspace:*"
+    "@lychen/vue-zitadel": "workspace:*"
+    "@tanstack/vue-query": "npm:^5.104.5"
+    vue: "npm:^3.5.44"
+  languageName: unknown
+  linkType: soft
+
+"@lychen/vue-flora-api@workspace:libs/vue/flora-api":
+  version: 0.0.0-use.local
+  resolution: "@lychen/vue-flora-api@workspace:libs/vue/flora-api"
+  dependencies:
+    "@lychen/typescript-api-client": "workspace:*"
+    "@lychen/typescript-api-mapping": "workspace:*"
+    "@lychen/typescript-flora-api-sdk": "workspace:*"
     "@lychen/typescript-front-model-business": "workspace:*"
     "@lychen/vue-api-query": "workspace:*"
     "@lychen/vue-zitadel": "workspace:*"

@@ -2,7 +2,7 @@
 
 import type { Client, ClientMeta, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { ApiAreaActivitiesGetCollectionData, ApiAreaActivitiesGetCollectionResponses, ApiAreaActivitiesPostData, ApiAreaActivitiesPostErrors, ApiAreaActivitiesPostResponses, ApiAreaActivitiesUuidDeleteData, ApiAreaActivitiesUuidDeleteErrors, ApiAreaActivitiesUuidDeleteResponses, ApiAreaActivitiesUuidGetData, ApiAreaActivitiesUuidGetErrors, ApiAreaActivitiesUuidGetResponses, ApiAreaActivitiesUuidPatchData, ApiAreaActivitiesUuidPatchErrors, ApiAreaActivitiesUuidPatchResponses, ApiAreaProposalsGetCollectionData, ApiAreaProposalsGetCollectionResponses, ApiAreaProposalsPostData, ApiAreaProposalsPostErrors, ApiAreaProposalsPostResponses, ApiAreaProposalsUuidDeleteData, ApiAreaProposalsUuidDeleteErrors, ApiAreaProposalsUuidDeleteResponses, ApiAreaProposalsUuidGetData, ApiAreaProposalsUuidGetErrors, ApiAreaProposalsUuidGetResponses, ApiAreaProposalsUuidPatchData, ApiAreaProposalsUuidPatchErrors, ApiAreaProposalsUuidPatchResponses, ApiAreaProposalsUuidworkflowGetData, ApiAreaProposalsUuidworkflowGetErrors, ApiAreaProposalsUuidworkflowGetResponses, ApiAreaRequestsGetCollectionData, ApiAreaRequestsGetCollectionResponses, ApiAreaRequestsPostData, ApiAreaRequestsPostErrors, ApiAreaRequestsPostResponses, ApiAreaRequestsUuidDeleteData, ApiAreaRequestsUuidDeleteErrors, ApiAreaRequestsUuidDeleteResponses, ApiAreaRequestsUuidGetData, ApiAreaRequestsUuidGetErrors, ApiAreaRequestsUuidGetResponses, ApiAreaRequestsUuidPatchData, ApiAreaRequestsUuidPatchErrors, ApiAreaRequestsUuidPatchResponses, ApiAreaRequestsUuidworkflowGetData, ApiAreaRequestsUuidworkflowGetErrors, ApiAreaRequestsUuidworkflowGetResponses, ApiMercureSubscriptionGetData, ApiMercureSubscriptionGetErrors, ApiMercureSubscriptionGetResponses } from './types.gen';
+import type { ApiAreaActivitiesGetCollectionData, ApiAreaActivitiesGetCollectionResponses, ApiAreaActivitiesPostData, ApiAreaActivitiesPostErrors, ApiAreaActivitiesPostResponses, ApiAreaActivitiesUuidDeleteData, ApiAreaActivitiesUuidDeleteErrors, ApiAreaActivitiesUuidDeleteResponses, ApiAreaActivitiesUuidGetData, ApiAreaActivitiesUuidGetErrors, ApiAreaActivitiesUuidGetResponses, ApiAreaActivitiesUuidPatchData, ApiAreaActivitiesUuidPatchErrors, ApiAreaActivitiesUuidPatchResponses, ApiAreaProposalsGetCollectionData, ApiAreaProposalsGetCollectionResponses, ApiAreaProposalsPostData, ApiAreaProposalsPostErrors, ApiAreaProposalsPostResponses, ApiAreaProposalsUuidarchivePatchData, ApiAreaProposalsUuidarchivePatchErrors, ApiAreaProposalsUuidarchivePatchResponses, ApiAreaProposalsUuidDeleteData, ApiAreaProposalsUuidDeleteErrors, ApiAreaProposalsUuidDeleteResponses, ApiAreaProposalsUuidGetData, ApiAreaProposalsUuidGetErrors, ApiAreaProposalsUuidGetResponses, ApiAreaProposalsUuidPatchData, ApiAreaProposalsUuidPatchErrors, ApiAreaProposalsUuidPatchResponses, ApiAreaProposalsUuidpublishPatchData, ApiAreaProposalsUuidpublishPatchErrors, ApiAreaProposalsUuidpublishPatchResponses, ApiAreaProposalsUuidrejectPatchData, ApiAreaProposalsUuidrejectPatchErrors, ApiAreaProposalsUuidrejectPatchResponses, ApiAreaProposalsUuidsubmitPatchData, ApiAreaProposalsUuidsubmitPatchErrors, ApiAreaProposalsUuidsubmitPatchResponses, ApiAreaProposalsUuidworkflowGetData, ApiAreaProposalsUuidworkflowGetErrors, ApiAreaProposalsUuidworkflowGetResponses, ApiAreaRequestsGetCollectionData, ApiAreaRequestsGetCollectionResponses, ApiAreaRequestsPostData, ApiAreaRequestsPostErrors, ApiAreaRequestsPostResponses, ApiAreaRequestsUuidapprovePatchData, ApiAreaRequestsUuidapprovePatchErrors, ApiAreaRequestsUuidapprovePatchResponses, ApiAreaRequestsUuidarchivePatchData, ApiAreaRequestsUuidarchivePatchErrors, ApiAreaRequestsUuidarchivePatchResponses, ApiAreaRequestsUuidDeleteData, ApiAreaRequestsUuidDeleteErrors, ApiAreaRequestsUuidDeleteResponses, ApiAreaRequestsUuidGetData, ApiAreaRequestsUuidGetErrors, ApiAreaRequestsUuidGetResponses, ApiAreaRequestsUuidPatchData, ApiAreaRequestsUuidPatchErrors, ApiAreaRequestsUuidPatchResponses, ApiAreaRequestsUuidrejectPatchData, ApiAreaRequestsUuidrejectPatchErrors, ApiAreaRequestsUuidrejectPatchResponses, ApiAreaRequestsUuidsubmitPatchData, ApiAreaRequestsUuidsubmitPatchErrors, ApiAreaRequestsUuidsubmitPatchResponses, ApiAreaRequestsUuidworkflowGetData, ApiAreaRequestsUuidworkflowGetErrors, ApiAreaRequestsUuidworkflowGetResponses, ApiMercureSubscriptionGetData, ApiMercureSubscriptionGetErrors, ApiMercureSubscriptionGetResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -204,6 +204,62 @@ export class EspaceApi extends HeyApiClient {
     }
     
     /**
+     * Archives the AreaProposal (owner only).
+     *
+     * Archives the AreaProposal (owner only).
+     */
+    public apiAreaProposalsUuidarchivePatch<ThrowOnError extends boolean = false>(options: Options<ApiAreaProposalsUuidarchivePatchData, ThrowOnError>): RequestResult<ApiAreaProposalsUuidarchivePatchResponses, ApiAreaProposalsUuidarchivePatchErrors, ThrowOnError> {
+        return (options.client ?? this.client).patch<ApiAreaProposalsUuidarchivePatchResponses, ApiAreaProposalsUuidarchivePatchErrors, ThrowOnError>({
+            security: [{ name: 'Authorization', type: 'apiKey' }],
+            url: '/api/area_proposals/{uuid}/archive',
+            ...options
+        });
+    }
+    
+    /**
+     * Publishes the AreaProposal waiting for verification (moderators only).
+     *
+     * Publishes the AreaProposal waiting for verification (moderators only).
+     */
+    public apiAreaProposalsUuidpublishPatch<ThrowOnError extends boolean = false>(options: Options<ApiAreaProposalsUuidpublishPatchData, ThrowOnError>): RequestResult<ApiAreaProposalsUuidpublishPatchResponses, ApiAreaProposalsUuidpublishPatchErrors, ThrowOnError> {
+        return (options.client ?? this.client).patch<ApiAreaProposalsUuidpublishPatchResponses, ApiAreaProposalsUuidpublishPatchErrors, ThrowOnError>({
+            security: [{ name: 'Authorization', type: 'apiKey' }],
+            url: '/api/area_proposals/{uuid}/publish',
+            ...options
+        });
+    }
+    
+    /**
+     * Sends the AreaProposal back to its owner as a draft, with the reason (moderators only).
+     *
+     * Sends the AreaProposal back to its owner as a draft, with the reason (moderators only).
+     */
+    public apiAreaProposalsUuidrejectPatch<ThrowOnError extends boolean = false>(options: Options<ApiAreaProposalsUuidrejectPatchData, ThrowOnError>): RequestResult<ApiAreaProposalsUuidrejectPatchResponses, ApiAreaProposalsUuidrejectPatchErrors, ThrowOnError> {
+        return (options.client ?? this.client).patch<ApiAreaProposalsUuidrejectPatchResponses, ApiAreaProposalsUuidrejectPatchErrors, ThrowOnError>({
+            security: [{ name: 'Authorization', type: 'apiKey' }],
+            url: '/api/area_proposals/{uuid}/reject',
+            ...options,
+            headers: {
+                'Content-Type': 'application/merge-patch+json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Submits the draft AreaProposal to moderation (owner only).
+     *
+     * Submits the draft AreaProposal to moderation (owner only).
+     */
+    public apiAreaProposalsUuidsubmitPatch<ThrowOnError extends boolean = false>(options: Options<ApiAreaProposalsUuidsubmitPatchData, ThrowOnError>): RequestResult<ApiAreaProposalsUuidsubmitPatchResponses, ApiAreaProposalsUuidsubmitPatchErrors, ThrowOnError> {
+        return (options.client ?? this.client).patch<ApiAreaProposalsUuidsubmitPatchResponses, ApiAreaProposalsUuidsubmitPatchErrors, ThrowOnError>({
+            security: [{ name: 'Authorization', type: 'apiKey' }],
+            url: '/api/area_proposals/{uuid}/submit',
+            ...options
+        });
+    }
+    
+    /**
      * Retrieves the Mermaid diagram of the AreaProposal workflow, current place outlined.
      *
      * Retrieves the Mermaid diagram of the AreaProposal workflow, current place outlined.
@@ -286,6 +342,62 @@ export class EspaceApi extends HeyApiClient {
                 'Content-Type': 'application/merge-patch+json',
                 ...options.headers
             }
+        });
+    }
+    
+    /**
+     * Activates the AreaRequest waiting for validation (moderators only).
+     *
+     * Activates the AreaRequest waiting for validation (moderators only).
+     */
+    public apiAreaRequestsUuidapprovePatch<ThrowOnError extends boolean = false>(options: Options<ApiAreaRequestsUuidapprovePatchData, ThrowOnError>): RequestResult<ApiAreaRequestsUuidapprovePatchResponses, ApiAreaRequestsUuidapprovePatchErrors, ThrowOnError> {
+        return (options.client ?? this.client).patch<ApiAreaRequestsUuidapprovePatchResponses, ApiAreaRequestsUuidapprovePatchErrors, ThrowOnError>({
+            security: [{ name: 'Authorization', type: 'apiKey' }],
+            url: '/api/area_requests/{uuid}/approve',
+            ...options
+        });
+    }
+    
+    /**
+     * Archives the AreaRequest (owner only).
+     *
+     * Archives the AreaRequest (owner only).
+     */
+    public apiAreaRequestsUuidarchivePatch<ThrowOnError extends boolean = false>(options: Options<ApiAreaRequestsUuidarchivePatchData, ThrowOnError>): RequestResult<ApiAreaRequestsUuidarchivePatchResponses, ApiAreaRequestsUuidarchivePatchErrors, ThrowOnError> {
+        return (options.client ?? this.client).patch<ApiAreaRequestsUuidarchivePatchResponses, ApiAreaRequestsUuidarchivePatchErrors, ThrowOnError>({
+            security: [{ name: 'Authorization', type: 'apiKey' }],
+            url: '/api/area_requests/{uuid}/archive',
+            ...options
+        });
+    }
+    
+    /**
+     * Sends the AreaRequest back to its owner as a draft, with the reason (moderators only).
+     *
+     * Sends the AreaRequest back to its owner as a draft, with the reason (moderators only).
+     */
+    public apiAreaRequestsUuidrejectPatch<ThrowOnError extends boolean = false>(options: Options<ApiAreaRequestsUuidrejectPatchData, ThrowOnError>): RequestResult<ApiAreaRequestsUuidrejectPatchResponses, ApiAreaRequestsUuidrejectPatchErrors, ThrowOnError> {
+        return (options.client ?? this.client).patch<ApiAreaRequestsUuidrejectPatchResponses, ApiAreaRequestsUuidrejectPatchErrors, ThrowOnError>({
+            security: [{ name: 'Authorization', type: 'apiKey' }],
+            url: '/api/area_requests/{uuid}/reject',
+            ...options,
+            headers: {
+                'Content-Type': 'application/merge-patch+json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Submits the draft AreaRequest to moderation (owner only).
+     *
+     * Submits the draft AreaRequest to moderation (owner only).
+     */
+    public apiAreaRequestsUuidsubmitPatch<ThrowOnError extends boolean = false>(options: Options<ApiAreaRequestsUuidsubmitPatchData, ThrowOnError>): RequestResult<ApiAreaRequestsUuidsubmitPatchResponses, ApiAreaRequestsUuidsubmitPatchErrors, ThrowOnError> {
+        return (options.client ?? this.client).patch<ApiAreaRequestsUuidsubmitPatchResponses, ApiAreaRequestsUuidsubmitPatchErrors, ThrowOnError>({
+            security: [{ name: 'Authorization', type: 'apiKey' }],
+            url: '/api/area_requests/{uuid}/submit',
+            ...options
         });
     }
     

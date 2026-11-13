@@ -22,4 +22,5 @@ return [
     Lychen\CoreBundle\CoreBundle::class => ['all' => true],
     Symfony\Bundle\MercureBundle\MercureBundle::class => ['all' => true],
     Lychen\Config\LychenConfig::class => ['all' => true],
+    Lychen\Api\LychenApiBundle::class => ['all' => true],
 ];
