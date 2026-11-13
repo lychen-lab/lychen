@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9262df8174be1371ebd49a7f011f7f15",
+    "content-hash": "c690cbdd3fa93b64ce376cb81ef0f5a3",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2042,6 +2042,55 @@
                     "email": "bonjour@lychen.org"
                 }
             ],
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
+        },
+        {
+            "name": "lychen/event-bus",
+            "version": "0.0.0",
+            "dist": {
+                "type": "path",
+                "url": "../packages/event-bus",
+                "reference": "a9a95d63c90b72c49cbe986a34a746b17fee8839"
+            },
+            "require": {
+                "doctrine/dbal": "^4.1",
+                "doctrine/doctrine-bundle": "^2.13 || ^3.0",
+                "doctrine/orm": "^3.0",
+                "doctrine/persistence": "^3.3 || ^4.0",
+                "php": "^8.4",
+                "psr/clock": "^1.0",
+                "psr/log": "^3.0",
+                "symfony/amqp-messenger": "^8.1",
+                "symfony/config": "^7.4 || ^8.0",
+                "symfony/console": "^7.4 || ^8.0",
+                "symfony/dependency-injection": "^7.4 || ^8.0",
+                "symfony/doctrine-bridge": "^7.4 || ^8.0",
+                "symfony/http-kernel": "^7.4 || ^8.0",
+                "symfony/messenger": "^8.1",
+                "symfony/serializer": "^7.4 || ^8.0",
+                "symfony/uid": "^7.4 || ^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Lychen\\EventBus\\": "src/"
+                }
+            },
+            "archive": {
+                "exclude": [
+                    "/moon.yml"
+                ]
+            },
+            "authors": [
+                {
+                    "name": "Lychen",
+                    "email": "bonjour@lychen.org"
+                }
+            ],
+            "description": "Events between the Lychen APIs over the central RabbitMQ: a transactional outbox on the producing side, an idempotent inbox on the consuming side",
             "transport-options": {
                 "symlink": false,
                 "relative": true

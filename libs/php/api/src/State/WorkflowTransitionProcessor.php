@@ -5,6 +5,9 @@ namespace Lychen\Api\State;
 use ApiPlatform\Metadata\HttpOperation;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
+use Doctrine\DBAL\LockMode;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\ObjectMapper\ObjectMapperInterface;
 use Symfony\Component\Workflow\Registry;
@@ -36,6 +39,19 @@ use Symfony\Component\Workflow\TransitionBlocker;
  * A transition the current state does not allow is a 409 Conflict, carrying the reasons the
  * workflow gives (its transition blockers). Nothing is persisted then, the input included.
  *
+ * The transition runs in one transaction, on the entity locked and read again under that lock:
+ *
+ *     BEGIN
+ *     SELECT ... FOR UPDATE      -- a concurrent transition on the same entity waits here
+ *     map the input              -- onto the entity read again, if the transition takes one
+ *     can(), apply()             -- guards and listeners see the committed state and the input
+ *     flush                      -- the entity, and what the listeners persisted
+ *     COMMIT
+ *
+ * so two concurrent requests cannot both pass the guard (the second sees the first's outcome
+ * and gets its 409), and whatever the workflow's listeners persist, such as an event recorded
+ * in lychen/event-bus's outbox, commits with the new state or not at all.
+ *
  * @implements ProcessorInterface<object, object>
  */
 final readonly class WorkflowTransitionProcessor implements ProcessorInterface
@@ -47,6 +63,7 @@ final readonly class WorkflowTransitionProcessor implements ProcessorInterface
         private ProcessorInterface $persistProcessor,
         private ?Registry $workflows,
         private ObjectMapperInterface $objectMapper,
+        private ManagerRegistry $doctrine,
     ) {
     }
 
@@ -74,25 +91,51 @@ final readonly class WorkflowTransitionProcessor implements ProcessorInterface
             throw new \LogicException(\sprintf('The "%s" operation must hand the entity over to %s: set map: false on it.', $operation->getName(), self::class));
         }
 
-        if (null !== $input) {
-            $this->objectMapper->map($input, $data);
+        $manager = $this->doctrine->getManagerForClass($data::class);
+        if (!$manager instanceof EntityManagerInterface) {
+            throw new \LogicException(\sprintf('%s needs a Doctrine entity: no entity manager maps %s.', self::class, $data::class));
         }
 
         $workflowName = $options['workflow'] ?? null;
         $workflow = $this->workflows->get($data, \is_string($workflowName) ? $workflowName : null);
 
-        if (!$workflow->can($data, $transition)) {
-            $reasons = array_map(
-                static fn (TransitionBlocker $blocker): string => $blocker->getMessage(),
-                iterator_to_array($workflow->buildTransitionBlockerList($data, $transition)),
-            );
+        // Not EntityManager::wrapInTransaction(): it closes the entity manager on any exception,
+        // a 409 included, and the rest of the request (or the next one, in worker mode) needs it.
+        $connection = $manager->getConnection();
+        $connection->beginTransaction();
+        try {
+            // lock() locks the entity's own row only (SELECT 1 ... FOR UPDATE), where
+            // refresh($data, PESSIMISTIC_WRITE) would lock the query that also joins its eager
+            // relations, which PostgreSQL refuses on the nullable side of a LEFT JOIN.
+            $manager->lock($data, LockMode::PESSIMISTIC_WRITE);
+            $manager->refresh($data);
 
-            throw new ConflictHttpException(trim(\sprintf('The "%s" transition cannot be applied. %s', $transition, implode(' ', $reasons))));
+            // After the refresh, which would otherwise discard it: the guards see what was sent.
+            if (null !== $input) {
+                $this->objectMapper->map($input, $data);
+            }
+
+            if (!$workflow->can($data, $transition)) {
+                $reasons = array_map(
+                    static fn (TransitionBlocker $blocker): string => $blocker->getMessage(),
+                    iterator_to_array($workflow->buildTransitionBlockerList($data, $transition)),
+                );
+
+                throw new ConflictHttpException(trim(\sprintf('The "%s" transition cannot be applied. %s', $transition, implode(' ', $reasons))));
+            }
+
+            $workflow->apply($data, $transition);
+
+            $persisted = $this->persistProcessor->process($data, $operation, $uriVariables, $context);
+
+            $connection->commit();
+        } catch (\Throwable $exception) {
+            if ($connection->isTransactionActive()) {
+                $connection->rollBack();
+            }
+
+            throw $exception;
         }
-
-        $workflow->apply($data, $transition);
-
-        $persisted = $this->persistProcessor->process($data, $operation, $uriVariables, $context);
 
         return $this->objectMapper->map(\is_object($persisted) ? $persisted : $data, $operation->getClass());
     }

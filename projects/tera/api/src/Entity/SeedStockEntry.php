@@ -14,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Lychen\UtilModel\Abstract\AbstractIdOrmAndUlidApiIdentified;
 use Lychen\UtilModel\Trait\CreatedAtTrait;
 use Lychen\UtilModel\Trait\UpdatedAtTrait;
+use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: SeedStockEntryRepository::class)]
 #[ApiResource]
@@ -43,6 +45,16 @@ class SeedStockEntry extends AbstractIdOrmAndUlidApiIdentified
 
     #[ORM\Column]
     private ?bool $publiclyShared = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $variety = null;
+
+    /**
+     * The flora seed lot this entry was received from, when a seed library gave it (see
+     * SeedLotGivenHandler). Unique: a lot is received once.
+     */
+    #[ORM\Column(type: UuidType::NAME, unique: true, nullable: true)]
+    private ?Uuid $receivedFromSeedLot = null;
 
     public function getSeedStock(): ?SeedStock
     {
@@ -100,6 +112,30 @@ class SeedStockEntry extends AbstractIdOrmAndUlidApiIdentified
     public function setPubliclyShared(bool $publiclyShared): static
     {
         $this->publiclyShared = $publiclyShared;
+
+        return $this;
+    }
+
+    public function getVariety(): ?string
+    {
+        return $this->variety;
+    }
+
+    public function setVariety(?string $variety): static
+    {
+        $this->variety = $variety;
+
+        return $this;
+    }
+
+    public function getReceivedFromSeedLot(): ?Uuid
+    {
+        return $this->receivedFromSeedLot;
+    }
+
+    public function setReceivedFromSeedLot(?Uuid $receivedFromSeedLot): static
+    {
+        $this->receivedFromSeedLot = $receivedFromSeedLot;
 
         return $this;
     }
