@@ -9,9 +9,10 @@
 Dans le monorepo, chaque frontend dépend du SDK TypeScript généré à partir de la
 spec OpenAPI de l'API correspondante. Pour `tera` :
 
-- `libs/typescript/tera/api-sdk/generated/tera-api/` est **généré** depuis
+- `libs/typescript/tera-api-sdk/generated/tera-api/` est **généré** depuis
   `projects/tera/api/openapi_docs.json` par `@hey-api/openapi-ts`
-  (`moon typescript-tera-api-sdk:generate-api`, configuré dans `openapi-ts.config.ts`).
+  (`moon run typescript-tera-api-sdk:generate-api`, avec la configuration commune à
+  tous les SDK de `libs/typescript/api-sdk-config`).
 - `projects/tera/app/moon.yml` déclare `dependsOn: [… typescript-tera-api-sdk …]`
   et `projects/tera/app/package.json` la consomme via
   `"@lychen/typescript-tera-api-sdk": "workspace:*"`.
@@ -19,9 +20,9 @@ spec OpenAPI de l'API correspondante. Pour `tera` :
 La chaîne de redéploiement qui en découle :
 
 1. **L'API change** → un PR doit régénérer la spec et le SDK. Le workflow
-   `.github/workflows/openapi-sdk-sync.yml` **échoue tant que le SDK committé
+   `.github/workflows/openapi-sdk-sync-tera.yml` **échoue tant que le SDK committé
    n'est pas régénéré et committé** (`git diff --exit-code` sur
-   `openapi_docs.json` et `libs/typescript/tera/api-sdk/generated/`).
+   `openapi_docs.json` et `libs/typescript/tera-api-sdk/generated/`).
 2. **Le fichier généré du SDK change** dans `libs/**`.
 3. Au merge sur `main`, `.github/workflows/deploy.yml`
    (déclenché sur `libs/**` et `projects/**`) appelle
@@ -87,7 +88,7 @@ Aujourd'hui `workspace:*` + `--downstream deep` = « toute régénération pouss
 immédiatement tout le monde ». On remplace ce lien implicite par un lien
 **explicite et versionné** :
 
-1. Le SDK porte une **version SemVer** (`libs/typescript/tera/api-sdk/package.json`)
+1. Le SDK porte une **version SemVer** (`libs/typescript/tera-api-sdk/package.json`)
    et est **publié** comme paquet (registre privé — GitHub Packages convient,
    le repo publie déjà des images sur `ghcr.io`). La version suit le contrat :
    - **patch** : changement de doc / cosmétique de la spec ;
@@ -198,7 +199,7 @@ Décision (revue) : plutôt que de couper le lien SDK → front, on coupe le lie
   inchangé). C'est voulu : un changement de SDK = un changement de contrat que le
   front doit suivre.
 - **On ne régénère plus le SDK automatiquement à chaque changement d'API.** La
-  génération du SDK redevient **manuelle** (`moon typescript-tera-api-sdk:generate-api`),
+  génération du SDK redevient **manuelle** (`moon run typescript-tera-api-sdk:generate-api`),
   déclenchée quand on le décide. Un changement d'API seul ne touche donc plus le
   SDK, et ne redéploie donc plus les fronts.
 
@@ -208,11 +209,12 @@ jour que lorsqu'on régénère puis committe le SDK volontairement.
 
 ### Mécanisme
 
-Le forçage venait des workflows `openapi-sdk-sync.yml` / `openapi-sdk-sync-espace.yml`,
+Le forçage venait des workflows de synchro SDK (aujourd'hui `openapi-sdk-sync.yml`, appelé
+par un `openapi-sdk-sync-<api>.yml` par API),
 qui **échouaient** le PR tant que la spec + le SDK committés n'étaient pas
 régénérés pour coller à l'API. On les rend **non bloquants** : ils régénèrent la
 spec/le SDK et, en cas d'écart, émettent un simple `::warning::` rappelant de
-lancer `moon …:generate-api` — sans `exit 1`. La génération reste donc à la main
+lancer `moon run …:generate-api` — sans `exit 1`. La génération reste donc à la main
 du développeur.
 
 Aucune autre modification : l'action `moon-affected-projects-list` et le

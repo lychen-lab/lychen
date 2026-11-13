@@ -5,7 +5,7 @@ import { ROUTE_LAND_REQUESTS } from '@/views/land-requests';
 import { ROUTE_FAVORITES } from '@/views/favorites';
 import { ROUTE_LAND_PROPOSAL } from '@/views/land-proposal';
 import { ROUTE_LAND_REQUEST } from '@/views/land-request';
-import zitadelAuth from '@lychen/typescript-zitadel/ZitadelAuth';
+import zitadelAuth from '@lychen/vue-zitadel/ZitadelAuth';
 
 const routes: RouteRecordRaw[] = [
   {

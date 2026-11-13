@@ -1,0 +1,9 @@
+# What every <api>-api Vue lib's endpoint composables share: the types of the Tanstack
+# options their callers may set (ApiQueryOptions, ApiMutationOptions), the cache keys of a
+# resource (createResourceQueryKeys) and the Mercure stream (useMercure). Each composable
+# calls useQuery or useMutation itself.
+id: vue-api-query
+language: typescript
+layer: library
+# Inherits lint, format, typecheck and test from .moon/tasks/frontend.yml.
+stack: frontend

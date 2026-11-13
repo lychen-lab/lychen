@@ -1,0 +1,16 @@
+{
+	auto_https off
+	admin off
+}
+
+:80 {
+	reverse_proxy {
+		# Every container of the `api` service, looked up again as they come and go.
+		dynamic a api 80 {
+			refresh 5s
+		}
+		lb_policy round_robin
+		# Which instance answered: `curl -sI localhost:8480/api/plants | grep -i x-upstream`
+		header_down X-Upstream {http.reverse_proxy.upstream.hostport}
+	}
+}

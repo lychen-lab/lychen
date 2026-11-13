@@ -1,8 +1,18 @@
 {
   "extends": "./tsconfig.options.json",
+  "files": [],
   "references": [
     {
       "path": "./libs/i18n/tera"
+    },
+    {
+      "path": "./libs/typescript/api-client"
+    },
+    {
+      "path": "./libs/typescript/api-mapping"
+    },
+    {
+      "path": "./libs/typescript/api-sdk-config"
     },
     {
       "path": "./libs/typescript/applications"
@@ -15,6 +25,9 @@
     },
     {
       "path": "./libs/typescript/espace-api-sdk"
+    },
+    {
+      "path": "./libs/typescript/front-model-business"
     },
     {
       "path": "./libs/typescript/humu"
@@ -38,10 +51,10 @@
       "path": "./libs/typescript/robust"
     },
     {
-      "path": "./libs/typescript/tera/api-sdk"
+      "path": "./libs/typescript/tera/core"
     },
     {
-      "path": "./libs/typescript/tera/core"
+      "path": "./libs/typescript/tera-api-sdk"
     },
     {
       "path": "./libs/typescript/utils"
@@ -50,10 +63,10 @@
       "path": "./libs/typescript/vara"
     },
     {
-      "path": "./libs/typescript/zitadel"
+      "path": "./libs/vite/ssg"
     },
     {
-      "path": "./libs/vite/ssg"
+      "path": "./libs/vue/api-query"
     },
     {
       "path": "./libs/vue/applications"
@@ -89,7 +102,7 @@
       "path": "./libs/vue/drawio/tera"
     },
     {
-      "path": "./libs/vue/espace"
+      "path": "./libs/vue/espace-api"
     },
     {
       "path": "./libs/vue/humu"
@@ -131,6 +144,9 @@
       "path": "./libs/vue/tera"
     },
     {
+      "path": "./libs/vue/tera-api"
+    },
+    {
       "path": "./libs/vue/tiptap"
     },
     {
@@ -138,6 +154,9 @@
     },
     {
       "path": "./libs/vue/vara"
+    },
+    {
+      "path": "./libs/vue/zitadel"
     },
     {
       "path": "./projects/espace/app"

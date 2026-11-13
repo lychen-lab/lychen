@@ -1,0 +1,8 @@
+{
+  "name": "@lychen/typescript-tera-api-sdk",
+  "type": "module",
+  "devDependencies": {
+    "@lychen/typescript-api-sdk-config": "workspace:*",
+    "typescript": "^6.0.3"
+  }
+}

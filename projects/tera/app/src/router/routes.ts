@@ -1,6 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router';
 
-import zitadelAuth from '@lychen/typescript-zitadel/ZitadelAuth';
+import zitadelAuth from '@lychen/vue-zitadel/ZitadelAuth';
 import { RoutePageDashboard } from '@/pages/dashboard';
 import { RoutePageOnboarding } from '@/pages/onboarding';
 import { LAND_ROUTE_PATH } from '@/pages/land';

@@ -16,7 +16,7 @@ import { BaseHeading } from '@lychen/vue-components-app/base-heading';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { messages, TRANSLATION_KEY } from './i18n';
 import GridTeraLandProposal from '@lychen/vue-tera/components/land-proposal/grid/GridTeraLandProposal.vue';
-import { useTeraApi } from '@lychen/vue-tera/composables/use-tera-api/useTeraApi';
+import { useTeraApi } from '@lychen/vue-tera-api/client/useTeraApi';
 import { useQuery } from '@tanstack/vue-query';
 
 const { t } = useI18nExtended({

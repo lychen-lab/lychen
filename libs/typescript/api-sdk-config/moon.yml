@@ -1,0 +1,5 @@
+# The @hey-api/openapi-ts configuration shared by the API SDKs (tag `api-sdk`, see
+# .moon/tasks/tag-api-sdk.yml). The generator is pinned here only, exactly, because it is 0.x.
+id: typescript-api-sdk-config
+language: typescript
+layer: configuration

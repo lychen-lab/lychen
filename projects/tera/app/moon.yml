@@ -3,7 +3,6 @@ dependsOn:
   - i18n-tera
   - typescript-tera-api-sdk
   - typescript-tera-core
-  - typescript-zitadel
   - vue-color-scheme
   - vue-components-app
   - vue-components-core
@@ -12,6 +11,8 @@ dependsOn:
   - vue-icons
   - vue-layouts
   - vue-tera
+  - vue-tera-api
+  - vue-zitadel
 env:
   PRODUCTION_DOKPLOY_COMPOSE_ID: 1yP_nHkip2nMiN-xuHAiR
   STAGING_DOKPLOY_COMPOSE_ID: f0fzklLF69wpejz9f89ir
