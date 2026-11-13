@@ -3,12 +3,12 @@
     <template #navigation>
       <div class="flex w-full flex-row items-center justify-between">
         <div>
-          <div class="font-lexend flex flex-row items-center gap-0">
+          <div class="flex flex-row items-center gap-0 font-lexend">
             <RouterLink
               :to="{ name: ROUTE_HOME.name }"
               class="flex flex-row"
             >
-              <span class="text-on-surface font-medium tracking-normal">espace</span>
+              <span class="font-medium tracking-normal text-on-surface">espace</span>
             </RouterLink>
             <Tooltip>
               <TooltipTrigger as-child>
@@ -21,7 +21,7 @@
                 </a>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Découvrir l'association sur <span class="underline">lychen.org</span></p>
+                <p>{{ t('association_link') }} <span class="underline">lychen.org</span></p>
               </TooltipContent>
             </Tooltip>
           </div>

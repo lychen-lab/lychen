@@ -1,7 +1,11 @@
+import { globSync } from 'node:fs';
 import type { ViteSSGOptions } from 'vite-ssg';
 import generateSitemap from 'vite-ssg-sitemap';
 import type { RouteRecordRaw } from 'vue-router';
 import { transformHtmlTemplate } from '@unhead/vue/server';
+
+const STALE_SCHEMA_ORG_GRAPH =
+  /<script type="application\/ld\+json" data-hid="schema-org-graph">[\s\S]*?<\/script>/g;
 
 export const ssgOptions: ViteSSGOptions = {
   script: 'async',
@@ -25,12 +29,50 @@ export const ssgOptions: ViteSSGOptions = {
     // vite-ssg types `appCtx.head` as a v2 VueHeadClient, but at runtime the apps
     // create a v3 unhead instance — the exact input `transformHtmlTemplate` expects.
     const head = appCtx.head as unknown as Parameters<typeof transformHtmlTemplate>[0];
-    return transformHtmlTemplate(head, renderedHTML);
+    // The one thing vite-ssg's own pass does write is the schema.org graph, at
+    // the end of the body, where the transformer does not look for existing
+    // tags: drop it, or the page ends up with two JSON-LD scripts.
+    return transformHtmlTemplate(head, renderedHTML.replace(STALE_SCHEMA_ORG_GRAPH, ''));
   },
   onFinished() {
     // Fall back to the literal ${HOST} placeholder so a host-agnostic build can be
     // produced; the docker entrypoint substitutes it (envsubst) at container start.
     const host = process.env.VITE_UNHEAD_HOST || '${HOST}';
-    generateSitemap({ hostname: `https://${host}` });
+    generateSitemap({
+      hostname: `https://${host}`,
+      // The root only redirects to a locale (libs/caddy/configs/ssg/Caddyfile).
+      exclude: ['/'],
+      ...sitemapHints(),
+    });
   },
 };
+
+// Legal pages, by their last path segment: they rarely change and should not
+// compete with the content pages.
+const LEGAL_PAGES = ['privacy-policy', 'terms-of-use'];
+
+/**
+ * vite-ssg-sitemap gives every URL `priority 1.0` and `changefreq daily` unless
+ * told otherwise, which tells crawlers nothing. Rank the pages found in dist
+ * instead: the locale home pages first, the legal pages last.
+ */
+function sitemapHints() {
+  const priority: Record<string, number> = { '*': 0.7 };
+  const changefreq: Record<string, string> = { '*': 'monthly' };
+
+  for (const file of globSync('**/index.html', { cwd: 'dist' })) {
+    // Normalised to the route keys vite-ssg-sitemap looks up, e.g. /fr-FR/privacy-policy
+    const segments = file.split(/[\\/]/).slice(0, -1);
+    const route = `/${segments.join('/')}`;
+
+    if (segments.length === 1) {
+      priority[route] = 1;
+      changefreq[route] = 'weekly';
+    } else if (LEGAL_PAGES.includes(segments.at(-1) ?? '')) {
+      priority[route] = 0.3;
+      changefreq[route] = 'yearly';
+    }
+  }
+
+  return { priority, changefreq };
+}

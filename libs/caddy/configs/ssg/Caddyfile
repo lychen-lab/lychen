@@ -3,6 +3,18 @@
 
 	encode gzip zstd
 
+	# The root has no page of its own: every page lives under a locale. Answer it
+	# with an HTTP redirect, which crawlers and browsers without JavaScript follow,
+	# instead of the empty application shell. English-speaking browsers go to
+	# en-US, everything else (crawlers send no Accept-Language) to the default
+	# locale. Keep the locales in line with libs/vue/i18n/configs/Default.ts.
+	map {header.Accept-Language} {root_locale} {
+		~(?i)^en en-US
+		default fr-FR
+	}
+	header / Vary Accept-Language
+	redir / /{root_locale} 302
+
 	# Serve the requested file, then the matching directory index, then fall back to the SPA entrypoint
 	try_files {path} {path}/index.html /index.html
 	file_server

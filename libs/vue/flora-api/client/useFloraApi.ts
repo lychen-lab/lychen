@@ -1,7 +1,7 @@
 import { FloraApi } from '@lychen/typescript-flora-api-sdk/generated/flora-api';
 import { createClient } from '@lychen/typescript-flora-api-sdk/generated/flora-api/client';
 import { createApiClient } from '@lychen/typescript-api-client/createApiClient';
-import { getAccessToken } from '@lychen/typescript-zitadel/getAccessToken';
+import { getAccessToken } from '@lychen/vue-zitadel/getAccessToken';
 
 // Set up like every API's client (libs/typescript/api-client), with the signed-in
 // user's token: pass `interceptors` to change flora's own.

@@ -124,8 +124,8 @@ make phpunit c="--group e2e"                         # Run by group
 
 /libs              # Reusable libraries
   /css/core        # Tailwind design tokens
-  /typescript/     # 21 TypeScript libraries, incl. the API SDKs (<api>-api-sdk), their client (api-client), the front's business model (front-model-business) and api-mapping
-  /vue/            # 29 Vue component/composable libraries, incl. each API's front lib (<api>-api) and api-query
+  /typescript/     # 20 TypeScript libraries, incl. the API SDKs (<api>-api-sdk), their client (api-client), the front's business model (front-model-business) and api-mapping
+  /vue/            # 30 Vue component/composable libraries, incl. each API's front lib (<api>-api) and api-query
   /php/            # 6 PHP/Symfony bundle libraries
   /i18n/           # Translation files (per domain, e.g. tera)
   /assets/         # Shared brand/content assets per domain (fonts, logos, icons)
@@ -170,7 +170,8 @@ make phpunit c="--group e2e"                         # Run by group
 - Real-time updates via Mercure (SSE) — one **central** hub
   (`projects/common/mercure`) shared by every API, each on its own path prefix
   with its own JWT keys
-- FrankenPHP as PHP runtime in Docker; PostgreSQL for storage; Redis for cache
+- FrankenPHP as PHP runtime in Docker; PostgreSQL 18 for storage (a local volume from an older
+  major: `moon <api>:db-upgrade`, see `docs/deployment.md`); Redis for cache
 - Each API project has its own `compose.yml` (Postgres + Redis) for local
   development; RabbitMQ, Mercure and mailpit are shared via the `lychen-network`
 
@@ -193,7 +194,7 @@ Every API's TypeScript SDK follows one norm, so that they all expose the same cl
   without one, and an `Error` naming the URL and status.
 - The bearer token is opt-in and knows no identity provider: `bearerToken` takes any function
   that gives the token, or undefined to send none, and adds `Authorization: Bearer <token>`
-  (`bearerToken.ts`). The apps pass `getAccessToken` from `libs/typescript/zitadel`.
+  (`bearerToken.ts`). The apps pass `getAccessToken` from `libs/vue/zitadel`.
 - An API changes its own interceptors with
   `interceptors: (defaults) => ({ request: [...defaults.request, mine] })` (complete, filter or
   replace a list) and passes any other client option in `config`. Change a default in

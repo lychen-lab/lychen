@@ -1,5 +1,6 @@
 {
   "extends": "./tsconfig.options.json",
+  "files": [],
   "references": [
     {
       "path": "./libs/i18n/tera"
@@ -63,9 +64,6 @@
     },
     {
       "path": "./libs/typescript/vara"
-    },
-    {
-      "path": "./libs/typescript/zitadel"
     },
     {
       "path": "./libs/vite/ssg"
@@ -162,6 +160,9 @@
     },
     {
       "path": "./libs/vue/vara"
+    },
+    {
+      "path": "./libs/vue/zitadel"
     },
     {
       "path": "./projects/espace/app"

@@ -6,8 +6,8 @@ dependsOn:
   - typescript-api-mapping
   - typescript-flora-api-sdk
   - typescript-front-model-business
-  - typescript-zitadel
   - vue-api-query
+  - vue-zitadel
 id: vue-flora-api
 language: typescript
 layer: library

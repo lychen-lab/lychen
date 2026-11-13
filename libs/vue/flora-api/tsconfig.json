@@ -15,10 +15,10 @@
       "path": "../../typescript/front-model-business"
     },
     {
-      "path": "../../typescript/zitadel"
+      "path": "../api-query"
     },
     {
-      "path": "../api-query"
+      "path": "../zitadel"
     }
   ],
   "compilerOptions": {
