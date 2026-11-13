@@ -30,6 +30,9 @@
       "path": "./libs/typescript/front-model-business"
     },
     {
+      "path": "./libs/typescript/flora-api-sdk"
+    },
+    {
       "path": "./libs/typescript/humu"
     },
     {
@@ -103,6 +106,9 @@
     },
     {
       "path": "./libs/vue/espace-api"
+    },
+    {
+      "path": "./libs/vue/flora-api"
     },
     {
       "path": "./libs/vue/humu"

@@ -10,7 +10,7 @@ services:
       - '21432:5432/tcp'
 
   api:
-    build:
+    build: &dev-build
       context: .
       # The Dockerfile of every API (libs/docker/symfony): drop dockerfile and
       # additional_contexts for a Dockerfile of the API's own, at its root. The
@@ -41,13 +41,29 @@ services:
       - protocol: udp
         published: ${HTTP3_PORT:-40443}
         target: 443
-    networks:
+    networks: &dev-networks
       # `default` is kept explicitly: naming any network opts a service out
       # of the implicit one, which would cut the API off from its own
-      # database and redis. Only `api` joins the shared network — database
-      # and redis keep private, non-colliding names on the stack's own.
+      # database and redis. Only the PHP processes (`api`, and the `worker`
+      # and `outbox-relay` below) join the shared network — database and
+      # redis keep private, non-colliding names on the stack's own.
       - default
       - lychen-network
+
+  # The event bus processes run the dev image on the mounted sources: restart
+  # them (`docker compose -p flora-api restart worker outbox-relay`) to pick up
+  # a code change.
+  worker:
+    build: *dev-build
+    networks: *dev-networks
+    volumes: &dev-volumes
+      - ./:/app
+      - ./frankenphp/conf.d/20-app.dev.ini:/usr/local/etc/php/app.conf.d/20-app.dev.ini:ro
+
+  outbox-relay:
+    build: *dev-build
+    networks: *dev-networks
+    volumes: *dev-volumes
 
 networks:
   lychen-network:

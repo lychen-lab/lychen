@@ -26,7 +26,7 @@ services:
         condition: service_healthy
       redis:
         condition: service_started
-    environment:
+    environment: &api-environment
       DATABASE_URL: postgresql://${POSTGRES_USER:-userlocal}:${POSTGRES_PASSWORD:-PasswordForLocal!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-18}&charset=${POSTGRES_CHARSET:-utf8}
       # Central broker (projects/common/rabbitmq), reached over lychen-network in
       # dev. Staging and production set MESSENGER_TRANSPORT_DSN on the Dokploy
@@ -42,6 +42,44 @@ services:
       - caddy_data:/data
       - caddy_config:/config
       - ../../../libs/php:/packages
+
+  # The two long-running processes of lychen/event-bus, on the api's image and
+  # environment. Both start once the api is healthy: its entrypoint has migrated
+  # the database by then. They skip that entrypoint (docker-php-entrypoint is the
+  # PHP image's own), so that only one container ever migrates; and the image's
+  # healthcheck, which probes FrankenPHP, does not apply to them. `init` puts an
+  # init process in front of php, which as PID 1 would ignore the SIGTERM of
+  # `docker stop` and be killed 10 s later. Each stops after an hour and is
+  # restarted, which bounds its memory.
+  #
+  # worker: consumes tera.events, the events tera subscribes to and its own
+  # background work, each in a transaction with its inbox record.
+  worker:
+    command: [ 'php', 'bin/console', 'messenger:consume', 'async', '--time-limit=3600', '-v' ]
+    depends_on:
+      api:
+        condition: service_healthy
+    entrypoint: docker-php-entrypoint
+    environment: *api-environment
+    healthcheck:
+      disable: true
+    image: ${IMAGES_PREFIX:-}tera-api:${IMAGE_TAG:-latest}
+    init: true
+    restart: unless-stopped
+
+  # outbox-relay: publishes the events tera records in its outbox, once committed.
+  outbox-relay:
+    command: [ 'php', 'bin/console', 'lychen:event-bus:relay', '--time-limit=3600', '-v' ]
+    depends_on:
+      api:
+        condition: service_healthy
+    entrypoint: docker-php-entrypoint
+    environment: *api-environment
+    healthcheck:
+      disable: true
+    image: ${IMAGES_PREFIX:-}tera-api:${IMAGE_TAG:-latest}
+    init: true
+    restart: unless-stopped
 
   redis:
     healthcheck:

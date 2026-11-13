@@ -21,6 +21,7 @@
     "gedmo/doctrine-extensions": "3.22.*",
     "lychen/api": "*",
     "lychen/core": "*",
+    "lychen/event-bus": "*",
     "lychen/model": "*",
     "lychen/tiptap": "*",
     "lychen/zitadel": "*",
@@ -93,7 +94,8 @@
           "lychen/test": "0.0.0",
           "lychen/zitadel": "0.0.0",
           "lychen/tiptap": "0.0.0",
-          "lychen/core": "0.0.0"
+          "lychen/core": "0.0.0",
+          "lychen/event-bus": "0.0.0"
         }
       }
     }

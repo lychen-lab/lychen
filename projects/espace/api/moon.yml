@@ -1,5 +1,6 @@
 dependsOn:
   - docker-symfony
+  - lychen-php-api
   - lychen-php-core
   - lychen-php-model
   - lychen-php-config
@@ -15,3 +16,4 @@ tags:
   - dokploy
   - version
   - compose-local
+  - mco

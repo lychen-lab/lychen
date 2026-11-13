@@ -55,6 +55,7 @@ final class LychenApiBundle extends AbstractBundle
                 service('api_platform.doctrine.orm.state.persist_processor'),
                 service('workflow.registry')->nullOnInvalid(),
                 service('api_platform.object_mapper'),
+                service('doctrine'),
             ])
             ->tag('api_platform.state_processor', ['key' => WorkflowTransitionProcessor::class]);
 

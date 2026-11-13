@@ -133,9 +133,9 @@ make phpunit c="--group e2e"                         # Run by group
 
 /libs              # Reusable libraries
   /css/core        # Tailwind design tokens
-  /typescript/     # 19 TypeScript libraries, incl. the API SDKs (<api>-api-sdk), their client (api-client), the front's business model (front-model-business) and api-mapping
-  /vue/            # 31 Vue component/composable libraries, incl. each API's front lib (<api>-api) and api-query
-  /php/            # 6 PHP/Symfony bundle libraries
+  /typescript/     # 20 TypeScript libraries, incl. the API SDKs (<api>-api-sdk), their client (api-client), the front's business model (front-model-business) and api-mapping
+  /vue/            # 30 Vue component/composable libraries, incl. each API's front lib (<api>-api) and api-query
+  /php/            # 8 PHP/Symfony bundle libraries
   /i18n/           # Translation files (per domain, e.g. tera)
   /assets/         # Shared brand/content assets per domain (fonts, logos, icons)
   /drawio/         # Architecture diagrams (.drawio) per domain
@@ -176,6 +176,11 @@ make phpunit c="--group e2e"                         # Run by group
   broker (`projects/common/rabbitmq`) shared by every API: a single durable topic
   exchange (`lychen.events`), one queue per service, routing keys shaped
   `<domain>.<aggregate>.<action>.v<n>`
+- Events between APIs go through `libs/php/event-bus` (lychen/event-bus): recorded in an
+  outbox in the transaction of the change, published by `lychen:event-bus:relay` under their
+  type as routing key, handled once per service behind an inbox (`worker` and
+  `outbox-relay` compose services). A service's queue receives its own `<domain>.internal.#`
+  work and the event types listed for it in `projects/common/rabbitmq/subscriptions.conf`
 - Real-time updates via Mercure (SSE) — one **central** hub
   (`projects/common/mercure`) shared by every API, each on its own path prefix
   with its own JWT keys

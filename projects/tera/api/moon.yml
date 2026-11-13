@@ -1,6 +1,7 @@
 dependsOn:
   - docker-symfony
   - lychen-php-core
+  - lychen-php-event-bus
   - lychen-php-model
   - lychen-php-test
   - lychen-php-tiptap
@@ -15,3 +16,4 @@ tags:
   - dokploy
   - version
   - compose-local
+  - mco
