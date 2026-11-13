@@ -1,0 +1,29 @@
+name: 'OpenAPI | SDK sync (flora)'
+
+# Reports, without failing, the drift between flora-api and its committed spec
+# and SDK (libs/typescript/flora-api-sdk): see openapi-sdk-sync.yml.
+
+on:
+  pull_request:
+    paths:
+      - 'projects/flora/api/**'
+      - 'libs/php/**'
+      # The SDK and the generator's configuration.
+      - 'libs/typescript/flora-api-sdk/**'
+      - 'libs/typescript/api-sdk-config/**'
+      - '.moon/tasks/tag-api-sdk.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  packages: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sdk-sync:
+    uses: ./.github/workflows/openapi-sdk-sync.yml
+    with:
+      api: flora

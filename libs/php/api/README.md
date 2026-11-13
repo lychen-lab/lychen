@@ -110,10 +110,17 @@ points `item_uri_template` at the resource's item GET, since a `Patch` cannot de
 Conflict, with the workflow's reasons. flora-api's `SeedLot` (reserve, release, give) is
 the example.
 
+A transition that needs data names an input DTO in place of `input: false`, marked
+`#[Map(target: Entity::class)]` like a Post or Patch DTO. API Platform deserializes and
+validates it (422), then the processor maps it onto the entity before asking the workflow,
+so that a guard can require what was sent. On a 409 nothing is persisted, the input
+included. espace-api's `reject` transitions (`AreaProposalReject`: the rejection reason)
+are the example.
+
 The transition runs in one transaction: the processor locks the entity's row and reads it
-again (`SELECT ... FOR UPDATE`), checks the guards and applies the transition, then flushes
-and commits. A concurrent transition on the same entity waits for the lock, and then sees
-the outcome of the first: two requests cannot both pass the guard. And whatever the
+again (`SELECT ... FOR UPDATE`), maps the input onto it, checks the guards and applies the
+transition, then flushes and commits. A concurrent transition on the same entity waits for
+the lock, and then sees the outcome of the first: two requests cannot both pass the guard. And whatever the
 workflow's listeners persist commits with the new state or not at all, which is how an
 event recorded in lychen/event-bus's outbox from a `completed` listener is published if,
 and only if, the transition happened (see flora-api's `SeedLotWorkflowSubscriber`).

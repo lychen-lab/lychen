@@ -27,8 +27,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                 'transitions' => [
                     AreaRequestWorkflow::TRANSITION_ARCHIVE => [
                         'from' => [
+                            AreaRequestWorkflow::PLACE_PENDING_VALIDATION,
                             AreaRequestWorkflow::PLACE_ACTIVE,
-                            AreaRequestWorkflow::PLACE_REJECTED,
                         ],
                         'to' => AreaRequestWorkflow::PLACE_ARCHIVED,
                     ],
@@ -36,9 +36,10 @@ return static function (ContainerConfigurator $containerConfigurator): void {
                         'from' => AreaRequestWorkflow::PLACE_PENDING_VALIDATION,
                         'to' => AreaRequestWorkflow::PLACE_ACTIVE,
                     ],
+                    // Back to draft, like a proposal: the requester fixes it and submits again.
                     AreaRequestWorkflow::TRANSITION_REJECT => [
                         'from' => AreaRequestWorkflow::PLACE_PENDING_VALIDATION,
-                        'to' => AreaRequestWorkflow::PLACE_REJECTED,
+                        'to' => AreaRequestWorkflow::PLACE_DRAFT,
                     ],
                     AreaRequestWorkflow::TRANSITION_SUBMIT => [
                         'from' => AreaRequestWorkflow::PLACE_DRAFT,

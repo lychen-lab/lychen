@@ -6,7 +6,6 @@ export const AREA_REQUEST_STATE = {
   Draft: 'draft',
   PendingValidation: 'pending_validation',
   Active: 'active',
-  Rejected: 'rejected',
   Archived: 'archived',
 } as const;
 

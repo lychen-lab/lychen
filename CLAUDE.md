@@ -124,8 +124,8 @@ make phpunit c="--group e2e"                         # Run by group
 
 /libs              # Reusable libraries
   /css/core        # Tailwind design tokens
-  /typescript/     # 19 TypeScript libraries, incl. the API SDKs (<api>-api-sdk), their client (api-client), the front's business model (front-model-business) and api-mapping
-  /vue/            # 31 Vue component/composable libraries, incl. each API's front lib (<api>-api) and api-query
+  /typescript/     # 20 TypeScript libraries, incl. the API SDKs (<api>-api-sdk), their client (api-client), the front's business model (front-model-business) and api-mapping
+  /vue/            # 30 Vue component/composable libraries, incl. each API's front lib (<api>-api) and api-query
   /php/            # 8 PHP/Symfony bundle libraries
   /i18n/           # Translation files (per domain, e.g. tera)
   /assets/         # Shared brand/content assets per domain (fonts, logos, icons)

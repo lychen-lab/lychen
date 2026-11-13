@@ -15,6 +15,7 @@ tags:
   - dokploy
   - version
   - compose-local
+  - mco
 tasks:
   # Load test (load/README.md): N instances of the production image behind a
   # load balancer, one filled database, and k6 to send the requests.

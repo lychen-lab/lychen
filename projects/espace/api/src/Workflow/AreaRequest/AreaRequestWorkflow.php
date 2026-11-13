@@ -8,14 +8,12 @@ final class AreaRequestWorkflow
     public const string PLACE_DRAFT = 'draft';
     public const string PLACE_PENDING_VALIDATION = 'pending_validation';
     public const string PLACE_ACTIVE = 'active';
-    public const string PLACE_REJECTED = 'rejected';
     public const string PLACE_ARCHIVED = 'archived';
 
     public const array PLACES = [
         self::PLACE_DRAFT,
         self::PLACE_PENDING_VALIDATION,
         self::PLACE_ACTIVE,
-        self::PLACE_REJECTED,
         self::PLACE_ARCHIVED,
     ];
 
@@ -29,5 +27,11 @@ final class AreaRequestWorkflow
         self::TRANSITION_APPROVE,
         self::TRANSITION_REJECT,
         self::TRANSITION_ARCHIVE,
+    ];
+
+    /** The transitions moderation decides; the others are the requester's. */
+    public const array MODERATION_TRANSITIONS = [
+        self::TRANSITION_APPROVE,
+        self::TRANSITION_REJECT,
     ];
 }

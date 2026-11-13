@@ -29,17 +29,22 @@ use Symfony\Component\Workflow\TransitionBlocker;
  *   workflow. With the mapping on, $data would be the resource, and the object mapper would
  *   first map that resource back onto the entity.
  * - input: false: a transition takes no body (no deserialization, no validation of one).
+ *   A transition that needs data names an input DTO instead (`input: SeedLotGive::class`),
+ *   marked #[Map(target: Entity::class)] like a Post or Patch DTO: API Platform validates
+ *   it, and it is mapped onto the entity before the workflow is asked, so that the
+ *   workflow's guards see what was sent.
  * - options: `transition` names the transition; `workflow` names the workflow, for an entity
  *   that supports several.
  *
  * A transition the current state does not allow is a 409 Conflict, carrying the reasons the
- * workflow gives (its transition blockers).
+ * workflow gives (its transition blockers). Nothing is persisted then, the input included.
  *
  * The transition runs in one transaction, on the entity locked and read again under that lock:
  *
  *     BEGIN
  *     SELECT ... FOR UPDATE      -- a concurrent transition on the same entity waits here
- *     can(), apply()             -- guards and listeners see the committed state
+ *     map the input              -- onto the entity read again, if the transition takes one
+ *     can(), apply()             -- guards and listeners see the committed state and the input
  *     flush                      -- the entity, and what the listeners persisted
  *     COMMIT
  *
@@ -74,6 +79,14 @@ final readonly class WorkflowTransitionProcessor implements ProcessorInterface
             throw new \LogicException(\sprintf('The "%s" operation must name its transition: options: [\'transition\' => \'...\'].', $operation->getName()));
         }
 
+        // With an input DTO, $data is that DTO, and the entity is what the provider read.
+        $input = null;
+        $inputClass = $operation->getInput()['class'] ?? null;
+        if (\is_string($inputClass) && $data instanceof $inputClass) {
+            $input = $data;
+            $data = $context['read_data'] ?? null;
+        }
+
         if (!\is_object($data) || $data::class === $operation->getClass()) {
             throw new \LogicException(\sprintf('The "%s" operation must hand the entity over to %s: set map: false on it.', $operation->getName(), self::class));
         }
@@ -96,6 +109,11 @@ final readonly class WorkflowTransitionProcessor implements ProcessorInterface
             // relations, which PostgreSQL refuses on the nullable side of a LEFT JOIN.
             $manager->lock($data, LockMode::PESSIMISTIC_WRITE);
             $manager->refresh($data);
+
+            // After the refresh, which would otherwise discard it: the guards see what was sent.
+            if (null !== $input) {
+                $this->objectMapper->map($input, $data);
+            }
 
             if (!$workflow->can($data, $transition)) {
                 $reasons = array_map(
