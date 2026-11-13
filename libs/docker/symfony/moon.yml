@@ -1,0 +1,7 @@
+# The Dockerfile of every Symfony API (see its header). A project with no task
+# of its own: the APIs list it in their dependsOn so that a change to it marks
+# them affected, for their checks (project://^ in tag-symfony.yml) and for the
+# deploy workflow, which rebuilds and redeploys the affected projects.
+id: docker-symfony
+language: unknown
+layer: library

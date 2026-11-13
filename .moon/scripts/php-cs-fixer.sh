@@ -12,8 +12,8 @@
 set -euo pipefail
 
 # The one php-cs-fixer version of the monorepo: bumping it here bumps every
-# PHP project. Keep the PHP version in step with the APIs' runtime (Dockerfile):
-# php-cs-fixer parses with the PHP it runs on.
+# PHP project. Keep the PHP version in step with the APIs' runtime
+# (libs/docker/symfony/Dockerfile): php-cs-fixer parses with the PHP it runs on.
 image='ghcr.io/php-cs-fixer/php-cs-fixer:3.95.27-php8.5'
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"

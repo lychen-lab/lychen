@@ -60,6 +60,15 @@ task go in their own file under the same task id, e.g. `tag-docker.yml` builds a
 shared Dockerfile. Files merge in `inheritedBy.order` (default 500 for a tag condition, +100 for
 a stack, then by file name): set `order` when the merge order matters.
 
+Every Symfony API is built from one Dockerfile, `libs/docker/symfony/Dockerfile` (dev, test and
+production stages), with its own directory as the build context: what differs per API stays in
+its `frankenphp/` (Caddyfile, `conf.d`, entrypoint). An API that needs something else puts its own
+`Dockerfile` at its root: `.moon/scripts/docker-buildx.sh` (`docker-build`, `docker-push`,
+`ci-test-image`) then takes it instead of the shared one (`SHARED_DOCKERFILE`, set in
+`tag-symfony.yml`), and the API drops `dockerfile` and `additional_contexts` from its
+`compose.override.yml` (that context only lets compose's bake read a Dockerfile outside the
+build context).
+
 ```bash
 moon tera-app:dev        # Start dev server for a project
 moon storybook:dev       # Component workshop
@@ -132,7 +141,7 @@ make phpunit c="--group e2e"                         # Run by group
   /drawio/         # Architecture diagrams (.drawio) per domain
   /vite/           # Shared Vite plugins/config (e.g. SSG scaffold)
   /caddy/          # Shared Caddy server configs (pwa, ssg)
-  /docker/         # Shared Dockerfiles (e.g. frontend image)
+  /docker/         # Shared Dockerfiles (frontend image, Symfony APIs' image)
 
 /templates         # `moon generate` templates (api-sdk, typescript-lib, vue-lib, php-api)
 
