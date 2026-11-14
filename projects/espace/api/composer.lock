@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6bc46826052cdd88e93ff3f1778236d0",
+    "content-hash": "792d5d3ee3ac32b5fa2a7295b37696c8",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2026,42 +2026,6 @@
             }
         },
         {
-            "name": "lychen/tiptap",
-            "version": "0.0.0",
-            "dist": {
-                "type": "path",
-                "url": "../packages/tiptap",
-                "reference": "70a33b1241a26ce761590b7f474861ee07b16899"
-            },
-            "require": {
-                "ueberdosis/tiptap-php": "^2.2"
-            },
-            "require-dev": {
-                "zenstruck/foundry": "^2.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Lychen\\UtilTiptap\\": "src/"
-                }
-            },
-            "archive": {
-                "exclude": [
-                    "/moon.yml"
-                ]
-            },
-            "authors": [
-                {
-                    "name": "Lychen",
-                    "email": "bonjour@lychen.org"
-                }
-            ],
-            "transport-options": {
-                "symlink": false,
-                "relative": true
-            }
-        },
-        {
             "name": "lychen/zitadel",
             "version": "0.0.0",
             "dist": {
@@ -3181,84 +3145,6 @@
             "time": "2026-03-10T08:22:48+00:00"
         },
         {
-            "name": "scrivo/highlight.php",
-            "version": "v9.18.1.10",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/scrivo/highlight.php.git",
-                "reference": "850f4b44697a2552e892ffe71490ba2733c2fc6e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/scrivo/highlight.php/zipball/850f4b44697a2552e892ffe71490ba2733c2fc6e",
-                "reference": "850f4b44697a2552e892ffe71490ba2733c2fc6e",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "php": ">=5.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8|^5.7",
-                "sabberworm/php-css-parser": "^8.3",
-                "symfony/finder": "^2.8|^3.4|^5.4",
-                "symfony/var-dumper": "^2.8|^3.4|^5.4"
-            },
-            "suggest": {
-                "ext-mbstring": "Allows highlighting code with unicode characters and supports language with unicode keywords"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "HighlightUtilities/functions.php"
-                ],
-                "psr-0": {
-                    "Highlight\\": "",
-                    "HighlightUtilities\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Geert Bergman",
-                    "homepage": "http://www.scrivo.org/",
-                    "role": "Project Author"
-                },
-                {
-                    "name": "Vladimir Jimenez",
-                    "homepage": "https://allejo.io",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "Martin Folkers",
-                    "homepage": "https://twobrain.io",
-                    "role": "Contributor"
-                }
-            ],
-            "description": "Server side syntax highlighter that supports 185 languages. It's a PHP port of highlight.js",
-            "keywords": [
-                "code",
-                "highlight",
-                "highlight.js",
-                "highlight.php",
-                "syntax"
-            ],
-            "support": {
-                "issues": "https://github.com/scrivo/highlight.php/issues",
-                "source": "https://github.com/scrivo/highlight.php"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/allejo",
-                    "type": "github"
-                }
-            ],
-            "time": "2022-12-17T21:53:22+00:00"
-        },
-        {
             "name": "sentry/sentry",
             "version": "4.34.0",
             "source": {
@@ -3550,71 +3436,6 @@
                 "source": "https://github.com/snc/SncRedisBundle/tree/4.13.1"
             },
             "time": "2026-08-02T20:54:01+00:00"
-        },
-        {
-            "name": "spatie/shiki-php",
-            "version": "2.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/shiki-php.git",
-                "reference": "b8b0ca32d3a82bc5c533e68ffab96c5d4ec1b9ba"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/shiki-php/zipball/b8b0ca32d3a82bc5c533e68ffab96c5d4ec1b9ba",
-                "reference": "b8b0ca32d3a82bc5c533e68ffab96c5d4ec1b9ba",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "php": "^8.0",
-                "symfony/process": "^5.4|^6.4|^7.1|^8.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^v3.0",
-                "pestphp/pest": "^1.8",
-                "phpunit/phpunit": "^9.5",
-                "spatie/pest-plugin-snapshots": "^1.1",
-                "spatie/ray": "^1.10"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\ShikiPhp\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rias Van der Veken",
-                    "email": "rias@spatie.be",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Highlight code using Shiki in PHP",
-            "homepage": "https://github.com/spatie/shiki-php",
-            "keywords": [
-                "shiki",
-                "spatie"
-            ],
-            "support": {
-                "source": "https://github.com/spatie/shiki-php/tree/2.4.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/spatie",
-                    "type": "github"
-                }
-            ],
-            "time": "2026-04-27T14:27:52+00:00"
         },
         {
             "name": "symfony/amqp-messenger",
@@ -10078,75 +9899,6 @@
                 }
             ],
             "time": "2026-09-25T13:20:01+00:00"
-        },
-        {
-            "name": "ueberdosis/tiptap-php",
-            "version": "2.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ueberdosis/tiptap-php.git",
-                "reference": "242a7a150c1233a01622e050152699382fb20bea"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ueberdosis/tiptap-php/zipball/242a7a150c1233a01622e050152699382fb20bea",
-                "reference": "242a7a150c1233a01622e050152699382fb20bea",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.0",
-                "scrivo/highlight.php": "^9.18",
-                "spatie/shiki-php": "^2.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.5",
-                "pestphp/pest": "^1.21",
-                "phpunit/phpunit": "^9.5",
-                "vimeo/psalm": "^4.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Tiptap\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Hans Pagel",
-                    "email": "humans@tiptap.dev",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A PHP package to work with Tiptap output",
-            "homepage": "https://github.com/ueberdosis/tiptap-php",
-            "keywords": [
-                "prosemirror",
-                "tiptap",
-                "ueberdosis"
-            ],
-            "support": {
-                "issues": "https://github.com/ueberdosis/tiptap-php/issues",
-                "source": "https://github.com/ueberdosis/tiptap-php/tree/2.2.1"
-            },
-            "funding": [
-                {
-                    "url": "https://tiptap.dev/pricing",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/ueberdosis",
-                    "type": "github"
-                },
-                {
-                    "url": "https://opencollective.com/tiptap",
-                    "type": "open_collective"
-                }
-            ],
-            "time": "2026-10-19T10:48:00+00:00"
         },
         {
             "name": "webmozart/assert",
