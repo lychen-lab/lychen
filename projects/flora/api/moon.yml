@@ -4,7 +4,8 @@ dependsOn:
   - lychen-php-core
   - lychen-php-event-bus
   - lychen-php-model
-  - lychen-php-test
+  - id: lychen-php-test
+    scope: development
   - lychen-php-zitadel
 id: flora-api
 language: php

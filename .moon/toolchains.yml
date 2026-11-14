@@ -1,4 +1,8 @@
 $schema: ./cache/schemas/toolchain.json
+composer:
+  pathRepositorySymlink: false
+  pathRepositoryUrl: ../packages/*
+  plugin: https://github.com/nathan-de-pachtere/moon-composer-toolchain/releases/download/v0.1.0/composer_toolchain.wasm
 javascript:
   dedupeOnLockfileChange: true
   inferTasksFromScripts: false
