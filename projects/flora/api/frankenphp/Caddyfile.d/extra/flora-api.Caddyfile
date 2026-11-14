@@ -1,0 +1,24 @@
+# flora-api as a site of its own, for the other APIs that call flora by that
+# name (tera's FLORA_API_URL). An addition to the shared Caddyfile
+# (libs/caddy/symfony), imported at its top level.
+flora-api {
+	root * /app/public
+	encode zstd br gzip
+
+	log {
+		output discard
+	}
+
+	vulcain
+
+	@phpRoute {
+		not path /.well-known/mercure*
+		not file {path}
+	}
+	rewrite @phpRoute index.php
+
+	@frontController path index.php
+	php @frontController
+
+	file_server
+}

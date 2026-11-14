@@ -1,0 +1,7 @@
+# The Caddyfile of the PWA frontends that build an image (tags pwa + docker),
+# see libs/caddy/README.md. A project with no task of its own: its users list
+# it in their dependsOn so that a change to it marks them affected, for their
+# checks and for the deploy workflow, which rebuilds and redeploys them.
+id: caddy-pwa
+language: unknown
+layer: library

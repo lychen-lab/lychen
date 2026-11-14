@@ -1,4 +1,5 @@
 dependsOn:
+  - caddy-ssg
   - css-core
   - typescript-constants
   - typescript-espace
