@@ -1,0 +1,8 @@
+# The Caddyfile of the SSG frontends that build an image (tags ssg + docker)
+# and of storybook, see libs/caddy/README.md. A project with no task of its
+# own: its users list it in their dependsOn so that a change to it marks them
+# affected, for their checks and for the deploy workflow, which rebuilds and
+# redeploys them.
+id: caddy-ssg
+language: unknown
+layer: library

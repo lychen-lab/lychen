@@ -40,7 +40,7 @@ export const ssgOptions: ViteSSGOptions = {
     const host = process.env.VITE_UNHEAD_HOST || '${HOST}';
     generateSitemap({
       hostname: `https://${host}`,
-      // The root only redirects to a locale (libs/caddy/configs/ssg/Caddyfile).
+      // The root only redirects to a locale (libs/caddy/ssg/Caddyfile).
       exclude: ['/'],
       ...sitemapHints(),
     });

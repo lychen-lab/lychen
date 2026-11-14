@@ -1,0 +1,55 @@
+# The Caddyfile of every Symfony API (FrankenPHP), copied to /etc/caddy/Caddyfile
+# by libs/docker/symfony/Dockerfile. See libs/caddy/README.md:
+# - to add to it, an API puts Caddyfile fragments in frankenphp/Caddyfile.d/:
+#   global/ (global options), site/ (the API's site block), extra/ (other site
+#   blocks, snippets), imported below;
+# - to replace it, an API puts its own frankenphp/Caddyfile.
+# The {$CADDY_*} placeholders are FrankenPHP's: the same three places, set from
+# the environment at runtime.
+{
+	{$CADDY_GLOBAL_OPTIONS}
+	import Caddyfile.d/global/*.Caddyfile
+
+	frankenphp {
+		{$FRANKENPHP_CONFIG}
+	}
+}
+
+{$CADDY_EXTRA_CONFIG}
+import Caddyfile.d/extra/*.Caddyfile
+
+{$SERVER_NAME:localhost} {
+	log {
+		{$CADDY_SERVER_LOG_OPTIONS}
+		# Redact the authorization query parameter that can be set by Mercure
+		format filter {
+			request>uri query {
+				replace authorization REDACTED
+			}
+		}
+	}
+
+	root /app/public
+	encode zstd br gzip
+
+	# No hub here: every API publishes to the central one (projects/common/mercure).
+
+	vulcain
+
+	{$CADDY_SERVER_EXTRA_DIRECTIVES}
+	import Caddyfile.d/site/*.Caddyfile
+
+	# Disable Topics tracking if not enabled explicitly: https://github.com/jkarlin/topics
+	header ?Permissions-Policy "browsing-topics=()"
+
+	@phpRoute {
+		not path /.well-known/mercure*
+		not file {path}
+	}
+	rewrite @phpRoute index.php
+
+	@frontController path index.php
+	php @frontController
+
+	file_server
+}

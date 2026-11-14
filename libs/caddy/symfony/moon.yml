@@ -1,0 +1,7 @@
+# The Caddyfiles of every Symfony API, see libs/caddy/README.md. A project with
+# no task of its own: the APIs list it in their dependsOn so that a change to it
+# marks them affected, for their checks (project://^ in tag-symfony.yml) and for
+# the deploy workflow, which rebuilds and redeploys them.
+id: caddy-symfony
+language: unknown
+layer: library

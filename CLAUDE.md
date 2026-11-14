@@ -62,12 +62,21 @@ a stack, then by file name): set `order` when the merge order matters.
 
 Every Symfony API is built from one Dockerfile, `libs/docker/symfony/Dockerfile` (dev, test and
 production stages), with its own directory as the build context: what differs per API stays in
-its `frankenphp/` (Caddyfile, `conf.d`, entrypoint). An API that needs something else puts its own
-`Dockerfile` at its root: `.moon/scripts/docker-buildx.sh` (`docker-build`, `docker-push`,
-`ci-test-image`) then takes it instead of the shared one (`SHARED_DOCKERFILE`, set in
-`tag-symfony.yml`), and the API drops `dockerfile` and `additional_contexts` from its
-`compose.override.yml` (that context only lets compose's bake read a Dockerfile outside the
-build context).
+its `frankenphp/` (`conf.d`, entrypoint, additions to the Caddyfile). An API that needs something
+else puts its own `Dockerfile` at its root: `.moon/scripts/docker-buildx.sh` (`docker-build`,
+`docker-push`, `ci-test-image`) then takes it instead of the shared one (`SHARED_DOCKERFILE`, set
+in `tag-symfony.yml`), and the API drops `dockerfile` and the `docker-symfony` additional context
+from its `compose.override.yml` (that context only lets compose's bake read a Dockerfile outside
+the build context).
+
+Caddy follows the same rule (`libs/caddy/README.md`): one Caddyfile per kind of project
+(`libs/caddy/pwa`, `ssg`, `symfony`), passed to the image build as its `caddy-config` context
+(`SHARED_CADDY_CONFIG` in `tag-pwa.yml`, `tag-ssg.yml`, `tag-symfony.yml`; `additional_contexts`
+in an API's compose files). A project adds to it with fragments in its
+`Caddyfile.d/{global,site,extra}/` (an API's under `frankenphp/`), or replaces it with its own
+`Caddyfile`: it never copies it. Each config is a moon project (`caddy-pwa`, `caddy-ssg`,
+`caddy-symfony`) in the `dependsOn` of the projects whose image uses it, like `docker-symfony`,
+so that a change to it redeploys them.
 
 ```bash
 moon tera-app:dev        # Start dev server for a project
@@ -140,7 +149,7 @@ make phpunit c="--group e2e"                         # Run by group
   /assets/         # Shared brand/content assets per domain (fonts, logos, icons)
   /drawio/         # Architecture diagrams (.drawio) per domain
   /vite/           # Shared Vite plugins/config (e.g. SSG scaffold)
-  /caddy/          # Shared Caddy server configs (pwa, ssg)
+  /caddy/          # Shared Caddyfiles (pwa, ssg, symfony), see its README
   /docker/         # Shared Dockerfiles (frontend image, Symfony APIs' image)
 
 /templates         # `moon generate` templates (api-sdk, typescript-lib, vue-lib, php-api)
