@@ -147,7 +147,7 @@ make phpunit c="--group e2e"                         # Run by group
 
 /.moon             # Moonrepo configuration
   workspace.yml    # Workspace constraints, VCS hooks
-  toolchains.yml   # Node, Yarn, TypeScript settings
+  toolchains.yml   # Node, Yarn, TypeScript, Composer settings
   hooks/           # Pre-commit hook scripts
   tasks/           # Shared task definitions (all.yml, frontend.yml, frontend-docker.yml, php.yml, php-library.yml, symfony-ci.yml, symfony-docker.yml, tag-*.yml)
 ```
@@ -289,6 +289,11 @@ endpoint/area-activity/get-area-activities/   endpoint/area-activity/create-area
 
 - Workspace dependencies use `@lychen/<lib-name>` with `workspace:*` protocol
 - Each project/lib has a `moon.yml` declaring `dependsOn` and `tasks`
+- In a PHP project, the `lychen/*` packages of `composer.json` are written by moon from `dependsOn`
+  (the `composer` toolchain, on `moon sync projects` and before any task): `require`, `require-dev`
+  for a dependency of `scope: development`, and the `versions` of the `../packages/*` repository.
+  Declare a PHP library in `moon.yml`, never in `composer.json`, then update `composer.lock` with
+  the `composer update <package>` the sync prints
 - Global task definitions in `.moon/tasks/` are inherited by projects based on tags/layer
 - Frontend and backend code are strictly separated — libs do not cross layers
 
