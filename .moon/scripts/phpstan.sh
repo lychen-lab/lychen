@@ -64,5 +64,32 @@ if [[ -n "$workdir" ]]; then
   cd "$workdir"
 fi
 
+# Without its dependencies, PHPStan would report every class they define as
+# unknown: a thousand errors that say nothing about the code. Only the
+# project's container installs them, so this says how instead of running.
+# stderr only: the editor shows it in its log (and must not read "No such
+# file" in it, its "PHP binary not found" case).
+if [[ -f composer.json ]]; then
+  project="${PWD#"$root"/}"
+  id="$(basename "$(dirname "$PWD")")-$(basename "$PWD")"
+  restart="moon $id:down, then moon $id:dev"
+  if [[ ! -f vendor/autoload.php ]]; then
+    echo "PHPStan not run: $project has no vendor/. Its container installs it" \
+      "when it starts with an empty vendor/: start it with moon $id:dev (if" \
+      "it already runs: $restart)." >&2
+    exit 1
+  fi
+  # -L: a link is still a link only if its target is missing. Typically an
+  # old install's lychen/* bundles, linked to ../packages: a folder of the
+  # container only.
+  broken="$(find -L vendor -mindepth 2 -maxdepth 2 -type l -print -quit)"
+  if [[ -n "$broken" ]]; then
+    echo "PHPStan not run: $project/$broken links to $(readlink "$broken")," \
+      "which exists only in its container. Delete $project/vendor/, then" \
+      "restart the container ($restart): it reinstalls it." >&2
+    exit 1
+  fi
+fi
+
 # ${args[@]+...}: macOS's bash 3.2 treats an empty array as unbound under set -u.
 exec php "$tools/vendor/bin/phpstan" ${args[@]+"${args[@]}"}
