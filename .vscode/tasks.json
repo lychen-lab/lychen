@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      // An API's PHPStan, the CI's analysis (`moon <api>:lint`: level, baseline, Symfony and
+      // Doctrine extensions), with its errors in the Problems panel. Covers what Intelephense does
+      // not check as you type, such as an attribute's unknown argument. Errors in
+      // phpstan-baseline.neon are known debt and stay hidden. Run it with "Tasks: Run Task".
+      "label": "PHPStan",
+      "type": "shell",
+      "command": "moon ${input:api}-api:lint -- --error-format=raw",
+      "problemMatcher": {
+        "owner": "phpstan",
+        "source": "PHPStan",
+        "severity": "error",
+        // The API's directory is /app in its container: PHPStan prints /app/src/Foo.php:12:message.
+        "fileLocation": ["relative", "${workspaceFolder}/projects/${input:api}/api"],
+        "pattern": {
+          "regexp": "^.*?/app/(.+?\\.php):(\\d+):(.*)$",
+          "file": 1,
+          "line": 2,
+          "message": 3
+        }
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "api",
+      "type": "pickString",
+      "description": "API to analyse",
+      "options": ["espace", "flora", "tera"]
+    }
+  ]
+}

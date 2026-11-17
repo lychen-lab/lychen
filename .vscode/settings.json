@@ -137,6 +137,31 @@
   "php-cs-fixer.config": ".php-cs-fixer.php",
   // The built-in validation needs a PHP binary on the host; PHPStan runs in the API's container.
   "php.validate.enable": false,
+  // Diagnostics as you type come from Intelephense (bmewburn.vscode-intelephense-client): missing
+  // imports, undefined classes, methods, properties and variables, wrong argument counts and
+  // types. It reads the sources and each API's vendor/ on the host, which the dev container fills
+  // (its entrypoint runs composer install into an empty vendor/). PHPStan, the CI's analysis, runs
+  // through the "PHPStan" task (.vscode/tasks.json). Intelephense replaces the basic suggestions.
+  "php.suggest.basic": false,
+  // The APIs' PHP (libs/docker/symfony/Dockerfile), not the extension's latest default.
+  "intelephense.environment.phpVersion": "8.5.0",
+  // Intelephense's defaults, plus the worktrees (full copies of the monorepo: every class would be
+  // defined many times over) and the APIs' var/ (Symfony's compiled container, Doctrine proxies).
+  // Patterns are relative to the opened folder, so a worktree opened on its own is still indexed.
+  "intelephense.files.exclude": [
+    "**/.git/**",
+    "**/.svn/**",
+    "**/.hg/**",
+    "**/CVS/**",
+    "**/.DS_Store/**",
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/vendor/**/{Tests,tests}/**",
+    "**/.history/**",
+    "**/vendor/**/vendor/**",
+    ".claude/worktrees/**",
+    "projects/*/api/var/**"
+  ],
 
   // ─── Markdown ────────────────────────────────────────────────────────────────
   "[markdown]": {
