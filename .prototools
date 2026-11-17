@@ -2,6 +2,13 @@ moon = "2.5.4"
 node = "24.21.0"
 yarn = "4.18.0"
 npm = "11.19.1"
+# PHPStan's PHP on the host (.moon/scripts/phpstan.sh), for the editor and the lint tasks: the
+# APIs themselves run in their containers. Keep it on the APIs' PHP minor
+# (libs/docker/symfony/Dockerfile). A prebuilt static binary (static-php-cli), nothing to compile.
+php = "8.5.8"
+
+[tools.php]
+plugin = "github://KonstantinKai/proto-php-plugin@v0.5.0"
 
 [settings]
 auto-install = true

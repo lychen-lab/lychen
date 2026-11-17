@@ -135,8 +135,40 @@
   },
   "php-cs-fixer.executablePath": "${workspaceFolder}/.moon/scripts/php-cs-fixer.sh",
   "php-cs-fixer.config": ".php-cs-fixer.php",
-  // The built-in validation needs a PHP binary on the host; PHPStan runs in the API's container.
+  // Two analyses mark the PHP code in the editor, without the API's container:
+  // - Intelephense (bmewburn.vscode-intelephense-client), as you type: missing imports, undefined
+  //   classes, methods, properties and variables, wrong argument counts and types.
+  // - PHPStan (sanderronde.phpstan-vscode), on save: the CI's own analysis (level, Symfony and
+  //   Doctrine extensions, baseline) of the saved file's whole project. It also catches what
+  //   Intelephense doesn't, such as an attribute's unknown argument.
+  // Both read each API's vendor/ on the host, which the dev container fills (its entrypoint runs
+  // composer install into an empty vendor/). VSCode's own PHP features would only repeat them:
+  // Intelephense replaces the basic suggestions, and reports the syntax errors of `php -l`.
+  "php.suggest.basic": false,
   "php.validate.enable": false,
+  // PHPStan through the monorepo's runner: the PHP of .prototools, one install in tools/php. The
+  // extension takes the phpstan.dist.neon whose paths hold the saved file: each API its own.
+  "phpstan.binPath": ".moon/scripts/phpstan.sh",
+  "phpstan.configFile": "phpstan.dist.neon",
+  // The APIs' PHP (libs/docker/symfony/Dockerfile), not the extension's latest default.
+  "intelephense.environment.phpVersion": "8.5.0",
+  // Intelephense's defaults, plus the worktrees (full copies of the monorepo: every class would be
+  // defined many times over) and the APIs' var/ (Symfony's compiled container, Doctrine proxies).
+  // Patterns are relative to the opened folder, so a worktree opened on its own is still indexed.
+  "intelephense.files.exclude": [
+    "**/.git/**",
+    "**/.svn/**",
+    "**/.hg/**",
+    "**/CVS/**",
+    "**/.DS_Store/**",
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/vendor/**/{Tests,tests}/**",
+    "**/.history/**",
+    "**/vendor/**/vendor/**",
+    ".claude/worktrees/**",
+    "projects/*/api/var/**"
+  ],
 
   // ─── Markdown ────────────────────────────────────────────────────────────────
   "[markdown]": {
