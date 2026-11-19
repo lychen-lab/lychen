@@ -146,8 +146,9 @@
   // Intelephense replaces the basic suggestions, and reports the syntax errors of `php -l`.
   "php.suggest.basic": false,
   "php.validate.enable": false,
-  // PHPStan through the monorepo's runner: the PHP of .prototools, one install in tools/php. The
-  // extension takes the phpstan.dist.neon whose paths hold the saved file: each API its own.
+  // PHPStan through the monorepo's runner: its own image (tools/phpstan/Dockerfile), built on first
+  // use, Docker being all it needs. The extension takes the phpstan.dist.neon whose paths hold
+  // the saved file: each API its own.
   "phpstan.binPath": ".moon/scripts/phpstan.sh",
   "phpstan.configFile": "phpstan.dist.neon",
   // The APIs' PHP (libs/docker/symfony/Dockerfile), not the extension's latest default.
