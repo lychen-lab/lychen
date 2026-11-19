@@ -37,6 +37,16 @@ if ! command -v docker >/dev/null 2>&1; then
   exit 1
 fi
 
+# The image's inputs, named plainly when one is missing (a copy of this runner
+# into another repository without them), for the same reason as docker above.
+for input in Dockerfile composer.json composer.lock; do
+  if [[ ! -f "$tools/$input" ]]; then
+    echo "PHPStan not run: $tools/$input is missing. The image is built from" \
+      "tools/phpstan/Dockerfile, composer.json and composer.lock." >&2
+    exit 1
+  fi
+done
+
 # The image, rebuilt when its inputs change. Everything the build prints goes to
 # stderr: the editor parses PHPStan's stdout (--error-format=json).
 # sha256sum is coreutils' (Linux), shasum is macOS's.
