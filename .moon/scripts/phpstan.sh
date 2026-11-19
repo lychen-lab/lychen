@@ -29,10 +29,20 @@ cache="$root/.moon/cache/phpstan"
 
 # The image, rebuilt when its inputs change. Everything the build prints goes to
 # stderr: the editor parses PHPStan's stdout (--error-format=json).
-hash="$(cat "$tools/Dockerfile" "$tools/composer.lock" | (shasum -a 256 2>/dev/null || sha256sum) | cut -c1-12)"
+# sha256sum is coreutils' (Linux), shasum is macOS's.
+sha256() {
+  if command -v sha256sum >/dev/null 2>&1; then
+    sha256sum
+  else
+    shasum -a 256
+  fi
+}
+hash="$(cat "$tools/Dockerfile" "$tools/composer.lock" | sha256 | cut -c1-12)"
 image="lychen-local/phpstan:$hash"
 if ! docker image inspect "$image" >/dev/null 2>&1; then
-  docker build --quiet --tag "$image" "$tools" >&2
+  # BuildKit, which the Dockerfile's RUN --mount needs: the default since
+  # Docker 23, not on every Linux.
+  DOCKER_BUILDKIT=1 docker build --quiet --tag "$image" "$tools" >&2
   docker images --filter reference=lychen-local/phpstan --format '{{.Repository}}:{{.Tag}}' \
     | grep -v -x -F "$image" | xargs -r docker rmi >/dev/null 2>&1 || true
 fi
