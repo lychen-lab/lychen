@@ -27,6 +27,16 @@ tools="$root/tools/phpstan"
 # save only reanalyses what changed.
 cache="$root/.moon/cache/phpstan"
 
+# Said plainly, on stderr: the editor shows any other wording of a missing
+# docker as "PHP binary not found" (it reads "command not found" / "No such
+# file" that way), which points away from the cause.
+if ! command -v docker >/dev/null 2>&1; then
+  echo "PHPStan not run: docker is not in PATH ($PATH). PHPStan runs from a" \
+    "Docker image here: install Docker, or start the editor from a shell" \
+    "that has it." >&2
+  exit 1
+fi
+
 # The image, rebuilt when its inputs change. Everything the build prints goes to
 # stderr: the editor parses PHPStan's stdout (--error-format=json).
 # sha256sum is coreutils' (Linux), shasum is macOS's.
