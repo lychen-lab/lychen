@@ -5,7 +5,10 @@ namespace App\Tests\Security;
 use App\Constant\GardeningLevel;
 use App\Constant\LandInteractionMode;
 use App\Constant\LandSharingCondition;
+use App\Entity\LandApiKey;
+use App\Entity\PersonApiKey;
 use App\Repository\LandMemberRepository;
+use App\Security\Constant\LandMemberPermission;
 use App\Security\Constant\PersonPermission;
 use App\Security\Voter\LandRequestVoter;
 use App\Tests\Utils\Abstract\AbstractApiTestCase;
@@ -219,6 +222,80 @@ class LandRequestSecurityTest extends AbstractApiTestCase
         $this->browser()->actingAs($personApiKey)
             ->get('/api/land_requests/public')
             ->assertStatus(403);
+    }
+
+    public function testCollectionWithPersonApiKeyListsItsPersonsOwn(): void
+    {
+        $otherPerson = $this->createPerson();
+        $this->createLandRequest($otherPerson);
+        $person = $this->createPerson();
+        $landRequest = $this->createLandRequest($person);
+
+        // The key's id is the other person's: it must stand for its own person, not for that id
+        $this->giveNextRowTheIdOf(PersonApiKey::class, $otherPerson);
+        $personApiKey = $this->createPersonApiKey($person, ['permissions' => PersonPermission::ALL]);
+        $this->assertSame($otherPerson->getId(), $personApiKey->getId());
+
+        $this->assertEqualsCanonicalizing(
+            [$this->getIriFromResource($landRequest)],
+            $this->listIris($personApiKey, '/api/land_requests'),
+        );
+    }
+
+    public function testCollectionPublicWithPersonApiKeyHidesItsPersonsOwn(): void
+    {
+        $published = ['state' => LandRequestWorkflowPlace::PUBLISHED];
+        $otherPerson = $this->createPerson();
+        $otherLandRequest = $this->createLandRequest($otherPerson, $published);
+        $person = $this->createPerson();
+        $this->createLandRequest($person, $published);
+
+        $this->giveNextRowTheIdOf(PersonApiKey::class, $otherPerson);
+        $personApiKey = $this->createPersonApiKey($person, ['permissions' => PersonPermission::ALL]);
+        $this->assertSame($otherPerson->getId(), $personApiKey->getId());
+
+        // Same list as its person's: the others' published requests, not its person's own
+        $this->assertEqualsCanonicalizing(
+            [$this->getIriFromResource($otherLandRequest)],
+            $this->listIris($person, '/api/land_requests/public'),
+        );
+        $this->assertEqualsCanonicalizing(
+            [$this->getIriFromResource($otherLandRequest)],
+            $this->listIris($personApiKey, '/api/land_requests/public'),
+        );
+    }
+
+    public function testCollectionsWithLandApiKeyAreDenied(): void
+    {
+        // A land API key cannot be given a land request permission
+        $landApiKey = $this->createLandApiKey($this->createLandContext()->land, ['permissions' => LandMemberPermission::ALL]);
+
+        $this->browser()->actingAs($landApiKey)
+            ->get('/api/land_requests')
+            ->assertStatus(403);
+        $this->browser()->actingAs($landApiKey)
+            ->get('/api/land_requests/public')
+            ->assertStatus(403);
+    }
+
+    public function testCollectionsWithLandApiKeyListNoPersonsRequests(): void
+    {
+        $published = ['state' => LandRequestWorkflowPlace::PUBLISHED];
+        $person = $this->createPerson();
+        $this->createLandRequest($person);
+        $this->createLandRequest($person, $published);
+        $this->createLandRequest($this->createPerson(), $published);
+
+        // Should a land API key hold the permissions anyway (written to the database, not through the
+        // API), it stands for a land, not a person: not for the person whose id it has
+        $this->giveNextRowTheIdOf(LandApiKey::class, $person);
+        $landApiKey = $this->createLandApiKey($this->createLandContext()->land, [
+            'permissions' => [LandRequestVoter::COLLECTION, LandRequestVoter::COLLECTION_PUBLIC],
+        ]);
+        $this->assertSame($person->getId(), $landApiKey->getId());
+
+        $this->assertSame([], $this->listIris($landApiKey, '/api/land_requests'));
+        $this->assertSame([], $this->listIris($landApiKey, '/api/land_requests/public'));
     }
 
     public function testPublish()

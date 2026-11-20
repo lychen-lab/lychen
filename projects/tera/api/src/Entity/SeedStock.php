@@ -18,11 +18,13 @@ use Lychen\UtilModel\Trait\UpdatedAtTrait;
 
 #[ORM\Entity(repositoryClass: SeedStockRepository::class)]
 #[ApiResource]
+// To its person alone: no permission gives an API key access to seed stocks (SeedStockCustomExtension
+// scopes the collection the same way). The getter, as ExpressionLanguage cannot read a private property.
 #[GetCollection()]
 #[Post()]
-#[Patch(security: 'object.person == user')]
-#[Delete(security: 'object.person == user')]
-#[Get(security: 'object.person == user')]
+#[Patch(security: 'object.getPerson() === user')]
+#[Delete(security: 'object.getPerson() === user')]
+#[Get(security: 'object.getPerson() === user')]
 #[ORM\HasLifecycleCallbacks]
 class SeedStock extends AbstractIdOrmAndUlidApiIdentified
 {

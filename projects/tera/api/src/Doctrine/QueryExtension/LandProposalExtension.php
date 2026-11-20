@@ -7,9 +7,8 @@ use ApiPlatform\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
 use App\Entity\LandProposal;
-use App\Entity\Person;
-use App\Entity\PersonApiKey;
 use App\Repository\LandMemberRepository;
+use App\Security\Service\ActingPersonResolver;
 use App\Workflow\LandProposal\LandProposalWorkflowPlace;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -19,6 +18,7 @@ final readonly class LandProposalExtension implements QueryCollectionExtensionIn
     public function __construct(
         private Security $security,
         private LandMemberRepository $landMemberRepository,
+        private ActingPersonResolver $actingPersonResolver,
     ) {
     }
 
@@ -47,18 +47,14 @@ final readonly class LandProposalExtension implements QueryCollectionExtensionIn
         $queryBuilder->andWhere(sprintf('%s.state = :publicState', $rootAlias));
         $queryBuilder->setParameter('publicState', LandProposalWorkflowPlace::PUBLISHED);
 
-        // 2. Filter out proposals linked to lands the user is a member of
-        $user = $this->security->getUser();
-
-        if ($user instanceof PersonApiKey) {
-            $user = $user->getPerson();
-        }
+        // 2. Filter out proposals linked to lands the user (or the person its API key stands for) is a member of
+        $person = $this->actingPersonResolver->resolve();
 
         // Proceed only if the user is logged in and is a standard user (not admin, as admins might need to see all)
         // If you want admins to also be filtered, remove the !isGranted('ROLE_ADMIN') check
-        if ($user instanceof Person && !$this->security->isGranted('ROLE_ADMIN')) {
+        if (null !== $person && !$this->security->isGranted('ROLE_ADMIN')) {
             // Find Land IDs where the user is a member
-            $userLandIds = $this->landMemberRepository->findPersonLandIds($user);
+            $userLandIds = $this->landMemberRepository->findPersonLandIds($person);
 
             // If the user is a member of some lands, exclude proposals from those lands
             if (!empty($userLandIds)) {
