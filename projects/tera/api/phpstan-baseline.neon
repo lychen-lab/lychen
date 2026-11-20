@@ -61,28 +61,10 @@ parameters:
 			path: src/Doctrine/Listener/PersonApiKeyLinkOwnerListener.php
 
 		-
-			message: '#^Call to an undefined method Symfony\\Component\\Security\\Core\\User\\UserInterface\:\:getId\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Doctrine/QueryExtension/LandExtension.php
-
-		-
 			message: '#^Call to an undefined method ApiPlatform\\Metadata\\Operation\:\:getUriTemplate\(\)\.$#'
 			identifier: method.notFound
 			count: 1
 			path: src/Doctrine/QueryExtension/LandProposalExtension.php
-
-		-
-			message: '#^Call to an undefined method Symfony\\Component\\Security\\Core\\User\\UserInterface\:\:getId\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: src/Doctrine/QueryExtension/LandRequestExtension.php
-
-		-
-			message: '#^Call to an undefined method Symfony\\Component\\Security\\Core\\User\\UserInterface\:\:getId\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Doctrine/QueryExtension/SeedStockCustomExtension.php
 
 		-
 			message: '#^Property App\\Entity\\Land\:\:\$name type mapping mismatch\: property can contain string\|null but database expects string\.$#'

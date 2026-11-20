@@ -2,7 +2,10 @@
 
 namespace App\Tests\Security;
 
+use App\Entity\LandApiKey;
+use App\Entity\PersonApiKey;
 use App\Security\Constant\LandMemberPermission;
+use App\Security\Constant\PersonPermission;
 use App\Security\Voter\LandVoter;
 use App\Tests\Utils\Abstract\AbstractApiTestCase;
 
@@ -158,6 +161,39 @@ class LandSecurityTest extends AbstractApiTestCase
         $personApiKey = $this->createPersonApiKey($person, ['permissions' => LandMemberPermission::ALL],
             [LandVoter::COLLECTION]);
         $this->browser()->actingAs($personApiKey)
+            ->get('/api/lands')
+            ->assertStatus(403);
+    }
+
+    public function testCollectionWithPersonApiKeyListsItsPersonsLands(): void
+    {
+        $otherContext = $this->createLandContext();
+        $context = $this->createLandContext();
+
+        // The key's id is the other owner's: it must stand for its own person, not for that id
+        $this->giveNextRowTheIdOf(PersonApiKey::class, $otherContext->owner);
+        $personApiKey = $this->createPersonApiKey($context->owner, ['permissions' => PersonPermission::ALL]);
+        $this->assertSame($otherContext->owner->getId(), $personApiKey->getId());
+
+        $this->assertSame([$this->getIriFromResource($context->land)], $this->listIris($context->owner, '/api/lands'));
+        $this->assertSame([$this->getIriFromResource($context->land)], $this->listIris($personApiKey, '/api/lands'));
+    }
+
+    public function testCollectionWithLandApiKey(): void
+    {
+        $otherContext = $this->createLandContext();
+        $land = $this->createLandContext()->land;
+
+        // Should a land API key hold the land collection permission (written to the database, not
+        // through the API), it stands for a land, not a person: not for the person whose id it has
+        $this->giveNextRowTheIdOf(LandApiKey::class, $otherContext->owner);
+        $landApiKey = $this->createLandApiKey($land, ['permissions' => [LandVoter::COLLECTION]]);
+        $this->assertSame($otherContext->owner->getId(), $landApiKey->getId());
+
+        $this->assertSame([], $this->listIris($landApiKey, '/api/lands'));
+
+        // It cannot be given that permission through the API
+        $this->browser()->actingAs($this->createLandApiKey($land, ['permissions' => LandMemberPermission::ALL]))
             ->get('/api/lands')
             ->assertStatus(403);
     }

@@ -3,6 +3,7 @@
 namespace App\Tests\Utils\Abstract;
 
 use App\Tests\Utils\Trait\ContextTrait;
+use App\Tests\Utils\Trait\IdCollisionTrait;
 use App\Tests\Utils\Trait\LandApiKeyTrait;
 use App\Tests\Utils\Trait\LandAreaTrait;
 use App\Tests\Utils\Trait\LandCultivationPlanTrait;
@@ -19,9 +20,10 @@ use App\Tests\Utils\Trait\LandTrait;
 use App\Tests\Utils\Trait\PersonApiKeyTrait;
 use App\Tests\Utils\Trait\PersonTrait;
 use Lychen\Test\AbstractApiTestCase as LychenApiTestCase;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * The shared test case (Lychen\Test\AbstractApiTestCase) plus tera's own fixtures traits.
+ * The shared test case (Lychen\Test\AbstractApiTestCase) plus tera's own fixtures traits and helpers.
  */
 abstract class AbstractApiTestCase extends LychenApiTestCase
 {
@@ -41,4 +43,25 @@ abstract class AbstractApiTestCase extends LychenApiTestCase
     use PersonApiKeyTrait;
     use LandApiKeyTrait;
     use LandHarvestEntryTrait;
+    use IdCollisionTrait;
+
+    /**
+     * The IRIs of the members of the collection $user gets at $url, which must succeed.
+     *
+     * @return list<string>
+     */
+    protected function listIris(UserInterface $user, string $url): array
+    {
+        $iris = $this->browser()->actingAs($user)
+            ->get($url)
+            ->assertSuccessful()
+            ->json()
+            ->search('member[*]."@id"');
+
+        if (!is_array($iris)) {
+            throw new \UnexpectedValueException(sprintf('%s is not a collection.', $url));
+        }
+
+        return array_values(array_filter($iris, is_string(...)));
+    }
 }
