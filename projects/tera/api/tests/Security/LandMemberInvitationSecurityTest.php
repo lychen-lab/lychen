@@ -10,7 +10,7 @@ use function Zenstruck\Foundry\faker;
 
 class LandMemberInvitationSecurityTest extends AbstractApiTestCase
 {
-    public function testPut()
+    public function testPut(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandMemberInvitation($context);
@@ -25,7 +25,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
             ->assertStatus(405);
     }
 
-    public function testPost()
+    public function testPost(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();
@@ -49,7 +49,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();
@@ -88,7 +88,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testAccept()
+    public function testAccept(): void
     {
         $context1 = $this->createLandContext();
         $this->addOneLandMemberInvitation($context1);
@@ -113,7 +113,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testRefuse()
+    public function testRefuse(): void
     {
         $context1 = $this->createLandContext();
         $this->addOneLandMemberInvitation($context1);
@@ -137,7 +137,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();
@@ -161,7 +161,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();
@@ -185,7 +185,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testCollection()
+    public function testCollection(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();
@@ -216,7 +216,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testCheckUnicity()
+    public function testCheckUnicity(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();
@@ -242,7 +242,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testCollectionByEmail()
+    public function testCollectionByEmail(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();
@@ -254,7 +254,7 @@ class LandMemberInvitationSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testCantAddRolesFromAnotherLand()
+    public function testCantAddRolesFromAnotherLand(): void
     {
         $this->expectException(\Exception::class);
 

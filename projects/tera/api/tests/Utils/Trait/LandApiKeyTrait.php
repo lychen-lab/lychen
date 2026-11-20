@@ -8,6 +8,10 @@ use App\Factory\LandApiKeyFactory;
 
 trait LandApiKeyTrait
 {
+    /**
+     * @param array<string, mixed>|callable $attributes
+     * @param list<string>                  $excludedPermissions
+     */
     protected function createLandApiKey(Land $land, array|callable $attributes = [], array $excludedPermissions = []): LandApiKey
     {
         if ($attributes['permissions'] && $excludedPermissions) {

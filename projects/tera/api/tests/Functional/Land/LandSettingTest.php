@@ -7,7 +7,7 @@ use App\Tests\Utils\Abstract\AbstractApiTestCase;
 
 class LandSettingTest extends AbstractApiTestCase
 {
-    public function testGet()
+    public function testGet(): void
     {
         $context = $this->createLandContext();
 
@@ -30,7 +30,7 @@ class LandSettingTest extends AbstractApiTestCase
             ->assertJsonMatches('lookingForMember', $landSetting->isLookingForMember());
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $context = $this->createLandContext();
 

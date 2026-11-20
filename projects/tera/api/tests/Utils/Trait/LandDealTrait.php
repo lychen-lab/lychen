@@ -9,6 +9,9 @@ use App\Factory\LandDealFactory;
 
 trait LandDealTrait
 {
+    /**
+     * @param array<string, mixed>|null $attributes
+     */
     protected function createLandDeal(Land $land, Person $person, ?array $attributes = null): LandDeal
     {
         return LandDealFactory::new()->create(array_merge([

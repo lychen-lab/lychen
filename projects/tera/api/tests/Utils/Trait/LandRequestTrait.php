@@ -8,6 +8,9 @@ use App\Factory\LandRequestFactory;
 
 trait LandRequestTrait
 {
+    /**
+     * @param array<string, mixed>|null $attributes
+     */
     protected function createLandRequest(Person $person, ?array $attributes = null): LandRequest
     {
         return LandRequestFactory::new()->create(array_merge([

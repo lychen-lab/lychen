@@ -44,36 +44,36 @@ class Plant extends AbstractIdOrmAndUlidApiIdentified
     #[ApiProperty(
         description: 'A boolean indicating if the plant is perennial or not',
     )]
-    private ?bool $perennial = false;
+    private bool $perennial = false;
 
     #[Groups(['plant:get'])]
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private string $name;
 
     #[ORM\ManyToOne(inversedBy: 'plants')]
     private ?LunarType $lunarType = null;
 
     #[ORM\ManyToOne(inversedBy: 'plants')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Species $species = null;
+    private Species $species;
 
     #[ORM\OneToOne(inversedBy: 'plant', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Cultivation $cultivation = null;
+    private Cultivation $cultivation;
 
     #[Groups(['plant:get'])]
     #[ORM\Column]
     #[ApiProperty(
         description: 'A boolean indicating if the plant is melliferous (used by bees) or not',
     )]
-    private ?bool $melliferous = false;
+    private bool $melliferous = false;
 
     #[Groups(['plant:get'])]
     #[ORM\Column]
     #[ApiProperty(
         description: 'A boolean indicating if the plant is medicinal or not',
     )]
-    private ?bool $medicinal = false;
+    private bool $medicinal = false;
 
     /**
      * @var Collection<int, PlantPart>
@@ -126,7 +126,7 @@ class Plant extends AbstractIdOrmAndUlidApiIdentified
 
     public function getName(): ?string
     {
-        return $this->name;
+        return $this->name ?? null;
     }
 
     public function setName(string $name): static
@@ -150,10 +150,10 @@ class Plant extends AbstractIdOrmAndUlidApiIdentified
 
     public function getSpecies(): ?Species
     {
-        return $this->species;
+        return $this->species ?? null;
     }
 
-    public function setSpecies(?Species $species): static
+    public function setSpecies(Species $species): static
     {
         $this->species = $species;
 
@@ -162,7 +162,7 @@ class Plant extends AbstractIdOrmAndUlidApiIdentified
 
     public function getCultivation(): ?Cultivation
     {
-        return $this->cultivation;
+        return $this->cultivation ?? null;
     }
 
     public function setCultivation(Cultivation $cultivation): static
@@ -216,12 +216,8 @@ class Plant extends AbstractIdOrmAndUlidApiIdentified
 
     public function removePlantPart(PlantPart $plantPart): static
     {
-        if ($this->plantParts->removeElement($plantPart)) {
-            // set the owning side to null (unless already changed)
-            if ($plantPart->getPlant() === $this) {
-                $plantPart->setPlant(null);
-            }
-        }
+        // orphanRemoval: the removed plantPart is deleted at flush, as it cannot exist without its owner.
+        $this->plantParts->removeElement($plantPart);
 
         return $this;
     }

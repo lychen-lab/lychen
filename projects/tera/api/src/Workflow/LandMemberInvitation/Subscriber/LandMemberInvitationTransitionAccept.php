@@ -24,17 +24,21 @@ readonly class LandMemberInvitationTransitionAccept implements EventSubscriberIn
         ];
     }
 
+    /**
+     * @param Event<LandMemberInvitation> $event
+     */
     public function onTransition(Event $event): void
     {
-        /** @var LandMemberInvitation $landMemberInvitation */
         $landMemberInvitation = $event->getSubject();
 
         $landMemberInvitation->setAcceptedAt(new \DateTimeImmutable());
     }
 
+    /**
+     * @param Event<LandMemberInvitation> $event
+     */
     public function createLandMember(Event $event): void
     {
-        /** @var LandMemberInvitation $landMemberInvitation */
         $landMemberInvitation = $event->getSubject();
 
         $this->landMemberInvitationManager->linkToAuthenticatedPerson($landMemberInvitation);

@@ -5,6 +5,7 @@ namespace App\Provider;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Entity\Land;
+use App\Entity\LandMember;
 use App\Entity\Person;
 use App\Entity\PersonApiKey;
 use App\Repository\LandMemberRepository;
@@ -13,6 +14,9 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
+/**
+ * @implements ProviderInterface<LandMember>
+ */
 final readonly class LandMembersMeProvider implements ProviderInterface
 {
     public function __construct(
@@ -22,7 +26,7 @@ final readonly class LandMembersMeProvider implements ProviderInterface
     ) {
     }
 
-    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): LandMember
     {
         $user = $this->security->getUser();
 

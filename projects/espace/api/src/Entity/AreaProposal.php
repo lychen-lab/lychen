@@ -20,10 +20,10 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified implements AreaList
     use CreatedAtTrait;
 
     #[ORM\Column(length: 255)]
-    private ?string $title = null;
+    private string $title;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $description = null;
+    private string $description;
 
     #[ORM\Column(length: 255)]
     #[Choice(choices: AreaProposalWorkflow::PLACES)]
@@ -31,7 +31,7 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified implements AreaList
 
     #[ORM\ManyToOne(inversedBy: 'areaProposals')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Person $proposer = null;
+    private Person $proposer;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $archivedAt = null;
@@ -70,7 +70,7 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified implements AreaList
 
     public function getTitle(): ?string
     {
-        return $this->title;
+        return $this->title ?? null;
     }
 
     public function setTitle(string $title): static
@@ -82,7 +82,7 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified implements AreaList
 
     public function getDescription(): ?string
     {
-        return $this->description;
+        return $this->description ?? null;
     }
 
     public function setDescription(string $description): static
@@ -106,10 +106,10 @@ class AreaProposal extends AbstractIdOrmAndUuidApiIdentified implements AreaList
 
     public function getProposer(): ?Person
     {
-        return $this->proposer;
+        return $this->proposer ?? null;
     }
 
-    public function setProposer(?Person $proposer): static
+    public function setProposer(Person $proposer): static
     {
         $this->proposer = $proposer;
 

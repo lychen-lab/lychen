@@ -2,6 +2,7 @@
 
 namespace App\Tests\Utils\Trait;
 
+use App\Entity\LandRole;
 use App\Entity\Person;
 use App\Tests\Utils\Model\LandTestContext;
 
@@ -42,6 +43,9 @@ trait ContextTrait
         return $landTestContext;
     }
 
+    /**
+     * @param array<string, mixed>|null $attributes
+     */
     protected function addOneLandTask(LandTestContext $landTestContext, ?array $attributes = []): LandTestContext
     {
         $landTask = $this->createLandTask($landTestContext->land, $attributes);
@@ -51,6 +55,9 @@ trait ContextTrait
         return $landTestContext;
     }
 
+    /**
+     * @param list<string>|null $permissions
+     */
     protected function addOneLandRole(LandTestContext $landTestContext, ?array $permissions = null): LandTestContext
     {
         $landRole = $this->createLandRole($landTestContext->land, $permissions);
@@ -60,6 +67,9 @@ trait ContextTrait
         return $landTestContext;
     }
 
+    /**
+     * @param list<LandRole>|null $roles
+     */
     protected function addLandMember(LandTestContext $landTestContext, ?array $roles = null, ?Person $person = null): LandTestContext
     {
         if (!$person) {
@@ -71,6 +81,9 @@ trait ContextTrait
         return $landTestContext;
     }
 
+    /**
+     * @param list<LandRole>|null $roles
+     */
     protected function addOneLandMemberInvitation(LandTestContext $landTestContext, ?array $roles = null, ?string $email = null): LandTestContext
     {
         $landMemberInvitation = $this->createLandMemberInvitation($landTestContext->land, $email, $roles);
@@ -79,6 +92,9 @@ trait ContextTrait
         return $landTestContext;
     }
 
+    /**
+     * @param array<string, mixed>|null $attributes
+     */
     protected function addOneLandHarvestEntry(LandTestContext $landTestContext, ?array $attributes = []): LandTestContext
     {
         $landHarvestEntry = $this->createLandHarvestEntry($landTestContext->land, $attributes);

@@ -50,12 +50,12 @@ use Symfony\Component\Validator\Constraints as Assert;
     normalizationContext: ['groups' => ['land_task:collection']],
     security            : "is_granted('".LandTaskVoter::COLLECTION."')",
     parameters          : [
-        new QueryParameter(
+        'land' => new QueryParameter(
             key   : 'land',
             filter: LandFilter::class,
         ),
         'order[:property]' => new QueryParameter(filter: 'land_task.order_filter'),
-        new QueryParameter(key    : 'state',
+        'state' => new QueryParameter(key    : 'state',
             schema : ['type' => 'string',
                 'enum' => LandTaskWorkflowPlace::PLACES,
                 'example' => LandTaskWorkflowPlace::TO_BE_DONE],
@@ -92,15 +92,17 @@ class LandTask extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
     #[ORM\Column(length: 255)]
     #[Groups(['land_task:collection', 'land_task:get', 'land_task:patch', 'land_task:post'])]
     #[Assert\NotBlank()]
-    private ?string $title = null;
+    private string $title;
 
     #[ORM\ManyToOne(inversedBy: 'landTasks')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['land_task:get', 'land_task:post', 'land_task:patch:output'])]
-    private ?Land $land = null;
+    private Land $land;
 
     /**
      * @var array|null Tiptap JSON Object
+     *
+     * @phpstan-var array<string, mixed>|null
      */
     #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['land_task:get', 'land_task:patch', 'land_task:post'])]
@@ -125,7 +127,7 @@ class LandTask extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
     #[ApiProperty(openapiContext: ['type' => 'string',
         'enum' => LandTaskWorkflowPlace::PLACES,
         'example' => LandTaskWorkflowPlace::TO_BE_DONE])]
-    private ?string $state = LandTaskWorkflowPlace::TO_BE_DONE;
+    private string $state = LandTaskWorkflowPlace::TO_BE_DONE;
 
     #[Groups(['land_task:collection', 'land_task:get', 'land_task:patch:output', 'land_task:post:output'])]
     public function getUlid(): Ulid
@@ -147,7 +149,7 @@ class LandTask extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
 
     public function getTitle(): ?string
     {
-        return $this->title;
+        return $this->title ?? null;
     }
 
     public function setTitle(string $title): static
@@ -159,21 +161,32 @@ class LandTask extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
 
     public function getLand(): ?Land
     {
-        return $this->land;
+        return $this->land ?? null;
     }
 
     public function setLand(?Land $land): static
     {
-        $this->land = $land;
+        // Null (from Land::removeLandTask()) leaves it unset, as Doctrine does for a NOT NULL column.
+        if (null === $land) {
+            unset($this->land);
+        } else {
+            $this->land = $land;
+        }
 
         return $this;
     }
 
+    /**
+     * @phpstan-return array<string, mixed>|null
+     */
     public function getContent(): ?array
     {
         return $this->content;
     }
 
+    /**
+     * @phpstan-param array<string, mixed>|null $content
+     */
     public function setContent(?array $content): static
     {
         $this->content = $content;

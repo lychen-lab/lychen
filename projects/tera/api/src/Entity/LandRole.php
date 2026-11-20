@@ -49,7 +49,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     normalizationContext: ['groups' => ['land_role:collection']],
     security            : "is_granted('".LandRoleVoter::COLLECTION."')",
     parameters          : [
-        new QueryParameter(
+        'land' => new QueryParameter(
             key   : 'land',
             filter: LandFilter::class,
         ),
@@ -73,13 +73,13 @@ class LandRole extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
         'land_role:post',
         'land_member_invitation:collection-by-email'])]
     #[Assert\NotBlank()]
-    private ?string $name = null;
+    private string $name;
 
     #[Gedmo\SortableGroup()]
     #[ORM\ManyToOne(inversedBy: 'landRoles')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['land_role:get', 'land_role:post'])]
-    private ?Land $land = null;
+    private Land $land;
 
     /**
      * @var Collection<int, LandMember>
@@ -88,6 +88,9 @@ class LandRole extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
     #[Groups(['land_role:collection', 'land_role:get'])]
     private Collection $landMembers;
 
+    /**
+     * @phpstan-var array<string>|null
+     */
     #[ORM\Column(nullable: true, options: ['jsonb' => true])]
     #[Assert\Choice(choices: LandMemberPermission::ALL, multiple: true)]
     #[Groups(['land_role:collection', 'land_role:get', 'land_role:patch', 'land_role:post', 'land_member:me'])]
@@ -124,7 +127,7 @@ class LandRole extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
 
     public function getName(): ?string
     {
-        return $this->name;
+        return $this->name ?? null;
     }
 
     public function setName(string $name): static
@@ -136,12 +139,17 @@ class LandRole extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
 
     public function getLand(): ?Land
     {
-        return $this->land;
+        return $this->land ?? null;
     }
 
     public function setLand(?Land $land): static
     {
-        $this->land = $land;
+        // Null (from Land::removeLandRole()) leaves it unset, as Doctrine does for a NOT NULL column.
+        if (null === $land) {
+            unset($this->land);
+        } else {
+            $this->land = $land;
+        }
 
         return $this;
     }
@@ -173,11 +181,17 @@ class LandRole extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
         return $this;
     }
 
+    /**
+     * @phpstan-return array<string>|null
+     */
     public function getPermissions(): ?array
     {
         return $this->permissions;
     }
 
+    /**
+     * @phpstan-param array<string>|null $permissions
+     */
     public function setPermissions(?array $permissions): static
     {
         $this->permissions = $permissions;

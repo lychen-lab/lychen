@@ -30,11 +30,11 @@ class SeedStock extends AbstractIdOrmAndUlidApiIdentified
     use UpdatedAtTrait;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private string $name;
 
     #[ORM\ManyToOne(inversedBy: 'seedStocks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Person $person = null;
+    private Person $person;
 
     /**
      * @var Collection<int, SeedStockEntry>
@@ -50,7 +50,7 @@ class SeedStock extends AbstractIdOrmAndUlidApiIdentified
 
     public function getName(): ?string
     {
-        return $this->name;
+        return $this->name ?? null;
     }
 
     public function setName(string $name): static
@@ -62,12 +62,17 @@ class SeedStock extends AbstractIdOrmAndUlidApiIdentified
 
     public function getPerson(): ?Person
     {
-        return $this->person;
+        return $this->person ?? null;
     }
 
     public function setPerson(?Person $person): static
     {
-        $this->person = $person;
+        // Null (from Person::removeSeedStock()) leaves it unset, as Doctrine does for a NOT NULL column.
+        if (null === $person) {
+            unset($this->person);
+        } else {
+            $this->person = $person;
+        }
 
         return $this;
     }

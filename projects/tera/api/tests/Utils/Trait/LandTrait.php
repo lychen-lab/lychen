@@ -8,6 +8,9 @@ use App\Factory\LandFactory;
 
 trait LandTrait
 {
+    /**
+     * @return list<array{int, int}>
+     */
     public static function landDataProvider(): array
     {
         return [

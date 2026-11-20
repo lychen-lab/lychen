@@ -7,7 +7,7 @@ use App\Tests\Utils\Abstract\AbstractApiTestCase;
 
 class LandSettingSecurityTest extends AbstractApiTestCase
 {
-    public function testPut()
+    public function testPut(): void
     {
         $context = $this->createLandContext();
 
@@ -21,7 +21,7 @@ class LandSettingSecurityTest extends AbstractApiTestCase
             ->assertStatus(405);
     }
 
-    public function testPost()
+    public function testPost(): void
     {
         $owner = $this->createPerson();
 
@@ -35,7 +35,7 @@ class LandSettingSecurityTest extends AbstractApiTestCase
             ->assertStatus(404);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $context = $this->createLandContext();
 
@@ -49,7 +49,7 @@ class LandSettingSecurityTest extends AbstractApiTestCase
             ->assertStatus(405);
     }
 
-    public function testCollection()
+    public function testCollection(): void
     {
         $owner = $this->createPerson();
 
@@ -63,7 +63,7 @@ class LandSettingSecurityTest extends AbstractApiTestCase
             ->assertStatus(404);
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();
@@ -86,7 +86,7 @@ class LandSettingSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();

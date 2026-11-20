@@ -6,8 +6,12 @@ use ApiPlatform\Doctrine\Orm\Paginator;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\Pagination\Pagination;
 use ApiPlatform\State\ProviderInterface;
+use App\Entity\Land;
 use App\Repository\LandRepository;
 
+/**
+ * @implements ProviderInterface<Land>
+ */
 final readonly class LandsLookingForMembersProvider implements ProviderInterface
 {
     public function __construct(
@@ -16,7 +20,7 @@ final readonly class LandsLookingForMembersProvider implements ProviderInterface
     ) {
     }
 
-    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): Paginator
     {
         [$page, , $limit] = $this->pagination->getPagination($operation, $context);
 

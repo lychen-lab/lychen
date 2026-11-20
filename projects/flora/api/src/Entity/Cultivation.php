@@ -103,11 +103,11 @@ class Cultivation extends AbstractIdOrmAndUlidApiIdentified
 
     #[ORM\ManyToOne(inversedBy: 'cultivations')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Maturity $maturity = null;
+    private Maturity $maturity;
 
     #[ORM\ManyToOne(inversedBy: 'cultivations')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Exposure $exposure = null;
+    private Exposure $exposure;
 
     #[Groups(['cultivation:get'])]
     #[ORM\Column(nullable: true)]
@@ -250,10 +250,10 @@ class Cultivation extends AbstractIdOrmAndUlidApiIdentified
 
     public function getMaturity(): ?Maturity
     {
-        return $this->maturity;
+        return $this->maturity ?? null;
     }
 
-    public function setMaturity(?Maturity $maturity): static
+    public function setMaturity(Maturity $maturity): static
     {
         $this->maturity = $maturity;
 
@@ -262,10 +262,10 @@ class Cultivation extends AbstractIdOrmAndUlidApiIdentified
 
     public function getExposure(): ?Exposure
     {
-        return $this->exposure;
+        return $this->exposure ?? null;
     }
 
-    public function setExposure(?Exposure $exposure): static
+    public function setExposure(Exposure $exposure): static
     {
         $this->exposure = $exposure;
 

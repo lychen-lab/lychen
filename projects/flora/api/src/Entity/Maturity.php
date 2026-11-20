@@ -40,7 +40,7 @@ class Maturity extends AbstractIdOrmAndUlidApiIdentified
 
     #[Groups(['maturity:get'])]
     #[ORM\Column(length: 100, unique: true)]
-    private ?string $code = null;
+    private string $code;
 
     /**
      * @var Collection<int, Cultivation>
@@ -56,7 +56,7 @@ class Maturity extends AbstractIdOrmAndUlidApiIdentified
 
     public function getCode(): ?string
     {
-        return $this->code;
+        return $this->code ?? null;
     }
 
     public function setCode(string $code): static
@@ -98,12 +98,8 @@ class Maturity extends AbstractIdOrmAndUlidApiIdentified
 
     public function removeCultivation(Cultivation $cultivation): static
     {
-        if ($this->cultivations->removeElement($cultivation)) {
-            // set the owning side to null (unless already changed)
-            if ($cultivation->getMaturity() === $this) {
-                $cultivation->setMaturity(null);
-            }
-        }
+        // The inverse side only: cultivation keeps its owner (a NOT NULL column) until it is given another one.
+        $this->cultivations->removeElement($cultivation);
 
         return $this;
     }

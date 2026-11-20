@@ -73,7 +73,7 @@ class LandRequestTest extends AbstractApiTestCase
             ->assertStatus(200);
     }
 
-    public function testCollection()
+    public function testCollection(): void
     {
         $person = $this->createPerson();
 
@@ -117,7 +117,7 @@ class LandRequestTest extends AbstractApiTestCase
             ->assertJsonMatches('member[0].ulid', $landRequest4->getUlid()->toString());
     }
 
-    public function testCollectionPublic()
+    public function testCollectionPublic(): void
     {
         $person1 = $this->createPerson();
         $person2 = $this->createPerson();

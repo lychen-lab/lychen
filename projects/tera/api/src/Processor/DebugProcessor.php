@@ -7,7 +7,11 @@ use ApiPlatform\State\ProcessorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 
-/** Only for dev */
+/**
+ * Only for dev.
+ *
+ * @implements ProcessorInterface<object, void>
+ */
 class DebugProcessor implements ProcessorInterface
 {
     public function __construct(private readonly EntityManagerInterface $entityManager)

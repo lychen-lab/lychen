@@ -146,7 +146,7 @@ abstract class AbstractLandAwareVoterInterface extends AbstractPermissionVoter i
     /**
      * Handle custom attributes not covered by standard CRUD operations.
      *
-     * @return bool|null Return bool for handled attributes, null for unhandled ones
+     * @return bool the vote on a handled attribute; an unhandled one throws
      */
     protected function voteOnCustomAttribute(string $attribute,
         mixed $subject,

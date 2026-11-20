@@ -10,7 +10,7 @@ use Zenstruck\Browser\Json;
 
 class LandMemberTest extends AbstractApiTestCase
 {
-    public function testGet()
+    public function testGet(): void
     {
         $context = $this->createLandContext();
         $this->addLandMember($context);
@@ -57,7 +57,7 @@ class LandMemberTest extends AbstractApiTestCase
             });
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $context = $this->createLandContext();
         $this->addLandMember($context);
@@ -99,7 +99,7 @@ class LandMemberTest extends AbstractApiTestCase
             });
     }
 
-    public function testCollection()
+    public function testCollection(): void
     {
         $context = $this->createLandContext();
         $this->addLandMember($context);
@@ -127,7 +127,7 @@ class LandMemberTest extends AbstractApiTestCase
             ->assertSuccessful();
     }
 
-    public function testCollectionPagination()
+    public function testCollectionPagination(): void
     {
         $context = $this->createLandContext();
         array_map(fn () => $this->addLandMember($context), range(1, 25));
@@ -144,7 +144,7 @@ class LandMemberTest extends AbstractApiTestCase
             });
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $context = $this->createLandContext();
         $context = $this->addLandMember($context);
@@ -181,7 +181,7 @@ class LandMemberTest extends AbstractApiTestCase
             ->assertStatus(204);
     }
 
-    public function testCantDeleteOwner()
+    public function testCantDeleteOwner(): void
     {
         $context = $this->createLandContext();
 
@@ -200,7 +200,7 @@ class LandMemberTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testMe()
+    public function testMe(): void
     {
         $context = $this->createLandContext();
         $context2 = $this->createLandContext();

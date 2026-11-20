@@ -40,11 +40,11 @@ class Species extends AbstractIdOrmAndUlidApiIdentified
 
     #[Groups(['species:get'])]
     #[ORM\Column(length: 100, unique: true)]
-    private ?string $code = null;
+    private string $code;
 
     #[ORM\ManyToOne(inversedBy: 'species')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Family $family = null;
+    private Family $family;
 
     /**
      * @var Collection<int, Plant>
@@ -60,7 +60,7 @@ class Species extends AbstractIdOrmAndUlidApiIdentified
 
     public function getCode(): ?string
     {
-        return $this->code;
+        return $this->code ?? null;
     }
 
     public function setCode(string $code): static
@@ -84,10 +84,10 @@ class Species extends AbstractIdOrmAndUlidApiIdentified
 
     public function getFamily(): ?Family
     {
-        return $this->family;
+        return $this->family ?? null;
     }
 
-    public function setFamily(?Family $family): static
+    public function setFamily(Family $family): static
     {
         $this->family = $family;
 
@@ -114,12 +114,8 @@ class Species extends AbstractIdOrmAndUlidApiIdentified
 
     public function removePlant(Plant $plant): static
     {
-        if ($this->plants->removeElement($plant)) {
-            // set the owning side to null (unless already changed)
-            if ($plant->getSpecies() === $this) {
-                $plant->setSpecies(null);
-            }
-        }
+        // The inverse side only: plant keeps its owner (a NOT NULL column) until it is given another one.
+        $this->plants->removeElement($plant);
 
         return $this;
     }

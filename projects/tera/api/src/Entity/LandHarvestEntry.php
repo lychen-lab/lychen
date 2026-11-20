@@ -49,7 +49,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     normalizationContext: ['groups' => ['land_harvest_entry:collection']],
     security            : "is_granted('".LandHarvestEntryVoter::COLLECTION."')",
     parameters          : [
-        new QueryParameter(
+        'land' => new QueryParameter(
             key   : 'land',
             filter: LandFilter::class,
         ),
@@ -67,7 +67,7 @@ class LandHarvestEntry extends AbstractIdOrmAndUlidApiIdentified implements Land
         'land_harvest_entry:post'])]
     #[ORM\ManyToOne(inversedBy: 'landHarvestEntries')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Land $land = null;
+    private Land $land;
 
     #[Groups(['land_harvest_entry:collection',
         'land_harvest_entry:get',
@@ -76,10 +76,12 @@ class LandHarvestEntry extends AbstractIdOrmAndUlidApiIdentified implements Land
     #[ORM\Column]
     #[Assert\NotNull]
     #[Assert\GreaterThan(0)]
-    private ?int $weight = null;
+    private int $weight;
 
     /**
      * @var array|null Tiptap JSON Object
+     *
+     * @phpstan-var array<string, mixed>|null
      */
     #[Groups(['land_harvest_entry:collection',
         'land_harvest_entry:get',
@@ -94,7 +96,7 @@ class LandHarvestEntry extends AbstractIdOrmAndUlidApiIdentified implements Land
         'land_harvest_entry:post'])]
     #[ORM\Column]
     #[Assert\LessThanOrEqual('today')]
-    private ?\DateTimeImmutable $harvestedAt = null;
+    private \DateTimeImmutable $harvestedAt;
 
     #[Groups(['land_harvest_entry:collection',
         'land_harvest_entry:get',
@@ -107,7 +109,7 @@ class LandHarvestEntry extends AbstractIdOrmAndUlidApiIdentified implements Land
         'enum' => HarvestQuality::ALL,
         'example' => HarvestQuality::GOOD,
     ])]
-    private ?string $quality = HarvestQuality::STANDARD;
+    private string $quality = HarvestQuality::STANDARD;
 
     #[Groups(['land_harvest_entry:collection',
         'land_harvest_entry:get',
@@ -146,19 +148,24 @@ class LandHarvestEntry extends AbstractIdOrmAndUlidApiIdentified implements Land
 
     public function getLand(): ?Land
     {
-        return $this->land;
+        return $this->land ?? null;
     }
 
     public function setLand(?Land $land): static
     {
-        $this->land = $land;
+        // Null (from Land::removeLandHarvestEntry()) leaves it unset, as Doctrine does for a NOT NULL column.
+        if (null === $land) {
+            unset($this->land);
+        } else {
+            $this->land = $land;
+        }
 
         return $this;
     }
 
     public function getWeight(): ?int
     {
-        return $this->weight;
+        return $this->weight ?? null;
     }
 
     public function setWeight(int $weight): static
@@ -168,11 +175,17 @@ class LandHarvestEntry extends AbstractIdOrmAndUlidApiIdentified implements Land
         return $this;
     }
 
+    /**
+     * @phpstan-return array<string, mixed>|null
+     */
     public function getNotes(): ?array
     {
         return $this->notes;
     }
 
+    /**
+     * @phpstan-param array<string, mixed>|null $notes
+     */
     public function setNotes(?array $notes): static
     {
         $this->notes = $notes;
@@ -182,7 +195,7 @@ class LandHarvestEntry extends AbstractIdOrmAndUlidApiIdentified implements Land
 
     public function getHarvestedAt(): ?\DateTimeImmutable
     {
-        return $this->harvestedAt;
+        return $this->harvestedAt ?? null;
     }
 
     public function setHarvestedAt(\DateTimeImmutable $harvestedAt): static
@@ -195,7 +208,7 @@ class LandHarvestEntry extends AbstractIdOrmAndUlidApiIdentified implements Land
     #[ORM\PrePersist]
     public function setHarvestedAtValue(): void
     {
-        if (null === $this->harvestedAt) {
+        if (!isset($this->harvestedAt)) {
             $this->harvestedAt = new \DateTimeImmutable();
         }
     }

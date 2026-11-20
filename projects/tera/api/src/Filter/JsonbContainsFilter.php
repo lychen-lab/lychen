@@ -14,12 +14,15 @@ use Psr\Log\LoggerInterface;
 
 final class JsonbContainsFilter extends AbstractFilter
 {
+    /**
+     * @param array<string, mixed>|null $properties
+     */
     public function __construct(
         ManagerRegistry $managerRegistry,
         protected LoggerInterface $logger, // Use promoted properties
         ?array $properties = null,
     ) {
-        parent::__construct($managerRegistry, $properties);
+        parent::__construct($managerRegistry, $logger, $properties);
     }
 
     /**
@@ -138,11 +141,6 @@ final class JsonbContainsFilter extends AbstractFilter
             }
         } else {
             // Ignore null, empty strings, or other unexpected types
-            return;
-        }
-
-        // If we don't have a valid JSON value string by now, return
-        if (null === $finalJsonValue) {
             return;
         }
 

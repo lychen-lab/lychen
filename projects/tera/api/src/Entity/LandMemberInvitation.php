@@ -71,7 +71,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     normalizationContext: ['groups' => ['land_member_invitation:collection']],
     security            : "is_granted('".LandMemberInvitationVoter::COLLECTION."')",
     parameters          : [
-        new QueryParameter(
+        'land' => new QueryParameter(
             key   : 'land',
             filter: LandFilter::class,
         ),
@@ -81,7 +81,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     normalizationContext: ['groups' => ['land_member_invitation:collection-by-email']],
     security            : "is_granted('".LandMemberInvitationVoter::COLLECTION_BY_EMAIL."') and user.getEmail() === request.query.get('email')",
     parameters          : [
-        new QueryParameter(
+        'email' => new QueryParameter(
             key     : 'email',
             schema  : ['type' => 'string'],
             openApi : new Parameter(
@@ -94,7 +94,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             filter  : EmailFilter::class,
             required: true
         ),
-        new QueryParameter(
+        'state' => new QueryParameter(
             key    : 'state',
             schema : [
                 'type' => 'string',
@@ -170,14 +170,14 @@ class LandMemberInvitation extends AbstractIdOrmAndUlidApiIdentified implements 
     #[Groups(['land_member_invitation:get',
         'land_member_invitation:post',
         'land_member_invitation:collection-by-email'])]
-    private ?Land $land = null;
+    private Land $land;
 
     #[ORM\Column(length: 255)]
     #[Assert\Email()]
     #[Groups(['land_member_invitation:collection',
         'land_member_invitation:get',
         'land_member_invitation:post'])]
-    private ?string $email = null;
+    private string $email;
 
     /**
      * @var Collection<int, LandRole>
@@ -194,7 +194,7 @@ class LandMemberInvitation extends AbstractIdOrmAndUlidApiIdentified implements 
     #[ORM\Column(length: 255)]
     #[Groups(['land_member_invitation:collection', 'land_member_invitation:get'])]
     #[Assert\Choice(choices: LandMemberInvitationWorkflowPlace::PLACES)]
-    private ?string $state = LandMemberInvitationWorkflowPlace::PENDING;
+    private string $state = LandMemberInvitationWorkflowPlace::PENDING;
 
     #[ORM\ManyToOne(inversedBy: 'landMemberInvitations')]
     #[Groups(['land_member_invitation:collection',
@@ -231,19 +231,24 @@ class LandMemberInvitation extends AbstractIdOrmAndUlidApiIdentified implements 
 
     public function getLand(): ?Land
     {
-        return $this->land;
+        return $this->land ?? null;
     }
 
     public function setLand(?Land $land): static
     {
-        $this->land = $land;
+        // Null (from Land::removeLandMemberInvitation()) leaves it unset, as Doctrine does for a NOT NULL column.
+        if (null === $land) {
+            unset($this->land);
+        } else {
+            $this->land = $land;
+        }
 
         return $this;
     }
 
     public function getEmail(): ?string
     {
-        return $this->email;
+        return $this->email ?? null;
     }
 
     public function setEmail(string $email): static

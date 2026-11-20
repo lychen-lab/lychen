@@ -14,6 +14,9 @@ use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 
 class LandFilter extends AbstractFilter
 {
+    /**
+     * @param array<string, mixed>|null $properties
+     */
     public function __construct(ManagerRegistry $managerRegistry,
         ?LoggerInterface $logger = null,
         ?array $properties = null,
@@ -42,7 +45,7 @@ class LandFilter extends AbstractFilter
     }
 
     protected function filterProperty(string $property,
-        $value,
+        mixed $value,
         QueryBuilder $queryBuilder,
         QueryNameGeneratorInterface $queryNameGenerator,
         string $resourceClass,

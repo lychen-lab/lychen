@@ -22,9 +22,11 @@ readonly class LandRequestTransitionArchive implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param Event<LandRequest> $event
+     */
     public function onTransition(Event $event): void
     {
-        /** @var LandRequest $landRequest */
         $landRequest = $event->getSubject();
 
         $landRequest->setArchivedAt(new \DateTimeImmutable());

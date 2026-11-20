@@ -10,7 +10,7 @@ use function Zenstruck\Foundry\faker;
 
 class LandGreenhouseTest extends AbstractApiTestCase
 {
-    public function testPost()
+    public function testPost(): void
     {
         $context = $this->createLandContext();
 
@@ -54,7 +54,7 @@ class LandGreenhouseTest extends AbstractApiTestCase
             });
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandGreenhouse($context);
@@ -93,7 +93,7 @@ class LandGreenhouseTest extends AbstractApiTestCase
             });
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandGreenhouse($context);
@@ -145,7 +145,7 @@ class LandGreenhouseTest extends AbstractApiTestCase
             });
     }
 
-    public function testCollection()
+    public function testCollection(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandGreenhouse($context);
@@ -179,7 +179,7 @@ class LandGreenhouseTest extends AbstractApiTestCase
             ->assertJsonMatches('member[1].constructionDate', $context->landGreenhouses[1]->getConstructionDate());
     }
 
-    public function testCollectionPagination()
+    public function testCollectionPagination(): void
     {
         $context = $this->createLandContext();
         array_map(fn () => $this->addOneLandGreenhouse($context), range(1, 25));
@@ -194,7 +194,7 @@ class LandGreenhouseTest extends AbstractApiTestCase
             });
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandGreenhouse($context);

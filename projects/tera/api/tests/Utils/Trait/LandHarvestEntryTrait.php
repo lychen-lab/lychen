@@ -8,6 +8,9 @@ use App\Factory\LandHarvestEntryFactory;
 
 trait LandHarvestEntryTrait
 {
+    /**
+     * @param array<string, mixed>|null $attributes
+     */
     protected function createLandHarvestEntry(Land $land, ?array $attributes = []): LandHarvestEntry
     {
         return LandHarvestEntryFactory::new()->create([

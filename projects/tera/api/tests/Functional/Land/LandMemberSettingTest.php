@@ -6,7 +6,7 @@ use App\Tests\Utils\Abstract\AbstractApiTestCase;
 
 class LandMemberSettingTest extends AbstractApiTestCase
 {
-    public function testGet()
+    public function testGet(): void
     {
         $context = $this->createLandContext();
         $landRole = $this->createLandRole($context->land, []);
@@ -21,7 +21,7 @@ class LandMemberSettingTest extends AbstractApiTestCase
             ->assertJsonMatches('emailNotificationActivated', $landMemberSetting->isEmailNotificationActivated());
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $context = $this->createLandContext();
         $landRole = $this->createLandRole($context->land, []);

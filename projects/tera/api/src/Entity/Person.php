@@ -45,6 +45,9 @@ class Person extends AbstractZitadelUser implements PermissionHolder
     #[ORM\OneToMany(targetEntity: LandDeal::class, mappedBy: 'person')]
     private Collection $landDeals;
 
+    /**
+     * @phpstan-var list<string>
+     */
     private array $permissions = [];
 
     /**
@@ -230,6 +233,9 @@ class Person extends AbstractZitadelUser implements PermissionHolder
         return $this->permissions;
     }
 
+    /**
+     * @phpstan-param list<string>|null $permissions
+     */
     public function setPermissions(?array $permissions): static
     {
         $this->permissions = $permissions;

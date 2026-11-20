@@ -6,7 +6,7 @@ use Lychen\Test\AbstractApiTestCase;
 
 class DefaultSecurityTest extends AbstractApiTestCase
 {
-    public function testOne()
+    public function testOne(): void
     {
         $this->markTestIncomplete();
     }

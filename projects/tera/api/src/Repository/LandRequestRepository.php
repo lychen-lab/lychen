@@ -17,7 +17,7 @@ class LandRequestRepository extends ServiceEntityRepository
         parent::__construct($registry, LandRequest::class);
     }
 
-    public function hasExistingStateForPerson(Person $person, string $state, ?string $excludeId = null): bool
+    public function hasExistingStateForPerson(Person $person, string $state, ?int $excludeId = null): bool
     {
         $qb = $this->createQueryBuilder('e')
             ->andWhere('e.person = :person')
