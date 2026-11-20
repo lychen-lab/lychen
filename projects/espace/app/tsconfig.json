@@ -3,6 +3,9 @@
   "include": ["**/*"],
   "references": [
     {
+      "path": "../../../libs/typescript/front-model-business"
+    },
+    {
       "path": "../../../libs/vue/color-scheme"
     },
     {

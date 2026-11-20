@@ -2346,6 +2346,7 @@ __metadata:
   resolution: "@lychen/espace-app@workspace:projects/espace/app"
   dependencies:
     "@lychen/css-core": "workspace:*"
+    "@lychen/typescript-front-model-business": "workspace:*"
     "@lychen/vue-color-scheme": "workspace:*"
     "@lychen/vue-components-app": "workspace:*"
     "@lychen/vue-components-business": "workspace:*"

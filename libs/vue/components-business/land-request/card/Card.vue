@@ -13,6 +13,12 @@
         class="size-4 text-lime-500"
       />
     </div>
+    <h3
+      v-if="title"
+      class="line-clamp-2 font-bold"
+    >
+      {{ title }}
+    </h3>
     <p class="line-clamp-5 text-sm opacity-70">{{ description }}</p>
     <div class="flex items-center gap-2 text-xs">
       <div class="flex items-center gap-1">
