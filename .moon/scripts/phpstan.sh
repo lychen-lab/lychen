@@ -113,13 +113,15 @@ if [[ -f composer.json ]]; then
       "it already runs: $restart)." >&2
     exit 1
   fi
-  # The path packages: in the container, /packages, a copy of libs/php baked
-  # into the image (copy-packages). Installed as links (composer's default;
-  # "symlink": false, which moon's composer toolchain writes, copies instead),
-  # vendor/ points to ../packages, a folder of the container only: the host
-  # gets it too, next to the API, as a link to libs/php (gitignored), so that
-  # vendor/ resolves here as there, for PHPStan and the editor alike. Any
-  # other link whose target is missing is an install the container must redo.
+  # The path packages: in the container, /packages, libs/php mounted in
+  # development (compose.yml), a copy baked into the test and production
+  # images (copy-packages). Installed as links (symlink: true in
+  # .moon/toolchains.yml, written into every composer.json by moon's composer
+  # toolchain: a library change is live in the API), vendor/ points to
+  # ../packages, a folder of the container only: the host gets it too, next to
+  # the API, as a link to libs/php (gitignored), so that vendor/ resolves here
+  # as there, for PHPStan and the editor alike. Any other link whose target is
+  # missing is an install the container must redo.
   packages="$(dirname "$PWD")/packages"
   while IFS= read -r link; do
     target="$(readlink "$link")"

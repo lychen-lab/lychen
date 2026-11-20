@@ -87,7 +87,7 @@
             "type": "path",
             "url": "../packages/*",
             "options": {
-                "symlink": false,
+                "symlink": true,
                 "versions": {
                     "lychen/api": "0.0.0",
                     "lychen/model": "0.0.0",

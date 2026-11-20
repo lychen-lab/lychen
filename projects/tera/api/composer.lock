@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "92c671dd409a892e97bdad3da3d309d8",
+    "content-hash": "a19ed208fd521a4b3f35dc8420cfa60b",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2410,7 +2410,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/core",
-                "reference": "bc8813d601d0f17d9702e6a8d39ee205c8a28bb1"
+                "reference": "c3000de28c3c8a3e84f5177bb5de799be472800c"
             },
             "require": {
                 "php": "^8.4"
@@ -2433,7 +2433,7 @@
                 }
             ],
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
@@ -2443,7 +2443,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/event-bus",
-                "reference": "e045386f1034db69e463c731f6489994b47873d1"
+                "reference": "ce809278cf7b6f72b558d8af14a9fec22c94d3d6"
             },
             "require": {
                 "doctrine/dbal": "^4.1",
@@ -2482,7 +2482,7 @@
             ],
             "description": "Events between the Lychen APIs over the central RabbitMQ: a transactional outbox on the producing side, an idempotent inbox on the consuming side",
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
@@ -2492,7 +2492,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/model",
-                "reference": "78763b3a349cf5c527c81281c8c2c66db36285cc"
+                "reference": "57f109598429f3d5a6d601b4c615d233f6a84731"
             },
             "require": {
                 "api-platform/core": "^4.1 || ^5.0",
@@ -2518,7 +2518,7 @@
                 }
             ],
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
@@ -2528,7 +2528,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/tiptap",
-                "reference": "70a33b1241a26ce761590b7f474861ee07b16899"
+                "reference": "68001c55f60e828a35827bbc28ba3fcd315f48c2"
             },
             "require": {
                 "ueberdosis/tiptap-php": "^2.2"
@@ -2554,7 +2554,7 @@
                 }
             ],
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
@@ -2564,7 +2564,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/zitadel",
-                "reference": "634f303ddd8c718e6defc8ced65f572e53460b79"
+                "reference": "f1157bdff83c113ffbd1cd68dbda0cec006c01b2"
             },
             "require": {
                 "symfony/dependency-injection": "^7.4 || ^8.0",
@@ -2591,7 +2591,7 @@
                 }
             ],
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
@@ -11147,7 +11147,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/test",
-                "reference": "0d02c011fbb2863719d00707343cf28d49164bf1"
+                "reference": "19e5724bf82960fb5ec916d3cf7b892a5d5907b2"
             },
             "require": {
                 "api-platform/core": "^5.0",
@@ -11178,7 +11178,7 @@
             ],
             "description": "Shared PHPUnit base classes of the Lychen APIs' functional and security tests",
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
@@ -14368,5 +14368,5 @@
         "ext-xml": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }

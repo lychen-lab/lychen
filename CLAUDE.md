@@ -296,7 +296,10 @@ endpoint/area-activity/get-area-activities/   endpoint/area-activity/create-area
   (the `composer` toolchain, on `moon sync projects` and before any task): `require`, `require-dev`
   for a dependency of `scope: development`, and the `versions` of the `../packages/*` repository.
   Declare a PHP library in `moon.yml`, never in `composer.json`, then update `composer.lock` with
-  the `composer update <package>` the sync prints
+  the `composer update <package>` the sync prints. The packages install as links
+  (`pathRepositorySymlink: true` in `.moon/toolchains.yml`): the dev container mounts `libs/php` at
+  `/packages`, so a library change is live in the API; on the host, `.moon/scripts/phpstan.sh` links
+  `projects/<domain>/packages` to `libs/php`, so that `vendor/` resolves there too
 - Global task definitions in `.moon/tasks/` are inherited by projects based on tags/layer
 - Frontend and backend code are strictly separated — libs do not cross layers
 

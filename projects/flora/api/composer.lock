@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8fcc6a87f901563540ee148713bc1312",
+    "content-hash": "1a770c58314f162d650d6b9191794e15",
     "packages": [
         {
             "name": "api-platform/core",
@@ -1975,7 +1975,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/api",
-                "reference": "7a02ebff2cfa937ae72c95b9dfdce2b2c842812c"
+                "reference": "e8413353fd80b54334848c3769ac93395acdb3cf"
             },
             "require": {
                 "api-platform/core": "^5.0",
@@ -2010,7 +2010,7 @@
             ],
             "description": "Shared API Platform building blocks of the Lychen APIs: resources kept apart from the Doctrine model, relations exposed and written by uuid",
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
@@ -2020,7 +2020,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/core",
-                "reference": "bc8813d601d0f17d9702e6a8d39ee205c8a28bb1"
+                "reference": "ded635f46a6fa1f58bff76ab81f5475ef01de5a8"
             },
             "require": {
                 "php": "^8.4"
@@ -2043,7 +2043,7 @@
                 }
             ],
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
@@ -2053,7 +2053,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/event-bus",
-                "reference": "a9a95d63c90b72c49cbe986a34a746b17fee8839"
+                "reference": "6134de04077d16d82b325b13bb2f64ec8e5d449b"
             },
             "require": {
                 "doctrine/dbal": "^4.1",
@@ -2092,7 +2092,7 @@
             ],
             "description": "Events between the Lychen APIs over the central RabbitMQ: a transactional outbox on the producing side, an idempotent inbox on the consuming side",
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
@@ -2102,7 +2102,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/model",
-                "reference": "78763b3a349cf5c527c81281c8c2c66db36285cc"
+                "reference": "94f1f52dae555028669b571db51c85d473ab673d"
             },
             "require": {
                 "api-platform/core": "^4.1 || ^5.0",
@@ -2128,7 +2128,7 @@
                 }
             ],
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
@@ -2138,7 +2138,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/zitadel",
-                "reference": "634f303ddd8c718e6defc8ced65f572e53460b79"
+                "reference": "550cec2ac24eb544802c277e9a0eab7a52287151"
             },
             "require": {
                 "symfony/dependency-injection": "^7.4 || ^8.0",
@@ -2165,7 +2165,7 @@
                 }
             ],
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
@@ -10402,7 +10402,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/test",
-                "reference": "0d02c011fbb2863719d00707343cf28d49164bf1"
+                "reference": "5be074704eb67a36742b65f2a9c52d1410d44e67"
             },
             "require": {
                 "api-platform/core": "^5.0",
@@ -10433,7 +10433,7 @@
             ],
             "description": "Shared PHPUnit base classes of the Lychen APIs' functional and security tests",
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },

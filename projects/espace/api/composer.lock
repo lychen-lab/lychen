@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "792d5d3ee3ac32b5fa2a7295b37696c8",
+    "content-hash": "37749339317881d4951ec76f2c442462",
     "packages": [
         {
             "name": "api-platform/core",
@@ -1877,7 +1877,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/api",
-                "reference": "54016cee29472a9808904efa084efb8a726c0e1e"
+                "reference": "7c23f8b3eab04f22bb83a9b049341d4c297ad4ef"
             },
             "require": {
                 "api-platform/core": "^5.0",
@@ -1912,7 +1912,7 @@
             ],
             "description": "Shared API Platform building blocks of the Lychen APIs: resources kept apart from the Doctrine model, relations exposed and written by uuid",
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
@@ -1922,7 +1922,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/config",
-                "reference": "d2ad48dd170d6a1667e265b1bfe9d1de22ca3ee4"
+                "reference": "4a3ab022b13ddb2882d545fed2a9af60296e1aba"
             },
             "require": {
                 "php": "^8.4",
@@ -1952,7 +1952,7 @@
             ],
             "description": "Shared Symfony configuration of the Lychen APIs",
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
@@ -1962,7 +1962,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/core",
-                "reference": "bc8813d601d0f17d9702e6a8d39ee205c8a28bb1"
+                "reference": "0f48cce5299678a811d5a984b0b80a0dc3df9795"
             },
             "require": {
                 "php": "^8.4"
@@ -1985,7 +1985,7 @@
                 }
             ],
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
@@ -1995,7 +1995,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/model",
-                "reference": "78763b3a349cf5c527c81281c8c2c66db36285cc"
+                "reference": "0bc479be7ef2aca28f6518163cc66fbe8f0e9649"
             },
             "require": {
                 "api-platform/core": "^4.1 || ^5.0",
@@ -2021,7 +2021,7 @@
                 }
             ],
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
@@ -2031,7 +2031,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/zitadel",
-                "reference": "634f303ddd8c718e6defc8ced65f572e53460b79"
+                "reference": "48377a3cf86e70593e367833f339242f76fbc527"
             },
             "require": {
                 "symfony/dependency-injection": "^7.4 || ^8.0",
@@ -2058,7 +2058,7 @@
                 }
             ],
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
@@ -10465,7 +10465,7 @@
             "dist": {
                 "type": "path",
                 "url": "../packages/test",
-                "reference": "0d02c011fbb2863719d00707343cf28d49164bf1"
+                "reference": "6ee1e68552b2d7797565c77b85cfcae21246ceec"
             },
             "require": {
                 "api-platform/core": "^5.0",
@@ -10496,7 +10496,7 @@
             ],
             "description": "Shared PHPUnit base classes of the Lychen APIs' functional and security tests",
             "transport-options": {
-                "symlink": false,
+                "symlink": true,
                 "relative": true
             }
         },
