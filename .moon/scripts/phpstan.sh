@@ -113,27 +113,47 @@ if [[ -f composer.json ]]; then
       "it already runs: $restart)." >&2
     exit 1
   fi
-  # -L: a link is still a link only if its target is missing: a path
-  # repository installed as links (composer's default) to ../packages, a folder
-  # of the container only. The monorepo's APIs install theirs as copies
-  # ("symlink": false, written by moon's composer toolchain), so such a link is
-  # an old install's and a reinstall copies; elsewhere the option comes first,
-  # as a reinstall would link again.
-  broken="$(find -L vendor -mindepth 2 -maxdepth 2 -type l -print -quit)"
-  if [[ -n "$broken" ]]; then
-    option=""
-    if ! grep -Eq '"symlink": *false' composer.json; then
-      option="Give the path repository of $project/composer.json the option"
-      option+=" \"symlink\": false (composer.pathRepositorySymlink: false in"
-      option+=" .moon/toolchains.yml where moon's composer toolchain writes it),"
-      option+=" so that composer copies its packages into vendor/."
-    fi
-    echo "PHPStan not run: $project/$broken links to $(readlink "$broken")," \
-      "which exists only in its container.${option:+ $option} Delete" \
-      "$project/vendor/, then restart the container ($restart): it" \
-      "reinstalls it." >&2
-    exit 1
-  fi
+  # The path packages: in the container, /packages, a copy of libs/php baked
+  # into the image (copy-packages). Installed as links (composer's default;
+  # "symlink": false, which moon's composer toolchain writes, copies instead),
+  # vendor/ points to ../packages, a folder of the container only: the host
+  # gets it too, next to the API, as a link to libs/php (gitignored), so that
+  # vendor/ resolves here as there, for PHPStan and the editor alike. Any
+  # other link whose target is missing is an install the container must redo.
+  packages="$(dirname "$PWD")/packages"
+  while IFS= read -r link; do
+    target="$(readlink "$link")"
+    case "$target" in
+      ../../../packages/*)
+        if [[ -L "$packages" && ! -e "$packages" ]]; then
+          rm "$packages"
+        fi
+        if [[ ! -e "$packages" ]]; then
+          # Relative, so that it survives a move of the checkout.
+          IFS=/ read -ra depth <<< "${packages#"$root"/}"
+          up=""
+          for ((i = 1; i < ${#depth[@]}; i++)); do up+="../"; done
+          ln -s "${up}libs/php" "$packages"
+        fi
+        lib="${target#../../../packages/}"
+        lib="${lib%%/*}"
+        if [[ ! -d "$packages/$lib" ]]; then
+          echo "PHPStan not run: $project/$link links to $target, which" \
+            "${packages#"$root"/} lacks. Delete $project/vendor/, then restart" \
+            "the container ($restart): it reinstalls it." >&2
+          exit 1
+        fi
+        ;;
+      *)
+        if [[ ! -e "$link" ]]; then
+          echo "PHPStan not run: $project/$link links to $target, which" \
+            "exists only in its container. Delete $project/vendor/, then" \
+            "restart the container ($restart): it reinstalls it." >&2
+          exit 1
+        fi
+        ;;
+    esac
+  done < <(find vendor -mindepth 2 -maxdepth 2 -type l)
 fi
 
 mkdir -p "$cache"
