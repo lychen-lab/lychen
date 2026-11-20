@@ -113,14 +113,25 @@ if [[ -f composer.json ]]; then
       "it already runs: $restart)." >&2
     exit 1
   fi
-  # -L: a link is still a link only if its target is missing. Typically an
-  # old install's lychen/* bundles, linked to ../packages: a folder of the
-  # container only.
+  # -L: a link is still a link only if its target is missing: a path
+  # repository installed as links (composer's default) to ../packages, a folder
+  # of the container only. The monorepo's APIs install theirs as copies
+  # ("symlink": false, written by moon's composer toolchain), so such a link is
+  # an old install's and a reinstall copies; elsewhere the option comes first,
+  # as a reinstall would link again.
   broken="$(find -L vendor -mindepth 2 -maxdepth 2 -type l -print -quit)"
   if [[ -n "$broken" ]]; then
+    option=""
+    if ! grep -Eq '"symlink": *false' composer.json; then
+      option="Give the path repository of $project/composer.json the option"
+      option+=" \"symlink\": false (composer.pathRepositorySymlink: false in"
+      option+=" .moon/toolchains.yml where moon's composer toolchain writes it),"
+      option+=" so that composer copies its packages into vendor/."
+    fi
     echo "PHPStan not run: $project/$broken links to $(readlink "$broken")," \
-      "which exists only in its container. Delete $project/vendor/, then" \
-      "restart the container ($restart): it reinstalls it." >&2
+      "which exists only in its container.${option:+ $option} Delete" \
+      "$project/vendor/, then restart the container ($restart): it" \
+      "reinstalls it." >&2
     exit 1
   fi
 fi
