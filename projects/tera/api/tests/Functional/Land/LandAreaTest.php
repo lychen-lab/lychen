@@ -11,7 +11,7 @@ use function Zenstruck\Foundry\faker;
 
 class LandAreaTest extends AbstractApiTestCase
 {
-    public function testPost()
+    public function testPost(): void
     {
         $context = $this->createLandContext();
 
@@ -58,7 +58,7 @@ class LandAreaTest extends AbstractApiTestCase
             });
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandArea($context);
@@ -99,7 +99,7 @@ class LandAreaTest extends AbstractApiTestCase
             });
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandArea($context);
@@ -148,7 +148,7 @@ class LandAreaTest extends AbstractApiTestCase
             });
     }
 
-    public function testCollection()
+    public function testCollection(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandArea($context);
@@ -186,7 +186,7 @@ class LandAreaTest extends AbstractApiTestCase
             ->assertJsonMatches('member[1].state', $context->landAreas[1]->getState());
     }
 
-    public function testCollectionPagination()
+    public function testCollectionPagination(): void
     {
         $context = $this->createLandContext();
         array_map(fn () => $this->addOneLandArea($context), range(1, 25));
@@ -201,7 +201,7 @@ class LandAreaTest extends AbstractApiTestCase
             });
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandArea($context);

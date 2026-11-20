@@ -5,8 +5,8 @@ namespace App\Doctrine\Listener;
 use App\Entity\LandMemberInvitation;
 use App\Entity\Person;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
+use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Events;
-use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Psr\Log\LoggerInterface;
 
 #[AsEntityListener(event: Events::postPersist, method: 'onNewPerson', entity: Person::class)]
@@ -17,7 +17,7 @@ final readonly class LandMemberInvitationAutoLink
     {
     }
 
-    public function onNewPerson(Person $person, LifecycleEventArgs $event): void
+    public function onNewPerson(Person $person, PostPersistEventArgs $event): void
     {
         $entityManager = $event->getObjectManager();
         $landMemberInvitationRepository = $entityManager->getRepository(LandMemberInvitation::class);
@@ -39,7 +39,7 @@ final readonly class LandMemberInvitationAutoLink
         }
     }
 
-    public function onNewMemberInvitation(LandMemberInvitation $landMemberInvitation, LifecycleEventArgs $event): void
+    public function onNewMemberInvitation(LandMemberInvitation $landMemberInvitation, PostPersistEventArgs $event): void
     {
         $entityManager = $event->getObjectManager();
         $personRepository = $entityManager->getRepository(Person::class);

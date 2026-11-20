@@ -40,7 +40,7 @@ class Family extends AbstractIdOrmAndUlidApiIdentified
 
     #[Groups(['family:get'])]
     #[ORM\Column(length: 100, unique: true)]
-    private ?string $code = null;
+    private string $code;
 
     /**
      * @var Collection<int, Species>
@@ -56,7 +56,7 @@ class Family extends AbstractIdOrmAndUlidApiIdentified
 
     public function getCode(): ?string
     {
-        return $this->code;
+        return $this->code ?? null;
     }
 
     public function setCode(string $code): static
@@ -98,12 +98,8 @@ class Family extends AbstractIdOrmAndUlidApiIdentified
 
     public function removeSpecies(Species $species): static
     {
-        if ($this->species->removeElement($species)) {
-            // set the owning side to null (unless already changed)
-            if ($species->getFamily() === $this) {
-                $species->setFamily(null);
-            }
-        }
+        // The inverse side only: species keeps its owner (a NOT NULL column) until it is given another one.
+        $this->species->removeElement($species);
 
         return $this;
     }

@@ -6,7 +6,7 @@ use App\Tests\Utils\Abstract\AbstractApiTestCase;
 
 class LandDealSecurityTest extends AbstractApiTestCase
 {
-    public function testPut()
+    public function testPut(): void
     {
         $person = $this->createPerson();
         $context = $this->createLandContext();

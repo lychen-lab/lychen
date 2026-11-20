@@ -23,9 +23,11 @@ readonly class LandProposalTransitionArchive implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param Event<LandProposal> $event
+     */
     public function onTransition(Event $event): void
     {
-        /** @var LandProposal $landProposal */
         $landProposal = $event->getSubject();
 
         $landProposal->setArchivedAt(new \DateTimeImmutable());

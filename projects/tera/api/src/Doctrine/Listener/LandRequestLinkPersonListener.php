@@ -6,8 +6,8 @@ use App\Entity\LandRequest;
 use App\Entity\Person;
 use App\Entity\PersonApiKey;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
+use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Events;
-use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -19,7 +19,7 @@ final readonly class LandRequestLinkPersonListener
     {
     }
 
-    public function __invoke(LandRequest $landRequest, LifecycleEventArgs $event): void
+    public function __invoke(LandRequest $landRequest, PrePersistEventArgs $event): void
     {
         if (!$person = $landRequest->getPerson()) {
             $person = $this->security->getUser();

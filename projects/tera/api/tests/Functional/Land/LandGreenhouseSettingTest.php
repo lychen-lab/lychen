@@ -7,7 +7,7 @@ use App\Tests\Utils\Abstract\AbstractApiTestCase;
 
 class LandGreenhouseSettingTest extends AbstractApiTestCase
 {
-    public function testGet()
+    public function testGet(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandGreenhouse($context);
@@ -29,7 +29,7 @@ class LandGreenhouseSettingTest extends AbstractApiTestCase
             ->assertJsonMatches('ulid', $landGreenhouseSetting->getUlid()->toString());
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandGreenhouse($context);

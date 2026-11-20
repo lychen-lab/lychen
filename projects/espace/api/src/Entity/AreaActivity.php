@@ -14,11 +14,11 @@ class AreaActivity extends AbstractIdOrmAndUuidApiIdentified
     use CreatedAtTrait;
 
     #[ORM\Column(length: 255, unique: true)]
-    private ?string $code = null;
+    private string $code;
 
     public function getCode(): ?string
     {
-        return $this->code;
+        return $this->code ?? null;
     }
 
     public function setCode(string $code): static

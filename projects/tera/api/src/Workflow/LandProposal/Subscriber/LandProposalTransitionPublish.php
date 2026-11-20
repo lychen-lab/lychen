@@ -23,9 +23,11 @@ readonly class LandProposalTransitionPublish implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param Event<LandProposal> $event
+     */
     public function onTransition(Event $event): void
     {
-        /** @var LandProposal $landProposal */
         $landProposal = $event->getSubject();
 
         $landProposal->setPublishedAt(new \DateTimeImmutable());

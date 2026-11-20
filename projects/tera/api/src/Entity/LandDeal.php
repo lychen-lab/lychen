@@ -65,15 +65,15 @@ class LandDeal extends AbstractIdOrmAndUlidApiIdentified
 
     #[ORM\Column(length: 255)]
     #[Assert\Choice(choices: LandDealWorkflowPlace::PLACES)]
-    private ?string $state = LandDealWorkflowPlace::OPENED;
+    private string $state = LandDealWorkflowPlace::OPENED;
 
     #[ORM\ManyToOne(inversedBy: 'landDeals')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Land $land = null;
+    private Land $land;
 
     #[ORM\ManyToOne(inversedBy: 'landDeals')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Person $person = null;
+    private Person $person;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $landAcceptedAt = null;
@@ -113,24 +113,34 @@ class LandDeal extends AbstractIdOrmAndUlidApiIdentified
 
     public function getLand(): ?Land
     {
-        return $this->land;
+        return $this->land ?? null;
     }
 
     public function setLand(?Land $land): static
     {
-        $this->land = $land;
+        // Null (from Land::removeLandDeal()) leaves it unset, as Doctrine does for a NOT NULL column.
+        if (null === $land) {
+            unset($this->land);
+        } else {
+            $this->land = $land;
+        }
 
         return $this;
     }
 
     public function getPerson(): ?Person
     {
-        return $this->person;
+        return $this->person ?? null;
     }
 
     public function setPerson(?Person $person): static
     {
-        $this->person = $person;
+        // Null (from Person::removeLandDeal()) leaves it unset, as Doctrine does for a NOT NULL column.
+        if (null === $person) {
+            unset($this->person);
+        } else {
+            $this->person = $person;
+        }
 
         return $this;
     }

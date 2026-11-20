@@ -51,11 +51,8 @@ class Person extends AbstractZitadelUser
 
     public function removeAreaRequest(AreaRequest $areaRequest): static
     {
-        if ($this->areaRequests->removeElement($areaRequest)) {
-            if ($areaRequest->getRequester() === $this) {
-                $areaRequest->setRequester(null);
-            }
-        }
+        // orphanRemoval: the areaRequest is deleted at flush, as it cannot exist without its person.
+        $this->areaRequests->removeElement($areaRequest);
 
         return $this;
     }
@@ -80,11 +77,8 @@ class Person extends AbstractZitadelUser
 
     public function removeAreaProposal(AreaProposal $areaProposal): static
     {
-        if ($this->areaProposals->removeElement($areaProposal)) {
-            if ($areaProposal->getProposer() === $this) {
-                $areaProposal->setProposer(null);
-            }
-        }
+        // orphanRemoval: the areaProposal is deleted at flush, as it cannot exist without its person.
+        $this->areaProposals->removeElement($areaProposal);
 
         return $this;
     }

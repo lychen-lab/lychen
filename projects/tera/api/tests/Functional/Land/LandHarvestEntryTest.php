@@ -17,7 +17,7 @@ class LandHarvestEntryTest extends AbstractApiTestCase
 {
     use PlantVerifierMockTrait;
 
-    public function testPost()
+    public function testPost(): void
     {
         $context = $this->createLandContext();
 
@@ -83,7 +83,7 @@ class LandHarvestEntryTest extends AbstractApiTestCase
             });
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandHarvestEntry($context);
@@ -124,7 +124,7 @@ class LandHarvestEntryTest extends AbstractApiTestCase
             });
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandHarvestEntry($context);
@@ -198,7 +198,7 @@ class LandHarvestEntryTest extends AbstractApiTestCase
             });
     }
 
-    public function testCollection()
+    public function testCollection(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandHarvestEntry($context);
@@ -252,7 +252,7 @@ class LandHarvestEntryTest extends AbstractApiTestCase
             });
     }
 
-    public function testCollectionPagination()
+    public function testCollectionPagination(): void
     {
         $context = $this->createLandContext();
         array_map(fn () => $this->addOneLandHarvestEntry($context), range(1, 25));
@@ -267,7 +267,7 @@ class LandHarvestEntryTest extends AbstractApiTestCase
             });
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandHarvestEntry($context);

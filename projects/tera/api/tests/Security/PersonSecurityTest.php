@@ -6,7 +6,7 @@ use App\Tests\Utils\Abstract\AbstractApiTestCase;
 
 class PersonSecurityTest extends AbstractApiTestCase
 {
-    public function testPut()
+    public function testPut(): void
     {
         $this->markTestIncomplete('TODO');
     }

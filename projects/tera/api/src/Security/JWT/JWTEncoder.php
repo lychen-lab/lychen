@@ -14,6 +14,9 @@ readonly class JWTEncoder
     {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function preparePayload(JWTPayloadable $subject): array
     {
         $subject->setJti(Uuid::v4());
@@ -24,6 +27,9 @@ readonly class JWTEncoder
         ]);
     }
 
+    /**
+     * @param array<string, mixed> $payload
+     */
     public function encode(array $payload): string
     {
         return JWT::encode($payload, $this->secret, $this->algorithm);

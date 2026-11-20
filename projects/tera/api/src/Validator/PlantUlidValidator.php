@@ -5,6 +5,7 @@ namespace App\Validator;
 use App\Service\PlantVerifier;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class PlantUlidValidator extends ConstraintValidator
 {
@@ -14,7 +15,10 @@ class PlantUlidValidator extends ConstraintValidator
 
     public function validate(mixed $value, Constraint $constraint): void
     {
-        /* @var PlantUlid $constraint */
+        if (!$constraint instanceof PlantUlid) {
+            throw new UnexpectedTypeException($constraint, PlantUlid::class);
+        }
+
         if (null === $value || '' === $value) {
             return;
         }

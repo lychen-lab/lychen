@@ -36,6 +36,9 @@ class LandFixtures extends Fixture implements DependentFixtureInterface
             ['name' => 'Champ du bas', 'owner' => $this->getReference(PersonFixtures::PERSON_7, Person::class)]);
     }
 
+    /**
+     * @param array<string, mixed>|callable(int): array<string, mixed> $attributes
+     */
     private function createLandAndAddReference(string $reference, array|callable $attributes = []): void
     {
         $land = LandFactory::new()->create($attributes);

@@ -82,6 +82,9 @@ class PersonFixtures extends Fixture
         return $reference.self::DEFAULT_EMAIL_DOMAIN;
     }
 
+    /**
+     * @param array<string, mixed>|callable(int): array<string, mixed> $attributes
+     */
     private function createPersonAndAddReference(string $reference, array|callable $attributes = []): Person
     {
         $person = PersonFactory::new()->create($attributes);

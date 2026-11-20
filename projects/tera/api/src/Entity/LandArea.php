@@ -42,7 +42,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     normalizationContext: ['groups' => ['land_area:collection']],
     security            : "is_granted('".LandAreaVoter::COLLECTION."')",
     parameters          : [
-        new QueryParameter(
+        'land' => new QueryParameter(
             key   : 'land',
             filter: LandFilter::class,
         ),
@@ -57,12 +57,12 @@ class LandArea extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
     #[ORM\Column(length: 255)]
     #[Groups(['land_area:collection', 'land_area:get', 'land_area:patch', 'land_area:post'])]
     #[Assert\NotBlank()]
-    private ?string $name = null;
+    private string $name;
 
     #[ORM\ManyToOne(inversedBy: 'landAreas')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['land_area:get', 'land_area:post'])]
-    private ?Land $land = null;
+    private Land $land;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['land_area:collection', 'land_area:get', 'land_area:patch', 'land_area:post'])]
@@ -91,7 +91,7 @@ class LandArea extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
     #[ORM\Column(length: 255)]
     #[Groups(['land_area:collection', 'land_area:get', 'land_area:patch:output', 'land_area:post:output'])]
     #[Assert\NotBlank()]
-    private ?string $state = LandAreaWorkflowPlace::ACTIVE;
+    private string $state = LandAreaWorkflowPlace::ACTIVE;
 
     /**
      * @var Collection<int, LandCultivationPlan>
@@ -103,7 +103,7 @@ class LandArea extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
     #[ORM\Column(length: 150, options: ['default' => LandAreaKind::OPEN_SOIL])]
     #[Assert\Choice(choices: LandAreaKind::ALL)]
     #[Groups(['land_area:collection', 'land_area:get', 'land_area:patch', 'land_area:post'])]
-    private ?string $kind = LandAreaKind::OPEN_SOIL;
+    private string $kind = LandAreaKind::OPEN_SOIL;
 
     public function __construct(?Ulid $ulid = null)
     {
@@ -116,7 +116,7 @@ class LandArea extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
 
     public function getName(): ?string
     {
-        return $this->name;
+        return $this->name ?? null;
     }
 
     public function setName(string $name): static
@@ -146,12 +146,17 @@ class LandArea extends AbstractIdOrmAndUlidApiIdentified implements LandAwareInt
 
     public function getLand(): ?Land
     {
-        return $this->land;
+        return $this->land ?? null;
     }
 
     public function setLand(?Land $land): static
     {
-        $this->land = $land;
+        // Null (from Land::removeLandArea()) leaves it unset, as Doctrine does for a NOT NULL column.
+        if (null === $land) {
+            unset($this->land);
+        } else {
+            $this->land = $land;
+        }
 
         return $this;
     }

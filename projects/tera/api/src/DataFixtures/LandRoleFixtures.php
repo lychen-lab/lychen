@@ -60,6 +60,9 @@ class LandRoleFixtures extends Fixture implements DependentFixtureInterface
         ]);
     }
 
+    /**
+     * @param array<string, mixed>|callable(int): array<string, mixed> $attributes
+     */
     private function createLandRoleAndAddReference(string $reference,
         array|callable $attributes = []): void
     {

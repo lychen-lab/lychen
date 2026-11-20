@@ -40,7 +40,7 @@ class Exposure extends AbstractIdOrmAndUlidApiIdentified
 
     #[Groups(['exposure:get'])]
     #[ORM\Column(length: 100, unique: true)]
-    private ?string $code = null;
+    private string $code;
 
     /**
      * @var Collection<int, Cultivation>
@@ -56,7 +56,7 @@ class Exposure extends AbstractIdOrmAndUlidApiIdentified
 
     public function getCode(): ?string
     {
-        return $this->code;
+        return $this->code ?? null;
     }
 
     public function setCode(string $code): static
@@ -98,12 +98,8 @@ class Exposure extends AbstractIdOrmAndUlidApiIdentified
 
     public function removeCultivation(Cultivation $cultivation): static
     {
-        if ($this->cultivations->removeElement($cultivation)) {
-            // set the owning side to null (unless already changed)
-            if ($cultivation->getExposure() === $this) {
-                $cultivation->setExposure(null);
-            }
-        }
+        // The inverse side only: cultivation keeps its owner (a NOT NULL column) until it is given another one.
+        $this->cultivations->removeElement($cultivation);
 
         return $this;
     }

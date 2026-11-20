@@ -5,8 +5,8 @@ namespace App\Doctrine\Listener;
 use App\Entity\LandMember;
 use App\Entity\LandMemberInvitation;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
+use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Events;
-use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[AsEntityListener(event: Events::prePersist, entity: LandMemberInvitation::class)]
@@ -20,7 +20,7 @@ final readonly class LandRolesBelongToLandValidateListener
     /**
      * @throws \Exception
      */
-    public function __invoke(LandMemberInvitation|LandMember $object, LifecycleEventArgs $event): void
+    public function __invoke(LandMemberInvitation|LandMember $object, PrePersistEventArgs $event): void
     {
         $errors = $this->validator->validate($object);
 

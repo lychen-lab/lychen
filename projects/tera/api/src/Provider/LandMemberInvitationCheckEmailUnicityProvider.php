@@ -13,6 +13,9 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
+/**
+ * @implements ProviderInterface<LandMemberInvitationCheckEmailUnicityDto>
+ */
 final readonly class LandMemberInvitationCheckEmailUnicityProvider implements ProviderInterface
 {
     public function __construct(
@@ -22,7 +25,7 @@ final readonly class LandMemberInvitationCheckEmailUnicityProvider implements Pr
     ) {
     }
 
-    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): LandMemberInvitationCheckEmailUnicityDto
     {
         $email = $context['filters']['email'] ?? null;
         $landUlid = $context['filters']['land'] ?? null;

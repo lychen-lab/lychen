@@ -14,7 +14,7 @@ use function Zenstruck\Foundry\faker;
 
 class LandMemberInvitationTest extends AbstractApiTestCase
 {
-    public function testPost()
+    public function testPost(): void
     {
         $context = $this->createLandContext();
 
@@ -52,7 +52,7 @@ class LandMemberInvitationTest extends AbstractApiTestCase
             });
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandMemberInvitation($context);
@@ -87,7 +87,7 @@ class LandMemberInvitationTest extends AbstractApiTestCase
             });
     }
 
-    public function testCollection()
+    public function testCollection(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandMemberInvitation($context);
@@ -122,7 +122,7 @@ class LandMemberInvitationTest extends AbstractApiTestCase
             ->assertJsonMatches('member[1].state', $context->landMemberInvitations[1]->getState());
     }
 
-    public function testCollectionPagination()
+    public function testCollectionPagination(): void
     {
         $context = $this->createLandContext();
         array_map(fn () => $this->addOneLandMemberInvitation($context), range(1, 25));
@@ -137,7 +137,7 @@ class LandMemberInvitationTest extends AbstractApiTestCase
             });
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandMemberInvitation($context);
@@ -157,7 +157,7 @@ class LandMemberInvitationTest extends AbstractApiTestCase
             ->assertStatus(204);
     }
 
-    public function testAccept()
+    public function testAccept(): void
     {
         $context = $this->createLandContext();
         $invited = $this->createPerson();
@@ -194,7 +194,7 @@ class LandMemberInvitationTest extends AbstractApiTestCase
         $this->assertNull($landMemberInvitation->getRefusedAt());
     }
 
-    public function testAutoLink()
+    public function testAutoLink(): void
     {
         $context = $this->createLandContext();
         $invited = $this->createPerson();
@@ -223,7 +223,7 @@ class LandMemberInvitationTest extends AbstractApiTestCase
         $this->assertNotNull($landMemberInvitation);
     }
 
-    public function testRefuse()
+    public function testRefuse(): void
     {
         $context = $this->createLandContext();
         $invited = $this->createPerson();
@@ -251,7 +251,7 @@ class LandMemberInvitationTest extends AbstractApiTestCase
         $this->assertNull($landMemberInvitation->getAcceptedAt());
     }
 
-    public function testCheckUnicity()
+    public function testCheckUnicity(): void
     {
         $context = $this->createLandContext();
         $email = faker()->email();
@@ -266,7 +266,7 @@ class LandMemberInvitationTest extends AbstractApiTestCase
             ->assertJsonMatches('isUnique', false);
     }
 
-    public function testCollectionByEmail()
+    public function testCollectionByEmail(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();

@@ -19,6 +19,9 @@ class LandRepository extends ServiceEntityRepository
         parent::__construct($registry, Land::class);
     }
 
+    /**
+     * @return Paginator<Land>
+     */
     public function findLookingForMembers(int $page = 1, int $itemsPerPage = 30): Paginator
     {
         return new Paginator(

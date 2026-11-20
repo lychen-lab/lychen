@@ -11,5 +11,8 @@ interface LandAwareVoterInterface
      */
     public function getSupportedClass(): string;
 
+    /**
+     * @return list<string>
+     */
     public function getAvailablePermissions(): array;
 }

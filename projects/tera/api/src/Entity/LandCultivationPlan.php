@@ -45,7 +45,7 @@ use Symfony\Component\Uid\Ulid;
     normalizationContext: ['groups' => ['land_cultivation_plan:collection']],
     security            : "is_granted('".LandCultivationPlanVoter::COLLECTION."')",
     parameters          : [
-        new QueryParameter(
+        'land' => new QueryParameter(
             key   : 'land',
             filter: LandFilter::class,
         ),
@@ -122,12 +122,12 @@ class LandCultivationPlan extends AbstractIdOrmAndUlidApiIdentified implements L
 
     #[ORM\Column(length: 255)]
     #[Groups(['land_cultivation_plan:collection', 'land_cultivation_plan:get'])]
-    private ?string $state = LandCultivationPlanWorkflowPlace::DRAFT;
+    private string $state = LandCultivationPlanWorkflowPlace::DRAFT;
 
     #[ORM\ManyToOne(inversedBy: 'landCultivationPlans')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['land_cultivation_plan:get', 'land_cultivation_plan:post', 'land_cultivation_plan:patch:output'])]
-    private ?Land $land = null;
+    private Land $land;
 
     #[ORM\ManyToOne(inversedBy: 'landCultivationPlans')]
     #[Groups(['land_cultivation_plan:collection',
@@ -279,12 +279,17 @@ class LandCultivationPlan extends AbstractIdOrmAndUlidApiIdentified implements L
 
     public function getLand(): ?Land
     {
-        return $this->land;
+        return $this->land ?? null;
     }
 
     public function setLand(?Land $land): static
     {
-        $this->land = $land;
+        // Null (from Land::removeLandCultivationPlan()) leaves it unset, as Doctrine does for a NOT NULL column.
+        if (null === $land) {
+            unset($this->land);
+        } else {
+            $this->land = $land;
+        }
 
         return $this;
     }
