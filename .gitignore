@@ -19,7 +19,6 @@ umd/
 
 ###> Vite ###
 .vite-ssg-temp
-.caddy-build
 ###< Vite ###
 
 ###> Node ###

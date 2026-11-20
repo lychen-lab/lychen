@@ -1,0 +1,6 @@
+# FrankenPHP's worker mode, for the production image only (FRANKENPHP_CONFIG in
+# libs/docker/symfony/Dockerfile imports it into the Caddyfile's frankenphp
+# block). An API replaces it with its own frankenphp/worker.Caddyfile.
+worker {
+	file ./public/index.php
+}

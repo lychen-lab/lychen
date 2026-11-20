@@ -13,11 +13,13 @@ services:
     build: &dev-build
       context: .
       # The Dockerfile of every API (libs/docker/symfony): drop dockerfile and
-      # additional_contexts for a Dockerfile of the API's own, at its root. The
-      # additional context is never used: it only lets compose (bake) read a
-      # Dockerfile from outside the build context.
+      # the docker-symfony context for a Dockerfile of the API's own, at its
+      # root. That context is never used: it only lets compose (bake) read a
+      # Dockerfile from outside the build context. caddy-config holds the
+      # Caddyfiles of every API, which the Dockerfile copies (libs/caddy).
       dockerfile: ../../../libs/docker/symfony/Dockerfile
       additional_contexts:
+        caddy-config: ../../../libs/caddy/symfony
         docker-symfony: ../../../libs/docker/symfony
       target: frankenphp_dev
     environment:
@@ -29,7 +31,11 @@ services:
     volumes:
       - ./:/app
       #- ./var:/app/var
-      - ./frankenphp/Caddyfile:/etc/caddy/Caddyfile:ro
+      # The shared Caddyfile (libs/caddy/symfony) and what flora adds to it, read
+      # at start: a change needs a restart, not a rebuild. An API with a
+      # Caddyfile of its own mounts ./frankenphp/Caddyfile instead.
+      - ../../../libs/caddy/symfony/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./frankenphp/Caddyfile.d:/etc/caddy/Caddyfile.d:ro
       - ./frankenphp/conf.d/20-app.dev.ini:/usr/local/etc/php/app.conf.d/20-app.dev.ini:ro
     ports:
       - protocol: tcp

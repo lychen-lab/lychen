@@ -1,4 +1,5 @@
 dependsOn:
+  - caddy-ssg
   - css-core
   - typescript-utils
   - vue-components-business
@@ -13,10 +14,6 @@ stack: frontend
 tasks:
   build:
     command: yarn build
-    deps:
-      - args:
-          - $projectRoot/.caddy-build
-        target: caddy-configs:sync-ssg
     options:
       cache: false
   dev:

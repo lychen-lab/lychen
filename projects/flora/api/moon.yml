@@ -1,4 +1,5 @@
 dependsOn:
+  - caddy-symfony
   - docker-symfony
   - lychen-php-api
   - lychen-php-core

@@ -1,5 +1,20 @@
+# The Caddyfile of every frontend that is a statically generated website
+# (vite-ssg), copied to /etc/caddy/Caddyfile by libs/docker/frontend/Dockerfile.
+# See libs/caddy/README.md:
+# - to add to it, a frontend puts Caddyfile fragments in its Caddyfile.d/:
+#   global/ (global options), site/ (the site block), extra/ (other site
+#   blocks, snippets), imported below;
+# - to replace it, a frontend puts its own Caddyfile at its root.
+{
+	import Caddyfile.d/global/*.Caddyfile
+}
+
+import Caddyfile.d/extra/*.Caddyfile
+
 :80 {
 	root * /usr/share/caddy/html
+
+	import Caddyfile.d/site/*.Caddyfile
 
 	encode gzip zstd
 

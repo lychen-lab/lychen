@@ -1,11 +1,15 @@
 # The Dockerfile of every Symfony API (FrankenPHP): its dev, test and production
 # images. An API without a Dockerfile of its own is built from this one, with its
 # own directory as the build context: what differs from one API to another
-# (frankenphp/: Caddyfile, conf.d, entrypoint) is copied from there. An API that
-# needs something else puts its own Dockerfile at its root, which then replaces
-# this one everywhere: .moon/scripts/docker-buildx.sh for the moon tasks, and its
-# compose.override.yml (drop `dockerfile` and `additional_contexts`) for the dev
-# container.
+# (frankenphp/: conf.d, entrypoint, additions to the Caddyfile) is copied from
+# there. An API that needs something else puts its own Dockerfile at its root,
+# which then replaces this one everywhere: .moon/scripts/docker-buildx.sh for the
+# moon tasks, and its compose.override.yml (drop `dockerfile` and the
+# `docker-symfony` additional context) for the dev container.
+#
+# The Caddyfiles come from the `caddy-config` build context: libs/caddy/symfony,
+# passed by docker-buildx.sh (SHARED_CADDY_CONFIG) and by the API's compose files
+# (additional_contexts). See libs/caddy/README.md.
 
 FROM dunglas/frankenphp:1.13-php8.5 AS frankenphp_upstream
 
@@ -56,7 +60,18 @@ ENV PHP_INI_SCAN_DIR=":$PHP_INI_DIR/app.conf.d"
 
 COPY --link frankenphp/conf.d/10-app.ini $PHP_INI_DIR/app.conf.d/
 COPY --link --chmod=755 frankenphp/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-COPY --link frankenphp/Caddyfile /etc/caddy/Caddyfile
+# The shared Caddyfile, then what the API adds to it (frankenphp/Caddyfile.d/) or
+# its own Caddyfile, which replaces it. The bracket globs make both optional: a
+# COPY whose sources match nothing copies nothing. The empty fragments spare
+# Caddy a warning at every start for an import that matches no file.
+RUN set -eux; \
+	for point in global site extra; do \
+		mkdir -p /etc/caddy/Caddyfile.d/$point; \
+		touch /etc/caddy/Caddyfile.d/$point/.empty.Caddyfile; \
+	done
+COPY --link --from=caddy-config Caddyfile /etc/caddy/Caddyfile
+COPY --link frankenphp/Caddyfile.[d] /etc/caddy/Caddyfile.d/
+COPY --link frankenphp/Caddyfil[e] /etc/caddy/
 
 ENTRYPOINT ["docker-entrypoint"]
 
@@ -128,7 +143,9 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 COPY --link packages /packages
 COPY --link frankenphp/conf.d/20-app.prod.ini $PHP_INI_DIR/app.conf.d/
-COPY --link frankenphp/worker.Caddyfile /etc/caddy/worker.Caddyfile
+# The shared worker configuration, unless the API has its own.
+COPY --link --from=caddy-config worker.Caddyfile /etc/caddy/worker.Caddyfile
+COPY --link frankenphp/worker.Caddyfil[e] /etc/caddy/
 
 # prevent the reinstallation of vendors at every changes in the source code
 COPY --link composer.* symfony.* ./

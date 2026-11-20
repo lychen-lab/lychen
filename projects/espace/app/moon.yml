@@ -1,4 +1,5 @@
 dependsOn:
+  - caddy-pwa
   - css-core
   - vue-color-scheme
   - vue-components-app
