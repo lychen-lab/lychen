@@ -11,9 +11,9 @@ Lychen is an environmental and agricultural symbiosis platform connecting food p
 Toolchain versions are enforced via [proto](https://moonrepo.dev/proto) (`.prototools`):
 
 - Node 24.21.0, Yarn 4.18.0, Moon 2.5.4
-- PHP 8.5.8 (community plugin `KonstantinKai/proto-php-plugin`, a prebuilt static binary) for
-  PHPStan only: `.moon/scripts/phpstan.sh` runs the monorepo's one PHPStan (`tools/php`) with it,
-  for the editor. The APIs themselves run in their containers.
+- No PHP on the host: the APIs run in their containers, php-cs-fixer runs from its official
+  image and PHPStan from the monorepo's own (`tools/phpstan/Dockerfile`, built on first use by
+  `.moon/scripts/phpstan.sh`, the editor's runner).
 - `.prototools` is the single source of truth: `.moon/toolchains.yml` leaves `node` and `yarn`
   unpinned so moon inherits them, and `package.json#packageManager` must match the Yarn version.
 
@@ -296,7 +296,10 @@ endpoint/area-activity/get-area-activities/   endpoint/area-activity/create-area
   (the `composer` toolchain, on `moon sync projects` and before any task): `require`, `require-dev`
   for a dependency of `scope: development`, and the `versions` of the `../packages/*` repository.
   Declare a PHP library in `moon.yml`, never in `composer.json`, then update `composer.lock` with
-  the `composer update <package>` the sync prints
+  the `composer update <package>` the sync prints. The packages install as links
+  (`pathRepositorySymlink: true` in `.moon/toolchains.yml`): the dev container mounts `libs/php` at
+  `/packages`, so a library change is live in the API; on the host, `.moon/scripts/phpstan.sh` links
+  `projects/<domain>/packages` to `libs/php`, so that `vendor/` resolves there too
 - Global task definitions in `.moon/tasks/` are inherited by projects based on tags/layer
 - Frontend and backend code are strictly separated — libs do not cross layers
 

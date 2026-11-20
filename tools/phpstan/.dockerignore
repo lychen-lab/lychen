@@ -1,0 +1,5 @@
+# The image's only inputs. Never the host's vendor/: an install left by the
+# runner before it had its image.
+*
+!composer.json
+!composer.lock

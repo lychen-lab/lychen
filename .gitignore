@@ -39,8 +39,9 @@ tsconfig.tsbuildinfo
 ###> PHP ###
 # php-cs-fixer's cache, in each project it runs from (.moon/tasks/php.yml)
 .php-cs-fixer.cache
-# The monorepo's PHPStan and Rector, installed by .moon/scripts/phpstan.sh
-/tools/php/vendor/
+# The host side of an API's ../packages path repository: a link to libs/php that
+# .moon/scripts/phpstan.sh makes when vendor/ holds links to it (symlink: true)
+/projects/*/packages
 ###< PHP ###
 
 ###> JetBrain/PHPStorm ###
