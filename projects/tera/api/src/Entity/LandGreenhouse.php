@@ -45,7 +45,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     normalizationContext: ['groups' => ['land_greenhouse:collection']],
     security            : "is_granted('".LandGreenhouseVoter::COLLECTION."')",
     parameters          : [
-        new QueryParameter(
+        'land' => new QueryParameter(
             key   : 'land',
             filter: LandFilter::class,
         ),
@@ -63,7 +63,7 @@ class LandGreenhouse extends AbstractIdOrmAndUlidApiIdentified implements LandAw
         'land_greenhouse:patch',
         'land_greenhouse:post'])]
     #[Assert\NotBlank()]
-    private ?string $name = null;
+    private string $name;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Groups(['land_greenhouse:collection',
@@ -82,7 +82,7 @@ class LandGreenhouse extends AbstractIdOrmAndUlidApiIdentified implements LandAw
     #[ORM\ManyToOne(inversedBy: 'landGreenhouses')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['land_greenhouse:get', 'land_greenhouse:post', 'land_greenhouse:patch:output'])]
-    private ?Land $land = null;
+    private Land $land;
 
     #[ORM\OneToOne(mappedBy: 'landGreenhouse', cascade: ['persist', 'remove'])]
     #[Groups(['land_greenhouse:collection',
@@ -135,7 +135,7 @@ class LandGreenhouse extends AbstractIdOrmAndUlidApiIdentified implements LandAw
 
     public function getName(): ?string
     {
-        return $this->name;
+        return $this->name ?? null;
     }
 
     public function setName(string $name): static
@@ -189,12 +189,17 @@ class LandGreenhouse extends AbstractIdOrmAndUlidApiIdentified implements LandAw
 
     public function getLand(): ?Land
     {
-        return $this->land;
+        return $this->land ?? null;
     }
 
     public function setLand(?Land $land): static
     {
-        $this->land = $land;
+        // Null (from Land::removeLandGreenhouse()) leaves it unset, as Doctrine does for a NOT NULL column.
+        if (null === $land) {
+            unset($this->land);
+        } else {
+            $this->land = $land;
+        }
 
         return $this;
     }

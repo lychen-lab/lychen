@@ -6,6 +6,9 @@ use ApiPlatform\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
+use App\Entity\LandApiKey;
+use App\Entity\Person;
+use App\Entity\PersonApiKey;
 use App\Entity\SeedStock;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -25,6 +28,10 @@ final readonly class SeedStockCustomExtension implements QueryCollectionExtensio
     {
         if (SeedStock::class !== $resourceClass || $this->security->isGranted('ROLE_ADMIN') || null === $user = $this->security->getUser()) {
             return;
+        }
+
+        if (!$user instanceof Person && !$user instanceof PersonApiKey && !$user instanceof LandApiKey) {
+            throw new \LogicException(sprintf('Unsupported user "%s".', get_debug_type($user)));
         }
 
         $rootAlias = $queryBuilder->getRootAliases()[0];

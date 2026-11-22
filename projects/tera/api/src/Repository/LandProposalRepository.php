@@ -19,7 +19,7 @@ class LandProposalRepository extends ServiceEntityRepository
 
     public function hasExistingStateForLand(Land $land,
         string $state,
-        ?string $excludeId = null): bool
+        ?int $excludeId = null): bool
     {
         $qb = $this->createQueryBuilder('e')
             ->andWhere('e.land = :land')

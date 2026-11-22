@@ -5,6 +5,9 @@ namespace App\Factory;
 use App\Entity\Cultivation;
 use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
 
+/**
+ * @extends PersistentObjectFactory<Cultivation>
+ */
 final class CultivationFactory extends PersistentObjectFactory
 {
     public function __construct()

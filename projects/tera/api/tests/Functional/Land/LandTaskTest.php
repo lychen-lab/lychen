@@ -15,7 +15,7 @@ use function Zenstruck\Foundry\faker;
 
 class LandTaskTest extends AbstractApiTestCase
 {
-    public function testPost()
+    public function testPost(): void
     {
         $context = $this->createLandContext();
 
@@ -59,7 +59,7 @@ class LandTaskTest extends AbstractApiTestCase
             });
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandTask($context);
@@ -96,7 +96,7 @@ class LandTaskTest extends AbstractApiTestCase
             });
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandTask($context);
@@ -148,7 +148,7 @@ class LandTaskTest extends AbstractApiTestCase
             });
     }
 
-    public function testCollection()
+    public function testCollection(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandTask($context);
@@ -186,7 +186,7 @@ class LandTaskTest extends AbstractApiTestCase
             ->assertJsonMatches('member[1].state', $context->landTasks[1]->getState());
     }
 
-    public function testCollectionPagination()
+    public function testCollectionPagination(): void
     {
         $context = $this->createLandContext();
         array_map(fn () => $this->addOneLandTask($context), range(1, 25));
@@ -201,7 +201,7 @@ class LandTaskTest extends AbstractApiTestCase
             });
     }
 
-    public function testCollectionFilterPerState()
+    public function testCollectionFilterPerState(): void
     {
         $context = $this->createLandContext();
         LandTaskFactory::new()->many(3)->create([
@@ -239,7 +239,7 @@ class LandTaskTest extends AbstractApiTestCase
             ->assertJsonMatches('totalItems', 6);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandTask($context);
@@ -259,7 +259,7 @@ class LandTaskTest extends AbstractApiTestCase
             ->assertStatus(204);
     }
 
-    public function testMarkAsDone()
+    public function testMarkAsDone(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandTask($context, ['state' => LandTaskWorkflowPlace::TO_BE_DONE]);
@@ -277,7 +277,7 @@ class LandTaskTest extends AbstractApiTestCase
         $this->assertNotNull($landTask);
     }
 
-    public function testMarkAsInProgress()
+    public function testMarkAsInProgress(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandTask($context, ['state' => LandTaskWorkflowPlace::TO_BE_DONE]);

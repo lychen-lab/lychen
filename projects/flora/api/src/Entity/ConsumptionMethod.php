@@ -40,7 +40,7 @@ class ConsumptionMethod extends AbstractIdOrmAndUlidApiIdentified
 
     #[Groups(['consumption_method:get'])]
     #[ORM\Column(length: 100, unique: true)]
-    private ?string $code = null;
+    private string $code;
 
     /**
      * @var Collection<int, PlantPart>
@@ -56,7 +56,7 @@ class ConsumptionMethod extends AbstractIdOrmAndUlidApiIdentified
 
     public function getCode(): ?string
     {
-        return $this->code;
+        return $this->code ?? null;
     }
 
     public function setCode(string $code): static

@@ -8,7 +8,7 @@ use Zenstruck\Browser\Json;
 
 class LandApiKeyTest extends AbstractApiTestCase
 {
-    public function testPost()
+    public function testPost(): void
     {
         $context = $this->createLandContext();
 

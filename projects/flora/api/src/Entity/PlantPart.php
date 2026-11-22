@@ -41,14 +41,14 @@ class PlantPart extends AbstractIdOrmAndUlidApiIdentified
 
     #[ORM\ManyToOne(inversedBy: 'plantParts')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Plant $plant = null;
+    private Plant $plant;
 
     #[ORM\ManyToOne(inversedBy: 'plantParts')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Part $part = null;
+    private Part $part;
 
     #[ORM\Column]
-    private ?bool $consumable = false;
+    private bool $consumable = false;
 
     /**
      * @var Collection<int, ConsumptionMethod>
@@ -82,10 +82,10 @@ class PlantPart extends AbstractIdOrmAndUlidApiIdentified
 
     public function getPlant(): ?Plant
     {
-        return $this->plant;
+        return $this->plant ?? null;
     }
 
-    public function setPlant(?Plant $plant): static
+    public function setPlant(Plant $plant): static
     {
         $this->plant = $plant;
 
@@ -94,10 +94,10 @@ class PlantPart extends AbstractIdOrmAndUlidApiIdentified
 
     public function getPart(): ?Part
     {
-        return $this->part;
+        return $this->part ?? null;
     }
 
-    public function setPart(?Part $part): static
+    public function setPart(Part $part): static
     {
         $this->part = $part;
 

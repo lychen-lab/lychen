@@ -39,7 +39,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         'order[:property]' => new QueryParameter(
             filter: 'land_request.order_filter'
         ),
-        new QueryParameter(
+        'state' => new QueryParameter(
             key    : 'state',
             schema : [
                 'type' => 'string',
@@ -104,7 +104,7 @@ class LandRequest extends AbstractIdOrmAndUlidApiIdentified implements StatePers
 
     #[ORM\ManyToOne(inversedBy: 'landRequests')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Person $person = null;
+    private Person $person;
 
     #[ORM\Column(length: 255)]
     #[Assert\Choice(choices: LandRequestWorkflowPlace::PLACES)]
@@ -115,10 +115,12 @@ class LandRequest extends AbstractIdOrmAndUlidApiIdentified implements StatePers
         'land_request:patch:output',
         'land_request:publish:output',
         'land_request:archive:output'])]
-    private ?string $state = LandRequestWorkflowPlace::DRAFT;
+    private string $state = LandRequestWorkflowPlace::DRAFT;
 
     /**
      * @var array|null Tiptap JSON Object
+     *
+     * @phpstan-var array<string, mixed>|null
      */
     #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['land_request:collection',
@@ -149,7 +151,7 @@ class LandRequest extends AbstractIdOrmAndUlidApiIdentified implements StatePers
         'land_request:patch',
         'land_request:publish:output',
         'land_request:archive:output'])]
-    private ?string $gardeningLevel = GardeningLevel::BEGINNER;
+    private string $gardeningLevel = GardeningLevel::BEGINNER;
 
     #[ORM\Column]
     #[Groups(['land_request:collection',
@@ -159,7 +161,7 @@ class LandRequest extends AbstractIdOrmAndUlidApiIdentified implements StatePers
         'land_request:patch',
         'land_request:publish:output',
         'land_request:archive:output'])]
-    private ?bool $hasTools = false;
+    private bool $hasTools = false;
 
     #[ORM\Column(length: 255)]
     #[Groups(['land_request:collection',
@@ -169,7 +171,7 @@ class LandRequest extends AbstractIdOrmAndUlidApiIdentified implements StatePers
         'land_request:patch',
         'land_request:publish:output',
         'land_request:archive:output'])]
-    private ?string $title = null;
+    private string $title;
 
     #[ORM\Column(length: 30)]
     #[Assert\Choice(choices: LandInteractionMode::ALL)]
@@ -185,7 +187,7 @@ class LandRequest extends AbstractIdOrmAndUlidApiIdentified implements StatePers
         'enum' => LandInteractionMode::ALL,
         'example' => LandInteractionMode::ALL,
     ])]
-    private ?string $preferredInteractionMode = LandInteractionMode::NO_PREFERENCE;
+    private string $preferredInteractionMode = LandInteractionMode::NO_PREFERENCE;
 
     #[ORM\Column]
     #[Groups(['land_request:collection',
@@ -195,8 +197,11 @@ class LandRequest extends AbstractIdOrmAndUlidApiIdentified implements StatePers
         'land_request:patch',
         'land_request:publish:output',
         'land_request:archive:output'])]
-    private ?bool $supportsLocalFoodSecurity = false;
+    private bool $supportsLocalFoodSecurity = false;
 
+    /**
+     * @phpstan-var array<string>|null
+     */
     #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Assert\Choice(choices: LandSharingCondition::ALL, multiple: true)]
     #[Groups(['land_request:collection',
@@ -281,12 +286,17 @@ class LandRequest extends AbstractIdOrmAndUlidApiIdentified implements StatePers
 
     public function getPerson(): ?Person
     {
-        return $this->person;
+        return $this->person ?? null;
     }
 
     public function setPerson(?Person $person): static
     {
-        $this->person = $person;
+        // Null (from Person::removeLandRequest()) leaves it unset, as Doctrine does for a NOT NULL column.
+        if (null === $person) {
+            unset($this->person);
+        } else {
+            $this->person = $person;
+        }
 
         return $this;
     }
@@ -303,11 +313,17 @@ class LandRequest extends AbstractIdOrmAndUlidApiIdentified implements StatePers
         return $this;
     }
 
+    /**
+     * @phpstan-return array<string, mixed>|null
+     */
     public function getMessage(): ?array
     {
         return $this->message;
     }
 
+    /**
+     * @phpstan-param array<string, mixed>|null $message
+     */
     public function setMessage(?array $message): static
     {
         $this->message = $message;
@@ -353,7 +369,7 @@ class LandRequest extends AbstractIdOrmAndUlidApiIdentified implements StatePers
 
     public function getTitle(): ?string
     {
-        return $this->title;
+        return $this->title ?? null;
     }
 
     public function setTitle(string $title): static
@@ -387,11 +403,17 @@ class LandRequest extends AbstractIdOrmAndUlidApiIdentified implements StatePers
         return $this;
     }
 
+    /**
+     * @phpstan-return array<string>|null
+     */
     public function getSharingConditions(): ?array
     {
         return $this->sharingConditions;
     }
 
+    /**
+     * @phpstan-param array<string>|null $sharingConditions
+     */
     public function setSharingConditions(?array $sharingConditions): static
     {
         $this->sharingConditions = $sharingConditions;

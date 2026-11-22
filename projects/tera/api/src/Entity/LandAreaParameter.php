@@ -29,11 +29,11 @@ class LandAreaParameter extends AbstractIdOrmAndUlidApiIdentified implements Lan
     #[ORM\OneToOne(inversedBy: 'landAreaParameter', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['land_area_parameter:get'])]
-    private ?LandArea $landArea = null;
+    private LandArea $landArea;
 
     #[ORM\Column]
     #[Groups(['land_area_parameter:patch', 'land_area_parameter:get'])]
-    private ?bool $aboveGround = false;
+    private bool $aboveGround = false;
 
     #[ORM\Column(nullable: true)]
     #[Groups(['land_area_parameter:patch', 'land_area_parameter:get'])]
@@ -92,7 +92,7 @@ class LandAreaParameter extends AbstractIdOrmAndUlidApiIdentified implements Lan
 
     public function getLandArea(): ?LandArea
     {
-        return $this->landArea;
+        return $this->landArea ?? null;
     }
 
     public function setLandArea(LandArea $landArea): static

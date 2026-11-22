@@ -5,8 +5,8 @@ namespace App\Doctrine\Listener;
 use App\Entity\Person;
 use App\Entity\PersonApiKey;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
+use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Events;
-use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 
@@ -19,7 +19,7 @@ final readonly class PersonApiKeyLinkOwnerListener
     }
 
     public function __invoke(PersonApiKey $personApiKey,
-        LifecycleEventArgs $event): void
+        PrePersistEventArgs $event): void
     {
         if (!$owner = $personApiKey->getPerson()) {
             $owner = $this->security->getUser();

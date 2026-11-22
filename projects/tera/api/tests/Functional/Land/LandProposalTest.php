@@ -14,7 +14,7 @@ use Zenstruck\Browser\Json;
 
 class LandProposalTest extends AbstractApiTestCase
 {
-    public function testPost()
+    public function testPost(): void
     {
         $context = $this->createLandContext();
 
@@ -185,7 +185,7 @@ class LandProposalTest extends AbstractApiTestCase
             ->assertJsonMatches('title', $landProposal->getTitle()); // Check at least one field
     }
 
-    public function testCollection()
+    public function testCollection(): void
     {
         $context = $this->createLandContext();
         $context2 = $this->createLandContext();
@@ -282,7 +282,7 @@ class LandProposalTest extends AbstractApiTestCase
             ->assertJsonMatches('member[0].ulid', $landProposal4->getUlid()->toString());
     }
 
-    public function testCollectionPublic()
+    public function testCollectionPublic(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();

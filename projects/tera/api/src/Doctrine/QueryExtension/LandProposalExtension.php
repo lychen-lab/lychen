@@ -5,6 +5,7 @@ namespace App\Doctrine\QueryExtension;
 use ApiPlatform\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
+use ApiPlatform\Metadata\HttpOperation;
 use ApiPlatform\Metadata\Operation;
 use App\Entity\LandProposal;
 use App\Entity\Person;
@@ -34,7 +35,7 @@ final readonly class LandProposalExtension implements QueryCollectionExtensionIn
             return;
         }
 
-        if ('/land_proposals/public' === $operation?->getUriTemplate()) {
+        if ($operation instanceof HttpOperation && '/land_proposals/public' === $operation->getUriTemplate()) {
             $this->addWhereForPublicCollection($queryBuilder);
         }
     }

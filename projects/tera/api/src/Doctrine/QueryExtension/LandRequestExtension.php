@@ -6,7 +6,10 @@ use ApiPlatform\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
+use App\Entity\LandApiKey;
 use App\Entity\LandRequest;
+use App\Entity\Person;
+use App\Entity\PersonApiKey;
 use App\Workflow\LandRequest\LandRequestWorkflowPlace;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -32,6 +35,10 @@ final readonly class LandRequestExtension implements QueryCollectionExtensionInt
             return;
         }
 
+        if (!$user instanceof Person && !$user instanceof PersonApiKey && !$user instanceof LandApiKey) {
+            throw new \LogicException(sprintf('Unsupported user "%s".', get_debug_type($user)));
+        }
+
         $rootAlias = $queryBuilder->getRootAliases()[0];
         $queryBuilder->andWhere(sprintf('%s.person = :current_user', $rootAlias));
         $queryBuilder->setParameter('current_user', $user->getId());
@@ -41,6 +48,10 @@ final readonly class LandRequestExtension implements QueryCollectionExtensionInt
     {
         if (LandRequest::class !== $resourceClass || $this->security->isGranted('ROLE_ADMIN') || null === $user = $this->security->getUser()) {
             return;
+        }
+
+        if (!$user instanceof Person && !$user instanceof PersonApiKey && !$user instanceof LandApiKey) {
+            throw new \LogicException(sprintf('Unsupported user "%s".', get_debug_type($user)));
         }
 
         $rootAlias = $queryBuilder->getRootAliases()[0];

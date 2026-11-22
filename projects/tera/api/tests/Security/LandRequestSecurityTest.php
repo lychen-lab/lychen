@@ -15,7 +15,7 @@ use Lychen\UtilTiptap\Service\TipTapFaker;
 
 class LandRequestSecurityTest extends AbstractApiTestCase
 {
-    public function testPut()
+    public function testPut(): void
     {
         $person = $this->createPerson();
         $landRequest = $this->createLandRequest($person);
@@ -30,7 +30,7 @@ class LandRequestSecurityTest extends AbstractApiTestCase
             ->assertStatus(405);
     }
 
-    public function testPost()
+    public function testPost(): void
     {
         // User not authenticated
         $this->browser()
@@ -73,7 +73,7 @@ class LandRequestSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $person = $this->createPerson();
         $person2 = $this->createPerson();
@@ -109,7 +109,7 @@ class LandRequestSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $person = $this->createPerson();
         $person2 = $this->createPerson();
@@ -139,7 +139,7 @@ class LandRequestSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $person = $this->createPerson();
         $person2 = $this->createPerson();
@@ -169,7 +169,7 @@ class LandRequestSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testCollection()
+    public function testCollection(): void
     {
         // User not authenticated
         $this->browser()
@@ -204,7 +204,7 @@ class LandRequestSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testCollectionPublic()
+    public function testCollectionPublic(): void
     {
         // User not authenticated
         $this->browser()
@@ -221,7 +221,7 @@ class LandRequestSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testPublish()
+    public function testPublish(): void
     {
         $person = $this->createPerson();
         $person2 = $this->createPerson();
@@ -240,7 +240,7 @@ class LandRequestSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testArchive()
+    public function testArchive(): void
     {
         $person = $this->createPerson();
         $person2 = $this->createPerson();

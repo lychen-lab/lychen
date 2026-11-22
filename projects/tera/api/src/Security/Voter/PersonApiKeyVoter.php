@@ -63,12 +63,12 @@ class PersonApiKeyVoter extends AbstractPermissionVoter
         };
     }
 
-    private function canGet($permissionHolder): bool
+    private function canGet(PermissionHolder $permissionHolder): bool
     {
         return $this->can($permissionHolder, self::GET);
     }
 
-    private function canPost($permissionHolder): bool
+    private function canPost(PermissionHolder $permissionHolder): bool
     {
         if (!$permissionHolder instanceof Person) {
             return false;

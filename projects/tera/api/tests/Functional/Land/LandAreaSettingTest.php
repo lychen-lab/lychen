@@ -7,7 +7,7 @@ use App\Tests\Utils\Abstract\AbstractApiTestCase;
 
 class LandAreaSettingTest extends AbstractApiTestCase
 {
-    public function testGet()
+    public function testGet(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandArea($context);
@@ -31,7 +31,7 @@ class LandAreaSettingTest extends AbstractApiTestCase
             ->assertJsonMatches('rotationActivated', $landAreaSetting->isRotationActivated());
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandArea($context);

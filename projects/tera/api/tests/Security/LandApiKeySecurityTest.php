@@ -9,7 +9,7 @@ use App\Tests\Utils\Abstract\AbstractApiTestCase;
 
 class LandApiKeySecurityTest extends AbstractApiTestCase
 {
-    public function testPost()
+    public function testPost(): void
     {
         $this->browser()
             ->post('/api/land_api_keys', ['json' => []])
@@ -28,7 +28,7 @@ class LandApiKeySecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testAuthentication()
+    public function testAuthentication(): void
     {
         $context = $this->createLandContext();
 
@@ -51,7 +51,7 @@ class LandApiKeySecurityTest extends AbstractApiTestCase
         )->get($this->getIriFromResource($context->land))->assertSuccessful();
     }
 
-    public function testAuthenticationWithInvalidToken()
+    public function testAuthenticationWithInvalidToken(): void
     {
         $this->browser()->setDefaultHttpOptions(
             [

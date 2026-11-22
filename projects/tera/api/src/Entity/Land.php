@@ -49,7 +49,7 @@ class Land extends AbstractIdOrmAndUlidApiIdentified
         'land:post',
         'land_member_invitation:collection-by-email',
         'land_proposal:collection-public'])]
-    private ?string $name = null;
+    private string $name;
 
     /**
      * @var Collection<int, LandMember>
@@ -160,7 +160,7 @@ class Land extends AbstractIdOrmAndUlidApiIdentified
 
     public function getName(): ?string
     {
-        return $this->name;
+        return $this->name ?? null;
     }
 
     public function setName(string $name): static

@@ -44,11 +44,11 @@ use Symfony\Component\Validator\Constraints as Assert;
         'order[:property]' => new QueryParameter(
             filter: 'land_proposal.order_filter'
         ),
-        new QueryParameter(
+        'land' => new QueryParameter(
             key   : 'land',
             filter: LandFilter::class
         ),
-        new QueryParameter(
+        'state' => new QueryParameter(
             key    : 'state',
             schema : [
                 'type' => 'string',
@@ -75,7 +75,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         'order[:property]' => new QueryParameter(
             filter: 'land_proposal.order_filter'
         ),
-        new QueryParameter(
+        'preferredInteractionMode' => new QueryParameter(
             key    : 'preferredInteractionMode',
             openApi: new Parameter(
                 name           : 'preferredInteractionMode',
@@ -86,7 +86,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             ),
             filter : 'land_proposal.preferred_interaction_mode_filter'
         ),
-        new QueryParameter(
+        'sharingConditions' => new QueryParameter(
             key    : 'sharingConditions',
             openApi: new Parameter(
                 name           : 'sharingConditions',
@@ -147,10 +147,12 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         'land_proposal:patch',
         'land_proposal:publish:output',
         'land_proposal:archive:output'])]
-    private ?string $title = null;
+    private string $title;
 
     /**
      * @var array|null Tiptap JSON Object
+     *
+     * @phpstan-var array<string, mixed>|null
      */
     #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['land_proposal:collection',
@@ -176,7 +178,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         'enum' => SoilType::ALL,
         'example' => SoilType::HUMUS_RICH,
     ])]
-    private ?string $soilType = null;
+    private string $soilType;
 
     #[ORM\Column(length: 20)]
     #[Assert\Choice(choices: Orientation::ALL)]
@@ -192,7 +194,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         'enum' => Orientation::ALL,
         'example' => Orientation::SOUTH_WEST,
     ])]
-    private ?string $orientation = null;
+    private string $orientation;
 
     #[ORM\Column]
     #[Groups(['land_proposal:collection',
@@ -202,7 +204,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         'land_proposal:patch',
         'land_proposal:publish:output',
         'land_proposal:archive:output'])]
-    private ?bool $hasParking = false;
+    private bool $hasParking = false;
 
     #[ORM\Column]
     #[Groups(['land_proposal:collection',
@@ -212,7 +214,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         'land_proposal:patch',
         'land_proposal:publish:output',
         'land_proposal:archive:output'])]
-    private ?bool $hasTools = false;
+    private bool $hasTools = false;
 
     #[ORM\Column]
     #[Groups(['land_proposal:collection',
@@ -222,7 +224,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         'land_proposal:patch',
         'land_proposal:publish:output',
         'land_proposal:archive:output'])]
-    private ?bool $hasShed = false;
+    private bool $hasShed = false;
 
     #[ORM\Column]
     #[Groups(['land_proposal:collection',
@@ -232,7 +234,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         'land_proposal:patch',
         'land_proposal:publish:output',
         'land_proposal:archive:output'])]
-    private ?bool $hasWaterPoint = false;
+    private bool $hasWaterPoint = false;
 
     #[ORM\Column]
     #[Groups(['land_proposal:collection',
@@ -242,7 +244,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         'land_proposal:patch',
         'land_proposal:publish:output',
         'land_proposal:archive:output'])]
-    private ?bool $hasIndependentAccess = false;
+    private bool $hasIndependentAccess = false;
 
     #[ORM\Column(length: 255)]
     #[Groups(['land_proposal:collection',
@@ -252,7 +254,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         'land_proposal:patch',
         'land_proposal:publish:output',
         'land_proposal:archive:output'])]
-    private ?string $gardenState = null;
+    private string $gardenState;
 
     #[ORM\Column(length: 30)]
     #[Assert\Choice(choices: LandInteractionMode::ALL)]
@@ -268,7 +270,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         'enum' => LandInteractionMode::ALL,
         'example' => LandInteractionMode::ALL,
     ])]
-    private ?string $preferredInteractionMode = LandInteractionMode::NO_PREFERENCE;
+    private string $preferredInteractionMode = LandInteractionMode::NO_PREFERENCE;
 
     #[ORM\Column(length: 30)]
     #[Assert\Choice(choices: GardeningLevel::ALL)]
@@ -284,7 +286,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         'enum' => GardeningLevel::ALL,
         'example' => GardeningLevel::BEGINNER,
     ])]
-    private ?string $gardeningLevel = GardeningLevel::BEGINNER;
+    private string $gardeningLevel = GardeningLevel::BEGINNER;
 
     #[ORM\Column(length: 30)]
     #[Groups(['land_proposal:collection',
@@ -300,7 +302,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         'enum' => GardeningLevel::ALL,
         'example' => GardeningLevel::BEGINNER,
     ])]
-    private ?string $lookingForGardenerLevel = null;
+    private string $lookingForGardenerLevel;
 
     #[ORM\Column]
     #[Groups(['land_proposal:collection',
@@ -310,7 +312,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         'land_proposal:patch',
         'land_proposal:publish:output',
         'land_proposal:archive:output'])]
-    private ?int $gardenTotalSurface = null;
+    private int $gardenTotalSurface;
 
     #[ORM\Column]
     #[Groups(['land_proposal:collection',
@@ -320,7 +322,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         'land_proposal:patch',
         'land_proposal:publish:output',
         'land_proposal:archive:output'])]
-    private ?bool $foodSecurityParticipation = false;
+    private bool $foodSecurityParticipation = false;
 
     #[ORM\ManyToOne(inversedBy: 'landProposals')]
     #[ORM\JoinColumn(nullable: false)]
@@ -328,7 +330,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         'land_proposal:get',
         'land_proposal:post',
         'land_proposal:patch:output'])]
-    private ?Land $land = null;
+    private Land $land;
 
     #[ORM\Column(length: 255)]
     #[Assert\Choice(choices: LandProposalWorkflowPlace::PLACES)]
@@ -339,8 +341,11 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         'land_proposal:patch:output',
         'land_proposal:publish:output',
         'land_proposal:archive:output'])]
-    private ?string $state = LandProposalWorkflowPlace::DRAFT;
+    private string $state = LandProposalWorkflowPlace::DRAFT;
 
+    /**
+     * @phpstan-var array<string>|null
+     */
     #[ORM\Column(type: Types::JSON, nullable: true, options: ['jsonb' => true])]
     #[Assert\Choice(choices: LandSharingCondition::ALL, multiple: true)]
     #[Groups(['land_proposal:collection',
@@ -421,7 +426,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
 
     public function getTitle(): ?string
     {
-        return $this->title;
+        return $this->title ?? null;
     }
 
     public function setTitle(string $title): static
@@ -431,11 +436,17 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         return $this;
     }
 
+    /**
+     * @phpstan-return array<string, mixed>|null
+     */
     public function getDescription(): ?array
     {
         return $this->description;
     }
 
+    /**
+     * @phpstan-param array<string, mixed>|null $description
+     */
     public function setDescription(?array $description): static
     {
         $this->description = $description;
@@ -445,7 +456,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
 
     public function getSoilType(): ?string
     {
-        return $this->soilType;
+        return $this->soilType ?? null;
     }
 
     public function setSoilType(string $soilType): static
@@ -457,7 +468,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
 
     public function getOrientation(): ?string
     {
-        return $this->orientation;
+        return $this->orientation ?? null;
     }
 
     public function setOrientation(string $orientation): static
@@ -529,7 +540,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
 
     public function getGardenState(): ?string
     {
-        return $this->gardenState;
+        return $this->gardenState ?? null;
     }
 
     public function setGardenState(string $gardenState): static
@@ -565,7 +576,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
 
     public function getLookingForGardenerLevel(): ?string
     {
-        return $this->lookingForGardenerLevel;
+        return $this->lookingForGardenerLevel ?? null;
     }
 
     public function setLookingForGardenerLevel(string $lookingForGardenerLevel): static
@@ -577,7 +588,7 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
 
     public function getGardenTotalSurface(): ?int
     {
-        return $this->gardenTotalSurface;
+        return $this->gardenTotalSurface ?? null;
     }
 
     public function setGardenTotalSurface(int $gardenTotalSurface): static
@@ -601,12 +612,17 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
 
     public function getLand(): ?Land
     {
-        return $this->land;
+        return $this->land ?? null;
     }
 
     public function setLand(?Land $land): static
     {
-        $this->land = $land;
+        // Null (from Land::removeLandProposal()) leaves it unset, as Doctrine does for a NOT NULL column.
+        if (null === $land) {
+            unset($this->land);
+        } else {
+            $this->land = $land;
+        }
 
         return $this;
     }
@@ -623,11 +639,17 @@ class LandProposal extends AbstractIdOrmAndUlidApiIdentified implements StateLan
         return $this;
     }
 
+    /**
+     * @phpstan-return array<string>|null
+     */
     public function getSharingConditions(): ?array
     {
         return $this->sharingConditions;
     }
 
+    /**
+     * @phpstan-param array<string>|null $sharingConditions
+     */
     public function setSharingConditions(?array $sharingConditions): static
     {
         $this->sharingConditions = $sharingConditions;

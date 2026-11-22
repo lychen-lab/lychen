@@ -40,7 +40,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     normalizationContext: ['groups' => ['land_member:collection']],
     security            : "is_granted('".LandMemberVoter::COLLECTION."')",
     parameters          : [
-        new QueryParameter(
+        'land' => new QueryParameter(
             key   : 'land',
             filter: LandFilter::class,
         ),
@@ -53,7 +53,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     name                : 'land-member_me',
     provider            : LandMembersMeProvider::class,
     parameters          : [
-        new QueryParameter(
+        'land' => new QueryParameter(
             key   : 'land',
             filter: LandFilter::class,
         ),
@@ -64,21 +64,21 @@ class LandMember extends AbstractIdOrmAndUlidApiIdentified implements LandAwareI
 {
     #[ORM\Column]
     #[Groups(['land_member:collection', 'land_member:get', 'land_member:patch:output'])]
-    private ?\DateTimeImmutable $joinedAt = null;
+    private \DateTimeImmutable $joinedAt;
 
     #[ORM\Column]
     #[Groups(['land_member:collection', 'land_member:get', 'land_member:me', 'land_member:patch:output'])]
-    private ?bool $owner = false;
+    private bool $owner = false;
 
     #[ORM\ManyToOne(inversedBy: 'landMembers')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['land_member:me', 'land_member:patch:output'])]
-    private ?Land $land = null;
+    private Land $land;
 
     #[ORM\ManyToOne(inversedBy: 'landMembers')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['land_member:collection', 'land_member:get', 'land_member:patch:output'])]
-    private ?Person $person = null;
+    private Person $person;
 
     #[ORM\OneToOne(mappedBy: 'landMember', cascade: ['persist', 'remove'])]
     #[Groups(['land_member:collection', 'land_member:get', 'land_member:patch:output'])]
@@ -113,7 +113,7 @@ class LandMember extends AbstractIdOrmAndUlidApiIdentified implements LandAwareI
 
     public function getJoinedAt(): ?\DateTimeImmutable
     {
-        return $this->joinedAt;
+        return $this->joinedAt ?? null;
     }
 
     public function setJoinedAt(\DateTimeImmutable $joinedAt): static
@@ -143,24 +143,34 @@ class LandMember extends AbstractIdOrmAndUlidApiIdentified implements LandAwareI
 
     public function getLand(): ?Land
     {
-        return $this->land;
+        return $this->land ?? null;
     }
 
     public function setLand(?Land $land): static
     {
-        $this->land = $land;
+        // Null (from Land::removeLandMember()) leaves it unset, as Doctrine does for a NOT NULL column.
+        if (null === $land) {
+            unset($this->land);
+        } else {
+            $this->land = $land;
+        }
 
         return $this;
     }
 
     public function getPerson(): ?Person
     {
-        return $this->person;
+        return $this->person ?? null;
     }
 
     public function setPerson(?Person $person): static
     {
-        $this->person = $person;
+        // Null (from Person::removeLandMember()) leaves it unset, as Doctrine does for a NOT NULL column.
+        if (null === $person) {
+            unset($this->person);
+        } else {
+            $this->person = $person;
+        }
 
         return $this;
     }
@@ -210,6 +220,9 @@ class LandMember extends AbstractIdOrmAndUlidApiIdentified implements LandAwareI
         return $this->landRoles;
     }
 
+    /**
+     * @param Collection<int, LandRole> $landRoles
+     */
     public function setLandRoles(Collection $landRoles): static
     {
         foreach ($landRoles as $landRole) {

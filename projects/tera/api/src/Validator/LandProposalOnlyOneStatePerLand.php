@@ -9,6 +9,9 @@ class LandProposalOnlyOneStatePerLand extends Constraint
 {
     public string $message = 'You can only have one proposal in {{ state }} state.';
 
+    /**
+     * @param list<string> $states
+     */
     public function __construct(
         public readonly array $states = [],
         ?string $message = null,

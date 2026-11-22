@@ -7,6 +7,9 @@ use App\Factory\PersonFactory;
 
 trait PersonTrait
 {
+    /**
+     * @param array<string, mixed>|callable $attributes
+     */
     protected function createPerson(array|callable $attributes = []): Person
     {
         return PersonFactory::new()->create($attributes);

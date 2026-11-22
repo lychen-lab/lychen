@@ -98,7 +98,7 @@ class LandRequestVoter extends AbstractPermissionVoter
         return $userIsOwner || $userIsNotOwnerButStateIsPublished;
     }
 
-    private function canPost($permissionHolder): bool
+    private function canPost(PermissionHolder $permissionHolder): bool
     {
         return $this->can($permissionHolder, self::POST);
     }

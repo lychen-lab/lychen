@@ -13,7 +13,7 @@ class LandHarvestEntrySecurityTest extends AbstractApiTestCase
 {
     use PlantVerifierMockTrait;
 
-    public function testPut()
+    public function testPut(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandHarvestEntry($context);
@@ -28,7 +28,7 @@ class LandHarvestEntrySecurityTest extends AbstractApiTestCase
             ->assertStatus(405);
     }
 
-    public function testPost()
+    public function testPost(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();
@@ -52,7 +52,7 @@ class LandHarvestEntrySecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();
@@ -107,7 +107,7 @@ class LandHarvestEntrySecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();
@@ -131,7 +131,7 @@ class LandHarvestEntrySecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();
@@ -155,7 +155,7 @@ class LandHarvestEntrySecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testCollection()
+    public function testCollection(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();

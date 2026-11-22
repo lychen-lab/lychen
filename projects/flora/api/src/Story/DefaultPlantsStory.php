@@ -308,10 +308,15 @@ final class DefaultPlantsStory extends Story
         );
     }
 
+    /**
+     * @param array<string, mixed>       $attributes            the plant's, for PlantFactory
+     * @param array<string, mixed>       $cultivationAttributes for CultivationFactory
+     * @param list<array<string, mixed>> $plantPartList         one PlantPartFactory's attributes per part
+     */
     protected function createPlant(string $stateId,
         array $attributes,
-        ?array $cultivationAttributes = [],
-        ?array $plantPartList = []): void
+        array $cultivationAttributes = [],
+        array $plantPartList = []): void
     {
         $plant = PlantFactory::new([
             ...$attributes,

@@ -8,7 +8,7 @@ use Zenstruck\Browser\Json;
 
 class PersonApiKeyTest extends AbstractApiTestCase
 {
-    public function testPost()
+    public function testPost(): void
     {
         $person = $this->createPerson();
 

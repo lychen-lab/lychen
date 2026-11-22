@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
+/**
+ * @extends Voter<string, mixed>
+ */
 abstract class AbstractPermissionVoter extends Voter
 {
     public function __construct(

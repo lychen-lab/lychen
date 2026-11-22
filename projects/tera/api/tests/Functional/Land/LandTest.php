@@ -13,7 +13,7 @@ class LandTest extends AbstractApiTestCase
 {
     #[DataProvider('landDataProvider')]
     public function testPost(int $surface,
-        int $altitude)
+        int $altitude): void
     {
         $person = $this->createPerson();
 
@@ -43,7 +43,7 @@ class LandTest extends AbstractApiTestCase
             ->assertStatus(201);
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $context = $this->createLandContext();
 
@@ -83,7 +83,7 @@ class LandTest extends AbstractApiTestCase
             ->assertStatus(200);
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $context = $this->createLandContext();
 
@@ -148,7 +148,7 @@ class LandTest extends AbstractApiTestCase
             ->assertStatus(200);
     }
 
-    public function testPatchWithInvalidSurface()
+    public function testPatchWithInvalidSurface(): void
     {
         $context = $this->createLandContext();
 
@@ -161,7 +161,7 @@ class LandTest extends AbstractApiTestCase
             ->assertStatus(422);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $context = $this->createLandContext();
 
@@ -186,7 +186,7 @@ class LandTest extends AbstractApiTestCase
             ->assertStatus(204);
     }
 
-    public function testCollection()
+    public function testCollection(): void
     {
         $context1 = $this->createLandContext();
         $this->createLand($context1->owner);
@@ -210,7 +210,7 @@ class LandTest extends AbstractApiTestCase
             ->assertJsonMatches('totalItems', 2);
     }
 
-    public function testCollectionPagination()
+    public function testCollectionPagination(): void
     {
         $owner = $this->createPerson();
         array_map(fn () => $this->createLand($owner), range(1, 25));

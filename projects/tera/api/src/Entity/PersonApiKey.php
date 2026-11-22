@@ -46,14 +46,17 @@ class PersonApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permissi
 
     public const string PREFIX = 'tera-person_';
 
+    /**
+     * @phpstan-var array<string>|null
+     */
     #[ORM\Column(nullable: true, options: ['jsonb' => true])]
     #[Assert\Choice(choices: PersonPermission::ALL, multiple: true)]
     #[Groups(['person_api_key:post', 'person_api_key:get'])]
-    private array $permissions = [];
+    private ?array $permissions = [];
 
     #[ORM\ManyToOne(inversedBy: 'personApiKeys')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Person $person = null;
+    private Person $person;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Groups(['person_api_key:get'])]
@@ -61,10 +64,10 @@ class PersonApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permissi
 
     #[ORM\Column(length: 255)]
     #[Groups(['person_api_key:post', 'person_api_key:get'])]
-    private ?string $name = null;
+    private string $name;
 
     #[ORM\Column(length: 255)]
-    private ?string $jti = null;
+    private string $jti;
 
     private ?string $token = null;
 
@@ -80,12 +83,17 @@ class PersonApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permissi
 
     public function getPerson(): ?Person
     {
-        return $this->person;
+        return $this->person ?? null;
     }
 
     public function setPerson(?Person $person): static
     {
-        $this->person = $person;
+        // Null (from Person::removePersonApiKey()) leaves it unset, as Doctrine does for a NOT NULL column.
+        if (null === $person) {
+            unset($this->person);
+        } else {
+            $this->person = $person;
+        }
 
         return $this;
     }
@@ -112,7 +120,7 @@ class PersonApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permissi
 
     public function getName(): ?string
     {
-        return $this->name;
+        return $this->name ?? null;
     }
 
     public function setName(string $name): static
@@ -148,14 +156,17 @@ class PersonApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permissi
 
     public function getUserIdentifier(): string
     {
-        return $this->ulid;
+        return $this->ulid->toString();
     }
 
     public function getPermissions(): array
     {
-        return $this->permissions;
+        return $this->permissions ?? [];
     }
 
+    /**
+     * @phpstan-param array<string>|null $permissions
+     */
     public function setPermissions(?array $permissions): static
     {
         $this->permissions = $permissions;

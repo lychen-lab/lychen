@@ -17,7 +17,8 @@ base="origin/${GITHUB_BASE_REF:-main}"
 
 cd "$(git rev-parse --show-toplevel)"
 
-total() { grep -E '^[[:space:]]+count: [0-9]+$' | awk '{ s += $2 } END { print s + 0 }'; }
+# awk alone: grep would exit 1 on a baseline with no errors left (pipefail).
+total() { awk '/^[[:space:]]+count: [0-9]+$/ { s += $2 } END { print s + 0 }'; }
 
 if ! fork=$(git merge-base HEAD "$base" 2> /dev/null); then
   echo "No common history with $base, nothing to compare."

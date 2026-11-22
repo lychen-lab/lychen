@@ -7,6 +7,8 @@ use ApiPlatform\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Metadata\Operation;
 use App\Entity\Land;
+use App\Entity\LandApiKey;
+use App\Entity\Person;
 use App\Entity\PersonApiKey;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -36,6 +38,10 @@ final readonly class LandExtension implements QueryCollectionExtensionInterface,
 
         if ($user instanceof PersonApiKey) {
             $user = $user->getPerson();
+        }
+
+        if (!$user instanceof Person && !$user instanceof LandApiKey) {
+            throw new \LogicException(sprintf('Unsupported user "%s".', get_debug_type($user)));
         }
 
         $rootAlias = $queryBuilder->getRootAliases()[0];

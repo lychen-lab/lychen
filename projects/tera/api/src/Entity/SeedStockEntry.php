@@ -32,7 +32,7 @@ class SeedStockEntry extends AbstractIdOrmAndUlidApiIdentified
 
     #[ORM\ManyToOne(inversedBy: 'seedStockEntries')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?SeedStock $seedStock = null;
+    private SeedStock $seedStock;
 
     #[ORM\Column(nullable: true)]
     private ?int $quantityInGram = null;
@@ -44,7 +44,7 @@ class SeedStockEntry extends AbstractIdOrmAndUlidApiIdentified
     private ?\DateTimeInterface $purchaseDate = null;
 
     #[ORM\Column]
-    private ?bool $publiclyShared = false;
+    private bool $publiclyShared = false;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $variety = null;
@@ -58,12 +58,17 @@ class SeedStockEntry extends AbstractIdOrmAndUlidApiIdentified
 
     public function getSeedStock(): ?SeedStock
     {
-        return $this->seedStock;
+        return $this->seedStock ?? null;
     }
 
     public function setSeedStock(?SeedStock $seedStock): static
     {
-        $this->seedStock = $seedStock;
+        // Null (from SeedStock::removeSeedStockEntry()) leaves it unset, as Doctrine does for a NOT NULL column.
+        if (null === $seedStock) {
+            unset($this->seedStock);
+        } else {
+            $this->seedStock = $seedStock;
+        }
 
         return $this;
     }

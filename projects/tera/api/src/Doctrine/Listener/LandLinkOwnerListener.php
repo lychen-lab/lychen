@@ -6,8 +6,8 @@ use App\Entity\Land;
 use App\Entity\LandMember;
 use App\Entity\Person;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
+use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Events;
-use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -19,7 +19,7 @@ final readonly class LandLinkOwnerListener
     {
     }
 
-    public function __invoke(Land $land, LifecycleEventArgs $event): void
+    public function __invoke(Land $land, PostPersistEventArgs $event): void
     {
         if (!$owner = $land->owner) {
             $owner = $this->security->getUser();

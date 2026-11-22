@@ -42,7 +42,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     normalizationContext: ['groups' => ['land_api_key:collection']],
     security            : "is_granted('".LandApiKeyVoter::COLLECTION."')",
     parameters          : [
-        new QueryParameter(
+        'land' => new QueryParameter(
             key   : 'land',
             filter: LandFilter::class,
         ),
@@ -55,10 +55,13 @@ class LandApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permission
 
     public const string PREFIX = 'tera-land_';
 
+    /**
+     * @phpstan-var array<string>|null
+     */
     #[ORM\Column(nullable: true, options: ['jsonb' => true])]
     #[Assert\Choice(choices: LandMemberPermission::ALL, multiple: true)]
     #[Groups(['land_api_key:post', 'land_api_key:get'])]
-    private array $permissions = [];
+    private ?array $permissions = [];
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Groups(['land_api_key:get'])]
@@ -66,15 +69,15 @@ class LandApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permission
 
     #[ORM\Column(length: 255)]
     #[Groups(['land_api_key:post', 'land_api_key:get'])]
-    private ?string $name = null;
+    private string $name;
 
     #[ORM\ManyToOne(inversedBy: 'landApiKeys')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['land_api_key:post', 'land_api_key:get'])]
-    private ?Land $land = null;
+    private Land $land;
 
     #[ORM\Column(length: 255)]
-    private ?string $jti = null;
+    private string $jti;
 
     private ?string $token = null;
 
@@ -90,9 +93,12 @@ class LandApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permission
 
     public function getPermissions(): array
     {
-        return $this->permissions;
+        return $this->permissions ?? [];
     }
 
+    /**
+     * @phpstan-param array<string>|null $permissions
+     */
     public function setPermissions(?array $permissions): static
     {
         $this->permissions = $permissions;
@@ -100,6 +106,9 @@ class LandApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permission
         return $this;
     }
 
+    /**
+     * @phpstan-return array{}
+     */
     public function getApiKeys(): array
     {
         return [];
@@ -111,7 +120,7 @@ class LandApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permission
 
     public function getUserIdentifier(): string
     {
-        return $this->ulid;
+        return $this->ulid->toString();
     }
 
     public function getLastUsedDate(): ?\DateTimeInterface
@@ -128,12 +137,17 @@ class LandApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permission
 
     public function getLand(): ?Land
     {
-        return $this->land;
+        return $this->land ?? null;
     }
 
     public function setLand(?Land $land): static
     {
-        $this->land = $land;
+        // Null (from Land::removeLandApiKey()) leaves it unset, as Doctrine does for a NOT NULL column.
+        if (null === $land) {
+            unset($this->land);
+        } else {
+            $this->land = $land;
+        }
 
         return $this;
     }
@@ -156,7 +170,7 @@ class LandApiKey extends AbstractIdOrmAndUlidApiIdentified implements Permission
 
     public function getName(): ?string
     {
-        return $this->name;
+        return $this->name ?? null;
     }
 
     public function setName(string $name): static

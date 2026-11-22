@@ -22,17 +22,21 @@ readonly class LandMemberInvitationTransitionRefuse implements EventSubscriberIn
         ];
     }
 
+    /**
+     * @param Event<LandMemberInvitation> $event
+     */
     public function onTransition(Event $event): void
     {
-        /** @var LandMemberInvitation $landMemberInvitation */
         $landMemberInvitation = $event->getSubject();
 
         $landMemberInvitation->setRefusedAt(new \DateTimeImmutable());
     }
 
+    /**
+     * @param Event<LandMemberInvitation> $event
+     */
     public function sendEmailToLandOwner(Event $event): void
     {
-        /** @var LandMemberInvitation $landMemberInvitation */
         $landMemberInvitation = $event->getSubject();
 
         // TODO Send email to LandOwner

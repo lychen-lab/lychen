@@ -20,10 +20,10 @@ class AreaRequest extends AbstractIdOrmAndUuidApiIdentified implements AreaListi
     use CreatedAtTrait;
 
     #[ORM\Column(length: 255)]
-    private ?string $title = null;
+    private string $title;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $description = null;
+    private string $description;
 
     #[ORM\Column(length: 255)]
     #[Choice(choices: AreaRequestWorkflow::PLACES)]
@@ -31,7 +31,7 @@ class AreaRequest extends AbstractIdOrmAndUuidApiIdentified implements AreaListi
 
     #[ORM\ManyToOne(inversedBy: 'areaRequests')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Person $requester = null;
+    private Person $requester;
 
     #[ORM\Column(nullable: true)]
     #[Positive]
@@ -63,7 +63,7 @@ class AreaRequest extends AbstractIdOrmAndUuidApiIdentified implements AreaListi
 
     public function getTitle(): ?string
     {
-        return $this->title;
+        return $this->title ?? null;
     }
 
     public function setTitle(string $title): static
@@ -75,7 +75,7 @@ class AreaRequest extends AbstractIdOrmAndUuidApiIdentified implements AreaListi
 
     public function getDescription(): ?string
     {
-        return $this->description;
+        return $this->description ?? null;
     }
 
     public function setDescription(string $description): static
@@ -99,10 +99,10 @@ class AreaRequest extends AbstractIdOrmAndUuidApiIdentified implements AreaListi
 
     public function getRequester(): ?Person
     {
-        return $this->requester;
+        return $this->requester ?? null;
     }
 
-    public function setRequester(?Person $requester): static
+    public function setRequester(Person $requester): static
     {
         $this->requester = $requester;
 

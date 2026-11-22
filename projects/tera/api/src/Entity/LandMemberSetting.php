@@ -26,11 +26,11 @@ class LandMemberSetting extends AbstractIdOrmAndUlidApiIdentified
 {
     #[ORM\OneToOne(inversedBy: 'landMemberSetting', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?LandMember $landMember = null;
+    private LandMember $landMember;
 
     #[ORM\Column]
     #[Groups(['land_member_setting:get', 'land_member_setting:patch'])]
-    private ?bool $emailNotificationActivated = false;
+    private bool $emailNotificationActivated = false;
 
     #[Groups(['land_member_setting:get', 'land_member_setting:patch:output'])]
     public function getUlid(): Ulid
@@ -52,7 +52,7 @@ class LandMemberSetting extends AbstractIdOrmAndUlidApiIdentified
 
     public function getLandMember(): ?LandMember
     {
-        return $this->landMember;
+        return $this->landMember ?? null;
     }
 
     public function setLandMember(LandMember $landMember): static

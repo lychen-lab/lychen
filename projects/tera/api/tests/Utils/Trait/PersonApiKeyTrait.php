@@ -8,6 +8,10 @@ use App\Factory\PersonApiKeyFactory;
 
 trait PersonApiKeyTrait
 {
+    /**
+     * @param array<string, mixed>|callable $attributes
+     * @param list<string>                  $excludedPermissions
+     */
     protected function createPersonApiKey(Person $person, array|callable $attributes = [], array $excludedPermissions = []): PersonApiKey
     {
         if ($attributes['permissions'] && $excludedPermissions) {

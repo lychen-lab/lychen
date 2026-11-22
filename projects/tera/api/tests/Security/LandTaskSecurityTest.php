@@ -9,7 +9,7 @@ use App\Tests\Utils\Abstract\AbstractApiTestCase;
 
 class LandTaskSecurityTest extends AbstractApiTestCase
 {
-    public function testPut()
+    public function testPut(): void
     {
         $context = $this->createLandContext();
         $this->addOneLandTask($context);
@@ -24,7 +24,7 @@ class LandTaskSecurityTest extends AbstractApiTestCase
             ->assertStatus(405);
     }
 
-    public function testPost()
+    public function testPost(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();
@@ -47,7 +47,7 @@ class LandTaskSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testPatch()
+    public function testPatch(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();
@@ -99,7 +99,7 @@ class LandTaskSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();
@@ -123,7 +123,7 @@ class LandTaskSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();
@@ -147,7 +147,7 @@ class LandTaskSecurityTest extends AbstractApiTestCase
             ->assertStatus(403);
     }
 
-    public function testCollection()
+    public function testCollection(): void
     {
         $context1 = $this->createLandContext();
         $context2 = $this->createLandContext();
