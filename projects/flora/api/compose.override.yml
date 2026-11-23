@@ -28,6 +28,9 @@ services:
     tty: true
     volumes:
       - ./:/app
+      # The lychen/* bundles, which vendor/ links to (symlinked path repository):
+      # dev only, as the test and production images bake them in /packages.
+      - ../../../libs/php:/packages
       #- ./var:/app/var
       - ./frankenphp/Caddyfile:/etc/caddy/Caddyfile:ro
       - ./frankenphp/conf.d/20-app.dev.ini:/usr/local/etc/php/app.conf.d/20-app.dev.ini:ro
@@ -58,6 +61,7 @@ services:
     networks: *dev-networks
     volumes: &dev-volumes
       - ./:/app
+      - ../../../libs/php:/packages
       - ./frankenphp/conf.d/20-app.dev.ini:/usr/local/etc/php/app.conf.d/20-app.dev.ini:ro
 
   outbox-relay:
