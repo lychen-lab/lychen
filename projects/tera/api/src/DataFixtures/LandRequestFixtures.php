@@ -4,18 +4,22 @@ namespace App\DataFixtures;
 
 use App\Entity\Person;
 use App\Factory\LandRequestFactory;
+use App\Workflow\LandRequest\LandRequestWorkflow;
 use App\Workflow\LandRequest\LandRequestWorkflowTransition;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\DependencyInjection\Attribute\Target;
 use Symfony\Component\Workflow\WorkflowInterface;
 
 use function Zenstruck\Foundry\Persistence\save;
 
 class LandRequestFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function __construct(private readonly WorkflowInterface $landRequestStateMachine)
-    {
+    public function __construct(
+        #[Target(LandRequestWorkflow::NAME)]
+        private readonly WorkflowInterface $landRequestStateMachine,
+    ) {
     }
 
     public function load(ObjectManager $manager): void

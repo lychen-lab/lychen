@@ -4,18 +4,22 @@ namespace App\DataFixtures;
 
 use App\Entity\Land;
 use App\Factory\LandProposalFactory;
+use App\Workflow\LandProposal\LandProposalWorkflow;
 use App\Workflow\LandProposal\LandProposalWorkflowTransition;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\DependencyInjection\Attribute\Target;
 use Symfony\Component\Workflow\WorkflowInterface;
 
 use function Zenstruck\Foundry\Persistence\save;
 
 class LandProposalFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function __construct(private readonly WorkflowInterface $landProposalStateMachine)
-    {
+    public function __construct(
+        #[Target(LandProposalWorkflow::NAME)]
+        private readonly WorkflowInterface $landProposalStateMachine,
+    ) {
     }
 
     public function load(ObjectManager $manager): void

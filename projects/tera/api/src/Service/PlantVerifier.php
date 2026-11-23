@@ -2,12 +2,13 @@
 
 namespace App\Service;
 
+use Symfony\Component\DependencyInjection\Attribute\Target;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 readonly class PlantVerifier
 {
-    public function __construct(private HttpClientInterface $floraClient)
+    public function __construct(#[Target('flora.client')] private HttpClientInterface $floraClient)
     {
     }
 

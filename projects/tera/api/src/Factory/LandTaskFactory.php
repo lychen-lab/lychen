@@ -34,7 +34,7 @@ final class LandTaskFactory extends PersistentObjectFactory
         return [
             'title' => self::faker()->text(100),
             'content' => TipTapFaker::randomContent(),
-            'dueDate' => self::faker()->boolean() ? self::faker()->dateTimeBetween($startDate, '+1 year') : null,
+            'dueDate' => self::faker()->boolean() ? self::faker()->dateTimeBetween($startDate ?? 'now', '+1 year') : null,
             'startDate' => $startDate,
             'state' => self::faker()->randomElement(LandTaskWorkflowPlace::PLACES),
         ];
