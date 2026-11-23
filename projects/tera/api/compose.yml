@@ -41,7 +41,8 @@ services:
     volumes:
       - caddy_data:/data
       - caddy_config:/config
-      - ../../../libs/php:/packages
+      # No libs/php mount here: CI and Dokploy run the lychen/* bundles the
+      # image bakes in /packages. The dev stack mounts them (compose.override.yml).
 
   # The two long-running processes of lychen/event-bus, on the api's image and
   # environment. Both start once the api is healthy: its entrypoint has migrated
