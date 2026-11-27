@@ -3018,6 +3018,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@lychen/vue-myko@workspace:libs/vue/myko"
   dependencies:
+    "@lucide/vue": "npm:^1.61.0"
     "@lychen/typescript-front-model-business": "workspace:*"
     "@lychen/typescript-myko": "workspace:*"
     "@lychen/vue-components-core": "workspace:*"
