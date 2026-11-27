@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>Myko</title>
+  <rect width="512" height="512" rx="112" fill="#3f2a1d"/>
+  <path d="M256 104c-106 0-180 70-180 150 0 18 14 30 32 30h296c18 0 32-12 32-30 0-80-74-150-180-150z" fill="#c8553d"/>
+  <circle cx="190" cy="190" r="22" fill="#f6e7d2"/>
+  <circle cx="290" cy="160" r="16" fill="#f6e7d2"/>
+  <circle cx="340" cy="222" r="20" fill="#f6e7d2"/>
+  <path d="M214 284h84l14 104c3 22-14 40-36 40h-40c-22 0-39-18-36-40z" fill="#f6e7d2"/>
+</svg>
