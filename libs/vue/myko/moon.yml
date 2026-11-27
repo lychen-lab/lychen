@@ -1,6 +1,7 @@
 dependsOn:
   - typescript-front-model-business
   - typescript-myko
+  - vue-components-core
   - vue-composables
   - vue-i18n
 id: vue-myko

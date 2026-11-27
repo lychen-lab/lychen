@@ -9,6 +9,9 @@
       "path": "../../typescript/myko"
     },
     {
+      "path": "../components-core"
+    },
+    {
       "path": "../composables"
     },
     {

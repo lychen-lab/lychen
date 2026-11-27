@@ -3020,6 +3020,7 @@ __metadata:
   dependencies:
     "@lychen/typescript-front-model-business": "workspace:*"
     "@lychen/typescript-myko": "workspace:*"
+    "@lychen/vue-components-core": "workspace:*"
     "@lychen/vue-composables": "workspace:*"
     "@lychen/vue-i18n": "workspace:*"
     vue: "npm:^3.5.44"
