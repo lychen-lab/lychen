@@ -1,0 +1,19 @@
+dependsOn:
+  - docker-symfony
+  - lychen-php-api
+  - lychen-php-core
+  - lychen-php-event-bus
+  - lychen-php-model
+  - id: lychen-php-test
+    scope: development
+  - lychen-php-zitadel
+id: myko-api
+language: php
+layer: application
+stack: backend
+# No `dokploy` (nor `version`, which promotes released images) until Myko is
+# deployed (M33), and no `mco` until it joins the MCO stack.
+tags:
+  - symfony
+  - docker
+  - compose-local

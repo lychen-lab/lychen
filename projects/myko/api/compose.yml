@@ -1,0 +1,99 @@
+services:
+  database:
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-app}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-PasswordForLocal!}
+      - POSTGRES_USER=${POSTGRES_USER:-userlocal}
+    healthcheck:
+      retries: 5
+      start_period: 60s
+      test: [ 'CMD', 'pg_isready', '-d', '${POSTGRES_DB:-app}', '-U', '${POSTGRES_USER:-userlocal}' ]
+      timeout: 5s
+    # The major is fixed, not taken from POSTGRES_VERSION: the mount below is
+    # the 18+ layout, on which an older image would initialise an empty
+    # database next to the existing data. PostgreSQL 18 refuses a data
+    # directory from an older major: upgrade it once with
+    # `moon <api>:db-upgrade` (see docs/deployment.md).
+    image: postgres:18-alpine
+    volumes:
+      # PostgreSQL 18+ images keep their data in a major-specific directory
+      # (18/docker) under this mount point.
+      - database_data:/var/lib/postgresql:rw
+
+  api:
+    depends_on:
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment: &api-environment
+      DATABASE_URL: postgresql://${POSTGRES_USER:-userlocal}:${POSTGRES_PASSWORD:-PasswordForLocal!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-18}&charset=${POSTGRES_CHARSET:-utf8}
+      # Central broker (projects/common/rabbitmq), reached over lychen-network in
+      # dev. Staging and production set MESSENGER_TRANSPORT_DSN on the Dokploy
+      # compose so it points at the deployed broker.
+      MESSENGER_TRANSPORT_DSN: ${MESSENGER_TRANSPORT_DSN:-amqp://myko:myko@rabbitmq:5672/lychen}
+      REDIS_URL: redis://redis:6379
+      SERVER_NAME: ${SERVER_NAME:-localhost}, php:80
+      TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-example\.com|localhost}|php$$}
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
+    image: ${IMAGES_PREFIX:-}myko-api:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+      # No libs/php mount here: CI and Dokploy run the lychen/* bundles the
+      # image bakes in /packages. The dev stack mounts them (compose.override.yml).
+
+  # The two long-running processes of lychen/event-bus, on the api's image and
+  # environment. Both start once the api is healthy: its entrypoint has migrated
+  # the database by then. They skip that entrypoint (docker-php-entrypoint is the
+  # PHP image's own), so that only one container ever migrates; and the image's
+  # healthcheck, which probes FrankenPHP, does not apply to them. `init` puts an
+  # init process in front of php, which as PID 1 would ignore the SIGTERM of
+  # `docker stop` and be killed 10 s later. Each stops after an hour and is
+  # restarted, which bounds its memory.
+  #
+  # worker: consumes myko.events, the events myko subscribes to and its own
+  # background work, each in a transaction with its inbox record.
+  worker:
+    command: [ 'php', 'bin/console', 'messenger:consume', 'async', '--time-limit=3600', '-v' ]
+    depends_on:
+      api:
+        condition: service_healthy
+    entrypoint: docker-php-entrypoint
+    environment: *api-environment
+    healthcheck:
+      disable: true
+    image: ${IMAGES_PREFIX:-}myko-api:${IMAGE_TAG:-latest}
+    init: true
+    restart: unless-stopped
+
+  # outbox-relay: publishes the events myko records in its outbox, once committed.
+  outbox-relay:
+    command: [ 'php', 'bin/console', 'lychen:event-bus:relay', '--time-limit=3600', '-v' ]
+    depends_on:
+      api:
+        condition: service_healthy
+    entrypoint: docker-php-entrypoint
+    environment: *api-environment
+    healthcheck:
+      disable: true
+    image: ${IMAGES_PREFIX:-}myko-api:${IMAGE_TAG:-latest}
+    init: true
+    restart: unless-stopped
+
+  redis:
+    healthcheck:
+      retries: 5
+      start_period: 10s
+      test: [ 'CMD', 'redis-cli', 'ping' ]
+      timeout: 3s
+    image: redis:alpine
+    volumes:
+      - redis_data:/data
+
+volumes:
+  caddy_config:
+  caddy_data:
+  database_data:
+  redis_data:

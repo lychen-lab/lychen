@@ -1,0 +1,153 @@
+{
+  "type": "project",
+  "license": "proprietary",
+  "name": "lychen/myko-api",
+  "description": "",
+  "require": {
+    "php": ">=8.4",
+    "ext-amqp": "*",
+    "ext-ctype": "*",
+    "ext-dom": "*",
+    "ext-exif": "*",
+    "ext-libxml": "*",
+    "ext-openssl": "*",
+    "ext-xml": "*",
+    "api-platform/core": "5.0.*",
+    "doctrine/annotations": "2.0.*",
+    "doctrine/cache": "2.2.*",
+    "doctrine/doctrine-bundle": "3.3.*",
+    "doctrine/doctrine-migrations-bundle": "4.0.*",
+    "doctrine/orm": "3.7.*",
+    "gedmo/doctrine-extensions": "3.22.*",
+    "lychen/api": "*",
+    "lychen/core": "*",
+    "lychen/event-bus": "*",
+    "lychen/model": "*",
+    "lychen/zitadel": "*",
+    "martin-georgiev/postgresql-for-doctrine": "4.10.*",
+    "nelmio/cors-bundle": "2.6.*",
+    "phpdocumentor/reflection-docblock": "6.0.*",
+    "predis/predis": "3.7.*",
+    "scienta/doctrine-json-functions": "6.5.*",
+    "sentry/sentry-symfony": "5.14.*",
+    "snc/redis-bundle": "4.13.*",
+    "symfony/amqp-messenger": "8.1.*",
+    "symfony/asset": "8.1.*",
+    "symfony/clock": "8.1.*",
+    "symfony/config": "8.1.*",
+    "symfony/console": "8.1.*",
+    "symfony/doctrine-messenger": "8.1.*",
+    "symfony/dotenv": "8.1.*",
+    "symfony/expression-language": "8.1.*",
+    "symfony/flex": "2.11.*",
+    "symfony/form": "8.1.*",
+    "symfony/framework-bundle": "8.1.*",
+    "symfony/http-client": "8.1.*",
+    "symfony/intl": "8.1.*",
+    "symfony/mailer": "8.1.*",
+    "symfony/messenger": "8.1.*",
+    "symfony/monolog-bundle": "4.1.*",
+    "symfony/object-mapper": "8.1.*",
+    "symfony/process": "8.1.*",
+    "symfony/property-access": "8.1.*",
+    "symfony/property-info": "8.1.*",
+    "symfony/rate-limiter": "8.1.*",
+    "symfony/runtime": "8.1.*",
+    "symfony/security-bundle": "8.1.*",
+    "symfony/serializer": "8.1.*",
+    "symfony/translation": "8.1.*",
+    "symfony/twig-bundle": "8.1.*",
+    "symfony/uid": "8.1.*",
+    "symfony/validator": "8.1.*",
+    "symfony/workflow": "8.1.*",
+    "symfony/yaml": "8.1.*"
+  },
+  "require-dev": {
+    "dama/doctrine-test-bundle": "8.7.*",
+    "doctrine/doctrine-fixtures-bundle": "4.3.*",
+    "justinrainbow/json-schema": "6.13.*",
+    "lychen/test": "*",
+    "mtdowling/jmespath.php": "2.9.*",
+    "phpstan/phpstan-doctrine": "2.0.*",
+    "phpunit/phpunit": "13.4.*",
+    "symfony/browser-kit": "8.1.*",
+    "symfony/css-selector": "8.1.*",
+    "symfony/debug-bundle": "8.1.*",
+    "symfony/maker-bundle": "1.68.*",
+    "symfony/phpunit-bridge": "8.1.*",
+    "symfony/stopwatch": "8.1.*",
+    "symfony/web-profiler-bundle": "8.1.*",
+    "zenstruck/browser": "1.13.*",
+    "zenstruck/foundry": "2.14.*",
+    "zenstruck/messenger-test": "1.15.*"
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../packages/*",
+      "options": {
+        "symlink": true,
+        "versions": {
+          "lychen/api": "0.0.0",
+          "lychen/model": "0.0.0",
+          "lychen/test": "0.0.0",
+          "lychen/zitadel": "0.0.0",
+          "lychen/core": "0.0.0",
+          "lychen/event-bus": "0.0.0"
+        }
+      }
+    }
+  ],
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true,
+    "allow-plugins": {
+      "symfony/flex": true,
+      "symfony/runtime": true
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "App\\Tests\\": "tests/"
+    }
+  },
+  "replace": {
+    "paragonie/random_compat": "2.*",
+    "symfony/polyfill-ctype": "*",
+    "symfony/polyfill-iconv": "*",
+    "symfony/polyfill-php71": "*",
+    "symfony/polyfill-php70": "*",
+    "symfony/polyfill-php56": "*"
+  },
+  "scripts": {
+    "auto-scripts": {
+      "cache:clear": "symfony-cmd",
+      "doctrine:cache:clear-metadata": "symfony-cmd",
+      "assets:install %PUBLIC_DIR%": "symfony-cmd"
+    },
+    "post-install-cmd": [
+      "@auto-scripts"
+    ],
+    "post-update-cmd": [
+      "@auto-scripts"
+    ]
+  },
+  "conflict": {
+    "symfony/symfony": "*"
+  },
+  "extra": {
+    "symfony": {
+      "allow-contrib": true,
+      "require": "8.1.*",
+      "docker": true
+    }
+  }
+}

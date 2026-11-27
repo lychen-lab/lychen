@@ -21,8 +21,9 @@ the source of truth for what the app does. This file is the source of truth for 
 | Constants | `libs/typescript/myko` (exists) | `typescript-myko` | `@lychen/typescript-myko` |
 | Brand assets | `libs/assets/myko` (exists) | `assets-myko` | |
 
-Local ports: API HTTP `8082`, API PostgreSQL `23432`, app dev server `5820` (Flora, Tera and Espace
-already use 8080, 8081, 8089, 21432, 22432, 19432, 5800 and 5810).
+Local ports: API HTTP `8082` (HTTPS `32443`, HTTP/3 `42443`), API PostgreSQL `23432`, app dev
+server `5820` (Flora, Tera and Espace already use 8080, 8081, 8089, 21432, 22432, 19432, 5800 and
+5810).
 
 ## What to copy
 
