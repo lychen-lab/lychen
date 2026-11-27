@@ -144,7 +144,11 @@ JournalEntry (`from → to` in its text).
   it moves its route into its own `views/<name>/` (`ROUTE_<NAME>` in its `index.ts`, as the home
   view does) and out of that list.
 - **The QR code content is `<app origin>/l/<log uuid>` and must never change**: labels are printed,
-  and will later be engraved on steel.
+  and will later be engraved on steel. `mushroomLogQrContent` and `mushroomLogUuidFromQrContent`
+  (`libs/typescript/myko/qr/`) are the only code that writes and reads it, and their test pins it.
+- A batch's labels (`B-001` to `B-040`) come from `mushroomLogBatchLabels`
+  (`front-model-business/mushroom/MushroomLogBatchLabels.ts`), for the form's preview and for the
+  creation alike. Its limits (200 logs, 6 digits) are constants next to it.
 - Every string in `fr-FR` (default) and `en-US`, in the view's `i18n/` folder, as in Espace.
 - Reuse `components-core`, `components-business` and `components-app` before writing a component.
   Myko-specific components go in `libs/vue/myko`.
