@@ -1,5 +1,6 @@
 dependsOn:
   - css-core
+  - typescript-myko
   - vue-color-scheme
   - vue-components-app
   - vue-components-core

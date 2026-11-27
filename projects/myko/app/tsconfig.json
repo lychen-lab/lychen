@@ -3,6 +3,9 @@
   "include": ["**/*"],
   "references": [
     {
+      "path": "../../../libs/typescript/myko"
+    },
+    {
       "path": "../../../libs/vue/color-scheme"
     },
     {

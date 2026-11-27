@@ -2413,6 +2413,7 @@ __metadata:
   resolution: "@lychen/myko-app@workspace:projects/myko/app"
   dependencies:
     "@lychen/css-core": "workspace:*"
+    "@lychen/typescript-myko": "workspace:*"
     "@lychen/vue-color-scheme": "workspace:*"
     "@lychen/vue-components-app": "workspace:*"
     "@lychen/vue-components-core": "workspace:*"
