@@ -138,7 +138,8 @@ JournalEntry (`from → to` in its text).
 
 ## Scope rules for agents
 
-The night agent merges its own PRs (see the ClickUp list "Myko"). To keep that safe:
+Myko is built from the GitHub issues labelled `myko` (milestone "Myko v0", one issue per ticket
+M01, M02…), mostly by a night agent that merges its own PRs. To keep that safe:
 
 - Change only `projects/myko/**`, the Myko libraries above, `libs/typescript/front-model-business/mushroom/**`,
   `docs/myko/**` and Myko's own workflow files (`.github/workflows/*myko*`).
@@ -149,4 +150,22 @@ The night agent merges its own PRs (see the ClickUp list "Myko"). To keep that s
   products, CI) is left as an open PR for Nathan's review.
 - Myko is not deployed: never add the `dokploy` tag or Dokploy ids, a dedicated ticket does it.
 - PR titles are Conventional Commits, scoped by project: `feat(myko-api): …`,
-  `feat(myko-app): …`, `feat(vue-myko-api): …`, `docs(myko): …`.
+  `feat(myko-app): …`, `feat(vue-myko-api): …`, `docs(myko): …`. A PR body says `Closes #<issue>`,
+  so that merging it closes its issue.
+
+## Working from a cloud session
+
+Claude's cloud sessions reach GitHub and the npm registry, but not ghcr.io, Docker Hub, Packagist,
+repo.yarnpkg.com or nodejs.org (unless Nathan adds them to the allowed domains). In practice:
+
+- Yarn: `export COREPACK_NPM_REGISTRY=https://registry.npmjs.org`, then `corepack enable` and
+  `yarn install` (about 30 s). Node is 22 there instead of 24: fine for installs, lint and tests.
+- Moon: `npx -p @moonrepo/cli@2.5.4 moon …` installs, but its toolchain plugins come from ghcr.io,
+  so tasks usually fail. Run the tools directly instead (ESLint, Prettier, vue-tsc, Vitest, as the
+  task commands in `.moon/tasks/*.yml` call them), from the project's folder.
+- PHP: no Packagist and no Docker images, so nothing PHP runs locally. Write the code with care, then
+  let CI judge: the QG workflow takes 3 to 7 minutes. Read a failed job's log through the REST API
+  (`gh api repos/lychen-lab/lychen/actions/runs/<run>/jobs`, then
+  `gh api repos/lychen-lab/lychen/actions/jobs/<job>/logs`).
+- GitHub's GraphQL API is closed to these sessions: `gh issue …` and `gh pr create` fail. Use
+  `gh api repos/lychen-lab/lychen/...` (REST) for issues, comments, labels, PRs and merges.
