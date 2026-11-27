@@ -123,7 +123,8 @@ JournalEntry (`from → to` in its text).
   gives `[{ key, label, totalGrams, harvestCount }]`, from an API Platform provider, scoped to the
   current person.
 - A log's timeline is not an endpoint: the app merges its inoculation, journal entries and
-  harvests (`useMushroomLogTimeline` in `vue-myko-api`).
+  harvests (`useMushroomLogTimeline` in `vue-myko-api`), with the pure
+  `buildMushroomLogTimeline` (`front-model-business/mushroom/MushroomLogTimeline.ts`).
 
 ## App conventions
 
