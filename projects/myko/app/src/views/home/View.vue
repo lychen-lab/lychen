@@ -20,22 +20,6 @@
         @click="auth.signOut()"
       />
     </div>
-    <div
-      v-else
-      class="flex flex-col items-center gap-3"
-    >
-      <p>{{ t('signed_out') }}</p>
-      <Button
-        v-if="auth.isConfigured"
-        :label="t('sign_in')"
-        @click="auth.signIn()"
-      />
-      <small
-        v-else
-        class="text-on-surface/60"
-        >{{ t('not_configured') }}</small
-      >
-    </div>
   </section>
 </template>
 
