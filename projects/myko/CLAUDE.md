@@ -155,8 +155,20 @@ M01, M02…), mostly by a night agent that merges its own PRs. To keep that safe
 
 ## Working from a cloud session
 
-Claude's cloud sessions reach GitHub and the npm registry, but not ghcr.io, Docker Hub, Packagist,
-repo.yarnpkg.com or nodejs.org (unless Nathan adds them to the allowed domains). In practice:
+Since 27/11/2026, Nathan allows every domain for Claude's cloud sessions, so a new session should
+reach ghcr.io, Docker Hub, Packagist, repo.yarnpkg.com, nodejs.org and moonrepo.dev. Check it first:
+`curl -s -o /dev/null -w '%{http_code}' https://ghcr.io/v2/` answers `401` when ghcr.io is
+reachable, `000` when it is blocked.
+
+**Full network**: work as on a laptop. Install proto
+(`curl -fsSL https://moonrepo.dev/install/proto.sh | bash -s -- --yes`, then put `~/.proto/bin` and
+`~/.proto/shims` on `PATH`), run `proto install`, then `yarn install`, and use the moon tasks:
+`moon myko-api:lint`, `moon myko-api:format`, `moon myko-api:test`, `moon myko-app:lint`,
+`moon myko-app:test`… The session has a Docker daemon: the APIs' dev containers and the PHP tools'
+images run there. Push only what passes locally. GitHub's GraphQL API stays closed (last point
+below).
+
+**Restricted network** (the check answers `000`): only GitHub and the npm registry. In practice:
 
 - Yarn: `export COREPACK_NPM_REGISTRY=https://registry.npmjs.org`, then `corepack enable` and
   `yarn install` (about 30 s). Node is 22 there instead of 24: fine for installs, lint and tests.
