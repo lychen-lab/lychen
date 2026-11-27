@@ -1,0 +1,74 @@
+# Development environment override
+# Pin the compose project name: every API lives in a directory called `api`, so
+# without this a bare `docker compose` (or `make up`) derives the project name
+# from that directory and all APIs collide on the same containers and volumes.
+# Moon tasks pass `-p $project`, which resolves to this same value.
+name: myko-api
+services:
+  database:
+    ports:
+      - '23432:5432/tcp'
+
+  api:
+    build: &dev-build
+      context: .
+      # The Dockerfile of every API (libs/docker/symfony): drop dockerfile and
+      # additional_contexts for a Dockerfile of the API's own, at its root. The
+      # additional context is never used: it only lets compose (bake) read a
+      # Dockerfile from outside the build context.
+      dockerfile: ../../../libs/docker/symfony/Dockerfile
+      additional_contexts:
+        docker-symfony: ../../../libs/docker/symfony
+      target: frankenphp_dev
+    environment:
+      SERVER_NAME: api.myko.lychen.local, api:80
+      XDEBUG_MODE: '${XDEBUG_MODE:-off}'
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    tty: true
+    volumes:
+      - ./:/app
+      # The lychen/* bundles, which vendor/ links to (symlinked path repository):
+      # dev only, as the test and production images bake them in /packages.
+      - ../../../libs/php:/packages
+      #- ./var:/app/var
+      - ./frankenphp/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./frankenphp/conf.d/20-app.dev.ini:/usr/local/etc/php/app.conf.d/20-app.dev.ini:ro
+    ports:
+      - protocol: tcp
+        published: ${HTTP_PORT:-8082}
+        target: 80
+      - protocol: tcp
+        published: ${HTTPS_PORT:-32443}
+        target: 443
+      - protocol: udp
+        published: ${HTTP3_PORT:-42443}
+        target: 443
+    networks: &dev-networks
+      # `default` is kept explicitly: naming any network opts a service out
+      # of the implicit one, which would cut the API off from its own
+      # database and redis. Only the PHP processes (`api`, and the `worker`
+      # and `outbox-relay` below) join the shared network — database and
+      # redis keep private, non-colliding names on the stack's own.
+      - default
+      - lychen-network
+
+  # The event bus processes run the dev image on the mounted sources: restart
+  # them (`docker compose -p myko-api restart worker outbox-relay`) to pick up
+  # a code change.
+  worker:
+    build: *dev-build
+    networks: *dev-networks
+    volumes: &dev-volumes
+      - ./:/app
+      - ../../../libs/php:/packages
+      - ./frankenphp/conf.d/20-app.dev.ini:/usr/local/etc/php/app.conf.d/20-app.dev.ini:ro
+
+  outbox-relay:
+    build: *dev-build
+    networks: *dev-networks
+    volumes: *dev-volumes
+
+networks:
+  lychen-network:
+    external: true
