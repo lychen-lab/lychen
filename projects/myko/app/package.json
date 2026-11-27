@@ -1,0 +1,35 @@
+{
+  "name": "@lychen/myko-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build --mode production",
+    "preview": "vite preview",
+    "generate-pwa-assets": "pwa-assets-generator"
+  },
+  "dependencies": {
+    "@lychen/css-core": "workspace:*",
+    "@lychen/vue-color-scheme": "workspace:*",
+    "@lychen/vue-components-app": "workspace:*",
+    "@lychen/vue-components-core": "workspace:*",
+    "@lychen/vue-i18n": "workspace:*",
+    "@lychen/vue-icons": "workspace:*",
+    "@lychen/vue-layouts": "workspace:*",
+    "@lychen/vue-zitadel": "workspace:*",
+    "@tanstack/vue-query": "^5.104.5",
+    "vue": "^3.5.44",
+    "vue-router": "^5.4.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@vite-pwa/assets-generator": "^2.0.0",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.5",
+    "vite-plugin-env-runtime": "^0.3.7",
+    "vite-plugin-mkcert": "^2.1.0",
+    "vite-plugin-pwa": "^2.0.0",
+    "vite-plugin-vue-devtools": "^8.2.1"
+  }
+}

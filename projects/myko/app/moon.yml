@@ -1,0 +1,32 @@
+dependsOn:
+  - css-core
+  - vue-color-scheme
+  - vue-components-app
+  - vue-components-core
+  - vue-i18n
+  - vue-icons
+  - vue-layouts
+  - vue-zitadel
+id: myko-app
+language: typescript
+layer: application
+stack: frontend
+tags:
+  - pwa
+  - asset
+  - docker
+tasks:
+  assets-sync:
+    deps:
+      - args:
+          - $projectRoot/public/fonts
+        target: assets-fonts:create-symlink-on-content
+      - args:
+          - $projectRoot/public/icons
+        target: assets-myko:create-symlink-on-icons
+  build:
+    deps:
+      - assets-sync
+  dev:
+    deps:
+      - assets-sync
