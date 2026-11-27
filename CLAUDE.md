@@ -128,6 +128,7 @@ make phpunit c="--group e2e"                         # Run by group
   /espace          # Another domain product (api/app/website, same structure as tera)
     /CLAUDE.md     # Project-specific context: Temporal workflows, shared DEV infra (Temporal, Novu, Zitadel, Minio). Read this before working in this project — see /docs/architecture-espace.md and architecture-espace.fr.md for details.
   /flora           # Flora domain (API only)
+  /myko            # Mushroom cultivation (api/app). Read projects/myko/CLAUDE.md and docs/myko/spec.fr.md first.
   /robust          # Design system project
   /storybook       # Component workshop (Storybook 10)
   /website         # Main Lychen website (SSG)
