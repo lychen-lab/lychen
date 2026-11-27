@@ -1,5 +1,7 @@
 dependsOn:
-- typescript-utils
+  - typescript-utils
 id: typescript-myko
 language: typescript
 layer: library
+# Inherits lint, format, typecheck and test from .moon/tasks/frontend.yml.
+stack: frontend

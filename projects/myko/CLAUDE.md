@@ -67,6 +67,11 @@ logging everywhere.
 - `WoodSpecies`, `FungusSpecies`: reference data, seeded by a story, read-only through the API.
   `code` (unique slug, e.g. `oak`, `shiitake`) and `scientificName` (e.g. `Quercus`,
   `Lentinula edodes`). No translated names in the database: the app translates `code` with i18n.
+  The seeded codes and scientific names are listed once, in `libs/typescript/myko/constants/`
+  (`FungusSpecies.ts`, `WoodSpecies.ts`): the API's story seeds exactly those, and
+  `useSpeciesLabels` (`libs/vue/myko`) translates them to fr-FR and en-US. A species the story does
+  not know has no translation: the app falls back to its scientific name, then to its code.
+  Adding a species means adding it to the constants, to the story and to both locale files.
 - `Strain`: `fungusSpecies` (required), `name` (required, e.g. `M3782`), `supplier` (nullable),
   `notes` (nullable), `owner`.
 - `MushroomLog`: `zone` (required, owned by the same person), `label` (required, unique per owner,

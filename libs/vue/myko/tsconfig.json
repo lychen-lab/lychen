@@ -3,6 +3,9 @@
   "include": ["**/*", "**/*.json"],
   "references": [
     {
+      "path": "../../typescript/front-model-business"
+    },
+    {
       "path": "../../typescript/myko"
     },
     {
