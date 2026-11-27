@@ -1,4 +1,7 @@
+import { createMemoryHistory, createRouter } from 'vue-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+import { ROUTE_NAME } from '@/router/routeNames';
 
 import { createFakeAuth } from './createFakeAuth';
 
@@ -80,5 +83,30 @@ describe('createFakeAuth', () => {
     expect(auth.isAuthenticated.value).toBe(true);
     await auth.signOut();
     expect(auth.isAuthenticated.value).toBe(false);
+  });
+
+  it('guards the routes it marks with the sign-in screen, until a fake user signs in', async () => {
+    const Empty = { render: () => null };
+    const auth = createFakeAuth();
+    const router = createRouter({
+      history: createMemoryHistory(),
+      routes: [
+        { path: '/', component: Empty, meta: auth.protectedRouteMeta, name: ROUTE_NAME.Home },
+        { path: '/sign-in', component: Empty, name: ROUTE_NAME.SignIn },
+      ],
+    });
+    await auth.startup(router);
+
+    await router.push('/');
+    expect(router.currentRoute.value.name).toBe(ROUTE_NAME.SignIn);
+
+    await auth.signIn();
+    await router.push('/');
+    expect(router.currentRoute.value.name).toBe(ROUTE_NAME.Home);
+
+    await auth.signOut();
+    await router.push('/sign-in');
+    await router.push('/');
+    expect(router.currentRoute.value.name).toBe(ROUTE_NAME.SignIn);
   });
 });

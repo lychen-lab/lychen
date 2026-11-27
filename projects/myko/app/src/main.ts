@@ -8,12 +8,13 @@ import { VueQueryPlugin } from '@tanstack/vue-query';
 
 import App from './App.vue';
 import { AUTH_KEY, createAuth } from './auth';
-import router from './router';
+import { createAppRouter } from './router';
 
 async function bootstrap(): Promise<void> {
   const app = createApp(App);
 
   const auth = await createAuth();
+  const router = createAppRouter(auth);
   app.provide(AUTH_KEY, auth);
   await auth.startup(router);
 

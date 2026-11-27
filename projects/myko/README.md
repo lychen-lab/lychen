@@ -18,7 +18,7 @@ The app reads them at runtime, as Espace does: `.env` maps each `VITE_*` variabl
 `${…}` placeholder, the build writes them to `dist/config.js`, and the image's entrypoint fills
 them in from the container's environment. In development, Vite takes them from the shell or from
 `projects/myko/app/.env.development.local` (git-ignored). A missing value breaks neither the
-build nor the tests: without Zitadel, the home page says that sign-in is not configured.
+build nor the tests: without Zitadel, the sign-in screen (`/sign-in`) says that sign-in is not configured.
 
 | Variable (container)          | In the app                         | What it is for                                                                                 |
 | ----------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------- |
@@ -32,7 +32,8 @@ build nor the tests: without Zitadel, the home page says that sign-in is not con
 ### Signing in without Zitadel
 
 `VITE_MYKO_FAKE_AUTH=true moon myko-app:dev` (or the line in `.env.development.local`) swaps
-Zitadel for a fake login: "Se connecter" signs in a fake "Dev Myko" user, kept in the browser's
+Zitadel for a fake login: "Se connecter" on the sign-in screen (every other screen sends an anonymous
+visitor there) signs in a fake "Dev Myko" user, kept in the browser's
 local storage, and sends no token to the API. The switch is read behind `import.meta.env.DEV`
 (`src/auth/createAuth.ts`) and excluded from the runtime configuration (`vite.config.ts`), so a
 production build contains neither the fake login nor the variable: after `moon myko-app:build`,

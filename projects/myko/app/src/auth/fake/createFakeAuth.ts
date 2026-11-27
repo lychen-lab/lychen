@@ -1,6 +1,7 @@
 import { computed, ref } from 'vue';
 
 import type { Auth } from '../Auth';
+import { SIGN_IN_SCREEN_ROUTE_META, installSignInScreenGuard } from '../signInGuard';
 
 const STORAGE_KEY = 'myko-fake-auth-user';
 const FAKE_USER_NAME = 'Dev Myko';
@@ -12,10 +13,12 @@ const FAKE_USER_NAME = 'Dev Myko';
  */
 export function createFakeAuth(): Auth {
   const user = ref<string | undefined>(readUser());
+  const isAuthenticated = computed(() => user.value !== undefined);
 
   return {
     isConfigured: true,
-    isAuthenticated: computed(() => user.value !== undefined),
+    isAuthenticated,
+    protectedRouteMeta: SIGN_IN_SCREEN_ROUTE_META,
     userName: computed(() => user.value),
     getAccessToken: () => undefined,
     async signIn() {
@@ -26,7 +29,9 @@ export function createFakeAuth(): Auth {
       user.value = undefined;
       writeUser(undefined);
     },
-    async startup() {},
+    async startup(router) {
+      installSignInScreenGuard(router, () => isAuthenticated.value);
+    },
   };
 }
 

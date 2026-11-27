@@ -17,6 +17,7 @@ export const ROUTE_NAME = {
   Scan: 'scan',
   Stats: 'stats',
   More: 'more',
+  SignIn: 'sign_in',
 } as const;
 
 export type RouteName = (typeof ROUTE_NAME)[keyof typeof ROUTE_NAME];

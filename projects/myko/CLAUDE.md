@@ -132,7 +132,13 @@ JournalEntry (`from → to` in its text).
 - Routes: `/`, `/logs`, `/logs/new`, `/logs/new-batch`, `/logs/:uuid`, `/logs/:uuid/edit`,
   `/l/:uuid` (QR entry point, redirects to `/logs/:uuid`), `/zones`, `/zones/new`,
   `/zones/:uuid/edit`, `/strains`, `/strains/new`, `/strains/:uuid/edit`, `/labels`, `/scan`,
-  `/stats`.
+  `/stats`, `/sign-in`.
+- Every route needs a signed-in user, except `/sign-in`: the layout route carries
+  `auth.protectedRouteMeta` (`src/auth/Auth.ts`, routes built by `createRoutes(auth)`). With Zitadel
+  configured the identity provider's guard (`meta.authName`, as in Espace) sends an anonymous visitor
+  to Zitadel; with the fake login, or Zitadel not configured, `installSignInScreenGuard` sends them to
+  `/sign-in?redirect=<where they were going>`. A new route goes under the layout route, so it is
+  protected without doing anything.
 - Every route has its name in `src/router/routeNames.ts` (`ROUTE_NAME`). A screen that is not
   built yet is listed in `src/views/provisional/index.ts`, with its path: the ticket that builds
   it moves its route into its own `views/<name>/` (`ROUTE_<NAME>` in its `index.ts`, as the home
