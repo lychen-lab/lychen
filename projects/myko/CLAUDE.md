@@ -153,6 +153,36 @@ M01, M02…), mostly by a night agent that merges its own PRs. To keep that safe
   `feat(myko-app): …`, `feat(vue-myko-api): …`, `docs(myko): …`. A PR body says `Closes #<issue>`,
   so that merging it closes its issue.
 
+## Never blocked
+
+Waiting on Nathan never stops the work. Whatever he has to provide (Zitadel apps and client ids,
+Dokploy composes and domains, secrets, a product decision), build everything around it, so that
+his answer only fills in a value:
+
+- **Configuration, not constants**: every external value (Zitadel issuer, client id and project
+  resource id, API URL, domains) comes from environment variables, as in Espace (`.env` with
+  `${…}` placeholders, read at runtime). List each one, with what it is for, in
+  `projects/myko/README.md`. A missing value never breaks the build or the tests.
+- **Authentication without a Zitadel**: the API's functional and security tests log in with
+  `actingAs()` (`Lychen\Test`), they never need a Zitadel. For the app's local runs, screenshots
+  and e2e, a fake login is allowed when an explicit variable turns it on
+  (`VITE_MYKO_FAKE_AUTH=true`) and the code that reads it sits behind `import.meta.env.DEV` (or the
+  test mode), so that a production build can never contain it. Never weaken the API's security to
+  get around a missing Zitadel.
+- **Deployment**: prepare everything (compose files as Tera's, the list of environment variables,
+  the Zitadel app's redirect URIs, a checklist) without the `dokploy` tag or Dokploy ids. Only
+  plugging those in waits for Nathan.
+- **Product questions**: pick the most reasonable option, keep it easy to change, and ship it.
+  The PR says so in a `## Questions for Nathan` section (the choice made, the alternatives).
+  Only a choice that is hard to undo, or touches security or secrets, waits for his answer.
+- **Shared code**: prefer a Myko-local solution, in Myko's libraries, to a change in shared code.
+  If a shared change is truly needed, open it as its own PR for Nathan's review and keep Myko
+  moving on the local solution meanwhile.
+- **Nothing ready?** There is always something within Myko's scope: missing tests, i18n gaps,
+  accessibility, the demo data, docs, small UX fixes found while reading the app, groundwork for
+  the next issues that only waits on a dependency. One coherent PR at a time, explained like any
+  other.
+
 ## Working from a cloud session
 
 Since 27/11/2026, Nathan allows every domain for Claude's cloud sessions, so a new session should
