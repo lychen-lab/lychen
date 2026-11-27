@@ -151,8 +151,8 @@ JournalEntry (`from → to` in its text).
   (`front-model-business/mushroom/MushroomLogBatchLabels.ts`), for the form's preview and for the
   creation alike. Its limits (200 logs, 6 digits) are constants next to it.
 - Every string in `fr-FR` (default) and `en-US`, in the view's `i18n/` folder, as in Espace. A test
-  checks that both files of every `i18n/` folder of `libs/vue/myko` have the same keys and
-  `{placeholders}` and no empty message (`compareLocales`, `libs/typescript/myko/i18n/`).
+  checks that both files of every `i18n/` folder of `libs/vue/myko` and of the app have the same
+  keys and `{placeholders}` and no empty message (`compareLocales`, `libs/typescript/myko/i18n/`).
 - Reuse `components-core`, `components-business` and `components-app` before writing a component.
   Myko-specific components go in `libs/vue/myko`.
 - Quick entries (journal, harvest, inoculation, transitions) open in a bottom sheet: three taps at
