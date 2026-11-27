@@ -1,6 +1,7 @@
 {
   "name": "@lychen/vue-myko",
   "dependencies": {
+    "@lucide/vue": "^1.61.0",
     "@lychen/typescript-front-model-business": "workspace:*",
     "@lychen/typescript-myko": "workspace:*",
     "@lychen/vue-components-core": "workspace:*",
