@@ -1,7 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import routes from './routes';
+import type { Auth } from '@/auth';
 
-const router = createRouter({ history: createWebHistory(import.meta.env.BASE_URL), routes });
+import { createRoutes } from './routes';
 
-export default router;
+export function createAppRouter(auth: Auth) {
+  return createRouter({
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes: createRoutes(auth),
+  });
+}
