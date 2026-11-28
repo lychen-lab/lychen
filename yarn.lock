@@ -2687,6 +2687,7 @@ __metadata:
   resolution: "@lychen/typescript-myko@workspace:libs/typescript/myko"
   dependencies:
     "@lychen/typescript-utils": "workspace:*"
+    uqr: "npm:^0.1.3"
   languageName: unknown
   linkType: soft
 
@@ -12310,6 +12311,13 @@ __metadata:
   bin:
     update-browserslist-db: cli.js
   checksum: 10c0/5c0769472715b57371208c3146cc07a4f0917c1d18cc34f60325bc4234f4a28f332e50b99f675999ff311315231ff19beb22a815dfe04ccc1e798e1d389514d7
+  languageName: node
+  linkType: hard
+
+"uqr@npm:^0.1.3":
+  version: 0.1.3
+  resolution: "uqr@npm:0.1.3"
+  checksum: 10c0/7e0ef173b736fb5c93179659b4fe0720c803d45fa8628aaf2715a399b33a15a3d26d9001e05e026421d544a814e971cf0fa66b481edb649d256e7a17d79777c0
   languageName: node
   linkType: hard
 
