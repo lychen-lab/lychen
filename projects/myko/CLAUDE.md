@@ -173,6 +173,12 @@ JournalEntry (`from → to` in its text).
   Its multiple selection is `useItemSelection` (`libs/vue/myko`), over the ids the list shows now: it
   only reports the selected logs the list shows, in the list's order, so that a bulk entry never
   reaches a log a filter hides, and it forgets nothing until `clear()`.
+- What the scanner reads is turned into an action by `resolveScannedContent`
+  (`libs/typescript/myko/scan/`): a Myko label (any origin) opens its log, anything else is `NotMyko`
+  and shown as text, never as a link. A camera that cannot be used is explained from
+  `classifyCameraError` (what `getUserMedia` rejected with) and `cameraProblemBeforeAsking` (an
+  insecure page or a browser without the API), as a `CameraProblem` the screen translates, with the
+  manual search by label as the way out.
 - A form checks what it gives with `validateZoneInput`, `validateMushroomLogInput`,
   `validateHarvestInput`, `validateInoculationInput` and `validateJournalEntryInput`
   (`front-model-business/mushroom/MushroomInputValidation.ts`): the API's rules, as codes the form
