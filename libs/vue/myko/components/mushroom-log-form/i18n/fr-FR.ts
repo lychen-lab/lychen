@@ -1,0 +1,18 @@
+export default {
+  label_label: 'Étiquette',
+  label_placeholder: 'Par exemple B-012',
+  label_required: 'Donnez une étiquette à la bûche.',
+  zone_label: 'Zone',
+  zone_placeholder: 'Choisir une zone',
+  zone_required: 'Choisissez une zone.',
+  zone_none: 'Aucune zone pour l’instant : créez-en une d’abord.',
+  wood_label: 'Essence de bois (facultatif)',
+  wood_none: 'Non précisée',
+  cut_label: 'Date de coupe (facultatif)',
+  diameter_label: 'Diamètre en cm (facultatif)',
+  length_label: 'Longueur en cm (facultatif)',
+  size_invalid: 'Entrez un nombre entier de centimètres, d’au moins 1.',
+  notes_label: 'Notes (facultatif)',
+  submit_create: 'Créer la bûche',
+  submit_edit: 'Enregistrer',
+};
