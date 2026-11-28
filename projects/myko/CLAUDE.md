@@ -181,7 +181,11 @@ JournalEntry (`from → to` in its text).
   and shown as text, never as a link. A camera that cannot be used is explained from
   `classifyCameraError` (what `getUserMedia` rejected with) and `cameraProblemBeforeAsking` (an
   insecure page or a browser without the API), as a `CameraProblem` the screen translates, with the
-  manual search by label as the way out.
+  manual search by label as the way out. The camera loop is `useQrScanner` (`libs/vue/myko`): it asks
+  for the rear camera, reads a frame every 250 ms through a `QrDetector` (the browser's
+  `BarcodeDetector` by default, `createBarcodeQrDetector`; a library for Safari on iOS goes in its
+  `createDetector` option) and reports each code once per 3 s. It makes the detector before it asks
+  for the camera, and `stop()` (or the end of the scope) releases the camera.
 - A form checks what it gives with `validateZoneInput`, `validateMushroomLogInput`,
   `validateHarvestInput`, `validateInoculationInput` and `validateJournalEntryInput`
   (`front-model-business/mushroom/MushroomInputValidation.ts`): the API's rules, as codes the form
