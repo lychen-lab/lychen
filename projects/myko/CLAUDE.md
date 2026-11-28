@@ -157,6 +157,10 @@ JournalEntry (`from → to` in its text).
   (`libs/typescript/myko/labels/`): how many labels fit, the millimetre position of each cell, of
   its QR code and of its text. The print stylesheet of `/labels` takes those values as they are and
   computes nothing.
+- A form checks what it gives with `validateZoneInput`, `validateMushroomLogInput`,
+  `validateHarvestInput`, `validateInoculationInput` and `validateJournalEntryInput`
+  (`front-model-business/mushroom/MushroomInputValidation.ts`): the API's rules, as codes the form
+  translates. The API still has the last word.
 - Every string in `fr-FR` (default) and `en-US`, in the view's `i18n/` folder, as in Espace. A test
   checks that both files of every `i18n/` folder of `libs/vue/myko` and of the app have the same
   keys and `{placeholders}` and no empty message (`compareLocales`, `libs/typescript/myko/i18n/`).
