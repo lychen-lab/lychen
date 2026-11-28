@@ -56,6 +56,48 @@ A "User Agent" application with PKCE in the Lychen Zitadel project, whose redire
 `<app origin>/auth/signinpop/zitadel`; post-logout URIs `<app origin>/` and
 `<app origin>/auth/signoutpop/zitadel`; for `https://localhost:5820` and each deployed origin. Its client id and the project's resource id go in the variables above.
 
+### Deploying the app to staging
+
+Myko is not deployed yet: `myko-app` has no `dokploy` tag and no Dokploy id (M35 adds them once the
+values below exist). Everything else is in place, so that Nathan's answer only fills in values.
+
+**Ready in the repository**
+
+- The image: `moon myko-app:docker-build` (and `docker-push`) builds the app and serves `dist/` with
+  Caddy, from the Dockerfile every frontend shares (`libs/docker/frontend`, tag `docker`). It is pushed
+  as `ghcr.io/lychen-lab/lychen/myko-app:<tag>` and serves the commit it was built from at
+  `/version.txt`, which the staging pipeline polls to check that a deploy is live.
+- `projects/myko/app/compose.yml`: one `app` service, `image: …/myko-app:${IMAGE_TAG:-latest}`, its
+  variables read from the compose's environment, as Tera's. The pipeline pins `IMAGE_TAG` to the commit.
+- The runtime variables, in the table above. None is needed to build or test; without them the app
+  runs and the sign-in screen says that sign-in is not configured.
+
+**To create, in this order**
+
+1. **Zitadel**: the application described above, for the staging origin. Keep its client id and the
+   project's resource id.
+2. **Dokploy**: a Compose service on `projects/myko/app/compose.yml`, as the other frontends, with
+   the domain pointed at the container's port 80 (a suggestion, any host works:
+   `staging.myko.lychen.org`). Its environment gets the variables of the table above:
+
+   | Variable                      | Staging value                                                                       |
+   | ----------------------------- | ----------------------------------------------------------------------------------- |
+   | `APP_ID`                      | `myko-app` (only hides the app from the ecosystem menu, which Myko has none of yet) |
+   | `MYKO_API_HOST`               | the staging API's URL (a suggestion: `https://staging.api.myko.lychen.org`)         |
+   | `MYKO_APP_URL`                | leave unset on staging; production only (see "Origin of the QR codes")              |
+   | `ZITADEL_ISSUER`              | the Zitadel instance's URL                                                          |
+   | `ZITADEL_CLIENT_ID`           | step 1                                                                              |
+   | `ZITADEL_PROJECT_RESOURCE_ID` | step 1                                                                              |
+
+3. **GitHub**, in the `staging` environment: the compose's id as the secret `MYKO_APP_DOKPLOY_ID`,
+   and the app's address as the variable `MYKO_APP_URL` (the pipeline's version check reads it; it is
+   not the container's variable of the same name). See `docs/deployment.md`.
+4. **Hand the three values over** (client id, resource id, Dokploy compose id) and the host chosen:
+   M35 then adds the `dokploy` tag and wires the rest.
+
+Before printing labels for good, set the container's `MYKO_APP_URL` to the production origin: a QR
+code never changes once printed.
+
 ### Icons
 
 The PWA icons live in `libs/assets/myko/content/icons` (`myko.svg` and what
