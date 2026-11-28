@@ -2,38 +2,13 @@ import { describe, expect, it } from 'vitest';
 
 import { INPUT_ISSUE_CODE } from '@lychen/typescript-front-model-business/mushroom/MushroomInputValidation';
 
-import { parseWeightGrams, useHarvestForm } from './useHarvestForm';
+import { useHarvestForm } from './useHarvestForm';
 
 const NOW = new Date(2026, 2, 12, 22, 30);
 
 function makeForm() {
   return useHarvestForm({ mushroomLogId: 'log-1', now: () => NOW });
 }
-
-describe('parseWeightGrams', () => {
-  it('reads a whole number, with or without a decimal part that is zero', () => {
-    expect(parseWeightGrams('250')).toBe(250);
-    expect(parseWeightGrams(' 250 ')).toBe(250);
-    expect(parseWeightGrams('250.0')).toBe(250);
-    expect(parseWeightGrams('250,0')).toBe(250);
-  });
-
-  it('gives undefined for a blank field', () => {
-    expect(parseWeightGrams('')).toBeUndefined();
-    expect(parseWeightGrams('   ')).toBeUndefined();
-  });
-
-  it('gives NaN for what is not a plain number, so that it is refused as a weight', () => {
-    expect(parseWeightGrams('12 g')).toBeNaN();
-    expect(parseWeightGrams('1e3')).toBeNaN();
-    expect(parseWeightGrams('abc')).toBeNaN();
-    expect(parseWeightGrams('1,2,3')).toBeNaN();
-  });
-
-  it('keeps a decimal as it is (a whole number is for the validation to ask)', () => {
-    expect(parseWeightGrams('12,5')).toBe(12.5);
-  });
-});
 
 describe('useHarvestForm', () => {
   it('starts empty, on today, and says nothing about the empty weight yet', () => {

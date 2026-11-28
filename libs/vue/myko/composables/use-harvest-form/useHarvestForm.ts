@@ -6,6 +6,7 @@ import {
   type InputIssueCode,
 } from '@lychen/typescript-front-model-business/mushroom/MushroomInputValidation';
 import { fromDayInputValue, toDayInputValue } from '@lychen/typescript-myko/form/dayInput';
+import { parseNumberInput } from '@lychen/typescript-myko/form/numberInput';
 
 export type HarvestFormField = 'harvestedAt' | 'weightGrams';
 
@@ -36,21 +37,6 @@ export interface UseHarvestForm {
 }
 
 /**
- * Reads a whole number of grams from what is typed. Undefined for a blank field; NaN for text
- * that is not a number (`12 g`, `1e3`), so that the validation refuses it as a weight rather than
- * as a missing one. A decimal comma is read as a point: phones in French type `12,5`.
- */
-export function parseWeightGrams(text: string): number | undefined {
-  const trimmed = text.trim();
-
-  if (trimmed === '') {
-    return undefined;
-  }
-
-  return /^[+-]?\d+([.,]\d+)?$/.test(trimmed) ? Number(trimmed.replace(',', '.')) : Number.NaN;
-}
-
-/**
  * The state of the harvest form ("peser une récolte"): what the fields hold, the issues to show
  * and the `HarvestInput` it gives. The rules are `validateHarvestInput`'s, the API's own.
  */
@@ -64,7 +50,7 @@ export function useHarvestForm(options: UseHarvestFormOptions): UseHarvestForm {
   const hasTriedToSubmit = ref(false);
 
   const harvestedAtDate = computed(() => fromDayInputValue(harvestedAt.value));
-  const weightGrams = computed(() => parseWeightGrams(weight.value));
+  const weightGrams = computed(() => parseNumberInput(weight.value));
 
   const issues = computed(() =>
     validateHarvestInput(
