@@ -1,11 +1,14 @@
 $schema: https://moonrepo.dev/schemas/tasks.json
+# The Caddyfile the image of a PWA frontend serves it with, unless the frontend
+# has its own (.moon/scripts/docker-buildx.sh, libs/caddy/README.md). A
+# file-level env reaches every task of the project, docker-build and docker-push
+# included. The frontend lists caddy-pwa in its dependsOn, so that a change to
+# it redeploys the frontend.
+env:
+  SHARED_CADDY_CONFIG: $workspaceRoot/libs/caddy/pwa
 tasks:
   build:
     command: yarn build
-    deps:
-    - args:
-      - $projectRoot/.caddy-build
-      target: caddy-configs:sync-pwa
     inputs:
     - .env*
     - index.html

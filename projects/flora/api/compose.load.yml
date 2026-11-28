@@ -45,11 +45,13 @@ services:
     build:
       context: .
       # The Dockerfile of every API (libs/docker/symfony): drop dockerfile and
-      # additional_contexts for a Dockerfile of the API's own, at its root. The
-      # additional context is never used: it only lets compose (bake) read a
-      # Dockerfile from outside the build context.
+      # the docker-symfony context for a Dockerfile of the API's own, at its
+      # root. That context is never used: it only lets compose (bake) read a
+      # Dockerfile from outside the build context. caddy-config holds the
+      # Caddyfiles of every API, which the Dockerfile copies (libs/caddy).
       dockerfile: ../../../libs/docker/symfony/Dockerfile
       additional_contexts:
+        caddy-config: ../../../libs/caddy/symfony
         docker-symfony: ../../../libs/docker/symfony
       target: frankenphp_dev
     command: php -d memory_limit=-1 bin/console foundry:load-fixtures load --append --no-debug
@@ -68,11 +70,13 @@ services:
     build:
       context: .
       # The Dockerfile of every API (libs/docker/symfony): drop dockerfile and
-      # additional_contexts for a Dockerfile of the API's own, at its root. The
-      # additional context is never used: it only lets compose (bake) read a
-      # Dockerfile from outside the build context.
+      # the docker-symfony context for a Dockerfile of the API's own, at its
+      # root. That context is never used: it only lets compose (bake) read a
+      # Dockerfile from outside the build context. caddy-config holds the
+      # Caddyfiles of every API, which the Dockerfile copies (libs/caddy).
       dockerfile: ../../../libs/docker/symfony/Dockerfile
       additional_contexts:
+        caddy-config: ../../../libs/caddy/symfony
         docker-symfony: ../../../libs/docker/symfony
       target: frankenphp_prod
     depends_on:
