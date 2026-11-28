@@ -165,6 +165,14 @@ JournalEntry (`from → to` in its text).
   For an inoculation, `splitLogsForInoculation`
   (`front-model-business/mushroom/MushroomLogBulkInoculation.ts`) first leaves out the logs that are
   not `prepared`, to be reported as skipped.
+- The list of logs keeps its filters in the URL, so that a filtered list can be shared, reloaded and
+  left with the back button: `parseMushroomLogListQuery`, `toMushroomLogListQuery` and
+  `withMushroomLogListFilters` (`front-model-business/mushroom/MushroomLogListFilters.ts`) are the
+  only code that reads and writes the parameters (`label`, `zone`, `state`, `fungusSpecies`,
+  `woodSpecies`). A blank parameter or a `state` the front does not know is ignored, never an error.
+  Its multiple selection is `useItemSelection` (`libs/vue/myko`), over the ids the list shows now: it
+  only reports the selected logs the list shows, in the list's order, so that a bulk entry never
+  reaches a log a filter hides, and it forgets nothing until `clear()`.
 - A form checks what it gives with `validateZoneInput`, `validateMushroomLogInput`,
   `validateHarvestInput`, `validateInoculationInput` and `validateJournalEntryInput`
   (`front-model-business/mushroom/MushroomInputValidation.ts`): the API's rules, as codes the form
