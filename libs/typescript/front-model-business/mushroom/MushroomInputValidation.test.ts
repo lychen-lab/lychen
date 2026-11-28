@@ -2,17 +2,23 @@ import { describe, expect, it } from 'vitest';
 
 import { JOURNAL_ENTRY_KIND } from './JournalEntry';
 import {
+  MUSHROOM_LOG_BATCH_MAX_COUNT,
+  MUSHROOM_LOG_BATCH_MAX_DIGITS,
+  isValidMushroomLogBatchNumbering,
+} from './MushroomLogBatchLabels';
+import {
   INPUT_ISSUE_CODE,
   ZONE_NAME_MAX_LENGTH,
   validateHarvestInput,
   validateInoculationInput,
   validateJournalEntryInput,
+  validateMushroomLogBatchInput,
   validateMushroomLogInput,
   validateStrainInput,
   validateZoneInput,
 } from './MushroomInputValidation';
 
-const { Required, TooLong, NotPositiveInteger, InFuture } = INPUT_ISSUE_CODE;
+const { Required, TooLong, NotPositiveInteger, InFuture, OutOfRange } = INPUT_ISSUE_CODE;
 
 // 12 March 2026, 14:30, local time.
 const NOW = new Date(2026, 2, 12, 14, 30);
@@ -165,6 +171,72 @@ describe('validateJournalEntryInput', () => {
       JOURNAL_ENTRY_KIND.Other,
     ]) {
       expect(validateJournalEntryInput({ kind })).toEqual([]);
+    }
+  });
+});
+
+describe('validateMushroomLogBatchInput', () => {
+  it('accepts a numbering', () => {
+    expect(validateMushroomLogBatchInput({ startNumber: 1, count: 40, digits: 3 })).toEqual([]);
+  });
+
+  it('requires the first number, the count and the digits', () => {
+    expect(validateMushroomLogBatchInput({})).toEqual([
+      { field: 'startNumber', code: Required },
+      { field: 'count', code: Required },
+      { field: 'digits', code: Required },
+    ]);
+  });
+
+  it('takes a first number from 0, but not below or a fraction', () => {
+    expect(validateMushroomLogBatchInput({ startNumber: 0, count: 1, digits: 1 })).toEqual([]);
+    expect(validateMushroomLogBatchInput({ startNumber: -1, count: 1, digits: 1 })).toEqual([
+      { field: 'startNumber', code: OutOfRange },
+    ]);
+    expect(validateMushroomLogBatchInput({ startNumber: 1.5, count: 1, digits: 1 })).toEqual([
+      { field: 'startNumber', code: OutOfRange },
+    ]);
+  });
+
+  it('takes from 1 to the most logs a batch creates', () => {
+    function issues(count: number) {
+      return validateMushroomLogBatchInput({ startNumber: 1, count, digits: 3 });
+    }
+
+    expect(issues(1)).toEqual([]);
+    expect(issues(MUSHROOM_LOG_BATCH_MAX_COUNT)).toEqual([]);
+    expect(issues(0)).toEqual([{ field: 'count', code: OutOfRange }]);
+    expect(issues(MUSHROOM_LOG_BATCH_MAX_COUNT + 1)).toEqual([
+      { field: 'count', code: OutOfRange },
+    ]);
+    expect(issues(2.5)).toEqual([{ field: 'count', code: OutOfRange }]);
+  });
+
+  it('takes from 1 to the most digits a number is padded to', () => {
+    function issues(digits: number) {
+      return validateMushroomLogBatchInput({ startNumber: 1, count: 3, digits });
+    }
+
+    expect(issues(1)).toEqual([]);
+    expect(issues(MUSHROOM_LOG_BATCH_MAX_DIGITS)).toEqual([]);
+    expect(issues(0)).toEqual([{ field: 'digits', code: OutOfRange }]);
+    expect(issues(MUSHROOM_LOG_BATCH_MAX_DIGITS + 1)).toEqual([
+      { field: 'digits', code: OutOfRange },
+    ]);
+  });
+
+  it('agrees with the numbering that makes labels', () => {
+    for (const numbering of [
+      { prefix: 'B-', startNumber: 1, count: 40, digits: 3 },
+      { prefix: 'B-', startNumber: 1, count: 0, digits: 3 },
+      { prefix: 'B-', startNumber: 1, count: 201, digits: 3 },
+      { prefix: 'B-', startNumber: 1, count: 5, digits: 7 },
+    ]) {
+      expect(validateMushroomLogBatchInput(numbering)).toEqual(
+        isValidMushroomLogBatchNumbering(numbering)
+          ? []
+          : expect.arrayContaining([expect.objectContaining({ code: OutOfRange })]),
+      );
     }
   });
 });

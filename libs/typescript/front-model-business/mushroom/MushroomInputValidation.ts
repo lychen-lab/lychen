@@ -4,6 +4,11 @@ import type { Harvest } from './Harvest';
 import type { Inoculation } from './Inoculation';
 import { JOURNAL_ENTRY_KIND, type JournalEntryInput } from './JournalEntry';
 import type { MushroomLog } from './MushroomLog';
+import {
+  MUSHROOM_LOG_BATCH_MAX_COUNT,
+  MUSHROOM_LOG_BATCH_MAX_DIGITS,
+  type MushroomLogBatchNumbering,
+} from './MushroomLogBatchLabels';
 import type { Strain } from './Strain';
 import type { Zone } from './Zone';
 
@@ -19,6 +24,8 @@ export const INPUT_ISSUE_CODE = {
   /** A whole number of at least 1. */
   NotPositiveInteger: 'not_positive_integer',
   InFuture: 'in_future',
+  /** A whole number, but outside the bounds the field takes (a batch of 0 or of 500 logs). */
+  OutOfRange: 'out_of_range',
 } as const;
 
 export type InputIssueCode = ObjectValues<typeof INPUT_ISSUE_CODE>;
@@ -153,4 +160,39 @@ export function validateJournalEntryInput(input: {
   return needsText && isBlank(input.text)
     ? [{ field: 'text', code: INPUT_ISSUE_CODE.Required }]
     : [];
+}
+
+/**
+ * The numbering of a batch (`mushroomLogBatchLabels`): the first number, how many logs and how many
+ * digits are required whole numbers; the first number is 0 or more, the count between 1 and
+ * `MUSHROOM_LOG_BATCH_MAX_COUNT` and the digits between 1 and `MUSHROOM_LOG_BATCH_MAX_DIGITS`
+ * (anything else, a fraction included, is `OutOfRange`). The prefix is free, and may be empty. That
+ * the labels are free among the person's logs only the API knows.
+ */
+export function validateMushroomLogBatchInput(input: {
+  startNumber?: MushroomLogBatchNumbering['startNumber'];
+  count?: MushroomLogBatchNumbering['count'];
+  digits?: MushroomLogBatchNumbering['digits'];
+}): InputIssue<'startNumber' | 'count' | 'digits'>[] {
+  const bounds = {
+    startNumber: { min: 0, max: Number.MAX_SAFE_INTEGER },
+    count: { min: 1, max: MUSHROOM_LOG_BATCH_MAX_COUNT },
+    digits: { min: 1, max: MUSHROOM_LOG_BATCH_MAX_DIGITS },
+  } as const;
+
+  return (Object.keys(bounds) as (keyof typeof bounds)[]).flatMap(
+    (field): InputIssue<keyof typeof bounds>[] => {
+      const value = input[field];
+
+      if (value === undefined) {
+        return [{ field, code: INPUT_ISSUE_CODE.Required }];
+      }
+
+      const { min, max } = bounds[field];
+
+      return Number.isSafeInteger(value) && value >= min && value <= max
+        ? []
+        : [{ field, code: INPUT_ISSUE_CODE.OutOfRange }];
+    },
+  );
 }

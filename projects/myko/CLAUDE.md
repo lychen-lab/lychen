@@ -210,6 +210,12 @@ JournalEntry (`from → to` in its text).
   `toDateTimeInputValue` (`libs/typescript/myko/form/dayInput.ts`): a mapper writes the API's date
   (`YYYY-MM-DD`) with `toDayInputValue`, never with `toISOString()`, which would send the day before
   for a day picked at local midnight east of Greenwich.
+- The series form is `MushroomLogBatchForm` with `useMushroomLogBatchForm` (create `B-001` to `B-040`
+  in a zone): the prefix, first number, count and digits go through `validateMushroomLogBatchInput`
+  (count 1 to `MUSHROOM_LOG_BATCH_MAX_COUNT`, else `INPUT_ISSUE_CODE.OutOfRange`), and its `labels`
+  are both the preview and what the creation makes (`mushroomLogBatchLabels`), so the two cannot
+  differ. The optional inoculation of the whole series is `useInoculationForm`'s, kept only while
+  `inoculate` is on; the screen creates the logs one request each and links each inoculation.
 - Every screen titles the page: `useDocumentTitle(() => t('page_title'))` (`libs/vue/myko`) gives
   `<screen> · Myko`, reactive to the language and to data (`() => log.value?.label`). A single-page
   app has to do it on every route (WCAG 2.4.2), and the title is what a screen reader announces.
