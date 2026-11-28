@@ -182,9 +182,12 @@ JournalEntry (`from → to` in its text).
   `classifyCameraError` (what `getUserMedia` rejected with) and `cameraProblemBeforeAsking` (an
   insecure page or a browser without the API), as a `CameraProblem` the screen translates, with the
   manual search by label as the way out. The camera loop is `useQrScanner` (`libs/vue/myko`): it asks
-  for the rear camera, reads a frame every 250 ms through a `QrDetector` (the browser's
-  `BarcodeDetector` by default, `createBarcodeQrDetector`; a library for Safari on iOS goes in its
-  `createDetector` option) and reports each code once per 3 s. It makes the detector before it asks
+  for the rear camera, reads a frame every 250 ms through a `QrDetector` made by
+  `createQrDetector` (`libs/typescript/myko/scan/`): the browser's own `BarcodeDetector` where there
+  is one (`createBarcodeQrDetector`, Chrome on Android), otherwise jsQR (`createJsQrDetector`, for
+  Safari on iOS and Firefox: loaded on first use as a chunk of its own, frames drawn at 640 px at
+  most, a light code on a dark ground read too); another detector goes in its `createDetector`
+  option. It reports each code once per 3 s. It makes the detector before it asks
   for the camera, and `stop()` (or the end of the scope) releases the camera.
 - A form checks what it gives with `validateZoneInput`, `validateMushroomLogInput`,
   `validateHarvestInput`, `validateInoculationInput` and `validateJournalEntryInput`

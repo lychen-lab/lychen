@@ -2,6 +2,7 @@
   "name": "@lychen/typescript-myko",
   "dependencies": {
     "@lychen/typescript-utils": "workspace:*",
+    "jsqr": "^1.4.0",
     "uqr": "^0.1.3"
   }
 }

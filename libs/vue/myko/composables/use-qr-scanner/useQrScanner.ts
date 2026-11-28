@@ -13,7 +13,8 @@ import {
   cameraProblemBeforeAsking,
   classifyCameraError,
 } from '@lychen/typescript-myko/scan/cameraProblem';
-import { createBarcodeQrDetector, type QrDetector } from '@lychen/typescript-myko/scan/qrDetector';
+import { createQrDetector } from '@lychen/typescript-myko/scan/createQrDetector';
+import type { QrDetector } from '@lychen/typescript-myko/scan/qrDetector';
 
 /** What the scanner is doing, for the screen: nothing, asking for the camera, reading, or stuck. */
 export const QR_SCANNER_STATE = {
@@ -41,8 +42,8 @@ export interface UseQrScannerOptions {
   /** Called with the content of a QR code the camera read (`resolveScannedContent` says what it is). */
   onScan: (content: string) => void;
   /**
-   * What reads the frames. Left out, the browser's own `BarcodeDetector`; where there is none, a
-   * detector of another kind (a library, for Safari on iOS) is given here.
+   * What reads the frames. Left out, `createQrDetector`: the browser's own `BarcodeDetector`, or
+   * jsQR where there is none (Safari on iOS, Firefox).
    */
   createDetector?: () => Promise<QrDetector | undefined>;
   intervalMs?: number;
@@ -70,7 +71,7 @@ export function useQrScanner(options: UseQrScannerOptions) {
 
   const intervalMs = options.intervalMs ?? QR_SCANNER_DEFAULT_INTERVAL_MS;
   const repeatDelayMs = options.repeatDelayMs ?? QR_SCANNER_DEFAULT_REPEAT_DELAY_MS;
-  const createDetector = options.createDetector ?? (() => createBarcodeQrDetector());
+  const createDetector = options.createDetector ?? (() => createQrDetector());
 
   /** Changes at each start and stop: what an older, slower start finds changed gives up. */
   let session = 0;
