@@ -18,6 +18,7 @@
     "@lychen/vue-i18n": "workspace:*",
     "@lychen/vue-icons": "workspace:*",
     "@lychen/vue-layouts": "workspace:*",
+    "@lychen/vue-myko": "workspace:*",
     "@lychen/vue-zitadel": "workspace:*",
     "@tanstack/vue-query": "^5.104.5",
     "vue": "^3.5.44",

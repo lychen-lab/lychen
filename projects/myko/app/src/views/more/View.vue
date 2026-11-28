@@ -35,6 +35,7 @@ import { computed } from 'vue';
 import { Button } from '@lychen/vue-components-core/button';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import IconChevronRight from '@lychen/vue-icons/IconChevronRight.vue';
+import { useDocumentTitle } from '@lychen/vue-myko/composables/use-document-title/useDocumentTitle';
 
 import { useAuth } from '@/auth';
 import { ROUTE_NAME } from '@/router/routeNames';
@@ -44,6 +45,8 @@ import { MESSAGES, TRANSLATION_KEY } from './i18n';
 const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 
 const auth = useAuth();
+
+useDocumentTitle(() => t('title'));
 
 const links = computed(() => [
   { name: ROUTE_NAME.Zones, label: t('zones') },

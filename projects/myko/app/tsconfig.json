@@ -24,6 +24,9 @@
       "path": "../../../libs/vue/layouts"
     },
     {
+      "path": "../../../libs/vue/myko"
+    },
+    {
       "path": "../../../libs/vue/zitadel"
     }
   ],

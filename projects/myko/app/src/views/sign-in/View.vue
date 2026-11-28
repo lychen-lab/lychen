@@ -30,6 +30,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 import { Button } from '@lychen/vue-components-core/button';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
+import { useDocumentTitle } from '@lychen/vue-myko/composables/use-document-title/useDocumentTitle';
 
 import { getRedirectTarget, useAuth } from '@/auth';
 
@@ -40,6 +41,8 @@ const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, pr
 const auth = useAuth();
 const route = useRoute();
 const router = useRouter();
+
+useDocumentTitle(() => t('page_title'));
 
 // Signed in, now or already: back to where the visitor was going.
 watchEffect(() => {
