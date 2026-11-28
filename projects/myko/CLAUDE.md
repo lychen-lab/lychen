@@ -216,6 +216,10 @@ JournalEntry (`from → to` in its text).
   are both the preview and what the creation makes (`mushroomLogBatchLabels`), so the two cannot
   differ. The optional inoculation of the whole series is `useInoculationForm`'s, kept only while
   `inoculate` is on; the screen creates the logs one request each and links each inoculation.
+  The screen starts both log forms on `suggestMushroomLogLabel(existing labels)`
+  (`front-model-business/mushroom/MushroomLogLabelSuggestion.ts`): the prefix most labels share, the
+  number after the highest one and its digits (`B-001` to `B-040` give `B-041`), as a suggestion
+  only: the API still says whether a label is free.
 - Every screen titles the page: `useDocumentTitle(() => t('page_title'))` (`libs/vue/myko`) gives
   `<screen> · Myko`, reactive to the language and to data (`() => log.value?.label`). A single-page
   app has to do it on every route (WCAG 2.4.2), and the title is what a screen reader announces.
