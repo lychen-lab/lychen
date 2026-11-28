@@ -17,9 +17,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
             'default_connection' => 'default',
         ],
         'orm' => [
-            'controller_resolver' => [
-                'auto_mapping' => false,
-            ],
             'default_entity_manager' => 'default',
             'entity_managers' => [
                 'default' => [
