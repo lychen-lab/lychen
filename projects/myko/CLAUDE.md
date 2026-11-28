@@ -159,6 +159,12 @@ JournalEntry (`from → to` in its text).
   (`libs/typescript/myko/labels/`): how many labels fit, the millimetre position of each cell, of
   its QR code and of its text. The print stylesheet of `/labels` takes those values as they are and
   computes nothing.
+- A bulk entry (the same journal entry or inoculation on every selected log) runs through `runBulk`
+  (`libs/typescript/myko/bulk/`): a few requests at a time, a failed item never stops the others, the
+  results come back in the selection's order and `onProgress` feeds the progress bar and the recap.
+  For an inoculation, `splitLogsForInoculation`
+  (`front-model-business/mushroom/MushroomLogBulkInoculation.ts`) first leaves out the logs that are
+  not `prepared`, to be reported as skipped.
 - A form checks what it gives with `validateZoneInput`, `validateMushroomLogInput`,
   `validateHarvestInput`, `validateInoculationInput` and `validateJournalEntryInput`
   (`front-model-business/mushroom/MushroomInputValidation.ts`): the API's rules, as codes the form
