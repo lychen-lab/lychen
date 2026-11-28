@@ -196,10 +196,12 @@ JournalEntry (`from → to` in its text).
 - A form is a component of `libs/vue/myko` over a composable the tests can drive: `MushroomLogHarvestForm`
   with `useHarvestForm`, `MushroomLogJournalEntryForm` with `useJournalEntryForm`,
   `MushroomLogInoculationForm` with `useInoculationForm`, `ZoneForm` with `useZoneForm` and
-  `StrainForm` with `useStrainForm` (both create and edit: `mode`, and the item's `initialValues`
-  once it is loaded; an optional text left blank comes out as an empty string, not left out, so that
-  an edit can clear it, and the endpoint's `mapToRequest` turns it into what the API takes for
-  "none"). The composable holds the typed values (a
+  `StrainForm` with `useStrainForm`, `MushroomLogForm` with `useMushroomLogForm` (the last three
+  create and edit: `mode`, and the item's `initialValues` once it is loaded; an optional text left
+  blank comes out as an empty string, not left out, so that an edit can clear it, and an optional
+  value that is not text (wood species, cutting day, sizes) as a key set to `undefined`; the
+  endpoint's `mapToRequest` turns both into what the API takes for "none"). The composable holds the
+  typed values (a
   number typed in a field goes through `parseNumberInput`, `libs/typescript/myko/form/numberInput.ts`),
   checks them with the `validate…Input` functions above, shows an issue only after a first
   submission, and gives the input to send; the component emits it and the screen owns the request

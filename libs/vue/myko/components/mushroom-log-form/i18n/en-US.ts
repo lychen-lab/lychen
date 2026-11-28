@@ -1,0 +1,18 @@
+export default {
+  label_label: 'Label',
+  label_placeholder: 'For example B-012',
+  label_required: 'Give the log a label.',
+  zone_label: 'Zone',
+  zone_placeholder: 'Choose a zone',
+  zone_required: 'Choose a zone.',
+  zone_none: 'No zone yet: create one first.',
+  wood_label: 'Wood species (optional)',
+  wood_none: 'Not specified',
+  cut_label: 'Cutting date (optional)',
+  diameter_label: 'Diameter in cm (optional)',
+  length_label: 'Length in cm (optional)',
+  size_invalid: 'Enter a whole number of centimetres, at least 1.',
+  notes_label: 'Notes (optional)',
+  submit_create: 'Create log',
+  submit_edit: 'Save',
+};
