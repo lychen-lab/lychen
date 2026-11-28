@@ -133,99 +133,21 @@ JournalEntry (`from → to` in its text).
 - Routes: `/`, `/logs`, `/logs/new`, `/logs/new-batch`, `/logs/:uuid`, `/logs/:uuid/edit`,
   `/l/:uuid` (QR entry point, redirects to `/logs/:uuid`), `/zones`, `/zones/new`,
   `/zones/:uuid/edit`, `/strains`, `/strains/new`, `/strains/:uuid/edit`, `/labels`, `/scan`,
-  `/stats`, `/sign-in`.
-- Every route needs a signed-in user, except `/sign-in`: the layout route carries
-  `auth.protectedRouteMeta` (`src/auth/Auth.ts`, routes built by `createRoutes(auth)`). With Zitadel
-  configured the identity provider's guard (`meta.authName`, as in Espace) sends an anonymous visitor
-  to Zitadel; with the fake login, or Zitadel not configured, `installSignInScreenGuard` sends them to
-  `/sign-in?redirect=<where they were going>`. A new route goes under the layout route, so it is
-  protected without doing anything.
-- Every route has its name in `src/router/routeNames.ts` (`ROUTE_NAME`). A screen that is not
-  built yet is listed in `src/views/provisional/index.ts`, with its path: the ticket that builds
-  it moves its route into its own `views/<name>/` (`ROUTE_<NAME>` in its `index.ts`, as the home
-  view does) and out of that list.
+  `/stats`, `/sign-in`. Every route needs a signed-in user, except `/sign-in`.
 - **The QR code content is `<app origin>/l/<log uuid>` and must never change**: labels are printed,
-  and will later be engraved on steel. `mushroomLogQrContent` and `mushroomLogUuidFromQrContent`
-  (`libs/typescript/myko/qr/`) are the only code that writes and reads it, and their test pins it.
-  The code itself is drawn from that content by `mushroomLogQrCode` (`uqr`, error correction M, an SVG
-  path, no markup) in `MushroomLogQrCode.vue` (`libs/vue/myko`); the origin it takes is the one the
-  labels must open, not whatever the app runs on: the screens get it from `getMushroomLogQrOrigin()`
-  (`projects/myko/app/src/config/`), which reads `VITE_MYKO_APP_URL` and falls back to the origin
-  the app runs on (`resolveMushroomLogQrOrigin`, `libs/typescript/myko/qr/`).
-- A batch's labels (`B-001` to `B-040`) come from `mushroomLogBatchLabels`
-  (`front-model-business/mushroom/MushroomLogBatchLabels.ts`), for the form's preview and for the
-  creation alike. Its limits (200 logs, 6 digits) are constants next to it.
-- A sheet of labels (A4, two sizes) is laid out by `labelSheetLayout` and `paginateLabels`
-  (`libs/typescript/myko/labels/`): how many labels fit, the millimetre position of each cell, of
-  its QR code and of its text. The print stylesheet of `/labels` takes those values as they are and
-  computes nothing: `labelSheetStyle.ts` turns them into the CSS lengths, and `MushroomLogLabelSheets`
-  (`libs/vue/myko`) draws the sheets with them (A4 pages, preview with cut lines on screen, nothing
-  but the labels in print). A label's text is a single line sized to fit (`labelTextFontSizeMm`), and
-  wraps rather than shrinks below legible.
-- A bulk entry (the same journal entry or inoculation on every selected log) runs through `runBulk`
-  (`libs/typescript/myko/bulk/`): a few requests at a time, a failed item never stops the others, the
-  results come back in the selection's order and `onProgress` feeds the progress bar and the recap.
-  For an inoculation, `splitLogsForInoculation`
-  (`front-model-business/mushroom/MushroomLogBulkInoculation.ts`) first leaves out the logs that are
-  not `prepared`, to be reported as skipped.
-- The list of logs keeps its filters in the URL, so that a filtered list can be shared, reloaded and
-  left with the back button: `parseMushroomLogListQuery`, `toMushroomLogListQuery` and
-  `withMushroomLogListFilters` (`front-model-business/mushroom/MushroomLogListFilters.ts`) are the
-  only code that reads and writes the parameters (`label`, `zone`, `state`, `fungusSpecies`,
-  `woodSpecies`). A blank parameter or a `state` the front does not know is ignored, never an error.
-  Its multiple selection is `useItemSelection` (`libs/vue/myko`), over the ids the list shows now: it
-  only reports the selected logs the list shows, in the list's order, so that a bulk entry never
-  reaches a log a filter hides, and it forgets nothing until `clear()`.
-- What the scanner reads is turned into an action by `resolveScannedContent`
-  (`libs/typescript/myko/scan/`): a Myko label (any origin) opens its log, anything else is `NotMyko`
-  and shown as text, never as a link. A camera that cannot be used is explained from
-  `classifyCameraError` (what `getUserMedia` rejected with) and `cameraProblemBeforeAsking` (an
-  insecure page or a browser without the API), as a `CameraProblem` the screen translates, with the
-  manual search by label as the way out. The camera loop is `useQrScanner` (`libs/vue/myko`): it asks
-  for the rear camera, reads a frame every 250 ms through a `QrDetector` made by
-  `createQrDetector` (`libs/typescript/myko/scan/`): the browser's own `BarcodeDetector` where there
-  is one (`createBarcodeQrDetector`, Chrome on Android), otherwise jsQR (`createJsQrDetector`, for
-  Safari on iOS and Firefox: loaded on first use as a chunk of its own, frames drawn at 640 px at
-  most, a light code on a dark ground read too); another detector goes in its `createDetector`
-  option. It reports each code once per 3 s. It makes the detector before it asks
-  for the camera, and `stop()` (or the end of the scope) releases the camera.
-- A form checks what it gives with `validateZoneInput`, `validateMushroomLogInput`,
-  `validateHarvestInput`, `validateInoculationInput` and `validateJournalEntryInput`
-  (`front-model-business/mushroom/MushroomInputValidation.ts`): the API's rules, as codes the form
-  translates. The API still has the last word.
-- A form is a component of `libs/vue/myko` over a composable the tests can drive: `MushroomLogHarvestForm`
-  with `useHarvestForm`, `MushroomLogJournalEntryForm` with `useJournalEntryForm`,
-  `MushroomLogInoculationForm` with `useInoculationForm`, `ZoneForm` with `useZoneForm` and
-  `StrainForm` with `useStrainForm`, `MushroomLogForm` with `useMushroomLogForm` (the last three
-  create and edit: `mode`, and the item's `initialValues` once it is loaded; an optional text left
-  blank comes out as an empty string, not left out, so that an edit can clear it, and an optional
-  value that is not text (wood species, cutting day, sizes) as a key set to `undefined`; the
-  endpoint's `mapToRequest` turns both into what the API takes for "none"). The composable holds the
-  typed values (a
-  number typed in a field goes through `parseNumberInput`, `libs/typescript/myko/form/numberInput.ts`),
-  checks them with the `validate…Input` functions above, shows an issue only after a first
-  submission, and gives the input to send; the component emits it and the screen owns the request
-  (`submitting`, `errorMessage`, `reset()` once saved). A day or a moment typed in a field is read and
-  written in local time by `fromDayInputValue`, `fromDateTimeInputValue`, `toDayInputValue` and
-  `toDateTimeInputValue` (`libs/typescript/myko/form/dayInput.ts`): a mapper writes the API's date
-  (`YYYY-MM-DD`) with `toDayInputValue`, never with `toISOString()`, which would send the day before
-  for a day picked at local midnight east of Greenwich.
-- The series form is `MushroomLogBatchForm` with `useMushroomLogBatchForm` (create `B-001` to `B-040`
-  in a zone): the prefix, first number, count and digits go through `validateMushroomLogBatchInput`
-  (count 1 to `MUSHROOM_LOG_BATCH_MAX_COUNT`, else `INPUT_ISSUE_CODE.OutOfRange`), and its `labels`
-  are both the preview and what the creation makes (`mushroomLogBatchLabels`), so the two cannot
-  differ. The optional inoculation of the whole series is `useInoculationForm`'s, kept only while
-  `inoculate` is on; the screen creates the logs one request each and links each inoculation.
-  The screen starts both log forms on `suggestMushroomLogLabel(existing labels)`
-  (`front-model-business/mushroom/MushroomLogLabelSuggestion.ts`): the prefix most labels share, the
-  number after the highest one and its digits (`B-001` to `B-040` give `B-041`), as a suggestion
-  only: the API still says whether a label is free.
-- Every screen titles the page: `useDocumentTitle(() => t('page_title'))` (`libs/vue/myko`) gives
-  `<screen> · Myko`, reactive to the language and to data (`() => log.value?.label`). A single-page
-  app has to do it on every route (WCAG 2.4.2), and the title is what a screen reader announces.
-- Every string in `fr-FR` (default) and `en-US`, in the view's `i18n/` folder, as in Espace. A test
-  checks that both files of every `i18n/` folder of `libs/vue/myko` and of the app have the same
-  keys and `{placeholders}` and no empty message (`compareLocales`, `libs/typescript/myko/i18n/`).
+  and will later be engraved on steel. One function writes it, one reads it, a test pins it. In a
+  production build the origin comes from `VITE_MYKO_APP_URL` only, never from wherever the app
+  happens to run, and the app is served at the root of its domain.
+- Forms use the repository's form stack, as Tera's (`libs/vue/tera/components/land/forms/`): a zod
+  schema, vee-validate's `useForm`, the `components-core/form` fields. A form emits its input; the
+  screen adds the log it applies to, calls the endpoint and shows its errors. The API has the last
+  word.
+- Days are read and written in local time (`YYYY-MM-DD`), never through `toISOString()`.
+- A list keeps its filters in the URL, typed with the SDK's query type.
+- Every screen titles the page.
+- Every string in `fr-FR` (default) and `en-US`, in the view's `i18n/` folder, as in Espace. Each
+  `en-US` file is typed from its `fr-FR` (`satisfies typeof frFr`), so a missing key fails the
+  type check.
 - Reuse `components-core`, `components-business` and `components-app` before writing a component.
   Myko-specific components go in `libs/vue/myko`.
 - Quick entries (journal, harvest, inoculation, transitions) open in a bottom sheet: three taps at
@@ -247,6 +169,11 @@ M01, M02…), mostly by a night agent that merges its own PRs. To keep that safe
 - PR titles are Conventional Commits, scoped by project: `feat(myko-api): …`,
   `feat(myko-app): …`, `feat(vue-myko-api): …`, `docs(myko): …`. A PR body says `Closes #<issue>`,
   so that merging it closes its issue.
+- Library code ships with its first consumer: the screen or endpoint that uses it, in the same PR.
+  No code for a screen or an endpoint that does not exist yet.
+- This file and `docs/myko/spec.fr.md` are Nathan's. A feature PR may add or correct a factual line
+  here (a port, a command, a path) when its issue asks for it; any other change to them goes in a
+  PR of its own, left open for his review. Never describe the code here: it says it itself.
 - Every PR gets a cold review by two larger models before it is merged (see "Keep it simple" for
   what they look for).
 
@@ -292,10 +219,10 @@ his answer only fills in a value:
 - **Shared code**: prefer a Myko-local solution, in Myko's libraries, to a change in shared code.
   If a shared change is truly needed, open it as its own PR for Nathan's review and keep Myko
   moving on the local solution meanwhile.
-- **Nothing ready?** There is always something within Myko's scope: missing tests, i18n gaps,
-  accessibility, the demo data, docs, small UX fixes found while reading the app, groundwork for
-  the next issues that only waits on a dependency. One coherent PR at a time, explained like any
-  other.
+- **Nothing ready?** Never write code ahead of the screen or endpoint that will use it. What is
+  worth doing: simplify existing Myko code, fix what a review found, test code that is used, fill
+  an i18n gap, docs. When nothing like that is left, end the run: an idle night saves Nathan's
+  quota.
 
 ## Working from a cloud session
 
