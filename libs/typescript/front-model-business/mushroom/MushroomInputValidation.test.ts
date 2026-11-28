@@ -8,6 +8,7 @@ import {
   validateInoculationInput,
   validateJournalEntryInput,
   validateMushroomLogInput,
+  validateStrainInput,
   validateZoneInput,
 } from './MushroomInputValidation';
 
@@ -30,6 +31,37 @@ describe('validateZoneInput', () => {
     expect(validateZoneInput({ name: 'a'.repeat(ZONE_NAME_MAX_LENGTH) })).toEqual([]);
     expect(validateZoneInput({ name: 'a'.repeat(ZONE_NAME_MAX_LENGTH + 1) })).toEqual([
       { field: 'name', code: TooLong },
+    ]);
+  });
+});
+
+describe('validateStrainInput', () => {
+  it('accepts a species and a name', () => {
+    expect(validateStrainInput({ fungusSpecies: { id: 'f1' }, name: 'M3782' })).toEqual([]);
+  });
+
+  it('requires a species, and an id left blank is none', () => {
+    expect(validateStrainInput({ name: 'M3782' })).toEqual([
+      { field: 'fungusSpecies', code: Required },
+    ]);
+    expect(validateStrainInput({ fungusSpecies: { id: '' }, name: 'M3782' })).toEqual([
+      { field: 'fungusSpecies', code: Required },
+    ]);
+  });
+
+  it('requires a name, and a blank one is none', () => {
+    expect(validateStrainInput({ fungusSpecies: { id: 'f1' } })).toEqual([
+      { field: 'name', code: Required },
+    ]);
+    expect(validateStrainInput({ fungusSpecies: { id: 'f1' }, name: '  ' })).toEqual([
+      { field: 'name', code: Required },
+    ]);
+  });
+
+  it('reports both, the species first', () => {
+    expect(validateStrainInput({})).toEqual([
+      { field: 'fungusSpecies', code: Required },
+      { field: 'name', code: Required },
     ]);
   });
 });

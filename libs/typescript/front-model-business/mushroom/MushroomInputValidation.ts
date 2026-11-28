@@ -4,6 +4,7 @@ import type { Harvest } from './Harvest';
 import type { Inoculation } from './Inoculation';
 import { JOURNAL_ENTRY_KIND, type JournalEntryInput } from './JournalEntry';
 import type { MushroomLog } from './MushroomLog';
+import type { Strain } from './Strain';
 import type { Zone } from './Zone';
 
 /**
@@ -67,6 +68,22 @@ export function validateZoneInput(input: { name?: Zone['name'] }): InputIssue<'n
     return [{ field: 'name', code: INPUT_ISSUE_CODE.TooLong }];
   }
   return [];
+}
+
+/**
+ * The species is required (only its id is sent) and so is the name. That the species exists and
+ * that the name is free among the person's strains only the API knows.
+ */
+export function validateStrainInput(input: {
+  fungusSpecies?: Pick<NonNullable<Strain['fungusSpecies']>, 'id'>;
+  name?: Strain['name'];
+}): InputIssue<'fungusSpecies' | 'name'>[] {
+  return [
+    ...(isBlank(input.fungusSpecies?.id)
+      ? [{ field: 'fungusSpecies' as const, code: INPUT_ISSUE_CODE.Required }]
+      : []),
+    ...(isBlank(input.name) ? [{ field: 'name' as const, code: INPUT_ISSUE_CODE.Required }] : []),
+  ];
 }
 
 /**
