@@ -194,9 +194,11 @@ JournalEntry (`from → to` in its text).
   (`front-model-business/mushroom/MushroomInputValidation.ts`): the API's rules, as codes the form
   translates. The API still has the last word.
 - A form is a component of `libs/vue/myko` over a composable the tests can drive: `MushroomLogHarvestForm`
-  with `useHarvestForm`, `MushroomLogJournalEntryForm` with `useJournalEntryForm`. The composable holds
-  the typed values, checks them with the `validate…Input` functions above, shows an issue only after a
-  first submission, and gives the input to send; the component emits it and the screen owns the request
+  with `useHarvestForm`, `MushroomLogJournalEntryForm` with `useJournalEntryForm`,
+  `MushroomLogInoculationForm` with `useInoculationForm`. The composable holds the typed values (a
+  number typed in a field goes through `parseNumberInput`, `libs/typescript/myko/form/numberInput.ts`),
+  checks them with the `validate…Input` functions above, shows an issue only after a first
+  submission, and gives the input to send; the component emits it and the screen owns the request
   (`submitting`, `errorMessage`, `reset()` once saved). A day or a moment typed in a field is read and
   written in local time by `fromDayInputValue`, `fromDateTimeInputValue`, `toDayInputValue` and
   `toDateTimeInputValue` (`libs/typescript/myko/form/dayInput.ts`): a mapper writes the API's date
