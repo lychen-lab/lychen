@@ -10,6 +10,7 @@ import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
+import { useDocumentTitle } from '@lychen/vue-myko/composables/use-document-title/useDocumentTitle';
 
 import { MESSAGES, TRANSLATION_KEY } from './i18n';
 
@@ -18,4 +19,6 @@ const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, pr
 const route = useRoute();
 
 const title = computed(() => t(`titles.${String(route.name)}`));
+
+useDocumentTitle(title);
 </script>

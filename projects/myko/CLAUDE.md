@@ -169,6 +169,9 @@ JournalEntry (`from → to` in its text).
   `validateHarvestInput`, `validateInoculationInput` and `validateJournalEntryInput`
   (`front-model-business/mushroom/MushroomInputValidation.ts`): the API's rules, as codes the form
   translates. The API still has the last word.
+- Every screen titles the page: `useDocumentTitle(() => t('page_title'))` (`libs/vue/myko`) gives
+  `<screen> · Myko`, reactive to the language and to data (`() => log.value?.label`). A single-page
+  app has to do it on every route (WCAG 2.4.2), and the title is what a screen reader announces.
 - Every string in `fr-FR` (default) and `en-US`, in the view's `i18n/` folder, as in Espace. A test
   checks that both files of every `i18n/` folder of `libs/vue/myko` and of the app have the same
   keys and `{placeholders}` and no empty message (`compareLocales`, `libs/typescript/myko/i18n/`).

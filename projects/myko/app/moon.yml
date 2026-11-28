@@ -7,6 +7,7 @@ dependsOn:
   - vue-i18n
   - vue-icons
   - vue-layouts
+  - vue-myko
   - vue-zitadel
 id: myko-app
 language: typescript
