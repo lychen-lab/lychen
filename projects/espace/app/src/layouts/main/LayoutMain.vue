@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-dvh flex-col">
-    <main class="flex flex-col gap-8 p-4 pb-[80px]">
+    <main class="flex flex-col gap-8 p-4 pb-20">
       <RouterView />
     </main>
     <LayoutNavigationMain class="fixed bottom-0" />

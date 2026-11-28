@@ -2,6 +2,7 @@ export { default as Card } from './Card.vue';
 
 export interface LandRequest {
   uuid: string;
+  title?: string;
   firstName: string;
   lastName: string;
   avatarUrl?: string;

@@ -1,96 +1,98 @@
 <template>
   <section class="flex flex-col gap-6">
     <div class="flex flex-col gap-1">
-      <h2 class="text-2xl font-bold">Espaces proposés</h2>
-      <p class="text-sm text-on-surface/60">
-        {{ proposals.length }} terrain{{ proposals.length !== 1 ? 's' : '' }} disponible{{
-          proposals.length !== 1 ? 's' : ''
-        }}
+      <h1 class="text-2xl font-bold">{{ t('title') }}</h1>
+      <p
+        v-if="data"
+        class="text-sm text-on-surface/60"
+      >
+        {{ t('count', totalItems) }}
       </p>
     </div>
 
-    <p
-      v-if="isPending"
-      class="text-sm text-on-surface/60"
+    <CollectionFilters
+      :filters="filters"
+      :has-active-filters="hasActiveFilters"
+      @update="update"
+      @reset="reset"
+    />
+
+    <QueryState
+      :is-pending="isPending"
+      :is-error="isError"
+      :is-empty="proposals.length === 0"
+      :empty-text="hasActiveFilters ? t('empty_filtered') : t('empty')"
+      :error-text="t('error')"
+      @retry="refetch()"
     >
-      Chargement des terrains…
-    </p>
-    <p
-      v-else-if="isError"
-      class="text-sm text-red-700"
-    >
-      Impossible de charger les terrains.
-    </p>
-    <p
-      v-else-if="proposals.length === 0"
-      class="text-sm text-on-surface/60"
-    >
-      Aucun terrain disponible pour le moment.
-    </p>
-    <div
-      v-else
-      class="grid grid-cols-2 gap-3"
-    >
-      <RouterLink
-        v-for="proposal in proposals"
-        :key="proposal.uuid"
-        :to="{ name: ROUTE_LAND_PROPOSAL.name, params: { uuid: proposal.uuid } }"
-        class="contents"
+      <div
+        class="grid grid-cols-2 gap-3 transition-opacity"
+        :class="{ 'opacity-50': isPlaceholderData }"
       >
-        <Card
-          v-bind="proposal"
-          :clickable="true"
-          :display-city="true"
-          :display-favorite-button="true"
-          :is-favorite="favorites.has(proposal.uuid)"
-          class="w-full max-w-full! min-w-0!"
-          @favorite.prevent="toggleFavorite(proposal.uuid)"
-        />
-      </RouterLink>
-    </div>
+        <RouterLink
+          v-for="proposal in proposals"
+          :key="proposal.uuid"
+          :to="{ name: ROUTE_LAND_PROPOSAL.name, params: { uuid: proposal.uuid } }"
+          class="contents"
+        >
+          <Card
+            v-bind="proposal"
+            :clickable="true"
+            :display-city="true"
+            :display-favorite-button="true"
+            :is-favorite="isFavorite(proposal.uuid)"
+            class="w-full max-w-full! min-w-0!"
+            @favorite="toggleFavorite(proposal.uuid)"
+          />
+        </RouterLink>
+      </div>
+      <CollectionPagination
+        :page="filters.page"
+        :total-items="totalItems"
+        @update:page="goToPage"
+      />
+    </QueryState>
   </section>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
+import { keepPreviousData } from '@tanstack/vue-query';
+import { AREA_PROPOSAL_STATE } from '@lychen/typescript-front-model-business/area/AreaProposal';
 import { useI18nExtended } from '@lychen/vue-i18n/composables/useI18nExtended';
 import { useGetAreaProposals } from '@lychen/vue-espace-api/endpoint/area-proposal/get-area-proposals';
 import { Card } from '@lychen/vue-components-business/land-proposal/card';
-import type { LandProposal } from '@lychen/vue-components-business/land-proposal/card';
-import { MESSAGES, TRANSLATION_KEY } from './i18n';
+import CollectionFilters from '@/components/CollectionFilters.vue';
+import CollectionPagination from '@/components/CollectionPagination.vue';
+import QueryState from '@/components/QueryState.vue';
+import { useCollectionFilters } from '@/composables/useCollectionFilters';
+import { useFavorites } from '@/composables/useFavorites';
+import { toLandProposalCard } from '@/helpers/cards';
 import { ROUTE_LAND_PROPOSAL } from '@/views/land-proposal';
+import { MESSAGES, TRANSLATION_KEY } from './i18n';
 
-// Image de remplacement en attendant la modélisation des médias côté API (lot 2).
-const PLACEHOLDER_IMAGE = 'https://images.pexels.com/photos/59321/pexels-photo-59321.jpeg';
+const { t } = useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
 
-useI18nExtended({ messages: MESSAGES, rootKey: TRANSLATION_KEY, prefixed: true });
+const { filters, hasActiveFilters, apiQuery, update, reset } = useCollectionFilters();
+const { isFavorite, toggleFavorite } = useFavorites();
 
+// The collection also returns the user's own drafts: this screen is the public listing.
 // Live: any proposal created, edited or deleted, by anyone, refetches the list.
-const { data, isPending, isError } = useGetAreaProposals({}, { live: true });
-
-const proposals = computed<LandProposal[]>(
-  () =>
-    data.value?.member.map((proposal) => ({
-      uuid: proposal.id,
-      title: proposal.title,
-      description: proposal.description,
-      surface: proposal.surfaceToShare ?? 0,
-      altitude: proposal.altitude ?? 0,
-      city: proposal.city,
-      image: PLACEHOLDER_IMAGE,
-    })) ?? [],
+const { data, isPending, isError, isPlaceholderData, refetch } = useGetAreaProposals(
+  () => ({ ...apiQuery.value, place: AREA_PROPOSAL_STATE.Published }),
+  {
+    live: true,
+    // Keep the current page on screen while the next one, or a new search, loads.
+    placeholderData: keepPreviousData,
+  },
 );
 
-const favorites = ref(new Set<string>());
+const proposals = computed(() => data.value?.member.map(toLandProposalCard) ?? []);
+const totalItems = computed(() => data.value?.totalItems ?? 0);
 
-function toggleFavorite(uuid: string) {
-  if (favorites.value.has(uuid)) {
-    favorites.value.delete(uuid);
-  } else {
-    favorites.value.add(uuid);
-  }
+async function goToPage(page: number) {
+  await update({ page });
+  window.scrollTo({ top: 0 });
 }
 </script>
-
-<style lang="css" scoped></style>

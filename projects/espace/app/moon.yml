@@ -1,5 +1,6 @@
 dependsOn:
   - css-core
+  - typescript-front-model-business
   - vue-color-scheme
   - vue-components-app
   - vue-components-business
