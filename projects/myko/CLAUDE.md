@@ -247,6 +247,25 @@ M01, M02…), mostly by a night agent that merges its own PRs. To keep that safe
 - PR titles are Conventional Commits, scoped by project: `feat(myko-api): …`,
   `feat(myko-app): …`, `feat(vue-myko-api): …`, `docs(myko): …`. A PR body says `Closes #<issue>`,
   so that merging it closes its issue.
+- Every PR gets a cold review by two larger models before it is merged (see "Keep it simple" for
+  what they look for).
+
+## Keep it simple
+
+Nathan wants code he can read in one pass. Simple beats clever, and the issue decides what is
+needed, not what might be needed one day.
+
+- Write the straightforward version: a function before a class, a component before a component
+  factory, a plain object before a registry. Two or three similar lines are fine; extract a
+  helper the third time the same thing appears.
+- No abstraction for a future that no issue asks for: no generic base classes, plugin systems,
+  strategy patterns, options nobody sets, or layers that only forward a call.
+- Follow the repository's patterns as they are (the front lib rules of the root CLAUDE.md,
+  Flora's API layout); never add a layer on top of them.
+- Small files, explicit names, few dependencies. A new dependency is justified in the PR's
+  `## Why`.
+- Tests prove behaviour, not implementation details, and stay simpler than the code they test.
+- Delete what is no longer used in the same PR.
 
 ## Never blocked
 
