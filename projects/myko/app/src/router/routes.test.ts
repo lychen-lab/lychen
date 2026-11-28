@@ -1,6 +1,6 @@
 import { computed } from 'vue';
 import { createMemoryHistory, createRouter } from 'vue-router';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import type { Auth } from '@/auth';
 import { SIGN_IN_SCREEN_ROUTE_META, installSignInScreenGuard } from '@/auth/signInGuard';
@@ -49,6 +49,10 @@ const PATHS: Record<string, string> = {
 };
 
 describe('routes', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it.each(Object.entries(PATHS))('%s is the %s screen', (path, name) => {
     expect(createTestRouter().resolve(path).name).toBe(name);
   });
@@ -76,6 +80,18 @@ describe('routes', () => {
     await router.push('/nowhere/at/all');
 
     expect(router.currentRoute.value.name).toBe(ROUTE_NAME.Home);
+  });
+
+  it('does not carry the unknown path over to the home screen as a parameter', async () => {
+    // Vue Router warns "Discarded invalid param(s) pathMatch" when a redirect keeps the params of
+    // the path it leaves, which a redirect to a named route does unless it says `params: {}`.
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const router = createTestRouter();
+
+    await router.push('/nowhere/at/all');
+
+    expect(router.currentRoute.value.params).toEqual({});
+    expect(warn).not.toHaveBeenCalled();
   });
 
   describe('sign-in', () => {

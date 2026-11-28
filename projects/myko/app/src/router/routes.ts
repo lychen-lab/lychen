@@ -31,7 +31,9 @@ export function createRoutes(auth: Auth): RouteRecordRaw[] {
     },
     {
       path: '/:pathMatch(.*)*',
-      redirect: { name: ROUTE_NAME.Home },
+      // `params: {}`: a redirect to a named route keeps the params of the path it leaves, here
+      // `pathMatch`, which Home does not have (Vue Router warns and drops it).
+      redirect: { name: ROUTE_NAME.Home, params: {} },
     },
   ];
 }
