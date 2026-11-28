@@ -24,10 +24,19 @@ build nor the tests: without Zitadel, the sign-in screen (`/sign-in`) says that 
 | ----------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------- |
 | `APP_ID`                      | `VITE_APP_ID`                      | The application's id in the Lychen ecosystem.                                                  |
 | `MYKO_API_HOST`               | `VITE_MYKO_API_HOST`               | Base URL of the Myko API (`projects/myko/api`), e.g. `https://localhost:8082`. Not called yet. |
+| `MYKO_APP_URL`                | `VITE_MYKO_APP_URL`                | Optional. Origin of the QR codes' address. Unset: where the app runs. See below.               |
 | `ZITADEL_ISSUER`              | `VITE_ZITADEL_ISSUER`              | URL of the Zitadel instance (OIDC issuer).                                                     |
 | `ZITADEL_CLIENT_ID`           | `VITE_ZITADEL_CLIENT_ID`           | Client id of Myko's Zitadel application (PKCE, user agent).                                    |
 | `ZITADEL_PROJECT_RESOURCE_ID` | `VITE_ZITADEL_PROJECT_RESOURCE_ID` | Resource id of the Zitadel project holding that application (audience and roles).              |
 | —                             | `VITE_MYKO_FAKE_AUTH`              | Development only: `true` replaces Zitadel with a fake login. See below.                        |
+
+### Origin of the QR codes
+
+A label's QR code holds `<origin>/l/<log uuid>`, and that address never changes once printed. Set
+`MYKO_APP_URL` to the address the labels must open for good (the production origin, say
+`https://myko.lychen.org`): a label printed from a laptop or a staging build then still opens the real
+app. Unset (or not an http(s) address), the origin is the one the app runs on, which is right for
+local runs. The screens read it through `getMushroomLogQrOrigin()` (`src/config/mushroomLogQrOrigin.ts`).
 
 ### Signing in without Zitadel
 

@@ -149,7 +149,9 @@ JournalEntry (`from → to` in its text).
   (`libs/typescript/myko/qr/`) are the only code that writes and reads it, and their test pins it.
   The code itself is drawn from that content by `mushroomLogQrCode` (`uqr`, error correction M, an SVG
   path, no markup) in `MushroomLogQrCode.vue` (`libs/vue/myko`); the origin it takes is the one the
-  labels must open, not whatever the app runs on.
+  labels must open, not whatever the app runs on: the screens get it from `getMushroomLogQrOrigin()`
+  (`projects/myko/app/src/config/`), which reads `VITE_MYKO_APP_URL` and falls back to the origin
+  the app runs on (`resolveMushroomLogQrOrigin`, `libs/typescript/myko/qr/`).
 - A batch's labels (`B-001` to `B-040`) come from `mushroomLogBatchLabels`
   (`front-model-business/mushroom/MushroomLogBatchLabels.ts`), for the form's preview and for the
   creation alike. Its limits (200 logs, 6 digits) are constants next to it.
