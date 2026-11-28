@@ -25,7 +25,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->load('App\\', __DIR__.'/../src/*')
         ->exclude([
-            __DIR__.'/../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}',
+            __DIR__.'/../src/{ApiResource,DependencyInjection,Entity,Migrations,Tests,Kernel.php}',
         ]);
 
     $services->set(JWTDecoder::class)
