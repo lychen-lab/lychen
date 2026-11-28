@@ -150,6 +150,10 @@ JournalEntry (`from → to` in its text).
 - A batch's labels (`B-001` to `B-040`) come from `mushroomLogBatchLabels`
   (`front-model-business/mushroom/MushroomLogBatchLabels.ts`), for the form's preview and for the
   creation alike. Its limits (200 logs, 6 digits) are constants next to it.
+- A sheet of labels (A4, two sizes) is laid out by `labelSheetLayout` and `paginateLabels`
+  (`libs/typescript/myko/labels/`): how many labels fit, the millimetre position of each cell, of
+  its QR code and of its text. The print stylesheet of `/labels` takes those values as they are and
+  computes nothing.
 - Every string in `fr-FR` (default) and `en-US`, in the view's `i18n/` folder, as in Espace. A test
   checks that both files of every `i18n/` folder of `libs/vue/myko` and of the app have the same
   keys and `{placeholders}` and no empty message (`compareLocales`, `libs/typescript/myko/i18n/`).
