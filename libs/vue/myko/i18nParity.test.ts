@@ -7,10 +7,10 @@ import {
   type LocaleMessages,
 } from '@lychen/typescript-myko/i18n/localeParity';
 
-// Every locale folder of the library, found by itself: a new composable's translations are checked
-// without anyone adding them here.
+// Every locale folder of the library, found by itself: a new composable's or component's
+// translations are checked without anyone adding them here.
 const FOLDERS = groupLocaleModules(
-  import.meta.glob<LocaleMessages>('./composables/**/i18n/{fr-FR,en-US}.ts', {
+  import.meta.glob<LocaleMessages>('./{composables,components}/**/i18n/{fr-FR,en-US}.ts', {
     eager: true,
     import: 'default',
   }),

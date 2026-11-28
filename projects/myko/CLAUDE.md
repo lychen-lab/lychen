@@ -193,6 +193,15 @@ JournalEntry (`from → to` in its text).
   `validateHarvestInput`, `validateInoculationInput` and `validateJournalEntryInput`
   (`front-model-business/mushroom/MushroomInputValidation.ts`): the API's rules, as codes the form
   translates. The API still has the last word.
+- A form is a component of `libs/vue/myko` over a composable the tests can drive: `MushroomLogHarvestForm`
+  with `useHarvestForm`, `MushroomLogJournalEntryForm` with `useJournalEntryForm`. The composable holds
+  the typed values, checks them with the `validate…Input` functions above, shows an issue only after a
+  first submission, and gives the input to send; the component emits it and the screen owns the request
+  (`submitting`, `errorMessage`, `reset()` once saved). A day or a moment typed in a field is read and
+  written in local time by `fromDayInputValue`, `fromDateTimeInputValue`, `toDayInputValue` and
+  `toDateTimeInputValue` (`libs/typescript/myko/form/dayInput.ts`): a mapper writes the API's date
+  (`YYYY-MM-DD`) with `toDayInputValue`, never with `toISOString()`, which would send the day before
+  for a day picked at local midnight east of Greenwich.
 - Every screen titles the page: `useDocumentTitle(() => t('page_title'))` (`libs/vue/myko`) gives
   `<screen> · Myko`, reactive to the language and to data (`() => log.value?.label`). A single-page
   app has to do it on every route (WCAG 2.4.2), and the title is what a screen reader announces.
