@@ -158,7 +158,10 @@ JournalEntry (`from → to` in its text).
 - A sheet of labels (A4, two sizes) is laid out by `labelSheetLayout` and `paginateLabels`
   (`libs/typescript/myko/labels/`): how many labels fit, the millimetre position of each cell, of
   its QR code and of its text. The print stylesheet of `/labels` takes those values as they are and
-  computes nothing.
+  computes nothing: `labelSheetStyle.ts` turns them into the CSS lengths, and `MushroomLogLabelSheets`
+  (`libs/vue/myko`) draws the sheets with them (A4 pages, preview with cut lines on screen, nothing
+  but the labels in print). A label's text is a single line sized to fit (`labelTextFontSizeMm`), and
+  wraps rather than shrinks below legible.
 - A bulk entry (the same journal entry or inoculation on every selected log) runs through `runBulk`
   (`libs/typescript/myko/bulk/`): a few requests at a time, a failed item never stops the others, the
   results come back in the selection's order and `onProgress` feeds the progress bar and the recap.
